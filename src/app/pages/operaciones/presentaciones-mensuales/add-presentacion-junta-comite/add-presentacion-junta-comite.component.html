@@ -1,0 +1,59 @@
+<form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
+  <div class="form-group row mb-3">
+    <input type="text" hidden formControlName="id" />
+    <label class="col-sm-3 font-weight-lighter">Periodo</label>
+
+    <div class="col-sm-9">
+      <input
+        class="form-control flatpickr-input"
+        type="text"
+        mwlFlatpickr
+        monthSelectorType="dropdown"
+        [altInput]="true"
+        [convertModelValue]="true"
+        formControlName="fechaCorrespondiente"
+        [class.is-invalid]="
+          f.fechaCorrespondiente.invalid &&
+          (f.fechaCorrespondiente.dirty || f.fechaCorrespondiente.touched)
+        "
+        [class.is-valid]="
+          !f.fechaCorrespondiente.invalid &&
+          (f.fechaCorrespondiente.dirty || f.fechaCorrespondiente.touched)
+        "
+      />
+      <div
+        *ngIf="
+          f.fechaCorrespondiente.invalid &&
+          (f.fechaCorrespondiente.dirty || f.fechaCorrespondiente.touched)
+        "
+      >
+        <small *ngIf="f.fechaCorrespondiente.errors.required" class="p-error"
+          >El campo es reqerido.</small
+        >
+      </div>
+    </div>
+  </div>
+  <div class="form-group row mb-3">
+    <label class="col-sm-3 font-weight-lighter">Fecha de Junta</label>
+
+    <div class="col-sm-9">
+      <input
+        class="form-control flatpickr-input"
+        type="text"
+        mwlFlatpickr
+        [altInput]="true"
+        monthSelectorType="dropdown"
+        [convertModelValue]="true"
+        formControlName="fechaJunta"
+      />
+    </div>
+  </div>
+
+  <!-- Boton submit -->
+  <custom-button-submit
+    [disabled]="this.form.invalid || submitting"
+  ></custom-button-submit>
+
+  <!-- Boton submit -->
+  <hr />
+</form>

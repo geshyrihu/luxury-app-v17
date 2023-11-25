@@ -1,0 +1,75 @@
+<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+
+<div *ngIf="data">
+  <div class="row">
+    <div class="col-12">
+      <div
+        class="page-title-box d-sm-flex align-items-center justify-content-between"
+      >
+        <h5 class="mb-sm-0 font-size-18">
+          PENDIENTES MINUTAS JUNTAS DE COMITÉ
+        </h5>
+        <a
+          ngbTooltip="IMPRIMIR PENDIENTES MINUTA"
+          [routerLink]="'/operaciones/junta-comite/minuta-pendientes'"
+          class="btn btn-soft-danger btn-sm w-xs waves-effect btn-label waves-light me-1"
+        >
+          <i class="fa-duotone fa-download fa-2x label-icon pointer"></i>PDF
+        </a>
+
+        <custom-button-confirmation
+          [mostrar]="authService.onValidateRoles(['SuperUsuario'])"
+          title="Confirmar"
+          icon=""
+          text="Enviar a todos los deptos"
+          label="Enviar a todos los deptos"
+          tooltipText="Enviar a todos los deptos"
+          classButton="btn btn-soft-primary btn-sm"
+          confirmButtonText="Sí, confirmar"
+          (OnConfirm)="onSendEmailAllPendingMeeting()"
+        ></custom-button-confirmation>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row mt-2">
+  <div class="col-xl-4 col-md-6 mb-2">
+    <ngb-alert
+      (click)="onModalAddOrEditMinutaDetalle(0)"
+      type="success"
+      [dismissible]="false"
+      class="alert-dismissible fade show px-4 mb-0 text-center custom-alert pointer"
+    >
+      <div class="h1 text-success d-block mt-2 mb-3">
+        {{ data.contable?.pendiente }}
+      </div>
+      <h5 class="text-success">CONTABLE</h5>
+    </ngb-alert>
+  </div>
+  <div class="col-xl-4 col-md-6 mb-2">
+    <ngb-alert
+      (click)="onModalAddOrEditMinutaDetalle(1)"
+      type="info"
+      [dismissible]="false"
+      class="alert-dismissible fade show px-4 mb-0 text-center custom-alert pointer"
+    >
+      <div class="h1 text-info d-block mt-2 mb-3">
+        {{ data.operaciones?.pendiente }}
+      </div>
+      <h5 class="text-info">OPERACIONES</h5>
+    </ngb-alert>
+  </div>
+  <div class="col-xl-4 col-md-6 mb-2">
+    <ngb-alert
+      (click)="onModalAddOrEditMinutaDetalle(2)"
+      type="warning"
+      [dismissible]="false"
+      class="alert-dismissible fade show px-4 mb-0 text-center custom-alert pointer"
+    >
+      <div class="h1 text-warning d-block mt-2 mb-3">
+        {{ data.legal?.pendiente }}
+      </div>
+      <h5 class="text-warning">LEGAL</h5>
+    </ngb-alert>
+  </div>
+</div>

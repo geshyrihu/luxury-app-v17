@@ -1,0 +1,77 @@
+<div class="card">
+  <div class="card-body">
+    <form autocomplete="off" [formGroup]="form" (ngSubmit)="onSubmit()">
+      <custom-input-text
+        [control]="form.get('id')"
+        formControlName="id"
+        label="Id"
+      ></custom-input-text>
+
+      <custom-input-date
+        [control]="form.get('fechaEntrada')"
+        formControlName="fechaEntrada"
+        label="Fecha de entrada"
+        placeholder="fecha de entrada"
+      ></custom-input-date>
+
+      <div class="form-group row mb-2">
+        <label class="col-sm-3">Producto</label>
+        <div class="col-sm-9" *ngIf="mostrarProductos == false">
+          <input
+            hidden
+            type="text"
+            class="form-control"
+            formControlName="productoId"
+          />
+          <input
+            readonly
+            [value]="nombreProducto"
+            type="text"
+            class="form-control"
+          />
+        </div>
+        <div class="col-sm-9" *ngIf="mostrarProductos == true">
+          <select class="form-select" formControlName="productoId">
+            <option value="">--Selecciona un producto--</option>
+            <option [value]="item.value" *ngFor="let item of cb_productos">
+              {{ item.label }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <custom-input-number
+        [control]="form.get('cantidad')"
+        formControlName="cantidad"
+        label="Cantidad"
+      ></custom-input-number>
+
+      <custom-input-select
+        [control]="form.get('unidadMedidaId')"
+        formControlName="unidadMedidaId"
+        label="ProfeUnidadsión"
+        [data]="cb_measurement_unit"
+      ></custom-input-select>
+
+      <custom-input-datalist
+        (propagar)="saveProviderId($event)"
+        [control]="form.get('providerName')"
+        [data]="cb_providers"
+        formControlName="providerName"
+        label="Nombre"
+        dataListId="providerNameDatalistOptions"
+      ></custom-input-datalist>
+
+      <custom-input-text
+        [control]="form.get('numeroFactura')"
+        formControlName="numeroFactura"
+        label="Factura"
+        placeholder="factura"
+      ></custom-input-text>
+
+      <custom-button-submit
+        [disabled]="form.invalid || submitting"
+      ></custom-button-submit>
+    </form>
+  </div>
+</div>

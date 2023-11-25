@@ -1,0 +1,152 @@
+<div class="p-card p-mb-5">
+  <p-table
+    #dt
+    [(selection)]="data"
+    [autoLayout]="true"
+    [globalFilterFields]="[
+      'fechaSolicitud',
+      'folio',
+      'factura',
+      'justificacionGasto',
+      'equipoOInstalacion',
+      'proveedor'
+    ]"
+    [paginator]="true"
+    [rowHover]="true"
+    [rows]="50"
+    [rowsPerPageOptions]="[50, 75, 100, 200]"
+    [showCurrentPageReport]="true"
+    [value]="data"
+    currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+    styleClass="custom-table"
+  >
+    <ng-template pTemplate="caption">
+      <app-table-header
+        [title]="'Ordenes de Compra Pagadas'"
+        [showAdd]="false"
+        [dt]="dt"
+      ></app-table-header>
+
+      <div
+        class="btn-group mt-2"
+        role="group"
+        aria-label="Basic checkbox toggle button group"
+      >
+        <input
+          type="checkbox"
+          class="btn-check"
+          id="btncheck1"
+          autocomplete="off"
+          (click)="onLoadData(0)"
+          (click)="tipo = 0"
+        />
+        <label class="btn btn-info" for="btncheck1">Fijos</label>
+
+        <input
+          type="checkbox"
+          class="btn-check"
+          id="btncheck2"
+          autocomplete="off"
+          (click)="onLoadData(1)"
+          (click)="tipo = 1"
+        />
+        <label class="btn btn-info" for="btncheck2">Variable</label>
+
+        <input
+          type="checkbox"
+          class="btn-check"
+          id="btncheck3"
+          autocomplete="off"
+          (click)="onLoadData(2)"
+          (click)="tipo = 2"
+        />
+        <label class="btn btn-info" for="btncheck3">Extraordinario</label>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th scope="col" style="width: 3%">N°</th>
+        <th scope="col" style="width: 6%" pSortableColumn="fechaSolicitud">
+          Fecha
+          <p-sortIcon field="fechaSolicitud"></p-sortIcon>
+        </th>
+        <th scope="col" style="width: 6%" pSortableColumn="folio">
+          Folio
+          <p-sortIcon field="folio"></p-sortIcon>
+        </th>
+        <th scope="col" style="width: 6%" pSortableColumn="factura">
+          Factura
+          <p-sortIcon field="factura"></p-sortIcon>
+        </th>
+        <th scope="col" style="width: 25%" pSortableColumn="proveedor">
+          Proveedor
+          <p-sortIcon field="proveedor"></p-sortIcon>
+        </th>
+        <th scope="col" style="width: 25%" pSortableColumn="justificacionGasto">
+          Justificación<p-sortIcon field="justificacionGasto"></p-sortIcon>
+        </th>
+        <th scope="col" style="width: 10%" pSortableColumn="total">
+          Total<p-sortIcon field="total"></p-sortIcon>
+        </th>
+        <th scope="col" style="width: 5%">Ver</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item let-ri="rowIndex">
+      <tr>
+        <td class="p-column-title">
+          <small>
+            {{ ri + 1 }}
+          </small>
+        </td>
+        <td class="p-column-title">
+          <small>
+            {{ item.fechaSolicitud | date }}
+          </small>
+        </td>
+        <td class="p-column-title">
+          <small
+            class="pointer"
+            [routerLink]="['/compras/ordenCompra', item.id]"
+            routerLinkActive="router-link-active"
+          >
+            {{ item.folio }}
+          </small>
+        </td>
+        <td class="p-column-title">
+          <small>
+            {{ item.factura }}
+          </small>
+        </td>
+        <td class="p-column-title">
+          <small>
+            {{ item.proveedor }}
+          </small>
+        </td>
+
+        <td class="p-column-title p-text-justify">
+          <small>
+            {{ item.equipoOInstalacion }}
+          </small>
+          <small>
+            {{ item.justificacionGasto }}
+          </small>
+        </td>
+        <td class="p-column-title">
+          <small>
+            {{ item.total | CurrencyMexicoPipe }}
+          </small>
+        </td>
+
+        <td class="text-center">
+          <custom-button-edit
+            (edit)="onAddOrEdit(item.id)"
+          ></custom-button-edit>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="paginatorleft">
+      <app-table-footer [data]="data"></app-table-footer>
+    </ng-template>
+  </p-table>
+</div>

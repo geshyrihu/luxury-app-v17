@@ -1,0 +1,24 @@
+<form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
+  <!-- img -->
+  <div class="form-group row mb-3">
+    <label class="col-sm-3 font-weight-lighter">Archivo</label>
+
+    <div class="col-sm-9">
+      <input
+        [required]="true"
+        type="file"
+        accept="application/pdf"
+        class="form-control"
+        (change)="change($event.target['files'][0])"
+      />
+    </div>
+  </div>
+
+  <!-- Boton submit -->
+  <custom-button-submit
+    [disabled]="this.form.invalid || submitting"
+  ></custom-button-submit>
+
+  <!-- Boton submit -->
+  <hr />
+</form>

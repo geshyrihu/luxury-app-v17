@@ -1,0 +1,11 @@
+<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+
+<button
+  (click)="confirm($any($event))"
+  [ngbTooltip]="textpTooltip"
+  placement="top"
+  type="button"
+  class="btn-close hide-print-mode"
+  data-bs-dismiss="modal"
+  aria-label="Close"
+></button>

@@ -1,0 +1,238 @@
+<ng-container *ngIf="generalMinutasGrupoView">
+  <p-table [value]="generalMinutasGrupo" styleClass="custom-table">
+    <ng-template pTemplate="caption">
+      <div class="row">
+        <div class="col-sm-7">
+          <div class="h4">
+            MINUTAS DE JUNTAS DE COMITÉ, PERIODO {{ periodo | uppercase }}
+          </div>
+        </div>
+        <div class="col-sm-5 text-left hide-print-mode">
+          <app-mesanio (periodoEmit)="onFiltrarPeriodo($event)"></app-mesanio>
+        </div>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th rowspan="2" style="width: 5%">#</th>
+        <th rowspan="2" style="width: 16%" pSortableColumn="numeroCliente">
+          CLIENTE
+          <p-sortIcon field="numeroCliente"></p-sortIcon>
+          <p-columnFilter
+            field="customer"
+            matchMode="in"
+            display="menu"
+            [showMatchModes]="false"
+            [showOperator]="false"
+            [showAddButton]="false"
+          >
+            <ng-template
+              pTemplate="filter"
+              let-value
+              let-filter="filterCallback"
+            >
+              <p-multiSelect
+                [ngModel]="value"
+                [options]="cb_customers"
+                placeholder="Ninguno"
+                (onChange)="filter($event.value)"
+                optionLabel="label"
+              >
+                <ng-template let-option pTemplate="item">
+                  <div class="p-multiselect-representative-option">
+                    <span class="ml-1">{{ option.label }}</span>
+                  </div>
+                </ng-template>
+              </p-multiSelect>
+            </ng-template>
+          </p-columnFilter>
+        </th>
+
+        <th colspan="3">
+          <p class="alert p-2 w-100 bg-contable">CONTABLE</p>
+        </th>
+        <th colspan="3">
+          <p class="alert p-2 w-100 bg-operaciones">OPERACIONES</p>
+        </th>
+        <th colspan="3">
+          <p class="alert p-2 w-100 bg-legal">LEGAL</p>
+        </th>
+      </tr>
+      <tr>
+        <th style="width: 8%" scope="col">TOTAL</th>
+        <th style="width: 8%" scope="col">ATENDIDAS</th>
+        <th style="width: 8%" scope="col">PENDIENTES</th>
+        <th style="width: 8%" scope="col">TOTAL</th>
+        <th style="width: 8%" scope="col">ATENDIDAS</th>
+        <th style="width: 8%" scope="col">PENDIENTES</th>
+        <th style="width: 8%" scope="col">TOTAL</th>
+        <th style="width: 8%" scope="col">ATENDIDAS</th>
+        <th style="width: 8%" scope="col">PENDIENTES</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowIndex="rowIndex" let-item>
+      <tr>
+        <td class="p-column-title pointer text-center">
+          {{ rowIndex + 1 }}
+        </td>
+        <td class="p-column-title pointer text-center">
+          <p>
+            {{ item.customer.label }}
+          </p>
+        </td>
+
+        <td
+          class="p-column-title pointer text-center"
+          (click)="
+            onModalFiltroMinutasArea(
+              item.meetingId,
+              0,
+              'Total',
+              null,
+              item.customer.label
+            )
+          "
+        >
+          <p>
+            {{ item.totalContable }}
+          </p>
+        </td>
+        <td
+          class="p-column-title pointer text-center"
+          (click)="
+            onModalFiltroMinutasArea(
+              item.meetingId,
+              0,
+              'Atendidas',
+              1,
+              item.customer.label
+            )
+          "
+        >
+          <p>
+            {{ item.atendidasContable }}
+          </p>
+        </td>
+        <td
+          class="p-column-title pointer text-center"
+          (click)="
+            onModalFiltroMinutasArea(
+              item.meetingId,
+              0,
+              'Pendiente',
+              0,
+              item.customer.label
+            )
+          "
+        >
+          <p
+            [ngClass]="{ 'text-danger text-bold': item.pendienteContable > 0 }"
+          >
+            {{ item.pendienteContable }}
+          </p>
+        </td>
+        <td
+          class="p-column-title pointer text-center"
+          (click)="
+            onModalFiltroMinutasArea(
+              item.meetingId,
+              1,
+              'Total',
+              null,
+              item.customer.label
+            )
+          "
+        >
+          <p>
+            {{ item.totalOperaciones }}
+          </p>
+        </td>
+        <td
+          class="p-column-title pointer text-center"
+          (click)="
+            onModalFiltroMinutasArea(
+              item.meetingId,
+              1,
+              'Atendidas',
+              1,
+              item.customer.label
+            )
+          "
+        >
+          <p>
+            {{ item.atendidasOperaciones }}
+          </p>
+        </td>
+        <td
+          class="p-column-title pointer text-center"
+          (click)="
+            onModalFiltroMinutasArea(
+              item.meetingId,
+              1,
+              'Pendiente',
+              0,
+              item.customer.label
+            )
+          "
+        >
+          <p
+            [ngClass]="{
+              'text-danger text-bold': item.pendienteOperaciones > 1
+            }"
+          >
+            {{ item.pendienteOperaciones }}
+          </p>
+        </td>
+        <td
+          class="p-column-title pointer text-center"
+          (click)="
+            onModalFiltroMinutasArea(
+              item.meetingId,
+              2,
+              'Total',
+              null,
+              item.customer.label
+            )
+          "
+        >
+          <p>
+            {{ item.totalLegal }}
+          </p>
+        </td>
+        <td
+          class="p-column-title pointer text-center"
+          (click)="
+            onModalFiltroMinutasArea(
+              item.meetingId,
+              2,
+              'Atendidas',
+              1,
+              item.customer.label
+            )
+          "
+        >
+          <p>
+            {{ item.atendidasLegal }}
+          </p>
+        </td>
+        <td
+          class="p-column-title pointer text-center"
+          (click)="
+            onModalFiltroMinutasArea(
+              item.meetingId,
+              2,
+              'Pendiente',
+              0,
+              item.customer.label
+            )
+          "
+        >
+          <p [ngClass]="{ 'text-danger text-bold': item.pendienteLegal > 0 }">
+            {{ item.pendienteLegal }}
+          </p>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</ng-container>

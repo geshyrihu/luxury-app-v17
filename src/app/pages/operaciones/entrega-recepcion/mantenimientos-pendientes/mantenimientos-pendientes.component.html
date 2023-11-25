@@ -1,0 +1,126 @@
+<app-report-header></app-report-header>
+<!-- 
+<p-table [value]="data" styleClass="custom-table">
+  <ng-template pTemplate="caption">
+    <div class="flex align-items-center justify-content-between">
+    </div>
+  </ng-template> -->
+<h5 class="m-0 h5">Mantenimientos Preventivos Pendientes</h5>
+
+<!-- <ng-template pTemplate="body" let-item>
+    <tr class="page-break">
+      <td>
+        <table class="table table-sm table-striped table-bordered mt-1">
+          <tr>
+            <td style="width: 25%">Equipo:</td>
+            <td style="width: 25%">{{ item.equipo }}</td>
+            <td style="width: 25%">Fecha de Solicitud:</td>
+            <td style="width: 25%">
+              {{ item.fechaSolicitud }}
+            </td>
+          </tr>
+          <tr>
+            <td style="width: 25%">Tipo de servicio:</td>
+            <td style="width: 25%">
+              {{ item.tipoServicio }}
+            </td>
+            <td style="width: 25%">Fecha de Ejecución:</td>
+            <td style="width: 25%">
+              {{ item.fechaTermino }}
+            </td>
+          </tr>
+          <tr>
+            <td style="width: 25%">Proveedor:</td>
+            <td style="width: 25%">
+              {{ item.proveedor }}
+            </td>
+            <td colspan="2" style="width: 50%"></td>
+          </tr>
+        </table>
+        <table class="table table-sm table-striped table-bordered mt-1">
+          <tr>
+            <td style="width: 50%">Actividad:</td>
+            <td style="width: 50%">Observaciones</td>
+          </tr>
+          <tr>
+            <td style="width: 50%">
+              <p
+                class="font-normal mb-0"
+                [innerHTML]="item.actividad | sanitizeHtml"
+              ></p>
+            </td>
+            <td style="width: 50%">
+              <p
+                class="font-normal mb-0"
+                [innerHTML]="item.observaciones | sanitizeHtml"
+              ></p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </ng-template>
+</p-table> -->
+
+<table class="custom-table">
+  <tbody>
+    <tr *ngFor="let item of data" class="page-break">
+      <td>
+        <table class="table table-sm table-striped table-bordered mt-1">
+          <tr>
+            <td style="width: 25%">Equipo:</td>
+            <td style="width: 25%">{{ item.equipo }}</td>
+            <td style="width: 25%">Fecha de Solicitud:</td>
+            <td style="width: 25%">
+              {{ item.fechaSolicitud }}
+            </td>
+          </tr>
+          <tr>
+            <td style="width: 25%">Tipo de servicio:</td>
+            <td style="width: 25%">
+              {{ item.tipoServicio }}
+            </td>
+            <td style="width: 25%">Fecha de Ejecución:</td>
+            <td style="width: 25%">
+              {{ item.fechaTermino }}
+            </td>
+          </tr>
+          <tr>
+            <td style="width: 25%">Proveedor:</td>
+            <td style="width: 25%">
+              {{ item.proveedor }}
+            </td>
+            <td colspan="2" style="width: 50%"></td>
+          </tr>
+        </table>
+        <table class="table table-sm table-striped table-bordered mt-1">
+          <tr>
+            <td style="width: 50%">Actividad:</td>
+            <td style="width: 50%">Observaciones</td>
+          </tr>
+          <tr>
+            <td style="width: 50%">
+              <p
+                class="font-normal mb-0"
+                [innerHTML]="item.actividad | sanitizeHtml"
+              ></p>
+            </td>
+            <td style="width: 50%">
+              <p
+                class="font-normal mb-0"
+                [innerHTML]="item.observaciones | sanitizeHtml"
+              ></p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<style>
+  @media print {
+    .page-break {
+      page-break-inside: avoid;
+    }
+  }
+</style>

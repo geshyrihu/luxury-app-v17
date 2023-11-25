@@ -1,0 +1,31 @@
+<div class="card">
+  <div class="card-body">
+    <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
+      <custom-input-text
+        [control]="form.get('id')"
+        formControlName="id"
+        label="Id"
+      ></custom-input-text>
+
+      <custom-input-select
+        [control]="form.get('ePosicionComite')"
+        formControlName="ePosicionComite"
+        label="Posición"
+        [data]="cb_position"
+      ></custom-input-select>
+
+      <custom-input-datalist
+        (propagar)="saveCondominoId($event)"
+        [control]="form.get('nameDirectoryCondominium')"
+        [data]="cb_condomino"
+        formControlName="nameDirectoryCondominium"
+        label="Nombre"
+        dataListId="nameDirectoryCondominiumDatalistOptions"
+      ></custom-input-datalist>
+
+      <custom-button-submit
+        [disabled]="this.form.invalid || submitting"
+      ></custom-button-submit>
+    </form>
+  </div>
+</div>

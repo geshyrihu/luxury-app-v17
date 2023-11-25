@@ -1,0 +1,60 @@
+<div class="card">
+  <div class="card-body">
+    <form autocomplete="off" (ngSubmit)="submit()" [formGroup]="form">
+      <custom-input-text
+        [control]="form.get('id')"
+        formControlName="id"
+        label="Id"
+        [horizontal]="false"
+      ></custom-input-text>
+
+      <custom-input-datalist
+        (propagar)="saveProviderId($event)"
+        [control]="form.get('providerName')"
+        [data]="cb_providers"
+        formControlName="providerName"
+        label="Proveedor"
+        [horizontal]="false"
+        dataListId="providerNameDatalistOptions"
+      ></custom-input-datalist>
+
+      <custom-input-text
+        [control]="form.get('description')"
+        formControlName="description"
+        label="Descripción"
+        [placeholder]="'descripción'"
+        [horizontal]="false"
+      ></custom-input-text>
+
+      <custom-input-date
+        [control]="form.get('startDate')"
+        formControlName="startDate"
+        label="Inicio"
+        placeholder="incio"
+        [horizontal]="false"
+      ></custom-input-date>
+
+      <custom-input-date
+        [control]="form.get('endDate')"
+        formControlName="endDate"
+        label="Fin"
+        placeholder="fin"
+        [horizontal]="false"
+      ></custom-input-date>
+
+      <div class="mb-2">
+        <label class="form-label">Documento</label>
+        <input
+          type="file"
+          accept="application/pdf"
+          (change)="uploadFile($event)"
+          class="form-control"
+        />
+      </div>
+
+      <custom-button-submit
+        [disabled]="this.form.invalid || submitting"
+      ></custom-button-submit>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,55 @@
+<app-report-header></app-report-header>
+
+<p-table
+  [value]="data"
+  sortField="descripcion"
+  rowGroupMode="subheader"
+  groupRowsBy="descripcion"
+  styleClass="custom-table"
+>
+  <ng-template pTemplate="caption">
+    <div class="flex align-items-center justify-content-between">
+      <h5 class="m-0 h5">Llaves</h5>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="header">
+    <tr>
+      <th scope="col" style="width: 1%" class="small">N°</th>
+      <th scope="col" style="width: 20%" class="small">Descripción</th>
+      <th scope="col" style="width: 10%" class="small">Marca</th>
+      <th scope="col" style="width: 10%" class="small">Cantidad</th>
+      <th scope="col" style="width: 10%" class="small">Check</th>
+      <th scope="col" style="width: 20%" class="small">Observaciones</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="groupheader" let-customer>
+    <tr pRowGroupHeader>
+      <td colspan="7">
+        <span class="font-bold ml-2">{{ customer.descripcion }}</span>
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="groupfooter" let-customer>
+    <tr class="p-rowgroup-footer">
+      <td class="small" colspan="7">
+        <div style="text-align: right">
+          Total:
+
+          {{ calcularEquiposTotal(customer.descripcion) }}
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+    <tr class="page-break">
+      <td class="small">{{ rowIndex + 1 }}</td>
+      <td class="small">{{ item.nombre }}</td>
+      <td class="small">{{ item.marca }}</td>
+      <td class="small">{{ item.cantidad }}</td>
+      <td class="small text-center">
+        <input type="checkbox" />
+      </td>
+      <td class="small"></td>
+    </tr>
+  </ng-template>
+</p-table>

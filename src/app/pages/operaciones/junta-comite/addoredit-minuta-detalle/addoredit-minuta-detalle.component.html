@@ -1,0 +1,48 @@
+<div class="card">
+  <div class="card-body">
+    <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
+      <custom-input-text
+        [control]="form.get('id')"
+        formControlName="id"
+        label="Id"
+        [horizontal]="false"
+      ></custom-input-text>
+
+      <custom-input-select
+        [control]="form.get('eAreaMinutasDetalles')"
+        formControlName="eAreaMinutasDetalles"
+        label="Area"
+        [data]="cb_area"
+        [horizontal]="false"
+      ></custom-input-select>
+
+      <custom-input-text
+        [control]="form.get('title')"
+        formControlName="title"
+        label="Título"
+        placeholder="titulo"
+        [horizontal]="false"
+      ></custom-input-text>
+      <div class="form-group mb-2">
+        <label class="form-label">Asunto</label>
+        <ckeditor
+          [config]="{ toolbar: ['heading', '|', 'bold', 'italic'] }"
+          [editor]="Editor"
+          formControlName="requestService"
+        ></ckeditor>
+      </div>
+
+      <custom-input-select
+        [control]="form.get('status')"
+        formControlName="status"
+        label="Estatus"
+        [data]="cb_estatus"
+        [horizontal]="false"
+      ></custom-input-select>
+
+      <custom-button-submit
+        [disabled]="this.form.invalid || submitting"
+      ></custom-button-submit>
+    </form>
+  </div>
+</div>

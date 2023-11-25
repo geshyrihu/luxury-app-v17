@@ -1,0 +1,106 @@
+<div class="card">
+  <div class="card-body">
+    <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
+      <custom-input-text
+        [control]="form.get('id')"
+        formControlName="id"
+        label="Id"
+      ></custom-input-text>
+
+      <div class="form-group row mb-1">
+        <label class="col-sm-3">Imagen</label>
+        <div class="col-sm-9">
+          <app-input-img
+            (fileSelected)="uploadFile($event)"
+            [urlImgCurrent]="urlBaseImg + model?.photoPath"
+            [contentHeight]="'50'"
+            [contentWidth]="'50'"
+          ></app-input-img>
+        </div>
+      </div>
+
+      <custom-input-text
+        [control]="form.get('nameCustomer')"
+        formControlName="nameCustomer"
+        label="Nombre"
+        placeholder="nombre"
+      ></custom-input-text>
+
+      <custom-input-text
+        [control]="form.get('nombreCorto')"
+        formControlName="nombreCorto"
+        label="Nombre Corto"
+        placeholder="nombre Corto"
+      ></custom-input-text>
+
+      <custom-input-text
+        [control]="form.get('rfc')"
+        formControlName="rfc"
+        label="RFC"
+        placeholder="rfc"
+      ></custom-input-text>
+
+      <custom-input-mask
+        [control]="form.get('phoneOne')"
+        formControlName="phoneOne"
+        label="Tél. 1"
+        placeholder="teléfono"
+        customMask="(00) 0000-0000"
+      ></custom-input-mask>
+
+      <custom-input-mask
+        [control]="form.get('phoneTwo')"
+        formControlName="phoneTwo"
+        label="Tél. 2"
+        placeholder="teléfono"
+        customMask="(00) 0000-0000"
+      ></custom-input-mask>
+
+      <custom-input-text-area
+        [control]="form.get('adreess')"
+        formControlName="adreess"
+        label="Dirección"
+        placeholder="dirección"
+      ></custom-input-text-area>
+
+      <custom-input-date
+        [control]="form.get('register')"
+        formControlName="register"
+        label="Fecha de registro"
+        placeholder="fecha de registro"
+      ></custom-input-date>
+
+      <custom-input-number
+        [control]="form.get('numeroCliente')"
+        formControlName="numeroCliente"
+        label="Numero de Cliente"
+        placeholder="numero de Cliente"
+      ></custom-input-number>
+
+      <custom-input-text
+        [control]="form.get('longitud')"
+        formControlName="longitud"
+        label="Longitud"
+        placeholder="longitud"
+      ></custom-input-text>
+
+      <custom-input-text
+        [control]="form.get('latitud')"
+        formControlName="latitud"
+        label="Latitud"
+        placeholder="latitud"
+      ></custom-input-text>
+
+      <custom-input-select
+        [control]="form.get('active')"
+        formControlName="active"
+        label="Activo"
+        [data]="optionActive"
+      ></custom-input-select>
+
+      <custom-button-submit
+        [disabled]="this.form.invalid || submitting"
+      ></custom-button-submit>
+    </form>
+  </div>
+</div>

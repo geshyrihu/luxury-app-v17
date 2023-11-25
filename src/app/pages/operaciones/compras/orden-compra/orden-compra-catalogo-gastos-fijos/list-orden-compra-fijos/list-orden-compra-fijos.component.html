@@ -1,0 +1,180 @@
+<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+
+<p-table
+  [(selection)]="data"
+  #dt
+  styleClass="custom-table"
+  [value]="data"
+  [rows]="30"
+  [paginator]="true"
+  [rowHover]="true"
+  currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+  [showCurrentPageReport]="true"
+  [rowsPerPageOptions]="[30, 40, 50, 75, 100]"
+  [globalFilterFields]="[
+    'fechaSolicitud',
+    'folio',
+    'equipoOInstalacion',
+    'justificacionGasto',
+    'revisadoPorResidente'
+  ]"
+  [autoLayout]="true"
+>
+  <ng-template pTemplate="caption">
+    <app-table-header
+      [title]="'Ordenes de Compra Gastos Fijos'"
+      (add)="onModalAdd()"
+      [dt]="dt"
+      [rolAuth]="
+        authService.onValidateRoles(['Asistente', 'Residente', 'SuperUsuario'])
+      "
+    ></app-table-header>
+    <br />
+
+    <div class="row">
+      <div class="col-12 d-flex justify-content-end">
+        <button (click)="selectStatus(1)" class="btn btn-secondary me-1">
+          Denegadas
+        </button>
+
+        <button (click)="selectStatus(0)" class="btn btn-success me-1">
+          Autorizadas
+        </button>
+
+        <button (click)="selectStatus(2)" class="btn btn-danger me-1">
+          Pendientes
+        </button>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="header">
+    <tr>
+      <th scope="col" style="width: 7%" pSortableColumn="folio">
+        FOLIO
+        <p-sortIcon field="folio"></p-sortIcon>
+      </th>
+      <th scope="col" style="width: 12%" pSortableColumn="fechaSolicitud">
+        FECHA DE SOLICITUD
+        <p-sortIcon field="fechaSolicitud"></p-sortIcon>
+      </th>
+      <th scope="col" style="width: 25%" pSortableColumn="equipoOInstalacion">
+        ÁREA/EQUIPO/INSTALACIÓN
+        <p-sortIcon field="equipoOInstalacion"></p-sortIcon>
+      </th>
+      <th scope="col" style="width: 25%" pSortableColumn="justificacionGasto">
+        JUSTIFICACIÓN
+        <p-sortIcon field="justificacionGasto"></p-sortIcon>
+      </th>
+      <th
+        scope="col"
+        style="width: 25%"
+        pSortableColumn="ordenCompraAuth.observaciones"
+        *ngIf="statusCompra === 1"
+      >
+        OBSERVACIONES
+        <p-sortIcon field="ordenCompraAuth.observaciones"></p-sortIcon>
+      </th>
+
+      <th
+        scope="col"
+        style="width: 15%"
+        *ngIf="this.statusCompra === 0"
+        pSortableColumn="ordenCompraAuth.applicationUserAuth.fullName"
+      >
+        AUTORIZA
+        <p-sortIcon
+          field="ordenCompraAuth.applicationUserAuth.fullName"
+        ></p-sortIcon>
+      </th>
+      <th scope="col" style="width: 20%" pSortableColumn="revisadoPorResidente">
+        REVISO
+        <p-sortIcon field="revisadoPorResidente"></p-sortIcon>
+      </th>
+      <th
+        scope="col"
+        style="width: 5%"
+        class="text-small"
+        *ngIf="
+          authService.onValidateRoles([
+            'Asistente',
+            'Residente',
+            'SuperUsuario'
+          ])
+        "
+      ></th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-item>
+    <tr>
+      <td>
+        {{ item.folio }}
+      </td>
+      <td>
+        {{ item.fechaSolicitud | date }}
+      </td>
+      <td>
+        {{ item.equipoOInstalacion }}
+      </td>
+      <td>
+        {{ item.justificacionGasto }}
+      </td>
+      <td *ngIf="statusCompra === 1">
+        {{ item.observaciones }}
+      </td>
+
+      <td *ngIf="this.statusCompra === 0">
+        {{ item.fullName }}
+      </td>
+
+      <td>
+        {{ item.revisadoPorResidente }}
+      </td>
+
+      <td
+        *ngIf="
+          authService.onValidateRoles([
+            'Asistente',
+            'Residente',
+            'SuperUsuario'
+          ])
+        "
+        class="p-column-title"
+      >
+        <div class="d-flex justify-content-center">
+          <custom-button-edit
+            *ngIf="
+              authService.onValidateRoles([
+                'Asistente',
+                'Residente',
+                'SuperUsuario'
+              ])
+            "
+            (edit)="onAddOrEdit(item.id)"
+          ></custom-button-edit>
+          <button
+            type="button"
+            class="btn btn-sm btn-outline-info me-1 pointer"
+            ngbTooltip="Ver en modal"
+            placement="top"
+            (click)="onOrdenCompraModal(item.id)"
+          >
+            <i class="fa-duotone fa-pen-to-square text-info"></i>
+          </button>
+
+          <custom-button-delete
+            *ngIf="
+              statusCompra === 2 &&
+              authService.onValidateRoles(['SuperUsuario'])
+            "
+            (OnConfirm)="onDelete(item)"
+          ></custom-button-delete>
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="paginatorleft">
+    <app-table-footer [data]="data"></app-table-footer>
+  </ng-template>
+</p-table>

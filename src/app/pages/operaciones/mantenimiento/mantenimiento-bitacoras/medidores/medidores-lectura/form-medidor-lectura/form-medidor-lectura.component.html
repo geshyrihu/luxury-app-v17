@@ -1,0 +1,62 @@
+<div class="card">
+  <div class="card-body">
+    <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
+      <!-- Id -->
+      <div class="form-group row mb-2" hidden>
+        <label class="col-sm-3">Id</label>
+        <div class="col-sm-9">
+          <input class="form-control" formControlName="id" />
+        </div>
+      </div>
+      <!-- Id -->
+      <div class="form-group row mb-2">
+        <label class="col-sm-3">Lectura anterior </label>
+        <div class="col-sm-9">
+          <input
+            readonly
+            class="form-control bg-secondary"
+            mode="decimal"
+            [value]="ultimaLectura"
+          />
+        </div>
+      </div>
+      <!-- Lectura -->
+      <div class="form-group row mb-2">
+        <label class="col-sm-3">Lectura</label>
+        <div class="col-sm-9">
+          <input
+            *ngIf="!seRegistroEsteDia"
+            (keyup)="evaluarLectura($event)"
+            formControlName="lectura"
+            class="form-control"
+            placeholder="Ingrese la Lectura"
+            [ngClass]="{ 'ng-invalid': laLecturaEsMenor }"
+            [class.is-invalid]="
+              f.lectura.invalid && (f.lectura.dirty || f.lectura.touched)
+            "
+            type="number"
+          />
+
+          <span *ngIf="seRegistroEsteDia" class="text-danger">{{
+            seRegistroEsteDiaMensaje
+          }}</span>
+          <div
+            *ngIf="f.lectura.invalid && (f.lectura.dirty || f.lectura.touched)"
+          >
+            <span *ngIf="f.lectura.errors.required" class="text-danger"
+              >Campo reqerido.</span
+            >
+          </div>
+          <div *ngIf="laLecturaEsMenor">
+            <span class="text-danger">La lectura no puede ser menor.</span>
+          </div>
+        </div>
+      </div>
+      <!-- Lectura -->
+
+      <custom-button-submit
+        [disabled]="this.form.invalid || laLecturaEsMenor || submitting"
+      ></custom-button-submit>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,36 @@
+<!-- data table -->
+
+<div class="alert alert-light" role="alert">
+  <div class="row">
+    <h5 class="alert-heading h5">Roles de Usuario</h5>
+  </div>
+</div>
+
+<!-- /.col -->
+
+<!-- data table end -->
+<!-- /.card-header -->
+<div class="row">
+  <div class="col-sm-6">
+    <div class="list-group">
+      <a class="list-group-item list-group-item-action active"> Id </a>
+      <a
+        *ngFor="let item of data"
+        class="list-group-item list-group-item-action"
+      >
+        {{ item.id }}</a
+      >
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <div class="list-group">
+      <a class="list-group-item list-group-item-action active"> Nombre </a>
+      <a
+        *ngFor="let item of data"
+        class="list-group-item list-group-item-action"
+      >
+        {{ item.name }}
+      </a>
+    </div>
+  </div>
+</div>

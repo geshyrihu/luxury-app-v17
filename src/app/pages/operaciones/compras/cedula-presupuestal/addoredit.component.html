@@ -1,0 +1,58 @@
+<!-- <form autocomplete="off" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="p-fluid">
+    <div class="p-field p-grid">
+      <label for="year" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Id</label>
+      <div class="p-col-12 p-md-10">
+        <input type="text" pInputText formControlName="id" />
+      </div>
+    </div>
+    <div class="p-field p-grid">
+      <label for="year" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Año</label>
+      <div class="p-col-12 p-md-10">
+        <!-- TODO: QUITAR inputMask -->
+        <p-inputMask
+          class="p-inputtext-sm"
+          id="year"
+          type="number"
+          formControlName="anio"
+          placeholder="9999"
+          mask="9999"
+        ></p-inputMask>
+        <small
+          *ngIf="f.anio?.errors?.required && (f.anio.dirty || f.anio.touched)"
+          class="p-invalid"
+          >Campo requerido.</small
+        >
+      </div>
+    </div>
+    <div class="p-field p-grid">
+      <label for="customerId" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0"
+        >Cliente</label
+      >
+      <div class="p-col-12 p-md-10">
+        <select class="p-inputtext-sm" formControlName="customerId">
+          <option *ngFor="let item of cb_customer" [value]="item">
+            {{ item }}
+          </option>
+        </select>
+
+        <small
+          *ngIf="
+            f.customerId?.errors?.required &&
+            (f.customerId.dirty || f.customerId.touched)
+          "
+          class="p-invalid"
+          >Campo requerido.</small
+        >
+      </div>
+    </div>
+  </div>
+
+  <custom-button-submit
+    [disabled]="this.form.invalid || submitting"
+  ></custom-button-submit>
+</form>
+
+<br />
+<br />
+<br /> -->

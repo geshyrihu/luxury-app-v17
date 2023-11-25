@@ -1,0 +1,110 @@
+<form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
+  <div class="row">
+    <div class="col-sm-3">
+      <label>Foto del Antes</label>
+      <app-input-img
+        (fileSelected)="uploadFileBefore($event)"
+        [urlImgCurrent]="urlBaseImg + model?.photoPathBefore"
+        [contentHeight]="'150'"
+        [contentWidth]="'250'"
+      ></app-input-img>
+
+      <label>Foto del después</label>
+      <app-input-img
+        (fileSelected)="uploadFileAfter($event)"
+        [urlImgCurrent]="urlBaseImg + model?.photoPathAfter"
+        [contentHeight]="'150'"
+        [contentWidth]="'250'"
+      ></app-input-img>
+    </div>
+
+    <div class="col-sm-9">
+      <div class="row">
+        <div class="col-sm-6">
+          <custom-input-datalist
+            (propagar)="saveUserId($event)"
+            [control]="form.get('userName')"
+            [data]="cb_user"
+            formControlName="userName"
+            label="Nombre"
+            dataListId="userNameDatalistOptions"
+            [horizontal]="false"
+          ></custom-input-datalist>
+
+          <custom-input-select
+            [control]="form.get('employeeResponsableId')"
+            formControlName="employeeResponsableId"
+            label="Responsable"
+            [data]="cb_responsableSistemas"
+            [horizontal]="false"
+          ></custom-input-select>
+
+          <custom-input-date
+            [control]="form.get('dateRequest')"
+            formControlName="dateRequest"
+            label="Fecha de solicitud"
+            [horizontal]="false"
+            placeholder="fecha de solicitud"
+          ></custom-input-date>
+
+          <div hidden>
+            <label>Responsable</label>
+            <select formControlName="responsibleAreaId" class="form-select">
+              <option
+                *ngFor="let item of cb_area_responsable"
+                [value]="item.value"
+              >
+                {{ item.label }}
+              </option>
+            </select>
+          </div>
+
+          <custom-input-select
+            [control]="form.get('status')"
+            formControlName="status"
+            label="Estatus"
+            [data]="cb_status"
+            [horizontal]="false"
+          ></custom-input-select>
+
+          <custom-input-text-area
+            [control]="form.get('activity')"
+            formControlName="activity"
+            label="Actividad"
+            placeholder="actividad"
+            [horizontal]="false"
+          ></custom-input-text-area>
+        </div>
+
+        <div class="col-sm-6">
+          <custom-input-date
+            [control]="form.get('dateFinished')"
+            formControlName="dateFinished"
+            label="Fecha de termino"
+            [horizontal]="false"
+            placeholder="fecha de termino"
+          ></custom-input-date>
+
+          <custom-input-select
+            [control]="form.get('priority')"
+            formControlName="priority"
+            label="Prioridad"
+            [data]="cb_priority"
+            [horizontal]="false"
+          ></custom-input-select>
+
+          <custom-input-text-area
+            [control]="form.get('observations')"
+            formControlName="observations"
+            label="Observaciones"
+            placeholder="observaciones"
+            [horizontal]="false"
+          ></custom-input-text-area>
+        </div>
+      </div>
+    </div>
+  </div>
+  <custom-button-submit
+    [disabled]="this.form.invalid || submitting"
+  ></custom-button-submit>
+</form>

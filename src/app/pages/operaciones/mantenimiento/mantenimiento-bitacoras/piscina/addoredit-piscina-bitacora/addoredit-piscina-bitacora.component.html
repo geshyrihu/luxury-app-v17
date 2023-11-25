@@ -1,0 +1,96 @@
+<div class="card">
+  <div class="card-body">
+    <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
+      <!-- Id -->
+
+      <custom-input-text
+        placeholder="id"
+        [control]="form.get('id')"
+        formControlName="id"
+        label="Id"
+      ></custom-input-text>
+      <!-- Id -->
+      <custom-input-date
+        [control]="form.get('date')"
+        formControlName="date"
+        label="Registro"
+      ></custom-input-date>
+
+      <custom-input-time
+        [control]="form.get('hour')"
+        formControlName="hour"
+        label="Hora"
+      ></custom-input-time>
+      <custom-input-number
+        placeholder="temperatura"
+        [control]="form.get('temperatura')"
+        formControlName="temperatura"
+        label="Temperatura C°"
+      ></custom-input-number>
+      <custom-input-number
+        placeholder="cloro (ppm)"
+        [control]="form.get('cl')"
+        formControlName="cl"
+        label="Cloro (ppm)"
+      ></custom-input-number>
+
+      <custom-input-number
+        placeholder="ph (ppm)"
+        [control]="form.get('ph')"
+        formControlName="ph"
+        label="Ph (ppm)"
+      ></custom-input-number>
+      <custom-input-number
+        placeholder="alkalinidad (ppm)"
+        [control]="form.get('alkalinidad')"
+        formControlName="alkalinidad"
+        label="Alkalinidad (ppm)"
+      ></custom-input-number>
+      <custom-input-number
+        placeholder="dureza (ppm)"
+        [control]="form.get('dureza')"
+        formControlName="dureza"
+        label="Dureza (ppm)"
+      ></custom-input-number>
+
+      <custom-input-number
+        placeholder="cantidad en gramos "
+        [control]="form.get('aplicationCl')"
+        formControlName="aplicationCl"
+        label="Cloro Aplicado"
+      ></custom-input-number>
+      <custom-input-number
+        placeholder="cantidad en gramos "
+        [control]="form.get('aplicationPhMas')"
+        formControlName="aplicationPhMas"
+        label="PH+ Aplicado"
+      ></custom-input-number>
+      <custom-input-number
+        placeholder="cantidad en gramos "
+        [control]="form.get('aplicationPhMenos')"
+        formControlName="aplicationPhMenos"
+        label="PH- Aplicado"
+      ></custom-input-number>
+      <custom-input-check
+        [control]="form.get('aspirado')"
+        formControlName="aspirado"
+        label="Aspirado"
+      ></custom-input-check>
+      <custom-input-check
+        [control]="form.get('cepillado')"
+        formControlName="cepillado"
+        label="Cepillado"
+      ></custom-input-check>
+      <custom-input-check
+        [control]="form.get('cenefas')"
+        formControlName="cenefas"
+        label="Limpieza de cenefas"
+      ></custom-input-check>
+      <!-- boton submit -->
+      <custom-button-submit
+        [disabled]="this.form.invalid || submitting"
+      ></custom-button-submit>
+      <!-- boton submit -->
+    </form>
+  </div>
+</div>

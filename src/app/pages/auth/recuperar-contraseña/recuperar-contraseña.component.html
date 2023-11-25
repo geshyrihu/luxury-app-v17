@@ -1,0 +1,50 @@
+<div class="text-center">
+  <h5 class="mb-0">Restablecer la contraseña</h5>
+</div>
+<div
+  class="alert alert-success text-center my-3"
+  role="alert"
+  *ngIf="!sendEmail"
+>
+  ¡Ingrese su correo electrónico y se le enviarán las instrucciones!
+</div>
+<div
+  class="alert alert-success text-center my-3"
+  role="alert"
+  *ngIf="sendEmail"
+>
+  Se han enviado instrucciones a su correo electrónico. Revisa tu bandeja para
+  restablecer tu contraseña.
+</div>
+<h1 class="h1"></h1>
+<form autocomplete="off" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <custom-input-text
+    [control]="form.get('email')"
+    [horizontal]="false"
+    formControlName="email"
+    label="Correo electronico"
+    placeholder="Ingresa tu correo electrónico"
+  ></custom-input-text>
+
+  <div class="row">
+    <custom-button
+      customClass="btn-primary w-100"
+      label="Enviar"
+      type="submit"
+    ></custom-button>
+  </div>
+</form>
+<div class="mt-2 text-center">
+  <p class="text-muted mb-0">
+    ¿Recuerdas tu contraseña?
+    <a (click)="onLogin()" class="text-primary fw-semibold pointer">
+      Iniciar Sesión</a
+    >
+  </p>
+</div>
+
+<div class="mt-5 text-center">
+  <p class="text-muted mb-0">
+    ¿No tienes cuenta?, Solicitalacon tu Administrador
+  </p>
+</div>

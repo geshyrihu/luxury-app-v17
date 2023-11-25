@@ -1,0 +1,73 @@
+<ng-container *ngIf="data">
+  <div class="card">
+    <h4 class="h4">
+      {{ data.turnoTrabajo }}
+      <!-- {{ data.turnoTrabajo | eTurnoTrabajo }} -->
+    </h4>
+    <table class="custom-table">
+      <thead>
+        <tr>
+          <th scope="col">EVENTO</th>
+          <th scope="col">LUNES</th>
+          <th scope="col">MARTES</th>
+          <th scope="col">MIERCOLES</th>
+          <th scope="col">JUEVES</th>
+          <th scope="col">VIERNES</th>
+          <th scope="col">SABADO</th>
+          <th scope="col">DOMINGO</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td>ENTRADA</td>
+          <td>
+            {{ data.lunesEntrada }}
+          </td>
+          <td>
+            {{ data.martesEntrada }}
+          </td>
+          <td>
+            {{ data.miercolesEntrada }}
+          </td>
+          <td>
+            {{ data.juevesEntrada }}
+          </td>
+          <td>
+            {{ data.viernesEntrada }}
+          </td>
+          <td>
+            {{ data.sabadoEntrada }}
+          </td>
+          <td>
+            {{ data.domingoEntrada }}
+          </td>
+        </tr>
+        <tr>
+          <td>SALIDA</td>
+          <td>
+            {{ data.lunesSalida }}
+          </td>
+          <td>
+            {{ data.martesSalida }}
+          </td>
+          <td>
+            {{ data.miercolesSalida }}
+          </td>
+          <td>
+            {{ data.juevesSalida }}
+          </td>
+          <td>
+            {{ data.viernesSalida }}
+          </td>
+          <td>
+            {{ data.sabadoSalida }}
+          </td>
+          <td>
+            {{ data.domingoSalida }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</ng-container>

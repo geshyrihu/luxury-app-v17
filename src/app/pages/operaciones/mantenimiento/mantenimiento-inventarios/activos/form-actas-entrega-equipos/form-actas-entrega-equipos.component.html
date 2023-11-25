@@ -1,0 +1,18 @@
+<div class="form-group">
+  <label for="">Fecha</label>
+  <input type="datetime-local" [(ngModel)]="date" class="form-control" />
+</div>
+<div class="form-group">
+  <label for="">Empresa Receptora</label>
+  <input type="text" [(ngModel)]="empresaReceptora" class="form-control" />
+</div>
+<div class="form-group">
+  <label for="">Recibido Por</label>
+  <input type="text" [(ngModel)]="recibidoPor" class="form-control" />
+</div>
+<div class="form-group">
+  <label for="">Entregado Por</label>
+  <input type="text" [(ngModel)]="entregadoPor" class="form-control" />
+</div>
+
+<button class="btn btn-primary" (click)="onSendData()">Enviar</button>

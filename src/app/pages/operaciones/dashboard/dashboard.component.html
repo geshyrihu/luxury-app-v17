@@ -1,0 +1,124 @@
+<ng-container
+  *ngIf="
+    authService.onValidateRoles([
+      'Asistente',
+      'Colaborador',
+      'Contador',
+      'Direccion',
+      'GerenteMantenimiento',
+      'Legal',
+      'Mantenimiento',
+      'Residente',
+      'Sistemas',
+      'SuperUsuario',
+      'SupervisionOperativa',
+      'SupervisorContable'
+    ])
+  "
+>
+  <div class="card p-2">
+    <div class="row">
+      <div class="col-sm-5">
+        <app-pagetitle title="RESUMEN OPERACIÓN"></app-pagetitle>
+      </div>
+
+      <div class="col-sm-7">
+        <div>
+          <custom-button
+            *ngIf="
+              authService.onValidateRoles([
+                'Asistente',
+                'GerenteMantenimiento',
+                'Mantenimiento',
+                'Residente',
+                'SuperUsuario'
+              ])
+            "
+            ngbTooltip="Bitacora de Mantenimiento"
+            [customClass]="
+              'btn btn-primary waves-effect waves-light btn-flat float-end'
+            "
+            label="Bitacora de Mantenimiento"
+            (clicked)="extraLarge(exlargeModal)"
+            data-bs-toggle="modal"
+            data-bs-target=".bs-example-modal-xl"
+          ></custom-button>
+
+          <!-- sample modal content -->
+          <ng-template #exlargeModal let-modal>
+            <div class="mt-3 d-grid">
+              <div class="modal-header">
+                <custom-button
+                  customClass="btn-close float-end"
+                  aria-label="Close"
+                  (clicked)="modal.dismiss('Close click')"
+                ></custom-button>
+              </div>
+            </div>
+            <div class="modal-body">
+              <app-bitacora-mantenimiento></app-bitacora-mantenimiento>
+            </div>
+          </ng-template>
+        </div>
+        <!-- end preview-->
+      </div>
+      <!--  Full Screen  modal example -->
+    </div>
+    <hr />
+
+    <ng-container
+      *ngIf="
+        authService.onValidateRoles([
+          'Asistente',
+          'Contador',
+          'Direccion',
+          'GerenteMantenimiento',
+          'Legal',
+          'Mantenimiento',
+          'Residente',
+          'Sistemas',
+          'SuperUsuario',
+          'SupervisionOperativa',
+          'SupervisorContable'
+        ])
+      "
+    >
+      <app-dashboard-minutas></app-dashboard-minutas>
+      <hr />
+    </ng-container>
+    <ng-container
+      *ngIf="
+        authService.onValidateRoles([
+          'Asistente',
+          'Direccion',
+          'GerenteMantenimiento',
+          'Mantenimiento',
+          'Residente',
+          'SuperUsuario',
+          'SupervisionOperativa',
+          'SupervisorContable'
+        ])
+      "
+    >
+      <app-mttos-preventivos></app-mttos-preventivos>
+      <hr />
+    </ng-container>
+    <ng-container
+      *ngIf="
+        authService.onValidateRoles([
+          'Asistente',
+          'Colaborador',
+          'Direccion',
+          'GerenteMantenimiento',
+          'Mantenimiento',
+          'Residente',
+          'SuperUsuario',
+          'SupervisionOperativa',
+          'SupervisorContable'
+        ])
+      "
+    >
+      <app-dashboard-tickets></app-dashboard-tickets>
+    </ng-container>
+  </div>
+</ng-container>

@@ -1,0 +1,57 @@
+<app-pagetitlereport title="SOLICITUDES DE COMPRA"></app-pagetitlereport>
+<ng-container *ngIf="solicitudes">
+  <div class="card">
+    <p-table #dt [value]="solicitudes" styleClass="custom-table">
+      <ng-template pTemplate="header">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">FECHA</th>
+          <th scope="col">SOLICITA</th>
+          <th scope="col">AREA</th>
+          <th scope="col">JUSTIFICACION</th>
+          <th scope="col">ESTATUS</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-item let-i="rowIndex">
+        <tr>
+          <td class="p-column-title">{{ i + 1 }}</td>
+          <td class="p-column-title">{{ item.fechaSolicitud }}</td>
+          <td class="p-column-title">{{ item.solicita }}</td>
+          <td class="p-column-title">{{ item.equipoOInstalacion }}</td>
+          <td class="p-column-title">{{ item.justificacionGasto }}</td>
+          <td class="p-column-title">{{ item.estatus }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</ng-container>
+<app-pagetitlereport title="ORDENES DE COMPRA"></app-pagetitlereport>
+
+<ng-container *ngIf="ordenesCompra">
+  <div class="card">
+    <p-table #dt [value]="ordenesCompra" styleClass="custom-table">
+      <ng-template pTemplate="header">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">FECHA</th>
+          <th scope="col">AREA</th>
+          <th scope="col">JUSTIFICACION</th>
+          <th scope="col">ESTATUS</th>
+          <th scope="col">AUTORIZO</th>
+          <th scope="col">ENTREGADO</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-item let-i="rowIndex">
+        <tr>
+          <td class="p-column-title">{{ i + 1 }}</td>
+          <td class="p-column-title">{{ item.fechaSolicitud }}</td>
+          <td class="p-column-title">{{ item.equipoOInstalacion }}</td>
+          <td class="p-column-title">{{ item.justificacionGasto }}</td>
+          <td class="p-column-title">{{ item.estatus }}</td>
+          <td class="p-column-title">{{ item.autorizo }}</td>
+          <td class="p-column-title">{{ item.entregado }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</ng-container>

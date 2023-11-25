@@ -1,0 +1,240 @@
+<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+
+<div class="h6">DEPTO : {{ depto }}</div>
+<div class="h6">NOMBRE : {{ nombre }}</div>
+<div class="h6">SEMANA : {{ semana }}</div>
+
+<div class="card">
+  <p-table
+    #dt
+    dataKey="id"
+    [autoLayout]="true"
+    [globalFilterFields]="[
+      'applicationUserId',
+      'customer.label',
+      'duracion',
+      'estatus',
+      'fechaConclusion',
+      'fechaSolicitud',
+      'id',
+      'name.label',
+      'photoPath',
+      'problema',
+      'solucion'
+    ]"
+    [paginator]="true"
+    [rowHover]="true"
+    [rows]="30"
+    [value]="data"
+    styleClass="custom-table"
+    currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+    [showCurrentPageReport]="true"
+    [rowsPerPageOptions]="[30, 40, 50, 75, 100, 150, 200]"
+  >
+    <ng-template pTemplate="caption">
+      <app-table-header
+        class="ocultar"
+        [title]="'Bitacora Supervisión'"
+        (add)="showModalAddOrEdit({ id: 0, title: 'Nuevo Registro' })"
+        [dt]="dt"
+      ></app-table-header>
+      <div class="row">
+        <div class="col-sm-5">
+          <app-rango-calendario-yyyymmdd></app-rango-calendario-yyyymmdd>
+        </div>
+
+        <div class="col text-right">
+          <button
+            ngbTooltip="Actualizar Información"
+            placement="top"
+            class="btn btn-sm"
+            (onClick)="onLoadData()"
+          >
+            <i class="fa-duotone fa-arrows-rotate"></i>
+          </button>
+        </div>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th [width]="'15%'" class="ocultar center" pSortableColumn="name.label">
+          SUPERVISOR
+          <p-sortIcon field="name.label"></p-sortIcon>
+          <p-columnFilter
+            field="name"
+            matchMode="in"
+            display="menu"
+            [showMatchModes]="false"
+            [showOperator]="false"
+            [showAddButton]="false"
+          >
+            <ng-template pTemplate="header">
+              <div class="px-3 pt-3 pb-0">
+                <span class="font-bold">Supervisor</span>
+              </div>
+            </ng-template>
+            <ng-template
+              pTemplate="filter"
+              let-value
+              let-filter="filterCallback"
+            >
+              <p-multiSelect
+                [ngModel]="value"
+                [options]="cb_user"
+                placeholder="Ninguno"
+                (onChange)="filter($event.value)"
+                optionLabel="label"
+              >
+                <ng-template let-option pTemplate="item">
+                  <div class="p-multiselect-representative-option">
+                    <span class="ml-1">{{ option.label }}</span>
+                  </div>
+                </ng-template>
+              </p-multiSelect>
+            </ng-template>
+          </p-columnFilter>
+        </th>
+
+        <th [width]="'7%'" pSortableColumn="fechaSolicitud">
+          SOLICITUD
+          <p-sortIcon field="fechaSolicitud"></p-sortIcon>
+        </th>
+        <th [width]="'9%'" pSortableColumn="numeroCliente">
+          CLIENTE
+          <p-sortIcon field="numeroCliente"></p-sortIcon>
+          <p-columnFilter
+            field="customer"
+            matchMode="in"
+            display="menu"
+            [showMatchModes]="false"
+            [showOperator]="false"
+            [showAddButton]="false"
+          >
+            <ng-template pTemplate="header">
+              <div class="px-3 pt-3 pb-0">
+                <span class="font-bold">Cliente</span>
+              </div>
+            </ng-template>
+            <ng-template
+              pTemplate="filter"
+              let-value
+              let-filter="filterCallback"
+            >
+              <p-multiSelect
+                [ngModel]="value"
+                [options]="cb_customers"
+                placeholder="Ninguno"
+                (onChange)="filter($event.value)"
+                optionLabel="label"
+              >
+                <ng-template let-option pTemplate="item">
+                  <div class="p-multiselect-representative-option">
+                    <span class="ml-1">{{ option.label }}</span>
+                  </div>
+                </ng-template>
+              </p-multiSelect>
+            </ng-template>
+          </p-columnFilter>
+        </th>
+        <th [width]="'20%'" pSortableColumn="problema">
+          PROBLEMA/TEMA
+          <p-sortIcon field="problema"></p-sortIcon>
+        </th>
+        <th [width]="'20%'" pSortableColumn="solucion">
+          SOLUCION/SEGUIMIENTO
+          <p-sortIcon field="solucion"></p-sortIcon>
+        </th>
+        <th [width]="'9%'" pSortableColumn="fechaConclusion">
+          CONCLUSION
+          <p-sortIcon field="fechaConclusion"></p-sortIcon>
+        </th>
+        <th pSortableColumn="duracion">
+          DIAS
+          <p-sortIcon field="duracion"></p-sortIcon>
+        </th>
+        <th pSortableColumn="estatus">
+          ESTATUS
+          <p-sortIcon field="estatus"></p-sortIcon>
+          <p-columnFilter
+            type="boolean"
+            field="estatus"
+            display="menu"
+          ></p-columnFilter>
+        </th>
+        <th class="ocultar">OPCIONES</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item>
+      <tr class="breakPage">
+        <td class="ocultar">
+          <img
+            [alt]="item.photoPath"
+            [src]="base_url + item.photoPath"
+            width="32"
+            style="vertical-align: middle"
+          />
+          <span class="image-text">
+            {{ item.name.label }}
+          </span>
+        </td>
+        <td>
+          {{ item.fechaSolicitud | date }}
+        </td>
+        <td>
+          {{ item.customer.label }}
+        </td>
+        <td class="text-justify">
+          {{ item.problema }}
+        </td>
+        <td class="text-justify">
+          {{ item.solucion }}
+        </td>
+        <td>
+          {{ item.fechaConclusion | date }}
+        </td>
+        <td class="text-center">
+          <small *ngIf="item.duracion > 0"> {{ item.duracion }}</small>
+        </td>
+        <td class="text-center">
+          <span
+            class="pi"
+            [ngClass]="{
+              'true-icon pi-check-circle text-success': item.estatus,
+              'false-icon pi-times-circle text-danger': !item.estatus
+            }"
+          ></span>
+        </td>
+        <td class="p-column-title">
+          <div
+            class="d-flex justify-content-center"
+            *ngIf="employeeId == item.employeeId"
+          >
+            <!-- Componente editar registro -->
+            <custom-button-edit
+              (edit)="
+                showModalAddOrEdit({ id: item.id, title: 'Editar Registro' })
+              "
+            ></custom-button-edit>
+            <!-- Componente editar registro -->
+            <!-- Componente eliminar registro -->
+            <custom-button-delete
+              (OnConfirm)="onDelete(item)"
+            ></custom-button-delete>
+            <!-- Componente eliminar registro -->
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="9">No Hay Registros.</td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="paginatorleft">
+      <div class="p-d-flex p-ai-center p-jc-between hide-print-mode">
+        En total hay
+        {{ data ? data.length : 0 }} registros.
+      </div>
+    </ng-template>
+  </p-table>
+</div>

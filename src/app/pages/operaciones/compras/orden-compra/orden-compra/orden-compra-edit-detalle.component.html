@@ -1,0 +1,57 @@
+<div class="card">
+  <div class="card-body">
+    <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
+      <custom-input-text
+        [control]="form.get('id')"
+        formControlName="id"
+        label="Id"
+      ></custom-input-text>
+
+      <custom-input-text
+        [hidden]="true"
+        [control]="form.get('productoId')"
+        formControlName="productoId"
+        label="ProductoId"
+      ></custom-input-text>
+
+      <custom-input-number
+        [control]="form.get('cantidad')"
+        formControlName="cantidad"
+        label="Cantidad"
+        placeholder="cantidad"
+      ></custom-input-number>
+
+      <custom-input-select
+        [control]="form.get('unidadMedidaId')"
+        formControlName="unidadMedidaId"
+        label="Unidad"
+        [data]="cb_unidadMedida"
+      ></custom-input-select>
+
+      <custom-input-number
+        [control]="form.get('precio')"
+        formControlName="precio"
+        label="Precio"
+        placeholder="precio"
+      ></custom-input-number>
+
+      <custom-input-number
+        [control]="form.get('descuento')"
+        formControlName="descuento"
+        label="Descuento"
+        placeholder="descuento"
+      ></custom-input-number>
+
+      <custom-input-number
+        [control]="form.get('ivaAplicado')"
+        formControlName="ivaAplicado"
+        label="Iva Aplicado"
+        placeholder="iva aplicado"
+      ></custom-input-number>
+
+      <custom-button-submit
+        [disabled]="this.form.invalid || submitting"
+      ></custom-button-submit>
+    </form>
+  </div>
+</div>

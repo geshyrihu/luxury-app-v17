@@ -1,0 +1,218 @@
+<div *ngIf="data">
+  <p-table
+    [value]="data"
+    [rowHover]="true"
+    styleClass="custom-table"
+    #dt
+    [globalFilterFields]="['customer.label', 'fecha']"
+  >
+    <ng-template pTemplate="caption">
+      <div class="row">
+        <div class="col-sm-6">
+          <h4 class="mb-sm-0 font-size-18">
+            {{
+              (reporteFiltro | uppercase) + ", PERIODO " + periodo | uppercase
+            }}
+          </h4>
+        </div>
+        <div class="col-sm-3 hide-print-mode">
+          <app-mesanio (periodoEmit)="onFiltrarPeriodo($event)"></app-mesanio>
+        </div>
+        <div class="col-sm-3 hide-print-mode">
+          <input
+            type="text"
+            (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+            placeholder="Ingresa texto para buscar..."
+            class="form-control w-100 hide-print-mode"
+          />
+        </div>
+      </div>
+      <div class="row hide-print-mode">
+        <div class="col-auto">
+          <button
+            [ngClass]="{ 'btn-dark': nivelReporte == 0 }"
+            class="btn mb-1 waves-effect waves-light me-1"
+            (click)="nivelReporte = 0"
+          >
+            GENERAL
+          </button>
+          <button
+            [ngClass]="{ 'btn-dark': nivelReporte == 1 }"
+            class="btn btn-dark mb-1 waves-effect waves-light me-1"
+            (click)="nivelReporte = 1"
+          >
+            OPER1
+          </button>
+          <button
+            [ngClass]="{ 'btn-dark': nivelReporte == 2 }"
+            class="btn btn-dark mb-1 waves-effect waves-light me-1"
+            (click)="nivelReporte = 2"
+          >
+            OPER2
+          </button>
+          <button
+            [ngClass]="{ 'btn-primary': mostrar }"
+            class="btn mb-1 waves-effect waves-light me-1"
+            (click)="mostrar = !mostrar"
+          >
+            MODO REPORTE
+          </button>
+        </div>
+      </div>
+
+      <div class="row hide-print-mode">
+        <div class="col-auto">
+          <button
+            class="btn btn-info waves-effect waves-light me-1"
+            (click)="onLoadDataMinutas()"
+          >
+            MINUTAS GENERAL
+          </button>
+          <button
+            class="btn btn-info waves-effect waves-light me-1"
+            (click)="onLoadDataMinutaFiltro(0, 'MINUTAS CONTABLE')"
+          >
+            MINUTAS CONTABLE
+          </button>
+          <button
+            class="btn btn-info waves-effect waves-light me-1"
+            (click)="onLoadDataMinutaFiltro(1, 'MINUTAS OPERACIONES')"
+          >
+            MINUTAS OPERACIONES
+          </button>
+          <button
+            class="btn btn-info waves-effect waves-light me-1"
+            (click)="onLoadDataMinutaFiltro(2, 'MINUTAS LEGAL')"
+          >
+            MINUTAS LEGAL
+          </button>
+          <button
+            class="btn btn-info waves-effect waves-light me-1"
+            (click)="onLoadDataPreventivos()"
+          >
+            MANTENIMIENTOS PREVENTIVOS
+          </button>
+          <button
+            class="btn btn-info waves-effect waves-light me-1"
+            (click)="onLoadDataTickets()"
+          >
+            TICKETS
+          </button>
+        </div>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+      <tr [hidden]="false">
+        <th scope="col" pSortableColumn="numeroCliente" style="width: 20%">
+          Cliente
+          <p-sortIcon field="numeroCliente"></p-sortIcon>
+          <p-columnFilter
+            field="customer"
+            matchMode="in"
+            display="menu"
+            locale="es"
+            [showMatchModes]="false"
+            [showOperator]="false"
+            [showAddButton]="false"
+          >
+            <ng-template
+              pTemplate="filter"
+              let-value
+              let-filter="filterCallback"
+            >
+              <p-multiSelect
+                [ngModel]="value"
+                [options]="cb_customers"
+                placeholder="Ninguno"
+                (onChange)="filter($event.value)"
+                optionLabel="label"
+              >
+                <ng-template let-option pTemplate="item">
+                  <div class="p-multiselect-representative-option">
+                    <span class="ml-1">{{ option.label }}</span>
+                  </div>
+                </ng-template>
+              </p-multiSelect>
+            </ng-template>
+          </p-columnFilter>
+        </th>
+
+        <th
+          *ngIf="mostrar"
+          scope="col"
+          pSortableColumn="solicitudesTotal"
+          style="width: 20%"
+        >
+          Solicitudes
+          <p-sortIcon field="solicitudesTotal"></p-sortIcon>
+        </th>
+        <th
+          *ngIf="mostrar"
+          scope="col"
+          pSortableColumn="solicitudesAtendidas"
+          style="width: 20%"
+        >
+          Atendidas
+          <p-sortIcon field="solicitudesAtendidas"></p-sortIcon>
+        </th>
+        <th
+          *ngIf="mostrar"
+          scope="col"
+          pSortableColumn="solicitudesPendientes"
+          style="width: 20%"
+        >
+          Pendientes
+          <p-sortIcon field="solicitudesPendientes"></p-sortIcon>
+        </th>
+        <th
+          scope="col"
+          pSortableColumn="porcentajeEjecucionValue"
+          style="width: 20%"
+        >
+          Cumplimiento
+          <p-sortIcon field="porcentajeEjecucionValue"></p-sortIcon>
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item>
+      <tr [hidden]="false">
+        <td>
+          {{ item.customer.label }}
+        </td>
+
+        <td class="text-center" *ngIf="mostrar">
+          <span class="pointer h4 card-title badge text-info p-1 w-25">
+            {{ item.solicitudesTotal }}
+          </span>
+        </td>
+        <td class="text-center" *ngIf="mostrar">
+          <span class="pointer h4 card-title badge text-success p-1 w-25">
+            {{ item.solicitudesAtendidas }}
+          </span>
+        </td>
+        <td class="text-center" *ngIf="mostrar">
+          <span class="pointer h4 card-title badge text-danger p-1 w-25">
+            {{ item.solicitudesPendientes }}
+          </span>
+        </td>
+        <td class="text-center">
+          <div *ngIf="item.porcentajeEjecucionValue == 0">
+            <small class="text-danger">0% de avance</small>
+          </div>
+          <div *ngIf="item.porcentajeEjecucionValue > 0">
+            <ngb-progressbar
+              [value]="item.porcentajeEjecucionValue"
+              height="24px"
+              [animated]="true"
+              [striped]="true"
+              [type]="onValueProgress(item.porcentajeEjecucionValue)"
+            >
+              {{ item.porcentajeEjecucion | uppercase }}
+            </ngb-progressbar>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

@@ -1,0 +1,80 @@
+<div class="row">
+  <div class="col-sm-4">
+    <div class="mb-3">
+      <label for="formrow-firstname-input">Proveedor</label>
+      <select
+        ngbTooltip="Seleccionar Proveedor"
+        placement="top"
+        class="form-select"
+        (change)="onLoadData()"
+        [(ngModel)]="providerId"
+        id="formrow-firstname-input"
+      >
+        <option value="">Todos</option>
+        <option [value]="item.value" *ngFor="let item of cb_providers">
+          {{ item.label }}
+        </option>
+      </select>
+    </div>
+  </div>
+</div>
+<table class="table table-sm">
+  <thead>
+    <tr>
+      <th style="width: 100%"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of data">
+      <td>
+        <ngb-alert [dismissible]="false" type="info">
+          {{ item.mes }}
+        </ngb-alert>
+        <div class="card" *ngFor="let servicio of item.servicios">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-12">
+                <ul class="list-group">
+                  <li class="list-group-item font-weight-bold">
+                    {{ servicio.equipo }}
+                  </li>
+                </ul>
+              </div>
+              <div class="col-sm-3">
+                <img
+                  [src]="pathImg + servicio.img"
+                  height="170px"
+                  width="100%"
+                  alt=""
+                />
+              </div>
+              <div class="col-sm-3">
+                <p class="small font-normal mb-0">
+                  <span class="font-bold">Recurencia:</span>
+                  {{ servicio.recurrencia }}
+                </p>
+                <p class="small font-normal mb-0">
+                  <span class="font-bold">Día</span> {{ servicio.dia }}
+                </p>
+                <p class="small font-normal mb-0">
+                  <span class="font-bold">Costo</span>
+                  {{ servicio.costo }}
+                </p>
+                <p class="small font-normal">
+                  <span class="font-bold">Proveedor</span>
+                  {{ servicio.proveedor }}
+                </p>
+              </div>
+              <div class="col-sm-6">
+                <p
+                  class="small font-normal mb-0"
+                  [innerHTML]="servicio.actividad | sanitizeHtml"
+                ></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>

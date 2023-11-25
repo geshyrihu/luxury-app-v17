@@ -1,0 +1,98 @@
+<div class="row" *ngIf="data !== undefined">
+  <div class="col-sm-4">
+    <p-table [value]="data.posicionesMinutas" styleClass="custom-table">
+      <ng-template pTemplate="caption">
+        <app-table-header
+          [title]="'Minutas'"
+          [showSearch]="false"
+          [showAdd]="false"
+        ></app-table-header>
+      </ng-template>
+
+      <ng-template pTemplate="header">
+        <tr>
+          <th scope="col">Posición</th>
+          <th scope="col">Cliente</th>
+          <th scope="col">Avance</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-i="rowIndex" let-item>
+        <tr>
+          <td class="p-column-title">
+            {{ i + 1 }}
+          </td>
+          <td class="p-column-title">
+            {{ item.customer }}
+          </td>
+          <td class="p-column-title">
+            {{ item.porcentajeEjecucion }}
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+  <div class="col-sm-4">
+    <p-table [value]="data.posicionesPreventivos" styleClass="custom-table">
+      <ng-template pTemplate="caption">
+        <app-table-header
+          [title]="'Preventivos'"
+          [showSearch]="false"
+          [showAdd]="false"
+        ></app-table-header>
+      </ng-template>
+
+      <ng-template pTemplate="header">
+        <tr>
+          <th scope="col">Posición</th>
+          <th scope="col">Cliente</th>
+          <th scope="col">Avance</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-i="rowIndex" let-item>
+        <tr>
+          <td class="p-column-title">
+            {{ i + 1 }}
+          </td>
+          <td class="p-column-title">
+            {{ item.customer }}
+          </td>
+          <td class="p-column-title">
+            {{ item.porcentajeEjecucion }}
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+  <div class="col-sm-4">
+    <p-table [value]="data.posicionesCorrectivos" styleClass="custom-table">
+      <ng-template pTemplate="caption">
+        <app-table-header
+          [title]="'Correctivos'"
+          [showSearch]="false"
+          [showAdd]="false"
+        ></app-table-header>
+      </ng-template>
+
+      <ng-template pTemplate="header">
+        <tr>
+          <th scope="col">Posición</th>
+          <th scope="col">Cliente</th>
+          <th scope="col">Avance</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-i="rowIndex" let-item>
+        <tr>
+          <td class="p-column-title">
+            {{ i + 1 }}
+          </td>
+          <td class="p-column-title">
+            {{ item.customer }}
+          </td>
+          <td class="p-column-title">
+            {{ item.porcentajeEjecucion }}
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>

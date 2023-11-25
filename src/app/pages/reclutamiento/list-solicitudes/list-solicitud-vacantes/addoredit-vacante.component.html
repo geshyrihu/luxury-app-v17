@@ -1,0 +1,58 @@
+<div class="card">
+  <div class="card-body">
+    <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
+      <custom-input-text
+        [control]="form.get('id')"
+        formControlName="id"
+        label="Id"
+        placeholder="id"
+      ></custom-input-text>
+
+      <custom-input-text
+        [control]="form.get('folio')"
+        formControlName="folio"
+        label="Folio"
+        placeholder="folio"
+      ></custom-input-text>
+
+      <custom-input-date
+        [control]="form.get('requestDate')"
+        formControlName="requestDate"
+        label="Fecha de solicitud"
+        placeholder="fecha de solicitud"
+      ></custom-input-date>
+
+      <custom-input-select
+        [control]="form.get('status')"
+        formControlName="status"
+        label="Estatus"
+        [data]="cb_status"
+      ></custom-input-select>
+
+      <custom-input-date
+        [control]="form.get('selectionDate')"
+        formControlName="selectionDate"
+        label="Fecha de selección"
+        placeholder="fecha de selección"
+      ></custom-input-date>
+
+      <custom-input-date
+        [control]="form.get('entryDate')"
+        formControlName="entryDate"
+        label="Fecha de ingreso"
+        placeholder="fecha de ingreso"
+      ></custom-input-date>
+
+      <custom-input-text-area
+        [control]="form.get('observations')"
+        formControlName="observations"
+        label="Observaciones"
+        placeholder="observaciones"
+      ></custom-input-text-area>
+
+      <custom-button-submit
+        [disabled]="this.form.invalid || submitting"
+      ></custom-button-submit>
+    </form>
+  </div>
+</div>

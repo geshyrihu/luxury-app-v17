@@ -1,0 +1,22 @@
+<div class="card">
+  <div class="card-body">
+    <div class="row" *ngIf="producto">
+      <div class="col-sm-4">
+        <img [src]="urlImg + producto.urlImagen" alt="" class="img-fluid" />
+      </div>
+      <div class="col-sm-8">
+        <h2 class="h2 font-weight-light">
+          Categoria: {{ producto.category.nameCotegory }}
+        </h2>
+        <h2 class="h2 font-weight-light">
+          Nombre del Producto: {{ producto.nombreProducto }}
+        </h2>
+        <h2 class="h2 font-weight-light">Modelo: {{ producto.modelo }}</h2>
+        <h2 class="h2 font-weight-light">Marca: {{ producto.marca }}</h2>
+        <h2 class="h2 font-weight-light">
+          Clasificación: {{ producto.clasificacion }}
+        </h2>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,27 @@
+<form autocomplete="off" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <custom-input-text
+    [control]="form.get('id')"
+    formControlName="id"
+    label="Id"
+    [horizontal]="false"
+    [readonly]="true"
+  ></custom-input-text>
+  <custom-input-text
+    [control]="form.get('descripcion')"
+    formControlName="descripcion"
+    label="Partida presupuestal"
+    [horizontal]="false"
+    [readonly]="true"
+  ></custom-input-text>
+
+  <custom-input-number
+    [horizontal]="false"
+    [control]="form.get('presupuestoMensual')"
+    formControlName="presupuestoMensual"
+    label="Presupuesto Mensual"
+  ></custom-input-number>
+
+  <custom-button-submit
+    [disabled]="this.form.invalid || submitting"
+  ></custom-button-submit>
+</form>

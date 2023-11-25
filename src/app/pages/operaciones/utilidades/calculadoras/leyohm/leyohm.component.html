@@ -1,0 +1,185 @@
+<div class="row">
+  <div class="card col-sm-6 m-1">
+    <div class="alert alert-default-success">
+      <h6>
+        Ley de ohm
+        <button
+          class="btn btn-sm m-1"
+          (click)="onVoltaje()"
+          [disabled]="verVoltaje"
+          [class.btn-danger]="verVoltaje"
+          [class.btn-outline-primary]="!verVoltaje"
+        >
+          Voltaje
+        </button>
+        <button
+          class="btn btn-sm m-1"
+          (click)="onAmperaje()"
+          [disabled]="verAmperaje"
+          [class.btn-danger]="verAmperaje"
+          [class.btn-outline-primary]="!verAmperaje"
+        >
+          Amperaje
+        </button>
+        <button
+          class="btn btn-sm m-1"
+          [disabled]="verResistencia"
+          (click)="onResistencia()"
+          [class.btn-danger]="verResistencia"
+          [class.btn-outline-primary]="!verResistencia"
+        >
+          Resistencia
+        </button>
+      </h6>
+    </div>
+
+    <div class="row" *ngIf="verResistencia">
+      <div class="col-sm-4">
+        <div class="card">
+          <div class="card-body">
+            <input
+              class="form-control form-control-sm"
+              type="number"
+              [(ngModel)]="volts"
+              (input)="calcularResistencia()"
+            />
+          </div>
+          <div class="card-footer text-center">
+            <label class="font-italic font-weight-normal small">Voltaje</label>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="card">
+          <div class="card-body p-fluid">
+            <input
+              class="form-control form-control-sm"
+              type="number"
+              [(ngModel)]="amperes"
+              (input)="calcularResistencia()"
+            />
+          </div>
+          <div class="card-footer text-center">
+            <label class="font-italic font-weight-normal small">Amperaje</label>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="card">
+          <div class="card-body p-fluid">
+            <input
+              readonly
+              class="form-control form-control-sm"
+              type="number"
+              [(ngModel)]="resistencia"
+            />
+          </div>
+          <div class="card-footer text-center">
+            <label class="font-italic font-weight-normal small"
+              >Resistencia</label
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" *ngIf="verVoltaje">
+      <div class="col-sm-4">
+        <div class="card">
+          <div class="card-body">
+            <input
+              class="form-control form-control-sm"
+              type="number"
+              [(ngModel)]="volts"
+              readonly
+            />
+          </div>
+          <div class="card-footer text-center">
+            <label class="font-italic font-weight-normal small">Voltaje</label>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="card">
+          <div class="card-body p-fluid">
+            <input
+              class="form-control form-control-sm"
+              type="number"
+              [(ngModel)]="amperes"
+              (input)="calcularVoltaje()"
+            />
+          </div>
+          <div class="card-footer text-center">
+            <label class="font-italic font-weight-normal small">Amperaje</label>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="card">
+          <div class="card-body p-fluid">
+            <input
+              class="form-control form-control-sm"
+              type="number"
+              [(ngModel)]="resistencia"
+              (input)="calcularVoltaje()"
+            />
+          </div>
+          <div class="card-footer text-center">
+            <label class="font-italic font-weight-normal small"
+              >Resistencia</label
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" *ngIf="verAmperaje">
+      <div class="col-sm-4">
+        <div class="card">
+          <div class="card-body">
+            <input
+              class="form-control form-control-sm"
+              type="number"
+              [(ngModel)]="volts"
+              (input)="calcularCorriente()"
+            />
+          </div>
+          <div class="card-footer text-center">
+            <label class="font-italic font-weight-normal small">Voltaje</label>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="card">
+          <div class="card-body p-fluid">
+            <input
+              class="form-control form-control-sm"
+              type="number"
+              [(ngModel)]="amperes"
+              readonly
+            />
+          </div>
+          <div class="card-footer text-center">
+            <label class="font-italic font-weight-normal small">Amperaje</label>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="card">
+          <div class="card-body p-fluid">
+            <input
+              class="form-control form-control-sm"
+              type="number"
+              [(ngModel)]="resistencia"
+              (input)="calcularCorriente()"
+            />
+          </div>
+          <div class="card-footer text-center">
+            <label class="font-italic font-weight-normal small"
+              >Resistencia</label
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

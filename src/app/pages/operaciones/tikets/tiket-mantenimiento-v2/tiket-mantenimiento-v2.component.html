@@ -1,0 +1,29 @@
+<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+<div class="btn-group me-2" ngbDropdown>
+  <button
+    type="button"
+    class="btn btn-primary dropdown-toggle dropdown-toggle-split"
+    data-bs-toggle="dropdown"
+    aria-expanded="false"
+    autoClose="outside"
+    ngbDropdownToggle
+  >
+    Departamentos <i class="ms-2 mdi mdi-chevron-down"></i>
+  </button>
+  <div class="dropdown-menu custom-dropdown" ngbDropdownMenu>
+    <div class="form-group mb-2" *ngFor="let item of cb_responsible_area">
+
+    </div>
+  </div>
+</div>
+
+<style>
+  .custom-dropdown {
+    max-height: 200px; /* Ajusta la altura máxima según tus necesidades */
+    overflow-y: auto;
+  }
+
+  .body {
+    background-color: aquamarine !important;
+  }
+</style>

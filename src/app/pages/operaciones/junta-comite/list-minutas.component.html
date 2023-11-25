@@ -1,0 +1,678 @@
+<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+<p-table
+  #dt
+  *ngIf="data"
+  [globalFilterFields]="['eTypeMeeting.label', 'date']"
+  [paginator]="true"
+  [rowHover]="true"
+  [rows]="15"
+  [rowsPerPageOptions]="[15, 30, 40, 50, 75, 100]"
+  [showCurrentPageReport]="true"
+  [value]="data"
+  currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+  dataKey="id"
+  styleClass="custom-table"
+>
+  <!-- Cabecera tabla -->
+  <ng-template pTemplate="caption">
+    <app-table-header
+      [title]="'Minutas de Juntas ' + tipoJunta"
+      (add)="showModalAddOrEditMeeting({ id: 0, title: 'Nuevo Registro' })"
+      [showSearch]="false"
+      [dt]="dt"
+    ></app-table-header>
+    <div class="mt-2">
+      <a
+        [routerLink]="'/operaciones/junta-comite/minuta-pendientes'"
+        class="pointer btn btn-sm btn-danger me-1"
+      >
+        IMPRIMIR PENDIENTES
+      </a>
+      <a
+        [routerLink]="
+          '/operaciones/junta-comite/seguimiento-minutas/operaciones'
+        "
+        class="pointer btn btn-sm btn-primary me-1"
+      >
+        SEGUIMIENTO A PENDIENTES
+      </a>
+      <!-- badge  bg-success -->
+      <a
+        (click)="onLoadData('Asamblea')"
+        class="pointer btn btn-sm btn-info me-1"
+      >
+        ASAMBLEA
+      </a>
+      <a
+        (click)="onLoadData('Comité')"
+        class="pointer btn btn-sm btn-info me-1"
+      >
+        COMITÉ
+      </a>
+      <a
+        (click)="onLoadData('Operación')"
+        class="pointer btn btn-sm btn-info me-1"
+      >
+        OPERACIÓN
+      </a>
+      <div class="flex align-items-center justify-content-between">
+        En total hay {{ data ? data.length : 0 }} reuniones.
+        {{ tipoJunta }}
+      </div>
+    </div>
+  </ng-template>
+  <!-- Cabecera tabla -->
+
+  <ng-template pTemplate="header">
+    <tr>
+      <th scope="col" style="width: 3%"></th>
+      <th scope="col" style="width: 17%" pSortableColumn="date">
+        Fecha
+        <p-sortIcon field="date"></p-sortIcon>
+      </th>
+
+      <th scope="col" style="width: 15%" pSortableColumn="issues">
+        Total
+        <p-sortIcon field="issues"></p-sortIcon>
+      </th>
+      <th scope="col" style="width: 15%" pSortableColumn="concluidos">
+        Concluido
+        <p-sortIcon field="concluidos"></p-sortIcon>
+      </th>
+      <th scope="col" style="width: 15%" pSortableColumn="pending">
+        Pendiente
+        <p-sortIcon field="pending"></p-sortIcon>
+      </th>
+      <th scope="col" style="width: 15%" pSortableColumn="noAutorizado">
+        No Autorizado
+        <p-sortIcon field="noAutorizado"></p-sortIcon>
+      </th>
+      <th scope="col" style="width: 10%">Opt.</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-item let-expanded="expanded">
+    <tr>
+      <td>
+        <button type="button" [pRowToggler]="item" class="btn btn-sm">
+          <i
+            [ngClass]="
+              expanded
+                ? 'fa-duotone fa-chevron-down'
+                : 'fa-duotone fa-chevron-right'
+            "
+          ></i>
+        </button>
+      </td>
+      <td class="p-column-title">
+        {{ item.dateFormat }}
+      </td>
+      <td class="p-column-title text-center">
+        <button
+          class="badge bg-info pointer p-2 w-100 border-0"
+          ngbTooltip="Revisar todos los asuntos"
+          (click)="showModalAddOrEditMeetingDetails(item.id, 'Asuntos', 4)"
+          [disabled]="item.issues == 0"
+        >
+          TOTAL.- {{ item.issues }}
+        </button>
+      </td>
+      <td class="p-column-title text-center">
+        <button
+          class="badge bg-success pointer p-2 w-100 border-0"
+          ngbTooltip="Revisar Pendientes"
+          (click)="showModalAddOrEditMeetingDetails(item.id, 'Concluidos', 1)"
+          [disabled]="item.concluidos == 0"
+        >
+          CONCLUIDOS.- {{ item.concluidos }}
+        </button>
+      </td>
+      <td class="p-column-title text-center">
+        <button
+          class="badge bg-danger pointer p-2 w-100 border-0"
+          ngbTooltip="Revisar Pendientes"
+          (click)="showModalAddOrEditMeetingDetails(item.id, 'Pendientes', 0)"
+          [disabled]="item.pending == 0"
+        >
+          PENDIENTES.- {{ item.pending }}
+        </button>
+      </td>
+      <td class="p-column-title text-center">
+        <button
+          class="badge bg-secondary pointer p-2 w-100 border-0"
+          ngbTooltip="Revisar Pendientes"
+          (click)="
+            showModalAddOrEditMeetingDetails(item.id, 'No Autorizado', 2)
+          "
+          [disabled]="item.noAutorizado == 0"
+        >
+          NO AUTORIZADOS.- {{ item.noAutorizado }}
+        </button>
+      </td>
+
+      <td class="p-column-title">
+        <div class="d-flex justify-content-center">
+          <custom-button
+            customClass="btn-outline-success me-1 btn-sm"
+            ngbTooltip="Exportar pendientes a excel"
+            icon="fa-duotone fa-file-excel"
+            (clicked)="exportToExcel(item.id)"
+          ></custom-button>
+          <!-- [mostrar]="emailAccount" -->
+          <custom-button-confirmation
+            title="Confirmar"
+            icon="fa-duotone fa-paper-plane"
+            text="Enviar minuta a comite"
+            tooltipText="Enviar minuta a comite"
+            classButton="btn btn-sm btn-outline-dark me-1"
+            confirmButtonText="Sí, enviar"
+            (OnConfirm)="onSendEmailMeeting(item.id)"
+          ></custom-button-confirmation>
+
+          <button
+            class="btn btn-sm btn-outline-danger me-1"
+            (click)="onGeneretePDF(item.id)"
+            ngbTooltip="Minuta PDF"
+            placement="top"
+          >
+            <i class="fa-duotone fa-file-pdf"></i>
+          </button>
+          <button
+            class="btn btn-sm btn-outline-info me-1"
+            (click)="resumenMinuta(item.id)"
+            ngbTooltip="Resumen minuta"
+            placement="top"
+          >
+            <i class="fa-duotone fa-file-pdf"></i>
+          </button>
+
+          <custom-button-edit
+            (edit)="
+              showModalAddOrEditMeeting({
+                id: item.id,
+                title: 'Editar Registro'
+              })
+            "
+          ></custom-button-edit>
+          <custom-button-delete
+            *ngIf="authService.onValidateRoles(['SupervisionOperativa'])"
+            (OnConfirm)="onDelete(item)"
+          ></custom-button-delete>
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="rowexpansion" let-item>
+    <tr>
+      <td colspan="8">
+        <div class="p-3">
+          <p-table [value]="item.contable" dataKey="id">
+            <ng-template pTemplate="header">
+              <tr>
+                <th scope="col" colspan="7">
+                  <button
+                    class="float-left btn btn-sm btn-outline-secondary me-1"
+                    (click)="
+                      onModalAddOrEditMinutaDetalle({
+                        meetingId: item.id,
+                        id: 0,
+                        header: 'Agregar',
+                        areaResponsable: 0
+                      })
+                    "
+                    ngbTooltip="Agregar pendiente contable"
+                    placement="top"
+                  >
+                    <i class="fa-duotone fa-plus me-1">CONTABLE</i>
+                  </button>
+
+                  <custom-button-confirmation
+                    title="Confirmar"
+                    icon=""
+                    text="Enviar Emial a Contable"
+                    label="Enviar Emial a Contable"
+                    tooltipText="Enviar Emial a Contable"
+                    classButton="float-right btn btn-sm btn-outline-secondary me-1"
+                    confirmButtonText="Sí, enviar"
+                    (OnConfirm)="onSendEmail(item.id, 0)"
+                  ></custom-button-confirmation>
+                </th>
+              </tr>
+              <tr *ngIf="item.contable">
+                <th scope="col" style="width: 2%">#</th>
+                <th scope="col" style="width: 13%" pSortableColumn="title">
+                  Titulo
+                  <p-sortIcon field="title"></p-sortIcon>
+                </th>
+                <th
+                  scope="col"
+                  style="width: 30%"
+                  pSortableColumn="requestService"
+                >
+                  Asunto
+                  <p-sortIcon field="requestService"></p-sortIcon>
+                </th>
+                <th scope="col" style="width: 30%">Seguimiento</th>
+                <th scope="col" style="width: 7%" pSortableColumn="status">
+                  Estatus
+                  <p-sortIcon field="status"></p-sortIcon>
+                </th>
+                <th scope="col" style="width: 10%">Opt.</th>
+              </tr></ng-template
+            >
+
+            <ng-template pTemplate="body" let-rowIndex="rowIndex" let-detalle>
+              <tr>
+                <td>{{ rowIndex + 1 }}</td>
+                <td>{{ detalle.title }}</td>
+                <td>
+                  <p
+                    class="mr-2 text-justify"
+                    [innerHTML]="detalle.requestService | sanitizeHtml"
+                  ></p>
+                </td>
+
+                <td>
+                  <ol [start]="detalle.seguimiento.length" reversed>
+                    <li *ngFor="let item of detalle.seguimiento">
+                      <div class="row">
+                        <div class="col-sm-9">
+                          {{ item.fecha }}, {{ item.seguimiento }}
+                        </div>
+                        <div class="col-sm-3 d-flex align-content-center">
+                          <custom-button-edit
+                            (edit)="
+                              onModalAddOrEditSeguimiento(detalle.id, item.id)
+                            "
+                          ></custom-button-edit>
+                          <custom-button-delete
+                            (OnConfirm)="onDeleteSeguimiento(item.id)"
+                          ></custom-button-delete>
+                        </div>
+                      </div>
+                    </li>
+                  </ol>
+                </td>
+                <td class="text-center">
+                  <span
+                    class="badge p-2"
+                    [ngClass]="{
+                      'bg-danger': detalle.status === 0,
+                      'bg-success': detalle.status === 1,
+                      'bg-secondary': detalle.status === 2
+                    }"
+                  >
+                    <!-- {{ detalle.status | eStatus | uppercase }} -->
+
+                    <span *ngIf="detalle.status === 0">
+                      <i class="fa-duotone fa-xmark text-danger"></i>
+                    </span>
+                    <span *ngIf="detalle.status === 1">
+                      <i class="fa-duotone fa-check-double"></i>
+                    </span>
+                    <span *ngIf="detalle.status === 2">
+                      <i class="fa-duotone fa-ban"></i>
+                    </span>
+                  </span>
+                </td>
+                <td>
+                  <div class="d-flex align-content-center">
+                    <!-- Agregar Seguimiento -->
+                    <button
+                      class="btn btn-sm btn-outline-info me-1"
+                      ngbTooltip="Seguimiento"
+                      placement="top"
+                      type="button"
+                      (click)="onModalAddOrEditSeguimiento(detalle.id, 0)"
+                    >
+                      <i class="fa-duotone fa-list-check"></i>
+                    </button>
+
+                    <!-- Agregar Seguimiento -->
+                    <!-- Editar  -->
+                    <custom-button-edit
+                      (edit)="
+                        onModalAddOrEditMinutaDetalle({
+                          meetingId: item.id,
+                          id: detalle.id,
+                          header: 'Editar Asunto'
+                        })
+                      "
+                    ></custom-button-edit>
+                    <!-- Editar  -->
+                    <!-- Borrar -->
+                    <custom-button-delete
+                      (OnConfirm)="onDeleteMeetingDetail(detalle.id)"
+                    ></custom-button-delete>
+
+                    <!-- Borrar -->
+                  </div>
+                </td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+              <tr>
+                <td colspan="6">Sin registros.</td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="8">
+        <div class="p-3">
+          <p-table [value]="item.operaciones" dataKey="id">
+            <ng-template pTemplate="header">
+              <tr>
+                <th scope="col" colspan="7">
+                  <button
+                    class="float-left btn btn-sm btn-outline-secondary me-1"
+                    (click)="
+                      onModalAddOrEditMinutaDetalle({
+                        meetingId: item.id,
+                        id: 0,
+                        header: 'Agregar',
+                        areaResponsable: 1
+                      })
+                    "
+                    ngbTooltip="Agregar pendiente Operaciones"
+                    placement="top"
+                  >
+                    <i class="fa-duotone fa-plus me-1">OPERACIONES</i>
+                  </button>
+                </th>
+              </tr>
+              <tr *ngIf="item.operaciones.length > 0">
+                <th scope="col" style="width: 2%">#</th>
+                <th scope="col" style="width: 13%" pSortableColumn="title">
+                  Titulo
+                  <p-sortIcon field="title"></p-sortIcon>
+                </th>
+                <th
+                  scope="col"
+                  style="width: 20%"
+                  pSortableColumn="requestService"
+                >
+                  Asunto
+                  <p-sortIcon field="requestService"></p-sortIcon>
+                </th>
+                <th scope="col" style="width: 30%">Seguimiento</th>
+                <th scope="col" style="width: 7%" pSortableColumn="status">
+                  Estatus
+                  <p-sortIcon field="status"></p-sortIcon>
+                </th>
+
+                <th scope="col" style="width: 10%">Opt.</th>
+              </tr></ng-template
+            >
+
+            <ng-template
+              pTemplate="body"
+              let-rowIndex="rowIndex"
+              let-operaciones
+            >
+              <tr>
+                <td>{{ rowIndex + 1 }}</td>
+                <td>{{ operaciones.title }}</td>
+                <td>
+                  <p
+                    class="mr-2 text-justify"
+                    [innerHTML]="operaciones.requestService | sanitizeHtml"
+                  ></p>
+                </td>
+
+                <td>
+                  <ol [start]="operaciones.seguimiento.length" reversed>
+                    <li *ngFor="let item of operaciones.seguimiento">
+                      <div class="row">
+                        <div class="col-sm-9">
+                          {{ item.fecha }}, {{ item.seguimiento }}
+                        </div>
+                        <div class="col-sm-3 d-flex align-content-center">
+                          <custom-button-edit
+                            (edit)="
+                              onModalAddOrEditSeguimiento(
+                                operaciones.id,
+                                item.id
+                              )
+                            "
+                          ></custom-button-edit>
+                          <custom-button-delete
+                            (OnConfirm)="onDeleteSeguimiento(item.id)"
+                          ></custom-button-delete>
+                        </div>
+                      </div>
+                    </li>
+                  </ol>
+                </td>
+                <td class="text-center">
+                  <span
+                    class="badge p-2"
+                    [ngClass]="{
+                      'bg-danger': operaciones.status == 0,
+                      'bg-success': operaciones.status == 1,
+                      'bg-secondary': operaciones.status == 2
+                    }"
+                  >
+                    <!-- {{ operaciones.status | eStatus | uppercase }} -->
+                    <span *ngIf="operaciones.status === 0">
+                      <i class="fa-duotone fa-xmark text-danger"></i>
+                    </span>
+                    <span *ngIf="operaciones.status === 1">
+                      <i class="fa-duotone fa-check-double"></i>
+                    </span>
+                    <span *ngIf="operaciones.status === 2">
+                      <i class="fa-duotone fa-ban"></i>
+                    </span>
+                  </span>
+                </td>
+                <td>
+                  <div class="d-flex align-content-center">
+                    <!-- Agregar Seguimiento -->
+                    <button
+                      class="btn btn-sm btn-outline-info me-1"
+                      ngbTooltip="Seguimiento"
+                      placement="top"
+                      type="button"
+                      (click)="onModalAddOrEditSeguimiento(operaciones.id, 0)"
+                    >
+                      <i class="fa-duotone fa-list-check"></i>
+                    </button>
+
+                    <!-- Agregar Seguimiento -->
+                    <!-- Editar  -->
+                    <custom-button-edit
+                      (edit)="
+                        onModalAddOrEditMinutaDetalle({
+                          meetingId: item.id,
+                          id: operaciones.id,
+                          header: 'Editar Asunto'
+                        })
+                      "
+                    ></custom-button-edit>
+                    <!-- Editar  -->
+                    <!-- Borrar -->
+                    <custom-button-delete
+                      (OnConfirm)="onDeleteMeetingDetail(operaciones.id)"
+                    ></custom-button-delete>
+                    <!-- Borrar -->
+                  </div>
+                </td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+              <tr>
+                <td colspan="6">Sin registros.</td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="8">
+        <div class="p-3">
+          <p-table [value]="item.legal" dataKey="id">
+            <ng-template pTemplate="header">
+              <tr>
+                <th scope="col" colspan="7">
+                  <button
+                    class="float-left btn btn-sm btn-outline-secondary me-1"
+                    (click)="
+                      onModalAddOrEditMinutaDetalle({
+                        meetingId: item.id,
+                        id: 0,
+                        header: 'Agregar',
+                        areaResponsable: 2
+                      })
+                    "
+                    ngbTooltip="Agregar pendiente contable"
+                    placement="top"
+                  >
+                    <i class="fa-duotone fa-plus me-1">LEGAL</i>
+                  </button>
+
+                  <custom-button-confirmation
+                    *ngIf="item.legal.length > 0"
+                    title="Confirmar"
+                    icon=""
+                    text="Enviar Emial a Legal"
+                    label="Enviar Emial a Legal"
+                    tooltipText="Enviar Emial a Legal"
+                    classButton="float-right btn btn-sm btn-outline-secondary me-1"
+                    confirmButtonText="Sí, eliminar"
+                    (OnConfirm)="onSendEmail(item.id, 2)"
+                  ></custom-button-confirmation>
+                </th>
+              </tr>
+              <tr *ngIf="item.legal.length > 0">
+                <th scope="col" style="width: 2%">#</th>
+                <th scope="col" style="width: 13%" pSortableColumn="title">
+                  Titulo
+                  <p-sortIcon field="title"></p-sortIcon>
+                </th>
+                <th
+                  scope="col"
+                  style="width: 20%"
+                  pSortableColumn="requestService"
+                >
+                  Asunto
+                  <p-sortIcon field="requestService"></p-sortIcon>
+                </th>
+                <th scope="col" style="width: 30%">Seguimiento</th>
+                <th scope="col" style="width: 7%" pSortableColumn="status">
+                  Estatus
+                  <p-sortIcon field="status"></p-sortIcon>
+                </th>
+
+                <th scope="col" style="width: 10%">Opt.</th>
+              </tr></ng-template
+            >
+
+            <ng-template pTemplate="body" let-rowIndex="rowIndex" let-legal>
+              <tr>
+                <td>{{ rowIndex + 1 }}</td>
+                <td>{{ legal.title }}</td>
+                <td>
+                  <p
+                    class="mr-2 text-justify"
+                    [innerHTML]="legal.requestService | sanitizeHtml"
+                  ></p>
+                </td>
+
+                <td>
+                  <ol [start]="legal.seguimiento.length" reversed>
+                    <li *ngFor="let item of legal.seguimiento">
+                      <div class="row">
+                        <div class="col-sm-9">
+                          {{ item.fecha }}, {{ item.seguimiento }}
+                        </div>
+                        <div class="col-sm-3 d-flex align-content-center">
+                          <custom-button-edit
+                            (edit)="
+                              onModalAddOrEditSeguimiento(legal.id, item.id)
+                            "
+                          ></custom-button-edit>
+                          <custom-button-delete
+                            (OnConfirm)="onDeleteSeguimiento(item.id)"
+                          ></custom-button-delete>
+                        </div>
+                      </div>
+                    </li>
+                  </ol>
+                </td>
+                <td class="text-center">
+                  <span
+                    class="badge p-2"
+                    [ngClass]="{
+                      'bg-danger': legal.status === 0,
+                      'bg-success': legal.status === 1,
+                      'bg-secondary': legal.status === 2
+                    }"
+                  >
+                    <!-- {{ legal.status | eStatus | uppercase }} -->
+                    <span *ngIf="legal.status === 0">
+                      <i class="fa-duotone fa-xmark text-danger"></i>
+                    </span>
+                    <span *ngIf="legal.status === 1">
+                      <i class="fa-duotone fa-check-double"></i>
+                    </span>
+                    <span *ngIf="legal.status === 2">
+                      <i class="fa-duotone fa-ban"></i>
+                    </span>
+                  </span>
+                </td>
+                <td>
+                  <!-- Agregar Seguimiento -->
+                  <div class="d-flex align-content-center">
+                    <button
+                      class="btn btn-sm btn-outline-info me-1"
+                      ngbTooltip="Seguimiento"
+                      placement="top"
+                      type="button"
+                      (click)="onModalAddOrEditSeguimiento(legal.id, 0)"
+                    >
+                      <i class="fa-duotone fa-list-check"></i>
+                    </button>
+
+                    <!-- Agregar Seguimiento -->
+                    <!-- Editar  -->
+                    <custom-button-edit
+                      (edit)="
+                        onModalAddOrEditMinutaDetalle({
+                          meetingId: item.id,
+                          id: legal.id,
+                          header: 'Editar Asunto'
+                        })
+                      "
+                    ></custom-button-edit>
+                    <!-- Editar  -->
+                    <!-- Borrar -->
+
+                    <custom-button-delete
+                      (OnConfirm)="onDeleteMeetingDetail(legal.id)"
+                    ></custom-button-delete>
+                    <!-- Borrar -->
+                  </div>
+                </td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+              <tr>
+                <td colspan="6">Sin registros.</td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="paginatorleft">
+    <div class="p-d-flex p-ai-center p-jc-between">
+      En total hay
+      {{ data ? data.length : 0 }} registros.
+    </div>
+
+    <!-- <app-table-footer [data]="data"></app-table-footer> -->
+  </ng-template>
+</p-table>

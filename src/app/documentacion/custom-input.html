@@ -1,0 +1,108 @@
+<custom-input-check
+  [control]="form.get('remember')"
+  [horizontal]="false"
+  formControlName="remember"
+  label="Recordarme"
+></custom-input-check>
+
+<custom-input-text
+  [control]="form.get('email')"
+  formControlName="email"
+  [horizontal]="false"
+  label="Usuario"
+  placeholder="Usuario"
+></custom-input-text>
+
+<custom-input-month
+  [control]="form.get('email')"
+  [horizontal]="false"
+  formControlName="email"
+  label="Usuario"
+></custom-input-month>
+
+<custom-input-email
+  [control]="form.get('mail')"
+  formControlName="mail"
+  label="Correo electrónico"
+  placeholder="correo electrónico"
+></custom-input-email>
+
+<custom-input-text
+  [control]="form.get('email')"
+  formControlName="email"
+  label="email"
+  placeholder="email"
+></custom-input-text>
+<custom-input-time
+  [control]="form.get('email')"
+  formControlName="email"
+  label="email"
+  placeholder="email"
+></custom-input-time>
+
+<custom-input-text
+  [control]="form.get('id')"
+  formControlName="id"
+  label="Id"
+></custom-input-text>
+
+<custom-input-number
+  [horizontal]="false"
+  [control]="form.get('presupuestoMensual')"
+  formControlName="presupuestoMensual"
+  label="Presupuesto"
+  placeholder="cantidad"
+></custom-input-number>
+
+<custom-input-password
+  [control]="form.get('password')"
+  [horizontal]="false"
+  formControlName="password"
+  label="Contraseña"
+  placeholder="Contraseña"
+></custom-input-password>
+
+<custom-input-mask
+  [control]="form.get('phoneNumber')"
+  formControlName="phoneNumber"
+  label="Tél. Celular"
+  placeholder="(00) 0000-0000"
+  customMask="(00) 0000-0000"
+></custom-input-mask>
+
+<custom-input-select
+  [control]="form.get('professionId')"
+  formControlName="professionId"
+  label="Profesión"
+  [data]="cb_profession"
+></custom-input-select>
+
+<custom-input-text
+  [control]="form.get('id')"
+  formControlName="id"
+  label="Id"
+></custom-input-text>
+
+<custom-input-datalist
+  (propagar)="saveCondominoId($event)"
+  [control]="form.get('nameDirectoryCondominium')"
+  [data]="cb_condomino"
+  formControlName="nameDirectoryCondominium"
+  label="Nombre"
+  dataListId="nameDirectoryCondominiumDatalistOptions"
+></custom-input-datalist>
+
+<custom-input-date
+  [control]="form.get('register')"
+  formControlName="register"
+  label="Fecha de registro"
+  placeholder="fecha de registro"
+></custom-input-date>
+
+<custom-input-text-area
+  [control]="form.get('address')"
+  formControlName="address"
+  label="Dirección"
+  placeholder="dirección"
+  [horizontal]="false"
+></custom-input-text-area>

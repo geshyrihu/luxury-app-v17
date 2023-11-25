@@ -1,0 +1,89 @@
+<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Cuenta</th>
+      <th>Mensual</th>
+      <th>Anual</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of resumenGastos; let i = index">
+      <td>{{ i + 1 }}</td>
+      <td>{{ item.cuenta.cuenta }}</td>
+      <td>{{ item.costoMensual }}</td>
+      <td>{{ item.total }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th class="w-100"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of data">
+      <td scope="row">
+        <div class="alert alert-default-info">
+          {{ item.cuenta }}
+        </div>
+        <table class="table table-bordered table-striped">
+          <tbody *ngFor="let subCuenta of item.subCuentas">
+            <tr>
+              <td colspan="5">
+                <div class="alert alert-default-success">
+                  {{ subCuenta.subCuenta }}
+                </div>
+              </td>
+            </tr>
+            <tr *ngFor="let items of subCuenta.items">
+              <td style="width: 10%" class="pointer">
+                <i
+                  class="fa-duotone fa-hand-pointer"
+                  (click)="onModalItem(items)"
+                ></i>
+              </td>
+              <td style="width: 30%">{{ items.equipo }}</td>
+              <td style="width: 20%">{{ items.recurrencia }}</td>
+              <td style="width: 20">{{ items.mes }}</td>
+
+              <td style="width: 20">
+                <div *ngIf="items.costo !== '$0.00'">
+                  {{ items.costo }}
+                </div>
+                <div
+                  *ngIf="items.costo === '$0.00'"
+                  class="text-warning font-bold"
+                >
+                  {{ items.costo }}
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="3"></td>
+              <td>Total por Cuenta:</td>
+              <td class="mr-auto">{{ subCuenta.costoTotal }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <table class="table">
+        <tbody>
+          <tr>
+            <td style="width: 60%"></td>
+            <td style="width: 20%">Total General:</td>
+            <td style="width: 20%" class="font-bold">{{ totalGasto }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </tr>
+  </tbody>
+</table>

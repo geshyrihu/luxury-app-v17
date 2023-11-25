@@ -1,0 +1,110 @@
+<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+<ng-container *ngIf="data">
+  <div class="card">
+    <p-table
+      #dt
+      [globalFilterFields]="[
+        'fullName',
+        'userName',
+        'profession',
+        'customer',
+        'email',
+        'phoneNumber'
+      ]"
+      [value]="data"
+      [tableStyle]="{ 'min-width': '50rem' }"
+      styleClass="p-datatable-sm p-datatable-striped "
+    >
+      <ng-template pTemplate="caption">
+        <app-table-header
+          [showAdd]="false"
+          [title]="'Cuentas de acceso '"
+          [dt]="dt"
+        ></app-table-header>
+      </ng-template>
+
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width: 15%" scope="col" pSortableColumn="customer">
+            CLIENTE<p-sortIcon field="customer"></p-sortIcon>
+          </th>
+          <th style="width: 15%" scope="col" pSortableColumn="userName">
+            USUARIO <p-sortIcon field="userName"></p-sortIcon>
+          </th>
+          <th scope="col" style="width: 25%" pSortableColumn="email">
+            CORREO
+            <p-sortIcon field="email"></p-sortIcon>
+          </th>
+          <th scope="col" style="width: 10%">TÉLEFONO</th>
+          <th scope="col" style="width: 20%" pSortableColumn="profession">
+            CARGO<p-sortIcon field="profession"></p-sortIcon>
+          </th>
+          <th
+            colspan="2"
+            scope="col"
+            style="width: 15%"
+            pSortableColumn="fullName"
+          >
+            COLABORADOR
+            <p-sortIcon field="fullName"></p-sortIcon>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-item>
+        <tr>
+          <td class="p-column-title">
+            {{ item.customer }}
+          </td>
+          <td class="p-column-title">
+            <i
+              ngbTooltip="Bloquear"
+              placement="top"
+              *ngIf="item.active"
+              (click)="onToBlockAccount(item.id)"
+              class="fa-duotone fa-lock-open font-size-18 pointer me-2 text-success"
+            ></i>
+            <i
+              ngbTooltip="Desbloquear"
+              placement="top"
+              *ngIf="!item.active"
+              (click)="onToUnlockAccount(item.id)"
+              class="fa-duotone fa-lock font-size-18 pointer me-2 text-danger"
+            ></i>
+            {{ item.userName }}
+          </td>
+          <td class="p-column-title">
+            {{ item.email }}
+          </td>
+          <td class="p-column-title">
+            {{ item.phoneNumber | phoneFormat }}
+          </td>
+          <td class="p-column-title">
+            {{ item.profession }}
+          </td>
+          <td class="p-column-title pointer text-center">
+            <img
+              *ngIf="item.employeeId === null"
+              src="assets/images/no-user.png"
+              alt="no employee"
+              class="rounded avatar-md pointer"
+            />
+            <img
+              *ngIf="item.employeeId !== null"
+              [src]="urlImgApi + item.photoPath"
+              alt="..."
+              class="rounded avatar-md pointer"
+              (click)="onCardEmployee(item.employeeId)"
+            />
+          </td>
+
+          <td class="p-column-title hide-print-mode">
+            <!-- (click)="onModalEditAccount(item.id, item.email)" -->
+            <custom-button-edit
+              (edit)="onModalEditAccount(item.id, item.email)"
+            ></custom-button-edit>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</ng-container>

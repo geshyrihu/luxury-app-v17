@@ -1,0 +1,33 @@
+<form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
+  <custom-input-date
+    [control]="form.get('fechaSolicitud')"
+    formControlName="fechaSolicitud"
+    label="Fecha de solicitud"
+    placeholder="fecha de solicitud"
+  ></custom-input-date>
+
+  <custom-input-text-area
+    [control]="form.get('equipoOInstalacion')"
+    formControlName="equipoOInstalacion"
+    label="Area"
+    placeholder="area"
+  ></custom-input-text-area>
+
+  <custom-input-text-area
+    [control]="form.get('justificacionGasto')"
+    formControlName="justificacionGasto"
+    label="Justificación"
+    placeholder="justificación"
+  ></custom-input-text-area>
+
+  <custom-input-text
+    [control]="form.get('urlFile')"
+    formControlName="urlFile"
+    label="Liga de luxuryCloud"
+    placeholder="Liga de luxuryCloud"
+  ></custom-input-text>
+
+  <custom-button-submit
+    [disabled]="form.invalid || submitting"
+  ></custom-button-submit>
+</form>

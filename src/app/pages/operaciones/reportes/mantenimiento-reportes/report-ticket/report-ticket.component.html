@@ -1,0 +1,171 @@
+<app-pagetitlereport title="TICKETS"></app-pagetitlereport>
+<ng-container *ngIf="data && data != undefined">
+  <div class="card">
+    <p-table #dt [value]="data" styleClass="custom-table">
+      <ng-template pTemplate="caption">
+        <div>TICKETS POR AREA</div>
+      </ng-template>
+
+      <ng-template pTemplate="header">
+        <tr>
+          <th scope="col" style="width: 5%">#</th>
+          <th scope="col" style="width: 50%">AREA RESPONSABLE</th>
+          <th scope="col" style="width: 15%">SOLICITUDES</th>
+          <th scope="col" style="width: 15%">ATENDIDAS</th>
+          <th scope="col" style="width: 15%">PENDIENTES</th>
+          <th scope="col" style="width: 15%">NO AUTORIZADO</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-item let-i="rowIndex">
+        <tr>
+          <td class="p-column-title">{{ i + 1 }}</td>
+          <td class="p-column-title">{{ item.areaResponsable }}</td>
+          <td class="p-column-title text-center">{{ item.solicitudes }}</td>
+          <td class="p-column-title text-center">{{ item.atendidas }}</td>
+          <td class="p-column-title text-center">{{ item.pendientes }}</td>
+          <td class="p-column-title text-center">{{ item.noAutorizado }}</td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="footer">
+        <tr>
+          <td colspan="2" class="text-right">Totales</td>
+          <td class="text-center">
+            <span class="h4 card-title text-dark">
+              {{ onSumaTotales(data).solicitudes }}
+            </span>
+          </td>
+          <td class="text-center">
+            <span class="h4 card-title text-dark">
+              {{ onSumaTotales(data).atendidas }}
+            </span>
+          </td>
+          <td class="text-center">
+            <span class="h4 card-title text-dark">
+              {{ onSumaTotales(data).pendientes }}
+            </span>
+          </td>
+          <td class="text-center">
+            <span class="h4 card-title text-dark">
+              {{ onSumaTotales(data).noAutorizado }}
+            </span>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</ng-container>
+<br />
+<div class="card">
+  <p-table #dt [value]="dataResponsable" styleClass="custom-table">
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th scope="col" style="width: 45%">AREA</th>
+        <th scope="col" style="width: 45%">RESPONSABLE</th>
+        <th scope="col" style="width: 15%">SOLICITUDES</th>
+        <th scope="col" style="width: 15%">ATENDIDAS</th>
+        <th scope="col" style="width: 15%">PENDIENTES</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="caption">
+      <div>ASIGNACIÓN DE TICKETS</div>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex">
+      <tr *ngIf="!rowData.subgroup">
+        <td [attr.rowspan]="rowData.employeeSubgroups.length + 1">
+          {{ rowData.areaResponsable }}
+        </td>
+      </tr>
+      <tr *ngFor="let subgroup of rowData.employeeSubgroups">
+        <td>{{ subgroup.employeeResponsable }}</td>
+        <td>{{ subgroup.solicitudes }}</td>
+        <td>{{ subgroup.atendidas }}</td>
+        <td>{{ subgroup.pendientes }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+<div *ngIf="dataCargaTicket">
+  <p-table
+    [value]="dataCargaTicket"
+    [rowHover]="true"
+    styleClass="custom-table"
+    #dt
+    [globalFilterFields]="['customer.label', 'fecha']"
+  >
+    <ng-template pTemplate="caption">
+      <div>TICKETS SOLICITADOS</div>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th scope="col" pSortableColumn="empleado" style="width: 20%">
+          COLABORADOR
+          <p-sortIcon field="empleado"></p-sortIcon>
+        </th>
+
+        <th scope="col" pSortableColumn="solicitudes" style="width: 20%">
+          SOLICITUDES
+          <p-sortIcon field="solicitudes"></p-sortIcon>
+        </th>
+        <th scope="col" pSortableColumn="atendidas" style="width: 20%">
+          ATENDIDAS
+          <p-sortIcon field="atendidas"></p-sortIcon>
+        </th>
+        <th scope="col" pSortableColumn="pendientes" style="width: 20%">
+          PENDIENTES
+          <p-sortIcon field="pendientes"></p-sortIcon>
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item>
+      <tr [hidden]="false">
+        <td>
+          <div>
+            <img
+              [src]="url + item.image"
+              alt=""
+              class="rounded avatar-sm me-2"
+            />
+            {{ item.empleado }}
+          </div>
+        </td>
+
+        <td class="text-center">
+          <span class="pointer h4 card-title badge text-info p-1 w-25">
+            {{ item.solicitudes }}
+          </span>
+        </td>
+        <td class="text-center">
+          <span class="pointer h4 card-title badge text-success p-1 w-25">
+            {{ item.atendidas }}
+          </span>
+        </td>
+        <td class="text-center">
+          <span class="pointer h4 card-title badge text-danger p-1 w-25">
+            {{ item.pendientes }}
+          </span>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="footer">
+      <tr>
+        <td class="text-right">Totales</td>
+        <td class="text-center">
+          <span class="h4 card-title text-dark">
+            {{ onSumaTotales(data).solicitudes }}
+          </span>
+        </td>
+        <td class="text-center">
+          <span class="h4 card-title text-dark">
+            {{ onSumaTotales(data).atendidas }}
+          </span>
+        </td>
+        <td class="text-center">
+          <span class="h4 card-title text-dark">
+            {{ onSumaTotales(data).pendientes }}
+          </span>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

@@ -1,0 +1,153 @@
+<div class="p-card p-mb-5">
+  <p-table #dt [value]="data" styleClass="custom-table">
+    <ng-template pTemplate="caption">
+      <app-table-header
+        [title]="'Evaluación de Areas'"
+        [showAdd]="false"
+        [showSearch]="false"
+        [dt]="dt"
+      ></app-table-header>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th rowspan="2">
+          <p class="font-light">#</p>
+        </th>
+        <th rowspan="2" pSortableColumn="fechaFiltro">
+          <p class="font-light">Fecha</p>
+          <p-sortIcon field="fechaFiltro"></p-sortIcon>
+        </th>
+        <th colspan="3">
+          <p class="badge p-2 w-100 bg-contable">Contable</p>
+        </th>
+        <th colspan="3">
+          <p class="badge p-2 w-100 bg-operaciones">Operaciones</p>
+        </th>
+        <th colspan="3">
+          <p class="badge p-2 w-100 bg-legal">Legal</p>
+        </th>
+      </tr>
+
+      <tr>
+        <th style="width: 9%" scope="col">
+          <p class="font-light">Total</p>
+        </th>
+        <th style="width: 9%" scope="col">
+          <p class="font-light">Atendidas</p>
+        </th>
+        <th style="width: 9%" scope="col">
+          <p class="font-light">Pendientes</p>
+        </th>
+        <th style="width: 9%" scope="col">
+          <p class="font-light">Total</p>
+        </th>
+        <th style="width: 9%" scope="col">
+          <p class="font-light">Atendidas</p>
+        </th>
+        <th style="width: 9%" scope="col">
+          <p class="font-light">Pendientes</p>
+        </th>
+        <th style="width: 9%" scope="col">
+          <p class="font-light">Total</p>
+        </th>
+        <th style="width: 9%" scope="col">
+          <p class="font-light">Atendidas</p>
+        </th>
+        <th style="width: 9%" scope="col">
+          <p class="font-light">Pendientes</p>
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowIndex="rowIndex" let-item>
+      <tr>
+        <td class="p-column-title">
+          {{ rowIndex + 1 }}
+        </td>
+        <td class="p-column-title">
+          <p>
+            {{ item.fecha }}
+          </p>
+        </td>
+        <td
+          class="p-column-title pointer"
+          (click)="onModalFiltroMinutasArea(item.fechaFiltro, 0, null)"
+        >
+          <p>
+            {{ item.totalContable }}
+          </p>
+        </td>
+        <td
+          class="p-column-title pointer"
+          (click)="onModalFiltroMinutasArea(item.fechaFiltro, 0, 1)"
+        >
+          <p>
+            {{ item.atendidasContable }}
+          </p>
+        </td>
+        <td
+          class="p-column-title pointer"
+          (click)="onModalFiltroMinutasArea(item.fechaFiltro, 0, 0)"
+        >
+          <p
+            [ngClass]="{ 'text-danger text-bold': item.pendienteContable > 0 }"
+          >
+            {{ item.pendienteContable }}
+          </p>
+        </td>
+        <td
+          class="p-column-title pointer"
+          (click)="onModalFiltroMinutasArea(item.fechaFiltro, 1, null)"
+        >
+          <p>
+            {{ item.totalOperaciones }}
+          </p>
+        </td>
+        <td
+          class="p-column-title pointer"
+          (click)="onModalFiltroMinutasArea(item.fechaFiltro, 1, 1)"
+        >
+          <p>
+            {{ item.atendidasOperaciones }}
+          </p>
+        </td>
+        <td
+          class="p-column-title pointer"
+          (click)="onModalFiltroMinutasArea(item.fechaFiltro, 1, 0)"
+        >
+          <p
+            [ngClass]="{
+              'text-danger text-bold': item.pendienteOperaciones > 0
+            }"
+          >
+            {{ item.pendienteOperaciones }}
+          </p>
+        </td>
+        <td
+          class="p-column-title pointer"
+          (click)="onModalFiltroMinutasArea(item.fechaFiltro, 2, null)"
+        >
+          <p>
+            {{ item.totalLegal }}
+          </p>
+        </td>
+        <td
+          class="p-column-title pointer"
+          (click)="onModalFiltroMinutasArea(item.fechaFiltro, 2, 1)"
+        >
+          <p>
+            {{ item.atendidasLegal }}
+          </p>
+        </td>
+        <td
+          class="p-column-title pointer"
+          (click)="onModalFiltroMinutasArea(item.fechaFiltro, 2, 0)"
+        >
+          <p [ngClass]="{ 'text-danger text-bold': item.pendienteLegal > 0 }">
+            {{ item.pendienteLegal }}
+          </p>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

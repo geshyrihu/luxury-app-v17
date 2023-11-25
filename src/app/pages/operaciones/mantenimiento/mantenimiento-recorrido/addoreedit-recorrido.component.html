@@ -1,0 +1,44 @@
+<div class="card">
+  <div class="card-body">
+    <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
+      <custom-input-text
+        [control]="form.get('id')"
+        [horizontal]="false"
+        formControlName="id"
+        label="Id"
+      ></custom-input-text>
+
+      <custom-input-datalist
+        (propagar)="saveMachineryId($event)"
+        [control]="form.get('machinery')"
+        [data]="cb_machinery"
+        formControlName="machinery"
+        label="Equipo o Instalación"
+        dataListId="machineryDatalistOptions"
+        [horizontal]="false"
+      ></custom-input-datalist>
+
+      <custom-input-select
+        [control]="form.get('routeRecurrence')"
+        formControlName="routeRecurrence"
+        label="Recurrencia"
+        [data]="cb_RouteRecurrence"
+        [horizontal]="false"
+      ></custom-input-select>
+
+      <custom-input-number
+        [horizontal]="false"
+        [control]="form.get('position')"
+        formControlName="position"
+        label="Posición"
+        placeholder="posición"
+      ></custom-input-number>
+
+      <div class="col-12 mb-2 text-left">
+        <custom-button-submit
+          [disabled]="this.form.invalid || submitting"
+        ></custom-button-submit>
+      </div>
+    </form>
+  </div>
+</div>

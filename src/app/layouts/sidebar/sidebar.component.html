@@ -1,0 +1,87 @@
+<!-- ========== Left Sidebar Start ========== -->
+<div class="vertical-menu">
+  <ngx-simplebar class="h-100">
+    <!--- Sidemenu -->
+    <div id="sidebar-menu">
+      <!-- Left Menu Start -->
+      <ul class="metismenu list-unstyled" id="side-menu">
+        <ng-container>
+          <ng-container *ngFor="let item of menuItems">
+            <li class="menu-title" *ngIf="item.isTitle">
+              {{ item.label }}
+            </li>
+
+            <li *ngIf="!item.isTitle && !item.isLayout">
+              <a
+                *ngIf="hasItems(item) && item.visible"
+                class="is-parent"
+                [ngClass]="{
+                  'has-arrow': !item.badge,
+                  'has-dropdown': item.badge
+                }"
+              >
+                <i class="{{ item.icon }}"></i>
+                <span> {{ item.label }}</span>
+              </a>
+
+              <a
+                [routerLink]="item.link"
+                *ngIf="!hasItems(item) && item.visible"
+                class="side-nav-link-ref"
+                routerLinkActive="active"
+              >
+                <i class="{{ item.icon }}" *ngIf="item.icon"></i>
+                <span> {{ item.label }}</span>
+              </a>
+
+              <ul *ngIf="hasItems(item)" class="sub-menu" aria-expanded="false">
+                <li *ngFor="let subitem of item.subItems">
+                  <a
+                    [routerLink]="subitem.link"
+                    *ngIf="!hasItems(subitem) && subitem.visible"
+                    class="side-nav-link-ref"
+                    routerLinkActive="active"
+                  >
+                    {{ subitem.label }}
+                  </a>
+                  <a
+                    *ngIf="hasItems(subitem)"
+                    class="side-nav-link-a-ref has-arrow"
+                  >
+                    {{ subitem.label }}
+                  </a>
+                  <ul
+                    *ngIf="hasItems(subitem)"
+                    class="sub-menu mm-collapse"
+                    aria-expanded="false"
+                  >
+                    <li *ngFor="let subSubitem of subitem.subItems">
+                      <a
+                        *ngIf="subSubitem.visible"
+                        [attr.data-parent]="subSubitem.parentId"
+                        [routerLink]="subSubitem.link"
+                        routerLinkActive="active"
+                        class="side-nav-link-ref"
+                      >
+                        {{ subSubitem.label }}
+                      </a>
+                      <!-- (click)="onOcultarBarra()" -->
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ng-container>
+        </ng-container>
+      </ul>
+    </div>
+    <!-- Sidebar -->
+  </ngx-simplebar>
+</div>
+<!-- Left Sidebar End -->
+
+<style>
+  a {
+    font-size: 15px !important;
+  }
+</style>

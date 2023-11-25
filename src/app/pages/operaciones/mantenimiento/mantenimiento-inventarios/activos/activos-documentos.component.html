@@ -1,0 +1,28 @@
+<button
+  ngbTooltip="Editar"
+  placement="top"
+  type="button"
+  class="mr-1 btn btn-info"
+  (click)="onModalFormUploadDoc(machineryId)"
+>
+  Cargar Documentos
+</button>
+<hr />
+<div *ngIf="data">
+  <div class="row">
+    <div class="col-1" *ngFor="let item of data">
+      <div class="card-body p-1 text-center border-1">
+        <a [href]="url + item.document" class="p-1">
+          <i class="fa-duotone fa-file-pdf text-danger fa-2x"></i><br />
+
+          <span class="text-truncate">
+            {{ item.document }}
+          </span>
+        </a>
+        <custom-button-delete
+          (OnConfirm)="onDelete(item)"
+        ></custom-button-delete>
+      </div>
+    </div>
+  </div>
+</div>

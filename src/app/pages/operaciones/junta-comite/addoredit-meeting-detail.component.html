@@ -1,0 +1,90 @@
+<p-table
+  [value]="data"
+  sortField="area"
+  rowGroupMode="subheader"
+  groupRowsBy="area"
+  styleClass="p-datatable-striped p-tag-success "
+>
+  <ng-template pTemplate="header">
+    <tr>
+      <th scope="col" style="width: 2%" class="small">#</th>
+
+      <th scope="col" style="width: 15%" class="small" pSortableColumn="title">
+        Titulo
+        <p-sortIcon field="title"></p-sortIcon>
+      </th>
+      <th
+        scope="col"
+        style="width: 25%"
+        class="small"
+        pSortableColumn="requestService"
+      >
+        Asunto
+        <p-sortIcon field="requestService"></p-sortIcon>
+      </th>
+      <th scope="col" style="width: 7%" class="small" pSortableColumn="status">
+        Estatus
+        <p-sortIcon field="status"></p-sortIcon>
+      </th>
+      <th
+        scope="col"
+        style="width: 7%"
+        class="small"
+        pSortableColumn="deliveryDateFiltro"
+      >
+        Entrega
+        <p-sortIcon field="deliveryDateFiltro"></p-sortIcon>
+      </th>
+      <th scope="col" style="width: 25%" class="small">Seguimiento</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="groupheader" let-customer>
+    <tr pRowGroupHeader>
+      <td colspan="6">
+        <span class="font-bold ml-2">{{
+          customer.area | eAreaMinutasDetalles | uppercase
+        }}</span>
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="groupfooter" let-customer>
+    <tr class="p-rowgroup-footer">
+      <td colspan="6" style="text-align: right">
+        Solicitudes Totales:
+        {{ calculateDetailTotal(customer.area) }}
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-detalle let-rowIndex="rowIndex">
+    <tr>
+      <td class="small">{{ rowIndex + 1 }}</td>
+      <td class="small">{{ detalle.title }}</td>
+      <td class="small">
+        <p
+          class="mr-2 text-justify"
+          [innerHTML]="detalle.requestService | sanitizeHtml"
+        ></p>
+      </td>
+      <td class="small text-center">
+        <span
+          class="badge p-2"
+          [ngClass]="{
+            'badge-danger': detalle.status == 0,
+            'badge-success': detalle.status == 1,
+            'badge-secondary': detalle.status == 2
+          }"
+        >
+          {{ detalle.status | eStatus | uppercase }}</span
+        >
+      </td>
+      <td class="small">{{ detalle.deliveryDate }}</td>
+      <td class="small">
+        <ol>
+          <li *ngFor="let item of detalle.seguimiento">
+            {{ item.fecha }}, {{ item.seguimiento }}
+          </li>
+        </ol>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

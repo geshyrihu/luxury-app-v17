@@ -1,0 +1,125 @@
+<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+<app-filter-requests
+  apiUrl="RequestSalaryModification/ExportRequestToExcel"
+  nameFile="Reporte Modificacion Salario.xlsx"
+></app-filter-requests>
+<div class="card">
+  <p-table
+    #dt
+    [paginator]="true"
+    [rowHover]="true"
+    [rows]="50"
+    [rowsPerPageOptions]="[50, 75, 100, 200]"
+    [showCurrentPageReport]="true"
+    [value]="data"
+    currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+    styleClass="custom-table p-datatable-sm"
+    [globalFilterFields]="['profession', 'status', 'numInternal']"
+  >
+    <ng-template pTemplate="caption">
+      <app-table-header
+        [title]="'Lista de Solicitudes de Puestos de Trabajo'"
+        [showAdd]="false"
+        [dt]="dt"
+      ></app-table-header>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th scope="col">FOLIO</th>
+        <th scope="col">SOLICITUD</th>
+        <th scope="col">CLIENTE</th>
+        <th scope="col">Colaborador</th>
+        <th scope="col">FECHA DE APLICACIÓN</th>
+        <th scope="col">PUESTO ACTUAL</th>
+        <th scope="col">SUELDO ACTUAL</th>
+        <th scope="col">PUESTO NUEVO</th>
+        <th scope="col">SUELDO NUEVO</th>
+        <th scope="col">RETROACTIVO</th>
+        <th scope="col">ESTATUS</th>
+        <!-- <th scope="col" >CONFIRMACION </th> -->
+        <th scope="col"></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item>
+      <tr>
+        <td class="text-center">
+          {{ item.folio }}
+        </td>
+        <td>
+          {{ item.requestDate }}
+        </td>
+        <td>
+          {{ item.customer }}
+        </td>
+        <td>
+          {{ item.employee }}
+        </td>
+        <td>
+          {{ item.executionDate }}
+        </td>
+        <td>
+          {{ item.professionCurrent }}
+        </td>
+        <td>
+          {{ item.currentSalary }}
+        </td>
+        <td>
+          {{ item.professionNew }}
+        </td>
+        <td class="text-center">{{ item.finalSalary }}</td>
+        <td>
+          {{ item.retroactive }}
+        </td>
+        <td class="text-center">
+          <span
+            [ngClass]="{
+              'bg-danger': item.status === 'Pendiente',
+              'bg-warning': item.status === 'Proceso',
+              'bg-success': item.status === 'Concluido',
+              'bg-dark': item.status === 'Cancelado'
+            }"
+            class="badge m-3 p-2 font-size-12"
+          >
+            {{
+              item.status === "Pendiente"
+                ? "Pendiente"
+                : item.status === "Proceso"
+                ? "En Proceso"
+                : item.status === "Concluido"
+                ? "Cubierta"
+                : "Cancelada"
+            }}
+          </span>
+        </td>
+
+        <!-- Opciones -->
+        <td>
+          <!-- Opciones -->
+          <div class="d-flex justify-content-center">
+            <custom-button-edit
+              (edit)="
+                onModalAddOrEdit({
+                  id: item.id,
+                  title: 'Vacante ' + item.profession
+                })
+              "
+            ></custom-button-edit>
+            <custom-button-delete
+              (OnConfirm)="onDelete(item.id)"
+            ></custom-button-delete>
+
+            <!-- <i class="fa-duotone fa-users-viewfinder"></i> -->
+          </div>
+          <!-- Opciones -->
+        </td>
+        <!-- Opciones -->
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="paginatorleft">
+      <div class="p-d-flex p-ai-center p-jc-between hide-print-mode">
+        En total hay
+        {{ data ? data.length : 0 }} registros.
+      </div>
+    </ng-template>
+  </p-table>
+</div>

@@ -1,0 +1,69 @@
+<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+
+<form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
+  <div class="card mt-2">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-12">
+          <p class="font-size-14">AGREGAR PRODUCTO</p>
+        </div>
+        <div class="col-sm-7">
+          <label for="example-text-input" class="form-label"
+            >PRODUCTO O SERVICIO</label
+          >
+          <input
+            class="form-control form-control-sm"
+            list="productOptions"
+            id="exaemployeempleDataList"
+            placeholder="Escribe para buscar producto o servicio..."
+            formControlName="productName"
+            (change)="onSelectProduct($event)"
+          />
+          <datalist id="productOptions">
+            <option
+              [value]="item.producto"
+              *ngFor="let item of products"
+            ></option>
+          </datalist>
+        </div>
+        <div class="col-sm-2">
+          <label for="example-text-input" class="form-label">CANTIDAD</label>
+          <input
+            type="number"
+            min="1"
+            formControlName="cantidad"
+            class="form-control form-control-sm"
+          />
+        </div>
+        <div class="col-sm-2">
+          <label for="example-text-input" class="form-label">UNIDAD</label>
+          <select
+            formControlName="unidadMedidaId"
+            class="form-select form-select-sm"
+          >
+            <option value="">Selecciona una opción</option>
+            <option
+              [value]="item.value"
+              *ngFor="let item of cb_measurement_units"
+            >
+              {{ item.label }}
+            </option>
+          </select>
+        </div>
+        <div class="col-sm-1 d-grid">
+          <label for="example-text-input" class="form-label">.</label>
+          <button
+            type="submit"
+            [disabled]="form.invalid"
+            class="btn btn-sm btn-info"
+          >
+            <i
+              class="fa-thin fa-floppy-disk font-size-16 align-middle me-1"
+            ></i>
+            Agregar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,71 @@
+<form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
+  <custom-input-text
+    [control]="form.get('id')"
+    formControlName="id"
+    label="Id"
+  ></custom-input-text>
+
+  <custom-input-select
+    [control]="form.get('habitant')"
+    formControlName="habitant"
+    label="Habitante"
+    [data]="cb_Habitant"
+  ></custom-input-select>
+
+  <custom-input-text
+    [control]="form.get('nameDirectoryCondominium')"
+    formControlName="nameDirectoryCondominium"
+    label="Nombre del Condómino"
+    placeholder="nombre del condómino"
+  ></custom-input-text>
+
+  <custom-input-number
+    [control]="form.get('extencion')"
+    formControlName="extencion"
+    label="Extesión"
+    placeholder="extención"
+  ></custom-input-number>
+
+  <custom-input-mask
+    [control]="form.get('fixedPhone')"
+    formControlName="fixedPhone"
+    label="Télefono fijo"
+    placeholder="(00) 0000-0000"
+    customMask="(00) 0000-0000"
+  ></custom-input-mask>
+
+  <custom-input-mask
+    [control]="form.get('cellPhone')"
+    formControlName="cellPhone"
+    label="Télefono celular"
+    placeholder="(00) 0000-0000"
+    customMask="(00) 0000-0000"
+  ></custom-input-mask>
+
+  <custom-input-email
+    [control]="form.get('mail')"
+    formControlName="mail"
+    label="Correo electrónico"
+    placeholder="correo electrónico"
+  ></custom-input-email>
+
+  <custom-input-select
+    [control]="form.get('enviarMails')"
+    formControlName="enviarMails"
+    label="Enviar correos"
+    [data]="cb_enviarMails"
+  ></custom-input-select>
+
+  <custom-input-datalist
+    (propagar)="savePropiedadId($event)"
+    [control]="form.get('directoryCondominium')"
+    [data]="cb_directory_condominium"
+    formControlName="directoryCondominium"
+    label="Departamento"
+    dataListId="directoryCondominiumDatalistOptions"
+  ></custom-input-datalist>
+
+  <custom-button-submit
+    [disabled]="this.form.invalid || submitting"
+  ></custom-button-submit>
+</form>

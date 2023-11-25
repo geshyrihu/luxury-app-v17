@@ -1,0 +1,74 @@
+<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+
+<h4 class="mb-sm-0 font-size-18">Calendario General de Mantenimiento</h4>
+
+<hr />
+<div class="row">
+  <div class="col-sm-3" *ngFor="let item of data; let i = index">
+    <ngb-alert [dismissible]="false" type="primary"
+      >{{ item.key.mes }}
+      <button
+        *ngIf="authService.onValidateRoles(['SuperUsuario'])"
+        type="button"
+        ngbTooltip="Agregar"
+        placement="top"
+        (click)="onModalAddOrEdit(0, i)"
+        class="btn btn-sm float-end"
+      >
+        <i class="fa-duotone fa-plus"></i>
+      </button>
+    </ngb-alert>
+
+    <ul class="list-group">
+      <li
+        *ngFor="let evento of item.items; let i = index"
+        class="pointer list-group-item mb-2"
+      >
+        <div class="d-flex justify-content-start">
+          <div
+            *ngIf="authService.onValidateRoles(['SuperUsuario'])"
+            class="btn-group me-3"
+            role="group"
+            ngbDropdown
+          >
+            <i
+              id="btnGroupVerticalDrop1"
+              type="button"
+              class="btn btn-sm btn-ligth dropdown-toggle"
+              data-bs-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+              ngbDropdownToggle
+              class="fa-duotone fa-bars"
+            ></i>
+            <div
+              class="dropdown-menu"
+              aria-labelledby="btnGroupVerticalDrop1"
+              ngbDropdownMenu
+            >
+              <a class="dropdown-item">
+                <custom-button-edit
+                  (edit)="onModalAddOrEdit(evento.id, i)"
+                ></custom-button-edit>
+              </a>
+              <a class="dropdown-item">
+                <custom-button-delete
+                  (OnConfirm)="onDelete(evento)"
+                ></custom-button-delete>
+              </a>
+            </div>
+          </div>
+
+          <div
+            (click)="onDatosServicio(evento)"
+            class="col-auto pointer"
+            ngbTooltip="Detalles del servicio"
+            placement="right"
+          >
+            {{ evento.nombreEquipo }}
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>

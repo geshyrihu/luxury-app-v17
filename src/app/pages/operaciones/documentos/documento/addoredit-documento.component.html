@@ -1,0 +1,40 @@
+<div class="card">
+  <div class="card-body">
+    <form autocomplete="off" (ngSubmit)="submit()" [formGroup]="form">
+      <custom-input-text
+        [control]="form.get('id')"
+        formControlName="id"
+        label="Id"
+        [horizontal]="false"
+      ></custom-input-text>
+
+      <custom-input-text
+        [control]="form.get('nameDocument')"
+        formControlName="nameDocument"
+        label="Nombre"
+        placeholder="nombre del documento"
+        [horizontal]="false"
+      ></custom-input-text>
+      <div class="mb-2">
+        <label class="form-label">Documento</label>
+        <input
+          formControlName="document"
+          type="file"
+          accept="application/pdf"
+          (change)="uploadFile($event)"
+          class="form-control"
+        />
+        <div
+          *ngIf="f.document.invalid && (f.document.dirty || f.document.touched)"
+          class="text-danger"
+        >
+          <small *ngIf="f.document.errors.required"> Campo requerido </small>
+        </div>
+      </div>
+
+      <custom-button-submit
+        [disabled]="this.form.invalid || submitting"
+      ></custom-button-submit>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,38 @@
+<ng-container *ngIf="profesion">
+  <div class="card">
+    <div class="cadr-body p-3">
+      <div class="row">
+        <div class="col-12">
+          <h6 class="mb-2 font-size-16">Descripción</h6>
+          <textarea
+            appAutosize
+            class="form-control no-resize no-scroll"
+            readonly
+            [value]="profesion.description"
+          ></textarea>
+          <hr />
+        </div>
+        <div class="col-12">
+          <h6 class="mb-2 font-size-16">Requisitos</h6>
+          <textarea
+            appAutosize
+            class="form-control no-resize no-scroll"
+            readonly
+            [value]="profesion.requirements"
+          ></textarea>
+          <hr />
+        </div>
+        <div class="col-12">
+          <h6 class="mb-2 font-size-16">Responsabilidades</h6>
+          <textarea
+            appAutosize
+            class="form-control no-resize no-scroll"
+            readonly
+            [value]="profesion.responsibilities"
+          ></textarea>
+          <hr />
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

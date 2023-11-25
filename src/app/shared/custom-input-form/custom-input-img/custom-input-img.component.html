@@ -1,0 +1,45 @@
+<div
+  class="p-1 card"
+  (click)="fileInput.click()"
+  [style]="{ cursor: 'pointer' }"
+>
+  <img
+    class="img-fluid"
+    *ngIf="imgBase64"
+    [src]="imgBase64"
+    alt="imgBase64"
+    [ngStyle]="{
+      width: contentWidth + 'px',
+      height: contentHeight + 'px'
+    }"
+  />
+  <img
+    class="img-fluid"
+    *ngIf="!imgBase64 && onValidateImgCurrent()"
+    src="assets/images/no-image.jpg"
+    alt="no-image"
+    [ngStyle]="{
+      width: contentWidth + 'px',
+      height: contentHeight + 'px'
+    }"
+  />
+
+  <img
+    class="img-fluid"
+    *ngIf="!imgBase64 && !onValidateImgCurrent()"
+    [src]="urlImgCurrent"
+    alt=""
+    [ngStyle]="{
+      width: contentWidth + 'px',
+      height: contentHeight + 'px'
+    }"
+  />
+</div>
+
+<input
+  type="file"
+  hidden
+  #fileInput
+  (change)="change($event)"
+  accept="image/png, .jpeg, .jpg"
+/>

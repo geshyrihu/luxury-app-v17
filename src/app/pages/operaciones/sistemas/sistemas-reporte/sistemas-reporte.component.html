@@ -1,0 +1,217 @@
+<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+
+<p-table
+  [(selection)]="data"
+  #dt
+  styleClass="custom-table"
+  [value]="data"
+  [rows]="30"
+  [paginator]="true"
+  [rowHover]="true"
+  currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+  [showCurrentPageReport]="true"
+  [rowsPerPageOptions]="[30, 40, 50, 75, 100]"
+  [globalFilterFields]="[
+    'folio',
+    'fechaSolicitudFiltro',
+    'areaSolicitante ',
+    'solicitante ',
+    'concepto',
+    'fechaConclusionFiltro',
+    'estatus',
+    'cliente'
+  ]"
+  [autoLayout]="true"
+>
+  <ng-template pTemplate="caption">
+    <app-table-header
+      [title]="'Reportes de sistemas'"
+      [dt]="dt"
+      [showAdd]="true"
+      (add)="showModalAddOrEdit(0)"
+    ></app-table-header>
+    <br />
+    <div class="row">
+      <div class="col-sm-5 p-fluid">
+        <app-calendar-range></app-calendar-range>
+      </div>
+
+      <div class="col-sm-7 text-end">
+        <button
+          ngbTooltip="Mostar tikets pendientes"
+          placement="top"
+          type="button"
+          class="btn btn-outline-danger me-1"
+          (click)="onFilter(true, false, employeeId)"
+        >
+          PENDIENTE
+        </button>
+        <button
+          ngbTooltip="Mostar tikets concluidos"
+          placement="top"
+          type="button"
+          class="btn btn-outline-success me-1"
+          (click)="onFilter(false, true, employeeId)"
+        >
+          CONCLUIDO
+        </button>
+        <button
+          ngbTooltip="Se mostraran todos los tikets"
+          placement="top"
+          type="button"
+          class="btn btn-outline-primary me-1"
+          (click)="onFilter(true, true, 0)"
+        >
+          MOSTAR TODOS
+        </button>
+        <button
+          ngbTooltip="Ver reporte"
+          placement="top"
+          [routerLink]="['/sistemas/reporte-pdf']"
+          class="btn btn-outline-danger me-1"
+        >
+          <i class="fa-duotone fa-file-pdf"></i>
+        </button>
+      </div>
+    </div>
+    <div class="row" *ngIf="data != null">
+      <div class="col-auto">
+        <div class="d-flex flex-wrap gap-2">
+          <button
+            type="button"
+            class="btn btn-primary waves-effect waves-light w-sm"
+          >
+            {{ data.length }} Total
+          </button>
+          <button
+            type="button"
+            class="btn btn-success waves-effect waves-light w-sm"
+          >
+            {{ concluidos }} ATENDIDOS
+          </button>
+          <button
+            type="button"
+            class="btn btn-light waves-effect waves-light w-sm"
+          >
+            {{ pendientes }} PENDIENTES
+          </button>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="header">
+    <tr>
+      <th scope="col" style="width: 10%" pSortableColumn="responsableId">
+        <small>TÉCNICO</small>
+        <p-sortIcon field="responsableId"></p-sortIcon>
+      </th>
+      <th scope="col" style="width: 10%">
+        <small>FOLIO</small>
+      </th>
+      <th scope="col" style="width: 10%" pSortableColumn="fechaSolicitudFiltro">
+        <small>FECHA SOLICITUD</small>
+        <p-sortIcon field="fechaSolicitudFiltro"></p-sortIcon>
+      </th>
+      <th scope="col" style="width: 10%" pSortableColumn="areaSolicitante">
+        <small>AREA</small>
+        <p-sortIcon field="areaSolicitante"></p-sortIcon>
+      </th>
+      <th scope="col" style="width: 15%" pSortableColumn="solicitante">
+        <small>SOLICITANTE</small>
+        <p-sortIcon field="solicitante"></p-sortIcon>
+      </th>
+      <th scope="col" style="width: 25%" pSortableColumn="concepto">
+        <small>CONCEPTO</small>
+        <p-sortIcon field="concepto"></p-sortIcon>
+      </th>
+      <th
+        scope="col"
+        style="width: 10%"
+        pSortableColumn="fechaConclusionFiltro"
+      >
+        <small>FECHA CONCLUSIÓN</small>
+        <p-sortIcon field="fechaConclusionFiltro"></p-sortIcon>
+      </th>
+      <th scope="col" style="width: 8%" pSortableColumn="estatus">
+        <small> ESTATUS </small>
+        <p-sortIcon field="estatus"></p-sortIcon>
+      </th>
+
+      <th scope="col" style="width: 2%"></th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-item>
+    <tr>
+      <td class="text-center">
+        <img
+          *ngIf="item.employeeResponsableId"
+          (click)="onCardEmployee(item.employeeResponsableId)"
+          [src]="url + item.employeeResponsable"
+          alt="."
+          width="32"
+          style="cursor: pointer"
+          class="img-circle"
+        />
+      </td>
+      <td class="text-justify">
+        <small>
+          {{ item.folio }}
+        </small>
+      </td>
+      <td>
+        <small>
+          {{ item.fechaSolicitud }}
+        </small>
+      </td>
+      <td>
+        <small>
+          {{ item.areaSolicitante }}
+        </small>
+      </td>
+      <td class="pointer" (click)="onCardEmployee(item.employeeCargoReporteId)">
+        <small>
+          {{ item.employeeCargoReporte }}
+        </small>
+      </td>
+      <td>
+        <small>
+          {{ item.concepto }}
+        </small>
+      </td>
+      <td>
+        <small>
+          {{ item.fechaConclusion }}
+        </small>
+      </td>
+      <td class="text-center">
+        <i
+          [ngClass]="{
+            'fa-duotone fa-xmark  text-danger': item.status === 0
+          }"
+        >
+        </i>
+        <i
+          [ngClass]="{ 'fa-duotone fa-check text-success': item.status === 1 }"
+        >
+        </i>
+      </td>
+
+      <!-- Opciones -->
+      <td>
+        <div class="d-flex justify-content-center">
+          <custom-button-edit
+            (edit)="showModalAddOrEdit(item.id)"
+          ></custom-button-edit>
+          <custom-button-delete
+            (OnConfirm)="eliminarTiket(item.id)"
+          ></custom-button-delete>
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="paginatorleft">
+    <app-table-footer [data]="data"></app-table-footer>
+  </ng-template>
+</p-table>

@@ -1,0 +1,58 @@
+<ng-container *ngIf="horizontal">
+  <div class="form-group row mb-2">
+    <label class="col-sm-3">{{ label }}</label>
+    <div class="col-sm-9">
+      <div class="form-group">
+        <input
+          class="form-control flatpickr-input"
+          type="text"
+          mwlFlatpickr
+          [noCalendar]="true"
+          [enableTime]="true"
+          [dateFormat]="'H:i'"
+          [value]="value"
+          [ngModel]="value"
+          (ngModelChange)="onChange($event)"
+          [ngClass]="{
+            'is-invalid': control.invalid && (control.dirty || control.touched)
+          }"
+        />
+        <div
+          class="invalid-feedback"
+          *ngIf="control.invalid && (control.dirty || control.touched)"
+        >
+          <p *ngIf="control.errors.required">El campo es requerido.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="!horizontal">
+  <div class="form-group row mb-2">
+    <label class="col-sm-3">{{ label }}</label>
+    <div class="col-sm-9">
+      <div class="form-group">
+        <input
+          class="form-control flatpickr-input"
+          type="text"
+          mwlFlatpickr
+          [noCalendar]="true"
+          [enableTime]="true"
+          [dateFormat]="'H:i'"
+          [value]="value"
+          [ngModel]="value"
+          (ngModelChange)="onChange($event)"
+          [ngClass]="{
+            'is-invalid': control.invalid && (control.dirty || control.touched)
+          }"
+        />
+        <div
+          class="invalid-feedback"
+          *ngIf="control.invalid && (control.dirty || control.touched)"
+        >
+          <p *ngIf="control.errors.required">El campo es requerido.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

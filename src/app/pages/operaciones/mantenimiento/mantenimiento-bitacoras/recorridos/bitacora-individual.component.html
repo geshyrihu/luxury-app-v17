@@ -1,0 +1,59 @@
+<p-table
+  *ngIf="data"
+  [(selection)]="data"
+  #dt
+  styleClass="custom-table"
+  [value]="data"
+  [rows]="50"
+  [paginator]="true"
+  [rowHover]="true"
+  currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+  [showCurrentPageReport]="true"
+  [rowsPerPageOptions]="[50, 75, 100]"
+  [globalFilterFields]="['machinery', 'userName', 'descripcion']"
+  [autoLayout]="true"
+>
+  <ng-template pTemplate="caption">
+    <div class="row">
+      <div class="col-sm-5">
+        <app-rango-calendario-yyyymmdd></app-rango-calendario-yyyymmdd>
+      </div>
+      <div class="col-sm-7">
+        <app-table-header
+          [title]="nameMachinery"
+          [showAdd]="false"
+          [dt]="dt"
+        ></app-table-header>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="body" let-item>
+    <div class="card" style="background-color: palegoldenrod">
+      <div class="card-header">
+        <p class="card-text">
+          {{ item.fechaRegistro | date : "fullDate" }},
+          {{ item.fechaRegistro | date : "shortTime" }}
+        </p>
+      </div>
+
+      <div class="card-body">
+        <p class="card-text font-italic text-justify">
+          {{ item.descripcion }}
+        </p>
+        <p
+          class="text-right small font-weight-normal pointer"
+          (click)="onCardEmployee(item.applicationUserId)"
+        >
+          {{ item.userName }}
+        </p>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="paginatorleft">
+    <div class="p-d-flex p-ai-center p-jc-between">
+      En total hay
+      {{ data ? data.length : 0 }} registros.
+    </div>
+  </ng-template>
+</p-table>

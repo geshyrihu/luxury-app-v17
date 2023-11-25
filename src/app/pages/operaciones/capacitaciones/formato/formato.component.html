@@ -1,0 +1,96 @@
+<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+
+<div class="card">
+  <p-table
+    #dt
+    [(selection)]="data"
+    [autoLayout]="true"
+    [globalFilterFields]="['descripcion', 'folioo', 'pathFormato']"
+    [rowHover]="true"
+    [showCurrentPageReport]="true"
+    [value]="data"
+    currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+    styleClass="custom-table"
+  >
+    <ng-template pTemplate="caption">
+      <app-table-header
+        [title]="'Formatos'"
+        (add)="onModalAddOrEdit({ id: 0, title: 'Nuevo Registro' })"
+        [dt]="dt"
+        [showAdd]="authService.onValidateRoles(['SuperUsuario'])"
+      ></app-table-header>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th scope="col" style="width: 30%" pSortableColumn="folio">
+          Folio
+          <p-sortIcon field="folio"></p-sortIcon>
+        </th>
+        <th scope="col" style="width: 30%" pSortableColumn="descripcion">
+          Descripción <p-sortIcon field="descripcion"></p-sortIcon>
+        </th>
+        <th scope="col" style="width: 30%" pSortableColumn="pathFormato">
+          Archivo
+          <p-sortIcon field="pathFormato"></p-sortIcon>
+        </th>
+        <th
+          scope="col"
+          style="width: 10%"
+          *ngIf="authService.onValidateRoles(['SuperUsuario'])"
+        >
+          Opciones
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item>
+      <tr>
+        <td class="p-column-title">
+          {{ item.folio }}
+        </td>
+        <td class="p-column-title">
+          {{ item.descripcion | uppercase }}
+        </td>
+
+        <td class="p-column-title">
+          <a
+            [href]="filePath + item.pathFormato"
+            target="_blank"
+            download="item.pathFormato"
+            ngbTooltip="Descargar"
+            placement="top"
+            class="btn btn-soft-danger btn-sm w-xs waves-effect btn-label waves-light me-1"
+          >
+            <i class="fa-duotone fa-download label-icon fa-2x pointer"></i>
+            Formato
+          </a>
+
+          <!-- {{ item.comunicadoPath }} -->
+        </td>
+        <!-- Opciones -->
+        <td
+          class="p-column-title"
+          *ngIf="authService.onValidateRoles(['SuperUsuario'])"
+        >
+          <div class="d-flex justify-content-center">
+            <custom-button-edit
+              (edit)="
+                onModalAddOrEdit({ id: item.id, title: 'Editar Registro' })
+              "
+            ></custom-button-edit>
+            <custom-button-delete
+              (OnConfirm)="onDelete(item)"
+            ></custom-button-delete>
+          </div>
+        </td>
+        <!-- Opciones -->
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="paginatorleft">
+      <div class="p-d-flex p-ai-center p-jc-between hide-print-mode">
+        En total hay
+        {{ data ? data.length : 0 }} registros.
+      </div>
+    </ng-template>
+  </p-table>
+</div>

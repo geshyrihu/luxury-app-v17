@@ -1,0 +1,47 @@
+<div class="card p-2">
+  <div class="h6">Buscar colaborador existente</div>
+
+  <div class="row">
+    <div class="col-3">
+      <div class="form-group mb-2">
+        <label class="col-form-label">Colaborador</label>
+        <input
+          class="form-control"
+          type="text"
+          placeholder="Introduce el nombre para buscar..."
+          (input)="searchExistingPerson($event)"
+        />
+      </div>
+    </div>
+  </div>
+  <p class="text-danger">
+    <strong>Coincidencias registradas</strong>
+  </p>
+
+  <div class="row">
+    <div class="col-6">
+      <table class="table table-sm">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Correo Electrónico</th>
+            <th>Número de Teléfono</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let item of existingPerson"
+            class="pointer"
+            (click)="onSelectEmployee(item.id, item.fullName)"
+          >
+            <td>{{ item.fullName }}</td>
+            <td>{{ item.email }}</td>
+            <td>{{ item.phoneNumber }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="h6">Agregar un nuevo colcaborador</div>
+</div>

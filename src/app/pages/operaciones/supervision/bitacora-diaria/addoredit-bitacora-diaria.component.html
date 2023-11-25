@@ -1,0 +1,49 @@
+<form autocomplete="off" (ngSubmit)="submit()" [formGroup]="form">
+  <custom-input-text
+    [control]="form.get('id')"
+    formControlName="id"
+    [horizontal]="false"
+    label="Id"
+  ></custom-input-text>
+
+  <custom-input-date
+    [control]="form.get('fechaSolicitud')"
+    formControlName="fechaSolicitud"
+    label="Fecha de solicitud"
+    [horizontal]="false"
+    placeholder="fecha de solicitud"
+  ></custom-input-date>
+
+  <custom-input-select
+    [control]="form.get('customerId')"
+    formControlName="customerId"
+    label="Cliente"
+    [horizontal]="false"
+    [data]="cb_customer"
+  ></custom-input-select>
+
+  <custom-input-text-area
+    [control]="form.get('problema')"
+    formControlName="problema"
+    label="Problema"
+    placeholder="problema"
+    [horizontal]="false"
+  ></custom-input-text-area>
+
+  <custom-input-text-area
+    [control]="form.get('solucion')"
+    formControlName="solucion"
+    label="Solución"
+    placeholder="solución"
+    [horizontal]="false"
+  ></custom-input-text-area>
+
+  <custom-input-date
+    [control]="form.get('fechaConclusion')"
+    formControlName="fechaConclusion"
+    label="Fecha de conclusión"
+    [horizontal]="false"
+    placeholder="fecha de conclusión"
+  ></custom-input-date>
+  <custom-button-submit [disabled]="this.form.invalid"></custom-button-submit>
+</form>

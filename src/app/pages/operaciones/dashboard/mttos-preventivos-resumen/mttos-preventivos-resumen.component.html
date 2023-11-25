@@ -1,0 +1,53 @@
+<p-table
+  [(selection)]="data"
+  [autoLayout]="true"
+  [rowHover]="true"
+  [showCurrentPageReport]="true"
+  [value]="data"
+  styleClass="custom-table"
+>
+  <ng-template pTemplate="header">
+    <tr>
+      <th scope="col" style="width: 10px">#</th>
+      <th scope="col">Categoria</th>
+      <th scope="col">Fecha de Servicio</th>
+      <th scope="col">Equipo</th>
+      <th scope="col">Actividad</th>
+      <th scope="col">Proveedor</th>
+      <th scope="col">Observaciones</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowIndex="rowIndex" let-item>
+    <tr>
+      <td>
+        <small>{{ rowIndex + 1 }}.</small>
+      </td>
+      <td>
+        <small>{{ item.categoria }}</small>
+      </td>
+      <td>
+        <small>{{ item.fecha }}</small>
+      </td>
+      <td>
+        <small>{{ item.equipo }}</small>
+      </td>
+
+      <td style="margin-bottom: 0%">
+        <p
+          class="small font-normal mb-0"
+          [innerHTML]="item.servicio | sanitizeHtml"
+        ></p>
+      </td>
+
+      <td>
+        <small>{{ item.proveedor }}</small>
+      </td>
+      <td>
+        <p
+          class="small font-normal mb-0"
+          [innerHTML]="item.observaciones | sanitizeHtml"
+        ></p>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

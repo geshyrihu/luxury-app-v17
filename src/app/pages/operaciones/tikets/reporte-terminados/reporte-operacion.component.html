@@ -1,0 +1,45 @@
+<div class="container">
+  <app-report-header></app-report-header>
+  <h6>
+    <a
+      class="bg-white"
+      [routerLink]="['/operaciones/mantenimiento/operationReport']"
+    >
+      <i class="fa-duotone fa-chevron-left" aria-hidden="true"></i>
+    </a>
+    Reporte de operación desde el {{ fechaInicial | date }} hasta el
+    {{ fechaFinal | date }}
+  </h6>
+  <ng-container *ngFor="let item of data">
+    <div class="alert alert-light p-1">
+      <h5 class="h5">
+        {{ item.key }}
+      </h5>
+    </div>
+
+    <div class="row" *ngFor="let detalles of item.weeklyReportPDFDTO">
+      <div class="col-6 pe-2">
+        <div style="height: 40px">
+          <small class="mb-1">{{ detalles.activity }}</small>
+        </div>
+        <img
+          [src]="urlImg + detalles.photoPathBefore"
+          alt=""
+          style="height: 300px"
+          width="100%"
+        />
+      </div>
+      <div class="col-6 ps-2">
+        <div style="height: 40px">
+          <p class="small mb-1">{{ detalles.observations }}</p>
+        </div>
+        <img
+          [src]="urlImg + detalles.photoPathAfter"
+          alt=""
+          style="height: 300px"
+          width="100%"
+        />
+      </div>
+    </div>
+  </ng-container>
+</div>

@@ -1,0 +1,136 @@
+<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+
+<ng-container *ngIf="authService.onValidateRoles(['SupervisionOperativa'])">
+  <custom-button
+    *ngFor="let item of cb_departamento"
+    [customClass]="' mb-1'"
+    [label]="item.value"
+    [customNgClass]="{
+      'btn-primary': item.value == this.departamento,
+      'btn-outline-primary': item.value != this.departamento
+    }"
+    (clicked)="onChangeDepartamento(item.value)"
+  ></custom-button>
+  <hr />
+</ng-container>
+
+<div class="card">
+  <p-table
+    #dt
+    [value]="data"
+    groupRowsBy="grupo"
+    rowGroupMode="subheader"
+    [globalFilterFields]="['descripcion']"
+    styleClass="custom-table"
+  >
+    <ng-template pTemplate="caption">
+      <app-table-header
+        [title]="'ENTREGA RECEPCIÓN ' + departamento"
+        (add)="onModalAddOrEdit({ id: 0, title: 'Nuevo Registro' })"
+        [showAdd]="false"
+        [dt]="dt"
+      ></app-table-header>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width: 4%" scope="col">ID</th>
+        <th style="width: 6%" scope="col">ESTATUS</th>
+        <th style="width: 30%" scope="col">DESCRIPCIÓN</th>
+        <th style="width: 25%" scope="col">OBSERVACION</th>
+        <th style="width: 9%" scope="col">ARCHIVO</th>
+        <th style="width: 9%" scope="col">SUBIO</th>
+        <th style="width: 9%" scope="col">SUPERVISO</th>
+        <th style="width: 8%" scope="col">ACTUALIZAR</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="groupheader" let-customer>
+      <tr pRowGroupHeader>
+        <td colspan="5">
+          <span class="font-bold ml-2">{{ customer.grupo }}</span>
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+      <tr>
+        <td class="p-column-title">
+          <small>
+            {{ item.folioId }}
+          </small>
+        </td>
+        <td class="p-column-title text-center">
+          <span
+            class="badge p-1"
+            [ngClass]="{
+              'bg-danger': item.estatus === 0,
+              'bg-success': item.estatus === 1
+            }"
+          >
+            <i *ngIf="item.estatus === 0" class="fa-duotone fa-xmark"></i>
+            <i
+              *ngIf="item.estatus === 1"
+              class="fa-duotone fa-check-double"
+            ></i>
+          </span>
+        </td>
+        <td class="p-column-title">
+          <small>
+            {{ item.descripcion }}
+          </small>
+        </td>
+        <td class="p-column-title">
+          <small>
+            {{ item.observaciones }}
+          </small>
+        </td>
+        <td class="p-column-title">
+          <div class="d-flex justify-content-center">
+            <custom-button-download-file
+              *ngIf="item.archivo"
+              (clicked)="navigateToPdf(item.archivo)"
+            >
+            </custom-button-download-file>
+          </div>
+        </td>
+        <td class="p-column-title">
+          <small class="text-truncate"> {{ item.cargo }} </small>
+          <small> {{ item.fechaCarga }}</small>
+        </td>
+        <td class="p-column-title">
+          <small class="text-truncate"> {{ item.superviso }} </small>
+          <small> {{ item.fechaSupervision }}</small>
+        </td>
+
+        <td class="p-column-title">
+          <div class="d-flex justify-content-center">
+            <custom-button-edit
+              (edit)="
+                onModalAddOrEdit({ id: item.id, title: 'Editar Registro' })
+              "
+            ></custom-button-edit>
+
+            <custom-button
+              *ngIf="item.archivo && item.superviso === ''"
+              ngbTooltip="Validar Información"
+              [customClass]="'btn-sm btn-outline-success'"
+              icon="fa-duotone fa-check-double text-success"
+              (clicked)="onValidarDocument(item.id)"
+            ></custom-button>
+
+            <custom-button
+              *ngIf="item.archivo && item.superviso !== ''"
+              ngbTooltip="Revocar Información"
+              [customClass]="'btn-sm btn-outline-danger'"
+              icon="fa-duotone fa-rotate-left text-danger"
+              (clicked)="onInvalidarDocument(item.id)"
+            ></custom-button>
+            <custom-button-delete
+              *ngIf="item.archivo !== ''"
+              (OnConfirm)="onDeleteFile(item.id)"
+            ></custom-button-delete>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

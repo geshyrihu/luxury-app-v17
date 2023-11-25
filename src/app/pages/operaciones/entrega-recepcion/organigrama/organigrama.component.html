@@ -1,0 +1,30 @@
+<app-report-header></app-report-header>
+<p-table [value]="data" styleClass="custom-table">
+  <ng-template pTemplate="caption">
+    <div class="flex align-items-center justify-content-between">
+      <h5 class="m-0 h5">Colaboradores de Mantenimiento</h5>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="header">
+    <tr>
+      <th scope="col" style="width: 1%">N°</th>
+      <th scope="col" style="width: 10%">Foto</th>
+      <th scope="col" style="width: 20%">Nombre</th>
+      <th scope="col" style="width: 20%">Profesión</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+    <tr class="page-break">
+      <td>{{ rowIndex + 1 }}</td>
+      <td>
+        <img
+          [src]="base_urlImg + item.photoPath"
+          alt="..."
+          class="rounded avatar-md pointer"
+        />
+      </td>
+      <td>{{ item.fullName }}</td>
+      <td>{{ item.nameProfession }}</td>
+    </tr>
+  </ng-template>
+</p-table>

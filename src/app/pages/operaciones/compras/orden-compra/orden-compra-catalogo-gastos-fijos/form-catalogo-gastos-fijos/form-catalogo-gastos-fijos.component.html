@@ -1,0 +1,50 @@
+<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+<form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
+  <custom-input-text-area
+    [control]="form.get('equipoOInstalacion')"
+    formControlName="equipoOInstalacion"
+    label="Equipo Area o Instalación"
+    placeholder="Equipo area o instalación"
+  ></custom-input-text-area>
+
+  <custom-input-text-area
+    [control]="form.get('justificacionGasto')"
+    formControlName="justificacionGasto"
+    label="Justificación del gasto"
+    placeholder="justificación del gasto"
+  ></custom-input-text-area>
+
+  <custom-input-datalist
+    (propagar)="saveProviderId($event)"
+    [control]="form.get('providerName')"
+    [data]="cb_providers"
+    formControlName="providerName"
+    label="Nombre"
+    dataListId="providerNameDatalistOptions"
+  ></custom-input-datalist>
+
+  <custom-input-select
+    [control]="form.get('usoCFDIId')"
+    formControlName="usoCFDIId"
+    label="Uso de Cfdi"
+    [data]="cb_use_cfdi"
+  ></custom-input-select>
+
+  <custom-input-select
+    [control]="form.get('formaDePagoId')"
+    formControlName="formaDePagoId"
+    label="Forma de pago"
+    [data]="cb_formaDePago"
+  ></custom-input-select>
+
+  <custom-input-select
+    [control]="form.get('metodoDePagoId')"
+    formControlName="metodoDePagoId"
+    label="Metodo de pago"
+    [data]="cb_metodoDePago"
+  ></custom-input-select>
+
+  <custom-button-submit
+    [disabled]="this.form.invalid || submitting"
+  ></custom-button-submit>
+</form>

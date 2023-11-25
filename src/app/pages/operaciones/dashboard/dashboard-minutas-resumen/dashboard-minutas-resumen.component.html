@@ -1,0 +1,87 @@
+<ng-container *ngIf="data.length > 0">
+  <p-table
+    [value]="data"
+    styleClass="p-datatable-striped   "
+    #dt
+    [globalFilterFields]="['pendiente', 'entrega']"
+    [showCurrentPageReport]="true"
+  >
+    <ng-template pTemplate="caption">
+      <app-table-header [showAdd]="false" [dt]="dt"></app-table-header>
+      <div class="flex align-items-center justify-content-between">
+        En total tenemos {{ data ? data.length : 0 }} pendientes.
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th
+          scope="col"
+          pSortableColumn="fechaFiltro"
+          class="font-weight-normal"
+          style="width: 10%"
+        >
+          Fecha Junta
+          <p-sortIcon field="fechaFiltro"></p-sortIcon>
+        </th>
+
+        <th
+          scope="col"
+          pSortableColumn="pendiente"
+          class="font-weight-normal"
+          style="width: 40%"
+        >
+          Pendiente
+          <p-sortIcon field="pendiente"></p-sortIcon>
+        </th>
+        <th scope="col" class="font-weight-normal" style="width: 40%">
+          Seguimiento
+        </th>
+        <th
+          scope="col"
+          pSortableColumn="entregaFiltro"
+          class="font-weight-normal"
+          style="width: 10%"
+        >
+          Entrega
+          <p-sortIcon field="entregaFiltro"></p-sortIcon>
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item>
+      <tr class="pointer" (click)="onModalAddOrEditMinutaDetalle(item.id)">
+        <td>
+          {{ item.fecha }}
+        </td>
+
+        <td>
+          <p>
+            {{ item.titulo | uppercase }}
+          </p>
+
+          <p
+            class="text-justify w-100"
+            [innerHTML]="item.pendiente | sanitizeHtml"
+          ></p>
+        </td>
+        <td>
+          <ul>
+            <li *ngIf="item.seguimientos.length > 0">
+              {{ item.seguimientos[0].fecha }},
+              {{ item.seguimientos[0].seguimiento }}
+            </li>
+          </ul>
+        </td>
+
+        <td>
+          {{ item.entrega }}
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="summary">
+      <div class="flex align-items-center justify-content-between">
+        En total tenemos
+        {{ data ? data.length : 0 }} pendientes.
+      </div>
+    </ng-template>
+  </p-table>
+</ng-container>

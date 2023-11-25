@@ -1,0 +1,178 @@
+<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+<div class="row mb-0 mb-sm-2">
+  <div class="col-sm-5 mb-2 mb-sm-0">
+    <h4 class="h4">Recorrido de Mantenimiento</h4>
+  </div>
+  <div class="col-sm-3 d-flex hide-print-mode">
+    <a
+      ngbTooltip="Ver bitacora"
+      routerLink="/mantenimiento/bitacora/reporte-bitacora-recorrido"
+      class="btn btn-danger me-1 hide-print-mode"
+    >
+      <i class="fa-duotone fa-file-pdf"></i>
+    </a>
+    <custom-button-active-desactive
+      (activo)="onChange(0)"
+      (inactivo)="onChange(1)"
+      activas="Diario"
+      inactivas="Semanal"
+    ></custom-button-active-desactive>
+  </div>
+  <div class="col-sm-3 d-grid mb-2 mb-sm-0 hide-print-mode">
+    <input
+      [(ngModel)]="this.filterValue"
+      type="text"
+      (input)="filterGlobal()"
+      placeholder="Ingresa texto para buscar..."
+      class="form-control hide-print-mode"
+    />
+  </div>
+  <div class="col-sm-1 d-grid mb-2 mb-sm-0">
+    <button
+      type="button"
+      class="btn btn-info hide-print-mode"
+      (click)="onModalAddOrEdit({ id: 0, title: 'Nuevo Registro' })"
+    >
+      Nuevo
+    </button>
+  </div>
+</div>
+
+<div class="card" *ngFor="let item of data">
+  <div class="card-body">
+    <div class="row mb-2">
+      <div class="col-sm-8">
+        <h3 class="card-title">
+          {{ item.position }}.- {{ item.nameMachinery }}
+        </h3>
+      </div>
+      <div class="col-sm-4 text-end d-flex mb-2 hide-print-mode">
+        <button
+          class="btn btn-primary pointer me-1 hide-print-mode"
+          (click)="onModalBitacora(item.machineryId)"
+          ngbTooltip="Agregar datos de revisión"
+          placement="top"
+        >
+          <i class="fa-duotone fa-book me-2" aria-hidden="true"></i>Agregar
+          Novedad
+        </button>
+
+        <button
+          ngbTooltip="Ver historico de bitacora"
+          placement="top"
+          class="btn btn-primary pointer me-1 hide-print-mode"
+          (click)="
+            onModalBitacoraIndividual({
+              machineryId: item.machineryId,
+              nameMachinery: item.nameMachinery
+            })
+          "
+        >
+          <i class="fa-duotone fa-book me-2" aria-hidden="true"></i> Bitacora
+        </button>
+
+        <div class="dropdown" ngbDropdown>
+          <button
+            ngbTooltip="Editar Recorrido"
+            placement="top"
+            class="btn btn-secondary dropdown-toggle hide-print-mode"
+            type="button"
+            id="dropdownMenuButton"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+            ngbDropdownToggle
+          >
+            Opciones <i class="mdi mdi-chevron-down"></i>
+          </button>
+          <div
+            class="dropdown-menu"
+            aria-labelledby="dropdownMenuButton"
+            ngbDropdownMenu
+          >
+            <a
+              (click)="
+                onModalAddTask({
+                  id: 0,
+                  routeId: item.id,
+                  title: 'Crear Registro'
+                })
+              "
+              class="dropdown-item pointer"
+              >Agregar Tarea</a
+            >
+            <a
+              (click)="
+                onModalAddOrEdit({
+                  id: item.id,
+                  routeId: item.id,
+                  title: 'Editar Recorrido'
+                })
+              "
+              class="dropdown-item pointer"
+              >Editar Recorrido</a
+            >
+            <custom-button-confirmation
+              title="Confirmar"
+              icon=""
+              text="Eliminar Recorrido"
+              label="Eliminar Recorrido"
+              tooltipText="Eliminar Recorrido"
+              classButton="dropdown-item pointer"
+              confirmButtonText="Sí, eliminar"
+              (OnConfirm)="eliminarRecorrido(item.id)"
+            ></custom-button-confirmation>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2">
+        <p-image
+          [src]="pathImg + item.photoMachinery"
+          class="img-fluid img-thumbnail"
+          alt="noImg"
+          width="100%"
+          [preview]="true"
+        ></p-image>
+      </div>
+      <div class="col-sm-10">
+        <ul class="list-group">
+          <li
+            class="list-group-item mt-0 mb-0"
+            *ngFor="let tasks of item.routeTasks"
+          >
+            <div class="row">
+              <div class="col-10">
+                <div class="float-start">{{ tasks.task }}</div>
+              </div>
+              <div class="col-2">
+                <div
+                  *ngIf="authService.onValidateRoles(['Mantenimiento'])"
+                  class="float-end"
+                >
+                  <custom-button-edit
+                    (edit)="
+                      onModalAddTask({
+                        id: tasks.id,
+                        routeId: item.routeId,
+                        title: 'Editar Registro'
+                      })
+                    "
+                  ></custom-button-edit>
+                </div>
+                <div
+                  *ngIf="authService.onValidateRoles(['Mantenimiento'])"
+                  class="float-end"
+                >
+                  <custom-button-delete
+                    (OnConfirm)="onDeleteTask(tasks.id)"
+                  ></custom-button-delete>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

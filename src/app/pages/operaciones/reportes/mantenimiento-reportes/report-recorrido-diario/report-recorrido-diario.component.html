@@ -1,0 +1,17 @@
+<app-pagetitlereport title="BITACORA DIARIA"></app-pagetitlereport>
+<p-table [value]="data" styleClass="custom-table">
+  <ng-template pTemplate="body" let-item>
+    <tr>
+      <td colspan="3">
+        <p class="card-title">{{ item.fecha }}</p>
+      </td>
+    </tr>
+    <tr class="breakPage" *ngFor="let registro of item.registros">
+      <td>
+        <p class="card-title">{{ registro.nameMachinery }}</p>
+        <p class="small">{{ registro.descripcion }}</p>
+        <p class="text-end small mt-0 mb-0">{{ registro.fullName }}</p>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

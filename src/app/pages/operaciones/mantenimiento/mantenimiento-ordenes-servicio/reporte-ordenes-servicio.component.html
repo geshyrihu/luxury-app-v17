@@ -1,0 +1,212 @@
+<ng-container *ngIf="data">
+  <div *ngFor="let item of data" class="card print salto-de-pagina">
+    <table class="table table-sm">
+      <tr>
+        <td colspan="3" class="text-center">
+          <h4 class="h4">Documento de recepción de servicio</h4>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="width: 10%">
+          <img
+            [src]="logoCustomer"
+            alt=""
+            style="width: 100px; height: 150px; max-width: 100%; height: auto"
+          />
+        </td>
+        <td style="width: 50%">
+          <div>
+            <p class="font-size-14 m-0">
+              {{ dataCustomer.nameCustomer }}
+            </p>
+            <p class="font-size-11 m-0">
+              {{ dataCustomer.adreess }}
+            </p>
+
+            <div
+              class="d-flex flex-wrap align-items-start gap-2 gap-lg-3 font-size-11 m-0"
+            >
+              <div class="m-0">
+                <i
+                  class="mdi mdi-circle-medium me-1 text-success align-middle"
+                ></i>
+                {{ dataCustomer.phoneOne }}
+              </div>
+              <div class="m-0">
+                <i
+                  class="mdi mdi-circle-medium me-1 text-success align-middle"
+                ></i>
+                {{ dataCustomer.phoneTwo }}
+              </div>
+            </div>
+          </div>
+        </td>
+        <td style="width: 40%">
+          <div class="div">
+            <p class="m-0 font-size-11">
+              Fecha de Solicitud:
+              {{ item.requestDate }}
+            </p>
+            <p class="m-0 font-size-11">
+              Fecha de Ejecución:
+              {{ item.executionDate }}
+            </p>
+            <p class="m-0 font-size-11">
+              Tipo de servicio:
+              <i
+                class="fa-duotone fa-thumbtack"
+                [ngClass]="{
+                  'text-success': item.typeMaintance == 0,
+                  'text-danger': item.typeMaintance == 1,
+                  'text-primary': item.typeMaintance == 2
+                }"
+              ></i>
+              {{ item.typeMaintance }},
+              <span *ngIf="item.maintenanceCalendar">
+                {{ item.recurrence }}
+              </span>
+            </p>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td colspan="3">
+          <h5 class="h5">Equipo: {{ item.nameMachinery }}</h5>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3">
+          <h5 class="h5">Proveedor: {{ item.nameComercial }}</h5>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2" style="width: 50%">
+          <p class="m-0">Actividad:</p>
+          <div>
+            <p class="mb-0" [innerHTML]="item.activity | sanitizeHtml"></p>
+          </div>
+        </td>
+        <td style="width: 50%">
+          <p class="m-0" *ngIf="item.observations">Observaciones:</p>
+          <div>
+            <p class="mb-0" [innerHTML]="item.observations | sanitizeHtml"></p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3">
+          <img
+            class="w-25"
+            *ngIf="item.serviceOrderImg[0] !== undefined"
+            [src]="urlImg + item.serviceOrderImg[0].img"
+            alt=""
+          />
+          <img
+            class="w-25"
+            *ngIf="item.serviceOrderImg[1] !== undefined"
+            [src]="urlImg + item.serviceOrderImg[1].img"
+            alt=""
+          />
+          <img
+            class="w-25"
+            *ngIf="item.serviceOrderImg[2] !== undefined"
+            [src]="urlImg + item.serviceOrderImg[2].img"
+            alt=""
+          />
+          <img
+            class="w-25"
+            *ngIf="item.serviceOrderImg[3] !== undefined"
+            [src]="urlImg + item.serviceOrderImg[3].img"
+            alt=""
+          />
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3">
+          <h6>Revisiones</h6>
+
+          <table class="table table-sm">
+            <tr>
+              <td style="width: 50%">
+                <div>
+                  <p class="m-0">
+                    <i
+                      *ngIf="item.cumplimientoActividades"
+                      class="text-success mr-1 fa-duotone fa-check"
+                    ></i>
+                    <i
+                      *ngIf="!item.cumplimientoActividades"
+                      class="text-danger mr-1 fa-duotone fa-xmark"
+                    ></i>
+                    Se cumplio con las actividades correspondientes a la orden
+                    de servicio
+                  </p>
+                  <p>
+                    <i
+                      *ngIf="item.equiposOperando"
+                      class="text-success mr-1 fa-duotone fa-check"
+                    ></i>
+                    <i
+                      *ngIf="!item.equiposOperando"
+                      class="text-danger mr-1 fa-duotone fa-xmark"
+                    ></i>
+                    Equipos/Areas operando sin ningun inconveniente
+                  </p>
+                </div>
+              </td>
+              <td style="width: 50%">
+                <div>
+                  <p class="m-0">
+                    <i
+                      *ngIf="item.ocacionoDanos"
+                      class="text-success mr-1 fa-duotone fa-check"
+                    ></i>
+                    <i
+                      *ngIf="!item.ocacionoDanos"
+                      class="text-danger mr-1 fa-duotone fa-xmark"
+                    ></i>
+                    Afectación en el Area donde se realizo el trabajo
+                  </p>
+                  <p class="m-0">
+                    <i
+                      *ngIf="item.calidadTrabajos"
+                      class="text-success mr-1 fa-duotone fa-check"
+                    ></i>
+                    <i
+                      *ngIf="!item.calidadTrabajos"
+                      class="text-danger mr-1 fa-duotone fa-xmark"
+                    ></i>
+                    Se cumplio con la calidad de los trabajos realizados
+                  </p>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+
+    <br />
+    <br />
+    <table class="table">
+      <tr>
+        <td style="width: 50%">
+          <div class="text-center">
+            <p>______________________________________</p>
+            <h6 *ngIf="item.fullName">Revisado por {{ item.fullName }}</h6>
+          </div>
+        </td>
+        <td style="width: 50%">
+          <div class="text-center">
+            <p>______________________________________</p>
+            <h6 *ngIf="item.nameComercial">
+              Realizado por {{ item.nameComercial }}
+            </h6>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+</ng-container>

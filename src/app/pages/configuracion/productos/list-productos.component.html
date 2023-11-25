@@ -1,0 +1,133 @@
+<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+<p-table
+  *ngIf="data"
+  [(selection)]="data"
+  #dt
+  styleClass="custom-table"
+  [value]="data"
+  [rows]="15"
+  [paginator]="true"
+  [rowHover]="true"
+  currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+  [showCurrentPageReport]="true"
+  [rowsPerPageOptions]="[10, 20, 30, 40, 50, 75, 100]"
+  [globalFilterFields]="[
+    'nombreProducto',
+    'category',
+    'marca',
+    'modelo',
+    'nameUser'
+  ]"
+  [autoLayout]="true"
+>
+  <ng-template pTemplate="caption">
+    <app-table-header
+      [title]="'Productos'"
+      (add)="showModalAddOrEdit({ id: 0, title: 'Nuevo Registro' })"
+      [dt]="dt"
+      [rolAuth]="
+        authService.onValidateRoles([
+          'Asistente',
+          'Mantenimiento',
+          'SuperUsuario',
+          'Residente'
+        ])
+      "
+    ></app-table-header>
+  </ng-template>
+  <ng-template pTemplate="header">
+    <tr>
+      <th scope="col" pSortableColumn="nombreProducto">
+        Imagen
+        <p-sortIcon field="nombreProducto"></p-sortIcon>
+      </th>
+      <th scope="col" pSortableColumn="nombreProducto">
+        Nombre
+        <p-sortIcon field="nombreProducto"></p-sortIcon>
+      </th>
+      <th scope="col" pSortableColumn="category">
+        Categoria
+        <p-sortIcon field="category"></p-sortIcon>
+      </th>
+      <th scope="col" pSortableColumn="marca">
+        Marca
+        <p-sortIcon field="marca"></p-sortIcon>
+      </th>
+      <th scope="col" pSortableColumn="modelo">
+        Modelo
+        <p-sortIcon field="modelo"></p-sortIcon>
+      </th>
+
+      <th
+        scope="col"
+        style="width: 5%"
+        *ngIf="
+          authService.onValidateRoles([
+            'Asistente',
+            'Mantenimiento',
+            'SuperUsuario',
+            'Residente'
+          ])
+        "
+      >
+        Opciones
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-item>
+    <tr>
+      <td class="p-column-title text-center">
+        <img
+          [src]="urlBaseImg + item.urlImagen"
+          alt="."
+          width="80px"
+          height="70px"
+          class="img-fluid img-thumbnail"
+        />
+      </td>
+      <td class="p-column-title">
+        <small>
+          {{ item.nombreProducto }}
+        </small>
+      </td>
+
+      <td class="p-column-title">
+        <small> {{ item.category }} </small>
+      </td>
+
+      <td class="p-column-title">
+        <small> {{ item.marca }} </small>
+      </td>
+      <td class="p-column-title">
+        <small> {{ item.modelo }} </small>
+      </td>
+
+      <td class="p-column-title">
+        <div class="d-flex justify-content-center">
+          <custom-button-edit
+            *ngIf="
+              authService.onValidateRoles([
+                'SupervisionOperativa',
+                'SuperUsuario',
+                'Residente'
+              ]) || item.userid === account_id
+            "
+            (edit)="
+              showModalAddOrEdit({ id: item.id, title: 'Editar Registro' })
+            "
+          ></custom-button-edit>
+          <custom-button-delete
+            *ngIf="authService.onValidateRoles(['SuperUsuario'])"
+            (OnConfirm)="onDelete(item)"
+          ></custom-button-delete>
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="paginatorleft">
+    <div class="p-d-flex p-ai-center p-jc-between">
+      En total hay
+      {{ data ? data.length : 0 }} registros.
+    </div>
+  </ng-template>
+</p-table>

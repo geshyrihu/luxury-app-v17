@@ -1,0 +1,121 @@
+<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+<div class="p-card p-mb-5">
+  <p-table
+    *ngIf="data"
+    #dt
+    [globalFilterFields]="[
+      'profession',
+      'sueldo',
+      'cubierta',
+      'employee',
+      'cliente'
+    ]"
+    responsiveLayout="scroll"
+    [rowHover]="true"
+    [value]="data"
+    styleClass="custom-table"
+  >
+    <ng-template pTemplate="caption">
+      <app-table-header
+        [title]="'Plantilla de General'"
+        (add)="onModalAddOrEdit({ id: 0, title: 'Nuevo Registro' })"
+        [dt]="dt"
+      ></app-table-header>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="numeroCliente">
+          Cliente
+          <p-sortIcon field="numeroCliente"></p-sortIcon>
+        </th>
+        <th>Foto</th>
+        <th scope="col" pSortableColumn="profession">
+          Profesión <p-sortIcon field="profession"></p-sortIcon>
+        </th>
+        <th scope="col" pSortableColumn="employee">
+          Nombre
+          <p-sortIcon field="employee"></p-sortIcon>
+        </th>
+        <th scope="col" pSortableColumn="turnoTrabajo">
+          Turno
+          <p-sortIcon field="turnoTrabajo"></p-sortIcon>
+        </th>
+        <th scope="col" pSortableColumn="sueldo">
+          Sueldo<p-sortIcon field="sueldo"></p-sortIcon>
+        </th>
+        <th scope="col" pSortableColumn="cubierta">
+          Estatus<p-sortIcon field="cubierta"></p-sortIcon>
+        </th>
+        <th scope="col" style="width: 5%">Opciones</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-item>
+      <tr>
+        <td>
+          {{ item.cliente }}
+        </td>
+        <td>
+          <img
+            *ngIf="item.foto !== ''"
+            [src]="pahtBaseImg + item.foto"
+            width="50px"
+            height="50px"
+            class="img-avatar"
+            alt=""
+          />
+          <img
+            *ngIf="item.foto === ''"
+            src="assets/img/noImg.jpg"
+            width="50px"
+            height="50px"
+            class="img-avatar"
+            alt=""
+          />
+        </td>
+        <td class="p-column-title">
+          {{ item.profession }}
+        </td>
+        <td class="p-column-title">
+          {{ item.employee }}
+        </td>
+        <td class="p-column-title">
+          {{ item.turnoTrabajo }}
+        </td>
+        <td class="p-column-title">
+          {{ item.sueldo }}
+        </td>
+        <td class="p-column-title" class="text-center">
+          <span
+            *ngIf="item.cubierta"
+            class="badge rounded-pill badge-soft-sucess"
+          >
+            <i class="fa-duotone fa-user-check"> </i>
+            Vacante cubierta
+          </span>
+          <span
+            *ngIf="!item.cubierta"
+            class="badge rounded-pill badge-soft-primary"
+          >
+            <i class="fa-duotone fa-xmark"></i>
+            Vacante disponible
+          </span>
+        </td>
+
+        <!-- Opciones -->
+        <td class="p-column-title">
+          <div class="d-flex justify-content-center">
+            <custom-button-edit
+              (edit)="
+                onModalAddOrEdit({ id: item.id, title: 'Editar Registro' })
+              "
+            ></custom-button-edit>
+          </div>
+        </td>
+      </tr>
+
+      <!-- Opciones -->
+    </ng-template>
+  </p-table>
+</div>

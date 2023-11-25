@@ -1,0 +1,72 @@
+<ng-container *ngIf="horizontal">
+  <div class="form-group row mb-2">
+    <label class="col-sm-3">{{ label }}</label>
+    <div class="col-sm-9">
+      <input
+        type="number"
+        [min]="min"
+        [max]="max"
+        class="form-control"
+        [disabled]="disabled"
+        [readonly]="readonly"
+        [placeholder]="'Ingresa ' + placeholder"
+        [value]="value"
+        (input)="onChange($event.target.value)"
+        (blur)="onTouch()"
+        [ngClass]="{
+          'is-invalid': control.invalid && (control.dirty || control.touched)
+        }"
+      />
+      <div
+        class="small text-danger"
+        *ngIf="control.invalid && (control.dirty || control.touched)"
+      >
+        <p class="mb-1" *ngIf="control.errors.required">
+          El campo {{ placeholder }} es requerido.
+        </p>
+        <p class="mb-1" *ngIf="control.errors.min">
+          El valor ingresado debe ser mayor o igual a
+          {{ control.errors.min.min }}.
+        </p>
+        <p class="mb-1" *ngIf="control.errors.max">
+          El valor ingresado debe ser menor o igual a
+          {{ control.errors.max.max }}.
+        </p>
+      </div>
+    </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="!horizontal">
+  <div class="mb-3">
+    <label>{{ label }}</label>
+    <input
+      type="number"
+      class="form-control"
+      [disabled]="disabled"
+      [readonly]="readonly"
+      [placeholder]="'Ingresa ' + placeholder"
+      [value]="value"
+      (input)="onChange($event.target.value)"
+      (blur)="onTouch()"
+      [ngClass]="{
+        'is-invalid': control.invalid && (control.dirty || control.touched)
+      }"
+    />
+    <div
+      class="small text-danger"
+      *ngIf="control.invalid && (control.dirty || control.touched)"
+    >
+      <p class="mb-1" *ngIf="control.errors.required">
+        El campo {{ placeholder }} es requerido.
+      </p>
+      <p class="mb-1" *ngIf="control.errors.min">
+        El valor ingresado debe ser mayor o igual a
+        {{ control.errors.min.min }}.
+      </p>
+      <p class="mb-1" *ngIf="control.errors.max">
+        El valor ingresado debe ser menor o igual a
+        {{ control.errors.max.max }}.
+      </p>
+    </div>
+  </div>
+</ng-container>

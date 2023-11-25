@@ -1,0 +1,119 @@
+<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+
+<div class="card">
+  <p-table
+    #dt
+    [(selection)]="data"
+    [autoLayout]="true"
+    [globalFilterFields]="[
+      'marca',
+      'modelo',
+      'serie',
+      'fechaCompra',
+      'customerId',
+      'bateria',
+      'responsibleArea',
+      'employee'
+    ]"
+    [showCurrentPageReport]="true"
+    [value]="data"
+    styleClass="custom-table"
+  >
+    <ng-template pTemplate="caption">
+      <app-table-header
+        [title]="'Radios de Comunicación'"
+        (add)="onModalAddOrEdit({ id: 0, title: 'Nuevo Registro' })"
+        [dt]="dt"
+      ></app-table-header>
+    </ng-template>
+    <ng-template pTemplate="paginatorleft">
+      <div class="p-d-flex p-ai-center p-jc-between hide-print-mode">
+        En total hay
+        {{ data ? data.length : 0 }} registros.
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th scope="col">Nº</th>
+        <th scope="col" pSortableColumn="fotografia">
+          Fotografia
+          <p-sortIcon field="fotografia"></p-sortIcon>
+        </th>
+        <th scope="col" pSortableColumn="marca">
+          Marca <p-sortIcon field="marca"></p-sortIcon>
+        </th>
+        <th scope="col" pSortableColumn="modelo">
+          Modelo<p-sortIcon field="modelo"></p-sortIcon>
+        </th>
+        <th scope="col" pSortableColumn="serie">
+          Serie<p-sortIcon field="serie"></p-sortIcon>
+        </th>
+        <th scope="col" pSortableColumn="bateria">
+          Bateria<p-sortIcon field="bateria"></p-sortIcon>
+        </th>
+        <th scope="col" pSortableColumn="fechaCompra">
+          Compra<p-sortIcon field="fechaCompra"></p-sortIcon>
+        </th>
+        <th scope="col" pSortableColumn="responsibleArea">
+          Area<p-sortIcon field="responsibleArea"></p-sortIcon>
+        </th>
+        <th scope="col" pSortableColumn="employee">
+          Responsable<p-sortIcon field="employee"></p-sortIcon>
+        </th>
+        <th scope="col" style="width: 5%">Opt.</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item let-i="rowIndex">
+      <tr>
+        <td class="p-column-title">
+          {{ i + 1 }}
+        </td>
+        <td class="p-column-title">
+          <!-- <img [src]="urlBaseImg + item.fotografia" alt="" /> -->
+          <p-image
+            [src]="urlBaseImg + item.fotografia"
+            alt="Image"
+            width="120"
+            height="70"
+            [preview]="true"
+          ></p-image>
+        </td>
+        <td class="p-column-title">
+          {{ item.marca }}
+        </td>
+        <td class="p-column-title">
+          {{ item.modelo }}
+        </td>
+        <td class="p-column-title">
+          {{ item.serie }}
+        </td>
+        <td class="p-column-title">
+          {{ item.bateria }}
+        </td>
+        <td class="p-column-title">
+          {{ item.fechaCompra | date }}
+        </td>
+        <td class="p-column-title">
+          {{ item.responsibleAreaName }}
+        </td>
+        <td class="p-column-title">
+          {{ item.employeeName }}
+        </td>
+        <!-- Opciones -->
+        <td class="p-column-title">
+          <div class="d-flex justify-content-center">
+            <custom-button-edit
+              (edit)="
+                onModalAddOrEdit({ id: item.id, title: 'Editar Registro' })
+              "
+            ></custom-button-edit>
+            <custom-button-delete
+              (OnConfirm)="onDelete(item)"
+            ></custom-button-delete>
+          </div>
+        </td>
+        <!-- Opciones -->
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

@@ -1,0 +1,185 @@
+<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+<p-table
+  [(selection)]="data"
+  #dt
+  styleClass="custom-table"
+  [value]="data"
+  [rows]="50"
+  [paginator]="true"
+  [rowHover]="true"
+  currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+  [showCurrentPageReport]="true"
+  [rowsPerPageOptions]="[50, 75, 100]"
+  [globalFilterFields]="[
+    'folio',
+    'fechaSolicitud',
+    'solicita',
+    'equipoOInstalacion',
+    'justificacionGasto'
+  ]"
+  [autoLayout]="true"
+>
+  <ng-template pTemplate="caption">
+    <app-table-header
+      [title]="'Solicitudes de Insumos y Servicios'"
+      (add)="onSolicitudCompra(0)"
+      [dt]="dt"
+      [rolAuth]="
+        authService.onValidateRoles([
+          'Asistente',
+          'Mantenimiento',
+          'Residente',
+          'SuperUsuario'
+        ])
+      "
+    ></app-table-header>
+    <br />
+    <div class="row">
+      <div class="col-12 float-end">
+        <button
+          (click)="onSelectStatus(1)"
+          (click)="statusCompra = 1"
+          [class.btn-outline-secondary]="statusCompra !== 1"
+          [class.btn-secondary]="statusCompra == 1"
+          class="btn btn-sm me-1"
+        >
+          Denegadas
+        </button>
+
+        <button
+          (click)="onSelectStatus(0)"
+          (click)="statusCompra = 0"
+          [class.btn-outline-success]="statusCompra !== 0"
+          [class.btn-success]="statusCompra == 0"
+          class="btn btn-sm me-1"
+        >
+          Autorizadas
+        </button>
+
+        <button
+          (click)="onSelectStatus(2)"
+          (click)="statusCompra = 2"
+          [class.btn-outline-danger]="statusCompra !== 2"
+          [class.btn-danger]="statusCompra == 2"
+          [class.btn-outlined-danger]="statusCompra == 2"
+          class="btn btn-sm me-1"
+        >
+          Pendientes
+        </button>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="header">
+    <tr>
+      <th
+        scope="col"
+        style="width: 10%"
+        class="text-small"
+        pSortableColumn="folio"
+      >
+        FOLIO
+        <p-sortIcon field="folio"></p-sortIcon>
+      </th>
+      <th
+        scope="col"
+        style="width: 10%"
+        class="text-small"
+        pSortableColumn="fechaSolicitud"
+      >
+        FECHA
+        <p-sortIcon field="fechaSolicitud"></p-sortIcon>
+      </th>
+      <th
+        scope="col"
+        style="width: 16%"
+        class="text-small"
+        pSortableColumn="solicita"
+      >
+        SOLICITA
+        <p-sortIcon field="solicita"></p-sortIcon>
+      </th>
+      <th
+        scope="col"
+        style="width: 32%"
+        class="text-small"
+        pSortableColumn="equipoOInstalacion"
+      >
+        ÁREA/EQUIPO/INSTALACIÓN
+        <p-sortIcon field="equipoOInstalacion"></p-sortIcon>
+      </th>
+      <th
+        scope="col"
+        style="width: 32%"
+        class="text-small"
+        pSortableColumn="justificacionGasto"
+      >
+        JUSTIFICACIÓN
+        <p-sortIcon field="justificacionGasto"></p-sortIcon>
+      </th>
+      <th scope="col" colspan="2" style="width: 10%" class="text-small">
+        ESTATUS
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-item>
+    <tr>
+      <td>
+        {{ item.folio }}
+      </td>
+      <td>
+        {{ item.fechaSolicitud | date }}
+      </td>
+      <td>
+        {{ item.solicita }}
+      </td>
+      <td>
+        {{ item.equipoOInstalacion }}
+      </td>
+      <td>
+        {{ item.justificacionGasto }}
+      </td>
+      <td class="text-center">
+        <span
+          *ngIf="item.estatus == 'Pendiente'"
+          class="badge bg-danger p-2 ms-1"
+          >{{ item.estatus }}</span
+        >
+        <span
+          *ngIf="item.estatus == 'Autorizado'"
+          class="badge bg-success p-2 ms-1"
+          >{{ item.estatus }}</span
+        >
+        <span
+          *ngIf="item.estatus == 'Denegado'"
+          class="badge bg-secondary p-2 ms-1"
+          >{{ item.estatus }}</span
+        >
+      </td>
+
+      <td class="p-column-title">
+        <div class="d-flex justify-content-center">
+          <custom-button-edit
+            *ngIf="
+              authService.onValidateRoles([
+                'Asistente',
+                'Mantenimiento',
+                'Residente',
+                'SuperUsuario'
+              ])
+            "
+            (edit)="onSolicitudCompra(item.id)"
+          ></custom-button-edit>
+          <custom-button-delete
+            *ngIf="authService.onValidateRoles(['SuperUsuario'])"
+            (OnConfirm)="onDelete(item)"
+          ></custom-button-delete>
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="paginatorleft">
+    <app-table-footer [data]="data"></app-table-footer>
+  </ng-template>
+</p-table>

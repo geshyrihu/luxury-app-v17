@@ -1,0 +1,14 @@
+<div class="row mb-4">
+  <label for="horizontal-firstname-input" class="col-sm-3 col-form-label"
+    >Periodo</label
+  >
+  <div class="col-sm-9">
+    <input
+      type="month"
+      ngbTooltip="SELECCIONA PERIODO"
+      class="form-control"
+      [(ngModel)]="periodo"
+      (change)="onChangePeriodo()"
+    />
+  </div>
+</div>

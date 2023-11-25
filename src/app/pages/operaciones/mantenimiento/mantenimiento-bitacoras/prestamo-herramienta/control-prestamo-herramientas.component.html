@@ -1,0 +1,105 @@
+<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+
+<p-table
+  *ngIf="data"
+  [(selection)]="data"
+  #dt
+  styleClass="custom-table"
+  [value]="data"
+  [rows]="15"
+  [paginator]="true"
+  [rowHover]="true"
+  currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+  [showCurrentPageReport]="true"
+  [rowsPerPageOptions]="[10, 20, 30, 40, 50, 75, 100]"
+  [globalFilterFields]="['fechaSalida', 'tool', 'employee', 'fechaEntrega']"
+  [autoLayout]="true"
+>
+  <ng-template pTemplate="caption">
+    <app-table-header
+      [title]="'Control Prestamo de Herramienta'"
+      (add)="onModalAddOrEdit({ id: 0, title: 'Nuevo Registro' })"
+      [dt]="dt"
+      [rolAuth]="authService.onValidateRoles(['SuperUsuario', 'Mantenimiento'])"
+    ></app-table-header>
+  </ng-template>
+
+  <ng-template pTemplate="header">
+    <tr>
+      <th scope="col" pSortableColumn="fechaSalida">
+        Fecha de Salida <p-sortIcon field="fechaSalida"></p-sortIcon>
+      </th>
+      <th scope="col" pSortableColumn="tool">
+        Herramienta
+        <p-sortIcon field="tool"></p-sortIcon>
+      </th>
+      <th scope="col" pSortableColumn="employee">
+        Colaborador<p-sortIcon field="employee"></p-sortIcon>
+      </th>
+      <th scope="col" pSortableColumn="fechaEntrega">
+        Fecha de Entrega<p-sortIcon field="fechaEntrega"></p-sortIcon>
+      </th>
+      <th scope="col" pSortableColumn="observaciones">
+        Observaciones<p-sortIcon field="observaciones"></p-sortIcon>
+      </th>
+
+      <th
+        *ngIf="authService.onValidateRoles(['SuperUsuario', 'Mantenimiento'])"
+        scope="col"
+        style="width: 5%"
+      >
+        Opciones
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-item>
+    <tr>
+      <td class="p-column-title">
+        <small>
+          {{ item.fechaSalida | date : "medium" }}
+        </small>
+      </td>
+      <td class="p-column-title">
+        <small>
+          {{ item.tool }}
+        </small>
+      </td>
+      <td class="p-column-title">
+        <small>
+          {{ item.employee }}
+        </small>
+      </td>
+      <td class="p-column-title">
+        <small>
+          {{ item.fechaRegreso | date : "medium" }}
+        </small>
+      </td>
+      <td class="p-column-title">
+        <small>
+          {{ item.observaciones }}
+        </small>
+      </td>
+      <!-- Opciones -->
+      <td
+        class="p-column-title"
+        *ngIf="authService.onValidateRoles(['SuperUsuario', 'Mantenimiento'])"
+      >
+        <div class="d-flex justify-content-center">
+          <custom-button-edit
+            (edit)="onModalAddOrEdit({ id: item.id, title: 'Editar Registro' })"
+          ></custom-button-edit>
+          <custom-button-delete
+            (OnConfirm)="onDelete(item)"
+          ></custom-button-delete>
+        </div>
+      </td>
+      <!-- Opciones -->
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="paginatorleft">
+    <div class="p-d-flex p-ai-center p-jc-between">
+      En total hay
+      {{ data ? data.length : 0 }} registros.
+    </div>
+  </ng-template>
+</p-table>

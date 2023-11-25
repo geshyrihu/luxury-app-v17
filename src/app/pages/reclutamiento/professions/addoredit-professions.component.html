@@ -1,0 +1,61 @@
+<div class="card">
+  <div class="card-body">
+    <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
+      <custom-input-text
+        [control]="form.get('id')"
+        formControlName="id"
+        label="Id"
+      ></custom-input-text>
+      <custom-input-select
+        [control]="form.get('ecompanyDepartments')"
+        formControlName="ecompanyDepartments"
+        label="Area"
+        [data]="cb_area_responsable"
+      ></custom-input-select>
+
+      <custom-input-text
+        [control]="form.get('nameProfession')"
+        formControlName="nameProfession"
+        label="Nombre"
+        placeholder="nombre"
+      ></custom-input-text>
+
+      <custom-input-text
+        [control]="form.get('professionkey')"
+        formControlName="professionkey"
+        label="Id Profesión"
+        placeholder="Id profesión"
+      ></custom-input-text>
+      <custom-input-number
+        [control]="form.get('hierarchy')"
+        formControlName="hierarchy"
+        label="Jeraquía"
+        placeholder="Jeraquía"
+      ></custom-input-number>
+      <custom-input-text-area
+        [control]="form.get('description')"
+        formControlName="description"
+        label="Descripción"
+        placeholder="descripción"
+      ></custom-input-text-area>
+
+      <custom-input-text-area
+        [control]="form.get('requirements')"
+        formControlName="requirements"
+        label="Requisitos"
+        placeholder="requisitos"
+      ></custom-input-text-area>
+
+      <custom-input-text-area
+        [control]="form.get('responsibilities')"
+        formControlName="responsibilities"
+        label="Responsabilidades"
+        placeholder="responsabilidades"
+      ></custom-input-text-area>
+
+      <custom-button-submit
+        [disabled]="this.form.invalid || submitting"
+      ></custom-button-submit>
+    </form>
+  </div>
+</div>

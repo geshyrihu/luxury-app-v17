@@ -1,0 +1,26 @@
+<form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
+  <custom-input-text
+    [control]="form.get('id')"
+    formControlName="id"
+    label="Id"
+    [horizontal]="false"
+  ></custom-input-text>
+  <input hidden class="form-control" formControlName="ordenCompraId" />
+  <input
+    hidden
+    class="form-control"
+    formControlName="cedulaPresupuestalDetalleId"
+  />
+
+  <custom-input-number
+    [horizontal]="false"
+    [control]="form.get('dineroUsado')"
+    formControlName="dineroUsado"
+    label="Gasto"
+    placeholder="gasto"
+  ></custom-input-number>
+
+  <custom-button-submit
+    [disabled]="this.form.invalid || submitting"
+  ></custom-button-submit>
+</form>

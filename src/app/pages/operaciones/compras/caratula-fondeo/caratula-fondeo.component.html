@@ -1,0 +1,58 @@
+<div class="card">
+  <div class="card-body">
+    <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
+      <custom-input-date
+        [control]="form.get('fechaInicial')"
+        formControlName="fechaInicial"
+        label="Fecha de inicial"
+        placeholder="fecha de inicial"
+      ></custom-input-date>
+
+      <custom-input-date
+        [control]="form.get('fechaFinal')"
+        formControlName="fechaFinal"
+        label="Fecha de final"
+        placeholder="fecha de final"
+      ></custom-input-date>
+
+      <custom-input-text
+        [control]="form.get('cuenta')"
+        formControlName="cuenta"
+        label="Cuenta"
+        placeholder="cuenta"
+      ></custom-input-text>
+
+      <custom-input-text
+        [control]="form.get('datoDePago')"
+        formControlName="datoDePago"
+        label="Dato de Pago"
+        placeholder="dato de Pago"
+      ></custom-input-text>
+
+      <custom-input-text
+        [control]="form.get('entregadoPor')"
+        formControlName="entregadoPor"
+        label="Entregado Por"
+        placeholder="entregado Por"
+      ></custom-input-text>
+
+      <custom-input-select
+        [control]="form.get('eTipoGasto')"
+        formControlName="eTipoGasto"
+        label="Tipo de Gasto"
+        [data]="tipoGasto"
+      ></custom-input-select>
+
+      <custom-input-text
+        [control]="form.get('ligaFacturas')"
+        formControlName="ligaFacturas"
+        label="Liga Facturasr"
+        placeholder="liga Facturasr"
+      ></custom-input-text>
+
+      <custom-button-submit
+        [disabled]="this.form.invalid || submitting"
+      ></custom-button-submit>
+    </form>
+  </div>
+</div>

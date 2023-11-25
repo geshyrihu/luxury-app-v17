@@ -1,0 +1,71 @@
+<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+
+<div class="p-card p-mb-5">
+  <p-table
+    [(selection)]="data"
+    [autoLayout]="true"
+    [value]="data"
+    styleClass="custom-table"
+  >
+    <ng-template pTemplate="caption">
+      <h5>Pendientes en Minutas Contabilidad</h5>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th scope="col" style="width: 8%">#</th>
+        <th scope="col" style="width: 8%" pSortableColumn="numeroCliente">
+          CLIENTE
+          <p-sortIcon
+            field="numeroCliente
+          "
+          ></p-sortIcon>
+        </th>
+        <th scope="col" style="width: 8%" pSortableColumn="dateFiltro">
+          Fecha<p-sortIcon field="dateFiltro"></p-sortIcon>
+        </th>
+        <th scope="col" style="width: 30%">Asunto</th>
+        <th scope="col" style="width: 30%" pSortableColumn="pendiente">
+          Seguimiento<p-sortIcon field="pendiente"></p-sortIcon>
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-i="rowIndex" let-item>
+      <tr>
+        <td class="p-column-title">
+          <small>
+            {{ i + 1 }}
+          </small>
+        </td>
+        <td class="p-column-title">
+          <small>
+            {{ item.nombreCorto }}
+          </small>
+        </td>
+        <td class="p-column-title">
+          <small>
+            {{ item.date }}
+          </small>
+        </td>
+        <td class="p-column-title">
+          <small>
+            <p class="h6">{{ item.title | titlecase }}</p>
+            <div
+              class="text-justify"
+              [innerHTML]="item.requestService | sanitizeHtml"
+            ></div>
+          </small>
+        </td>
+        <td class="p-column-title">
+          <small>
+            <ol [start]="item.seguimientos.length" reversed>
+              <li *ngFor="let seguimiento of item.seguimientos">
+                {{ seguimiento.fecha }},
+                {{ seguimiento.seguimiento | titlecase }}
+              </li>
+            </ol>
+          </small>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

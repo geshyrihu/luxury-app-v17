@@ -1,0 +1,232 @@
+<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+
+<ng-container *ngIf="presupuestoAgregados">
+  <p-table
+    [(selection)]="presupuestoAgregados"
+    #dtt
+    styleClass="custom-table"
+    [value]="presupuestoAgregados"
+    [rows]="15"
+    [paginator]="true"
+    [rowHover]="true"
+    currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+    [showCurrentPageReport]="true"
+    [rowsPerPageOptions]="[10, 20, 30, 40, 50, 75, 100]"
+    [globalFilterFields]="['cedulaPresupuestalDetalle.cuenta.descripcion']"
+    [autoLayout]="true"
+  >
+    <ng-template pTemplate="caption">
+      <app-table-header
+        [title]="'Partidas agregadas'"
+        [showAdd]="false"
+        [dt]="dtt"
+      ></app-table-header>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width: 35%">Periodo</th>
+        <th
+          style="width: 35%"
+          scope="col"
+          pSortableColumn="cedulaPresupuestalDetalle.cuenta.descripcion"
+        >
+          Descripción
+          <p-sortIcon
+            field="cedulaPresupuestalDetalle.cuenta.descripcion"
+          ></p-sortIcon>
+        </th>
+        <th
+          style="width: 15%"
+          scope="col"
+          pSortableColumn="cedulaPresupuestalDetalle.presupuestoMensual"
+        >
+          Pres. Mensual
+          <p-sortIcon
+            field="cedulaPresupuestalDetalle.presupuestoMensual"
+          ></p-sortIcon>
+        </th>
+
+        <th style="width: 15%" scope="col">Gasto a realizar</th>
+        <th style="width: 5%" scope="col" style="width: 5%">Guardar</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item>
+      <tr>
+        <td class="p-column-title">
+          <p *ngFor="let cedulaId of cb_cedulas">
+            <small
+              *ngIf="
+                item.cedulaPresupuestalDetalle.cedulaPresupuestalId ==
+                cedulaId.value
+              "
+            >
+              {{ cedulaId.label }}
+            </small>
+          </p>
+        </td>
+        <td class="p-column-title">
+          <small>
+            <input
+              type="text"
+              [(ngModel)]="item.cedulaPresupuestalDetalle.cuenta.descripcion"
+              mode="currency"
+              readonly
+              class="form-control form-control-sm"
+            />
+          </small>
+        </td>
+        <td class="p-column-title">
+          <input
+            type="number"
+            [(ngModel)]="item.cedulaPresupuestalDetalle.presupuestoMensual"
+            class="form-control form-control-sm"
+          />
+        </td>
+
+        <td class="">
+          <input
+            type="number"
+            [(ngModel)]="item.dineroUsado"
+            class="form-control form-control-sm"
+          />
+        </td>
+        <td class="p-column-title">
+          <div class="d-flex justify-content-center">
+            <button
+              ngbTooltip="Guardar"
+              placement="top"
+              (click)="onUpdatePresupuestoAgregado(item)"
+              class="btn btn-sm btn-outline-info me-1"
+            >
+              <i class="fa-thin fa-floppy-disk"></i>
+            </button>
+            <custom-button-delete
+              (OnConfirm)="deletePresupuestoAgregado(item.id)"
+            ></custom-button-delete>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</ng-container>
+
+<ng-container *ngIf="data">
+  <p-table
+    [(selection)]="data"
+    #dt
+    styleClass="custom-table"
+    [value]="data"
+    [rows]="15"
+    [paginator]="true"
+    [rowHover]="true"
+    currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+    [showCurrentPageReport]="true"
+    [rowsPerPageOptions]="[10, 20, 30, 40, 50, 75, 100]"
+    [globalFilterFields]="['cedulaPresupuestalDetalle.cuenta.descripcion']"
+    [autoLayout]="true"
+  >
+    <ng-template pTemplate="caption">
+      <app-table-header
+        [title]="'Cedula Presupuestal'"
+        [showAdd]="false"
+        [dt]="dt"
+      ></app-table-header>
+      <div class="col-sm-12">
+        <div class="form-group row">
+          <label class="col-sm-3 font-weight-light"
+            >Selecciona presupuesto</label
+          >
+          <div class="col-sm-5" *ngIf="cedulaId !== 0">
+            <select
+              class="form-control form-con"
+              (change)="onLoadPresupuesto()"
+              [(ngModel)]="cedulaId"
+            >
+              <option [value]="item.value" *ngFor="let item of cb_cedulas">
+                {{ item.label }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th
+          style="width: 35%"
+          scope="col"
+          pSortableColumn="cedulaPresupuestalDetalle.cuenta.descripcion"
+        >
+          Descripción
+          <p-sortIcon
+            field="cedulaPresupuestalDetalle.cuenta.descripcion"
+          ></p-sortIcon>
+        </th>
+        <th
+          style="width: 15%"
+          scope="col"
+          pSortableColumn="cedulaPresupuestalDetalle.presupuestoMensual"
+        >
+          Pres. Mensual
+          <p-sortIcon
+            field="cedulaPresupuestalDetalle.presupuestoMensual"
+          ></p-sortIcon>
+        </th>
+
+        <th style="width: 15%" scope="col">Gasto a realizar</th>
+
+        <th style="width: 5%" scope="col" style="width: 5%">Guardar</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item>
+      <tr>
+        <td class="p-column-title">
+          <small>
+            <input
+              type="text"
+              [(ngModel)]="item.cedulaPresupuestalDetalle.cuenta.descripcion"
+              mode="currency"
+              readonly
+              class="form-control form-con"
+            />
+          </small>
+        </td>
+        <td class="p-column-title">
+          <small>
+            <input
+              readonly
+              [(ngModel)]="item.cedulaPresupuestalDetalle.presupuestoMensual"
+              type="number"
+              min="0"
+              class="form-control form-control-sm"
+            />
+          </small>
+        </td>
+
+        <td class="">
+          <input
+            type="number"
+            class="form-control formcontrol"
+            [(ngModel)]="item.dineroUsado"
+          />
+        </td>
+        <!-- Opciones -->
+        <td class="p-column-title">
+          <div class="d-flex justify-content-center">
+            <button
+              (click)="onSubmit(item)"
+              class="btn btn-sm btn-outline-info"
+            >
+              <i class="fa-thin fa-floppy-disk"></i>
+            </button>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="paginatorleft">
+      <app-table-footer [data]="data"></app-table-footer>
+    </ng-template>
+  </p-table>
+</ng-container>

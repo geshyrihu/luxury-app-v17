@@ -1,0 +1,107 @@
+<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+
+<div class="card">
+  <p-table
+    #dt
+    [(selection)]="data"
+    [autoLayout]="true"
+    [globalFilterFields]="['shortName', 'largeName']"
+    [paginator]="true"
+    [rowHover]="true"
+    [rows]="50"
+    [rowsPerPageOptions]="[50, 75, 100, 200]"
+    [showCurrentPageReport]="true"
+    [value]="data"
+    currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+    styleClass="custom-table"
+  >
+    <ng-template pTemplate="caption">
+      <app-table-header
+        [title]="'Bitacora'"
+        (add)="onModalAddOrEdit({ id: 0, title: 'Nuevo Registro' })"
+        [dt]="dt"
+      ></app-table-header>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th scope="col" pSortableColumn="filtro">
+          Fecha <p-sortIcon field="filtro"></p-sortIcon>
+        </th>
+        <th scope="col" style="width: 7%">Cl</th>
+        <th scope="col" style="width: 7%">Ph</th>
+        <th scope="col" style="width: 7%">Ak</th>
+        <th scope="col" style="width: 7%">Dureza</th>
+        <th scope="col" style="width: 7%">Temp</th>
+        <th scope="col" style="width: 7%">Apl Cl</th>
+        <th scope="col" style="width: 7%">Apl Ph+</th>
+        <th scope="col" style="width: 7%">Apl Ph-</th>
+        <th scope="col" style="width: 7%">Cepillado</th>
+        <th scope="col" style="width: 7%">Aspirado</th>
+        <th scope="col" style="width: 7%">Cenefas</th>
+        <th scope="col"></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item>
+      <tr>
+        <td class="p-column-title">{{ item.dateString }}</td>
+        <td class="p-column-title text-center">{{ item.cl }}</td>
+        <td class="p-column-title text-center">{{ item.ph }}</td>
+        <td class="p-column-title text-center">{{ item.alkalinidad }}</td>
+        <td class="p-column-title text-center">{{ item.dureza }}</td>
+        <td class="p-column-title text-center">{{ item.temperatura }}</td>
+        <td class="p-column-title text-center">{{ item.aplicationCl }}</td>
+        <td class="p-column-title text-center">{{ item.aplicationPhMas }}</td>
+        <td class="p-column-title text-center">{{ item.aplicationPhMenos }}</td>
+        <td class="p-column-title text-center">
+          <i
+            [ngClass]="{
+              'fa-duotone fa-check-double text-success font-size-18':
+                item.cepillado,
+              'fa-duotone fa-x text-danger font-size-18': !item.cepillado
+            }"
+          ></i>
+        </td>
+        <td class="p-column-title text-center">
+          <i
+            [ngClass]="{
+              'fa-duotone fa-check-double text-success font-size-18':
+                item.aspirado,
+              'fa-duotone fa-x text-danger font-size-18': !item.aspirado
+            }"
+          ></i>
+        </td>
+        <td class="p-column-title text-center">
+          <i
+            [ngClass]="{
+              'fa-duotone fa-check-double text-success font-size-18':
+                item.cenefas,
+              'fa-duotone fa-x text-danger font-size-18': !item.cenefas
+            }"
+          ></i>
+        </td>
+
+        <!-- Opciones -->
+        <td class="p-column-title">
+          <div class="d-flex justify-content-center">
+            <custom-button-edit
+              (edit)="
+                onModalAddOrEdit({ id: item.id, title: 'Editar Registro' })
+              "
+            ></custom-button-edit>
+            <custom-button-delete
+              (OnConfirm)="onDelete(item)"
+            ></custom-button-delete>
+          </div>
+        </td>
+        <!-- Opciones -->
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="paginatorleft">
+      <div class="p-d-flex p-ai-center p-jc-between hide-print-mode">
+        En total hay
+        {{ data ? data.length : 0 }} registros.
+      </div>
+    </ng-template>
+  </p-table>
+</div>

@@ -1,0 +1,122 @@
+<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+<div class="card">
+  <div class="card-body">
+    <div class="row">
+      <button
+        class="col-auto btn btn-outline-primary me-1"
+        (click)="onSelectAll()"
+      >
+        Seleccionar Todos
+      </button>
+      <button
+        class="col-auto btn btn-outline-primary me-1"
+        (click)="onDeselecteAll()"
+      >
+        Desmarcar Todos
+      </button>
+
+      <button
+        class="col-auto btn btn-outline-primary me-1"
+        (click)="onMostrarInput(false, false, true, 'CCO')"
+        [ngClass]="{ active: mostrarCco }"
+      >
+        Agregar CCO
+      </button>
+
+      <custom-button-confirmation
+        title="Confirmar"
+        icon=""
+        text="Enviar Informe Financiero"
+        label="Enviar Informe Financiero"
+        tooltipText="Enviar Informe Financiero"
+        classButton="col-auto btn btn-outline-success me-1"
+        confirmButtonText="Sí, enviar"
+        (OnConfirm)="onEnviarEmail()"
+      ></custom-button-confirmation>
+    </div>
+    <form
+      *ngIf="mostrarPara || mostrarCo || mostrarCco"
+      [formGroup]="form"
+      (ngSubmit)="onAddCorreo()"
+      class="ms-0 mt-1"
+    >
+      <div class="row">
+        <div class="col-md-3">
+          <input
+            type="email"
+            required
+            class="form-control"
+            [placeholder]="placeholder"
+            formControlName="email"
+            [ngClass]="{
+              'is-invalid': f.email.errors && (f.email.dirty || f.email.touched)
+            }"
+          />
+        </div>
+        <div class="col-md-1 d-grid">
+          <button
+            ngbTooltip="Agregar Correo"
+            placement="top"
+            class="btn"
+            [disabled]="this.form.invalid"
+            [ngClass]="{
+              'btn-danger': this.form.invalid,
+              'btn-success': !this.form.invalid
+            }"
+          >
+            <i
+              class="fas"
+              [ngClass]="{
+                'fa-times': this.form.invalid,
+                'fa-check': !this.form.invalid
+              }"
+            ></i>
+          </button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <div
+            *ngIf="f.email.errors && (f.email.dirty || f.email.touched)"
+            class="invalid-feedback"
+          >
+            <small
+              *ngIf="
+                f.email.errors.required && (f.email.dirty || f.email.touched)
+              "
+            >
+              Correo electronico es requerido
+            </small>
+            <small
+              *ngIf="f.email.errors.email && (f.email.dirty || f.email.touched)"
+            >
+              El correo electrónico debe ser una dirección de correo electrónico
+              válida
+            </small>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <div class="row">
+      <div class="col">
+        <span
+          *ngFor="let item of destinatariosAdicionales; let i = index"
+          class="badge bg-info ms-1 p-2 position-relative"
+        >
+          {{ item.nivelPrivacidad }}/{{ item.emailResidente }}
+          <span
+            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success"
+            ><i
+              ngbTooltip="Descartar correo"
+              placement="top"
+              (click)="onDeleteDestinatariosAdicionales(i)"
+              class="fa-duotone fa-xmark pointer"
+            ></i
+          ></span>
+        </span>
+      </div>
+    </div>
+    <!-- end card-body -->
+  </div>
+</div>

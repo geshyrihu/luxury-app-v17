@@ -1,0 +1,37 @@
+<h3 class="h3">Inventario de Herramientas</h3>
+<table class="table table-bordered" *ngIf="data">
+  <thead class="thead-dark">
+    <tr>
+      <th style="width: 30%">
+        <p class="font-normal">Imagen</p>
+      </th>
+      <th style="width: 35%">Descripción</th>
+      <th style="width: 35%">Observaciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of data">
+      <td>
+        <img
+          [src]="base_urlImg + item.photoPath"
+          alt=""
+          width="100px"
+          height="80px"
+        />
+      </td>
+      <td>
+        <p class="mb-0">{{ item.nameTool }}</p>
+        <p class="mb-0">{{ item.brand }}</p>
+        <p class="mb-0">{{ item.model }}</p>
+        <p
+          class="font-normal mb-0"
+          [innerHTML]="item.technicalSpecifications | sanitizeHtml"
+        ></p>
+        <p
+          class="font-normal mb-0"
+          [innerHTML]="item.observations | sanitizeHtml"
+        ></p>
+      </td>
+    </tr>
+  </tbody>
+</table>

@@ -1,0 +1,17 @@
+<div class="card">
+  <div class="card-body">
+    <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
+      <custom-input-text-area
+        [control]="form.get('observaciones')"
+        formControlName="observaciones"
+        label="Observaciones"
+        placeholder="Observaciones"
+        [horizontal]="false"
+      ></custom-input-text-area>
+
+      <custom-button-submit
+        [disabled]="form.invalid || submitting"
+      ></custom-button-submit>
+    </form>
+  </div>
+</div>

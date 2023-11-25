@@ -1,0 +1,149 @@
+<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+
+<div class="card">
+  <p-table
+    #dt
+    [value]="data"
+    sortMode="single"
+    rowGroupMode="subheader"
+    [globalFilterFields]="[
+      'correoPersonal',
+      'fullName',
+      'celularPersonal',
+      'profession'
+    ]"
+    styleClass="custom-table"
+  >
+    <ng-template pTemplate="caption">
+      <div class="row">
+        <div class="col-sm-10">
+          <app-table-header
+            [title]="'DIRECTORIO DE PERSONAL ' + tipoContrato | uppercase"
+            (add)="showModalAddAccount()"
+            [dt]="dt"
+            [rolAuth]="
+              authService.onValidateRoles([
+                'Asistente',
+                'Residente',
+                'SuperUsuario'
+              ])
+            "
+          ></app-table-header>
+        </div>
+        <div class="col-sm-2">
+          <custom-button-active-desactive
+            (activo)="onSelectActive($event)"
+            (inactivo)="onSelectActive($event)"
+          ></custom-button-active-desactive>
+        </div>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th
+          scope="col"
+          style="width: 10%"
+          pSortableColumn="userName"
+          class="hide-print-mode"
+        >
+          USUARIO
+          <p-sortIcon field="userName"></p-sortIcon>
+        </th>
+        <th scope="col" style="width: 20%" pSortableColumn="workPositionFolio">
+          VACANTE
+          <p-sortIcon field="workPositionFolio"></p-sortIcon>
+        </th>
+        <th
+          colspan="2"
+          scope="col"
+          style="width: 30%"
+          pSortableColumn="fullName"
+        >
+          COLABORADOR
+          <p-sortIcon field="fullName"></p-sortIcon>
+        </th>
+        <th
+          scope="col"
+          style="width: 30%"
+          pSortableColumn="celularPersonal"
+          class="hide-print-mode"
+        >
+          TÉLEFONO
+          <p-sortIcon field="celularPersonal"></p-sortIcon>
+        </th>
+        <th scope="col" style="width: 30%" pSortableColumn="email">
+          EMAIL
+          <p-sortIcon field="email"></p-sortIcon>
+        </th>
+
+        <th
+          *ngIf="
+            authService.onValidateRoles([
+              'Asistente',
+              'Residente',
+              'SuperUsuario'
+            ])
+          "
+          scope="col"
+          style="width: 5%"
+        ></th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+      <tr>
+        <td>
+          {{ item.userName }}
+        </td>
+        <td>
+          {{ item.workPositionFolio }}
+        </td>
+        <td>
+          <img [src]="url + item.photoPath" alt="" class="rounded avatar-sm" />
+        </td>
+        <td>
+          {{ item.fullName }}
+        </td>
+        <td>
+          {{ item.celularPersonal }}
+        </td>
+        <td>
+          {{ item.correoPersonal }}
+        </td>
+
+        <td
+          class="p-column-title hide-print-mode"
+          *ngIf="
+            authService.onValidateRoles([
+              'Asistente',
+              'Residente',
+              'SuperUsuario'
+            ])
+          "
+        >
+          <div class="d-flex justify-content-center">
+            <custom-button
+              *ngIf="
+                authService.onValidateRoles([
+                  'SuperUsuario',
+                  'Residente',
+                  'Asistente'
+                ])
+              "
+              [ngbTooltipCustom]="'Opciones'"
+              customClass="btn-sm btn-outline-info"
+              icon="fa-duotone fa-ellipsis-vertical"
+              (clicked)="
+                onModalEmpleadoOpciones(
+                  item.applicationUserId,
+                  item.id,
+                  item.active
+                )
+              "
+            ></custom-button>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

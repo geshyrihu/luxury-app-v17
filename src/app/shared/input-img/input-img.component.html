@@ -1,0 +1,44 @@
+<div
+  class="p-1 card"
+  (click)="fileInput.click()"
+  [style]="{ cursor: 'pointer' }"
+>
+  <!-- <div class="card-header">
+    <span> {{ title }}</span>
+  </div> -->
+  <img
+    class="img-fluid"
+    *ngIf="imgBase64"
+    [src]="imgBase64"
+    alt="imgBase64"
+    [ngStyle]="{
+      width: contentWidth + 'px',
+      height: contentHeight + 'px'
+    }"
+  />
+
+  <img
+    class="img-fluid"
+    *ngIf="!imgBase64 && urlImgCurrent === null"
+    src="assets/images/no-image.jpg"
+    alt="CARGAR IMAGEN"
+  />
+  <img
+    class="img-fluid"
+    *ngIf="!imgBase64 && urlImgCurrent !== null"
+    [src]="urlImgCurrent"
+    alt=""
+    [ngStyle]="{
+      width: contentWidth + 'px',
+      height: contentHeight + 'px'
+    }"
+  />
+</div>
+
+<input
+  type="file"
+  hidden
+  #fileInput
+  (change)="change($event)"
+  accept="image/png, .jpeg, .jpg"
+/>

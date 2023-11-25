@@ -1,0 +1,290 @@
+<form autocomplete="off" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-4">
+              <custom-input-text
+                [control]="form.get('nameProvider')"
+                [horizontal]="false"
+                formControlName="nameProvider"
+                label="Razón Social"
+                placeholder="razón social"
+              ></custom-input-text>
+
+              <custom-input-text
+                [control]="form.get('nameComercial')"
+                [horizontal]="false"
+                formControlName="nameComercial"
+                label="Nombre Comercial"
+                placeholder="nombre comercial"
+              ></custom-input-text>
+
+              <custom-input-text
+                (keyup)="onValidarRFC()"
+                [(ngModel)]="valueRfc"
+                [control]="form.get('rfc')"
+                [horizontal]="false"
+                formControlName="rfc"
+                label="RFC"
+                placeholder="rfc"
+              ></custom-input-text>
+
+              <div class="form-group mb-1" *ngIf="rfcCoincidente.length > 0">
+                <div *ngFor="let item of rfcCoincidente">
+                  <label class="font-weight-normal small text-danger">
+                    {{ item.rfc }} Ya hay un registro con este RFC
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="row">
+                <div class="col-sm-6">
+                  <custom-input-mask
+                    [control]="form.get('phoneOne')"
+                    formControlName="phoneOne"
+                    label="Teléfono fijo 1"
+                    placeholder="(00) 0000-0000"
+                    customMask="(00) 0000-0000"
+                    [horizontal]="false"
+                  ></custom-input-mask>
+                </div>
+                <div class="col-sm-6">
+                  <custom-input-mask
+                    [control]="form.get('phoneTwo')"
+                    formControlName="phoneTwo"
+                    label="Teléfono fijo 2"
+                    placeholder="(00) 0000-0000"
+                    customMask="(00) 0000-0000"
+                    [horizontal]="false"
+                  ></custom-input-mask>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <custom-input-text
+                    [control]="form.get('webPage')"
+                    [horizontal]="false"
+                    formControlName="webPage"
+                    label="Página Web"
+                    placeholder="página web"
+                  ></custom-input-text>
+
+                  <custom-input-select
+                    [control]="form.get('nivelAcceso')"
+                    formControlName="nivelAcceso"
+                    label="Nivel de Acceso"
+                    [data]="cb_nivel_acceso"
+                    [horizontal]="false"
+                  ></custom-input-select>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <custom-input-text-area
+                [control]="form.get('address')"
+                formControlName="address"
+                label="Dirección"
+                placeholder="dirección"
+                [horizontal]="false"
+              ></custom-input-text-area>
+              <div class="row">
+                <div class="col-sm-9">
+                  <custom-input-check
+                    [control]="form.get('sales')"
+                    formControlName="sales"
+                    label="Ventas"
+                    [horizontal]="false"
+                  ></custom-input-check>
+                  <custom-input-check
+                    [control]="form.get('repair')"
+                    formControlName="repair"
+                    label="Reparación"
+                    [horizontal]="false"
+                  ></custom-input-check>
+                </div>
+                <!-- Logo de porveedor -->
+                <div class="col-sm-3">
+                  <app-input-img
+                    (fileSelected)="uploadFile($event)"
+                    [urlImgCurrent]="urlLogo"
+                    [contentHeight]="'75'"
+                    [contentWidth]="'75'"
+                  ></app-input-img>
+                </div>
+                <!-- Logo de porveedor -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body">
+          <custom-input-text
+            [control]="form.get('contactOne')"
+            [horizontal]="false"
+            formControlName="contactOne"
+            label="Nombre de contacto 1"
+            placeholder="nombre de contacto 1"
+          ></custom-input-text>
+
+          <custom-input-text
+            [control]="form.get('positionOne')"
+            [horizontal]="false"
+            formControlName="positionOne"
+            label="Puesto"
+            placeholder="puesto"
+          ></custom-input-text>
+
+          <custom-input-mask
+            [control]="form.get('cellPhoneOne')"
+            formControlName="cellPhoneOne"
+            label="Teléfono Celular"
+            placeholder="(00) 0000-0000"
+            customMask="(00) 0000-0000"
+            [horizontal]="false"
+          ></custom-input-mask>
+
+          <custom-input-text
+            [control]="form.get('emailOne')"
+            [horizontal]="false"
+            formControlName="emailOne"
+            label="Correo Electronico"
+            placeholder="correo electronico"
+          ></custom-input-text>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body">
+          <custom-input-text
+            [control]="form.get('contactTwo')"
+            [horizontal]="false"
+            formControlName="contactTwo"
+            label="Nombre de contacto 2"
+            placeholder="nombre de contacto 2"
+          ></custom-input-text>
+
+          <custom-input-text
+            [control]="form.get('positionTwo')"
+            [horizontal]="false"
+            formControlName="positionTwo"
+            label="Puesto"
+            placeholder="puesto"
+          ></custom-input-text>
+
+          <custom-input-mask
+            [control]="form.get('cellPhoneTwo')"
+            formControlName="cellPhoneTwo"
+            label="Teléfono Celular"
+            placeholder="(00) 0000-0000"
+            customMask="(00) 0000-0000"
+            [horizontal]="false"
+          ></custom-input-mask>
+
+          <custom-input-text
+            [control]="form.get('emailTwo')"
+            [horizontal]="false"
+            formControlName="emailTwo"
+            label="Correo Electronico"
+            placeholder="correo electronico"
+          ></custom-input-text>
+        </div>
+      </div>
+    </div>
+
+    <!-- Datos de Pago -->
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body">
+          <custom-input-text
+            [control]="form.get('nameCheck')"
+            [horizontal]="false"
+            formControlName="nameCheck"
+            label="beneficiario"
+            placeholder="beneficiario"
+          ></custom-input-text>
+
+          <custom-input-datalist
+            [horizontal]="false"
+            (propagar)="saveBancoId($event)"
+            [control]="form.get('bankName')"
+            [data]="cb_bancos"
+            formControlName="bankName"
+            label="Banco"
+            dataListId="bankNameDatalistOptions"
+          ></custom-input-datalist>
+
+          <custom-input-text
+            [control]="form.get('paymentAccount')"
+            [horizontal]="false"
+            formControlName="paymentAccount"
+            label="Cuenta/Convenio"
+            placeholder="cuenta o convenio"
+          ></custom-input-text>
+
+          <custom-input-text
+            [control]="form.get('interbankCode')"
+            [horizontal]="false"
+            formControlName="interbankCode"
+            label="Clabe/Referencia"
+            placeholder="clabe o referencia"
+          ></custom-input-text>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-4">
+      <div class="mb-3">
+        <label for="formFileSm">Constancia fiscal</label>
+        <input
+          [required]="true"
+          class="form-control"
+          id="formFileSm"
+          type="file"
+          accept="application/pdf"
+          (change)="change($event.target['files'][0])"
+        />
+      </div>
+    </div>
+    <div class="col-8">
+      <div class="mb-3">
+        <label for="choices-multiple-default">Seleccionar categoria</label>
+        <div class="multi_default">
+          <ng-select
+            formControlName="categorias"
+            [items]="cb_category"
+            [multiple]="true"
+            bindLabel="label"
+            [(ngModel)]="catecoriasSeleccinadas"
+          >
+            <ng-template ng-optgroup-tmp let-item="item">
+              {{ item.label || "Unnamed group" }}
+            </ng-template>
+          </ng-select>
+          <div
+            *ngIf="
+              f.categorias.invalid &&
+              (f.categorias.dirty || f.categorias.touched)
+            "
+          >
+            <small *ngIf="f.categorias.errors.required" class="text-danger"
+              >Selecciona los servicios que ofrece este proveedor.</small
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <custom-button-submit
+    [disabled]="this.form.invalid || submitting"
+  ></custom-button-submit>
+</form>

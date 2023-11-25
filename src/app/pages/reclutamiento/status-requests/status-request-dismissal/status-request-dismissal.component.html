@@ -1,0 +1,116 @@
+<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+<ng-container *ngIf="data">
+  <div class="card">
+    <table class="custom-table">
+      <thead>
+        <tr>
+          <th scope="col">Folio</th>
+          <th scope="col">Fecha de solicitud</th>
+          <th scope="col">Puesto</th>
+          <th scope="col">Fecha de baja</th>
+          <th scope="col">Excolaborador</th>
+          <th scope="col">Télefono</th>
+          <th scope="col">Tipo de baja</th>
+          <th scope="col">Motivo de baja</th>
+          <th scope="col">Colaborador enterado</th>
+          <th scope="col">Se solicita abogado</th>
+          <th
+            scope="col"
+            *ngIf="
+              authService.onValidateRoles(['SuperUsuario', 'Reclutamiento'])
+            "
+          ></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td>{{ data.folio }}</td>
+          <td>{{ data.requestDate }}</td>
+          <td>{{ data.profession }}</td>
+          <td>{{ data.executionDate }}</td>
+
+          <td>
+            <img
+              (click)="onCardEmployee(data.employeeId)"
+              *ngIf="data.photoPath && data.photoPath !== undefined"
+              [src]="pahtBaseImg + data.photoPath"
+              class="rounded avatar-sm pointer me-3"
+              alt=""
+            />
+            <i
+              *ngIf="!data.photoPath"
+              class="fa-duotone fa-user-xmark fa-2x"
+            ></i>
+            {{ data.employee }}
+          </td>
+          <td>{{ data.employeePhone | phoneFormat }}</td>
+          <td>{{ data.tipoBaja }}</td>
+          <td>{{ data.reasonForLeaving }}</td>
+          <td>
+            {{ data.employeeInformed ? "Si" : "No" }}
+          </td>
+          <td>
+            {{ data.lawyerAssistance ? "Si" : "No" }}
+          </td>
+
+          <td
+            *ngIf="
+              authService.onValidateRoles(['SuperUsuario', 'Reclutamiento'])
+            "
+          >
+            <div class="d-flex justify-content-end">
+              <custom-button-edit
+                (edit)="
+                  onModalAddOrEdit({ id: data.id, title: 'Editar Registro' })
+                "
+              ></custom-button-edit>
+              <custom-button-delete
+                (OnConfirm)="onDelete(data.id)"
+              ></custom-button-delete>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="row">
+    <div class="col-6">
+      <h3>Lista de descuentos</h3>
+      <ul class="list-unstyle">
+        <li class="list-group-item" *ngFor="let item of data.discounts">
+          <div class="row">
+            <div class="col-9">
+              <!-- <strong>ID:</strong> {{ item.id }}<br /> -->
+              <strong>Descripción:</strong> {{ item.description }}<br />
+              <strong>Descuento:</strong> {{ item.discount }}
+            </div>
+            <div
+              class="col-3"
+              *ngIf="
+                authService.onValidateRoles(['SuperUsuario', 'Reclutamiento'])
+              "
+            >
+              <div class="d-flex justify-content-end">
+                <custom-button-edit
+                  (edit)="
+                    onModalAddOrEditDiscounts({
+                      id: item.id,
+                      title: 'Editar Registro'
+                    })
+                  "
+                ></custom-button-edit>
+
+                <custom-button-delete
+                  (OnConfirm)="onDeleteDiscounts(item.id)"
+                ></custom-button-delete>
+              </div>
+            </div>
+          </div>
+          <hr />
+        </li>
+      </ul>
+    </div>
+  </div>
+</ng-container>

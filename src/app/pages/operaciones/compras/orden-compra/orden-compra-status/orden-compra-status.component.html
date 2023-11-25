@@ -1,0 +1,34 @@
+<div class="card">
+  <div class="card-body">
+    <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
+      <custom-input-check
+        [control]="form.get('sePago')"
+        formControlName="sePago"
+        label="¿Pago Realizado?"
+      ></custom-input-check>
+
+      <custom-input-check
+        [control]="form.get('seRecibio')"
+        formControlName="seRecibio"
+        label="¿Compra recibido?"
+      ></custom-input-check>
+
+      <custom-input-text
+        [control]="form.get('recibidoPor')"
+        formControlName="recibidoPor"
+        label="Recibido Por"
+        placeholder="receptor"
+      ></custom-input-text>
+
+      <custom-input-text
+        [control]="form.get('factura')"
+        formControlName="factura"
+        label="Factura"
+        placeholder="factura"
+      ></custom-input-text>
+      <custom-button-submit
+        [disabled]="form.invalid || submitting"
+      ></custom-button-submit>
+    </form>
+  </div>
+</div>

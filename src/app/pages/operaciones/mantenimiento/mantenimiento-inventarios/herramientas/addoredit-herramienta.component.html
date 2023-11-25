@@ -1,0 +1,107 @@
+<div class="card">
+  <div class="card-body">
+    <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
+      <div class="row">
+        <div class="form-group col-sm-4">
+          <custom-input-text
+            [control]="form.get('nameTool')"
+            [horizontal]="false"
+            formControlName="nameTool"
+            label="Nombre del Equipo"
+            placeholder="nombre del equipo"
+          ></custom-input-text>
+        </div>
+
+        <div class="form-group col-sm-4">
+          <custom-input-select
+            [horizontal]="false"
+            [control]="form.get('categoryId')"
+            formControlName="categoryId"
+            label="Categoria"
+            [data]="cb_category"
+          ></custom-input-select>
+        </div>
+        <div class="form-group col-sm-4">
+          <custom-input-text
+            [control]="form.get('brand')"
+            formControlName="brand"
+            label="Marca"
+            placeholder="marca"
+            [horizontal]="false"
+          ></custom-input-text>
+        </div>
+        <div class="col-sm-4">
+          <custom-input-text
+            [control]="form.get('model')"
+            formControlName="model"
+            label="Modelo"
+            placeholder="modelo"
+            [horizontal]="false"
+          ></custom-input-text>
+        </div>
+        <div class="col-sm-4">
+          <custom-input-text
+            [control]="form.get('serie')"
+            formControlName="serie"
+            label="Serie"
+            placeholder="serie"
+            [horizontal]="false"
+          ></custom-input-text>
+        </div>
+
+        <div class="col-sm-4">
+          <custom-input-date
+            [horizontal]="false"
+            [control]="form.get('dateOfPurchase')"
+            formControlName="dateOfPurchase"
+            label="Compra/Instalación"
+            placeholder="fecha de compra/instalación"
+          ></custom-input-date>
+        </div>
+        <div class="col-sm-4">
+          <custom-input-select
+            [horizontal]="false"
+            [control]="form.get('state')"
+            formControlName="state"
+            label="Estado"
+            [data]="optionActive"
+          ></custom-input-select>
+        </div>
+        <!-- Img -->
+        <div class="form-group col-sm-4">
+          <label>Imagen</label>
+
+          <app-input-img
+            (fileSelected)="uploadFile($event)"
+            [urlImgCurrent]="urlBaseImg"
+            [contentHeight]="'100'"
+            [contentWidth]="'100'"
+          ></app-input-img>
+        </div>
+        <!-- Img -->
+
+        <div class="col-sm-6">
+          <custom-input-text-area
+            [control]="form.get('technicalSpecifications')"
+            formControlName="technicalSpecifications"
+            label="Especificaciones Técnicas"
+            placeholder="especificaciones técnicas"
+            [horizontal]="false"
+          ></custom-input-text-area>
+        </div>
+        <div class="col-sm-6">
+          <custom-input-text-area
+            [control]="form.get('observations')"
+            formControlName="observations"
+            label="Observaciones"
+            placeholder="observaciones"
+            [horizontal]="false"
+          ></custom-input-text-area>
+        </div>
+      </div>
+      <custom-button-submit
+        [disabled]="this.form.invalid || submitting"
+      ></custom-button-submit>
+    </form>
+  </div>
+</div>

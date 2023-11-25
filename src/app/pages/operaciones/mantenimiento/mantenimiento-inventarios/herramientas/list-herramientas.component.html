@@ -1,0 +1,92 @@
+<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+<p-table
+  #dt
+  [value]="data"
+  styleClass="custom-table"
+  [paginator]="true"
+  [rows]="15"
+  [showCurrentPageReport]="true"
+  currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+  [rowsPerPageOptions]="[10, 20, 30, 40, 50, 75, 100]"
+  [globalFilterFields]="['nameTool', 'category']"
+  [autoLayout]="true"
+  [rowHover]="true"
+>
+  <ng-template pTemplate="caption">
+    <app-table-header
+      [title]="'Herramientas'"
+      (add)="showModalAddOrEdit({ id: 0, title: 'Nuevo Registro' })"
+      [dt]="dt"
+      [rolAuth]="authService.onValidateRoles(['Mantenimiento', 'SuperUsuario'])"
+    ></app-table-header>
+    <a
+      class="mt-1 btn btn-sm btn-outline-danger"
+      routerLink="/mantenimiento/inventario/reporte-herramientas"
+      >Informe
+      <i class="fa-duotone fa-file-pdf"></i>
+    </a>
+  </ng-template>
+  <ng-template pTemplate="header">
+    <tr>
+      <th scope="col">Img</th>
+      <th scope="col" pSortableColumn="nameTool">
+        Nombre
+        <p-sortIcon field="nameTool"></p-sortIcon>
+      </th>
+      <th scope="col" pSortableColumn="category">
+        Categoria
+        <p-sortIcon field="category"></p-sortIcon>
+      </th>
+
+      <th
+        *ngIf="authService.onValidateRoles(['Mantenimiento', 'SuperUsuario'])"
+        scope="col"
+        style="width: 10%"
+      >
+        Opciones
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-item>
+    <tr>
+      <td class="p-column-title">
+        <img
+          class="img-thumbnail"
+          alt="200x200"
+          width="100"
+          [src]="base_urlImg + item.photoPath"
+          data-holder-rendered="true"
+        />
+      </td>
+      <td class="p-column-title">
+        <small> {{ item.nameTool }}</small>
+      </td>
+      <td class="p-column-title">
+        <small>{{ item.category }} </small>
+      </td>
+
+      <!-- Opciones -->
+      <td
+        class="p-column-title"
+        *ngIf="authService.onValidateRoles(['Mantenimiento', 'SuperUsuario'])"
+      >
+        <div class="d-flex justify-content-center">
+          <custom-button-edit
+            (edit)="
+              showModalAddOrEdit({ id: item.id, title: 'Editar Registro' })
+            "
+          ></custom-button-edit>
+          <custom-button-delete
+            (OnConfirm)="onDelete(item)"
+          ></custom-button-delete>
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="paginatorleft">
+    <div class="p-d-flex p-ai-center p-jc-between">
+      En total hay
+      {{ data ? data.length : 0 }} registros.
+    </div>
+  </ng-template>
+</p-table>

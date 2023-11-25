@@ -1,0 +1,64 @@
+<ng-container *ngIf="horizontal">
+  <div class="form-group row mb-2" [hidden]="hidden">
+    <label class="col-sm-3">{{ label }}</label>
+    <div class="col-sm-9">
+      <select
+        [value]="value"
+        class="form-select"
+        [disabled]="disabled"
+        (input)="onChange($event.target.value)"
+        (blur)="onTouch()"
+        [ngClass]="{
+          'is-invalid': control.invalid && (control.dirty || control.touched)
+        }"
+      >
+        <!-- <option *ngIf="SelectDefaulOption" value="">
+          {{ placeholder }}
+        </option> -->
+        <option *ngFor="let item of data" [value]="item.value">
+          {{ item.label }}
+        </option>
+      </select>
+
+      <div
+        class="small text-danger"
+        *ngIf="control.invalid && (control.dirty || control.touched)"
+      >
+        <p class="mb-1" *ngIf="control.errors.required">
+          El campo {{ placeholder }} es requerido.
+        </p>
+      </div>
+    </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="!horizontal">
+  <div class="mb-2">
+    <label>{{ label }}</label>
+    <select
+      [value]="value"
+      class="form-select"
+      [disabled]="disabled"
+      (input)="onChange($event.target.value)"
+      (blur)="onTouch()"
+      [ngClass]="{
+        'is-invalid': control.invalid && (control.dirty || control.touched)
+      }"
+    >
+      <!-- <option *ngIf="SelectDefaulOption" value="">
+        {{ placeholder }}
+      </option> -->
+      <option *ngFor="let item of data" [value]="item.value">
+        {{ item.label }}
+      </option>
+    </select>
+
+    <div
+      class="small text-danger"
+      *ngIf="control.invalid && (control.dirty || control.touched)"
+    >
+      <p class="mb-1" *ngIf="control.errors.required">
+        El campo {{ placeholder }} es requerido.
+      </p>
+    </div>
+  </div>
+</ng-container>

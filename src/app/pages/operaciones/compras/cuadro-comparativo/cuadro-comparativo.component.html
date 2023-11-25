@@ -1,0 +1,332 @@
+<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+<div class="row" *ngIf="solicitudCompra">
+  <div class="col-sm-8">
+    <h5 class="font-size-14">Folio de cotización {{ folio }}</h5>
+    <p class="mb-1">{{ solicitudCompra.equipoOInstalacion }}</p>
+    <p class="mb-1">{{ solicitudCompra.justificacionGasto }}</p>
+  </div>
+
+  <div class="col-sm-4">
+    <custom-button
+      *ngIf="cotizacionProveedor.length > 1"
+      ngbTooltip="Evaluar precio de manera individual"
+      placement="left"
+      [customNgClass]="{ active: evaluarPrecioIndependiente }"
+      customClass="btn-warning float-end me-1"
+      (clicked)="evaluarPrecioIndependiente = !evaluarPrecioIndependiente"
+      label="Evaluar"
+    >
+    </custom-button>
+    <custom-button
+      *ngIf="cotizacionProveedor.length !== 3"
+      ngbTooltip="Agregar Cotización"
+      placement="left"
+      customClass="btn-info float-end me-2"
+      (clicked)="onModalAddProveedor()"
+      [disabled]="cotizacionProveedor.length === 3"
+      icon="fa-duotone fa-plus me-1"
+      label="Agregar cotización"
+    >
+    </custom-button>
+  </div>
+</div>
+
+<hr class="bg-dark" style="height: 4px" />
+<div class="row">
+  <div class="col-sm-12">
+    <p-table [value]="solicitudCompraDetalle" styleClass="custom-table">
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width: 30%" scope="col" class="font-size-14">
+            DESCRIPCIÓN
+          </th>
+          <th style="width: 10%" scope="col" class="font-size-14">CANTIDAD</th>
+          <th style="width: 10%" scope="col" class="font-size-14">UNIDAD</th>
+          <th
+            scope="col"
+            [class.one]="cotizacionProveedor.length === 1"
+            [class.two]="cotizacionProveedor.length === 2"
+            [class.three]="cotizacionProveedor.length === 3"
+            class="text-center font-size-14 pointer"
+            (click)="onEditCotizacion(1)"
+            *ngIf="provider1 !== undefined"
+          >
+            {{ provider1 | uppercase }}
+          </th>
+          <th
+            [class.two]="cotizacionProveedor.length === 2"
+            [class.three]="cotizacionProveedor.length === 3"
+            scope="col"
+            class="text-center pointer font-size-14"
+            *ngIf="provider2 !== undefined"
+            (click)="onEditCotizacion(2)"
+          >
+            {{ provider2 | uppercase }}
+          </th>
+          <th
+            [class.three]="cotizacionProveedor.length === 3"
+            scope="col"
+            class="text-center pointer font-size-14"
+            *ngIf="provider3 !== undefined"
+            (click)="onEditCotizacion(3)"
+          >
+            {{ provider3 | uppercase }}
+          </th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-item>
+        <tr>
+          <td class="font-size-14">
+            {{ item.producto | uppercase }}
+          </td>
+          <td class="font-size-14">{{ item.cantidad }}</td>
+          <td class="font-size-14">
+            {{ item.unidadMedida }}
+          </td>
+          <!-- Total 1 -->
+
+          <td
+            class="font-size-14"
+            [ngClass]="{
+              'bg-warning':
+                item.total < item.total2 &&
+                cotizacionProveedor.length === 2 &&
+                evaluarPrecioIndependiente
+            }"
+            [ngClass]="{
+              'bg-warning':
+                item.total < item.total2 &&
+                item.total < item.total3 &&
+                cotizacionProveedor.length === 3 &&
+                evaluarPrecioIndependiente
+            }"
+            *ngIf="provider1 != undefined"
+          >
+            {{ item.total | currency : "MXN" : "symbol" : "1.0-0" }}
+          </td>
+
+          <!-- Total 1 -->
+          <!-- Total 2 -->
+          <td
+            class="font-size-14"
+            [ngClass]="{
+              'bg-warning':
+                item.total2 < item.total &&
+                cotizacionProveedor.length === 2 &&
+                evaluarPrecioIndependiente
+            }"
+            [ngClass]="{
+              'bg-warning':
+                item.total2 < item.total &&
+                item.total2 < item.total3 &&
+                cotizacionProveedor.length === 3 &&
+                evaluarPrecioIndependiente
+            }"
+            *ngIf="provider2 != undefined"
+          >
+            {{ item.total2 | currency : "MXN" : "symbol" : "1.0-0" }}
+          </td>
+
+          <!-- Total 2 -->
+          <!-- Total 3 -->
+          <td
+            class="font-size-14"
+            [ngClass]="{
+              'bg-warning':
+                item.total3 < item.total &&
+                item.total3 < item.total2 &&
+                evaluarPrecioIndependiente
+            }"
+            *ngIf="provider3 != undefined"
+          >
+            {{ item.total3 | currency : "MXN" : "symbol" : "1.0-0" }}
+          </td>
+          <!-- Total 3 -->
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="footer">
+        <tr>
+          <td class="font-size-14" colspan="3"></td>
+          <td
+            class="font-size-14"
+            (change)="onEvaluationPriceTotal()"
+            *ngIf="provider1 !== undefined"
+            [ngClass]="{
+              'bg-warning': amarilloTotal1
+            }"
+          >
+            {{ total1 | currency : "MXN" : "symbol" : "1.0-0" }}
+          </td>
+          <td
+            class="font-size-14"
+            (change)="onEvaluationPriceTotal()"
+            *ngIf="provider2 !== undefined"
+            [ngClass]="{
+              'bg-warning': amarilloTotal2
+            }"
+          >
+            {{ total2 | currency : "MXN" : "symbol" : "1.0-0" }}
+          </td>
+          <td
+            class="font-size-14"
+            (change)="onEvaluationPriceTotal()"
+            *ngIf="provider3 !== undefined"
+            [ngClass]="{
+              'bg-warning': amarilloTotal3
+            }"
+          >
+            {{ total3 | currency : "MXN" : "symbol" : "1.0-0" }}
+          </td>
+        </tr>
+        <!-- Totales: -->
+        <br />
+        <!-- Totales Mejor Opcion: -->
+        <tr *ngIf="evaluarPrecioIndependiente">
+          <td class="font-size-14" colspan="3"></td>
+          <td
+            class="font-size-14"
+            (change)="onEvaluationPriceTotal()"
+            *ngIf="provider1 !== undefined"
+          >
+            {{ mejorPrecioTotal1 | currency : "MXN" : "symbol" : "1.0-0" }}
+          </td>
+          <td
+            class="font-size-14"
+            (change)="onEvaluationPriceTotal()"
+            *ngIf="provider2 !== undefined"
+          >
+            {{ mejorPrecioTotal2 | currency : "MXN" : "symbol" : "1.0-0" }}
+          </td>
+          <td
+            class="font-size-14"
+            (change)="onEvaluationPriceTotal()"
+            *ngIf="provider3 !== undefined"
+          >
+            {{ mejorPrecioTotal3 | currency : "MXN" : "symbol" : "1.0-0" }}
+          </td>
+        </tr>
+        <tr *ngIf="evaluarPrecioIndependiente">
+          <td class="font-size-14" colspan="3"></td>
+          <td class="font-size-14" colspan="3" class="text-center">
+            <p class="font-size-14">
+              TOTAL A GASTAR COMPRANDO LO MAS BARATO A CADA PROVEEDOR:
+            </p>
+            {{ totalMejorPrecioTotal | currency : "MXN" : "symbol" : "1.0-0" }}
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+
+<table *ngIf="cotizacionProveedor" class="custom-table w-100">
+  <tr>
+    <td
+      colspan="3"
+      style="width: 50%; border: none !important; text-align: end !important"
+    >
+      TIEMPO DE ENTREGA
+    </td>
+    <td
+      *ngIf="provider1 !== undefined"
+      [class.one]="cotizacionProveedor.length === 1"
+      [class.two]="cotizacionProveedor.length === 2"
+      [class.three]="cotizacionProveedor.length === 3"
+    >
+      {{ cotizacionProveedor[0].entrega }}
+    </td>
+    <td
+      *ngIf="provider2 !== undefined"
+      [class.two]="cotizacionProveedor.length === 2"
+      [class.three]="cotizacionProveedor.length === 3"
+    >
+      {{ cotizacionProveedor[1].entrega }}
+    </td>
+    <td
+      *ngIf="provider3 !== undefined"
+      [class.three]="cotizacionProveedor.length === 3"
+    >
+      {{ cotizacionProveedor[2].entrega }}
+    </td>
+  </tr>
+  <tr>
+    <td
+      colspan="3"
+      style="width: 50%; border: none !important; text-align: end !important"
+    >
+      GARANTIA
+    </td>
+    <td
+      *ngIf="provider1 !== undefined"
+      [class.one]="cotizacionProveedor.length === 1"
+      [class.two]="cotizacionProveedor.length === 2"
+      [class.three]="cotizacionProveedor.length === 3"
+    >
+      {{ cotizacionProveedor[0].garantia }}
+    </td>
+    <td
+      *ngIf="provider2 !== undefined"
+      [class.two]="cotizacionProveedor.length === 2"
+      [class.three]="cotizacionProveedor.length === 3"
+    >
+      {{ cotizacionProveedor[1].garantia }}
+    </td>
+    <td
+      *ngIf="provider3 !== undefined"
+      [class.three]="cotizacionProveedor.length === 3"
+    >
+      {{ cotizacionProveedor[2].garantia }}
+    </td>
+  </tr>
+
+  <tr>
+    <td
+      colspan="3"
+      style="width: 50%; border: none !important; text-align: end !important"
+    >
+      POLITICAS DE PAGO
+    </td>
+    <td
+      *ngIf="provider1 !== undefined"
+      [class.one]="cotizacionProveedor.length === 1"
+      [class.two]="cotizacionProveedor.length === 2"
+      [class.three]="cotizacionProveedor.length === 3"
+    >
+      {{ cotizacionProveedor[0].politicaPago }}
+    </td>
+    <td
+      *ngIf="provider2 !== undefined"
+      [class.two]="cotizacionProveedor.length === 2"
+      [class.three]="cotizacionProveedor.length === 3"
+    >
+      {{ cotizacionProveedor[1].politicaPago }}
+    </td>
+    <td
+      *ngIf="provider3 !== undefined"
+      [class.three]="cotizacionProveedor.length === 3"
+    >
+      {{ cotizacionProveedor[2].politicaPago }}
+    </td>
+  </tr>
+</table>
+
+<style>
+  .one {
+    width: 50%;
+  }
+  .two {
+    width: 25%;
+  }
+  .three {
+    width: 16.66%;
+  }
+  /* th {
+    background: #000 !important;
+    color: white !important;
+  }
+  td {
+    color: #000 !important;
+    border-color: #000 !important;
+  } */
+</style>

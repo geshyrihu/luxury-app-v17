@@ -1,0 +1,40 @@
+<ng-container *ngIf="mostrarTabla">
+  <div class="p-fluid">
+    <button
+      [disabled]="ordenCompraPresupuestoUtilizado"
+      (click)="onModalOrdenCompraStatus()"
+      type="button"
+      class="pointer btn btn-info w-100 mb-2 p-1"
+    >
+      ESTATUS DE COMPRA
+    </button>
+  </div>
+  <table class="table table-sm">
+    <tbody>
+      <tr>
+        <td style="width: 30%">Pagado</td>
+        <td style="width: 70%">
+          {{ ordenCompra.ordenCompraStatus.sePago | eBoolText }}
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 30%">Entregado</td>
+        <td style="width: 70%">
+          {{ ordenCompra.ordenCompraStatus.seRecibio | eBoolText }}
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 30%">Recibido por</td>
+        <td style="width: 70%">
+          {{ ordenCompra.ordenCompraStatus.recibidoPor }}
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 30%">Factura</td>
+        <td style="width: 70%">
+          {{ ordenCompra.ordenCompraStatus.factura }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</ng-container>

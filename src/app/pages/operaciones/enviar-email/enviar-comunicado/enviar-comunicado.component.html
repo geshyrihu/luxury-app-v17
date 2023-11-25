@@ -1,0 +1,155 @@
+<div class="card">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-12 mb-2">
+        <button
+          type="button"
+          class="btn btn-light me-1 mb-1"
+          (click)="onModalCorreosCondominos()"
+        >
+          Seleccionar correos Condomios
+        </button>
+      </div>
+      <div class="col-1">
+        <label class="font-size-12">
+          <i
+            ngbTooltip="Agregar destinatario"
+            placement="top"
+            class="fa-duotone fa-list me-2 pointer"
+            (click)="onModalAgregarCorreoElectronico(0)"
+          ></i>
+          PARA
+        </label>
+      </div>
+      <div class="col-11 mb-3">
+        <div
+          *ngFor="let item of para; let i = index"
+          class="btn btn-sm btn-light position-relative m-1 p-1 font-size-12"
+        >
+          {{ item.emailResidente }}
+
+          <i
+            ngbTooltip="Descartar correo"
+            placement="top"
+            (click)="onDeletePara(i)"
+            class="fa-duotone fa-xmark pointer ms-2"
+          ></i>
+        </div>
+      </div>
+      <div class="col-1">
+        <label class="font-size-12">
+          <i
+            ngbTooltip="Agregar destinatario en copia"
+            placement="top"
+            class="fa-duotone fa-list me-2 pointer"
+            (click)="onModalAgregarCorreoElectronico(1)"
+          ></i>
+          CC
+        </label>
+      </div>
+      <div class="col-11 mb-3">
+        <div
+          *ngFor="let item of copia; let i = index"
+          class="btn btn-sm btn-light position-relative m-1 p-1 font-size-12"
+        >
+          {{ item.emailResidente }}
+
+          <i
+            ngbTooltip="Descartar correo"
+            placement="top"
+            (click)="onDeleteCopia(i)"
+            class="fa-duotone fa-xmark pointer ms-2"
+          ></i>
+        </div>
+      </div>
+      <div class="col-1">
+        <label class="font-size-12">
+          <i
+            ngbTooltip="Agregar destinatario en copia oculta"
+            placement="top"
+            class="fa-duotone fa-list me-2 pointer"
+            (click)="onModalAgregarCorreoElectronico(2)"
+          ></i>
+          CCO
+        </label>
+      </div>
+      <div class="col-11 mb-3">
+        <div
+          *ngFor="let item of copiaOculta; let i = index"
+          class="btn btn-sm btn-light position-relative m-1 p-1 font-size-12"
+        >
+          {{ item.emailResidente }}
+
+          <i
+            ngbTooltip="Descartar correo"
+            placement="top"
+            (click)="onDeleteCopiaOculta(i)"
+            class="fa-duotone fa-xmark pointer ms-2"
+          ></i>
+        </div>
+      </div>
+
+      <div class="col-1">
+        <label class="font-size-12">ARCHIVOS</label>
+      </div>
+      <div class="col-11 mb-3">
+        <div class="mb-3 mb-3">
+          <form [formGroup]="demoForm">
+            <file-upload
+              formControlName="files"
+              [animation]="animation"
+              maxsize="10 MB"
+            >
+              <ng-template
+                let-i="index"
+                let-file="file"
+                let-control="control"
+                #item
+              >
+                <file-upload-list-item
+                  [index]="i"
+                  [file]="file"
+                  [control]="control"
+                  >Eliminar</file-upload-list-item
+                >
+              </ng-template>
+            </file-upload>
+          </form>
+        </div>
+      </div>
+      <div class="col-1">
+        <label class="font-size-12">ASUNTO</label>
+      </div>
+      <div class="col-11 mb-3">
+        <input
+          [(ngModel)]="subject"
+          class="form-control"
+          list="providerDatalistOptions"
+          id="providerDataList"
+          placeholder="Ingresar asunto..."
+        />
+
+        <datalist id="providerDatalistOptions">
+          <option [value]="item.label" *ngFor="let item of cb_asuntos"></option>
+        </datalist>
+      </div>
+    </div>
+    <div class="mb-3">
+      <ckeditor
+        [(ngModel)]="body"
+        [editor]="Editor"
+        data="<p>Content of the editor.</p>"
+      ></ckeditor>
+    </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        [disabled]="submitting"
+        (click)="onSubmit()"
+        class="btn btn-primary"
+      >
+        Enviar <i class="fa-duotone fa-paper-plane ms-1"></i>
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,40 @@
+<div class="row">
+  <!-- end col -->
+  <div class="col-md-3" *ngFor="let item of data">
+    <div class="card">
+      <div class="card-header">
+        <custom-button-delete-span
+          (OnConfirm)="deleteImg(item.id)"
+          [nameItem]="item.img"
+          [textHeader]="'Eliminar Imagen'"
+          [textpTooltip]="'Eliminar Imagen!'"
+        ></custom-button-delete-span>
+        <p-image
+          [src]="urlImg + item.img"
+          alt="Image"
+          class="float-end"
+          width="15"
+          height="15"
+          [preview]="true"
+        >
+        </p-image>
+      </div>
+      <!-- end card header -->
+
+      <div class="card-body">
+        <img
+          [style]="{ cursor: 'pointer' }"
+          class="rounded me-2 w-100"
+          height="200px"
+          alt="200x200"
+          [src]="urlImg + item.img"
+          data-holder-rendered="true"
+        />
+      </div>
+      <!-- end col -->
+      <!-- end row -->
+    </div>
+    <!-- end card-body -->
+  </div>
+  <!-- end card -->
+</div>

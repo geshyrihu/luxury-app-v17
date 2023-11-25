@@ -1,0 +1,98 @@
+<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+
+<div class="card">
+  <p-table
+    #dt
+    [(selection)]="data"
+    [autoLayout]="true"
+    [globalFilterFields]="[
+      'applicationUserId',
+      'email',
+      'password',
+      'port',
+      'smtp',
+      'userName'
+    ]"
+    [value]="data"
+    styleClass="custom-table"
+  >
+    <ng-template pTemplate="caption">
+      <app-table-header
+        [title]="'Datos de Email'"
+        [showAdd]="false"
+        [dt]="dt"
+      ></app-table-header>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th scope="col" pSortableColumn="userName">
+          User Name <p-sortIcon field="userName"></p-sortIcon>
+        </th>
+        <th scope="col" pSortableColumn="email">
+          Email
+          <p-sortIcon field="email"></p-sortIcon>
+        </th>
+        <th scope="col" pSortableColumn="smtp">
+          Smtp<p-sortIcon field="smtp"></p-sortIcon>
+        </th>
+        <th scope="col" pSortableColumn="port">
+          Port<p-sortIcon field="port"></p-sortIcon>
+        </th>
+        <th scope="col" pSortableColumn="password">
+          Password<p-sortIcon field="password"></p-sortIcon>
+        </th>
+        <th scope="col" style="width: 5%">Opciones</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item>
+      <tr>
+        <td class="p-column-title">
+          {{ item.userName }}
+        </td>
+        <td class="p-column-title">
+          {{ item.email }}
+        </td>
+        <td class="p-column-title">
+          {{ item.smtp }}
+        </td>
+        <td class="p-column-title">
+          {{ item.port }}
+        </td>
+        <td class="p-column-title">
+          {{ item.password }}
+        </td>
+        <!-- Opciones -->
+        <td class="p-column-title">
+          <div class="d-flex justify-content-center">
+            <custom-button
+              [customClass]="'btn-sm btn-outline-dark'"
+              ngbTooltip="Enviar mail de prueba"
+              icon="fa-duotone fa-envelope text-dark"
+              (clicked)="onSendTestEmail(item.applicationUserId)"
+            ></custom-button>
+
+            <custom-button-edit
+              (edit)="
+                onModalAddOrEdit({
+                  applicationUserId: item.applicationUserId,
+                  title: 'Editar Registro'
+                })
+              "
+            ></custom-button-edit>
+            <custom-button-delete
+              (OnConfirm)="onDelete(item.id)"
+            ></custom-button-delete>
+          </div>
+        </td>
+        <!-- Opciones -->
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="paginatorleft">
+      <div class="p-d-flex p-ai-center p-jc-between hide-print-mode">
+        En total hay
+        {{ data ? data.length : 0 }} registros.
+      </div>
+    </ng-template>
+  </p-table>
+</div>

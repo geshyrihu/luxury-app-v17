@@ -1,0 +1,89 @@
+<div class="card">
+  <p-table
+    #dt
+    [value]="data"
+    [globalFilterFields]="['departamento', 'label', 'email']"
+    styleClass="custom-table"
+  >
+    <ng-template pTemplate="caption">
+      <div class="row">
+        <div class="col-sm-12">
+          <app-table-header
+            [title]="'CONDOMINOS'"
+            [showAdd]="false"
+            [dt]="dt"
+          ></app-table-header>
+        </div>
+        <div class="col-sm-12">
+          <button class="btn btn-outline-primary me-1" (click)="onSelectAll()">
+            Seleccionar Todos
+          </button>
+          <button
+            class="btn btn-outline-primary me-1"
+            (click)="onDeselecteAll()"
+          >
+            Desmarcar Todos
+          </button>
+          <button
+            (click)="onSendListCondominos()"
+            class="btn btn-outline-primary me-1"
+          >
+            Listo
+          </button>
+        </div>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width: 10%" scope="col" pSortableColumn="select">
+          <p class="font-size-16">
+            SELECCIONAR
+            <p-sortIcon field="select"></p-sortIcon>
+          </p>
+        </th>
+        <th style="width: 15%" scope="col" pSortableColumn="departamento">
+          <p class="font-size-16">
+            DEPARTAMENTO
+            <p-sortIcon field="departamento"></p-sortIcon>
+          </p>
+        </th>
+        <th style="width: 30%" scope="col" pSortableColumn="label">
+          <p class="font-size-16">
+            NOMBRE
+            <p-sortIcon field="label"></p-sortIcon>
+          </p>
+        </th>
+        <th style="width: 30%" scope="col" pSortableColumn="email">
+          <p class="font-size-16">
+            CORREO
+            <p-sortIcon field="email"></p-sortIcon>
+          </p>
+        </th>
+        <th style="width: 15%" scope="col" pSortableColumn="figuraLegal">
+          <p class="font-size-16">
+            FIGURA ELGAL
+            <p-sortIcon field="figuraLegal"></p-sortIcon>
+          </p>
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item>
+      <tr>
+        <td class="text-center">
+          <div class="w-100" for="btncheck">
+            <input
+              id="btncheck"
+              type="checkbox"
+              class="form-check-input"
+              [(ngModel)]="item.select"
+            />
+          </div>
+        </td>
+        <td>{{ item.departamento }}</td>
+        <td>{{ item.label }}</td>
+        <td>{{ item.email }}</td>
+        <td>{{ item.figuraLegal }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

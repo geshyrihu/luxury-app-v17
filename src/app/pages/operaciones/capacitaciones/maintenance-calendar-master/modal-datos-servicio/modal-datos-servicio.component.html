@@ -1,0 +1,32 @@
+<div class="row">
+  <div class="col">
+    <label>Actvidad:</label>
+    <textarea
+      class="form-control"
+      readonly
+      cols="30"
+      [(ngModel)]="data.servicio"
+      rows="10"
+    ></textarea>
+    <label>Observaciones:</label>
+    <textarea
+      class="form-control"
+      readonly
+      cols="30"
+      [(ngModel)]="data.observaciones"
+      rows="5"
+    ></textarea>
+    <label>Proveedores:</label>
+    <ul class="list-group">
+      <li
+        *ngFor="let proveedor of proveedores"
+        (click)="onDataProveedor(proveedor.id)"
+        class="pointer list-group-item"
+      >
+        <p class="card-text">
+          {{ proveedor.nameProvider }}
+        </p>
+      </li>
+    </ul>
+  </div>
+</div>

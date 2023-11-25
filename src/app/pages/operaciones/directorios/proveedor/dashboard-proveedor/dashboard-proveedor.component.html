@@ -1,0 +1,42 @@
+<div class="row">
+  <div class="col-sm-12">
+    <ngb-alert [dismissible]="false" type="primary">
+      <div class="row">
+        <div class="col-6">
+          <h4 class="mb-sm-0 font-size-18">Directorio de Proveedores</h4>
+        </div>
+        <div class="col-6">
+          <custom-button
+            ngbTooltip="Bloquear"
+            customClass="float-end btn-primary"
+            [label]="!mostrarBuscador ? 'Buscador' : 'Ver Listado'"
+            (clicked)="mostrarBuscador = !mostrarBuscador"
+          ></custom-button>
+
+          <a
+            ngbTooltip="Formato para dar de alta a proveedor"
+            class="btn btn-outline-info float-end me-1"
+            href="assets/documents/glb-altaproveedor.docx"
+          >
+            <i class="fa-duotone fa-file-word"></i>
+          </a>
+          <a
+            ngbTooltip="Guia para cargar proveedor"
+            class="btn btn-outline-danger float-end me-1"
+            target="_blank"
+            href="assets/documents/carga_proveedores.pdf"
+          >
+            <i class="fa-duotone fa-file-pdf"></i>
+          </a>
+        </div>
+      </div>
+    </ngb-alert>
+  </div>
+</div>
+
+<ng-container *ngIf="mostrarBuscador">
+  <app-buscador-proveedor></app-buscador-proveedor>
+</ng-container>
+<ng-container *ngIf="!mostrarBuscador">
+  <app-list-provider></app-list-provider>
+</ng-container>

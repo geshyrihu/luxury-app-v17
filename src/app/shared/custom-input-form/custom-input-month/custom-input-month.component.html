@@ -1,0 +1,51 @@
+<ng-container *ngIf="horizontal">
+  <div class="form-group row mb-2" [hidden]="hidden">
+    <label class="col-sm-3">{{ label }}</label>
+    <div class="col-sm-9">
+      <input
+        (blur)="onTouch()"
+        (input)="onChange($event.target.value)"
+        [attr.disabled]="disabled ? 'disabled' : null"
+        [readonly]="readonly"
+        [value]="value"
+        class="form-control"
+        type="month"
+        [ngClass]="{
+          'is-invalid': control.invalid && (control.dirty || control.touched)
+        }"
+      />
+      <div
+        class="invalid-feedback"
+        *ngIf="control.invalid && (control.dirty || control.touched)"
+      >
+        <p *ngIf="control.errors.required">
+          El campo {{ placeholder }} es reqerido.
+        </p>
+      </div>
+    </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="!horizontal">
+  <div class="mb-2">
+    <label>{{ label }}</label>
+    <input
+      type="month"
+      class="form-control"
+      [value]="value"
+      [attr.disabled]="disabled ? 'disabled' : null"
+      (input)="onChange($event.target.value)"
+      (blur)="onTouch()"
+      [ngClass]="{
+        'is-invalid': control.invalid && (control.dirty || control.touched)
+      }"
+    />
+    <div
+      class="invalid-feedback"
+      *ngIf="control.invalid && (control.dirty || control.touched)"
+    >
+      <p *ngIf="control.errors.required">
+        El campo {{ placeholder }} es reqerido.
+      </p>
+    </div>
+  </div>
+</ng-container>

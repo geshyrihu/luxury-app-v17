@@ -1,0 +1,185 @@
+<ng-container *ngIf="model !== undefined">
+  <div class="invoice-title">
+    <div class="row">
+      <div class="col-12 text-center mt-2">
+        <h5 class="font-size-15 mb-3">ORDEN DE COMPRA</h5>
+      </div>
+      <div class="col-6 mb-1">
+        <div class="flex-grow-1">
+          <img [src]="url + model.photoPath" alt="" height="24" /><span
+            class="font-size-14"
+            >{{ model.customer }}</span
+          >
+          <p class="mb-0 small">{{ model.customerAdreess }}</p>
+          <p class="mb-0 small">{{ model.rfc }}</p>
+          <p class="mb-0 small">{{ model.phone }}</p>
+        </div>
+      </div>
+      <div class="col-6 mb-1 text-right">
+        <p class="small mb-0 float-end">Folio: {{ model.folio }}</p>
+        <br />
+        <p class="small mb-0 float-end">
+          Fecha: {{ model.fechaSolicitud | date }}
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <hr />
+  <div class="row">
+    <div class="col-6">
+      <div class="row">
+        <div class="col-4"><small> Proveedor </small></div>
+        <div class="col-8">
+          <small>
+            {{ model.ordenCompraDatosPago.providerName }}
+          </small>
+        </div>
+        <div class="col-4"><small> </small></div>
+        <div class="col-8">
+          <small>
+            {{ model.ordenCompraDatosPago.providerAdreess }}
+          </small>
+        </div>
+        <div class="col-4"><small> </small></div>
+        <div class="col-8">
+          <small>
+            {{ model.ordenCompraDatosPago.providerPhoneOne }}
+            {{ model.ordenCompraDatosPago.providerPhoneTwo }}
+          </small>
+        </div>
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="row">
+        <div class="col-4">
+          <small> Uso de CFDI </small>
+        </div>
+        <div class="col-8">
+          <small>
+            {{ model.ordenCompraDatosPago.usoCFDI }}
+          </small>
+        </div>
+        <div class="col-4">
+          <small> Metodo de Pago </small>
+        </div>
+        <div class="col-8">
+          <small>
+            {{ model.ordenCompraDatosPago.metodoDePago }}
+          </small>
+        </div>
+        <div class="col-4">
+          <small> Forma de Pago </small>
+        </div>
+        <div class="col-8">
+          <small>
+            {{ model.ordenCompraDatosPago.formaDePago }}
+          </small>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabla Presupuesto -->
+
+  <table class="table table-sm table-striped table-bordered mt-2">
+    <caption></caption>
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col" class="small font-weight-normal" style="width: 30%">
+          Producto
+        </th>
+        <th scope="col" class="small font-weight-normal" style="width: 10%">
+          Cantidad
+        </th>
+        <th scope="col" class="small font-weight-normal" style="width: 10%">
+          Unidad
+        </th>
+        <th scope="col" class="small font-weight-normal" style="width: 10%">
+          Precio
+        </th>
+        <th scope="col" class="small font-weight-normal" style="width: 10%">
+          Descuento
+        </th>
+        <th scope="col" class="small font-weight-normal" style="width: 10%">
+          Iva
+        </th>
+        <th scope="col" class="small font-weight-normal" style="width: 10%">
+          Total
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of model.ordenCompraDetalle">
+        <td class="small font-weight-normal">
+          {{ item.producto }}
+        </td>
+        <td class="p-fluid">
+          <p class="font-weight-normal small">{{ item.cantidad }}</p>
+        </td>
+
+        <td class="p-fluid">
+          <p class="font-weight-normal small">{{ item.unidadMedida }}</p>
+        </td>
+        <td class="p-fluid">
+          <p class="font-weight-normal small">
+            {{ item.precio | currency: "MXN":"symbol" }}
+          </p>
+        </td>
+        <td>
+          <p class="font-weight-normal small">
+            {{ item.descuento | currency: "%" }}
+          </p>
+        </td>
+        <td>
+          <p class="font-weight-normal small">
+            {{ item.iva | currency: "MXN":"symbol" }}
+          </p>
+        </td>
+        <td class="p-fluid">
+          <p class="font-weight-normal small">
+            {{ item.total | currency: "MXN":"symbol" }}
+          </p>
+        </td>
+      </tr>
+
+      <tr>
+        <td colspan="5"></td>
+        <td class="font-weight-normal small">Subtotal</td>
+        <td class="p-fluid">
+          <p class="font-weight-normal small">
+            {{ subtotal | currency: "MXN":"symbol" }}
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="5"></td>
+        <td class="font-weight-normal small">I.V.A.</td>
+        <td class="p-fluid">
+          <p class="font-weight-normal small">
+            {{ iva | currency: "MXN":"symbol" }}
+          </p>
+        </td>
+      </tr>
+      <tr *ngIf="retencionIva !== 0">
+        <td colspan="5"></td>
+        <td class="font-weight-normal small">Retención de Iva</td>
+        <td class="p-fluid">
+          <p class="font-weight-normal small">
+            {{ retencionIva | currency: "MXN":"symbol" }}
+          </p>
+        </td>
+      </tr>
+
+      <tr>
+        <td colspan="5"></td>
+        <td class="font-weight-normal small">Total</td>
+        <td class="p-fluid">
+          <p class="font-weight-normal small">
+            {{ total | currency: "MXN":"symbol" }}
+          </p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</ng-container>

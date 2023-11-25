@@ -1,0 +1,99 @@
+<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+<div class="row">
+  <div class="col-12">
+    <custom-button
+      ngbTooltip="Bloquear"
+      [customClass]="'btn-info float-end'"
+      label="Agregar Medidor"
+      (clicked)="modalAddEdit({ id: 0, title: 'Agregar Registro' })"
+    ></custom-button>
+  </div>
+  <div class="col-sm-3" *ngFor="let item of data">
+    <div
+      class="card"
+      [ngClass]="{
+        'bg-primary': item.medidorCategoria.id === 3,
+        'bg-success': item.medidorCategoria.id === 2,
+        'bg-warning': item.medidorCategoria.id === 1
+      }"
+    >
+      <div
+        class="card-body text-center pointer"
+        (click)="modalMedidorLecturaAddEdit(item)"
+      >
+        <h5 class="card-subtitle mb-2">
+          {{ item.medidorCategoria.nombreMedidorCategoria }}
+        </h5>
+        <i
+          *ngIf="item.medidorCategoria.id === 1"
+          class="fa-duotone fa-fire-burner fa-3x"
+          aria-hidden="true"
+        ></i>
+        <i
+          *ngIf="item.medidorCategoria.id === 3"
+          class="fa-duotone fa-hand-holding-droplet fa-3x"
+          aria-hidden="true"
+        ></i>
+        <i
+          *ngIf="item.medidorCategoria.id === 2"
+          class="fa-duotone fa-bolt fa-3x"
+          aria-hidden="true"
+        ></i>
+        <hr />
+        <h6 class="card-subtitle mb-2 text-muted">
+          {{ item.numeroMedidor }}
+        </h6>
+        <p class="card-text">
+          {{ item.descripcion }}
+        </p>
+        <p class="card-text">
+          {{ item.consumoDiarioMaximo }}
+        </p>
+      </div>
+
+      <div
+        class="card-footer"
+        *ngIf="
+          authService.onValidateRoles([
+            'Mantenimiento',
+            'Residente',
+            'SuperUsuario'
+          ])
+        "
+      >
+        <div class="d-flex justify-content-center">
+          <custom-button-edit
+            (edit)="modalAddEdit({ id: item.id, title: 'Editar Registro' })"
+          ></custom-button-edit>
+          <custom-button-delete
+            (OnConfirm)="onDelete(item)"
+          ></custom-button-delete>
+          <a
+            [routerLink]="[
+              '/mantenimiento/bitacora/lista-medidar-lectura',
+              item.id
+            ]"
+            routerLinkActive="router-link-active"
+            ngbTooltip="Lecturas"
+            placement="top"
+            class="btn btn-sm me-1 btn-outline-success"
+          >
+            <i class="fa-duotone fa-database"></i>
+          </a>
+          <a
+            [routerLink]="['/mantenimiento/bitacora/grafico', item.id]"
+            routerLinkActive="router-link-active"
+            ngbTooltip="Grafica"
+            placement="top"
+            class="btn btn-sm me-1 btn-outline-secondary"
+          >
+            <i class="fa-duotone fa-chart-line"> </i>
+          </a>
+          <custom-button-export-excel
+            (clicked)="exportExcel(item.id)"
+          ></custom-button-export-excel>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

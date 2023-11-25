@@ -1,0 +1,42 @@
+<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+<app-table-header
+  [title]="'Télefonos de Emergencia'"
+  [showSearch]="false"
+  [rolAuth]="authService.onValidateRoles(['superUsuario'])"
+  (add)="onModalAddOrEdit({ id: 0, title: 'Nuevo Registro' })"
+></app-table-header>
+<div class="row mt-2">
+  <div class="col">
+    <div class="card" *ngFor="let item of data">
+      <div class="card-body p-2">
+        <div class="row">
+          <div class="col-sm-1">
+            <img [src]="urlImg + item.logo" alt="" class="rounded avatar-lg" />
+          </div>
+          <div class="col-sm-6">
+            <div class="card-text">
+              {{ item.telefonoUno }} - {{ item.telefonoDos }}
+            </div>
+            <hr />
+            <p>{{ item.instancia }}</p>
+          </div>
+          <div class="col-sm-5">
+            <p class="text-justify">{{ item.direccion }}</p>
+            <div class="d-flex justify-content-center">
+              <custom-button-edit
+                (edit)="
+                  onModalAddOrEdit({ id: item.id, title: 'Editar Registro' })
+                "
+              ></custom-button-edit>
+              <custom-button-delete
+                (OnConfirm)="onDelete(item)"
+              ></custom-button-delete>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- end card -->
+  </div>
+</div>

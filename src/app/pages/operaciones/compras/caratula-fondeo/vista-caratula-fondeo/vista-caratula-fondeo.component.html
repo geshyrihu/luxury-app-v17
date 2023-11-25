@@ -1,0 +1,144 @@
+<p-contextMenu #cm [model]="items"></p-contextMenu>
+
+<div></div>
+<div *ngIf="data !== undefined">
+  <div id="pdfTable" #pdfTable>
+    <div class="row">
+      <div class="col">
+        <h5 class="h5">{{ data.nameCustomer }}</h5>
+        <h6 class="h6">Reporte de Cuentas por Pagar a Proveedores</h6>
+        <h6 class="h6">Cuenta: {{ data.cuenta }}</h6>
+        <h6 class="h6">{{ data.datoDePago }}</h6>
+        <h6 class="h6">
+          Facturas
+          <a [href]="data.ligaFacturas" target="_blank">{{
+            data.ligaFacturas
+          }}</a>
+        </h6>
+      </div>
+    </div>
+    <hr />
+    <p-table
+      [autoLayout]="true"
+      [value]="data.itemsFondeoCaratulaDto"
+      styleClass="  table-fondeo "
+      [contextMenu]="cm"
+      [(contextMenuSelection)]="dataSelect"
+      dataKey="code"
+      [columns]="data.itemsFondeoCaratulaDto"
+      [reorderableColumns]="true"
+    >
+      <ng-template pTemplate="header">
+        <tr class="table-fondeo">
+          <th style="width: 3%" class="small" scope="col">No.</th>
+          <th style="width: 5%" class="small" scope="col">FECHA</th>
+          <th style="width: 13%" class="small" scope="col">
+            PROVEEDOR Y/O ACREEDOR
+          </th>
+          <th style="width: 7%" class="small" scope="col">No. FACTURA</th>
+          <th style="width: 23%" class="small" scope="col">CONCEPTO</th>
+          <th style="width: 6%" class="small" scope="col">IMPORTE</th>
+          <th style="width: 6%" class="small" scope="col">I.V.A.</th>
+          <th style="width: 6%" class="small" scope="col">TOTALES</th>
+          <th style="width: 7%" class="small" scope="col">BANCO</th>
+          <th style="width: 8%" class="small" scope="col">CUENTA DEPÓSITO</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-item let-i="rowIndex">
+        <tr [pContextMenuRow]="item" [pReorderableRow]="i">
+          <td>
+            <span pReorderableRowHandle>{{ i + 1 }} </span>
+          </td>
+          <td>
+            <small>
+              {{ item.fecha | date : "dd/MM/yyyy" }}
+            </small>
+          </td>
+          <td>
+            <small>
+              {{ item.acreedor }}
+            </small>
+          </td>
+          <td>
+            <small>
+              {{ item.factura }}
+            </small>
+          </td>
+          <td>
+            <small>
+              {{ item.concepto }}
+            </small>
+          </td>
+          <td>
+            <small>
+              {{ item.importe | CurrencyMexicoPipe }}
+            </small>
+          </td>
+          <td>
+            <small>
+              {{ item.iva | CurrencyMexicoPipe }}
+            </small>
+          </td>
+
+          <td>
+            <small>
+              {{ item.totales | CurrencyMexicoPipe }}
+            </small>
+          </td>
+          <td>
+            <small>
+              {{ item.banco }}
+            </small>
+          </td>
+          <td>
+            <small>
+              {{ item.cuentaDeposito }}
+            </small>
+          </td>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="footer">
+        <!-- Totales -->
+        <tr>
+          <td colspan="5"></td>
+          <td class="p-fluid">
+            <small>{{ data.totalImporte | CurrencyMexicoPipe }}</small>
+          </td>
+          <td class="p-fluid">
+            <small>{{ data.totalIva | CurrencyMexicoPipe }}</small>
+          </td>
+
+          <td class="p-fluid">
+            <small>{{ data.totalTotales | CurrencyMexicoPipe }}</small>
+          </td>
+          <td colspan="3"></td>
+        </tr>
+        <!-- Totales -->
+      </ng-template>
+    </p-table>
+  </div>
+  <br />
+  <br />
+  <br />
+  <div class="row">
+    <div class="col-sm-2"></div>
+    <div class="col-sm-3 text-center">
+      <br />
+      <hr />
+      <p>
+        {{ data.entregadoPor }}
+      </p>
+      <p>Entregado por</p>
+    </div>
+    <div class="col-sm-2"></div>
+    <div class="col-sm-3 text-center">
+      <br />
+      <hr />
+      <p>Matias Luis Abramoff</p>
+      <p>Pago Autorizado por</p>
+    </div>
+    <div class="col-sm-2"></div>
+  </div>
+</div>

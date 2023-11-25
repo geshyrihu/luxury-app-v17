@@ -1,0 +1,62 @@
+<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+
+<p-table
+  #dt
+  [(selection)]="data"
+  [autoLayout]="true"
+  [globalFilterFields]="['nameCotegory']"
+  [paginator]="true"
+  [rowHover]="true"
+  [rows]="30"
+  [rowsPerPageOptions]="[30, 40, 50, 75, 100, 200]"
+  [showCurrentPageReport]="true"
+  [value]="data"
+  currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+  styleClass="custom-table"
+>
+  <ng-template pTemplate="caption">
+    <app-table-header
+      [title]="'Categorias'"
+      (add)="onModalAddOrEdit({ id: 0, title: 'Nuevo Registro' })"
+      [dt]="dt"
+    ></app-table-header>
+  </ng-template>
+
+  <ng-template pTemplate="header">
+    <tr>
+      <th
+        scope="col"
+        style="width: 7%"
+        class="text-small"
+        pSortableColumn="nameCotegory"
+      >
+        NOMBRE DE CATEGORIA
+        <p-sortIcon field="nameCotegory"></p-sortIcon>
+      </th>
+
+      <th scope="col" style="width: 5%" class="text-small">.</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-item>
+    <tr>
+      <td>
+        {{ item.nameCotegory }}
+      </td>
+
+      <td class="p-column-title">
+        <div class="d-flex justify-content-center">
+          <custom-button-edit
+            (edit)="onModalAddOrEdit({ id: item.id, title: 'Editar Registro' })"
+          ></custom-button-edit>
+          <custom-button-delete
+            (OnConfirm)="onDelete(item)"
+          ></custom-button-delete>
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="paginatorleft">
+    <app-table-footer [data]="data"></app-table-footer>
+  </ng-template>
+</p-table>

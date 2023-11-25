@@ -1,0 +1,36 @@
+<table>
+  <tr>
+    <td>
+      <div class="card">
+        <p-chart
+          class="chart"
+          type="line"
+          [data]="data"
+          [options]="options"
+        ></p-chart>
+      </div>
+    </td>
+  </tr>
+</table>
+<hr />
+
+<style>
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  td {
+    padding: 10px;
+    border: 0px solid black;
+  }
+
+  tr:first-child,
+  tr:last-child {
+    width: 10%;
+  }
+
+  tr:nth-child(2) {
+    width: 80%;
+  }
+</style>

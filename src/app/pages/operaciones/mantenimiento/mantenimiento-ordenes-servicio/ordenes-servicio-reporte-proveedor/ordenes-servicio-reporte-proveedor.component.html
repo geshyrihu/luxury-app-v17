@@ -1,0 +1,39 @@
+<div class="card">
+  <p-table [value]="data" styleClass="custom-table">
+    <ng-template pTemplate="header">
+      <tr>
+        <th scope="col">Archivo</th>
+        <th scope="col">Nombre</th>
+        <th scope="col" style="width: 5%">Borrar</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item>
+      <tr>
+        <td class="p-column-title">
+          <a
+            [ngbTooltip]="item.document"
+            placement="top"
+            target="_blank"
+            [href]="urlImg + item.document"
+            class="pointer text-danger btn btn-soft-light btn-sm w-xs waves-effect btn-label waves-light me-1"
+          >
+            <i class="fa-duotone fa-download label-icon text-danger"> </i>Pdf
+          </a>
+        </td>
+        <td class="p-column-title">
+          {{ item.document }}
+        </td>
+
+        <!-- Opciones -->
+        <td class="p-column-title">
+          <div class="d-flex justify-content-center">
+            <custom-button-delete
+              (OnConfirm)="deleteDoc(item.id)"
+            ></custom-button-delete>
+          </div>
+        </td>
+        <!-- Opciones -->
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

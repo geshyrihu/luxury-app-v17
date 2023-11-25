@@ -1,0 +1,64 @@
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <!-- end card header -->
+      <div class="card-body">
+        <!-- Nav tabs -->
+        <ul ngbNav #nav="ngbNav" [activeId]="1" class="nav-tabs">
+          <li [ngbNavItem]="1">
+            <a ngbNavLink>
+              <span class="d-block d-sm-none"
+                ><i class="fa-duotone fa-house"></i
+              ></span>
+              <span class="d-none d-sm-block">Datos principales</span>
+            </a>
+            <ng-template ngbNavContent>
+              <ng-template [ngTemplateOutlet]="TabContent"></ng-template>
+            </ng-template>
+          </li>
+          <li [ngbNavItem]="2">
+            <a ngbNavLink>
+              <span class="d-block d-sm-none"
+                ><i class="fa-duotone fa-user"></i
+              ></span>
+              <span class="d-none d-sm-block">Productos o servicios</span>
+            </a>
+            <ng-template ngbNavContent>
+              <ng-template [ngTemplateOutlet]="TabContent1"></ng-template>
+            </ng-template>
+          </li>
+          <li [ngbNavItem]="3">
+            <a ngbNavLink>
+              <span class="d-block d-sm-none"
+                ><i class="fa-duotone fa-envelope"></i
+              ></span>
+              <span class="d-none d-sm-block">Cedula Presupuestal</span>
+            </a>
+            <ng-template ngbNavContent>
+              <ng-template [ngTemplateOutlet]="TabContent2"></ng-template>
+            </ng-template>
+          </li>
+        </ul>
+        <div [ngbNavOutlet]="nav" class="text-muted"></div>
+      </div>
+      <!-- end card-body -->
+    </div>
+    <!-- end card -->
+  </div>
+  <!-- end col -->
+</div>
+<ng-template #TabContent>
+  <div class="card-body">
+    <app-form-catalogo-gastos-fijos></app-form-catalogo-gastos-fijos>
+  </div>
+</ng-template>
+<ng-template #TabContent1>
+  <div class="card-body">
+    <app-form-gastos-fijos-servicios></app-form-gastos-fijos-servicios>
+  </div>
+</ng-template>
+<ng-template #TabContent2>
+  <div class="card-body">
+    <app-form-gastos-fijos-presupuesto></app-form-gastos-fijos-presupuesto>
+  </div>
+</ng-template>

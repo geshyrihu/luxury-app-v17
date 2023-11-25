@@ -1,0 +1,19 @@
+<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+
+<div class="card p-2">
+  <ngb-alert [dismissible]="false" type="primary">Acceso a clientes </ngb-alert>
+  <div class="form-check pointer" *ngFor="let item of clientes">
+    <input
+      class="form-check-input pointer"
+      type="checkbox"
+      [ngModel]="item.isSelected"
+      [checked]="item.isSelected"
+      [id]="item.customerId"
+      (change)="item.isSelected = !item.isSelected"
+      (change)="onUpdateAcceso(clientes)"
+    />
+    <label class="form-check-label pointer" [for]="item.customerId">
+      {{ item.customerName }}
+    </label>
+  </div>
+</div>

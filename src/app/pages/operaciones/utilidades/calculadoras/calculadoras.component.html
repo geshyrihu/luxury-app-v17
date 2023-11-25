@@ -1,0 +1,50 @@
+<div class="row">
+  <div class="col-sm-6 p-1">
+    <ngb-alert [dismissible]="false" type="info">
+      Calcular IVA a precio
+    </ngb-alert>
+
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="card">
+          <div class="card-body">
+            <div class="form-group">
+              <label>Ingresa el precio</label>
+              <input
+                type="number"
+                class="form-control"
+                [(ngModel)]="precio"
+                (input)="calcularPrecioSinIva()"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="card">
+          <div class="card-body">
+            <div class="form-group">
+              <label>Precio sin iva</label>
+              <input
+                type="number"
+                class="form-control"
+                value="0.00"
+                [(ngModel)]="precioSinIva"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="card">
+          <div class="card-body">
+            <div class="form-group">
+              <label class="font-italic font-weight-normal small">I.V.A.</label>
+              <input type="number" class="form-control" [(ngModel)]="iva" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

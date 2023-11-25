@@ -1,0 +1,91 @@
+<div class="card">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-12">
+        <ng-container *ngIf="loading">
+          <div class="text-center">
+            <div class="spinner-grow text-primary m-1" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+
+      <div class="col-12">
+        <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
+          <div class="form-floating">
+            <textarea
+              class="form-control"
+              placeholder="Ingresa seguimiento"
+              id="floatingTextarea2"
+              formControlName="seguimiento"
+              maxlength="200"
+              minlength="10"
+              style="resize: none"
+              [(ngModel)]="seguimientoConst"
+              [class.is-invalid]="
+                f.seguimiento.invalid &&
+                (f.seguimiento.dirty || f.seguimiento.touched)
+              "
+              (input)="validarCaracteres($event.target)"
+            ></textarea>
+            <label for="floatingTextarea2">Agregar Seguimiento</label>
+          </div>
+          <small class="text-danger"
+            >Minimo 10 caracteres, maximo 200, restantes
+            {{ seguimientoLenght }}</small
+          >
+          <div
+            *ngIf="
+              f.seguimiento.invalid &&
+              (f.seguimiento.dirty || f.seguimiento.touched)
+            "
+            class="invalid-feedback"
+          >
+            <div *ngIf="f.seguimiento.errors.required">
+              seguimiento requerido
+            </div>
+          </div>
+          <div class="float-end mt-2">
+            <button class="btn btn-sm btn-primary">Guardar</button>
+          </div>
+        </form>
+      </div>
+      <div class="col-12 mt-2">
+        <ng-container *ngIf="seguimientos.length > 0">
+          <!-- 1 -->
+          <ul class="list-unstyled activity-wid mb-0">
+            <li
+              class="activity-list activity-border"
+              *ngFor="let data of seguimientos"
+            >
+              <div class="activity-icon avatar-md">
+                <span
+                  class="avatar-title bg-soft-primary text-primary rounded-circle bg-soft-info text-info"
+                >
+                  <i class="fa-duotone fa-thumbtack"></i>
+                </span>
+              </div>
+              <div class="timeline-list-item">
+                <div class="d-flex">
+                  <div class="flex-grow-1 overflow-hidden me-4">
+                    <h5 class="font-size-14 mb-1">{{ data.employee }}</h5>
+                    <p class="text-justify text-muted font-size-13">
+                      {{ data.seguimiento }}
+                    </p>
+                  </div>
+                  <div class="flex-shrink-0 text-end me-3">
+                    <h6 class="mb-1">{{ data.fechaRegistro }}</h6>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </ng-container>
+        <ng-container *ngIf="seguimientos.length == 0">
+          <em>SIN SEGUIMIENTO</em>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>

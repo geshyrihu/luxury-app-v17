@@ -1,0 +1,12 @@
+<app-pagetitlereport
+  class="breakPage"
+  title="ALBERCAS Y JACUZZIS"
+></app-pagetitlereport>
+<div *ngFor="let item of medidores">
+  <h6 class="card-title">{{ item.namePiscina }}</h6>
+  <div *ngFor="let data of item.chartLinePrime">
+    <div class="card card-chart">
+      <app-custom-bar-chart [data]="data"></app-custom-bar-chart>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,67 @@
+<div class="card">
+  <div class="card-body">
+    <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
+      <custom-input-text
+        [control]="form.get('id')"
+        formControlName="id"
+        label="Id"
+      ></custom-input-text>
+
+      <custom-input-text
+        [control]="form.get('applicationUserId')"
+        formControlName="applicationUserId"
+        label="Account Id"
+        [readonly]="true"
+      ></custom-input-text>
+
+      <custom-input-text
+        [control]="form.get('port')"
+        formControlName="port"
+        label="Ingrese el puerto"
+        placeholder="port"
+      ></custom-input-text>
+
+      <custom-input-text
+        [control]="form.get('smtp')"
+        formControlName="smtp"
+        label="Ingrese el smtp"
+        placeholder="smtp"
+      ></custom-input-text>
+
+      <custom-input-text
+        [control]="form.get('password')"
+        formControlName="password"
+        label="Password"
+        placeholder="password"
+      ></custom-input-text>
+
+      <div class="row">
+        <div class="col float-end">
+          <custom-button
+            *ngIf="authService.onValidateRoles(['SuperUsuario']) && id !== 0"
+            customClass="btn-primary mt-1"
+            (clicked)="TestEmail()"
+            label="Test de prueba"
+            icon="fa-duotone fa-paper-plane me-1"
+            [disabled]="submitting"
+          >
+          </custom-button>
+
+          <custom-button-submit
+            [disabled]="this.form.invalid || submitting"
+          ></custom-button-submit>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<ngb-alert
+  *ngIf="testEmailMessage"
+  [dismissible]="false"
+  [type]="
+    testEmailMessage == 'Test realizo con exito!!!' ? 'success' : 'danger'
+  "
+>
+  {{ testEmailMessage }}
+</ngb-alert>

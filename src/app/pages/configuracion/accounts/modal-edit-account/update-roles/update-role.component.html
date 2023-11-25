@@ -1,0 +1,19 @@
+<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+
+<div class="card p-2">
+  <ngb-alert [dismissible]="false" type="primary">Permisos</ngb-alert>
+  <div class="form-check pointer" *ngFor="let item of roles">
+    <input
+      class="form-check-input pointer"
+      type="checkbox"
+      [ngModel]="item.isSelected"
+      [checked]="item.isSelected"
+      [id]="item.roleId"
+      (change)="item.isSelected = !item.isSelected"
+      (change)="updateRole(roles)"
+    />
+    <label class="form-check-label font-ligth pointer" [for]="item.roleId">
+      {{ item.roleName | uppercase }}
+    </label>
+  </div>
+</div>

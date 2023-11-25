@@ -1,0 +1,112 @@
+<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+
+<p-table
+  #dt
+  responsiveLayout="scroll"
+  styleClass="custom-table"
+  [value]="data"
+  [rows]="100"
+  [paginator]="true"
+  [rowHover]="true"
+  currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+  [showCurrentPageReport]="true"
+  [rowsPerPageOptions]="[100, 200, 500]"
+  [globalFilterFields]="[
+    'fullName',
+    'phoneNumber',
+    'customer',
+    'phoneNumber',
+    'email',
+    'state'
+  ]"
+  [autoLayout]="true"
+>
+  <ng-template pTemplate="caption">
+    <div class="row">
+      <div class="col-10">
+        <app-table-header
+          [title]="'Colaborador General'"
+          [showAdd]="false"
+          [dt]="dt"
+        ></app-table-header>
+      </div>
+      <div class="col-2">
+        <div class="row hide-print-mode">
+          <custom-button-active-desactive
+            (activo)="onSelectActive($event)"
+            (inactivo)="onSelectActive($event)"
+          ></custom-button-active-desactive>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="header">
+    <tr>
+      <th scope="col" style="width: 30%" pSortableColumn="fullName">
+        Nombre
+        <p-sortIcon field="fullName"></p-sortIcon>
+      </th>
+      <th scope="col" style="width: 20%" pSortableColumn="customer">
+        Cliente
+        <p-sortIcon field="customer"></p-sortIcon>
+      </th>
+      <th scope="col" style="width: 15%" pSortableColumn="phoneNumber">
+        Teléfono
+        <p-sortIcon field="phoneNumber"></p-sortIcon>
+      </th>
+      <th scope="col" style="width: 20%" pSortableColumn="email">
+        Email
+        <p-sortIcon field="email"></p-sortIcon>
+      </th>
+      <th scope="col" style="width: 20%" pSortableColumn="state">
+        State
+        <p-sortIcon field="state"></p-sortIcon>
+      </th>
+      <th scope="col" style="width: 5%" class="hide-print-mode">Opciones</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-item>
+    <tr>
+      <td>
+        <img [src]="url + item.photoPath" alt="" class="rounded avatar-sm" />
+        {{ item.fullName }}
+      </td>
+      <td>
+        {{ item.customer }}
+      </td>
+      <td>
+        {{ item.phoneNumber }}
+      </td>
+      <td>
+        {{ item.email }}
+      </td>
+      <td>
+        {{ item.state }}
+      </td>
+      <td class="p-column-title hide-print-mode">
+        <div class="d-flex justify-content-center">
+          <custom-button-edit
+            (edit)="
+              showModalAddOrEdit({
+                id: item.id,
+                title: 'Editar Registro'
+              })
+            "
+          ></custom-button-edit>
+
+          <custom-button-delete
+            (OnConfirm)="onDelete(item)"
+          ></custom-button-delete>
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="paginatorleft">
+    <div class="p-d-flex p-ai-center p-jc-between">
+      En total hay
+      {{ data ? data.length : 0 }} registros.
+    </div>
+  </ng-template>
+</p-table>

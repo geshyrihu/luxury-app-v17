@@ -1,0 +1,85 @@
+<div class="card-body w-50" *ngIf="datosUser">
+  <dl class="row">
+    <dt class="col-sm-2">DEPTO:</dt>
+    <dd class="col-sm-10">{{ datosUser.departamento }}</dd>
+    <dt class="col-sm-2">NOMBRE:</dt>
+    <dd class="col-sm-10">{{ datosUser.nombre }}</dd>
+    <dt class="col-sm-2">MES:</dt>
+    <dd class="col-sm-10">
+      {{ fechaInicioDate | date }} - {{ fechaFinalDate | date }}
+    </dd>
+  </dl>
+</div>
+<p-table styleClass="custom-table" [value]="data">
+  <ng-template pTemplate="header">
+    <tr>
+      <th scope="col" style="width: 10%">
+        <small>Folio</small>
+      </th>
+      <th scope="col" style="width: 10%">
+        <small>Fecha Solicitud</small>
+      </th>
+      <th scope="col" style="width: 10%">
+        <small>Area</small>
+      </th>
+      <th scope="col" style="width: 15%">
+        <small>Solicitante</small>
+      </th>
+      <th scope="col" style="width: 25%">
+        <small>Concepto</small>
+      </th>
+      <th scope="col" style="width: 10%">
+        <small> Fecha Conclusión </small>
+      </th>
+      <th scope="col" style="width: 8%">
+        <small> Estatus </small>
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-item>
+    <tr>
+      <td class="text-justify">
+        <small>
+          {{ item.folio }}
+        </small>
+      </td>
+      <td>
+        <small>
+          {{ item.fechaSolicitud }}
+        </small>
+      </td>
+      <td>
+        <small>
+          {{ item.areaSolicitante }}
+        </small>
+      </td>
+      <td class="pointer" (click)="onCardEmployee(item.solicitanteId)">
+        <small>
+          {{ item.solicitante }}
+        </small>
+      </td>
+      <td>
+        <small>
+          {{ item.concepto }}
+        </small>
+      </td>
+      <td>
+        <small>
+          {{ item.fechaConclusion }}
+        </small>
+      </td>
+      <td class="text-center">
+        <i
+          [ngClass]="{
+            'fa-duotone fa-xmark  text-danger': item.status === 0
+          }"
+        >
+        </i>
+        <i
+          [ngClass]="{ 'fa-duotone fa-check text-success': item.status === 1 }"
+        >
+        </i>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

@@ -1,0 +1,28 @@
+<div class="card">
+  <div class="card-body">
+    <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
+      <custom-input-text
+        [control]="form.get('id')"
+        formControlName="id"
+        label="Id"
+      ></custom-input-text>
+
+      <custom-input-date
+        [control]="form.get('desde')"
+        formControlName="desde"
+        label="Desde"
+        placeholder="desde"
+      ></custom-input-date>
+      <custom-input-date
+        [control]="form.get('hasta')"
+        formControlName="hasta"
+        label="Hasta"
+        placeholder="hasta"
+      ></custom-input-date>
+
+      <custom-button-submit
+        [disabled]="this.form.invalid || submitting"
+      ></custom-button-submit>
+    </form>
+  </div>
+</div>

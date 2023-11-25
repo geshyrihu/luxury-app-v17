@@ -1,0 +1,65 @@
+<div class="card">
+  <div class="card-body">
+    <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
+      <custom-input-text
+        [control]="form.get('id')"
+        formControlName="id"
+        label="Id"
+      ></custom-input-text>
+
+      <custom-input-text
+        [control]="form.get('nombreComunicado')"
+        formControlName="nombreComunicado"
+        label="Nombre Comunicado"
+        placeholder="Nombre Comunicado"
+      ></custom-input-text>
+
+      <custom-input-text
+        [control]="form.get('folioComunicado')"
+        formControlName="folioComunicado"
+        label="Folio comunicado"
+        placeholder="folio comunicado"
+      ></custom-input-text>
+
+      <custom-input-date
+        [control]="form.get('fechaPublicacion')"
+        formControlName="fechaPublicacion"
+        label="Fecha"
+        placeholder="fecha"
+      ></custom-input-date>
+
+      <custom-input-datalist
+        (propagar)="saveAreResponsableId($event)"
+        [control]="form.get('responsibleArea')"
+        [data]="cb_area_responsable"
+        formControlName="responsibleArea"
+        label="Area responsable"
+        placeholder="area responsable"
+        dataListId="responsibleAreaDatalistOptions"
+      ></custom-input-datalist>
+      <div class="form-group row mb-2">
+        <label class="col-sm-3">Documento</label>
+        <div class="col-sm-9">
+          <input
+            type="file"
+            accept="application/pdf"
+            (change)="uploadFile($event)"
+            class="form-control"
+          />
+        </div>
+      </div>
+
+      <custom-input-text
+        [control]="form.get('comunicadoPath')"
+        formControlName="comunicadoPath"
+        label="Documento Actual"
+        [readonly]="true"
+        placeholder="documento actual"
+      ></custom-input-text>
+
+      <custom-button-submit
+        [disabled]="this.form.invalid || submitting"
+      ></custom-button-submit>
+    </form>
+  </div>
+</div>

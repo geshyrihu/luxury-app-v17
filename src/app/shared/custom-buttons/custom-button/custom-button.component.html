@@ -1,0 +1,12 @@
+<button
+  (click)="onClick($event)"
+  [class]="customClass"
+  [ngbTooltip]="ngbTooltipCustom"
+  [placement]="placement"
+  [ngClass]="customNgClass"
+  [disabled]="disabled"
+  class="btn me-1 pointer hide-print-mode"
+  [type]="type"
+>
+  <i [class]="icon" [ngClass]="customNgClassIcon"></i>{{ label }}
+</button>

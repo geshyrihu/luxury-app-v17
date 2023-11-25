@@ -1,0 +1,51 @@
+<div class="card">
+  <div class="card-body">
+    <div (click)="inputImg.click()">
+      <div class="card-image text-center mt-3">
+        <img
+          *ngIf="!imgUpload"
+          [src]="photoPath"
+          class="img-avatar img-thumbnail pointer"
+          alt=""
+        />
+        <img
+          *ngIf="imgUpload"
+          [src]="imgTemp"
+          class="img-avatar img-thumbnail pointer"
+          alt=""
+        />
+      </div>
+      <div class="input-group mb-3 d-none">
+        <div class="custom-file">
+          <input
+            class="custom-file-input"
+            type="file"
+            id="file"
+            #inputImg
+            aria-describedby="file"
+            (change)="changeImg($event.target['files'][0])"
+            accept="image/png, .jpeg, .jpg"
+            class="custom-file-input"
+          />
+        </div>
+      </div>
+    </div>
+    <hr />
+    <div class="d-flex justify-content-end">
+      <custom-button
+        ngbTooltip="Actualizar foto"
+        label="Actualizar foto"
+        (clicked)="uploadImg()"
+        [customClass]="'btn-sm btn-info'"
+        [disabled]="!imgUpload || submitting"
+      ></custom-button>
+    </div>
+  </div>
+</div>
+
+<style>
+  .img-avatar {
+    height: 200px;
+    width: 200px;
+  }
+</style>

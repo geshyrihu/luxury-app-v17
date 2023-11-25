@@ -1,0 +1,49 @@
+<div class="card">
+  <div class="card-body">
+    <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
+      <custom-input-text
+        [control]="form.get('id')"
+        formControlName="id"
+        label="Id"
+      ></custom-input-text>
+
+      <custom-input-text
+        [control]="form.get('descripcion')"
+        formControlName="descripcion"
+        label="Descripción"
+        placeholder="descripción"
+      ></custom-input-text>
+
+      <custom-input-text
+        [control]="form.get('marca')"
+        formControlName="marca"
+        label="Marca"
+        placeholder="marca"
+      ></custom-input-text>
+
+      <custom-input-select
+        [control]="form.get('equipoClasificacionId')"
+        formControlName="equipoClasificacionId"
+        label="Clasificación"
+        [data]="cb_equipoClasificacion"
+      ></custom-input-select>
+
+      <custom-input-number
+        [control]="form.get('numeroLlave')"
+        formControlName="numeroLlave"
+        label="Número llave"
+        placeholder="número llave"
+      ></custom-input-number>
+
+      <custom-input-number
+        [control]="form.get('cantidad')"
+        formControlName="cantidad"
+        label="Cantidad"
+        placeholder="cantidad"
+      ></custom-input-number>
+      <custom-button-submit
+        [disabled]="this.form.invalid || submitting"
+      ></custom-button-submit>
+    </form>
+  </div>
+</div>

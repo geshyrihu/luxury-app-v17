@@ -1,0 +1,76 @@
+<div class="mt-2">
+  <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
+    <custom-input-number
+      [control]="form.get('currentSalary')"
+      formControlName="currentSalary"
+      label="Salario mensual libre"
+      [readonly]="true"
+      placeholder="salario mensual actual neto"
+    ></custom-input-number>
+    <custom-input-text
+      [control]="form.get('professionCurrent')"
+      formControlName="professionCurrent"
+      label="Puesto actual"
+      [readonly]="true"
+      placeholder="Puesto actual"
+    ></custom-input-text>
+    <custom-input-number
+      [control]="form.get('finalSalary')"
+      formControlName="finalSalary"
+      label="Salario mensual final neto"
+      placeholder="salario mensual final neto"
+    ></custom-input-number>
+
+    <custom-input-datalist
+      (propagar)="onSaveProfessionIdToAccount($event)"
+      [control]="form.get('professionNew')"
+      formControlName="professionNew"
+      [data]="cb_profession"
+      dataListId="professionNewCondominiumDatalistOptions"
+      label="Puesto nuevo"
+    ></custom-input-datalist>
+
+    <custom-input-date
+      [control]="form.get('executionDate')"
+      formControlName="executionDate"
+      label="Fecha de aplicación"
+      placeholder="fecha de aplicación"
+    ></custom-input-date>
+    <custom-input-select
+      [control]="form.get('retroactive')"
+      formControlName="retroactive"
+      label="Aplicar retroactivo"
+      [data]="cb_si_no"
+      [SelectDefaulOption]="false"
+    ></custom-input-select>
+    <custom-input-text-area
+      [control]="form.get('additionalInformation')"
+      formControlName="additionalInformation"
+      label="Comentarios adicionales"
+      placeholder="comentarios adicionales"
+    ></custom-input-text-area>
+
+    <div class="form-group row mb-2">
+      <label class="col-sm-3">Adjuntar soporte (máximo 10MB) </label>
+      <div class="col-sm-9">
+        <form [formGroup]="filesForm">
+          <file-upload
+            formControlName="files"
+            [animation]="true"
+            (change)="onFileChange()"
+          >
+          </file-upload>
+
+          <!-- Mostrar mensaje de error si se supera el tamaño máximo -->
+          <div class="text-danger" *ngIf="maxSizeExceeded">
+            Los archivos adjuntos no deben superar los 10 MB.
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <custom-button-send-email
+      [disabled]="this.form.invalid || submitting"
+    ></custom-button-send-email>
+  </form>
+</div>

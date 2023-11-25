@@ -1,0 +1,85 @@
+<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+
+<p-table
+  [(selection)]="data"
+  [autoLayout]="true"
+  [globalFilterFields]="['nameCustomer']"
+  [rowHover]="true"
+  [showCurrentPageReport]="true"
+  [value]="data"
+  #dt
+  currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+  styleClass="custom-table"
+>
+  <ng-template pTemplate="caption">
+    <app-table-header
+      [title]="'Clientes'"
+      (add)="onModalAddOrEdit({ id: 0, title: 'Nuevo Registro' })"
+      [dt]="dt"
+    ></app-table-header>
+    <div class="btn-group" role="group" aria-label="Basic example">
+      <custom-button-active-desactive
+        (activo)="onSortChange($event)"
+        (inactivo)="onSortChange($event)"
+      ></custom-button-active-desactive>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="header">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col" colspan="2" pSortableColumn="nameCustomer">
+        NOMBRE
+        <p-sortIcon field="nameCustomer"></p-sortIcon>
+      </th>
+      <th scope="col">TÉLEFONOS</th>
+      <th scope="col">DIRECCIÓN</th>
+      <th scope="col" style="width: 10%">OPCIONES</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+    <tr>
+      <td>{{ rowIndex + 1 }}</td>
+      <td class="p-column-title">
+        <img
+          [src]="urlBaseImg + item.photoPath"
+          alt=""
+          class="rounded avatar-lg"
+        />
+      </td>
+      <td class="p-column-title">
+        {{ item.nameCustomer }}
+      </td>
+
+      <td class="p-column-title">
+        {{ item.phoneOne | celularNumber }} <br />{{
+          item.phoneTwo | celularNumber
+        }}
+      </td>
+
+      <td class="p-column-title">
+        {{ item.adreess }}
+      </td>
+
+      <td class="p-column-title">
+        <div class="d-flex align-content-center">
+          <custom-button-edit
+            (edit)="onModalAddOrEdit({ id: item.id, title: 'Editar Registro' })"
+          ></custom-button-edit>
+          <custom-button-delete
+            (OnConfirm)="onDelete(item)"
+          ></custom-button-delete>
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <tr>
+      <td colspan="6">
+        <div class="p-d-flex p-ai-center p-jc-between">
+          En total hay
+          {{ data ? data.length : 0 }} registros.
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

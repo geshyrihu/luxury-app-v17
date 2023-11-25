@@ -1,0 +1,122 @@
+<ng-container *ngIf="data != undefined">
+  <div class="card">
+    <div class="row">
+      <div class="col-12">
+        <ngb-alert [dismissible]="false" type="info">
+          {{ data.nameMachinery }}
+        </ngb-alert>
+      </div>
+      <div class="col-sm-12 col-md-3">
+        <div class="card">
+          <img
+            [src]="urlImgBase + data.photoPath"
+            class="figure-img img-fluid rounded"
+            alt="..."
+          />
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-9">
+        <div class="row">
+          <div class="col-6">
+            <div class="table-responsive">
+              <table class="table">
+                <tbody>
+                  <tr>
+                    <td>Categoria:</td>
+                    <td>
+                      <p class="m-1">
+                        {{ data.inventoryCategory }}
+                      </p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Estado:</td>
+                    <td>
+                      <p class="m-1">{{ data.state }}</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Clasificación:</td>
+                    <td>
+                      <p class="m-1">{{ data.equipoClasificacion }}</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Marca:</td>
+                    <td>
+                      <p class="m-1">{{ data.brand }}</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Modelo:</td>
+                    <td>
+                      <p class="m-1">{{ data.model }}</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Serie:</td>
+                    <td>
+                      <p class="m-1">{{ data.serie }}</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Adquisición:</td>
+                    <td>
+                      <p class="m-1">{{ data.dateOfPurchase }}</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Ubicación</td>
+                    <td>
+                      <p class="m-1">{{ data.ubication }}</p>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="table-responsive">
+              <table class="table">
+                <table class="table table-primary">
+                  <thead>
+                    <tr>
+                      <th>Especificaciones Tecnicas</th>
+                    </tr>
+                  </thead>
+                </table>
+
+                <tbody>
+                  <tr>
+                    <td>
+                      <p class="m-1">{{ data.technicalSpecifications }}</p>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="table-responsive">
+              <table class="table">
+                <table class="table table-primary">
+                  <thead>
+                    <tr>
+                      <th>Observaciones</th>
+                    </tr>
+                  </thead>
+                </table>
+
+                <tbody>
+                  <tr>
+                    <td>
+                      <p class="m-1">{{ data.observations }}</p>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

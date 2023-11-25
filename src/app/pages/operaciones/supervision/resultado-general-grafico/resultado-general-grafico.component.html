@@ -1,0 +1,303 @@
+<div class="container-fluid mt-0">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="h4">MINUTAS</div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-4">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            Contable (<span class="font-bold text-seco">
+              {{ graficoMinutasContable.totalItems }} </span
+            >)
+          </div>
+        </div>
+        <div class="card-body text-center">
+     
+        </div>
+        <div class="card-footer">
+          <div class="w-100">
+            <span class="info-box-text">
+              <span class="float-left">
+                <i class="fa-duotone fa-check-double text-success"></i>
+                Concluido :
+                {{ graficoMinutasContable.totalConcluido }}
+              </span>
+              <span class="float-right">
+                <i class="fa-duotone fa-xmark text-danger"></i>
+                Pendiente:
+                {{ graficoMinutasContable.totalPendiente }}
+              </span>
+            </span>
+          </div>
+          <br />
+          <div class="w-100">
+            <span
+              *ngIf="onValidateNan(graficoMinutasContable.evaluacionConcluido)"
+              [style]="
+                'width:' + graficoMinutasContable.evaluacionConcluido + '%'
+              "
+              class="badge py-2 bg-success rounded-0"
+            >
+              {{ graficoMinutasContable.evaluacionConcluido }}%
+            </span>
+            <span
+              *ngIf="onValidateNan(graficoMinutasContable.evaluacionPendiente)"
+              [style]="
+                'width:' + graficoMinutasContable.evaluacionPendiente + '%'
+              "
+              class="badge py-2 bg-danger rounded-0"
+            >
+              {{ graficoMinutasContable.evaluacionPendiente }}%
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            Operaciones (<span class="font-bold text-seco">
+              {{ graficoMinutasOperaciones.totalItems }} </span
+            >)
+          </div>
+        </div>
+        <div class="card-body text-center">
+          <!-- <p-knob
+            [(ngModel)]="totalMinutasOperaciones"
+            [readonly]="true"
+            [min]="0"
+            [max]="100"
+            [size]="100"
+            valueColor="#00B050"
+            rangeColor="#FF0004"
+          >
+          </p-knob> -->
+        </div>
+        <div class="card-footer">
+          <div class="w-100">
+            <span class="float-left">
+              <i class="fa-duotone fa-check-double text-success"></i>
+              Concluido :
+              {{ graficoMinutasOperaciones.totalConcluido }}
+            </span>
+            <span class="float-right">
+              <i class="fa-duotone fa-xmark text-danger"></i>
+              Pendiente:
+              {{ graficoMinutasOperaciones.totalPendiente }}
+            </span>
+          </div>
+          <br />
+          <div class="w-100">
+            <span
+              *ngIf="
+                onValidateNan(graficoMinutasOperaciones.evaluacionConcluido)
+              "
+              [style]="
+                'width:' + graficoMinutasOperaciones.evaluacionConcluido + '%'
+              "
+              class="badge py-2 bg-success rounded-0"
+            >
+              {{ graficoMinutasOperaciones.evaluacionConcluido }}%
+            </span>
+            <span
+              *ngIf="
+                onValidateNan(graficoMinutasOperaciones.evaluacionPendiente)
+              "
+              [style]="
+                'width:' + graficoMinutasOperaciones.evaluacionPendiente + '%'
+              "
+              class="badge py-2 bg-danger rounded-0"
+            >
+              {{ graficoMinutasOperaciones.evaluacionPendiente }}%
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            Legal (<span class="font-bold text-seco">
+              {{ graficoMinutasLegal.totalItems }} </span
+            >)
+          </div>
+        </div>
+        <div class="card-body text-center">
+          <!-- <p-knob
+            [(ngModel)]="totalMinutasLegal"
+            [readonly]="true"
+            [min]="0"
+            [max]="100"
+            [size]="100"
+            valueColor="#00B050"
+            rangeColor="#FF0004"
+          >
+          </p-knob> -->
+        </div>
+        <div class="card-footer">
+          <div class="w-100">
+            <span class="info-box-text">
+              <span class="float-left">
+                <i class="fa-duotone fa-check-double text-success"></i>
+                Concluido :
+                {{ graficoMinutasLegal.totalConcluido }}
+              </span>
+              <span class="float-right">
+                <i class="fa-duotone fa-xmark text-danger"></i>
+                Pendiente:
+                {{ graficoMinutasLegal.totalPendiente }}
+              </span>
+            </span>
+          </div>
+          <br />
+          <div class="w-100">
+            <span
+              *ngIf="onValidateNan(graficoMinutasLegal.evaluacionConcluido)"
+              [style]="'width:' + graficoMinutasLegal.evaluacionConcluido + '%'"
+              class="badge py-2 bg-success rounded-0"
+            >
+              {{ graficoMinutasLegal.evaluacionConcluido }}%
+            </span>
+            <span
+              *ngIf="onValidateNan(graficoMinutasLegal.evaluacionPendiente)"
+              [style]="'width:' + graficoMinutasLegal.evaluacionPendiente + '%'"
+              class="badge py-2 bg-danger rounded-0"
+            >
+              {{ graficoMinutasLegal.evaluacionPendiente }}%
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="h4">Mantenimientos</div>
+    </div>
+    <div class="col-sm-4">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            Preventivos (<span class="font-bold text-seco">
+              {{ graficoMttoPreventivos.totalItems }} </span
+            >)
+          </div>
+        </div>
+        <div class="card-body text-center">
+          <!-- <p-knob
+            [(ngModel)]="totalMttoPreventivos"
+            [readonly]="true"
+            [min]="0"
+            [max]="100"
+            [size]="100"
+            valueColor="#00B050"
+            rangeColor="#FF0004"
+          >
+          </p-knob> -->
+        </div>
+        <div class="card-footer">
+          <div class="w-100">
+            <span class="info-box-text">
+              <span class="float-left">
+                <i class="fa-duotone fa-check-double text-success"></i>
+                Concluido :
+                {{ graficoMttoPreventivos.totalConcluido }}
+              </span>
+              <span class="float-right">
+                <i class="fa-duotone fa-xmark text-danger"></i>
+                Pendiente:
+                {{ graficoMttoPreventivos.totalPendiente }}
+              </span>
+            </span>
+          </div>
+          <br />
+          <div class="w-100">
+            <span
+              *ngIf="onValidateNan(graficoMttoPreventivos.evaluacionConcluido)"
+              [style]="
+                'width:' + graficoMttoPreventivos.evaluacionConcluido + '%'
+              "
+              class="badge py-2 bg-success rounded-0"
+            >
+              {{ graficoMttoPreventivos.evaluacionConcluido }}%
+            </span>
+            <span
+              *ngIf="onValidateNan(graficoMttoPreventivos.evaluacionPendiente)"
+              [style]="
+                'width:' + graficoMttoPreventivos.evaluacionPendiente + '%'
+              "
+              class="badge py-2 bg-danger rounded-0"
+            >
+              {{ graficoMttoPreventivos.evaluacionPendiente }}%
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            Correctivos (<span class="font-bold text-seco">
+              {{ graficosMantenimiento.totalItems }} </span
+            >)
+          </div>
+        </div>
+        <div class="card-body text-center">
+          <!-- <p-knob
+            [(ngModel)]="totalsMantenimiento"
+            [readonly]="true"
+            [min]="0"
+            [max]="100"
+            [size]="100"
+            valueColor="#00B050"
+            rangeColor="#FF0004"
+          >
+          </p-knob> -->
+        </div>
+        <div class="card-footer">
+          <div class="w-100">
+            <span class="info-box-text">
+              <span class="float-left">
+                <i class="fa-duotone fa-check-double text-success"></i>
+                Concluido :
+                {{ graficosMantenimiento.totalConcluido }}
+              </span>
+              <span class="float-right">
+                <i class="fa-duotone fa-xmark text-danger"></i>
+                Pendiente:
+                {{ graficosMantenimiento.totalPendiente }}
+              </span>
+            </span>
+          </div>
+          <br />
+          <div class="w-100">
+            <span
+              *ngIf="onValidateNan(graficosMantenimiento.evaluacionConcluido)"
+              [style]="
+                'width:' + graficosMantenimiento.evaluacionConcluido + '%'
+              "
+              class="badge py-2 bg-success rounded-0"
+            >
+              {{ graficosMantenimiento.evaluacionConcluido }}%
+            </span>
+            <span
+              *ngIf="onValidateNan(graficosMantenimiento.evaluacionPendiente)"
+              [style]="
+                'width:' + graficosMantenimiento.evaluacionPendiente + '%'
+              "
+              class="badge py-2 bg-danger rounded-0"
+            >
+              {{ graficosMantenimiento.evaluacionPendiente }}%
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

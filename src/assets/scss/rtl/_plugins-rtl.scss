@@ -1,0 +1,113 @@
+//
+// plugins-rtl.scss
+//
+
+// lightbox
+
+.modal-video-close-btn {
+  left: 0px;
+  right: auto;
+
+  @media (orientation: landscape) {
+    right: auto;
+    left: -45px;
+  }
+}
+
+// rdw-editor
+
+.rdw-dropdown-carettoclose,
+.rdw-dropdown-carettoopen {
+  right: auto;
+  left: 10%;
+}
+
+// form wizard
+
+.twitter-bs-wizard {
+  .twitter-bs-wizard-nav {
+    .nav-link::after {
+      left: auto;
+      right: 62%;
+    }
+  }
+
+  .twitter-bs-wizard-pager-link li.next {
+    float: left;
+  }
+}
+
+
+// editor
+
+.ck.ck-toolbar>.ck-toolbar__items {
+  flex-direction: row-reverse !important;
+}
+
+.ck.ck-editor__editable_inline {
+  text-align: right !important;
+}
+
+.ck.ck-dropdown .ck-dropdown__panel.ck-dropdown__panel_ne,
+.ck.ck-dropdown .ck-dropdown__panel.ck-dropdown__panel_se {
+  right: 0;
+  left: auto !important;
+}
+
+
+.ng-select .ng-select-container .ng-value-container{
+    padding-right: 10px;
+    padding-left: 0;
+}
+
+.ck.ck-editor__editable_inline[dir="ltr"] {
+    text-align: right !important;
+}
+
+// wizard
+
+aw-wizard-navigation-bar{
+  &.horizontal.large-empty-symbols ul.steps-indicator li:not(:last-child):after{
+    left: auto;
+    right: calc(50% + 25px);
+  }
+}
+
+// select2 Css
+.ng-select{
+  .ng-select-container{
+      background-color: $input-bg;
+      border-color: $input-border-color;
+      color: $input-color;
+
+      .ng-value-container .ng-input>input{
+          color: $input-color;
+      }
+  }
+
+  &.ng-select-opened>.ng-select-container{
+      background-color: $input-bg;
+      border-color: $input-border-color;
+  }
+}
+
+.ng-dropdown-panel{
+  border-color: $input-border-color;
+  background-color: $input-bg;
+}
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option{
+  background-color: $input-bg;
+  color: var(--#{$prefix}body-color);
+}
+
+.ng-dropdown-panel.ng-select-bottom{
+  border-top-color: $input-border-color;
+}
+
+.ng-dropdown-panel.ng-select-top{
+  border-bottom-color: $input-border-color;
+}
+
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-optgroup{
+  color: var(--#{$prefix}body-color);
+}

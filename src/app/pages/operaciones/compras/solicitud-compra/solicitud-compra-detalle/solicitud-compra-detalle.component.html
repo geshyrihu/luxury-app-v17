@@ -1,0 +1,35 @@
+<div class="card mt-2">
+  <p-table [value]="SolicitudCompraDetalle" styleClass="custom-table">
+    <ng-template pTemplate="header">
+      <tr>
+        <th scope="col" style="width: 60%">PRODUCTO</th>
+        <th scope="col" style="width: 15%">CANTIDAD</th>
+        <th scope="col" style="width: 15%">UNIDAD</th>
+        <th scope="col" style="width: 10%"></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item>
+      <tr>
+        <td>{{ item.productoId }}-{{ item.producto }}</td>
+        <td>{{ item.cantidad }}</td>
+        <td>{{ item.unidadMedida }}</td>
+        <td>
+          <div class="d-flex justify-content-center">
+            <custom-button-edit
+              (click)="
+                editProduct({
+                  purchasesolicitaId: solicitudCompraId,
+                  id: item.id
+                })
+              "
+            ></custom-button-edit>
+
+            <custom-button-delete
+              (OnConfirm)="onDeleteProduct(item)"
+            ></custom-button-delete>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

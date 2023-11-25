@@ -1,0 +1,182 @@
+<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+<div class="card">
+  <div class="card-body">
+    <p class="mb-4">
+      <ngb-progressbar [value]="100" [type]="type"></ngb-progressbar>
+    </p>
+    <div class="row">
+      <div class="col-sm-10">
+        <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
+          <div class="row">
+            <div class="col-sm-3 mb-2">
+              <label>Folio</label>
+              <input
+                readonly
+                type="text"
+                formControlName="folio"
+                class="form-control"
+              />
+            </div>
+            <div class="col-sm-3 mb-2">
+              <label>Fecha de Solicitud</label>
+              <input
+                readonly
+                type="date"
+                readonly
+                formControlName="fechaSolicitud"
+                class="form-control"
+              />
+            </div>
+
+            <div class="col-sm-3 mb-2">
+              <label>Estatus</label>
+
+              <select
+                class="form-select form-select-sm"
+                formControlName="estatus"
+              >
+                <option [value]="item.value" *ngFor="let item of statusCompra">
+                  {{ item.label }}
+                </option>
+              </select>
+            </div>
+
+            <div class="col-sm-3 mb-2">
+              <label>Solicita</label>
+              <input
+                type="text"
+                formControlName="solicita"
+                class="form-control"
+                [class.is-invalid]="
+                  f.solicita.invalid && (f.solicita.dirty || f.solicita.touched)
+                "
+              />
+              <div
+                *ngIf="
+                  f.solicita?.errors?.required &&
+                  (f.solicita.dirty || f.solicita.touched)
+                "
+                class="p-invalid text-danger"
+              >
+                <p>Campo requerido.</p>
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+              <label>Área equipo o instalación</label>
+              <textarea
+                formControlName="equipoOInstalacion"
+                class="form-control text-justify"
+                [class.is-invalid]="
+                  f.equipoOInstalacion.invalid &&
+                  (f.equipoOInstalacion.dirty || f.equipoOInstalacion.touched)
+                "
+              ></textarea>
+              <div
+                *ngIf="
+                  f.equipoOInstalacion?.errors?.required &&
+                  (f.equipoOInstalacion.dirty || f.equipoOInstalacion.touched)
+                "
+                class="p-invalid text-danger"
+              >
+                <p>Campo requerido.</p>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <label>Justificación del gasto</label>
+              <textarea
+                formControlName="justificacionGasto"
+                class="form-control text-justify"
+                [class.is-invalid]="
+                  f.justificacionGasto.invalid &&
+                  (f.justificacionGasto.dirty || f.justificacionGasto.touched)
+                "
+              ></textarea>
+              <div
+                *ngIf="
+                  f.justificacionGasto?.errors?.required &&
+                  (f.justificacionGasto.dirty || f.justificacionGasto.touched)
+                "
+                class="p-invalid text-danger"
+              >
+                <p>Campo requerido.</p>
+              </div>
+            </div>
+
+            <div class="col-sm-12 text-left mt-2">
+              <custom-button-submit
+                [disabled]="form.invalid || submitting"
+              ></custom-button-submit>
+            </div>
+          </div>
+        </form>
+      </div>
+      <!-- Botones de opciones -->
+      <div class="col-sm-2 border">
+        <div class="row">
+          <div class="col-12">
+            <button
+              [disabled]="id == 0"
+              [routerLink]="['/operaciones/compras/cuadro-comparativo', id]"
+              type="button"
+              ngbTooltip="Cuadro comparativo"
+              placement="top"
+              class="w-100 btn btn-outline-primary me-1 mb-1"
+            >
+              Cuadro comparativo
+            </button>
+
+            <button
+              [disabled]="id == 0"
+              [routerLink]="['/operaciones/compras/pdf-solicitud-compra', id]"
+              type="button"
+              ngbTooltip="Vista para Pdf"
+              placement="top"
+              class="w-100 btn btn-outline-primary me-1 mb-1"
+            >
+              Vista para Pdf
+            </button>
+          </div>
+        </div>
+        <!-- Cantidad de ordenes relacioneadas -->
+
+        <button
+          [disabled]="id == 0"
+          (click)="
+            addProductModal({
+              purchasesolicitaId: id,
+              id: 0
+            })
+          "
+          type="button"
+          ngbTooltip="Agregar Productos"
+          placement="top"
+          class="w-100 btn btn-outline-primary me-1 mb-1"
+        >
+          Agregar Productos
+        </button>
+        <!-- Cantidad de ordenes relacioneadas -->
+        <label
+          *ngFor="let item of cotizacionesRelacionadas"
+          (click)="onAddOrEdit(item.id)"
+          class="badge bg-warning p-2 m-1"
+          >{{ item.folio }}</label
+        >
+      </div>
+    </div>
+
+    <!-- Add Product -->
+    <app-add-product
+      (updateData)="onLoadData()"
+      [solicitudCompraId]="id"
+    ></app-add-product>
+    <!-- Add Product -->
+
+    <!--Star Productos de Solicitud de Compra -->
+    <app-solicitud-compra-detalle
+      [SolicitudCompraDetalle]="SolicitudCompraDetalle"
+      (updateData)="onLoadData()"
+    ></app-solicitud-compra-detalle>
+    <!--End Productos de Solicitud de Compra -->
+  </div>
+</div>

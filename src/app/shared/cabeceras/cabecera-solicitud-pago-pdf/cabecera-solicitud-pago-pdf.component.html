@@ -1,0 +1,30 @@
+<div class="invoice-title" *ngIf="data">
+  <div class="row">
+    <div class="col-12 text-center mt-2">
+      <h5 class="font-size-15 mb-3">{{ titulo }}</h5>
+    </div>
+    <div class="col-6 mb-1">
+      <div class="row">
+        <div class="col-2">
+          <img [src]="url + data.photoPath" alt="" height="24" /><span
+            class="font-size-14"
+            >{{ data.customer }}</span
+          >
+        </div>
+        <div class="col-10">
+          <div class="flex-grow-1">
+            <p class="mb-0 small">{{ data.adreess }}</p>
+            <p class="mb-0 small">{{ data.rfc }}</p>
+            <p class="mb-0 small">{{ data.phoneOne }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 mb-1 text-right">
+      <p class="small mb-0 float-end">Folio {{ folio }}</p>
+      <br />
+      <p class="small mb-0 float-end">Factura {{ factura }}</p>
+    </div>
+  </div>
+</div>
+<hr />

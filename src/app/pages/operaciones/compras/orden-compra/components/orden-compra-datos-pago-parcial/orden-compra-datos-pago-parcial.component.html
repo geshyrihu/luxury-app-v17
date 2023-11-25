@@ -1,0 +1,49 @@
+<button
+  (click)="onModalOrdenCompraDatosPago()"
+  [disabled]="bloqueada"
+  type="button"
+  class="btn btn-info mb-2 p-1 w-100"
+>
+  DATOS DE PAGO
+</button>
+<table class="table table-sm">
+  <tbody>
+    <tr>
+      <td class="text-justify" style="width: 30%">Proveedor</td>
+      <td
+        style="
+          width: 70%;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        "
+      >
+        {{ ordenCompra.ordenCompraDatosPago.provider }}
+      </td>
+    </tr>
+    <tr>
+      <td class="text-justify" style="width: 30%">Tipo de Gasto</td>
+      <td style="width: 70%">
+        {{ ordenCompra.ordenCompraDatosPago.tipoGasto }}
+      </td>
+    </tr>
+    <tr>
+      <td class="text-justify" style="width: 30%">Uso de CFDI</td>
+      <td style="width: 70%">
+        {{ ordenCompra.ordenCompraDatosPago.usoCFDI }}
+      </td>
+    </tr>
+    <tr>
+      <td class="text-justify" style="width: 30%">Metodo de Pago</td>
+      <td style="width: 70%">
+        {{ ordenCompra.ordenCompraDatosPago.metodoDePago }}
+      </td>
+    </tr>
+    <tr>
+      <td class="text-justify" style="width: 30%">Forma de Pago</td>
+      <td style="width: 70%">
+        {{ ordenCompra.ordenCompraDatosPago.formaDePago }}
+      </td>
+    </tr>
+  </tbody>
+</table>

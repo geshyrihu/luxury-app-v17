@@ -1,0 +1,122 @@
+<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+
+<p-table
+  [(selection)]="data"
+  #dt
+  styleClass="custom-table"
+  [value]="data"
+  [rows]="15"
+  [paginator]="true"
+  [rowHover]="true"
+  currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+  [showCurrentPageReport]="true"
+  [rowsPerPageOptions]="[10, 20, 30, 40, 50, 75, 100]"
+  [globalFilterFields]="['nombreProducto']"
+  [autoLayout]="true"
+>
+  <ng-template pTemplate="caption">
+    <app-table-header
+      [title]="'Productos'"
+      [showAdd]="false"
+      [dt]="dt"
+    ></app-table-header>
+    <p class="text-danger font-weight-light" *ngIf="mensajeError">
+      {{ mensajeError }}
+    </p>
+  </ng-template>
+
+  <ng-template pTemplate="header">
+    <tr>
+      <th scope="col" pSortableColumn="nombreProducto" style="width: 35%">
+        Producto <p-sortIcon field="nombreProducto"></p-sortIcon>
+      </th>
+      <th scope="col" pSortableColumn="existencia">
+        Existencia
+        <p-sortIcon field="existencia"></p-sortIcon>
+      </th>
+      <th scope="col" pSortableColumn="unidadDeMedidaId">
+        Unidad<p-sortIcon field="unidadDeMedidaId"></p-sortIcon>
+      </th>
+      <th scope="col" pSortableColumn="stockMax">
+        Stok Max<p-sortIcon field="stockMax"></p-sortIcon>
+      </th>
+      <th scope="col" pSortableColumn="stockMin">
+        Stok Min<p-sortIcon field="stockMin"></p-sortIcon>
+      </th>
+      <th scope="col" style="width: 5%">Agregar</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-item>
+    <tr>
+      <td class="p-column-title">
+        <input
+          (click)="onModalTarjetaProducto(item.productoId)"
+          readonly
+          [value]="item.nombreProducto"
+          type="text"
+          class="form-control form-control-sm pointer"
+        />
+      </td>
+      <td class="p-column-title">
+        <input
+          required
+          [(ngModel)]="item.existencia"
+          min="0"
+          type="number"
+          class="form-control form-control-sm"
+          [class.invalid]="mensajeError != ''"
+        />
+      </td>
+      <td class="p-column-title">
+        <select
+          required
+          [(ngModel)]="item.unidadDeMedidaId"
+          class="form-control form-control-sm"
+          [class.invalid]="mensajeError"
+        >
+          <option value="0">Selecciona una opción</option>
+          <option [value]="item.value" *ngFor="let item of cb_UnidadMedida">
+            {{ item.label }}
+          </option>
+        </select>
+      </td>
+
+      <td class="p-column-title">
+        <input
+          required
+          required
+          min="0"
+          [(ngModel)]="item.stockMax"
+          type="number"
+          class="form-control form-control-sm"
+          [class.invalid]="mensajeError"
+        />
+      </td>
+      <td class="p-column-title">
+        <input
+          [(ngModel)]="item.stockMin"
+          min="0"
+          max="item.stockMax"
+          type="number"
+          class="form-control form-control-sm"
+          [class.invalid]="mensajeError"
+        />
+      </td>
+      <!-- Opciones -->
+      <td class="p-column-title">
+        <div class="d-flex justify-content-center">
+          <i
+            class="fa-thin fa-floppy-disk text-info m-1"
+            (click)="onSubmit(item)"
+          ></i>
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="paginatorleft">
+    <div class="p-d-flex p-ai-center p-jc-between">
+      En total hay
+      {{ data ? data.length : 0 }} registros.
+    </div>
+  </ng-template>
+</p-table>

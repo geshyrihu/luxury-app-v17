@@ -1,0 +1,160 @@
+<div class="card" *ngIf="model">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-12">
+        <ngb-alert [dismissible]="false" type="info">
+          <img
+            [src]="urlLogo"
+            alt="noImg"
+            class="img-fluid"
+            width=" 35px"
+            height="35px"
+          />
+          <small> {{ model.nameProvider }}</small>
+        </ngb-alert>
+      </div>
+      <div class="col-sm-4">
+        <div class="card-title mb-3">General</div>
+        <div class="table-responsive">
+          <table class="table table-sm">
+            <tr>
+              <td style="width: 35%"><small> Nombre Comercial</small></td>
+              <td style="width: 65%">
+                <small> {{ model.nameComercial }}</small>
+              </td>
+            </tr>
+            <tr>
+              <td style="width: 35%"><small> Dirección</small></td>
+              <td style="width: 65%">
+                <small>{{ model.address }}</small>
+              </td>
+            </tr>
+            <tr>
+              <td style="width: 35%"><small> Télefonos</small></td>
+              <td style="width: 65%">
+                <small> {{ model.phoneOne }}</small> -
+                <small> {{ model.phoneTwo }}</small>
+              </td>
+            </tr>
+            <tr>
+              <td style="width: 35%"><small> RFC</small></td>
+              <td style="width: 65%">
+                <small> {{ model.rfc }}</small>
+              </td>
+            </tr>
+
+            <tr>
+              <td style="width: 35%"><small> Página web</small></td>
+              <td style="width: 65%">
+                <small> {{ model.webPage }}</small>
+              </td>
+            </tr>
+            <tr>
+              <td style="width: 35%"><small> Alcances</small></td>
+              <td style="width: 65%">
+                <span *ngIf="model.sales" class="badge bg-success p-2"
+                  >Ventas</span
+                >
+                <span *ngIf="model.repair" class="badge bg-success p-2"
+                  >Repaciones</span
+                >
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="card-title mb-3">Contactos</div>
+        <div class="table-responsive">
+          <table class="table table-sm">
+            <tr>
+              <td style="width: 35%"><small> Contacto</small></td>
+              <td style="width: 65%">
+                <small> {{ model.contactOne }}</small>
+              </td>
+            </tr>
+            <tr>
+              <td style="width: 35%"><small> Puesto</small></td>
+              <td style="width: 65%">
+                <small> {{ model.positionOne }}</small>
+              </td>
+            </tr>
+            <tr>
+              <td style="width: 35%"><small> Télefono</small></td>
+              <td style="width: 65%">
+                <small> {{ model.cellPhoneOne }}</small>
+              </td>
+            </tr>
+            <tr>
+              <td style="width: 35%"><small> Email</small></td>
+              <td style="width: 65%">
+                <small> {{ model.emailOne }}</small>
+              </td>
+            </tr>
+            <tr>
+              <td style="width: 35%"><small> Contacto</small></td>
+              <td style="width: 65%">
+                <small> {{ model.contactTwo }}</small>
+              </td>
+            </tr>
+            <tr>
+              <td style="width: 35%"><small> Puesto</small></td>
+              <td style="width: 65%">
+                <small> {{ model.positionTwo }}</small>
+              </td>
+            </tr>
+            <tr>
+              <td style="width: 35%"><small> Télefono</small></td>
+              <td style="width: 65%">
+                <small> {{ model.cellPhoneTwo }}</small>
+              </td>
+            </tr>
+            <tr>
+              <td style="width: 35%"><small> Email</small></td>
+              <td style="width: 65%">
+                <small> {{ model.emailTwo }}</small>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="col-sm-4">
+        <div class="card-title mb-3">Datos Bancarios</div>
+        <div class="table-responsive">
+          <table class="table table-sm">
+            <tr>
+              <td style="width: 35%"><small> Beneficiario</small></td>
+              <td style="width: 65%">
+                <small> {{ model.nameCheck }}</small>
+              </td>
+            </tr>
+            <tr>
+              <td style="width: 35%"><small> Banco</small></td>
+              <td style="width: 65%">
+                <small> {{ model.bankName }}</small>
+              </td>
+            </tr>
+            <tr>
+              <td style="width: 35%"><small> Cuenta/Convenio</small></td>
+              <td style="width: 65%">
+                <small> {{ model.paymentAccount }}</small>
+              </td>
+            </tr>
+            <tr>
+              <td style="width: 35%"><small> Clabe/Referencia</small></td>
+              <td style="width: 65%">
+                <small> {{ model.interbankCode }}</small>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<style>
+  table {
+    color: black !important;
+  }
+</style>

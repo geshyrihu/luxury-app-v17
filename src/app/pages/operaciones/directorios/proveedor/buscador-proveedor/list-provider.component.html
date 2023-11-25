@@ -1,0 +1,198 @@
+<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+
+<div class="card" *ngIf="data !== undefined">
+  <p-table
+    [value]="data"
+    #dt
+    styleClass="custom-table"
+    [rows]="50"
+    [paginator]="true"
+    [rowHover]="true"
+    currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+    [showCurrentPageReport]="true"
+    [rowsPerPageOptions]="[10, 20, 30, 40, 50, 75, 100, 500]"
+    [globalFilterFields]="[
+      'categorias.nombreCategoria',
+      'providerId',
+      'nameProvider',
+      'nameComercial',
+      'pathPhoto',
+      'activo',
+      'user',
+      'rfc'
+    ]"
+  >
+    <ng-template pTemplate="caption">
+      <app-table-header
+        (add)="showModalAddOrEdit({ id: 0, title: 'Nuevo Registro' })"
+        [dt]="dt"
+        [showAdd]="false"
+        [rolAuth]="
+          validateRole([
+            'Asistente',
+            'Mantenimiento',
+            'Residente',
+            'SuperUsuario'
+          ])
+        "
+      ></app-table-header>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th scope="col" style="width: 5%" pSortableColumn="providerId">
+          <small>ID</small> <p-sortIcon field="providerId"></p-sortIcon>
+        </th>
+        <th scope="col" style="width: 10%">
+          <small>LOGO</small>
+        </th>
+        <th scope="col" style="width: 30%" pSortableColumn="nameProvider">
+          <small>PROVEEDOR</small>
+          <p-sortIcon field="nameProvider"></p-sortIcon>
+        </th>
+
+        <th scope="col" style="width: 15%" pSortableColumn="rfc">
+          <small>RFC</small> <p-sortIcon field="rfc"></p-sortIcon>
+        </th>
+        <th scope="col" style="width: 15%" pSortableColumn="user">
+          <small>USUARIO</small> <p-sortIcon field="user"></p-sortIcon>
+        </th>
+        <th scope="col" style="width: 10%" pSortableColumn="categorias">
+          <small>CATEGORIAS</small><p-sortIcon field="categorias"></p-sortIcon>
+        </th>
+        <th scope="col" style="width: 10%" pSortableColumn="autorizado">
+          <small>APROBADO</small><p-sortIcon field="autorizado"></p-sortIcon>
+        </th>
+        <th scope="col" style="width: 20%" pSortableColumn="activo">
+          <small></small><p-sortIcon field="activo"></p-sortIcon>
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+      <tr>
+        <td>
+          <small>{{ item.providerId }}</small>
+        </td>
+        <td>
+          <img
+            [src]="url_img + item.pathPhoto"
+            alt="noImg"
+            class="rounded avatar-lg"
+          />
+        </td>
+        <td>
+          <small>
+            {{ item.nameProvider }}
+          </small>
+          <br />
+          <small>
+            {{ item.nameComercial }}
+          </small>
+        </td>
+
+        <td>
+          <small>
+            {{ item.rfc }}
+          </small>
+        </td>
+        <td>
+          <small>
+            {{ item.user }}
+          </small>
+        </td>
+        <td>
+          <span
+            class="badge bg-info p-2 me-1 mb-1"
+            *ngFor="let categoria of item.categorias"
+            >{{ categoria.nombreCategoria }}</span
+          >
+        </td>
+
+        <td>
+          <div
+            *ngIf="authService.onValidateRoles(['SuperUsuario'])"
+            class="form-check form-switch mb-3"
+            dir="ltr"
+          >
+            <input
+              type="checkbox"
+              class="form-check-input"
+              id="customSwitch1"
+              checked
+              [(ngModel)]="item.autorizado"
+              (change)="onAutorizarProvider(item.providerId)"
+            />
+          </div>
+
+          <i
+            *ngIf="item.autorizado"
+            class="bx-md fa-duotone fa-check-double text-success font-size-16"
+          ></i>
+          <i
+            *ngIf="!item.autorizado"
+            class="bx-md fa-duotone fa-x text-danger font-size-16"
+          ></i>
+        </td>
+        <td>
+          <div class="d-flex bd-highlight">
+            <custom-button-download-pdf
+              ngbTooltip="Visualizar Pdf"
+              [urlFile]="item.constanciaFiscalPath"
+            ></custom-button-download-pdf>
+            <custom-button-edit
+              *ngIf="
+                validateRole([
+                  'Asistente',
+                  'Mantenimiento',
+                  'Residente',
+                  'SuperUsuario',
+                  'SupervisionOperativa'
+                ]) && item.id != 109
+              "
+              class="bd-highlight"
+              (edit)="
+                showModalAddOrEdit({
+                  id: item.providerId,
+                  title: 'Editar Registro'
+                })
+              "
+            ></custom-button-edit>
+
+            <custom-button-delete
+              *ngIf="validateRole(['SuperUsuario'])"
+              class="bd-highlight"
+              (OnConfirm)="onDelete(item.providerId)"
+            ></custom-button-delete>
+            <custom-button
+              *ngIf="!item.activo && validateRole(['SuperUsuario'])"
+              ngbTooltip="Activar"
+              [customClass]="'btn-sm btn-outline-danger'"
+              icon="fa-duotone fa-lock text-danger"
+              (clicked)="
+                onActivateProvider({
+                  providerId: item.providerId,
+                  state: !item.activo
+                })
+              "
+            ></custom-button>
+
+            <custom-button
+              *ngIf="item.activo && validateRole(['SuperUsuario'])"
+              ngbTooltip="Desactivar"
+              [customClass]="'btn-sm btn-outline-success'"
+              icon="fa-duotone fa-lock-open text-success"
+              (clicked)="
+                onActivateProvider({
+                  providerId: item.providerId,
+                  state: !item.activo
+                })
+              "
+            ></custom-button>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+<div *ngIf="data.length === 0" class="alert alert-default-danger">
+  <h4 class="h4">Sin resultados</h4>
+</div>

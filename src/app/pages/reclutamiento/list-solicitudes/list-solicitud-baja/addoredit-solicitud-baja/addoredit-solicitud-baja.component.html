@@ -1,0 +1,128 @@
+<div class="card">
+  <div class="card-body">
+    <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
+      <custom-input-date
+        [control]="form.get('executionDate')"
+        formControlName="executionDate"
+        label="Fecha de ejecución"
+        placeholder="fecha de ejecución"
+      ></custom-input-date>
+
+      <custom-input-select
+        [control]="form.get('status')"
+        formControlName="status"
+        label="Estatus"
+        [data]="cb_status"
+      ></custom-input-select>
+      <custom-input-select
+        [control]="form.get('tipoBaja')"
+        formControlName="tipoBaja"
+        label="Tipo de baja"
+        [data]="cb_tipo_baja"
+      ></custom-input-select>
+      <custom-input-text-area
+        [control]="form.get('reasonForLeaving')"
+        formControlName="reasonForLeaving"
+        label="Motivo de baja"
+        placeholder="Motivo de baja"
+      ></custom-input-text-area>
+      <custom-input-select
+        [control]="form.get('lawyerAssistance')"
+        formControlName="lawyerAssistance"
+        label="Require abogado"
+        [data]="cb_si_no"
+        [SelectDefaulOption]="false"
+      ></custom-input-select>
+      <custom-input-select
+        [control]="form.get('employeeInformed')"
+        formControlName="employeeInformed"
+        label="Colaborador enterado de su baja"
+        [data]="cb_si_no"
+        [SelectDefaulOption]="false"
+      ></custom-input-select>
+      <div formArrayName="discounts">
+        <button
+          type="button"
+          class="btn btn-outline-info mb-2"
+          (click)="addDiscountDescription()"
+        >
+          Agregar descuento
+        </button>
+
+        <div *ngFor="let discount of discounts.controls; let i = index">
+          <div [formGroupName]="i">
+            <div class="row">
+              <div class="col-5">
+                <div class="form-group row mb-2">
+                  <label class="col-sm-3">Descripción</label>
+                  <div class="col-sm-9">
+                    <input
+                      class="form-control"
+                      type="text"
+                      formControlName="description"
+                      [ngClass]="{
+                        'is-invalid': isControlInvalid(
+                          discount.get('description')
+                        )
+                      }"
+                    />
+                    <div
+                      *ngIf="
+                        isControlInvalid(discount.get('description')) &&
+                        (discount.get('description').dirty ||
+                          discount.get('description').touched)
+                      "
+                      class="invalid-feedback"
+                    >
+                      La descripción es requerida.
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-5">
+                <div class="form-group row mb-2">
+                  <label class="col-sm-3">Costo</label>
+                  <div class="col-sm-9">
+                    <input
+                      class="form-control"
+                      type="number"
+                      formControlName="discount"
+                      [ngClass]="{
+                        'is-invalid': isControlInvalid(discount.get('discount'))
+                      }"
+                    />
+                    <div
+                      *ngIf="
+                        isControlInvalid(discount.get('discount')) &&
+                        (discount.get('discount').dirty ||
+                          discount.get('discount').touched)
+                      "
+                      class="invalid-feedback"
+                    >
+                      El costo es requerido.
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-2">
+                <button
+                  type="button"
+                  class="btn btn-outline-danger w-100"
+                  (click)="
+                    removeDiscountDescription(i, discount.get('id').value)
+                  "
+                >
+                  Borrar
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <custom-button-submit
+        [disabled]="this.form.invalid || submitting"
+      ></custom-button-submit>
+    </form>
+  </div>
+</div>

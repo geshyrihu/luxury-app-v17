@@ -1,0 +1,99 @@
+<!-- Formulario de minuta -->
+<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+<form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
+  <div class="row">
+    <div class="col">
+      <div class="form-group row mb-2" hidden>
+        <label class="font-weight-normal col-sm-3">Id</label>
+        <div class="col-sm-9">
+          <input class="form-control" formControlName="id" />
+        </div>
+      </div>
+      <div class="form-group row mb-2">
+        <label class="font-weight-normal col-sm-3">Fecha</label>
+        <div class="col-sm-9 p-fluid">
+          <input
+            type="datetime-local"
+            class="form-control"
+            formControlName="date"
+            [class.is-invalid]="
+              f.date.invalid && (f.date.dirty || f.date.touched)
+            "
+          />
+
+          <div
+            *ngIf="f.date.invalid && (f.date.dirty || f.date.touched)"
+            class="text-danger"
+          >
+            <small *ngIf="f.date.errors.required"> Campo requerido </small>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row mb-2">
+        <label class="font-weight-normal col-sm-3">Tipo de Junta</label>
+        <div class="col-sm-9 p-fluid">
+          <select formControlName="eTypeMeeting" class="form-control">
+            <option value="">Seleecion una opción</option>
+            <option [value]="item.value" *ngFor="let item of cb_typeMeeting">
+              {{ item.label }}
+            </option>
+          </select>
+
+          <div
+            *ngIf="
+              f.eTypeMeeting.invalid &&
+              (f.eTypeMeeting.dirty || f.eTypeMeeting.touched)
+            "
+            class="text-danger"
+          >
+            <small *ngIf="f.eTypeMeeting.errors.required">
+              Campo requerido
+            </small>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mt-1 mb-2">
+      <custom-button-submit [disabled]="form.invalid"></custom-button-submit>
+      <!-- <button
+        ngbTooltip="Guardar"
+        placement="top"
+        type="submit"
+        [disabled]="form.invalid"
+        class="btn btn-info float-end"
+      >
+        <i class="fa-duotone fa-check-double"></i>
+      </button> -->
+    </div>
+  </div>
+</form>
+<!-- Formulario de minuta -->
+
+<div *ngIf="id !== 0">
+  <div class="row">
+    <div class="col-sm-4">
+      <!-- Fomrulario comité -->
+      <app-addoredit-comite
+        [meetingId]="id"
+        [customerId]="customerId"
+      ></app-addoredit-comite>
+      <!-- Fomrulario comité -->
+    </div>
+    <div class="col-sm-4">
+      <!-- Formulario Administración -->
+      <app-addoredit-list-administration
+        [meetingId]="id"
+        [customerId]="customerId"
+      ></app-addoredit-list-administration>
+      <!-- Formulario Administración -->
+    </div>
+    <div class="col-sm-4">
+      <!-- Formulario Administración -->
+      <app-addoredit-invited
+        [meetingId]="id"
+        [customerId]="customerId"
+      ></app-addoredit-invited>
+      <!-- Formulario Administración -->
+    </div>
+  </div>
+</div>

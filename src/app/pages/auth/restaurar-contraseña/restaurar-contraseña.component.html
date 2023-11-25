@@ -1,0 +1,75 @@
+<div class="text-center">
+  <h5 class="mb-0">Recuperar cuenta</h5>
+  <p class="text-muted mt-2">Cambio de contraseña</p>
+</div>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <custom-input-text
+    [control]="form.get('userName')"
+    [horizontal]="false"
+    formControlName="userName"
+    label="Usuario"
+    placeholder="usuario"
+  ></custom-input-text>
+
+  <custom-input-password
+    [control]="form.get('password')"
+    [horizontal]="false"
+    formControlName="password"
+    label="Contraseña nueva"
+    placeholder="contraseña nueva"
+  ></custom-input-password>
+
+  <!-- Confirmar contraseña -->
+  <div class="mb-3">
+    <label>Confirmar Contraseña</label>
+    <div class="input-group auth-pass-inputgroup">
+      <input
+        [type]="fieldTextType ? 'text' : 'password'"
+        class="form-control"
+        formControlName="confirmPassword"
+        placeholder="Ingresa contraseña"
+        aria-label="confirmPassword"
+        aria-describedby="confirmPassword-addon"
+        [ngClass]="{
+          'is-invalid': f.confirmPassword.touched && f.confirmPassword.errors
+        }"
+      />
+      <button class="btn btn-light" type="button" id="confirmPassword-addon">
+        <i
+          class="mdi"
+          [ngClass]="{
+            'mdi-eye-off-outline': !fieldTextType,
+            'mdi-eye-outline': fieldTextType
+          }"
+          (click)="toggleFieldTextType()"
+        ></i>
+      </button>
+      <div
+        *ngIf="f.confirmPassword.touched && f.confirmPassword.errors"
+        class="invalid-feedback"
+      >
+        <span *ngIf="f.confirmPassword.errors.required"
+          >Contraseña requerida</span
+        >
+        <div *ngIf="form.controls['confirmPassword'].errors?.passwordMatch">
+          Las contraseñas no coinciden
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Confirmar contraseña -->
+  <div class="mt-3 d-grid">
+    <custom-button
+      customClass="btn-primary w-100"
+      label="Actualizar contraseña"
+      type="submit"
+    ></custom-button>
+  </div>
+</form>
+
+<div class="mt-5 text-center">
+  <p class="text-muted mb-0">
+    ¿No tienes cuenta?, Solicita a tu Administrador tu cuenta.
+  </p>
+</div>

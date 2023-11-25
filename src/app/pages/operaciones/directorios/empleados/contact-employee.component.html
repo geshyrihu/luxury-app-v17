@@ -1,0 +1,96 @@
+<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+
+<div class="row mb-2">
+  <div class="col d-flex justify-content-end" *ngIf="!showButtonAddOrCancel">
+    <custom-button
+      [customClass]="'btn-info'"
+      ngbTooltip="Agregar un contacto"
+      label="Agregar un contacto"
+      (clicked)="showButtonAddOrCancel = !showButtonAddOrCancel"
+    ></custom-button>
+  </div>
+  <div class="col d-flex justify-content-end" *ngIf="showButtonAddOrCancel">
+    <custom-button
+      [customClass]="'btn-info'"
+      ngbTooltip="Cancelar"
+      label="Cancelar"
+      (clicked)="showButtonAddOrCancel = !showButtonAddOrCancel"
+    ></custom-button>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-3">Nombre</div>
+  <div class="col-sm-3">Apellido</div>
+  <div class="col-sm-3">Relación</div>
+  <div class="col-sm-2">Télefono</div>
+  <div class="col-sm-1">Opciones</div>
+</div>
+<form
+  *ngIf="showButtonAddOrCancel"
+  class="row mb-2"
+  autocomplete="off"
+  (ngSubmit)="onSubmit()"
+  [formGroup]="form"
+>
+  <div class="col-sm-3">
+    <input class="form-control" formControlName="firstName" />
+  </div>
+  <div class="col-sm-3">
+    <input class="form-control" formControlName="lastName" />
+  </div>
+  <div class="col-sm-3">
+    <select class="form-select" formControlName="relacion">
+      <option value="">Selecciona</option>
+      <option [value]="item.value" *ngFor="let item of cb_contactEmployee">
+        {{ item.label }}
+      </option>
+    </select>
+  </div>
+  <div class="col-sm-2">
+    <input
+      formControlName="phoneNumber"
+      class="form-control"
+      placeholder="(00)-0000-0000"
+      mask="(00)-0000-0000"
+    />
+  </div>
+
+  <div class="col-sm-1">
+    <custom-button-submit
+      [disabled]="this.form.invalid || submitting"
+    ></custom-button-submit>
+  </div>
+</form>
+<hr />
+
+<div class="row mt-3" *ngFor="let item of data">
+  <div class="col-sm-3">
+    <input class="form-control" [(ngModel)]="item.firstName" />
+  </div>
+  <div class="col-sm-3">
+    <input class="form-control" [(ngModel)]="item.lastName" />
+  </div>
+  <div class="col-sm-3">
+    <select class="form-select" [(ngModel)]="item.relacion">
+      <option value="">Selecciona</option>
+      <option [value]="item.value" *ngFor="let item of cb_contactEmployee">
+        {{ item.label }}
+      </option>
+    </select>
+  </div>
+  <div class="col-sm-2">
+    <input
+      [(ngModel)]="item.phoneNumber"
+      class="form-control"
+      placeholder="(00)-0000-0000"
+      mask="(00)-0000-0000"
+    />
+  </div>
+
+  <div class="col-sm-1">
+    <div class="d-flex justify-content-center">
+      <custom-button-edit (edit)="onUpdate(item)"></custom-button-edit>
+      <custom-button-delete (OnConfirm)="onDelete(item)"></custom-button-delete>
+    </div>
+  </div>
+</div>

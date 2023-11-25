@@ -1,0 +1,76 @@
+<hr />
+<div class="card-body">
+  <table class="table table-bordered">
+    <tbody *ngFor="let item of data">
+      <tr>
+        <td colspan="2">
+          <div class="alert alert-default-info">
+            <h6 class="h6">Catalogo de Gastos Fijos</h6>
+          </div>
+        </td>
+      </tr>
+      <tr *ngFor="let item1 of item.catalogoGastosFijos">
+        <td>{{ item1.folio }}</td>
+        <td>{{ item1.total }}</td>
+      </tr>
+
+      <tr>
+        <td colspan="2">
+          <div class="alert alert-default-info">
+            <h6 class="h6">Cotización Proveedor</h6>
+          </div>
+        </td>
+      </tr>
+      <tr *ngFor="let item1 of item.cotizacionProveedor">
+        <td>{{ item1.cliente }}</td>
+        <td>{{ item1.folioSolicitud }}</td>
+      </tr>
+
+      <tr>
+        <td colspan="2">
+          <div class="alert alert-default-info">
+            <h6 class="h6">Entrada de Producto</h6>
+          </div>
+        </td>
+      </tr>
+      <tr *ngFor="let item1 of item.entradaProducto">
+        <td>{{ item1.cliente.cliente }}</td>
+        <td>{{ item1.total }}</td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <div class="alert alert-default-info">
+            <h6 class="h6">Calendario de Mantenimiento</h6>
+          </div>
+        </td>
+      </tr>
+      <tr *ngFor="let item1 of item.maintenanceCalendar">
+        <td>{{ item1.cliente.cliente }}</td>
+        <td>{{ item1.total }}</td>
+      </tr>
+
+      <tr>
+        <td colspan="2">
+          <div class="alert alert-default-info">
+            <h6 class="h6">Orden de Compra</h6>
+          </div>
+        </td>
+      </tr>
+      <tr *ngFor="let item1 of item.ordenCompra">
+        <td>{{ item1.cliente }}</td>
+        <td>{{ item1.folio }}</td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <div class="alert alert-default-info">
+            <h6 class="h6">Orden de Servicio</h6>
+          </div>
+        </td>
+      </tr>
+      <tr *ngFor="let item1 of item.ordenServicio">
+        <td>{{ item1.cliente.cliente }}</td>
+        <td>{{ item1.total }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

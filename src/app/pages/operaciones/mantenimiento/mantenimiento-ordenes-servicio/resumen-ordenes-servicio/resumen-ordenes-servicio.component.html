@@ -1,0 +1,52 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <app-resumen-ordenes-servicio-grafico></app-resumen-ordenes-servicio-grafico>
+    </div>
+  </div>
+</div>
+<ng-container *ngIf="data">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <p-table [value]="data" styleClass="custom-table">
+          <ng-template pTemplate="header">
+            <tr>
+              <th scope="col">Equipo</th>
+              <th scope="col">Fecha de ejecución</th>
+              <th scope="col">Estatus</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-item>
+            <tr>
+              <td>{{ item.nameMachinery }}</td>
+              <td>
+                {{ item.executionDate | date }}
+              </td>
+              <td>
+                <p
+                  class="badge border-0 m-0 p-2"
+                  [ngClass]="{
+                    'bg-danger': item.status == 0,
+                    'bg-success': item.status == 1,
+                    'bg-secondary': item.status == 2
+                  }"
+                >
+                  <span *ngIf="item.status === 0">
+                    {{ item.status | eStatus | uppercase }}
+                  </span>
+                  <span *ngIf="item.status === 1">
+                    {{ item.status | eStatus | uppercase }}
+                  </span>
+                  <span *ngIf="item.status === 2">{{
+                    item.status | eStatus | uppercase
+                  }}</span>
+                </p>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+  </div>
+</ng-container>

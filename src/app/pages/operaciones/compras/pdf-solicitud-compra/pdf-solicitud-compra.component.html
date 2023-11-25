@@ -1,0 +1,27 @@
+<div class="container">
+  <div class="row">
+    <div class="col p-3">
+      <app-report-header></app-report-header>
+      <h6>Cotización {{ folioCotizacion }}</h6>
+      <table class="table table-striped table-sm">
+        <caption></caption>
+        <thead>
+          <tr>
+            <th style="width: 70%" scope="col">Descripción</th>
+            <th style="width: 15%" scope="col">Cantidad</th>
+            <th style="width: 15%" scope="col">Unidad</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of model">
+            <td>
+              {{ item.producto }}
+            </td>
+            <td>{{ item.cantidad }}</td>
+            <td>{{ item.unidadMedida }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

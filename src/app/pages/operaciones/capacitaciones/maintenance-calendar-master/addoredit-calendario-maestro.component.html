@@ -1,0 +1,112 @@
+<div class="card">
+  <div class="card-body">
+    <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
+      <!-- Id -->
+      <custom-input-text
+        [control]="form.get('id')"
+        formControlName="id"
+        label="Id"
+      ></custom-input-text>
+
+      <!-- Id -->
+
+      <div class="form-group row mb-1">
+        <label class="col-sm-3">Mes</label>
+        <div class="col-sm-9">
+          <select
+            class="form-select"
+            formControlName="mes"
+            [class.is-invalid]="f.mes.invalid && (f.mes.dirty || f.mes.touched)"
+          >
+            <option *ngFor="let item of cb_meses" [value]="item.value">
+              {{ item.label }}
+            </option>
+          </select>
+          <div *ngIf="f.mes.invalid && (f.mes.dirty || f.mes.touched)">
+            <small *ngIf="f.mes.errors.required" class="text-danger"
+              >El campo es reqerido.</small
+            >
+          </div>
+        </div>
+      </div>
+      <div class="form-group row mb-1">
+        <label class="col-sm-3">Equipo</label>
+        <div class="col-sm-9">
+          <select
+            class="form-select"
+            formControlName="calendarioMaestroEquipoId"
+            [class.is-invalid]="
+              f.calendarioMaestroEquipoId.invalid &&
+              (f.calendarioMaestroEquipoId.dirty ||
+                f.calendarioMaestroEquipoId.touched)
+            "
+          >
+            <option value="">Selecciona un equipo</option>
+            <option
+              *ngFor="let item of cb_equipoCalendarioMaestro"
+              [value]="item.value"
+            >
+              {{ item.label }}
+            </option>
+          </select>
+          <div
+            *ngIf="
+              f.calendarioMaestroEquipoId.invalid &&
+              (f.calendarioMaestroEquipoId.dirty ||
+                f.calendarioMaestroEquipoId.touched)
+            "
+          >
+            <small
+              *ngIf="f.calendarioMaestroEquipoId.errors.required"
+              class="text-danger"
+              >El campo es reqerido.</small
+            >
+          </div>
+        </div>
+      </div>
+      <!-- <custom-input-select
+        [control]="form.get('calendarioMaestroEquipoId')"
+        formControlName="calendarioMaestroEquipoId"
+        label="Nombre Equipo"
+        [data]="cb_equipoCalendarioMaestro"
+      ></custom-input-select> -->
+
+      <custom-input-text-area
+        [control]="form.get('descripcionServicio')"
+        formControlName="descripcionServicio"
+        label="Servicio"
+        placeholder="servicio"
+      ></custom-input-text-area>
+
+      <custom-input-text-area
+        [control]="form.get('observaciones')"
+        formControlName="observaciones"
+        label="Observaciones"
+        placeholder="observaciones"
+      ></custom-input-text-area>
+
+      <div class="form-group row mb-1">
+        <label class="col-sm-3">Proveedores </label>
+        <div class="col-sm-9">
+          <div class="multi_default">
+            <ng-select
+              formControlName="proveedores"
+              [items]="cb_providers"
+              [multiple]="true"
+              bindLabel="label"
+              [(ngModel)]="proveedoresSeleccionados"
+            >
+              <ng-template ng-optgroup-tmp let-item="item">
+                {{ item.label || "Unnamed group" }}
+              </ng-template>
+            </ng-select>
+          </div>
+        </div>
+      </div>
+
+      <custom-button-submit
+        [disabled]="this.form.invalid || submitting"
+      ></custom-button-submit>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,24 @@
+<form autocomplete="off" (ngSubmit)="submit()" [formGroup]="form">
+  <custom-input-text
+    [control]="form.get('id')"
+    formControlName="id"
+    label="Id"
+  ></custom-input-text>
+
+  <custom-input-text
+    [control]="form.get('department')"
+    formControlName="department"
+    label="Departamento"
+    placeholder="Departamento"
+  ></custom-input-text>
+
+  <custom-input-text
+    [control]="form.get('tower')"
+    formControlName="tower"
+    label="Torre"
+    placeholder="torre"
+  ></custom-input-text>
+  <custom-button-submit
+    [disabled]="this.form.invalid || submitting"
+  ></custom-button-submit>
+</form>

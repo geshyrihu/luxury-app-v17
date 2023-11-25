@@ -1,0 +1,71 @@
+<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+
+<div class="card">
+  <p-table
+    #dt
+    responsiveLayout="scroll"
+    styleClass="custom-table"
+    [value]="data"
+    [globalFilterFields]="['numeroCuenta', 'descripcion']"
+  >
+    <ng-template pTemplate="caption">
+      <app-table-header
+        [title]="'Cuentas primer nivel'"
+        (add)="showModalAddOrEdit({ id: 0, title: 'Nuevo Registro' })"
+        [dt]="dt"
+        [rolAuth]="authService.onValidateRoles(['SuperUsuario'])"
+      ></app-table-header>
+    </ng-template>
+
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th scope="col" style="width: 30%" pSortableColumn="numeroCuenta">
+          CUENTA
+          <p-sortIcon field="numeroCuenta"></p-sortIcon>
+        </th>
+        <th scope="col" style="width: 65%" pSortableColumn="descripcion">
+          DESCRIPCIÓN DE LA CUENTA
+          <p-sortIcon field="descripcion"></p-sortIcon>
+        </th>
+        <th
+          scope="col"
+          *ngIf="authService.onValidateRoles(['SuperUsuario'])"
+          style="width: 5%"
+        ></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item let-columns="columns">
+      <tr>
+        <td class="p-column-title">
+          {{ item.numeroCuenta }}
+        </td>
+
+        <td class="p-column-title">
+          {{ item.descripcion }}
+        </td>
+
+        <td
+          class="p-column-title"
+          *ngIf="authService.onValidateRoles(['SuperUsuario'])"
+        >
+          <div class="d-flex justify-content-center">
+            <custom-button-edit
+              (edit)="
+                showModalAddOrEdit({ id: item.id, title: 'Editar Registro' })
+              "
+            ></custom-button-edit>
+            <custom-button-delete
+              (OnConfirm)="onDelete(item)"
+            ></custom-button-delete>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="paginatorleft">
+      <div class="p-d-flex p-ai-center p-jc-between hide-print-mode">
+        En total hay
+        {{ data ? data.length : 0 }} registros.
+      </div>
+    </ng-template>
+  </p-table>
+</div>

@@ -1,32 +1,60 @@
 /* To learn more about this file see: https://angular.io/config/tsconfig. */
+
 {
+  // Desactiva la compilación automática al guardar el archivo.
   "compileOnSave": false,
   "compilerOptions": {
-    "outDir": "./dist/out-tsc",
-    "forceConsistentCasingInFileNames": true,
-    "strict": true,
+    // Especifica la ruta base para resolver los módulos.
+    "baseUrl": "./",
+    // Si se establece en true, se asegura de que los nombres de archivo tengan una capitalización consistente.
+    "forceConsistentCasingInFileNames": false,
+    // Si se establece en false, desactiva las comprobaciones estrictas del compilador TypeScript.
+    "strict": false,
+    // Si se establece en true, muestra un error si un método no anula correctamente un método de la clase base.
     "noImplicitOverride": true,
-    "noPropertyAccessFromIndexSignature": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "esModuleInterop": true,
+    // Si se establece en false, permite el acceso a propiedades a través de índices de firma.
+    "noPropertyAccessFromIndexSignature": false,
+    // Si se establece en false, no muestra un error si una función no tiene una sentencia de retorno.
+    "noImplicitReturns": false,
+    // Si se establece en false, permite casos de caída a través en declaraciones switch.
+    "noFallthroughCasesInSwitch": false,
+    // Si se establece en true, genera archivos de mapa de origen para facilitar la depuración.
     "sourceMap": true,
+    // Si se establece en false, no genera archivos de declaración .d.ts.
     "declaration": false,
+    // Si se establece en true, habilita la iteración descendente para for...of.
+    "downlevelIteration": true,
+    // Si se establece en true, permite el uso de decoradores experimentales.
     "experimentalDecorators": true,
+    // Especifica cómo se resuelven los módulos (por ejemplo, "node" para Node.js)
     "moduleResolution": "node",
+    // Si se establece en true, habilita la generación de funciones de ayuda de importación.
     "importHelpers": true,
+    // Define la versión de ECMAScript a la que se compila el código.
     "target": "ES2022",
+    // Define el sistema de módulos (por ejemplo, "ES2022").
     "module": "ES2022",
+    // Si se establece en false, no utiliza define para campos de clase.
     "useDefineForClassFields": false,
-    "lib": [
-      "ES2022",
-      "dom"
-    ]
+    // Especifica las bibliotecas de definición de TypeScript que se incluirán en el proyecto.
+    "lib": ["ES2022", "dom"],
+    // Si se establece en false, deshabilita la interoperabilidad de ES6.
+    "esModuleInterop": false,
+    // Especifica la carpeta de salida para los archivos compilados.
+    "outDir": "./dist/out-tsc",
+    // Si se establece en true, permite importaciones sintéticas por defecto.
+    "allowSyntheticDefaultImports": true
   },
   "angularCompilerOptions": {
+    // Si se establece en false, desactiva el formato de identificación de mensajes heredado.
     "enableI18nLegacyMessageIdFormat": false,
+    // Si se establece en true, muestra un error si los parámetros de inyección no son válidos.
     "strictInjectionParameters": true,
+    // Si se establece en true, muestra un error si los modificadores de acceso de entrada no son válidos.
     "strictInputAccessModifiers": true,
-    "strictTemplates": true
+    // Si se establece en false, desactiva las comprobaciones estrictas en las plantillas.
+    "strictTemplates": false,
+    // Si se establece en true, desactiva la comprobación de la versión de TypeScrip
+    "disableTypeScriptVersionCheck": true
   }
 }

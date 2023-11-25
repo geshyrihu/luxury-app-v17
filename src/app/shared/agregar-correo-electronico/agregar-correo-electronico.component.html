@@ -1,0 +1,20 @@
+<div>
+  <label class="mb-2">Dirección de correo electronico</label>
+  <input
+    type="email"
+    (input)="esEmailValido()"
+    [(ngModel)]="email"
+    class="form-control"
+    [ngClass]="{ 'is-invalid': !mailValido }"
+    [ngClass]="{ 'is-valid': mailValido }"
+    required
+  />
+  <small class="text-danger" *ngIf="!mailValido">Email no valido</small>
+  <button
+    class="btn btn-info float-end mt-2"
+    (click)="onAgregarEmail()"
+    [disabled]="!mailValido"
+  >
+    Agregar
+  </button>
+</div>

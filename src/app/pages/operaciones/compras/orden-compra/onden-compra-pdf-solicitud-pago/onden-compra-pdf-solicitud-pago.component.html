@@ -1,0 +1,175 @@
+<div class="container card" *ngIf="model !== undefined">
+  <div class="row">
+    <div class="col-12">
+      <app-cabecera-solicitud-pago-pdf
+        [titulo]="'Solicitud de pago'"
+        [folio]="model.folio"
+        [factura]="model.ordenCompraStatus.factura"
+      ></app-cabecera-solicitud-pago-pdf>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6">
+      <div class="row">
+        <div class="col-4"><small>Fecha </small></div>
+        <div class="col-8">
+          <small> {{ model.fechaSolicitud | date }}</small>
+        </div>
+        <div class="col-4">
+          <small>Area</small>
+        </div>
+        <div class="col-8">
+          <small> {{ model.equipoOInstalacion }}</small>
+        </div>
+        <div class="col-4">
+          <small>Justificación</small>
+        </div>
+        <div class="col-8">
+          <small> {{ model.justificacionGasto }}</small>
+        </div>
+        <div class="col-4">
+          <small>Reviso</small>
+        </div>
+        <div class="col-8">
+          <small> {{ model.ordenCompraAuth.revisadoPorResidente }}</small>
+        </div>
+        <div class="col-4">
+          <small>Autorizo</small>
+        </div>
+        <div class="col-8">
+          <small>
+            {{ model.ordenCompraAuth.applicationUserAuth }} {{
+            model.ordenCompraAuth.fechaAutorizacion | date: "medium" }}</small
+          >
+        </div>
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="row">
+        <div class="col-4"><small> Proveedor </small></div>
+        <div class="col-8">
+          <small>
+            {{ model.ordenCompraDatosPago.providerName }}
+          </small>
+        </div>
+        <div class="col-4"><small> Dirección</small></div>
+        <div class="col-8">
+          <small>
+            {{ model.ordenCompraDatosPago.providerAdreess }}
+          </small>
+        </div>
+        <div class="col-4"><small>Télefono </small></div>
+        <div class="col-8">
+          <small>
+            {{ model.ordenCompraDatosPago.providerPhoneOne }} - {{
+            model.ordenCompraDatosPago.providerPhoneTwo }}
+          </small>
+        </div>
+        <div class="col-4"><small> Beneficiario </small></div>
+        <div class="col-8">
+          <small>
+            {{ model.ordenCompraDatosPago.nameCheck }}
+          </small>
+        </div>
+        <div class="col-4"><small> Banco </small></div>
+        <div class="col-8">
+          <small>
+            {{ model.ordenCompraDatosPago.bank }}
+          </small>
+        </div>
+        <div class="col-4"><small> Cuenta/Convenio </small></div>
+        <div class="col-8">
+          <small>
+            {{ model.ordenCompraDatosPago.paymentAccount }}
+          </small>
+        </div>
+        <div class="col-4"><small> Clabe/Referencia </small></div>
+        <div class="col-8">
+          <small>
+            {{ model.ordenCompraDatosPago.interbankCode }}
+          </small>
+        </div>
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="row">
+        <div class="col-4"><small> Uso de CFDI</small></div>
+        <div class="col-8">
+          <small> {{ model.ordenCompraDatosPago.usoCFDI }} </small>
+        </div>
+        <div class="col-4"><small> Metodo de Pago </small></div>
+        <div class="col-8">
+          <small>{{ model.ordenCompraDatosPago.metodoDePago }} </small>
+        </div>
+        <div class="col-4"><small> Forma de Pago </small></div>
+        <div class="col-8">
+          <small>{{ model.ordenCompraDatosPago.formaDePago }}</small>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-3">
+    <div class="col-12">
+      <div class="table-responsive">
+        <table class="table table-sm border-0 table-nowrap align-middle mb-5">
+          <thead>
+            <tr>
+              <th style="width: 80%;">Cuenta</th>
+              <th class="text-end" style="width: 20%;">Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of ordenCompraPresupuesto">
+              <td>
+                <p class="text-muted mb-0">
+                  {{ item.cuenta }} {{ item.numeroCuenta }}
+                </p>
+              </td>
+              <td class="text-end">
+                {{ item.dineroUsado | currency: "MXN":"symbol" }}
+              </td>
+            </tr>
+
+            <tr>
+              <th scope="row" class="border-0 text-end">SubTotal</th>
+              <td class="border-0 text-end">
+                {{ subtotal | currency: "MXN":"symbol" }}
+              </td>
+            </tr>
+            <tr>
+              <th scope="row" class="border-0 text-end">IVA</th>
+              <td class="border-0 text-end">
+                {{ iva | currency: "MXN":"symbol" }}
+              </td>
+            </tr>
+            <tr>
+              <th scope="row" class="border-0 text-end">Total a pagar</th>
+              <td class="border-0 text-end">
+                {{ total | currency: "MXN":"symbol" }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <br />
+      <br />
+      <br />
+    </div>
+  </div>
+  <div class="row mt-2">
+    <div class="col-6 text-center">
+      <br />
+      <hr />
+      <p>
+        {{ model.ordenCompraAuth.revisadoPorResidente.valueOf().slice(0, -21) }}
+      </p>
+      <p>Pago Solicitado por</p>
+    </div>
+    <div class="col-6 text-center">
+      <br />
+      <hr />
+      <p>Matias Luis Abramoff</p>
+      <p>Pago Autorizado por</p>
+    </div>
+  </div>
+</div>

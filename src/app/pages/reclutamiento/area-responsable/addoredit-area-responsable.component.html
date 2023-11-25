@@ -1,0 +1,39 @@
+<div class="card">
+  <div class="card-body">
+    <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
+      <custom-input-text
+        [control]="form.get('id')"
+        formControlName="id"
+        label="Id"
+      ></custom-input-text>
+
+      <custom-input-select
+        [control]="form.get('companyArea')"
+        formControlName="companyArea"
+        label="Área"
+        [data]="cb_area_empresa"
+      ></custom-input-select>
+      <custom-input-text
+        [control]="form.get('nameArea')"
+        formControlName="nameArea"
+        label="Nombre Departamento"
+        placeholder="nombre Departamento"
+      ></custom-input-text>
+      <custom-input-number
+        [control]="form.get('position')"
+        formControlName="position"
+        label="Posición"
+        placeholder="posición"
+      ></custom-input-number>
+      <custom-input-number
+        [control]="form.get('hierarchy')"
+        formControlName="hierarchy"
+        label="Jerarquía"
+        placeholder="nivel de jerarquía"
+      ></custom-input-number>
+      <custom-button-submit
+        [disabled]="this.form.invalid || submitting"
+      ></custom-button-submit>
+    </form>
+  </div>
+</div>

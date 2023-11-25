@@ -1,0 +1,45 @@
+<div class="card">
+  <div class="card-body">
+    <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
+      <!-- Id -->
+      <div class="form-group row mb-2">
+        <label class="col-sm-3">Id</label>
+        <div class="col-sm-9">
+          <input class="form-control" formControlName="id" />
+        </div>
+      </div>
+      <!-- Id -->
+      <!-- Img -->
+      <div class="form-group row mb-2">
+        <label class="col-sm-3">Imagen</label>
+        <div class="col-sm-9">
+          <app-input-img
+            (fileSelected)="uploadFile($event)"
+            [urlImgCurrent]="urlBaseImg"
+            [contentHeight]="'150'"
+            [contentWidth]="'250'"
+          ></app-input-img>
+        </div>
+      </div>
+      <!-- Img -->
+
+      <custom-input-select
+        [control]="form.get('eExtintor')"
+        formControlName="eExtintor"
+        label="Extintor"
+        [data]="cb_extintor"
+      ></custom-input-select>
+
+      <custom-input-text
+        [control]="form.get('ubicacion')"
+        formControlName="ubicacion"
+        label="Ubicación"
+        placeholder="ubicación"
+      ></custom-input-text>
+
+      <custom-button-submit
+        [disabled]="this.form.invalid || submitting"
+      ></custom-button-submit>
+    </form>
+  </div>
+</div>

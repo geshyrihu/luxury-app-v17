@@ -1,0 +1,60 @@
+<div class="card">
+  <div class="card-body">
+    <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
+      <custom-input-text
+        [control]="form.get('id')"
+        formControlName="id"
+        label="Id"
+      ></custom-input-text>
+
+      <div class="form-group row mb-1">
+        <label class="col-sm-3">Producto</label>
+        <div class="col-sm-9">
+          <input
+            hidden
+            type="number"
+            class="form-control"
+            formControlName="productoId"
+          />
+          <input
+            readonly
+            type="text"
+            class="form-control"
+            formControlName="producto"
+          />
+        </div>
+      </div>
+
+      <custom-input-number
+        [control]="form.get('existencia')"
+        formControlName="existencia"
+        label="Existencia"
+      ></custom-input-number>
+
+      <custom-input-select
+        [control]="form.get('unidadDeMedidaId')"
+        formControlName="unidadDeMedidaId"
+        label="Unidad"
+        [data]="cb_measurementUnits"
+      ></custom-input-select>
+
+      <custom-input-number
+        [control]="form.get('stockMax')"
+        formControlName="stockMax"
+        label="Stock Maximo"
+        placeholder="stock maximo"
+      ></custom-input-number>
+
+      <custom-input-number
+        [control]="form.get('stockMin')"
+        formControlName="stockMin"
+        label="Stock Minimo"
+        placeholder="stock minimo"
+      ></custom-input-number>
+
+      <custom-button-submit
+        [disabled]="this.form.invalid || submitting"
+      ></custom-button-submit>
+    </form>
+  </div>
+</div>

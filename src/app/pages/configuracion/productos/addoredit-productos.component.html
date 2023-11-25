@@ -1,0 +1,65 @@
+<div class="card">
+  <div class="card-body">
+    <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
+      <custom-input-text
+        [control]="form.get('id')"
+        formControlName="id"
+        label="Id"
+      ></custom-input-text>
+
+      <!-- Img -->
+      <div class="form-group row mb-2">
+        <label class="col-sm-3">Imagen</label>
+        <div class="col-sm-9">
+          <div class="card">
+            <app-input-img
+              (fileSelected)="uploadFile($event)"
+              [urlImgCurrent]="urlBaseImg"
+              [contentHeight]="'150'"
+              [contentWidth]="'250'"
+            ></app-input-img>
+          </div>
+        </div>
+      </div>
+      <custom-input-text
+        [control]="form.get('nombreProducto')"
+        formControlName="nombreProducto"
+        label="Nombre"
+        placeholder="nombre"
+      ></custom-input-text>
+
+      <custom-input-datalist
+        (propagar)="savecategoryId($event)"
+        [control]="form.get('category')"
+        [data]="cb_category"
+        formControlName="category"
+        label="Categoria"
+        dataListId="categoryDatalistOptions"
+      ></custom-input-datalist>
+
+      <custom-input-select
+        [control]="form.get('clasificacion')"
+        formControlName="clasificacion"
+        label="Clasificación"
+        [data]="cb_clasificacion"
+      ></custom-input-select>
+
+      <custom-input-text
+        [control]="form.get('marca')"
+        formControlName="marca"
+        label="Marca"
+        placeholder="marca"
+      ></custom-input-text>
+      <custom-input-text
+        [control]="form.get('modelo')"
+        formControlName="modelo"
+        label="Modelo"
+        placeholder="modelo"
+      ></custom-input-text>
+
+      <custom-button-submit
+        [disabled]="this.form.invalid || submitting"
+      ></custom-button-submit>
+    </form>
+  </div>
+</div>

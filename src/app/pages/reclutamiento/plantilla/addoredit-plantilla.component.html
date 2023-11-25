@@ -1,0 +1,256 @@
+<div class="card" *ngIf="this.form">
+  <div class="card-body">
+    <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
+      <!-- Id -->
+
+      <custom-input-text
+        *ngIf="authService.onValidateRoles(['SuperUsuario'])"
+        [control]="form.get('id')"
+        formControlName="id"
+        label="Id"
+        placeholder="id"
+      ></custom-input-text>
+
+      <custom-input-datalist
+        *ngIf="authService.onValidateRoles(['SuperUsuario'])"
+        (propagar)="saveprofessionIdId($event)"
+        [control]="form.get('professionName')"
+        [data]="cb_profession"
+        formControlName="professionName"
+        label="Profesion"
+        dataListId="professionNameDatalistOptions"
+      ></custom-input-datalist>
+
+      <!-- Profesion -->
+
+      <!-- Colaborador -->
+      <custom-input-datalist
+        (propagar)="saveemployeeIdId($event)"
+        [control]="form.get('employeeName')"
+        [data]="cb_employee"
+        formControlName="employeeName"
+        label="Colaborador"
+        dataListId="employeeNameDatalistOptions"
+      ></custom-input-datalist>
+      <!-- Colaborador -->
+
+      <!-- Sueldo -->
+
+      <custom-input-number
+        [control]="form.get('sueldoBase')"
+        formControlName="sueldoBase"
+        label="Sueldo base"
+        placeholder="sueldo base"
+      ></custom-input-number>
+      <custom-input-number
+        [control]="form.get('sueldo')"
+        formControlName="sueldo"
+        label="Sueldo actual"
+        placeholder="sueldo actual"
+      ></custom-input-number>
+      <!-- Sueldo -->
+
+      <!-- Horarios -->
+
+      <custom-input-select
+        *ngIf="authService.onValidateRoles(['SuperUsuario'])"
+        [control]="form.get('turnoTrabajo')"
+        formControlName="turnoTrabajo"
+        label="Turno de trabajo"
+        [data]="cb_turnoTrabajo"
+      ></custom-input-select>
+
+      <div
+        class="form-group row mb-2"
+        *ngIf="authService.onValidateRoles(['SuperUsuario'])"
+      >
+        <label class="font-weight-lighter col-sm-3">Lunes</label>
+        <div class="col-9">
+          <div class="row">
+            <div class="col-sm-6">
+              <input
+                formControlName="lunesEntrada"
+                class="form-control"
+                type="time"
+              />
+            </div>
+            <div class="col-sm-6">
+              <input
+                class="form-control"
+                formControlName="lunesSalida"
+                type="time"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="form-group row mb-2"
+        *ngIf="authService.onValidateRoles(['SuperUsuario'])"
+      >
+        <label class="font-weight-lighter col-sm-3">Martes</label>
+        <div class="col-9">
+          <div class="row">
+            <div class="col-sm-6">
+              <input
+                class="form-control"
+                formControlName="martesEntrada"
+                type="time"
+              />
+            </div>
+
+            <div class="col-sm-6">
+              <input
+                class="form-control"
+                formControlName="martesSalida"
+                type="time"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="form-group row mb-2"
+        *ngIf="authService.onValidateRoles(['SuperUsuario'])"
+      >
+        <label class="font-weight-lighter col-sm-3">Miercoles</label>
+        <div class="col-9">
+          <div class="row">
+            <div class="col-sm-6">
+              <input
+                class="form-control"
+                formControlName="miercolesEntrada"
+                type="time"
+              />
+            </div>
+
+            <div class="col-sm-6">
+              <input
+                class="form-control"
+                formControlName="miercolesSalida"
+                type="time"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="form-group row mb-2"
+        *ngIf="authService.onValidateRoles(['SuperUsuario'])"
+      >
+        <label class="font-weight-lighter col-sm-3">Jueves</label>
+        <div class="col-9">
+          <div class="row">
+            <div class="col-sm-6">
+              <input
+                class="form-control"
+                formControlName="juevesEntrada"
+                type="time"
+              />
+            </div>
+
+            <div class="col-sm-6">
+              <input
+                class="form-control"
+                formControlName="juevesSalida"
+                type="time"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="form-group row mb-2"
+        *ngIf="authService.onValidateRoles(['SuperUsuario'])"
+      >
+        <label class="font-weight-lighter col-sm-3">Viernes</label>
+        <div class="col-9">
+          <div class="row">
+            <div class="col-sm-6">
+              <input
+                class="form-control"
+                formControlName="viernesEntrada"
+                type="time"
+              />
+            </div>
+
+            <div class="col-sm-6">
+              <input
+                class="form-control"
+                formControlName="viernesSalida"
+                type="time"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="form-group row mb-2"
+        *ngIf="authService.onValidateRoles(['SuperUsuario'])"
+      >
+        <label class="font-weight-lighter col-sm-3">Sabado</label>
+        <div class="col-9">
+          <div class="row">
+            <div class="col-sm-6">
+              <input
+                class="form-control"
+                formControlName="sabadoEntrada"
+                type="time"
+              />
+            </div>
+
+            <div class="col-sm-6">
+              <input
+                class="form-control"
+                formControlName="sabadoSalida"
+                type="time"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="form-group row mb-2"
+        *ngIf="authService.onValidateRoles(['SuperUsuario'])"
+      >
+        <label class="font-weight-lighter col-sm-3">Domingo</label>
+        <div class="col-9">
+          <div class="row">
+            <div class="col-sm-6">
+              <input
+                class="form-control"
+                formControlName="domingoEntrada"
+                type="time"
+              />
+            </div>
+
+            <div class="col-sm-6">
+              <input
+                class="form-control"
+                formControlName="domingoSalida"
+                type="time"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <custom-input-text-area
+        *ngIf="authService.onValidateRoles(['SuperUsuario'])"
+        [control]="form.get('observationsWorkShift')"
+        formControlName="observationsWorkShift"
+        label="Obr. referentes al horario"
+        placeholder="Observaciones referentes al horario"
+      ></custom-input-text-area>
+      <custom-input-select
+        *ngIf="authService.onValidateRoles(['SuperUsuario'])"
+        [control]="form.get('state')"
+        formControlName="state"
+        label="Vacante activa"
+        [data]="cb_state"
+      ></custom-input-select>
+      <custom-button-submit
+        [disabled]="this.form.invalid || submitting"
+      ></custom-button-submit>
+    </form>
+  </div>
+</div>

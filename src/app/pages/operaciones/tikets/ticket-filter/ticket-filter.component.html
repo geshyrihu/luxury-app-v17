@@ -1,0 +1,118 @@
+<p class="text-danger">{{ messageError }}</p>
+<div class="card">
+  <div class="card-body">
+    <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
+      <div class="row">
+        <div class="col-sm-3">
+  
+          <label>Estatus</label>
+          <select class="form-control" formControlName="status">
+            <option value="">Seleccionar opcion...</option>
+            <option [value]="item.value" *ngFor="let item of cb_status">
+              {{ item.label }}
+            </option>
+          </select>
+          <div class="mb-3">
+
+            <label>Responsable</label>
+            <select class="form-control" formControlName="responsible">
+              <option value="">Seleccionar opcion...</option>
+              <option
+                [value]="item.value"
+                *ngFor="let item of cb_area_responsable"
+              >
+                {{ item.label }}
+              </option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label>Folios de Reporte</label>
+            <select class="form-control" formControlName="folioReporte">
+              <option [value]="null">Seleccionar opcion...</option>
+              <option [value]="true">Si</option>
+              <option [value]="false">No</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-sm-3">
+       
+          <div class="mb-3">
+            <label>Solicita</label>
+            <select class="form-control" formControlName="request">
+              <option value="">Seleccionar opcion...</option>
+              <option [value]="item.value" *ngFor="let item of cb_solicitantes">
+                {{ item.label }}
+              </option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label>Prioridad</label>
+            <select class="form-control" formControlName="priority">
+              <option value="">Seleccionar opcion...</option>
+              <option [value]="item.value" *ngFor="let item of cb_priority">
+                {{ item.label }}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="mb-3">
+            <custom-input-date
+              [control]="form.get('requestStart')"
+              formControlName="requestStart"
+              label="Fecha de Solicitud desde"
+              placeholder="Fecha de solicitud desde"
+              [horizontal]="false"
+            ></custom-input-date>
+          </div>
+          <div class="mb-3">
+            <custom-input-date
+              [control]="form.get('finishedStart')"
+              formControlName="finishedStart"
+              label="Fecha de Termino desde"
+              placeholder="Fecha de termino desde"
+              [horizontal]="false"
+            ></custom-input-date>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="mb-3">
+            <custom-input-date
+              [control]="form.get('requestEnd')"
+              formControlName="requestEnd"
+              label="Fecha de Solicitud hasta"
+              placeholder="Fecha de solicitud hasta"
+              [horizontal]="false"
+            ></custom-input-date>
+          </div>
+          <div class="mb-3">
+            <custom-input-date
+              [control]="form.get('finishedEnd')"
+              formControlName="finishedEnd"
+              label="Fecha de Termino hasta"
+              placeholder="Fecha de termino hasta"
+              [horizontal]="false"
+            ></custom-input-date>
+          </div>
+          <div class="mb-3">
+            <br />
+            <br />
+            <button type="submit" class="mt-1 float-end btn btn-info me-2">
+              Filtrar
+            </button>
+            <button
+              type="button"
+              (click)="onResetForm()"
+              class="mt-1 float-end btn btn-info me-2"
+            >
+              Reset
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

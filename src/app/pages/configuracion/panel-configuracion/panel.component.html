@@ -1,0 +1,15 @@
+<div class="row mb-2" *ngFor="let i of menuPanel">
+  <h4 class="h4">
+    <i class="font-truncate" [class]="i.icon"> </i>
+    {{ i.group }}
+  </h4>
+  <div class="col-sm-2 d-grid p-1" *ngFor="let item of i.items">
+    <div class="card">
+      <div class="card-body">
+        <a [routerLink]="item.path" class="btn btn-primary d-grid">
+          {{ item.title }}
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,67 @@
+<form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
+  <custom-input-text
+    [control]="form.get('id')"
+    formControlName="id"
+    label="Id"
+  ></custom-input-text>
+
+  <div class="form-group row mb-2">
+    <label class="col-sm-3">Hora/Fecha Salida</label>
+
+    <div class="col-sm-9">
+      <input
+        type="datetime-local"
+        class="form-control"
+        formControlName="fechaSalida"
+        [ngClass]="{
+          'is-invalid':
+            f.fechaSalida.errors &&
+            (f.fechaSalida.dirty || f.fechaSalida.touched)
+        }"
+      />
+    </div>
+  </div>
+
+  <custom-input-datalist
+    (propagar)="saveToolId($event)"
+    [control]="form.get('tool')"
+    [data]="cb_tool"
+    formControlName="tool"
+    label="Herramienta"
+    dataListId="toolDatalistOptions"
+  ></custom-input-datalist>
+
+  <custom-input-datalist
+    (propagar)="saveEmployeeId($event)"
+    [control]="form.get('employee')"
+    [data]="cb_employee"
+    formControlName="employee"
+    label="Colaborador"
+    dataListId="employeeDatalistOptions"
+  ></custom-input-datalist>
+
+  <div class="form-group row mb-2">
+    <label class="col-sm-3">Hora/Fecha Regreso</label>
+
+    <div class="col-sm-9">
+      <div class="p-fluid">
+        <input
+          type="datetime-local"
+          class="form-control"
+          formControlName="fechaRegreso"
+        />
+      </div>
+    </div>
+  </div>
+
+  <custom-input-text-area
+    [control]="form.get('observaciones')"
+    formControlName="observaciones"
+    label="Observaciones"
+    placeholder="observaciones"
+  ></custom-input-text-area>
+
+  <custom-button-submit
+    [disabled]="this.form.invalid || submitting"
+  ></custom-button-submit>
+</form>

@@ -1,0 +1,59 @@
+<div class="card">
+  <div class="card-body">
+    <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
+      <custom-input-text
+        [control]="form.get('id')"
+        formControlName="id"
+        label="Id"
+      ></custom-input-text>
+
+      <div class="form-group row mb-2">
+        <label class="col-sm-3">Imagen</label>
+        <div class="col-sm-9">
+          <div class="card">
+            <app-input-img
+              (fileSelected)="uploadFile($event)"
+              [urlImgCurrent]="urlBaseImg"
+              [contentHeight]="'150'"
+              [contentWidth]="'250'"
+            ></app-input-img>
+          </div>
+        </div>
+      </div>
+
+      <custom-input-text
+        [control]="form.get('instancia')"
+        formControlName="instancia"
+        label="Instancia"
+        placeholder="instancia"
+      ></custom-input-text>
+
+      <custom-input-mask
+        [control]="form.get('telefonoUno')"
+        formControlName="telefonoUno"
+        label="Teléfono 1"
+        placeholder="(00) 0000-0000"
+        customMask="(00) 0000-0000"
+      ></custom-input-mask>
+
+      <custom-input-mask
+        [control]="form.get('telefonoDos')"
+        formControlName="telefonoDos"
+        label="Teléfono 2"
+        placeholder="(00) 0000-0000"
+        customMask="(00) 0000-0000"
+      ></custom-input-mask>
+
+      <custom-input-text-area
+        [control]="form.get('direccion')"
+        formControlName="direccion"
+        label="Dirección"
+        placeholder="dirección"
+      ></custom-input-text-area>
+
+      <custom-button-submit
+        [disabled]="this.form.invalid || submitting"
+      ></custom-button-submit>
+    </form>
+  </div>
+</div>

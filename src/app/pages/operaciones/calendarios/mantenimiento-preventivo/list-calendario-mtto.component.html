@@ -1,0 +1,50 @@
+<div class="card">
+  <div class="card-header">
+    <h3 class="h3 text-secondary">
+      Calendario Anual de Mantenimiento preventivo
+    </h3>
+  </div>
+  <!-- end card header -->
+
+  <div class="card-body">
+    <!-- Nav tabs -->
+    <ul ngbNav #nav="ngbNav" [activeId]="1" class="nav-tabs">
+      <li [ngbNavItem]="1" class="hide-print-mode">
+        <a ngbNavLink>
+          <span class="d-block d-sm-none"
+            ><i class="fa-duotone fa-house"></i
+          ></span>
+          <span class="d-none d-sm-block">Cronograma</span>
+        </a>
+        <ng-template ngbNavContent>
+          <app-cronograma-anual-mantenimiento></app-cronograma-anual-mantenimiento>
+        </ng-template>
+      </li>
+      <li [ngbNavItem]="2" class="hide-print-mode">
+        <a ngbNavLink>
+          <span class="d-block d-sm-none"
+            ><i class="fa-regular fa-user"></i
+          ></span>
+          <span class="d-none d-sm-block">Listado</span>
+        </a>
+        <ng-template ngbNavContent>
+          <app-listado-anual-mantenimiento></app-listado-anual-mantenimiento>
+        </ng-template>
+      </li>
+      <li [ngbNavItem]="3" class="hide-print-mode">
+        <a ngbNavLink>
+          <span class="d-block d-sm-none"
+            ><i class="fa-duotone fa-envelope"></i
+          ></span>
+          <span class="d-none d-sm-block">General</span>
+        </a>
+        <ng-template ngbNavContent>
+          <app-general-anual-mantenimiento></app-general-anual-mantenimiento>
+        </ng-template>
+      </li>
+    </ul>
+    <div [ngbNavOutlet]="nav" class="text-muted"></div>
+  </div>
+  <!-- end card-body -->
+</div>
+<!-- end card -->

@@ -1,0 +1,96 @@
+<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+
+<div class="row">
+  <div class="col-12">
+    <div class="card" *ngFor="let item of data">
+      <div class="card-header">
+        <span class="p-2 badge rounded-pill bg-primary">{{ item.fecha }}</span>
+      </div>
+      <div class="card-body" *ngFor="let reports of item.areaResponsable">
+        <ngb-alert
+          type="info"
+          [dismissible]="false"
+          class="alert alert-dismissible alert-label-icon label-arrow fade show custom-alert w-25"
+        >
+          <i class="mdi mdi-alert-circle-outline label-icon"></i>
+          {{ reports.area }}
+        </ngb-alert>
+        <div class="row" *ngFor="let items of reports.responsable">
+          <div class="col-sm-3 order-2 order-sm-1">
+            <div class="d-flex align-items-start mt-3 mt-sm-0">
+              <div class="flex-shrink-0">
+                <div class="avatar-xl me-3">
+                  <img
+                    [src]="url + items.responsablePhoto"
+                    alt=""
+                    class="avatar-sm rounded-circle me-2 mb-2"
+                  />
+                </div>
+              </div>
+              <div class="flex-grow-1">
+                <div>
+                  <h5 class="font-size-16 mb-1">{{ items.responsable }}</h5>
+                  <p class="text-muted font-size-13">{{ items.profesion }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-9 order-1 order-sm-2">
+            <ol>
+              <li *ngFor="let trabajo of items.trabajos">
+                <div class="row">
+                  <div class="col-sm-8">
+                    <span>{{ trabajo.actividad }} </span>
+                    <span>{{ trabajo.observaciones }} </span>
+                  </div>
+                  <div class="col-sm-2">
+                    <span>
+                      <i
+                        class="fa-duotone fa-clock text-success"
+                        aria-hidden="true"
+                      ></i>
+                      {{ trabajo.fechaInicio }}
+                    </span>
+                    <br />
+                    <span>
+                      <i
+                        class="fa-duotone fa-clock text-danger"
+                        aria-hidden="true"
+                      ></i>
+                      {{ trabajo.fechaLimite }}
+                    </span>
+                  </div>
+
+                  <div class="col-sm-2">
+                    <div class="d-flex justify-content-center">
+                      <custom-button-edit
+                        (edit)="
+                          showModalAddOrEdit({
+                            id: trabajo.idItem,
+                            title: 'Editar Registro'
+                          })
+                        "
+                      ></custom-button-edit>
+                      <custom-button-delete
+                        *ngIf="authService.onValidateRoles(['Mantenimiento'])"
+                        (OnConfirm)="onDelete(trabajo.idItem)"
+                      ></custom-button-delete>
+                    </div>
+                  </div>
+                </div>
+                <hr />
+              </li>
+            </ol>
+          </div>
+        </div>
+      </div>
+      <!-- end card body -->
+    </div>
+    <!-- end card -->
+
+    <!-- end tab content -->
+  </div>
+  <!-- end col -->
+
+  <!-- end col -->
+</div>

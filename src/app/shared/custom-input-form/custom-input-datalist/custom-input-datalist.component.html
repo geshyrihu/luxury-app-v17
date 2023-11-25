@@ -1,0 +1,60 @@
+<ng-container *ngIf="horizontal">
+  <div class="form-group row mb-2">
+    <label class="col-sm-3 form-label">{{ label }} </label>
+    <div class="col-sm-9">
+      <input
+        class="form-control"
+        placeholder="Escribir para buscar"
+        [value]="value"
+        (input)="onChange($event)"
+        (blur)="onTouch()"
+        (change)="onSelectItem($event)"
+        [attr.list]="dataListId"
+        [ngClass]="{
+          'is-invalid': control.invalid && (control.dirty || control.touched)
+        }"
+      />
+
+      <datalist [id]="dataListId">
+        <option [value]="item.label" *ngFor="let item of data"></option>
+      </datalist>
+      <div
+        class="small text-danger"
+        *ngIf="control.invalid && (control.dirty || control.touched)"
+      >
+        <p class="mb-1" *ngIf="control.errors.required">
+          El campo {{ placeholder }} es requerido.
+        </p>
+      </div>
+    </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="!horizontal">
+  <div class="mb-3">
+    <label>{{ label }} </label>
+    <input
+      class="form-control"
+      placeholder="Escribir para buscar"
+      [value]="value"
+      (input)="onChange($event)"
+      (blur)="onTouch()"
+      (change)="onSelectItem($event)"
+      [attr.list]="dataListId"
+      [ngClass]="{
+        'is-invalid': control.invalid && (control.dirty || control.touched)
+      }"
+    />
+
+    <datalist [id]="dataListId">
+      <option [value]="item.label" *ngFor="let item of data"></option>
+    </datalist>
+    <div
+      class="small text-danger"
+      *ngIf="control.invalid && (control.dirty || control.touched)"
+    >
+      <p class="mb-1" *ngIf="control.errors.required">
+        El campo {{ placeholder }} es requerido.
+      </p>
+    </div>
+  </div>
+</ng-container>

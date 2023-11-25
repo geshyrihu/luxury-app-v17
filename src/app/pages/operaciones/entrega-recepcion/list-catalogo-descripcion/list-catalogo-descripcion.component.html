@@ -1,0 +1,91 @@
+<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+
+<div class="p-card p-mb-5">
+  <p-table
+    #dt
+    [(selection)]="data"
+    [autoLayout]="true"
+    [globalFilterFields]="['folioId', 'descripcion', 'departamento', 'grupo']"
+    [paginator]="true"
+    [rowHover]="true"
+    [rows]="15"
+    [rowsPerPageOptions]="[10, 20, 30, 40, 50, 75, 100, 200]"
+    [showCurrentPageReport]="true"
+    [value]="data"
+    currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+    styleClass="custom-table"
+  >
+    <ng-template pTemplate="caption">
+      <app-table-header
+        [title]="'Descripcion'"
+        (add)="onModalAddOrEdit({ id: 0, title: 'Nuevo Registro' })"
+        [dt]="dt"
+      ></app-table-header>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th scope="col" pSortableColumn="folioId">
+          Folio
+          <p-sortIcon field="folioId"></p-sortIcon>
+        </th>
+        <th scope="col" pSortableColumn="responsibleArea">
+          Departamento
+          <p-sortIcon field="responsibleArea"></p-sortIcon>
+        </th>
+        <th scope="col" pSortableColumn="grupo">
+          Grupo
+          <p-sortIcon field="grupo"></p-sortIcon>
+        </th>
+        <th scope="col" pSortableColumn="descripcion">
+          Descripción<p-sortIcon field="descripcion"></p-sortIcon>
+        </th>
+        <th scope="col" style="width: 5%">Opciones</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item>
+      <tr>
+        <td class="p-column-title">
+          <small>
+            {{ item.folioId }}
+          </small>
+        </td>
+        <td class="p-column-title">
+          <small>
+            {{ item.departamento }}
+          </small>
+        </td>
+        <td class="p-column-title">
+          <small>
+            {{ item.grupo }}
+          </small>
+        </td>
+        <td class="p-column-title">
+          <small>
+            {{ item.descripcion }}
+          </small>
+        </td>
+        <!-- Opciones -->
+        <td class="p-column-title">
+          <div class="d-flex justify-content-center">
+            <custom-button-edit
+              (edit)="
+                onModalAddOrEdit({ id: item.id, title: 'Editar Registro' })
+              "
+            ></custom-button-edit>
+            <custom-button-delete
+              (OnConfirm)="onDelete(item)"
+            ></custom-button-delete>
+          </div>
+        </td>
+        <!-- Opciones -->
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="paginatorleft">
+      <div class="p-d-flex p-ai-center p-jc-between hide-print-mode">
+        En total hay
+        {{ data ? data.length : 0 }} registros.
+      </div>
+    </ng-template>
+  </p-table>
+</div>

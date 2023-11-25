@@ -1,0 +1,236 @@
+<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+<div class="row">
+  <div class="col-sm-4">
+    <input
+      type="text"
+      class="form-control mb-2"
+      [(ngModel)]="filtro"
+      placeholder="Escribe para buscar proveedor... "
+      (input)="buscar()"
+    />
+  </div>
+
+  <div class="col-sm-7">
+    <div class="form-check form-switch ms-3 mt-1" dir="ltr">
+      <input
+        type="checkbox"
+        class="form-check-input"
+        id="incluirInactivos"
+        [(ngModel)]="incluirInactivos"
+        (click)="onSelectForState()"
+        checked
+      />
+      <label class="form-check-label" for="incluirInactivos"
+        >Incluir proveedores vetados</label
+      >
+    </div>
+  </div>
+
+  <div class="col-sm-1">
+    <custom-button
+      ngbTooltip="Agregar  proveedor"
+      [customClass]="'btn btn-sm btn-info w-100'"
+      label="Agregar"
+      (clicked)="showModalAddOrEdit({ id: 0, title: 'Nuevo Registro' })"
+    ></custom-button>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-3" *ngFor="let item of resultados">
+    <div class="card">
+      <div class="card-header">
+        <div class="row" *ngIf="item.calificacionProveedor.length > 0">
+          <div class="col-sm-4">
+            <small>Servicio</small>
+            <ngb-rating
+              [rate]="
+                calificacionPromedio(item.calificacionProveedor, 'servicio')
+              "
+              [readonly]="true"
+              [max]="5"
+            ></ngb-rating>
+          </div>
+          <div class="col-sm-4">
+            <small>Precio</small>
+            <ngb-rating
+              [rate]="
+                calificacionPromedio(item.calificacionProveedor, 'precio')
+              "
+              [readonly]="true"
+              [max]="5"
+            ></ngb-rating>
+          </div>
+          <div class="col-sm-4">
+            <small>Entrega</small>
+            <ngb-rating
+              [rate]="
+                calificacionPromedio(item.calificacionProveedor, 'entrega')
+              "
+              [readonly]="true"
+              [max]="5"
+            ></ngb-rating>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-sm-3 text-center">
+            <img [src]="url_img + item.pathPhoto" class="img-fluid" alt="" />
+          </div>
+          <div class="col-sm-9">
+            <div class="text-muted small">
+              {{ item.providerId }}
+            </div>
+            <div class="card-title text-truncate">
+              {{ item.nameProvider }}
+            </div>
+            <div class="card-title text-truncate">
+              {{ item.nameComercial }}
+            </div>
+          </div>
+        </div>
+        <div class="mt-1">
+          <a
+            class="btn btn-primary btn-sm float-start"
+            (click)="showModalCardProveedor(item)"
+            >Ver mas datos <i class="mdi mdi-arrow-right ms-1"></i
+          ></a>
+        </div>
+      </div>
+      <div class="card-footer">
+        <span
+          class="badge bg-info p-2 me-1 mb-1"
+          *ngFor="let categoria of item.categorias"
+          >{{ categoria.nombreCategoria }}</span
+        >
+        <hr />
+
+        <div class="d-flex bd-highlight">
+          <!-- Constancia Fiscal -->
+
+          <custom-button-download-pdf
+            ngbTooltip="Constancia fiscal"
+            [urlFile]="item.constanciaFiscalPath"
+          ></custom-button-download-pdf>
+
+          <!-- Constancia Fiscal -->
+          <custom-button-edit
+            *ngIf="
+              item.activo &&
+              validateRole([
+                'Asistente',
+                'Mantenimiento',
+                'Residente',
+                'SuperUsuario',
+                'SupervisionOperativa'
+              ])
+            "
+            (edit)="
+              showModalAddOrEdit({
+                id: item.providerId,
+                title: 'Editar Registro'
+              })
+            "
+          ></custom-button-edit>
+          <!-- Editar -->
+          <!-- Borrar -->
+          <custom-button-delete
+            class="bd-highlight"
+            *ngIf="item.activo"
+            (OnConfirm)="onDelete(item)"
+          ></custom-button-delete>
+          <!-- Borrar -->
+
+          <button
+            *ngIf="item.activo"
+            type="button"
+            ngbTooltip="Calificar proveedor"
+            placement="top"
+            class="btn btn-sm btn-outline-primary me-1 pointer bd-highlight"
+            (click)="
+              showModalCalificarProveedor({
+                providerId: item.providerId,
+                nameProvider: item.nameComercial
+              })
+            "
+          >
+            <i class="fa-duotone fa-star-half-stroke"> </i>
+          </button>
+
+          <!-- Categorias -->
+
+          <!-- Activar  Proveedor -->
+          <button
+            type="button"
+            *ngIf="!item.activo && validateRole(['SuperUsuario'])"
+            ngbTooltip="Activar"
+            placement="top"
+            class="btn btn-sm me-1 btn-outline-danger pointer bd-highlight"
+            (click)="
+              onActivateProvider({
+                providerId: item.providerId,
+                state: !item.activo
+              })
+            "
+          >
+            <i class="fa-duotone fa-lock"> </i>
+          </button>
+          <!-- Activar  Proveedor -->
+          <!-- Desctivar  Proveedor -->
+          <button
+            type="button"
+            *ngIf="item.activo && validateRole(['SuperUsuario'])"
+            ngbTooltip="Desactivar"
+            placement="top"
+            class="btn btn-sm me-1 btn-outline-success pointer bd-highlight"
+            (click)="
+              onActivateProvider({
+                providerId: item.providerId,
+                state: !item.activo
+              })
+            "
+          >
+            <i class="fa-duotone fa-lock-open"> </i>
+          </button>
+
+          <button
+            type="button"
+            [ngbTooltip]="item.activo ? 'Activo' : 'Betado'"
+            placement="top"
+            class="btn btn-sm me-1 btn-outline-success ms-auto bd-highlight"
+            [ngClass]="{
+              'btn-outline-danger': item.inactivo,
+              'btn-outline-success': item.activo
+            }"
+          >
+            <i
+              class="fas"
+              [ngClass]="{
+                'fa-ban': item.inactivo,
+                'fa-check-double': item.activo
+              }"
+            >
+            </i>
+          </button>
+          <!-- Desctivar  Proveedor -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row" *ngIf="loading">
+  <div class="col-12 text-center">
+    <div class="spinner-border text-info m-1" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+</div>
+
+<ngb-alert
+  *ngIf="resultados.length === 0 && !loading"
+  [dismissible]="false"
+  type="danger"
+>
+  <h6 class="h5">Sin resultados...</h6>
+</ngb-alert>

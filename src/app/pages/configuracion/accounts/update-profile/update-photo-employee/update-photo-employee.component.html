@@ -1,0 +1,45 @@
+<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+<div class="card">
+  <div class="card-header">
+    <ngb-alert [dismissible]="false" type="primary">Foto de perfil! </ngb-alert>
+  </div>
+  <div class="card-body">
+    <div (click)="inputImg.click()">
+      <div class="card-image text-center">
+        <img
+          class="img-thumbnail rounded me-2 pointer"
+          alt="200x200"
+          width="180"
+          height="200"
+          *ngIf="!imgUpload"
+          [src]="base_urlImg + infoEmployeeDto.photoPath"
+          data-holder-rendered="true"
+        />
+
+        <img
+          alt="200x200"
+          width="180"
+          height="200"
+          *ngIf="imgUpload"
+          [src]="imgTemp"
+          class="img-thumbnail rounded me-2 pointer"
+          data-holder-rendered="true"
+        />
+      </div>
+      <div class="input-group mb-3 d-none">
+        <div class="custom-file">
+          <input
+            class="custom-file-input"
+            type="file"
+            id="file"
+            #inputImg
+            aria-describedby="file"
+            (change)="changeImg($event.target['files'][0])"
+            accept="image/png, .jpeg, .jpg"
+            class="custom-file-input"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

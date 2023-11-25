@@ -1,0 +1,187 @@
+<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+
+<div class="p-card p-mb-5">
+  <p-table
+    #dt
+    [(selection)]="data"
+    [autoLayout]="true"
+    [globalFilterFields]="['customer']"
+    [rowHover]="true"
+    [showCurrentPageReport]="true"
+    [value]="data"
+    styleClass="custom-table"
+  >
+    <ng-template pTemplate="caption">
+      <app-table-header
+        [title]="'Presentaciones Juntas de Comité'"
+        [showAdd]="false"
+        [dt]="dt"
+      ></app-table-header>
+      <br />
+      <div class="row">
+        <div class="col-sm-4">
+          <input
+            type="month"
+            class="form-control"
+            [(ngModel)]="periodo"
+            (change)="onLoadData()"
+          />
+        </div>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th scope="col" style="width: 2%">#</th>
+        <th scope="col" style="width: 10%" pSortableColumn="numeroCliente">
+          Cliente
+          <p-sortIcon field="numeroCliente"></p-sortIcon>
+        </th>
+        <th
+          scope="col"
+          style="width: 8%"
+          pSortableColumn="fechaCorrespondienteFiltro"
+        >
+          Periodo
+          <p-sortIcon field="fechaCorrespondienteFiltro"></p-sortIcon>
+        </th>
+        <th
+          scope="col"
+          style="width: 12%"
+          pSortableColumn="fechaCorrespondienteFiltro"
+        >
+          Fecha Junta
+          <p-sortIcon field="fechaCorrespondienteFiltro"></p-sortIcon>
+        </th>
+        <th scope="col" style="width: 19%">Portada</th>
+        <th scope="col" style="width: 19%">Contable</th>
+        <th scope="col" style="width: 19%">Operaciones</th>
+        <th scope="col" style="width: 19%">Supervisor</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-i="rowIndex" let-item>
+      <tr>
+        <td class="p-column-title">
+          {{ i + 1 }}
+        </td>
+        <td class="p-column-title">
+          {{ item.customer }}
+        </td>
+        <td class="p-column-title">
+          {{ item.fechaCorrespondiente }}
+        </td>
+        <td class="p-column-title">
+          {{ item.fechaJunta }}
+        </td>
+        <td class="p-column-title">
+          <!-- Portada -->
+
+          <div class="row" *ngIf="item.userPortada">
+            <div class="col-12">
+              <p class="m-0">{{ item.userPortada }}</p>
+            </div>
+            <div class="col-12">
+              <p class="m-0">
+                {{ item.fechaCargaPortada }}
+              </p>
+            </div>
+            <div class="col-12 mt-1">
+              <button
+                ngbTooltip="Visualizar Pdf"
+                placement="top"
+                (click)="navigateToPdf(item.archivoPortada)"
+                type="button"
+                class="btn btn-soft-danger btn-sm w-xs waves-effect btn-label waves-light me-1 hide-print-mode"
+              >
+                <i class="fa-duotone fa-download fa-2x pointer label-icon"></i>
+                Pdf
+              </button>
+            </div>
+          </div>
+          <!-- Portada -->
+        </td>
+        <td class="p-column-title">
+          <!-- CONTABLE -->
+
+          <div class="row" *ngIf="item.userContable">
+            <div class="col-12">
+              <p class="m-0">{{ item.userContable }}</p>
+            </div>
+            <div class="col-12">
+              <p class="m-0">
+                {{ item.fechaCargaContable }}
+              </p>
+            </div>
+            <div class="col-12 mt-1">
+              <button
+                ngbTooltip="Visualizar Pdf"
+                placement="top"
+                (click)="navigateToPdf(item.archivoContable)"
+                type="button"
+                class="btn btn-soft-danger btn-sm w-xs waves-effect btn-label waves-light me-1 hide-print-mode"
+              >
+                <i class="fa-duotone fa-download fa-2x pointer label-icon"></i>
+                Pdf
+              </button>
+            </div>
+          </div>
+          <!-- CONTABLE -->
+        </td>
+        <td class="p-column-title">
+          <!-- OPERACIONES -->
+
+          <div class="row" *ngIf="item.fullName">
+            <div class="col-12">
+              <p class="m-0">{{ item.fullName }}</p>
+            </div>
+            <div class="col-12">
+              <p class="m-0">
+                {{ item.fechaCarga }}
+              </p>
+            </div>
+            <div class="col-12 mt-1">
+              <button
+                ngbTooltip="Visualizar Pdf"
+                placement="top"
+                (click)="navigateToPdf(item.archivoJunta)"
+                type="button"
+                class="btn btn-soft-danger btn-sm w-xs waves-effect btn-label waves-light me-1 hide-print-mode"
+              >
+                <i class="fa-duotone fa-download fa-2x pointer label-icon"></i>
+                Pdf
+              </button>
+            </div>
+          </div>
+          <!-- OPERACIONES -->
+        </td>
+        <td>
+          <!-- FINAL -->
+
+          <div class="row" *ngIf="item.userSupervisor">
+            <div class="col-12">
+              <p class="m-0">{{ item.userSupervisor }}</p>
+            </div>
+            <div class="col-12">
+              <p class="m-0">
+                {{ item.fechaCargaSupervisor }}
+              </p>
+            </div>
+            <div class="col-12 mt-1">
+              <button
+                ngbTooltip="Visualizar Pdf"
+                placement="top"
+                (click)="navigateToPdf(item.archivoFinal)"
+                type="button"
+                class="btn btn-soft-danger btn-sm w-xs waves-effect btn-label waves-light me-1 hide-print-mode"
+              >
+                <i class="fa-duotone fa-download fa-2x pointer label-icon"></i>
+                Pdf
+              </button>
+            </div>
+          </div>
+          <!-- FINAL -->
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

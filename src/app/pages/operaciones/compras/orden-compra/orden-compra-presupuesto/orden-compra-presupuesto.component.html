@@ -1,0 +1,176 @@
+<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+
+<p-table
+  [(selection)]="data"
+  #dt
+  styleClass="custom-table"
+  [value]="data"
+  [rows]="15"
+  [paginator]="true"
+  [rowHover]="true"
+  currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+  [showCurrentPageReport]="true"
+  [rowsPerPageOptions]="[10, 20, 30, 40, 50, 75, 100]"
+  [globalFilterFields]="['cedulaPresupuestalDetalle.cuenta.descripcion']"
+  [autoLayout]="true"
+>
+  <ng-template pTemplate="caption">
+    <app-table-header
+      [title]="'Cedula Presupuestal'"
+      [showAdd]="false"
+      [dt]="dt"
+    ></app-table-header>
+
+    <div class="form-group row">
+      <label class="col-sm-2">Selecciona presupuesto</label>
+      <div class="col-sm-3" *ngIf="cedulaId !== 0">
+        <select
+          class="form-control"
+          (change)="onLoadData()"
+          [(ngModel)]="cedulaId"
+        >
+          <option [value]="item.value" *ngFor="let item of cb_cedulas">
+            {{ item.label }}
+          </option>
+        </select>
+        <p class="text-danger">
+          Valida estar seleccionando una partida del presupuesto correcto
+        </p>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="header">
+    <tr>
+      <th
+        style="width: 35%"
+        scope="col"
+        pSortableColumn="cedulaPresupuestalDetalle.cuenta.descripcion"
+      >
+        Descripción
+        <p-sortIcon
+          field="cedulaPresupuestalDetalle.cuenta.descripcion"
+        ></p-sortIcon>
+      </th>
+      <th
+        style="width: 10%"
+        scope="col"
+        pSortableColumn="cedulaPresupuestalDetalle.presupuestoMensual"
+      >
+        Pres. Mensual
+        <p-sortIcon
+          field="cedulaPresupuestalDetalle.presupuestoMensual"
+        ></p-sortIcon>
+      </th>
+      <th
+        style="width: 10%"
+        scope="col"
+        pSortableColumn="cedulaPresupuestalDetalle.presupuestoEjercido"
+      >
+        Ejercido<p-sortIcon
+          field="cedulaPresupuestalDetalle.presupuestoEjercido"
+        ></p-sortIcon>
+      </th>
+      <th
+        style="width: 10%"
+        scope="col"
+        pSortableColumn="cedulaPresupuestalDetalle.presupuestoDisponible"
+      >
+        Disponible<p-sortIcon
+          field="cedulaPresupuestalDetalle.presupuestoDisponible"
+        ></p-sortIcon>
+      </th>
+      <th style="width: 10%" scope="col">Gasto a realizar</th>
+      <th style="width: 10%" scope="col">Monto a Afectar</th>
+      <th style="width: 5%" scope="col" style="width: 5%">Guardar</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-item>
+    <tr>
+      <td class="p-column-title p-fluid">
+        {{ item.cedulaPresupuestalDetalle.cuenta.numeroCuenta }}-
+        {{ item.cedulaPresupuestalDetalle.cuenta.descripcion }}
+        <small hidden>
+          <input
+            type="text"
+            [(ngModel)]="item.cedulaPresupuestalDetalle.cuenta.descripcion"
+            readonly
+            class="form-control"
+          />
+        </small>
+      </td>
+      <td class="p-column-title p-fluid">
+        <small>
+          <input
+            readonly
+            [(ngModel)]="item.cedulaPresupuestalDetalle.presupuestoMensual"
+            class="form-control"
+          />
+        </small>
+      </td>
+      <td class="p-column-title p-fluid">
+        <small>
+          <input
+            readonly
+            [(ngModel)]="item.cedulaPresupuestalDetalle.presupuestoEjercido"
+            class="form-control"
+          />
+        </small>
+      </td>
+      <td class="p-column-title p-fluid">
+        <small>
+          <input
+            readonly
+            [(ngModel)]="item.cedulaPresupuestalDetalle.presupuestoDisponible"
+            mode="currency"
+            class="form-control"
+          />
+        </small>
+      </td>
+      <td class="p-column-title p-fluid">
+        <div
+          class="w3-container"
+          *ngIf="
+            item.cedulaPresupuestalDetalle.presupuestoDisponible >=
+            item.dineroUsado
+          "
+        >
+          <div class="w3-tag w3-round w3-green" style="padding: 3px">
+            <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              {{ item.cedulaPresupuestalDetalle.presupuestoDisponible }}
+            </div>
+          </div>
+        </div>
+        <div
+          class="w3-container"
+          *ngIf="
+            item.cedulaPresupuestalDetalle.presupuestoDisponible <
+            item.dineroUsado
+          "
+        >
+          <div class="w3-tag w3-round w3-red" style="padding: 3px">
+            <div class="w3-tag w3-round w3-red w3-border w3-border-white">
+              {{ item.cedulaPresupuestalDetalle.presupuestoDisponible }}
+            </div>
+          </div>
+        </div>
+      </td>
+      <td class="p-fluid">
+        <input
+          [(ngModel)]="item.dineroUsado"
+          mode="currency"
+          class="form-control"
+        />
+      </td>
+      <!-- Opciones -->
+      <td class="p-column-title text-center">
+        <button icon="" (click)="onSubmit(item)" class="btn btn-info">
+          <i class="fa-thin fa-floppy-disk"></i>
+        </button>
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="paginatorleft">
+    <app-table-footer [data]="data"></app-table-footer>
+  </ng-template>
+</p-table>

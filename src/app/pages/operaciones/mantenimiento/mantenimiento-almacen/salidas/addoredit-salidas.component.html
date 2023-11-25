@@ -1,0 +1,102 @@
+<div class="card">
+  <div class="card-body">
+    <form autocomplete="off" [formGroup]="form" (ngSubmit)="onSubmit()">
+      <custom-input-text
+        [control]="form.get('id')"
+        formControlName="id"
+        label="Id"
+      ></custom-input-text>
+
+      <custom-input-date
+        [control]="form.get('fechaSalida')"
+        formControlName="fechaSalida"
+        label="Fecha de salida"
+        placeholder="fecha de salida"
+      ></custom-input-date>
+
+      <custom-input-time
+        [control]="form.get('horaSalida')"
+        formControlName="horaSalida"
+        label="Hora de salida"
+        placeholder="hora de salida"
+      ></custom-input-time>
+
+      <div class="form-group row mb-2">
+        <label class="col-sm-3">Producto</label>
+        <div class="col-sm-9">
+          <input
+            hidden
+            type="text"
+            class="form-control"
+            formControlName="productoId"
+          />
+          <input
+            readonly
+            [value]="nombreProducto"
+            type="text"
+            class="form-control"
+          />
+        </div>
+      </div>
+      <div class="form-group row mb-2">
+        <label class="col-sm-3">Cantidad</label>
+        <div class="col-sm-9">
+          <input
+            [(ngModel)]="contidadSeleccionada"
+            [max]="existenciaActual"
+            min="0"
+            type="number"
+            class="form-control"
+            formControlName="cantidad"
+            [class.is-invalid]="
+              f.cantidad.errors && (f.cantidad.dirty || f.cantidad.touched)
+            "
+            [readonly]="existenciaActual == 0"
+          />
+
+          <div>
+            <span
+              class="text-danger small"
+              *ngIf="contidadSeleccionada > existenciaActual"
+              >No hay suficiente stock</span
+            >
+            <span class="text-danger small" *ngIf="existenciaActual == 0"
+              >No hay stok</span
+            >
+          </div>
+          <div
+            *ngIf="
+              f.cantidad.errors && (f.cantidad.dirty || f.cantidad.touched)
+            "
+          >
+            <span *ngIf="f.cantidad.errors.required" class="text-danger small"
+              >El campo es reqerido.</span
+            >
+          </div>
+        </div>
+      </div>
+      <custom-input-select
+        [control]="form.get('unidadMedidaId')"
+        formControlName="unidadMedidaId"
+        label="Unidad"
+        [data]="cb_measurement_unit"
+      ></custom-input-select>
+
+      <custom-input-text
+        [control]="form.get('quienUso')"
+        formControlName="quienUso"
+        label="Entregado a"
+        placeholder="entregado a"
+      ></custom-input-text>
+      <custom-input-text-area
+        [control]="form.get('usoPrducto')"
+        formControlName="usoPrducto"
+        label="Uso"
+        placeholder="uso"
+      ></custom-input-text-area>
+      <custom-button-submit
+        [disabled]="form.invalid || submitting"
+      ></custom-button-submit>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,67 @@
+<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+
+<div class="card">
+  <p-table [value]="data" [autoLayout]="true" styleClass="custom-table">
+    <ng-template pTemplate="caption">
+      <div class="row">
+        <div class="col-9">
+          <app-table-header
+            title="Reporte Envio de estados Financioeros"
+            [showAdd]="false"
+            [showSearch]="false"
+          ></app-table-header>
+        </div>
+        <div class="col-3">
+          <app-mesanio (periodoEmit)="onFiltrarPeriodo($event)"></app-mesanio>
+        </div>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th scope="col">Cliente</th>
+        <th scope="col">Periodo</th>
+        <th scope="col">Cargo</th>
+        <th scope="col">Fecha Carga</th>
+        <th scope="col">Autorizo</th>
+        <th scope="col">Fecha Autorización</th>
+        <th scope="col">Estatus</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item>
+      <tr>
+        <td class="p-column-title">
+          {{ item.nombreCorto }}
+        </td>
+        <td class="p-column-title">
+          {{ item.periodo }}
+        </td>
+        <td class="p-column-title">
+          {{ item.cargo }}
+        </td>
+        <td class="p-column-title">
+          {{ item.fechaCarga }}
+        </td>
+        <td class="p-column-title">
+          {{ item.autorizo }}
+        </td>
+        <td class="p-column-title">
+          {{ item.fechaAutorizacion }}
+        </td>
+        <td class="p-column-title">
+          <span
+            class="badge badge-soft-success p-2 w-100"
+            *ngIf="item.estatus == 'Enviado'"
+            >{{ item.estatus }}</span
+          >
+          <span
+            class="badge badge-soft-danger p-2 w-100"
+            *ngIf="item.estatus != 'Enviado'"
+          >
+            {{ item.estatus }}</span
+          >
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

@@ -1,0 +1,92 @@
+<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+
+<p class="small text-danger text-left font-italic" *ngIf="mensajeError == true">
+  Seleccione producto y unidad
+</p>
+
+<p-table
+  *ngIf="data"
+  [(selection)]="data"
+  #dt
+  styleClass="custom-table"
+  [value]="data"
+  [rows]="15"
+  [paginator]="true"
+  [rowHover]="true"
+  currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+  [showCurrentPageReport]="true"
+  [rowsPerPageOptions]="[10, 20, 30, 40, 50, 75, 100]"
+  [globalFilterFields]="['producto', 'marca']"
+  [autoLayout]="true"
+>
+  <ng-template pTemplate="caption">
+    <app-table-header
+      [title]="'Productos'"
+      [dt]="dt"
+      [showAdd]="false"
+    ></app-table-header>
+  </ng-template>
+
+  <ng-template pTemplate="header">
+    <tr>
+      <th scope="col">Imagen</th>
+      <th scope="col" pSortableColumn="producto">
+        Descripción
+        <p-sortIcon field="producto"></p-sortIcon>
+      </th>
+      <th scope="col">
+        Cantidad
+        <p-sortIcon></p-sortIcon>
+      </th>
+      <th scope="col">Unidad</th>
+      <th scope="col" style="width: 5%">Agregar</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowItem>
+    <tr>
+      <td
+        class="p-column-title"
+        style="width: 10%"
+        class="pointer"
+        (click)="onModalTarjetaProducto(rowItem.productoId)"
+      >
+        <img [src]="urlImagenProducto + rowItem.urlImagen" alt="" width="50%" />
+      </td>
+      <td
+        class="p-column-title pointer"
+        (click)="onModalTarjetaProducto(rowItem.productoId)"
+      >
+        {{ rowItem.marca }}
+        {{ rowItem.producto }}
+      </td>
+      <td class="p-column-title">
+        <input
+          type="number"
+          class="form-control"
+          [(ngModel)]="rowItem.cantidad"
+        />
+      </td>
+      <td class="p-column-title">
+        <select class="form-select" [(ngModel)]="rowItem.unidadMedidaId">
+          <option value="">Selecciona una opción</option>
+          <option [value]="unit.value" *ngFor="let unit of cb_unidadMedida">
+            {{ unit.label }}
+          </option>
+        </select>
+      </td>
+      <td class="p-column-title">
+        <div class="d-flex justify-content-center">
+          <button
+            (click)="onSubmit(rowItem)"
+            class="btn btn-sm btn-primary m-1"
+          >
+            <span class="fa-thin fa-floppy-disk"></span>
+          </button>
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="paginatorleft">
+    <app-table-footer [data]="data"></app-table-footer>
+  </ng-template>
+</p-table>

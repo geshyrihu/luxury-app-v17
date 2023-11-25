@@ -1,0 +1,208 @@
+<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+
+<p class="small text-danger text-left font-italic" *ngIf="mensajeError == true">
+  Seleccione producto y unidad
+</p>
+
+<p-table
+  [(selection)]="productosAgregados"
+  #dc
+  styleClass="custom-table"
+  [value]="productosAgregados"
+  [rows]="15"
+  [rowHover]="true"
+  [showCurrentPageReport]="true"
+  [autoLayout]="true"
+  [globalFilterFields]="['producto.nombreProducto']"
+>
+  <ng-template pTemplate="caption">
+    <app-table-header
+      [title]="'Productos o Servicios Agregados'"
+      [dt]="dc"
+      [showAdd]="false"
+    ></app-table-header>
+  </ng-template>
+  <ng-template pTemplate="header">
+    <tr>
+      <th scope="col" pSortableColumn="nombreProducto">
+        <small>Imagen</small>
+        <p-sortIcon field="nombreProducto"></p-sortIcon>
+      </th>
+      <th scope="col" pSortableColumn="nombreProducto">
+        <small>Descripción</small>
+        <p-sortIcon field="nombreProducto"></p-sortIcon>
+      </th>
+      <th scope="col">
+        <small>Cantidad</small>
+      </th>
+      <th scope="col">
+        <small>Unidad</small>
+      </th>
+      <th scope="col">
+        <small>Precio</small>
+      </th>
+      <th scope="col" style="width: 5%">
+        <small>Opciones</small>
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-item>
+    <tr>
+      <td class="p-column-title" style="width: 10%">
+        <small>
+          <img
+            [src]="urlImagenProducto + item.productoImg"
+            alt=""
+            width="50%"
+          />
+        </small>
+      </td>
+      <td class="p-column-title">
+        <small>
+          {{ item.productoDescription }}
+        </small>
+      </td>
+      <td class="p-column-title">
+        <small>
+          <input
+            type="number"
+            class="form-control form-control-sm"
+            [(ngModel)]="item.cantidad"
+        /></small>
+      </td>
+      <td class="p-column-title">
+        <small>
+          <select
+            class="form-select form-control-sm"
+            [(ngModel)]="item.unidadMedidaId"
+          >
+            <option value="">Selecciona una opción</option>
+            <option [value]="item.value" *ngFor="let item of cb_unidadMedida">
+              {{ item.label }}
+            </option>
+          </select>
+        </small>
+      </td>
+      <td class="p-column-title">
+        <small>
+          <input
+            type="number"
+            class="form-control form-control-sm"
+            [value]="item.precio"
+            [(ngModel)]="item.precio"
+          />
+        </small>
+      </td>
+      <!-- Opciones -->
+      <td class="p-column-title">
+        <div class="d-flex justify-content-center">
+          <button
+            (click)="onUpdateProductoAgregado(item)"
+            class="btn btn-outline-info btn-sm me-1"
+          >
+            <i class="fa-thin fa-floppy-disk"></i>
+          </button>
+
+          <custom-button-delete
+            (OnConfirm)="deleteProductoAgregado(item.id)"
+          ></custom-button-delete>
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<p-table
+  [(selection)]="productos"
+  #dt
+  styleClass="custom-table"
+  [value]="productos"
+  [rows]="15"
+  [paginator]="true"
+  [rowHover]="true"
+  currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+  [showCurrentPageReport]="true"
+  [rowsPerPageOptions]="[10, 20, 30, 40, 50, 75, 100]"
+  [globalFilterFields]="['nombreProducto']"
+  [autoLayout]="true"
+>
+  <ng-template pTemplate="caption">
+    <app-table-header
+      [title]="'Productos'"
+      [dt]="dt"
+      [showAdd]="false"
+    ></app-table-header>
+  </ng-template>
+  <ng-template pTemplate="header">
+    <tr>
+      <th scope="col" pSortableColumn="nombreProducto">
+        <small>Imagen</small>
+        <p-sortIcon field="nombreProducto"></p-sortIcon>
+      </th>
+      <th scope="col" pSortableColumn="nombreProducto">
+        <small>Descripción</small>
+        <p-sortIcon field="nombreProducto"></p-sortIcon>
+      </th>
+      <th scope="col"><small>Cantidad</small></th>
+      <th scope="col"><small>Unidad</small></th>
+      <th scope="col"><small>Precio</small></th>
+      <th scope="col" style="width: 5%"><small>Agregar</small></th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-item>
+    <tr>
+      <td class="p-column-title" style="width: 10%">
+        <small>
+          <img [src]="urlImagenProducto + item.urlImagen" alt="" width="50%" />
+        </small>
+      </td>
+      <td class="p-column-title">
+        <small>
+          {{ item.nombreProducto }}
+        </small>
+      </td>
+      <td class="p-column-title">
+        <small>
+          <input
+            type="number"
+            class="form-control form-control-sm"
+            [(ngModel)]="item.cantidad"
+        /></small>
+      </td>
+      <td class="p-column-title">
+        <small>
+          <select
+            class="form-select form-control-sm"
+            [(ngModel)]="item.unidadMedidaId"
+          >
+            <option value="">Selecciona una opción</option>
+            <option [value]="item.value" *ngFor="let item of cb_unidadMedida">
+              {{ item.label }}
+            </option>
+          </select>
+        </small>
+      </td>
+      <td class="p-column-title">
+        <small>
+          <input
+            type="number"
+            class="form-control form-control-sm"
+            [value]="item.precio"
+            [(ngModel)]="item.precio"
+          />
+        </small>
+      </td>
+      <!-- Opciones -->
+      <td class="p-column-title">
+        <div class="d-flex justify-content-center">
+          <button (click)="onSubmit(item)" class="btn btn-sm btn-primary m-1">
+            <span class="fa-thin fa-floppy-disk"></span>
+          </button>
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="paginatorleft">
+    <app-table-footer [data]="productos"></app-table-footer>
+  </ng-template>
+</p-table>

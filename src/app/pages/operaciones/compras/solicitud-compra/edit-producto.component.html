@@ -1,0 +1,30 @@
+<div class="card" *ngIf="data">
+  <div class="card-body">
+    <form (ngSubmit)="onSubmit()" [formGroup]="form">
+      <custom-input-text
+        [control]="form.get('nombreProducto')"
+        formControlName="nombreProducto"
+        label="Producto"
+        [readonly]="true"
+      ></custom-input-text>
+
+      <custom-input-number
+        [control]="form.get('cantidad')"
+        formControlName="cantidad"
+        label="Cantidad"
+        placeholder="cantidad"
+      ></custom-input-number>
+
+      <custom-input-select
+        [control]="form.get('unidadMedidaId')"
+        formControlName="unidadMedidaId"
+        label="Unidad"
+        [data]="cb_unidadMedida"
+      ></custom-input-select>
+
+      <custom-button-submit
+        [disabled]="form.invalid || submitting"
+      ></custom-button-submit>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,32 @@
+<div class="row">
+  <div class="col-sm-6">
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text">De</span>
+      </div>
+      <input
+        class="form-control"
+        type="month"
+        [(ngModel)]="fechaInicial"
+        pTooltip="Selecciona mes incial"
+        tooltipPosition="top"
+        (change)="onSendDateRange(fechaInicial, fechaFinal)"
+      />
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text">a</span>
+      </div>
+      <input
+        class="form-control"
+        type="month"
+        [(ngModel)]="fechaFinal"
+        pTooltip="Selecciona mes final"
+        tooltipPosition="top"
+        (change)="onSendDateRange(fechaInicial, fechaFinal)"
+      />
+    </div>
+  </div>
+</div>

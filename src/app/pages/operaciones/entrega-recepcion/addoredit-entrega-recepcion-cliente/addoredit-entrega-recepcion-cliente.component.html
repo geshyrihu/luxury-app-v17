@@ -1,0 +1,45 @@
+<div class="card">
+  <div class="card-body">
+    <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
+      <custom-input-text
+        [control]="form.get('id')"
+        formControlName="id"
+        label="Id"
+      ></custom-input-text>
+
+      <custom-input-select
+        [control]="form.get('estatus')"
+        formControlName="estatus"
+        label="Estatus"
+        [data]="cb_estatus"
+      ></custom-input-select>
+
+      <custom-input-text-area
+        [control]="form.get('observaciones')"
+        formControlName="observaciones"
+        placeholder="observaciones"
+        label="Observaciones"
+      ></custom-input-text-area>
+
+      <!-- Archivo -->
+      <div class="form-group row mb-1">
+        <label class="col-sm-3">Archivo</label>
+        <div class="col-sm-9">
+          <input
+            [required]="true"
+            type="file"
+            accept="application/pdf"
+            class="form-control"
+            (change)="change($event.target['files'][0])"
+          />
+        </div>
+      </div>
+      <!-- Archivo -->
+
+      <!-- Razón social -->
+      <custom-button-submit
+        [disabled]="this.form.invalid || submitting"
+      ></custom-button-submit>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,12 @@
+<button
+  [ngbTooltip]="tooltipText"
+  [placement]="placementPosition"
+  type="button"
+  [class]="classButton"
+  [disabled]="disabled"
+  class="hide-print-mode btn pointer me-1"
+  (click)="confirm($any($event))"
+  *ngIf="mostrar"
+>
+  <i [class]="icon"></i>{{ label }}
+</button>

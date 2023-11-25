@@ -1,0 +1,49 @@
+<div class="card">
+  <div class="card-body">
+    <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
+      <custom-input-text
+        [hidden]="true"
+        [control]="form.get('id')"
+        formControlName="id"
+        label="Id"
+      ></custom-input-text>
+
+      <custom-input-text
+        [control]="form.get('folioId')"
+        formControlName="folioId"
+        label="Id"
+        placeholder="folio id"
+      ></custom-input-text>
+      <custom-input-select
+        [control]="form.get('departamento')"
+        formControlName="departamento"
+        label="Departamento"
+        [data]="cb_area_responsable"
+      ></custom-input-select>
+
+      <custom-input-select
+        [control]="form.get('state')"
+        formControlName="state"
+        label="Estado"
+        [data]="cb_state"
+      ></custom-input-select>
+      <custom-input-select
+        [control]="form.get('grupo')"
+        formControlName="grupo"
+        label="Grupo"
+        [data]="cb_grupo"
+      ></custom-input-select>
+
+      <custom-input-text
+        [control]="form.get('descripcion')"
+        formControlName="descripcion"
+        label="Descripción"
+        placeholder="descripción"
+      ></custom-input-text>
+
+      <custom-button-submit
+        [disabled]="this.form.invalid || submitting"
+      ></custom-button-submit>
+    </form>
+  </div>
+</div>

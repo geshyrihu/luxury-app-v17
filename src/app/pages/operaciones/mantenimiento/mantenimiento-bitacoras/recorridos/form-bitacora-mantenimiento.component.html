@@ -1,0 +1,74 @@
+<form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
+  <!-- <custom-input-datalist
+    (propagar)="saveMaquinariaId($event)"
+    [control]="form.get('machinery')"
+    [data]="maquinarias"
+    formControlName="machinery"
+    label="Equipo o Instalación"
+    dataListId="machineryDatalistOptions"
+  ></custom-input-datalist> -->
+  <div class="form-group">
+    <label class="font-weight-light">Equipo o Instalación</label>
+
+    <input
+      formControlName="machinery"
+      class="form-control"
+      list="DatalistOptions"
+      placeholder="Escribir para buscar..."
+      [ngClass]="{
+        'is-invalid':
+          f.machinery.errors && (f.machinery.dirty || f.machinery.touched)
+      }"
+      (change)="saveMaquinariaId($event)"
+    />
+
+    <datalist id="DatalistOptions">
+      <option [value]="item.nameMachinery" *ngFor="let item of maquinarias">
+        {{ item.nameMachinery }}
+      </option>
+    </datalist>
+  </div>
+  <!-- <div class="form-group">
+    <label class="font-weight-light">Descripción</label>
+    <textarea
+      formControlName="descripcion"
+      class="form-control form-control-sm"
+      cols="30"
+      rows="10"
+    ></textarea>
+  </div> -->
+  <custom-input-text-area
+    [control]="form.get('descripcion')"
+    formControlName="descripcion"
+    label="Descripción"
+    placeholder="descripción"
+    [horizontal]="false"
+  ></custom-input-text-area>
+  <div class="form-group">
+    <label class="font-weight-light"
+      >Activar Si nota nota alguna emergencia
+    </label>
+    <!-- TODO: ELIMINAR CHECK BOX -->
+
+    <custom-input-check
+      [control]="form.get('emergencia')"
+      formControlName="emergencia"
+      label="Emergencia"
+    ></custom-input-check>
+    <!-- <div class="p-field-checkbox">
+      <p-checkbox
+        [(ngModel)]="checked"
+        [binary]="true"
+        inputId="binary"
+        formControlName="emergencia"
+      ></p-checkbox>
+      <label for="binary">
+        {{ form.get("emergencia").value | eBoolText }}
+      </label>
+    </div> -->
+  </div>
+
+  <custom-button-submit
+    [disabled]="form.invalid || submitting"
+  ></custom-button-submit>
+</form>

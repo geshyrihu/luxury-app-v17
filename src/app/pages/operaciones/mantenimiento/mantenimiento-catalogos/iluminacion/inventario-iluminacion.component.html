@@ -1,0 +1,84 @@
+<div class="p-card p-mb-5">
+  <p-table
+    #dt
+    [autoLayout]="true"
+    [globalFilterFields]="[
+      'luminaria.producto',
+      'items.nameMachinery',
+      'items.area'
+    ]"
+    [paginator]="true"
+    [rowHover]="true"
+    [rows]="100"
+    [rowsPerPageOptions]="[100, 200]"
+    [showCurrentPageReport]="true"
+    [value]="data"
+    currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+    styleClass="custom-table"
+  >
+    <ng-template pTemplate="caption">
+      <app-table-header
+        [title]="'Inventario de Iluminación'"
+        (add)="onModalAddOrEdit({ id: 0, title: 'Nuevo Registro' })"
+        [dt]="dt"
+      ></app-table-header>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th scope="col">Ubicación</th>
+        <th scope="col">Area</th>
+        <th scope="col">Cantidad</th>
+        <th scope="col" style="width: 5%">Opciones</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item let-i="rowIndex">
+      <tr>
+        <td colspan="4">
+          <ngb-alert [dismissible]="false" type="primary">
+            <p-image
+              [src]="urlImg + item.luminaria.img"
+              alt="."
+              width="60px"
+              [preview]="true"
+            ></p-image>
+            {{ item.luminaria.producto }}
+          </ngb-alert>
+        </td>
+      </tr>
+      <tr *ngFor="let itm of item.items; let index = index">
+        <td>
+          {{ itm.nameMachinery }}
+        </td>
+        <td>
+          {{ itm.area }}
+        </td>
+        <td>
+          {{ itm.cantidad }}
+        </td>
+        <td>
+          <div class="d-flex justify-content-center">
+            <custom-button-edit
+              (edit)="
+                onModalAddOrEdit({
+                  id: itm.id,
+                  title: 'Editar Registro'
+                })
+              "
+            ></custom-button-edit>
+            <custom-button-delete
+              (OnConfirm)="onDelete(itm)"
+            ></custom-button-delete>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="paginatorleft">
+      <div class="p-d-flex p-ai-center p-jc-between hide-print-mode">
+        En total hay
+        {{ data ? data.length : 0 }} registros.
+      </div>
+    </ng-template>
+  </p-table>
+</div>

@@ -1,0 +1,59 @@
+<ng-container *ngIf="horizontal">
+  <div class="form-group row mb-2">
+    <label class="col-sm-3">{{ label }}</label>
+    <div class="col-sm-9">
+      <input
+        (blur)="onTouch()"
+        (input)="onChange($event.target.value)"
+        [attr.disabled]="disabled ? 'disabled' : null"
+        [placeholder]="'Ingresa ' + placeholder"
+        [readonly]="readonly"
+        [value]="value"
+        class="form-control"
+        type="email"
+        [ngClass]="{
+          'is-invalid': control.invalid && (control.dirty || control.touched)
+        }"
+      />
+      <div
+        class="small text-danger"
+        *ngIf="control.invalid && (control.dirty || control.touched)"
+      >
+        <p class="mb-1" *ngIf="control.errors.required">
+          El campo {{ placeholder }} es requerido.
+        </p>
+        <p class="mb-1" *ngIf="control.errors.email">El email no es válido.</p>
+      </div>
+    </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="!horizontal">
+  <div class="mb-3">
+    <label>{{ label }}</label>
+    <input
+      (blur)="onTouch()"
+      (input)="onChange($event.target.value)"
+      [attr.disabled]="disabled ? 'disabled' : null"
+      [placeholder]="'Ingresa ' + placeholder"
+      [readonly]="readonly"
+      [value]="value"
+      class="form-control"
+      type="email"
+      [ngClass]="{
+        'is-invalid': control.invalid && (control.dirty || control.touched)
+      }"
+      [ngClass]="{
+        'is-invalid': control.invalid && (control.dirty || control.touched)
+      }"
+    />
+    <div
+      class="small text-danger"
+      *ngIf="control.invalid && (control.dirty || control.touched)"
+    >
+      <p class="mb-1" *ngIf="control.errors.required">
+        El campo {{ placeholder }} es requerido.
+      </p>
+      <p class="mb-1" *ngIf="control.errors.email">El email no es válido.</p>
+    </div>
+  </div>
+</ng-container>

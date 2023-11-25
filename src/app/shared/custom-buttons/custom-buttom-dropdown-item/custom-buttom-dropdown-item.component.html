@@ -1,0 +1,14 @@
+<button
+  (click)="onClick($event)"
+  class="btn bg-soft-light pointer hide-print-mode w-100"
+  type="button"
+>
+  <div class="row">
+    <div class="col-2"><i [class]="icon"></i></div>
+    <div class="col-10">
+      <div class="text-start">
+        {{ label }}
+      </div>
+    </div>
+  </div>
+</button>

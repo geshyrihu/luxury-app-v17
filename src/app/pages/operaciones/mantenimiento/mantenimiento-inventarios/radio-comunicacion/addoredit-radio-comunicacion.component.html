@@ -1,0 +1,82 @@
+<div class="card">
+  <div class="card-body">
+    <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
+      <custom-input-text
+        [control]="form.get('id')"
+        formControlName="id"
+        label="Id"
+      ></custom-input-text>
+
+      <div class="form-group row mb-2">
+        <label class="col-sm-3">Imagen</label>
+        <div class="col-sm-9">
+          <div class="card">
+            <app-input-img
+              (fileSelected)="uploadFile($event)"
+              [urlImgCurrent]="urlBaseImg"
+              [contentHeight]="'150'"
+              [contentWidth]="'250'"
+            ></app-input-img>
+          </div>
+        </div>
+      </div>
+
+      <custom-input-text
+        [control]="form.get('marca')"
+        formControlName="marca"
+        label="Marca"
+        placeholder="marca"
+      ></custom-input-text>
+
+      <custom-input-text
+        [control]="form.get('modelo')"
+        formControlName="modelo"
+        label="Modelo"
+        placeholder="modelo"
+      ></custom-input-text>
+
+      <custom-input-text
+        [control]="form.get('serie')"
+        formControlName="serie"
+        label="Serie"
+        placeholder="serie"
+      ></custom-input-text>
+
+      <custom-input-text
+        [control]="form.get('bateria')"
+        formControlName="bateria"
+        label="Bateria"
+        placeholder="bateria"
+      ></custom-input-text>
+
+      <custom-input-date
+        [control]="form.get('fechaCompra')"
+        formControlName="fechaCompra"
+        label="Compra"
+        placeholder="Compra"
+      ></custom-input-date>
+
+      <custom-input-datalist
+        (propagar)="saveAreResponsableId($event)"
+        [control]="form.get('responsibleAreaName')"
+        [data]="cb_area_responsable"
+        formControlName="responsibleAreaName"
+        label="Area"
+        dataListId="responsibleAreaNameDatalistOptions"
+      ></custom-input-datalist>
+
+      <custom-input-datalist
+        (propagar)="saveEmployeeId($event)"
+        [control]="form.get('employeeName')"
+        [data]="cb_employee"
+        formControlName="employeeName"
+        label="Responsable"
+        dataListId="employeeNameDatalistOptions"
+      ></custom-input-datalist>
+
+      <custom-button-submit
+        [disabled]="this.form.invalid || submitting"
+      ></custom-button-submit>
+    </form>
+  </div>
+</div>

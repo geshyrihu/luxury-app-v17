@@ -1,0 +1,43 @@
+<div class="container">
+  <app-report-header></app-report-header>
+  <div class="row" *ngFor="let item of data">
+    <div class="col-12">
+      <h5 class="h5 font-weight-bold">
+        {{ item.responsibleArea | titlecase }}
+      </h5>
+    </div>
+    <div class="col-12" *ngFor="let asunto of item.items; let i = index">
+      <div class="row page-break">
+        <div class="col-12 d-flex">
+          <div class="h6 mr-auto">
+            {{ i + 1 }}.- {{ asunto.title | titlecase }}
+          </div>
+          <div class="text-left">
+            <p class="badge badge-danger p-2 border-0">
+              <span *ngIf="asunto.status === 0">
+                {{ asunto.status | eStatus | uppercase }}
+              </span>
+            </p>
+          </div>
+        </div>
+        <div class="col-6">
+          <div
+            class="text-justify"
+            [innerHTML]="asunto.requestService | sanitizeHtml"
+          ></div>
+        </div>
+        <div class="col-6">
+          <div *ngIf="todoElSeguimiento && asunto.seguimientos.length > 0">
+            <p>
+              {{ asunto.seguimientos[asunto.seguimientos.length - 1].fecha }},
+              {{
+                asunto.seguimientos[asunto.seguimientos.length - 1].seguimiento
+              }}
+            </p>
+          </div>
+        </div>
+      </div>
+      <hr />
+    </div>
+  </div>
+</div>

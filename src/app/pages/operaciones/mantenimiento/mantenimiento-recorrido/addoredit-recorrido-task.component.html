@@ -1,0 +1,27 @@
+<div class="card">
+  <div class="card-body">
+    <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
+      <div class="row">
+        <div class="col-12" hidden>
+          <input formControlName="id" />
+          <input formControlName="routeId" />
+        </div>
+        <div class="col-12">
+          <custom-input-text
+            [control]="form.get('task')"
+            formControlName="task"
+            label="Tarea"
+            placeholder="tarea"
+            [horizontal]="false"
+          ></custom-input-text>
+        </div>
+
+        <div class="col-12 text-left mt-2">
+          <custom-button-submit
+            [disabled]="this.form.invalid || submitting"
+          ></custom-button-submit>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

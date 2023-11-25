@@ -1,0 +1,79 @@
+<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+
+<p-table
+  #dt
+  [autoLayout]="true"
+  [globalFilterFields]="['nameArea']"
+  [rowHover]="true"
+  [value]="data"
+  currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+  styleClass="custom-table"
+  rowGroupMode="subheader"
+  sortField="companyArea"
+  groupRowsBy="companyArea"
+>
+  <ng-template pTemplate="caption">
+    <app-table-header
+      [title]="'Departamentos de la empresa'"
+      (add)="showModalAddOrEdit({ id: 0, title: 'Nuevo Registro' })"
+      [dt]="dt"
+    ></app-table-header>
+  </ng-template>
+  <ng-template pTemplate="groupheader" let-item>
+    <tr pRowGroupHeader>
+      <td colspan="5">
+        <span class="font-size-18 fw-semibold ml-2">{{
+          item.companyArea
+        }}</span>
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="header">
+    <tr>
+      <th scope="col" style="width: 5%">#</th>
+      <th scope="col" style="width: 65%" pSortableColumn="nameArea">
+        NOMBRE DE AREA RESPONSABLE <p-sortIcon field="nameArea"></p-sortIcon>
+      </th>
+      <th scope="col" style="width: 20%" pSortableColumn="position">
+        POSICIÓN
+        <p-sortIcon field="position"></p-sortIcon>
+      </th>
+      <th scope="col" colspan="2" style="width: 30%" pSortableColumn="position">
+        JERARQUÍA
+        <p-sortIcon field="position"></p-sortIcon>
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+    <tr>
+      <td class="p-column-title">{{ rowIndex + 1 }}</td>
+      <td class="p-column-title">
+        {{ item.nameArea }}
+      </td>
+      <td class="p-column-title">
+        {{ item.position }}
+      </td>
+      <td class="p-column-title">
+        {{ item.hierarchy }}
+      </td>
+      <td class="p-column-title">
+        <div class="d-flex justify-content-center">
+          <custom-button-edit
+            (edit)="
+              showModalAddOrEdit({ id: item.id, title: 'Editar Registro' })
+            "
+          ></custom-button-edit>
+          <custom-button-delete
+            (OnConfirm)="onDelete(item)"
+          ></custom-button-delete>
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="paginatorleft">
+    <div class="p-d-flex p-ai-center p-jc-between">
+      En total hay
+      {{ data ? data.length : 0 }} registros.
+    </div>
+  </ng-template>
+</p-table>

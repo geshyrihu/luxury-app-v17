@@ -1,0 +1,149 @@
+<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+
+<div class="p-card p-mb-5">
+  <p-table
+    #dt
+    [(selection)]="data"
+    [autoLayout]="true"
+    [globalFilterFields]="[
+      'equipoOInstalacion',
+      'producto.producto',
+      'provider'
+    ]"
+    [paginator]="true"
+    [rowHover]="true"
+    [rows]="15"
+    [rowsPerPageOptions]="[10, 20, 30, 40, 50, 75, 100, 200]"
+    [showCurrentPageReport]="true"
+    [value]="data"
+    currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+    styleClass="custom-table"
+  >
+    <ng-template pTemplate="caption">
+      <app-table-header
+        [title]="'Catalogo de gastos fijos'"
+        (add)="onModal({ id: 0, title: 'Nuevo Registro' })"
+        [dt]="dt"
+        [rolAuth]="
+          authService.onValidateRoles([
+            'Asistente',
+            'Residente',
+            'SuperUsuario'
+          ])
+        "
+      ></app-table-header>
+      <div
+        class="row mt-3"
+        *ngIf="
+          authService.onValidateRoles([
+            'Asistente',
+            'Residente',
+            'SuperUsuario'
+          ])
+        "
+      >
+        <div class="col-6">
+          <div class="form-group w-50">
+            <label class="font-weight-normal font-italic"
+              >Fecha de solicitud:</label
+            >
+            <input
+              class="form-control flatpickr-input"
+              type="text"
+              mwlFlatpickr
+              [altInput]="true"
+              [convertModelValue]="true"
+              [(ngModel)]="fechaSolicitud"
+            />
+          </div>
+        </div>
+        <div class="col-6">
+          <button
+            (click)="createOrdenesCompra()"
+            class="mb-1 pointer btn btn-outline-primary float-end"
+          >
+            Generar Ordenes de Compra
+          </button>
+        </div>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th scope="col" style="width: 10%">
+          <small>Seleccionar</small>
+        </th>
+        <th scope="col" pSortableColumn="code" style="width: 20%">
+          <small>Encabezado</small> <p-sortIcon field="code"></p-sortIcon>
+        </th>
+        <th scope="col" pSortableColumn="shortName" style="width: 15%">
+          <small>Datos de pago</small>
+          <p-sortIcon field="shortName"></p-sortIcon>
+        </th>
+        <th scope="col" pSortableColumn="largeName" style="width: 30%">
+          <small>Producto o Servicio</small
+          ><p-sortIcon field="largeName"></p-sortIcon>
+        </th>
+        <th scope="col" pSortableColumn="largeName" style="width: 30%">
+          <small>Partida Presupuestal</small
+          ><p-sortIcon field="largeName"></p-sortIcon>
+        </th>
+        <th scope="col" style="width: 5%"><small>Opciones</small></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item>
+      <tr>
+        <td class="text-center">
+          <input
+            [(ngModel)]="item.crearOrdenCompra"
+            type="checkbox"
+            class="form-check-input"
+            (change)="crearOrder(item.id, $event.target['checked'])"
+          />
+        </td>
+        <td class="p-column-title">
+          <small>{{ item.equipoOInstalacion }} </small><br />
+          <small>{{ item.justificacionGasto }} </small>
+        </td>
+        <td class="p-column-title">
+          <small>Uso de CFDI: {{ item.usoCFDI }} </small><br />
+          <small>Metodo de Pago: {{ item.metodoDePago }} </small><br />
+          <small>Forma de pago: {{ item.formaPago }} </small>
+        </td>
+        <td class="p-column-title">
+          <div *ngFor="let item3 of item.producto">
+            <small>{{ item3.producto }} </small><br />
+          </div>
+        </td>
+        <td class="p-column-title">
+          <div *ngFor="let item2 of item.presupuesto">
+            <small> {{ item2.cedula }} </small><br />
+          </div>
+        </td>
+
+        <td
+          class="p-column-title"
+          *ngIf="
+            authService.onValidateRoles([
+              'Asistente',
+              'Residente',
+              'SuperUsuario'
+            ])
+          "
+        >
+          <div class="d-flex justify-content-center">
+            <custom-button-edit
+              (edit)="onModal({ id: item.id, title: 'Editar Registro' })"
+            ></custom-button-edit>
+            <custom-button-delete
+              (OnConfirm)="onDelete(item)"
+            ></custom-button-delete>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="paginatorleft">
+      <app-table-footer [data]="data"></app-table-footer>
+    </ng-template>
+  </p-table>
+</div>

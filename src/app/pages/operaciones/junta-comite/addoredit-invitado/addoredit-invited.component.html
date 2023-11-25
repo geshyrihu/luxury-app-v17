@@ -1,0 +1,46 @@
+<div class="list-group">
+  <p class="small list-group-item list-group-item-action active">Invitados</p>
+
+  <small>
+    <div class="row">
+      <div class="col-10">
+        <div class="mb-2">
+          <input [(ngModel)]="invitado" class="form-control" />
+        </div>
+      </div>
+      <div class="col-2 mb-2">
+        <button
+          ngbTooltip="Guardar"
+          placement="top"
+          type="button"
+          (click)="onSubmit()"
+          class="btn btn-info float-end"
+          [disabled]="invitado == ''"
+        >
+          <i class="fa-duotone fa-check-double"></i>
+        </button>
+      </div>
+    </div>
+  </small>
+
+  <small
+    *ngFor="let item of listaInvitados"
+    class="list-group-item list-group-item-action"
+  >
+    {{ item.invitado }}
+    <span
+      (click)="onDelete(item.id)"
+      ngbTooltip="Eliminar"
+      placement="top"
+      class="fa-duotone fa-trash-can text-danger float-end pointer"
+    ></span>
+  </small>
+  <br />
+  <hr />
+  <small
+    *ngFor="let item of participantsList"
+    class="list-group-item list-group-item-action"
+  >
+    {{ item.name }}
+  </small>
+</div>

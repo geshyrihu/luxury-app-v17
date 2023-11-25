@@ -1,0 +1,102 @@
+<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+
+<div class="card p-3">
+  <div class="row">
+    <div class="col-6">
+      <ul class="list-group">
+        <!-- Inicio contactos de emergencia -->
+        <li
+          class="list-group-item pointer"
+          (click)="onShowModalcontactEmployee()"
+        >
+          <i class="fa-duotone fa-family-pants me-3"></i>
+          Contactos de Emergencia
+        </li>
+        <!-- Final contactos de emergencia -->
+        <!-- Inicio cambiar foto de perfil -->
+        <li
+          class="list-group-item pointer"
+          (click)="onShowModalActualizarImagen()"
+        >
+          <i class="fa-duotone fa-camera me-3"></i>
+          Cambiar foto
+        </li>
+        <!-- Final cambiar foto de perfil -->
+        <!-- Inicio restablecer contraseña -->
+        <li class="list-group-item pointer" (click)="onModalUpdatePassword()">
+          <i class="fa-duotone fa-key me-3"></i>
+          Restablecer contraseña
+        </li>
+        <!-- Final restablecer contraseña  -->
+        <li
+          class="list-group-item pointer"
+          (click)="onModalAccountToEmployee()"
+        >
+          <i class="fa-duotone fa-image-user me-3"></i>
+          Asignar cuenta de usuario
+        </li>
+        <li
+          class="list-group-item pointer"
+          *ngIf="!active"
+          (click)="onBlockEmployee()"
+        >
+          <i class="fa-duotone fa-user-xmark me-3"></i>
+          Activar empleado
+        </li>
+        <li
+          class="list-group-item pointer"
+          *ngIf="active"
+          (click)="onBlockEmployee()"
+        >
+          <i class="fa-duotone fa-user-xmark me-3"></i>
+          Desactivar empleado
+        </li>
+      </ul>
+    </div>
+    <div class="col-6">
+      <ul class="list-group">
+        <li class="list-group-item text-danger" *ngIf="!workPosition">
+          <em>
+            Para solicitar baja o modificación de salario, este empleado debe
+            estar cubriendo una vacante.
+          </em>
+        </li>
+        <li
+          class="list-group-item pointer"
+          *ngIf="!solicitudBajaStatus && workPosition"
+          (click)="onModalSolicitudBaja()"
+        >
+          <i class="fa-duotone fa-user-minus me-3"></i>
+          Solicitar Baja
+        </li>
+        <li class="list-group-item disabled" *ngIf="solicitudBajaStatus">
+          <i class="fa-duotone fa-user-minus me-3"></i>
+          Solicitar Baja en proceso
+        </li>
+        <li
+          class="list-group-item pointer"
+          *ngIf="!solicitudModificacionSalarioStatus && workPosition"
+          (click)="onModalSolicitudModificacionSalarion()"
+        >
+          <i class="fa-duotone fa-money-bill-1 me-3"></i>
+          Solicitar modificación de salario
+        </li>
+        <li
+          class="list-group-item disabled"
+          *ngIf="solicitudModificacionSalarioStatus"
+        >
+          <i class="fa-duotone fa-money-bill-1 me-3"></i>
+          Solicitar modificación de salario en proceso
+        </li>
+        <li class="list-group-item pointer" (click)="onShowModalAddOrEdit()">
+          <i class="fa-duotone fa-pen-to-square me-3"></i>
+          Editar
+        </li>
+        <li class="list-group-item pointer" (click)="onDelete()">
+          <i class="fa-duotone fa-trash me-3"></i>
+          Eliminar
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

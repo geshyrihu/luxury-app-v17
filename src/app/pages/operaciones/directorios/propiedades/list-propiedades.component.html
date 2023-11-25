@@ -1,0 +1,112 @@
+<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+
+<p-table
+  #dt
+  responsiveLayout="scroll"
+  styleClass="custom-table"
+  [value]="data"
+  [rows]="15"
+  [paginator]="true"
+  [rowHover]="true"
+  currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+  [showCurrentPageReport]="true"
+  [rowsPerPageOptions]="[10, 15, 20, 30, 40, 50, 75, 100]"
+  [globalFilterFields]="['department', 'tower']"
+  [autoLayout]="true"
+>
+  <ng-template pTemplate="caption">
+    <app-table-header
+      [title]="'Propiedades'"
+      (add)="showModalAddOrEdit({ id: 0, title: 'Nuevo Registro' })"
+      [dt]="dt"
+      [rolAuth]="
+        authService.onValidateRoles(['Asistente', 'Residente', 'SuperUsuario'])
+      "
+    ></app-table-header>
+  </ng-template>
+
+  <ng-template pTemplate="header">
+    <tr>
+      <th
+        scope="col"
+        style="width: 7%"
+        class="text-small"
+        pSortableColumn="tower"
+      >
+        Torre
+        <p-sortIcon field="tower"></p-sortIcon>
+      </th>
+      <th
+        scope="col"
+        style="width: 10%"
+        class="text-small"
+        pSortableColumn="department"
+      >
+        Departamento
+        <p-sortIcon field="department"></p-sortIcon>
+      </th>
+
+      <th
+        *ngIf="
+          authService.onValidateRoles([
+            'Asistente',
+            'Residente',
+            'SuperUsuario'
+          ])
+        "
+        scope="col"
+        style="width: 5%"
+        class="text-small"
+      >
+        Opciones
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-item>
+    <tr>
+      <td>
+        <small>
+          {{ item.tower }}
+        </small>
+      </td>
+      <td>
+        <small>
+          {{ item.department }}
+        </small>
+      </td>
+
+      <td
+        class="p-column-title"
+        *ngIf="
+          authService.onValidateRoles([
+            'Asistente',
+            'Residente',
+            'SuperUsuario'
+          ])
+        "
+      >
+        <div class="d-flex justify-content-center">
+          <!-- Componente editar registro -->
+          <custom-button-edit
+            (edit)="
+              showModalAddOrEdit({ id: item.id, title: 'Editar Registro' })
+            "
+          ></custom-button-edit>
+          <!-- Componente editar registro -->
+          <!-- Componente eliminar registro -->
+          <custom-button-delete
+            (OnConfirm)="onDelete(item)"
+          ></custom-button-delete>
+          <!-- Componente eliminar registro -->
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="paginatorleft">
+    <div class="p-d-flex p-ai-center p-jc-between">
+      En total hay
+      {{ data ? data.length : 0 }} registros.
+    </div>
+  </ng-template>
+</p-table>

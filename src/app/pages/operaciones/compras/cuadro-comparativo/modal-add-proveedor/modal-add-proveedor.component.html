@@ -1,0 +1,26 @@
+<form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
+  <custom-input-datalist
+    (propagar)="saveProviderId($event)"
+    [control]="form.get('providerName')"
+    [data]="cb_providers"
+    dataListId="providerNameDatalistOptions"
+    formControlName="providerName"
+    label="Proveedor"
+  ></custom-input-datalist>
+
+  <custom-input-date
+    [control]="form.get('fechaCotizacion')"
+    formControlName="fechaCotizacion"
+    label="Fecha de cotización"
+    placeholder="fecha de cotización"
+  ></custom-input-date>
+
+  <custom-input-number
+    [control]="form.get('numeroCotizacion')"
+    formControlName="numeroCotizacion"
+    label="Número de cotización"
+    placeholder="Número de cotización"
+  ></custom-input-number>
+
+  <custom-button-submit [disabled]="form.invalid"></custom-button-submit>
+</form>

@@ -1,0 +1,55 @@
+<div class="row">
+  <div class="col-sm-6">
+    <!-- Filtros por Mes -->
+    <ngb-alert [dismissible]="false" type="success">
+      <label class="pointer">
+        <input
+          [checked]="ViewMonth"
+          class="form-check-input"
+          type="radio"
+          id="monyh"
+          name="formRadios"
+          [value]="ViewMonth"
+          (change)="onCheckboxChange()"
+        />
+        Filtrar por mes
+      </label>
+    </ngb-alert>
+    <app-calendar-range></app-calendar-range>
+
+    <!-- Filtros por Mes -->
+  </div>
+  <div class="col-sm-6">
+    <!-- Filtros por dia -->
+    <ngb-alert [dismissible]="false" type="success">
+      <label class="pointer">
+        <input
+          [checked]="ViewDay"
+          id="day"
+          class="form-check-input"
+          type="radio"
+          name="formRadios"
+          [value]="ViewDay"
+          (change)="onCheckboxChange()"
+        />
+        Filtrar por dias</label
+      >
+    </ngb-alert>
+    <app-rango-calendario-yyyymmdd
+      [mostrartextHasta]="false"
+      [mostrartextDesde]="false"
+    ></app-rango-calendario-yyyymmdd>
+    <!-- Filtros por dia -->
+  </div>
+</div>
+<div class="card-body" *ngIf="data !== undefined">
+  <canvas
+    baseChart
+    [datasets]="lineBarChart.datasets"
+    chartType="bar"
+    [options]="lineBarChart.options"
+    height="300"
+    [labels]="lineBarChart.labels"
+  >
+  </canvas>
+</div>

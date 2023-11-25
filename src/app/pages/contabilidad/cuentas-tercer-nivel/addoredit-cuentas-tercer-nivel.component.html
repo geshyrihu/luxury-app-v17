@@ -1,0 +1,40 @@
+<form autocomplete="off" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <custom-input-text
+    [control]="form.get('id')"
+    formControlName="id"
+    label="Id"
+  ></custom-input-text>
+
+  <custom-input-mask
+    [control]="form.get('numeroCuenta')"
+    formControlName="numeroCuenta"
+    label="Cuenta"
+    placeholder="000-000-000"
+    customMask="000-000-000"
+  ></custom-input-mask>
+
+  <custom-input-text
+    [control]="form.get('descripcion')"
+    formControlName="descripcion"
+    label="Descripción"
+    placeholder="descripción"
+  ></custom-input-text>
+
+  <custom-input-text-area
+    [control]="form.get('information')"
+    formControlName="information"
+    label="Información"
+    placeholder="información"
+  ></custom-input-text-area>
+
+  <custom-input-select
+    [control]="form.get('estate')"
+    formControlName="estate"
+    label="estado"
+    [data]="cb_state"
+  ></custom-input-select>
+
+  <custom-button-submit
+    [disabled]="this.form.invalid || submitting"
+  ></custom-button-submit>
+</form>

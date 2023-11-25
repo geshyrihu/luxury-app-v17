@@ -1,0 +1,26 @@
+<p-table [value]="data" styleClass="p-datatable-sm">
+  <ng-template pTemplate="header">
+    <tr>
+      <th scope="col" style="white-space: 20%"></th>
+      <th scope="col" style="white-space: 70%"></th>
+      <th scope="col" style="white-space: 10%"></th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-seguimiento>
+    <tr>
+      <td>
+        {{ seguimiento.fecha }}, {{ seguimiento.seguimiento | titlecase }}
+      </td>
+      <td>
+        <div class="col-sm-3 d-flex align-content-center">
+          <custom-button-edit
+            (edit)="onModalAddOrEditSeguimiento(seguimiento.id)"
+          ></custom-button-edit>
+          <custom-button-delete
+            (OnConfirm)="onDeleteSeguimiento(seguimiento.id)"
+          ></custom-button-delete>
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

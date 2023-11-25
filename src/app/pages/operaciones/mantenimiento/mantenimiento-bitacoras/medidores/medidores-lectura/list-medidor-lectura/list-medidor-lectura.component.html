@@ -1,0 +1,75 @@
+<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+
+<p-table
+  [(selection)]="data"
+  #dt
+  styleClass="custom-table"
+  [value]="data"
+  [rows]="15"
+  [paginator]="true"
+  [rowHover]="true"
+  currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+  [showCurrentPageReport]="true"
+  [rowsPerPageOptions]="[10, 20, 30, 40, 50, 75, 100]"
+  [globalFilterFields]="['lectura']"
+  [autoLayout]="true"
+>
+  <ng-template pTemplate="caption">
+    <app-table-header
+      [title]="'Lectura'"
+      (add)="modalAddEdit({ id: 0, title: 'Nuevo Registro' })"
+      [dt]="dt"
+    ></app-table-header>
+    <div class="mt-1">
+      <custom-button-export-excel
+        (clicked)="exportExcel()"
+      ></custom-button-export-excel>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="header">
+    <tr>
+      <th scope="col" pSortableColumn="fechaRegistro">
+        Fecha de Registro <p-sortIcon field="fechaRegistro"></p-sortIcon>
+      </th>
+      <th scope="col" pSortableColumn="lectura">
+        Lectura <p-sortIcon field="lectura"></p-sortIcon>
+      </th>
+
+      <th scope="col" style="width: 5%">Opciones</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-item>
+    <tr>
+      <td class="p-column-title">
+        <small>
+          {{ item.fechaRegistro | date : "short" }}
+        </small>
+      </td>
+      <td class="p-column-title">
+        <small>
+          {{ item.lectura }}
+        </small>
+      </td>
+
+      <!-- Opciones -->
+      <td class="p-column-title">
+        <div class="d-flex justify-content-center">
+          <custom-button-edit
+            (edit)="modalAddEdit({ id: item.id, title: 'Editar Registro' })"
+          ></custom-button-edit>
+          <custom-button-delete
+            (OnConfirm)="onDelete(item)"
+          ></custom-button-delete>
+        </div>
+      </td>
+      <!-- Opciones -->
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="paginatorleft">
+    <div class="p-d-flex p-ai-center p-jc-between">
+      En total hay
+      {{ data ? data.length : 0 }} registros.
+    </div>
+  </ng-template>
+</p-table>

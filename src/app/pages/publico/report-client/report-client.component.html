@@ -1,0 +1,76 @@
+<div class="container-md">
+  <div class="m-1">
+    <div class="row">
+      <div class="col-12 text-center">
+        <img
+          alt="noimg"
+          [src]="imgBase + data.logoCustomer"
+          style="width: 100px; height: 150px; max-width: 100%; height: auto"
+        />
+      </div>
+      <div class="col">
+        <div style="height: 3px; background-color: black"></div>
+
+        <p>Reporte del {{ inicio | date }} al {{ final | date }}</p>
+      </div>
+    </div>
+    <div *ngFor="let area of data.reportes">
+      <h5 class="h2 font-bold">
+        {{ area.responsable }}
+      </h5>
+
+      <div class="card" *ngFor="let item of area.items">
+        <div class="card-body">
+          <p class="text-justify font-size-20">
+            {{ item.activity }}
+          </p>
+          <div class="row">
+            <div class="col-6">
+              <img
+                [src]="urlImgBase + item.photoPathBefore"
+                alt=""
+                class="img-fluid"
+                style="width: 100%; height: 300px"
+              />
+            </div>
+            <div class="col-6">
+              <img
+                [src]="urlImgBase + item.photoPathAfter"
+                alt=""
+                class="img-fluid"
+                style="width: 100%; height: 300px"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Estilos para el modo de impresión */
+  @media print {
+    body {
+      margin: 0;
+      padding: 0;
+    }
+    .card {
+      width: 100%;
+      page-break-inside: avoid;
+      break-inside: avoid; /* Para navegadores que no soportan page-break-inside */
+    }
+    .card-body {
+      page-break-inside: avoid;
+      break-inside: avoid; /* Para navegadores que no soportan page-break-inside */
+    }
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+  }
+
+  .card {
+    background-color: rgba(200, 200, 200, 0.1); /* Color gris muy tenue */
+  }
+</style>
