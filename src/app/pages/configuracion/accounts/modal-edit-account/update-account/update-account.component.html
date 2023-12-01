@@ -19,22 +19,21 @@
       placeholder="email"
     ></custom-input-text>
 
+    @if(this.authService.onValidateRoles(['SuperUsuario'])){
     <custom-input-select
-      [hidden]="!this.authService.onValidateRoles(['SuperUsuario'])"
       [control]="form.get('customerId')"
       formControlName="customerId"
       label="Cliente"
       [data]="cb_customer"
     ></custom-input-select>
-
+    } @if(this.authService.onValidateRoles(['SuperUsuario'])){
     <custom-input-select
-      [hidden]="!this.authService.onValidateRoles(['SuperUsuario'])"
       [control]="form.get('professionId')"
       formControlName="professionId"
       label="Cargo"
       [data]="cb_profession"
     ></custom-input-select>
-
+    }
     <custom-input-mask
       [hidden]="!this.authService.onValidateRoles(['SuperUsuario'])"
       [control]="form.get('phoneNumber')"

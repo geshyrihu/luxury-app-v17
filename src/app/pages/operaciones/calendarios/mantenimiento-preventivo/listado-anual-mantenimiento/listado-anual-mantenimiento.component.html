@@ -1,8 +1,9 @@
+@if (data) {
 <p-table
-  *ngIf="data"
   [(selection)]="data"
   #dt
   styleClass="custom-table"
+  [tableStyle]="{ 'min-width': '50rem' }"
   [value]="data"
   [rows]="100"
   [paginator]="true"
@@ -28,9 +29,11 @@
           [(ngModel)]="month"
           (change)="selectMonth()"
         >
-          <option [value]="item.value" *ngFor="let item of months">
+          @for (item of months; track item) {
+          <option [value]="item.value">
             {{ item.label }}
           </option>
+          }
         </select>
       </div>
       <div class="col-sm-9">
@@ -101,23 +104,12 @@
         Costo
         <p-sortIcon field="precio"></p-sortIcon>
       </th>
-
-      <th
-        *ngIf="
-          authService.onValidateRoles([
-            'Mantenimiento',
-            'Residente',
-            'SuperUsuario'
-          ])
-        "
-        scope="col"
-        style="width: 10%"
-      >
-        Opciones
-      </th>
+      @if ( authService.onValidateRoles([ 'Mantenimiento', 'Residente',
+      'SuperUsuario' ]) ) {
+      <th scope="col" style="width: 10%">Opciones</th>
+      }
     </tr>
   </ng-template>
-
   <ng-template pTemplate="body" let-item>
     <tr>
       <td class="p-column-title">
@@ -144,16 +136,9 @@
       <td class="p-column-title">
         <small>{{ item.precio | CurrencyMexicoPipe }} </small>
       </td>
-      <td
-        class="p-column-title"
-        *ngIf="
-          authService.onValidateRoles([
-            'Mantenimiento',
-            'Residente',
-            'SuperUsuario'
-          ])
-        "
-      >
+      @if ( authService.onValidateRoles([ 'Mantenimiento', 'Residente',
+      'SuperUsuario' ]) ) {
+      <td class="p-column-title">
         <div class="d-flex justify-content-center">
           <custom-button-edit
             (edit)="
@@ -165,12 +150,11 @@
               })
             "
           ></custom-button-edit>
-
           <custom-button
             [customClass]="'btn-sm btn-outline-dark'"
             ngbTooltip="Duplicar Servicio"
             placement="top"
-            icon="fa-duotone fa-copy text-dark"
+            icon="fa-regular fa-copy text-dark"
             (clicked)="
               showModalAddOrEdit({
                 idnombre: item.id,
@@ -180,9 +164,7 @@
               })
             "
           ></custom-button>
-
           <!-- Duplicar Servicio -->
-
           <!-- Borrar -->
           <custom-button-delete
             (OnConfirm)="onDelete(item)"
@@ -190,9 +172,9 @@
           <!-- Borrar -->
         </div>
       </td>
+      }
     </tr>
   </ng-template>
-
   <ng-template pTemplate="paginatorleft">
     <div class="p-d-flex p-ai-center p-jc-between">
       En total hay
@@ -200,3 +182,4 @@
     </div>
   </ng-template>
 </p-table>
+}

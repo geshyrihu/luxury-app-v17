@@ -14,7 +14,6 @@
       placeholder="professionId"
       hidden
     ></custom-input-number>
-
     <p class="text-danger">
       Esta fecha correponde a el día en que se llevara a cabo la baja, valida la
       fecha correcta
@@ -25,7 +24,6 @@
       label="Fecha de la baja"
       placeholder="fecha de la baja"
     ></custom-input-date>
-
     <custom-input-text
       [control]="form.get('employee')"
       formControlName="employee"
@@ -33,7 +31,6 @@
       placeholder="Nombre del colaborador"
       [readonly]="true"
     ></custom-input-text>
-
     <custom-input-text
       [control]="form.get('phoneEmployee')"
       formControlName="phoneEmployee"
@@ -41,21 +38,18 @@
       placeholder="Nombre del colaborador"
       [readonly]="true"
     ></custom-input-text>
-
     <custom-input-select
       [control]="form.get('typeOfDeparture')"
       formControlName="typeOfDeparture"
       label="Tipo de baja"
       [data]="cb_type_departure"
     ></custom-input-select>
-
     <custom-input-text-area
       [control]="form.get('reasonForLeaving')"
       formControlName="reasonForLeaving"
       label="Motivo de la baja"
       placeholder="motivo de la baja"
     ></custom-input-text-area>
-
     <div formArrayName="discountDescriptions">
       <button
         type="button"
@@ -64,10 +58,9 @@
       >
         Agregar descuento
       </button>
-
-      <div
-        *ngFor="let discount of discountDescriptions.controls; let i = index"
-      >
+      @for (discount of discountDescriptions.controls; track discount; let i =
+      $index) {
+      <div>
         <div [formGroupName]="i">
           <div class="row">
             <div class="col-5">
@@ -84,16 +77,13 @@
                       )
                     }"
                   />
-                  <div
-                    *ngIf="
-                      isControlInvalid(discount.get('description')) &&
-                      (discount.get('description').dirty ||
-                        discount.get('description').touched)
-                    "
-                    class="invalid-feedback"
-                  >
+                  @if ( isControlInvalid(discount.get('description')) &&
+                  (discount.get('description').dirty ||
+                  discount.get('description').touched) ) {
+                  <div class="invalid-feedback">
                     La descripción es requerida.
                   </div>
+                  }
                 </div>
               </div>
             </div>
@@ -109,16 +99,11 @@
                       'is-invalid': isControlInvalid(discount.get('price'))
                     }"
                   />
-                  <div
-                    *ngIf="
-                      isControlInvalid(discount.get('price')) &&
-                      (discount.get('price').dirty ||
-                        discount.get('price').touched)
-                    "
-                    class="invalid-feedback"
-                  >
-                    El costo es requerido.
-                  </div>
+                  @if ( isControlInvalid(discount.get('price')) &&
+                  (discount.get('price').dirty || discount.get('price').touched)
+                  ) {
+                  <div class="invalid-feedback">El costo es requerido.</div>
+                  }
                 </div>
               </div>
             </div>
@@ -126,7 +111,7 @@
               <button
                 type="button"
                 class="btn btn-outline-danger w-100"
-                (click)="removeDiscountDescription()"
+                (click)="removeDiscountDescription(i)"
               >
                 Borrar
               </button>
@@ -134,6 +119,7 @@
           </div>
         </div>
       </div>
+      }
     </div>
     <custom-input-select
       [control]="form.get('lawyerAssistance')"
@@ -159,15 +145,15 @@
             (change)="onFileChange()"
           >
           </file-upload>
-
           <!-- Mostrar mensaje de error si se supera el tamaño máximo -->
-          <div class="text-danger" *ngIf="maxSizeExceeded">
+          @if (maxSizeExceeded) {
+          <div class="text-danger">
             Los archivos adjuntos no deben superar los 10 MB.
           </div>
+          }
         </form>
       </div>
     </div>
-
     <custom-button-send-email
       [disabled]="this.form.invalid || submitting"
     ></custom-button-send-email>

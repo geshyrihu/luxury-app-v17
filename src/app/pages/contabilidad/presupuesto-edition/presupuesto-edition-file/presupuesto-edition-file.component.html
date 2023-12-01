@@ -12,11 +12,13 @@
     styleClass="font-size-12"
   >
     <ng-template pTemplate="content">
-      <ul *ngIf="uploadedFiles.length">
-        <li *ngFor="let file of uploadedFiles">
-          {{ file.name }} - {{ file.size }} bytes
-        </li>
+      @if (uploadedFiles.length) {
+      <ul>
+        @for (file of uploadedFiles; track file) {
+        <li>{{ file.name }} - {{ file.size }} bytes</li>
+        }
       </ul>
+      }
     </ng-template>
   </p-fileUpload>
 </div>
@@ -46,7 +48,6 @@
     </button>
   </div>
 </div>
-
 <div class="card">
   <p-table [value]="files" styleClass="">
     <ng-template pTemplate="header">
@@ -62,20 +63,19 @@
           {{ item.nameFile }}
         </td>
         <td class="p-column-title">
+          @if (item.typeFile === 'pdf') {
           <custom-button-download-pdf
-            *ngIf="item.typeFile === 'pdf'"
             [urlFile]="item.pathFile"
           ></custom-button-download-pdf>
-
+          } @if (item.typeFile === 'img') {
           <p-image
-            *ngIf="item.typeFile === 'img'"
             [src]="this.urlimg + item.pathFile"
             alt="."
             width="20"
             [preview]="true"
           ></p-image>
+          }
         </td>
-
         <!-- Opciones -->
         <td class="p-column-title" class="hide-print-mode">
           <div class="d-flex justify-content-center">

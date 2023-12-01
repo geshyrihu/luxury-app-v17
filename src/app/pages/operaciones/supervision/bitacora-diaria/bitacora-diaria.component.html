@@ -1,9 +1,7 @@
 <p-toast position="top-left" [baseZIndex]="99999"></p-toast>
-
 <div class="h6">DEPTO : {{ depto }}</div>
 <div class="h6">NOMBRE : {{ nombre }}</div>
 <div class="h6">SEMANA : {{ semana }}</div>
-
 <div class="card">
   <p-table
     #dt
@@ -27,6 +25,7 @@
     [rows]="30"
     [value]="data"
     styleClass="custom-table"
+    [tableStyle]="{ 'min-width': '50rem' }"
     currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
     [showCurrentPageReport]="true"
     [rowsPerPageOptions]="[30, 40, 50, 75, 100, 150, 200]"
@@ -42,7 +41,6 @@
         <div class="col-sm-5">
           <app-rango-calendario-yyyymmdd></app-rango-calendario-yyyymmdd>
         </div>
-
         <div class="col text-right">
           <button
             ngbTooltip="Actualizar Información"
@@ -50,7 +48,7 @@
             class="btn btn-sm"
             (onClick)="onLoadData()"
           >
-            <i class="fa-duotone fa-arrows-rotate"></i>
+            <i class="fa-regular fa-arrows-rotate"></i>
           </button>
         </div>
       </div>
@@ -94,7 +92,6 @@
             </ng-template>
           </p-columnFilter>
         </th>
-
         <th [width]="'7%'" pSortableColumn="fechaSolicitud">
           SOLICITUD
           <p-sortIcon field="fechaSolicitud"></p-sortIcon>
@@ -193,7 +190,9 @@
           {{ item.fechaConclusion | date }}
         </td>
         <td class="text-center">
-          <small *ngIf="item.duracion > 0"> {{ item.duracion }}</small>
+          @if (item.duracion > 0) {
+          <small> {{ item.duracion }}</small>
+          }
         </td>
         <td class="text-center">
           <span
@@ -205,10 +204,8 @@
           ></span>
         </td>
         <td class="p-column-title">
-          <div
-            class="d-flex justify-content-center"
-            *ngIf="employeeId == item.employeeId"
-          >
+          @if (employeeId == item.employeeId) {
+          <div class="d-flex justify-content-center">
             <!-- Componente editar registro -->
             <custom-button-edit
               (edit)="
@@ -222,6 +219,7 @@
             ></custom-button-delete>
             <!-- Componente eliminar registro -->
           </div>
+          }
         </td>
       </tr>
     </ng-template>

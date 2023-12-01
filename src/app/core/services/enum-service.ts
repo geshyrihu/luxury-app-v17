@@ -8,7 +8,6 @@ import { DataService } from './data.service';
 })
 export class EnumService {
   private dataService = inject(DataService);
-  // public customToastService = inject(CustomToastService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 

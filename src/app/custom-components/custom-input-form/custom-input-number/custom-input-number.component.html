@@ -1,0 +1,47 @@
+@if(hidden){
+<div class="mb-2" [ngClass]="{ 'form-group row ': horizontal }">
+  @if (horizontal) {
+  <label class="col-sm-3">{{ label }}</label>
+  <div class="col-sm-9">
+    <input
+      type="number"
+      [min]="min"
+      [max]="max"
+      class="form-control"
+      [disabled]="disabled"
+      [readonly]="readonly"
+      [placeholder]="'Ingresa ' + placeholder"
+      [value]="value"
+      (input)="onChange($event.target.value)"
+      (blur)="onTouch()"
+      [ngClass]="{
+        'is-invalid': control.invalid && (control.dirty || control.touched)
+      }"
+    />
+    <app-validation-errors-custom-input
+      [control]="control"
+      [placeholder]="placeholder"
+    ></app-validation-errors-custom-input>
+  </div>
+  } @if (!horizontal) {
+  <label>{{ label }}</label>
+  <input
+    type="number"
+    class="form-control"
+    [disabled]="disabled"
+    [readonly]="readonly"
+    [placeholder]="'Ingresa ' + placeholder"
+    [value]="value"
+    (input)="onChange($event.target.value)"
+    (blur)="onTouch()"
+    [ngClass]="{
+      'is-invalid': control.invalid && (control.dirty || control.touched)
+    }"
+  />
+  <app-validation-errors-custom-input
+    [control]="control"
+    [placeholder]="placeholder"
+  ></app-validation-errors-custom-input>
+  }
+</div>
+}

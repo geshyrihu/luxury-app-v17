@@ -8,7 +8,8 @@
       (clicked)="modalAddEdit({ id: 0, title: 'Agregar Registro' })"
     ></custom-button>
   </div>
-  <div class="col-sm-3" *ngFor="let item of data">
+  @for (item of data; track item) {
+  <div class="col-sm-3">
     <div
       class="card"
       [ngClass]="{
@@ -24,21 +25,16 @@
         <h5 class="card-subtitle mb-2">
           {{ item.medidorCategoria.nombreMedidorCategoria }}
         </h5>
+        @if (item.medidorCategoria.id === 1) {
+        <i class="fa-regular fa-fire-burner fa-3x" aria-hidden="true"></i>
+        } @if (item.medidorCategoria.id === 3) {
         <i
-          *ngIf="item.medidorCategoria.id === 1"
-          class="fa-duotone fa-fire-burner fa-3x"
+          class="fa-regular fa-hand-holding-droplet fa-3x"
           aria-hidden="true"
         ></i>
-        <i
-          *ngIf="item.medidorCategoria.id === 3"
-          class="fa-duotone fa-hand-holding-droplet fa-3x"
-          aria-hidden="true"
-        ></i>
-        <i
-          *ngIf="item.medidorCategoria.id === 2"
-          class="fa-duotone fa-bolt fa-3x"
-          aria-hidden="true"
-        ></i>
+        } @if (item.medidorCategoria.id === 2) {
+        <i class="fa-regular fa-bolt fa-3x" aria-hidden="true"></i>
+        }
         <hr />
         <h6 class="card-subtitle mb-2 text-muted">
           {{ item.numeroMedidor }}
@@ -50,17 +46,9 @@
           {{ item.consumoDiarioMaximo }}
         </p>
       </div>
-
-      <div
-        class="card-footer"
-        *ngIf="
-          authService.onValidateRoles([
-            'Mantenimiento',
-            'Residente',
-            'SuperUsuario'
-          ])
-        "
-      >
+      @if ( authService.onValidateRoles([ 'Mantenimiento', 'Residente',
+      'SuperUsuario' ]) ) {
+      <div class="card-footer">
         <div class="d-flex justify-content-center">
           <custom-button-edit
             (edit)="modalAddEdit({ id: item.id, title: 'Editar Registro' })"
@@ -78,7 +66,7 @@
             placement="top"
             class="btn btn-sm me-1 btn-outline-success"
           >
-            <i class="fa-duotone fa-database"></i>
+            <i class="fa-regular fa-database"></i>
           </a>
           <a
             [routerLink]="['/mantenimiento/bitacora/grafico', item.id]"
@@ -87,13 +75,15 @@
             placement="top"
             class="btn btn-sm me-1 btn-outline-secondary"
           >
-            <i class="fa-duotone fa-chart-line"> </i>
+            <i class="fa-regular fa-chart-line"> </i>
           </a>
           <custom-button-export-excel
             (clicked)="exportExcel(item.id)"
           ></custom-button-export-excel>
         </div>
       </div>
+      }
     </div>
   </div>
+  }
 </div>

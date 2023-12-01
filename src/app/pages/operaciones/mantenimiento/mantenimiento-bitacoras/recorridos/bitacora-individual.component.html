@@ -1,8 +1,9 @@
+@if (data) {
 <p-table
-  *ngIf="data"
   [(selection)]="data"
   #dt
   styleClass="custom-table"
+  [tableStyle]="{ 'min-width': '50rem' }"
   [value]="data"
   [rows]="50"
   [paginator]="true"
@@ -27,7 +28,6 @@
       </div>
     </div>
   </ng-template>
-
   <ng-template pTemplate="body" let-item>
     <div class="card" style="background-color: palegoldenrod">
       <div class="card-header">
@@ -36,7 +36,6 @@
           {{ item.fechaRegistro | date : "shortTime" }}
         </p>
       </div>
-
       <div class="card-body">
         <p class="card-text font-italic text-justify">
           {{ item.descripcion }}
@@ -57,3 +56,4 @@
     </div>
   </ng-template>
 </p-table>
+}

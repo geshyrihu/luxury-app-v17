@@ -24,8 +24,8 @@ import ComponentsModule from 'src/app/shared/components.module';
     FormsModule,
     NgbModule,
     TableModule,
-    MultiSelectModule,
-  ],
+    MultiSelectModule
+],
   providers: [DialogService, MessageService, CustomToastService],
 })
 export default class ResultadoGeneralDashboardComponent

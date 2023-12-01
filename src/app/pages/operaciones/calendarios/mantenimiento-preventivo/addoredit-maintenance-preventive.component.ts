@@ -22,9 +22,8 @@ import {
   DataService,
   SelectItemService,
 } from 'src/app/core/services/common-services';
-import { EnumService } from 'src/app/core/services/enum-service';
+import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import ComponentsModule from 'src/app/shared/components.module';
-import CustomInputModule from 'src/app/shared/custom-input-form/custom-input.module';
 
 @Component({
   selector: 'app-addoredit-maintenance-preventive',
@@ -50,7 +49,6 @@ export default class AddoreditMaintenancePreventiveComponent
   public selectItemService = inject(SelectItemService);
   public customerIdService = inject(CustomerIdService);
   private customToastService = inject(CustomToastService);
-  private enumService = inject(EnumService);
 
   public Editor = ClassicEditor;
 
@@ -165,7 +163,7 @@ export default class AddoreditMaintenancePreventiveComponent
       price: ['', Validators.required],
       providerId: ['', Validators.required],
       recurrence: ['', Validators.required],
-      typeMaintance: [0, Validators.required],
+      typeMaintance: [, Validators.required],
       customerId: [this.customerIdService.getcustomerId()],
       employeeId: [this.authService.userTokenDto.infoEmployeeDto.employeeId],
       cuentaId: ['', Validators.required],

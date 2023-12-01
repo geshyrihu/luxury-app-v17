@@ -10,16 +10,16 @@
       </div>
       <div class="col">
         <div style="height: 3px; background-color: black"></div>
-
         <p>Reporte del {{ inicio | date }} al {{ final | date }}</p>
       </div>
     </div>
-    <div *ngFor="let area of data.reportes">
+    @for (area of data.reportes; track area) {
+    <div>
       <h5 class="h2 font-bold">
         {{ area.responsable }}
       </h5>
-
-      <div class="card" *ngFor="let item of area.items">
+      @for (item of area.items; track item) {
+      <div class="card">
         <div class="card-body">
           <p class="text-justify font-size-20">
             {{ item.activity }}
@@ -44,10 +44,11 @@
           </div>
         </div>
       </div>
+      }
     </div>
+    }
   </div>
 </div>
-
 <style>
   /* Estilos para el modo de impresión */
   @media print {
@@ -69,7 +70,6 @@
       height: auto;
     }
   }
-
   .card {
     background-color: rgba(200, 200, 200, 0.1); /* Color gris muy tenue */
   }

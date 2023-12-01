@@ -1,12 +1,13 @@
 <p-toast position="top-left" [baseZIndex]="99999"></p-toast>
-
 <div class="row">
   <div class="col-12">
-    <div class="card" *ngFor="let item of data">
+    @for (item of data; track item) {
+    <div class="card">
       <div class="card-header">
         <span class="p-2 badge rounded-pill bg-primary">{{ item.fecha }}</span>
       </div>
-      <div class="card-body" *ngFor="let reports of item.areaResponsable">
+      @for (reports of item.areaResponsable; track reports) {
+      <div class="card-body">
         <ngb-alert
           type="info"
           [dismissible]="false"
@@ -15,7 +16,8 @@
           <i class="mdi mdi-alert-circle-outline label-icon"></i>
           {{ reports.area }}
         </ngb-alert>
-        <div class="row" *ngFor="let items of reports.responsable">
+        @for (items of reports.responsable; track items) {
+        <div class="row">
           <div class="col-sm-3 order-2 order-sm-1">
             <div class="d-flex align-items-start mt-3 mt-sm-0">
               <div class="flex-shrink-0">
@@ -37,7 +39,8 @@
           </div>
           <div class="col-sm-9 order-1 order-sm-2">
             <ol>
-              <li *ngFor="let trabajo of items.trabajos">
+              @for (trabajo of items.trabajos; track trabajo) {
+              <li>
                 <div class="row">
                   <div class="col-sm-8">
                     <span>{{ trabajo.actividad }} </span>
@@ -46,7 +49,7 @@
                   <div class="col-sm-2">
                     <span>
                       <i
-                        class="fa-duotone fa-clock text-success"
+                        class="fa-regular fa-clock text-success"
                         aria-hidden="true"
                       ></i>
                       {{ trabajo.fechaInicio }}
@@ -54,13 +57,12 @@
                     <br />
                     <span>
                       <i
-                        class="fa-duotone fa-clock text-danger"
+                        class="fa-regular fa-clock text-danger"
                         aria-hidden="true"
                       ></i>
                       {{ trabajo.fechaLimite }}
                     </span>
                   </div>
-
                   <div class="col-sm-2">
                     <div class="d-flex justify-content-center">
                       <custom-button-edit
@@ -71,26 +73,29 @@
                           })
                         "
                       ></custom-button-edit>
+                      @if (authService.onValidateRoles(['Mantenimiento'])) {
                       <custom-button-delete
-                        *ngIf="authService.onValidateRoles(['Mantenimiento'])"
                         (OnConfirm)="onDelete(trabajo.idItem)"
                       ></custom-button-delete>
+                      }
                     </div>
                   </div>
                 </div>
                 <hr />
               </li>
+              }
             </ol>
           </div>
         </div>
+        }
       </div>
+      }
       <!-- end card body -->
     </div>
+    }
     <!-- end card -->
-
     <!-- end tab content -->
   </div>
   <!-- end col -->
-
   <!-- end col -->
 </div>

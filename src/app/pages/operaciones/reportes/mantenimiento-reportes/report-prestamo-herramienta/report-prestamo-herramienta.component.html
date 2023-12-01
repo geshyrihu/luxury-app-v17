@@ -1,5 +1,9 @@
 <app-pagetitlereport title="'PRESATMO DE HERRAMIENTA'"></app-pagetitlereport>
-<p-table [value]="data" styleClass="custom-table">
+<p-table
+  [value]="data"
+  styleClass="custom-table"
+  [tableStyle]="{ 'min-width': '50rem' }"
+>
   <ng-template pTemplate="header">
     <tr>
       <th style="width: 15%">SALIDA</th>
@@ -14,7 +18,8 @@
         <p class="card-title">{{ item.producto }}</p>
       </td>
     </tr>
-    <tr class="breakPage" *ngFor="let registro of item.registros">
+    @for (registro of item.registros; track registro) {
+    <tr class="breakPage">
       <td>
         <p class="small">{{ registro.fechaSalida }}</p>
       </td>
@@ -28,5 +33,6 @@
         <p class="small">{{ registro.observaciones }}</p>
       </td>
     </tr>
+    }
   </ng-template>
 </p-table>

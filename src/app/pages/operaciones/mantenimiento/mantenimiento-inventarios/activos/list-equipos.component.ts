@@ -1,15 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
-// import { EInventoryCategory } from 'src/app/enums/categoria-inventario.enum';
-import AddoreditMaintenancePreventiveComponent from 'src/app/pages/operaciones/calendarios/mantenimiento-preventivo/addoredit-maintenance-preventive.component';
 import { CurrencyMexicoPipe } from 'src/app/core/pipes/currencyMexico.pipe';
-// import { EMonthPipe } from 'src/app/pipes/month.pipe';
-// import { ERecurrencePipe } from 'src/app/pipes/recurrence.pipe';
 import { SanitizeHtmlPipe } from 'src/app/core/pipes/sanitize-html.pipe';
 import {
   AuthService,
@@ -17,6 +14,7 @@ import {
   CustomerIdService,
   DataService,
 } from 'src/app/core/services/common-services';
+import AddoreditMaintenancePreventiveComponent from 'src/app/pages/operaciones/calendarios/mantenimiento-preventivo/addoredit-maintenance-preventive.component';
 import ComponentsModule from 'src/app/shared/components.module';
 import PrimeNgModule from 'src/app/shared/prime-ng.module';
 import { environment } from 'src/environments/environment';
@@ -35,10 +33,9 @@ import ServiceHistoryMachineryComponent from './service-history-machinery/servic
     ComponentsModule,
     CommonModule,
     PrimeNgModule,
-    // ERecurrencePipe,
-    // EMonthPipe,
     CurrencyMexicoPipe,
     SanitizeHtmlPipe,
+    NgbTooltipModule,
   ],
   providers: [
     DialogService,
@@ -76,17 +73,13 @@ export default class ListEquiposComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.inventoryCategoryId = this.rutaActiva.snapshot.params.categoria;
-    console.log(
-      '🚀 ~ this.rutaActiva.snapshot.params.categoria:',
-      this.rutaActiva.snapshot.params.categoria
-    );
     this.base_urlImg = this.urlImg(this.customerId);
     this.customerId$ = this.customerIdService.getCustomerId$();
     this.customerId = this.customerIdService.getcustomerId();
     this.onLoadData();
     this.subscriber = this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
-      .subscribe((event) => {
+      .subscribe((_) => {
         this.inventoryCategoryId = this.rutaActiva.snapshot.params.categoria;
 
         if (this.inventoryCategoryId == 3 || this.inventoryCategoryId == 4) {

@@ -1,3 +1,4 @@
+import {} from '@angular/common';
 import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { CustomerIdService } from 'src/app/core/services/common-services';
@@ -9,6 +10,7 @@ import { environment } from 'src/environments/environment';
   selector: 'app-haeder-customer',
   templateUrl: './haeder-customer.component.html',
   standalone: true,
+  imports: [],
 })
 export default class HaederCustomerComponent implements OnInit, OnDestroy {
   public dataService = inject(DataService);

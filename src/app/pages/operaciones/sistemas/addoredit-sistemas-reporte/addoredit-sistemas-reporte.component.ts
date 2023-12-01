@@ -20,8 +20,8 @@ import {
   SelectItemService,
 } from 'src/app/core/services/common-services';
 import { EnumService } from 'src/app/core/services/enum-service';
+import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import ComponentsModule from 'src/app/shared/components.module';
-import CustomInputModule from 'src/app/shared/custom-input-form/custom-input.module';
 import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-addoredit-sistemas-reporte',

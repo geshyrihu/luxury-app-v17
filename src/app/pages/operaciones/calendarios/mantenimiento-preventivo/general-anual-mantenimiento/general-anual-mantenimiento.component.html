@@ -11,9 +11,11 @@
         id="formrow-firstname-input"
       >
         <option value="">Todos</option>
-        <option [value]="item.value" *ngFor="let item of cb_providers">
+        @for (item of cb_providers; track item) {
+        <option [value]="item.value">
           {{ item.label }}
         </option>
+        }
       </select>
     </div>
   </div>
@@ -25,12 +27,14 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let item of data">
+    @for (item of data; track item) {
+    <tr>
       <td>
         <ngb-alert [dismissible]="false" type="info">
           {{ item.mes }}
         </ngb-alert>
-        <div class="card" *ngFor="let servicio of item.servicios">
+        @for (servicio of item.servicios; track servicio) {
+        <div class="card">
           <div class="card-body">
             <div class="row">
               <div class="col-12">
@@ -74,7 +78,9 @@
             </div>
           </div>
         </div>
+        }
       </td>
     </tr>
+    }
   </tbody>
 </table>

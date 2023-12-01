@@ -1,3 +1,4 @@
+import {} from '@angular/common';
 import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { CustomerIdService } from 'src/app/core/services/common-services';
@@ -9,6 +10,7 @@ import { environment } from 'src/environments/environment';
   selector: 'app-report-header',
   templateUrl: './report-header.component.html',
   standalone: true,
+  imports: [],
 })
 export default class ReportHeaderComponent implements OnInit, OnDestroy {
   public dataService = inject(DataService);

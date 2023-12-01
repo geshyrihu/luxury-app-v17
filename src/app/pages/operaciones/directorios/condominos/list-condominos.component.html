@@ -1,8 +1,8 @@
 <p-toast position="top-left" [baseZIndex]="99999"></p-toast>
-
 <p-table
   #dt
   styleClass="custom-table"
+  [tableStyle]="{ 'min-width': '50rem' }"
   [value]="data"
   [globalFilterFields]="[
     'cellPhone',
@@ -28,7 +28,6 @@
       <div class="col-sm-4"></div>
     </div>
   </ng-template>
-
   <ng-template pTemplate="header">
     <tr>
       <th scope="col" style="width: 10%" pSortableColumn="directoryCondominium">
@@ -72,20 +71,10 @@
         Enviar Info
         <p-sortIcon field="mail"></p-sortIcon>
       </th>
-      <th
-        *ngIf="
-          authService.onValidateRoles([
-            'Asistente',
-            'Residente',
-            'SuperUsuario'
-          ])
-        "
-        scope="col"
-        style="width: 5%"
-        class="hide-print-mode"
-      >
-        Opciones
-      </th>
+      @if ( authService.onValidateRoles([ 'Asistente', 'Residente',
+      'SuperUsuario' ]) ) {
+      <th scope="col" style="width: 5%" class="hide-print-mode">Opciones</th>
+      }
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-item>
@@ -112,23 +101,15 @@
         {{ item.mail }}
       </td>
       <td class="hide-print-mode">
-        <i
-          *ngIf="item.enviarMails"
-          class="text-success fa-duotone fa-check-double"
-        ></i>
-        <i *ngIf="!item.enviarMails" class="text-danger fa-duotone fa-x"></i>
+        @if (item.enviarMails) {
+        <i class="text-success fa-regular fa-check-double"></i>
+        } @if (!item.enviarMails) {
+        <i class="text-danger fa-regular fa-x"></i>
+        }
       </td>
-
-      <td
-        class="p-column-title hide-print-mode"
-        *ngIf="
-          authService.onValidateRoles([
-            'Asistente',
-            'Residente',
-            'SuperUsuario'
-          ])
-        "
-      >
+      @if ( authService.onValidateRoles([ 'Asistente', 'Residente',
+      'SuperUsuario' ]) ) {
+      <td class="p-column-title hide-print-mode">
         <div class="d-flex justify-content-center">
           <!-- Componente editar registro -->
           <custom-button-edit
@@ -144,9 +125,9 @@
           <!-- Componente eliminar registro -->
         </div>
       </td>
+      }
     </tr>
   </ng-template>
-
   <ng-template pTemplate="paginatorleft">
     <div class="p-d-flex p-ai-center p-jc-between">
       En total hay

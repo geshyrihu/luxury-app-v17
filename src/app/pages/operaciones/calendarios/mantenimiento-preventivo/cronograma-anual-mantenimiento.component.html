@@ -1,4 +1,5 @@
-<div class="card" *ngIf="cronogramaAnual">
+@if (cronogramaAnual) {
+<div class="card">
   <p-table
     [autoLayout]="true"
     [globalFilterFields]="['sistema', 'nameMachinery']"
@@ -8,6 +9,7 @@
     rowGroupMode="subheader"
     sortMode="single"
     styleClass="custom-table"
+    [tableStyle]="{ 'min-width': '50rem' }"
   >
     <ng-template pTemplate="header">
       <tr>
@@ -37,12 +39,11 @@
               [customClass]="'btn-soft-success waves-effect waves-light '"
               ngbTooltip="Descargar hoja de datos"
               placement="top"
-              icon="fa-duotone fa-file-excel font-size-16 align-middle"
+              icon="fa-regular fa-file-excel font-size-16 align-middle"
               (clicked)="exportExcel()"
             ></custom-button>
-
+            @for (item of filtroEquipos; track item) {
             <custom-button
-              *ngFor="let item of filtroEquipos"
               [customClass]="'btn-soft-secondary waves-effect waves-light '"
               [ngbTooltip]="'Ver ' + item.nombre | titlecase"
               [customNgClassIcon]="{
@@ -52,8 +53,8 @@
               icon="fas {{ item.icon }}"
               (clicked)="clickButton(item)"
             ></custom-button>
+            }
           </div>
-
           <input
             class="form-control ms-auto w-25"
             type="text"
@@ -74,7 +75,6 @@
         </td>
       </tr>
     </ng-template>
-
     <ng-template pTemplate="body" let-customer let-rowIndex="rowIndex">
       <tr>
         <td>
@@ -82,16 +82,22 @@
             {{ customer.nameMachinery }}
           </p>
         </td>
-        <td *ngFor="let item of meses" class="text-center">
-          <div *ngFor="let servicio of customer.maintenanceCalendars">
+        @for (item of meses; track item) {
+        <td class="text-center">
+          @for (servicio of customer.maintenanceCalendars; track servicio) {
+          <div>
+            @if (item == servicio.month) {
             <span
               (click)="onModalItem(servicio.id)"
-              *ngIf="item == servicio.month"
-              class="fa-duotone fa-circle text-secondary pointer"
+              class="fa-regular fa-circle text-secondary pointer"
             ></span>
+            }
           </div>
+          }
         </td>
+        }
       </tr>
     </ng-template>
   </p-table>
 </div>
+}

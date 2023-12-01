@@ -34,8 +34,8 @@ import ListadoCondominosComponent from 'src/app/shared/listado-condominos/listad
     ReactiveFormsModule,
     FileUploadModule,
     FormsModule,
-    CKEditorModule,
-  ],
+    CKEditorModule
+],
   providers: [DialogService, MessageService, CustomToastService],
 })
 export default class EnviarComunicadoComponent {

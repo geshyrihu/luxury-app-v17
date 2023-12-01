@@ -6,12 +6,11 @@
         <div class="mb-2">
           <select [(ngModel)]="comiteparticipante" class="form-select">
             <option value="">Seleecion una opción</option>
-            <option
-              [value]="item.value"
-              *ngFor="let item of cb_ParticipantComite"
-            >
+            @for (item of cb_ParticipantComite; track item) {
+            <option [value]="item.value">
               {{ item.label }}
             </option>
+            }
           </select>
         </div>
       </div>
@@ -24,22 +23,20 @@
           class="btn btn-info float-end"
           [disabled]="comiteparticipante == ''"
         >
-          <i class="fa-duotone fa-check-double"></i>
+          <i class="fa-regular fa-check-double"></i>
         </button>
       </div>
     </div>
   </small>
-  <small
-    *ngFor="let item of listaParticipantesComite"
-    class="list-group-item list-group-item-action"
-  >
+  @for (item of listaParticipantesComite; track item) {
+  <small class="list-group-item list-group-item-action">
     {{ item.cargo }}-{{ item.nombre }}
-
     <span
       (click)="onDelete(item.id)"
       ngbTooltip="Eliminar"
       placement="top"
-      class="fa-duotone fa-trash-can text-danger float-end pointer"
+      class="fa-regular fa-trash-can text-danger float-end pointer"
     ></span>
   </small>
+  }
 </div>

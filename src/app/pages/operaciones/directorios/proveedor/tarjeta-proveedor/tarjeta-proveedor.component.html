@@ -1,4 +1,5 @@
-<div class="card" *ngIf="model">
+@if (model) {
+<div class="card">
   <div class="card-body">
     <div class="row">
       <div class="col-12">
@@ -42,7 +43,6 @@
                 <small> {{ model.rfc }}</small>
               </td>
             </tr>
-
             <tr>
               <td style="width: 35%"><small> Página web</small></td>
               <td style="width: 65%">
@@ -52,12 +52,11 @@
             <tr>
               <td style="width: 35%"><small> Alcances</small></td>
               <td style="width: 65%">
-                <span *ngIf="model.sales" class="badge bg-success p-2"
-                  >Ventas</span
-                >
-                <span *ngIf="model.repair" class="badge bg-success p-2"
-                  >Repaciones</span
-                >
+                @if (model.sales) {
+                <span class="badge bg-success p-2">Ventas</span>
+                } @if (model.repair) {
+                <span class="badge bg-success p-2">Repaciones</span>
+                }
               </td>
             </tr>
           </table>
@@ -118,7 +117,6 @@
           </table>
         </div>
       </div>
-
       <div class="col-sm-4">
         <div class="card-title mb-3">Datos Bancarios</div>
         <div class="table-responsive">
@@ -153,6 +151,7 @@
     </div>
   </div>
 </div>
+}
 <style>
   table {
     color: black !important;

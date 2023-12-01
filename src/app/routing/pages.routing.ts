@@ -53,6 +53,11 @@ export default [
     canActivate: [AuthGuard],
   },
   {
+    path: 'menu',
+    loadChildren: () => import('./menu-movil.routing'),
+    canActivate: [AuthGuard],
+  },
+  {
     path: 'directorio',
     loadChildren: () => import('./directorio.routing'),
   },

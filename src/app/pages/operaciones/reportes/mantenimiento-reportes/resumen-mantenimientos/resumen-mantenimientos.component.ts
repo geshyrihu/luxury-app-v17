@@ -19,8 +19,8 @@ import ComponentsModule from 'src/app/shared/components.module';
     PagetitleReportComponent,
     TableModule,
     CommonModule,
-    ComponentsModule,
-  ],
+    ComponentsModule
+],
   providers: [CustomToastService, MessageService],
 })
 export default class ResumenMantenimientosComponent

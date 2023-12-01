@@ -1,8 +1,9 @@
+@if (data) {
 <p-table
-  *ngIf="data"
   [(selection)]="data"
   #dt
   styleClass="custom-table"
+  [tableStyle]="{ 'min-width': '50rem' }"
   [value]="data"
   [rows]="30"
   [paginator]="true"
@@ -61,3 +62,4 @@
     </tr>
   </ng-template>
 </p-table>
+}

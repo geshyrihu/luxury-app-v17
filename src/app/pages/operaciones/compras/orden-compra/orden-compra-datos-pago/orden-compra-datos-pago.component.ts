@@ -14,8 +14,8 @@ import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { SelectItemService } from 'src/app/core/services/select-item.service';
+import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import ComponentsModule from 'src/app/shared/components.module';
-import CustomInputModule from 'src/app/shared/custom-input-form/custom-input.module';
 
 @Component({
   selector: 'app-orden-compra-datos-pago',
@@ -90,7 +90,6 @@ export default class OrdenCompraDatosPagoComponent
       .subscribe({
         next: (resp: any) => {
           this.form.patchValue(resp.body);
-          console.log('🚀 ~ datos de pago:', resp.body);
         },
         error: (err) => {
           this.customToastService.onShowError();

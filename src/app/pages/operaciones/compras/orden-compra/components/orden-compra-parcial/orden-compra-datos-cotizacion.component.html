@@ -16,8 +16,8 @@
         {{ ordenCompra.folio }}
       </td>
     </tr>
-
-    <tr *ngIf="ordenCompra.folioSolicitudCompra">
+    @if (ordenCompra.folioSolicitudCompra) {
+    <tr>
       <td style="width: 40%">Solicitud Compra</td>
       <td style="width: 60%" class="pointer">
         <a
@@ -30,7 +30,7 @@
         </a>
       </td>
     </tr>
-
+    }
     <tr>
       <td style="width: 40%">Fecha de Solicitud</td>
       <td style="width: 70%">
@@ -52,14 +52,11 @@
     <tr>
       <td style="width: 40%">LuxuryCloud</td>
       <td style="width: 60%">
-        <a
-          [href]="ordenCompra.urlFile"
-          target="_blank"
-          *ngIf="ordenCompra.urlFile"
-          class="pointer"
-        >
-          <i class="text-dark fa-duotone fa-cloud" aria-hidden="true"></i>
+        @if (ordenCompra.urlFile) {
+        <a [href]="ordenCompra.urlFile" target="_blank" class="pointer">
+          <i class="text-dark fa-regular fa-cloud" aria-hidden="true"></i>
         </a>
+        }
       </td>
     </tr>
   </tbody>

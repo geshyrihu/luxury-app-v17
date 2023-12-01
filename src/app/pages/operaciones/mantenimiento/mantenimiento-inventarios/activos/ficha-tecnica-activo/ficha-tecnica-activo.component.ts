@@ -14,10 +14,7 @@ import { environment } from 'src/environments/environment';
   selector: 'app-ficha-tecnica-activo',
   templateUrl: './ficha-tecnica-activo.component.html',
   standalone: true,
-  imports: [
-    NgbAlert,
-    CommonModule,
-  ],
+  imports: [NgbAlert, CommonModule],
   providers: [CustomToastService],
 })
 export default class FichaTecnicaActivoComponent implements OnInit, OnDestroy {

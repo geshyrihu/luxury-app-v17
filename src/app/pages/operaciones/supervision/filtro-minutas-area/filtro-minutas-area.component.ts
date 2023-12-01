@@ -28,8 +28,8 @@ import ComponentsModule from 'src/app/shared/components.module'
     TableModule,
     EAreaMinutasDetallesPipe,
     SanitizeHtmlPipe,
-    EStatusPipe,
-  ],
+    EStatusPipe
+],
   providers: [CustomToastService, MessageService],
 })
 export default class FiltroMinutasAreaComponent implements OnInit, OnDestroy {

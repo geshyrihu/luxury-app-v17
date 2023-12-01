@@ -16,14 +16,14 @@ export class SidebarService {
       visible: this.authService.onValidateRoles(['SuperUsuario']),
       label: 'Configuración',
       icon: 'fa-thin fa-gear',
-      link: 'configuracion/panel',
+      routerLink: '/configuracion/panel',
       name: 'Configuración',
     },
     {
       visible: this.authService.onValidateRoles(['Residente']),
       label: 'Accesos',
       icon: 'fa-thin fa-key',
-      link: 'accounts/cliente',
+      routerLink: '/accounts/cliente',
       name: 'Accesos',
     },
     {
@@ -38,18 +38,18 @@ export class SidebarService {
       ]),
       label: 'Mi Edificio',
       icon: 'fa-thin fa-building',
-      link: 'operaciones/mi-edificio',
+      routerLink: '/operaciones/mi-edificio',
       name: 'Mi edificio',
     },
     {
       visible: this.authService.onValidateRoles(['Legal', 'SuperUsuario']),
       label: '1.-Legal',
       icon: 'fa-thin fa-gavel',
-      subItems: [
+      items: [
         {
           visible: this.authService.onValidateRoles(['Legal', 'SuperUsuario']),
           label: 'Minutas',
-          link: 'contabilidad/pendientes-minutas-legal',
+          routerLink: '/contabilidad/pendientes-minutas-legal',
           name: 'Legal-Minutas',
         },
       ],
@@ -62,7 +62,7 @@ export class SidebarService {
       ]),
       label: '2.-Contabilidad',
       icon: 'fa-thin fa-hand-holding-dollar',
-      subItems: [
+      items: [
         {
           visible: this.authService.onValidateRoles([
             'Contador',
@@ -70,7 +70,7 @@ export class SidebarService {
             'SupervisorContable',
           ]),
           label: 'Presentaciones',
-          link: 'operaciones/presentacion-junta-comite/presentaciones',
+          routerLink: '/operaciones/presentacion-junta-comite/presentaciones',
           name: 'Contabilidad-Presentaciones',
         },
         {
@@ -79,7 +79,7 @@ export class SidebarService {
             'SuperUsuario',
           ]),
           label: 'Minutas',
-          link: 'contabilidad/pendientes-minutas',
+          routerLink: '/contabilidad/pendientes-minutas',
           name: 'Contabilidad-Pendientes-Minutas',
         },
         {
@@ -88,7 +88,7 @@ export class SidebarService {
             'SuperUsuario',
           ]),
           label: 'Presupuesto',
-          link: 'operaciones/compras/cedula-cliente',
+          routerLink: '/operaciones/compras/cedula-cliente',
           name: 'Contabilidad-Presupuesto',
         },
         {
@@ -97,30 +97,30 @@ export class SidebarService {
             'SuperUsuario',
           ]),
           label: 'Reporte Envio Financieros',
-          link: 'contabilidad/reporte-envio-financieros',
+          routerLink: '/contabilidad/reporte-envio-financieros',
           name: 'Reporte-Envio-Financieros',
         },
 
         {
           visible: this.authService.onValidateRoles(['SuperUsuario']),
           label: 'Catalogo de Cuentas',
-          subItems: [
+          items: [
             {
               visible: this.authService.onValidateRoles(['SuperUsuario']),
               label: 'Cuentas 1er Nivel',
-              link: '/contabilidad/catalogo-cuentas-primer-nivel',
+              routerLink: '//contabilidad/catalogo-cuentas-primer-nivel',
               name: 'Cuentas 1er Nivel',
             },
             {
               visible: this.authService.onValidateRoles(['SuperUsuario']),
               label: 'Cuentas 2do Nivel',
-              link: '/contabilidad/catalogo-cuentas-segundo-nivel',
+              routerLink: '//contabilidad/catalogo-cuentas-segundo-nivel',
               name: 'Cuentas 2do Nivel',
             },
             {
               visible: this.authService.onValidateRoles(['SuperUsuario']),
               label: 'Cuentas',
-              link: '/contabilidad/catalogo-cuentas',
+              routerLink: '//contabilidad/catalogo-cuentas',
               name: 'Cuentas',
             },
           ],
@@ -136,7 +136,7 @@ export class SidebarService {
       ]),
       label: '3.-Op-Supervisión',
       icon: 'fa-thin fa-user-tie',
-      subItems: [
+      items: [
         {
           visible: this.authService.onValidateRoles([
             'Direccion',
@@ -145,7 +145,7 @@ export class SidebarService {
             'SupervisionOperativa',
           ]),
           label: 'Bitácora Diaria',
-          link: '/supervision/bitacora-diaria',
+          routerLink: '//supervision/bitacora-diaria',
           name: 'Supervisión-Bitacora Diaria',
         },
         {
@@ -156,7 +156,7 @@ export class SidebarService {
             'SupervisionOperativa',
           ]),
           label: 'Resultado General',
-          link: '/supervision/resultado-general-dashboard',
+          routerLink: '//supervision/resultado-general-dashboard',
           name: 'Supervisión-Resultado General',
         },
         {
@@ -167,7 +167,7 @@ export class SidebarService {
             'SupervisionOperativa',
           ]),
           label: 'Reporte Presentaciones',
-          link: '/supervision/presentaciones-juntas-comite',
+          routerLink: '//supervision/presentaciones-juntas-comite',
           name: 'Supervisión-Reporte presentaciónes juntas de comité',
         },
         {
@@ -178,7 +178,7 @@ export class SidebarService {
             'SupervisionOperativa',
           ]),
           label: 'Reporte Minutas',
-          link: '/supervision/minutas-resumen',
+          routerLink: '//supervision/minutas-resumen',
           name: 'Supervisión-Reporte minutas',
         },
         {
@@ -189,7 +189,7 @@ export class SidebarService {
             'SupervisionOperativa',
           ]),
           label: 'Reporte Ticket',
-          link: '/supervision/reporte-tickets',
+          routerLink: '//supervision/reporte-tickets',
           name: 'Supervisión-Reporte tickets',
         },
         {
@@ -198,14 +198,14 @@ export class SidebarService {
             'SuperUsuario',
           ]),
           label: 'Entrega Recepción',
-          subItems: [
+          items: [
             {
               visible: this.authService.onValidateRoles([
                 'GerenteMantenimiento',
                 'SuperUsuario',
               ]),
               label: 'General',
-              link: 'entrega-recepcion/general',
+              routerLink: '/entrega-recepcion/general',
               name: 'Supervisión-Entrega recepción',
             },
             {
@@ -214,7 +214,7 @@ export class SidebarService {
                 'SuperUsuario',
               ]),
               label: 'Equipos',
-              link: 'operaciones/entrega-recepcion/equipos',
+              routerLink: '/operaciones/entrega-recepcion/equipos',
               name: 'Supervisión-Entrega recepción-Equipos',
             },
             {
@@ -223,7 +223,7 @@ export class SidebarService {
                 'SuperUsuario',
               ]),
               label: 'Instalaciones',
-              link: 'operaciones/entrega-recepcion/instalaciones',
+              routerLink: '/operaciones/entrega-recepcion/instalaciones',
               name: 'Supervisión-Entrega recepción-Instalaciones',
             },
             {
@@ -232,7 +232,7 @@ export class SidebarService {
                 'SuperUsuario',
               ]),
               label: 'Extintores',
-              link: 'operaciones/entrega-recepcion/hidrantes',
+              routerLink: '/operaciones/entrega-recepcion/hidrantes',
               name: 'Supervisión-Entrega recepción-Hidrantes',
             },
             {
@@ -241,7 +241,7 @@ export class SidebarService {
                 'SuperUsuario',
               ]),
               label: 'Llaves',
-              link: 'operaciones/entrega-recepcion/llaves',
+              routerLink: '/operaciones/entrega-recepcion/llaves',
               name: 'Supervisión-Entrega recepción-Llaves',
             },
             {
@@ -250,7 +250,7 @@ export class SidebarService {
                 'SuperUsuario',
               ]),
               label: 'Herramientas',
-              link: 'operaciones/entrega-recepcion/herramientas',
+              routerLink: '/operaciones/entrega-recepcion/herramientas',
               name: 'Supervisión-Entrega recepción-Herramientas',
             },
             {
@@ -259,7 +259,7 @@ export class SidebarService {
                 'SuperUsuario',
               ]),
               label: 'Mantenimientos',
-              link: 'operaciones/entrega-recepcion/mantenimientos',
+              routerLink: '/operaciones/entrega-recepcion/mantenimientos',
               name: 'Supervisión-Entrega recepción-Mantenimientos',
             },
             {
@@ -268,7 +268,8 @@ export class SidebarService {
                 'SuperUsuario',
               ]),
               label: 'Pendientes',
-              link: 'operaciones/entrega-recepcion/mantenimientos-pendientes',
+              routerLink:
+                'operaciones/entrega-recepcion/mantenimientos-pendientes',
               name: 'Supervisión-Entrega recepción-Pendientes',
             },
             {
@@ -277,7 +278,7 @@ export class SidebarService {
                 'SuperUsuario',
               ]),
               label: 'Organigrama',
-              link: 'operaciones/entrega-recepcion/organigrama',
+              routerLink: '/operaciones/entrega-recepcion/organigrama',
               name: 'Supervisión-Entrega recepción-Organigrama',
             },
             {
@@ -286,7 +287,7 @@ export class SidebarService {
                 'SuperUsuario',
               ]),
               label: 'Planos',
-              link: 'operaciones/entrega-recepcion/planos',
+              routerLink: '/operaciones/entrega-recepcion/planos',
               name: 'Supervisión-Entrega recepción-Planos',
             },
             {
@@ -295,7 +296,7 @@ export class SidebarService {
                 'SuperUsuario',
               ]),
               label: 'Insumos',
-              link: 'operaciones/entrega-recepcion/insumos',
+              routerLink: '/operaciones/entrega-recepcion/insumos',
               name: 'Supervisión-Entrega recepción-Insumos',
             },
           ],
@@ -306,14 +307,14 @@ export class SidebarService {
       visible: this.authService.onValidateRoles(['Sistemas', 'SuperUsuario']),
       label: '4.-Sistemas',
       icon: 'fa-thin fa-laptop-code',
-      subItems: [
+      items: [
         {
           visible: this.authService.onValidateRoles([
             'Sistemas',
             'SuperUsuario',
           ]),
           label: 'Tickets',
-          link: 'sistemas/reportes',
+          routerLink: '/sistemas/reportes',
           name: 'Sistemas-Tickets',
         },
       ],
@@ -331,7 +332,7 @@ export class SidebarService {
       ]),
       label: '5.1-Operaciones',
       icon: 'fa-thin fa-person-chalkboard',
-      subItems: [
+      items: [
         {
           visible: this.authService.onValidateRoles([
             'Asistente',
@@ -343,7 +344,7 @@ export class SidebarService {
             'SupervisionOperativa',
           ]),
           label: 'Resumen',
-          link: 'inicio/dashboard',
+          routerLink: '/inicio/dashboard',
           name: 'Operaciones-Pendientes',
         },
         {
@@ -355,7 +356,7 @@ export class SidebarService {
             'SupervisionOperativa',
           ]),
           label: 'Presentacion JC',
-          link: 'operaciones/presentacion-junta-comite/presentaciones',
+          routerLink: '/operaciones/presentacion-junta-comite/presentaciones',
           name: 'Operaciones-Presentaciones juntas de comité',
         },
         {
@@ -367,7 +368,7 @@ export class SidebarService {
             'SupervisionOperativa',
           ]),
           label: 'Minutas',
-          link: 'operaciones/junta-comite/minutas',
+          routerLink: '/operaciones/junta-comite/minutas',
           name: 'Operaciones-Minuta',
         },
         {
@@ -379,14 +380,14 @@ export class SidebarService {
             'SuperUsuario',
           ]),
           label: 'Mtto Preventivo',
-          link: 'reporte/mantenimiento-preventivo',
+          routerLink: '/reporte/mantenimiento-preventivo',
           name: 'Operaciones-Mantenimientos preventivos',
         },
         {
           visible: this.authService.onValidateRoles(['SuperUsuario']),
 
           label: 'Tickets V2',
-          link: 'operaciones/reporte/tiket-mantenimiento-v2',
+          routerLink: '/operaciones/reporte/tiket-mantenimiento-v2',
           name: 'Operaciones-Tickets-v2',
         },
         {
@@ -401,7 +402,7 @@ export class SidebarService {
           ]),
 
           label: 'Tickets',
-          link: 'operaciones/reporte/tiket-mantenimiento',
+          routerLink: '/operaciones/reporte/tiket-mantenimiento',
           name: 'Operaciones-Tickets',
         },
         {
@@ -415,7 +416,7 @@ export class SidebarService {
           ]),
 
           label: 'Reportes',
-          link: 'operaciones/reportes-mantenimiento/panel',
+          routerLink: '/operaciones/reportes-mantenimiento/panel',
           name: 'Operaciones-Reporte general mensual de manteniento',
         },
       ],
@@ -430,7 +431,7 @@ export class SidebarService {
       ]),
       label: '5.2-Compras',
       icon: 'fa-thin fa-bag-shopping',
-      subItems: [
+      items: [
         {
           visible: this.authService.onValidateRoles([
             'SuperUsuario',
@@ -442,7 +443,7 @@ export class SidebarService {
 
           // Se va a editar y se mostraran todos los presupuestos
           label: 'Ultimo Presupuesto',
-          link: 'operaciones/compras/cedula-cliente',
+          routerLink: '/operaciones/compras/cedula-cliente',
           name: 'Compras-Cedula presupuestal',
         },
         {
@@ -456,8 +457,8 @@ export class SidebarService {
 
           // Se va a editar y se mostraran todos los presupuestos
           label: 'Presupuestos',
-          // link: 'operaciones/compras/cedula-cliente',
-          link: 'operaciones/compras/presupuestos',
+          // url: 'operaciones/compras/cedula-cliente',
+          routerLink: '/operaciones/compras/presupuestos',
           name: 'Compras-Cedula presupuestal',
         },
         {
@@ -469,8 +470,8 @@ export class SidebarService {
 
           // Se va a editar y se mostraran todos los presupuestos
           label: 'Cuentas Mtto',
-          // link: 'operaciones/compras/cedula-cliente',
-          link: 'operaciones/compras/mtto-presupuesto',
+          // url: 'operaciones/compras/cedula-cliente',
+          routerLink: '/operaciones/compras/mtto-presupuesto',
           name: 'Compras-Cuentas Mtto',
         },
         {
@@ -482,7 +483,7 @@ export class SidebarService {
           ]),
 
           label: 'Productos y servicios',
-          link: 'mantenimiento/catalogo/productos-servicios',
+          routerLink: '/mantenimiento/catalogo/productos-servicios',
           name: 'Compras-Productos y servicios',
         },
         {
@@ -493,7 +494,7 @@ export class SidebarService {
             'Residente',
           ]),
           label: 'Solicitud compra',
-          link: 'operaciones/compras/solicitudes-compra',
+          routerLink: '/operaciones/compras/solicitudes-compra',
           name: 'Compras-Solicitudes de compra',
         },
         {
@@ -504,7 +505,7 @@ export class SidebarService {
             'Mantenimiento',
           ]),
           label: 'OC Fijos',
-          link: 'operaciones/compras/ordenes-compra-fijos',
+          routerLink: '/operaciones/compras/ordenes-compra-fijos',
           name: 'Compras-ordenes de compra gastos fijos',
         },
         {
@@ -515,7 +516,7 @@ export class SidebarService {
             'Mantenimiento',
           ]),
           label: 'OC Variables',
-          link: 'operaciones/compras/ordenes-compra',
+          routerLink: '/operaciones/compras/ordenes-compra',
           name: 'Compras-ordenes de compra gastos variables',
         },
         {
@@ -525,7 +526,7 @@ export class SidebarService {
             'SuperUsuario',
           ]),
           label: 'Catalogo OC Fijos',
-          link: 'operaciones/compras/catalogo-gastos-fijos',
+          routerLink: '/operaciones/compras/catalogo-gastos-fijos',
           name: 'Compras-catalogo ordenes de compra gastos fijos',
         },
         {
@@ -535,7 +536,7 @@ export class SidebarService {
             'SuperUsuario',
           ]),
           label: 'OC Pagadas',
-          link: 'operaciones/compras/pagadas',
+          routerLink: '/operaciones/compras/pagadas',
           name: 'Compras-ordenes de compra pagadas',
         },
       ],
@@ -550,7 +551,7 @@ export class SidebarService {
       ]),
       label: '5.3-Bitacoras Mtto',
       icon: 'fa-thin fa-book',
-      subItems: [
+      items: [
         {
           visible: this.authService.onValidateRoles([
             'SuperUsuario',
@@ -560,7 +561,7 @@ export class SidebarService {
             'Residente',
           ]),
           label: 'Recorrido diario',
-          link: 'mantenimiento/bitacora/recorrido',
+          routerLink: '/mantenimiento/bitacora/recorrido',
           name: 'Bitacoras-mantenimiento recorrido diario',
         },
         {
@@ -572,7 +573,7 @@ export class SidebarService {
             'SuperUsuario',
           ]),
           label: 'Consumos lecturas',
-          link: 'mantenimiento/bitacora/lista-medidor',
+          routerLink: '/mantenimiento/bitacora/lista-medidor',
           name: 'Bitacoras-medidores gas, agua y luz',
         },
         {
@@ -584,7 +585,7 @@ export class SidebarService {
             'SuperUsuario',
           ]),
           label: 'Albercas',
-          link: 'mantenimiento/bitacora/piscina',
+          routerLink: '/mantenimiento/bitacora/piscina',
           name: 'Bitacoras-alberca',
         },
       ],
@@ -602,7 +603,7 @@ export class SidebarService {
       ]),
       label: '5.4-Inventarios',
       icon: 'fa-thin fa-boxes-stacked',
-      subItems: [
+      items: [
         {
           visible: this.authService.onValidateRoles([
             'Asistente',
@@ -612,7 +613,7 @@ export class SidebarService {
             'SuperUsuario',
           ]),
           label: 'Amenidades',
-          link: 'mantenimiento/inventario/equipos/2',
+          routerLink: '/mantenimiento/inventario/equipos/2',
           name: 'Inventarios-Equipos',
         },
 
@@ -625,7 +626,7 @@ export class SidebarService {
             'SuperUsuario',
           ]),
           label: 'Áreas Comunes',
-          link: 'mantenimiento/inventario/equipos/8',
+          routerLink: '/mantenimiento/inventario/equipos/8',
           name: 'Inventarios-Areas comunes',
         },
         {
@@ -636,7 +637,7 @@ export class SidebarService {
             'SuperUsuario',
           ]),
           label: 'Cuartos de Maquinas',
-          link: 'mantenimiento/inventario/equipos/7',
+          routerLink: '/mantenimiento/inventario/equipos/7',
           name: 'Inventarios-Cuartos de maquinas',
         },
         {
@@ -648,7 +649,7 @@ export class SidebarService {
             'SuperUsuario',
           ]),
           label: 'Mobiliario',
-          link: 'mantenimiento/inventario/equipos/3',
+          routerLink: '/mantenimiento/inventario/equipos/3',
           name: 'Inventarios-Mobiliarios',
         },
         {
@@ -660,7 +661,7 @@ export class SidebarService {
             'SuperUsuario',
           ]),
           label: 'Llaves',
-          link: 'mantenimiento/inventario/llaves',
+          routerLink: '/mantenimiento/inventario/llaves',
           name: 'Inventarios-Llaves',
         },
         {
@@ -671,7 +672,7 @@ export class SidebarService {
             'SuperUsuario',
           ]),
           label: 'Herramientas',
-          link: 'mantenimiento/inventario/herramienta',
+          routerLink: '/mantenimiento/inventario/herramienta',
           name: 'Inventarios-Herramienta',
         },
         {
@@ -683,7 +684,7 @@ export class SidebarService {
             'SuperUsuario',
           ]),
           label: 'Radios',
-          link: 'mantenimiento/inventario/radios',
+          routerLink: '/mantenimiento/inventario/radios',
           name: 'Inventarios-Radios',
         },
         {
@@ -696,7 +697,7 @@ export class SidebarService {
             'SuperUsuario',
           ]),
           label: 'EQ. Sistemas',
-          link: 'mantenimiento/inventario/equipos/6',
+          routerLink: '/mantenimiento/inventario/equipos/6',
           name: 'Inventarios-Equipos de sistemas',
         },
 
@@ -708,7 +709,7 @@ export class SidebarService {
             'SuperUsuario',
           ]),
           label: 'Equipos electromecánicos',
-          link: 'mantenimiento/inventario/equipos/1',
+          routerLink: '/mantenimiento/inventario/equipos/1',
           name: 'Inventarios-Equipos electromecanicos',
         },
         {
@@ -720,7 +721,7 @@ export class SidebarService {
             'SuperUsuario',
           ]),
           label: 'Equipos de Gimnasio',
-          link: 'mantenimiento/inventario/equipos/5',
+          routerLink: '/mantenimiento/inventario/equipos/5',
           name: 'Inventarios-Equipos de gimnasio',
         },
         {
@@ -731,7 +732,7 @@ export class SidebarService {
             'SuperUsuario',
           ]),
           label: 'Extintores',
-          link: 'mantenimiento/catalogo/extintores',
+          routerLink: '/mantenimiento/catalogo/extintores',
           name: 'Inventarios-Extintores',
         },
         {
@@ -742,7 +743,7 @@ export class SidebarService {
             'SuperUsuario',
           ]),
           label: 'EQ. Iluminación',
-          link: 'mantenimiento/catalogo/iluminacion',
+          routerLink: '/mantenimiento/catalogo/iluminacion',
           name: 'Inventarios-Catalogo de iluminación',
         },
         {
@@ -753,7 +754,7 @@ export class SidebarService {
             'SuperUsuario',
           ]),
           label: 'Pintura Especificación',
-          link: 'mantenimiento/catalogo/pintura',
+          routerLink: '/mantenimiento/catalogo/pintura',
           name: 'Inventarios-Catalogo de pintura',
         },
         {
@@ -764,7 +765,7 @@ export class SidebarService {
             'SuperUsuario',
           ]),
           label: 'Almacén',
-          link: 'mantenimiento/almacen/inventario-productos',
+          routerLink: '/mantenimiento/almacen/inventario-productos',
           name: 'Inventarios-Almacen',
         },
         {
@@ -776,7 +777,7 @@ export class SidebarService {
             'SuperUsuario',
           ]),
           label: '5.4.1-Mov. al almacén',
-          subItems: [
+          items: [
             {
               visible: this.authService.onValidateRoles([
                 'Asistente',
@@ -786,7 +787,7 @@ export class SidebarService {
                 'SuperUsuario',
               ]),
               label: 'Entradas de insumos',
-              link: 'mantenimiento/almacen/entrada-productos',
+              routerLink: '/mantenimiento/almacen/entrada-productos',
               name: 'Inventarios-Entradas de insumos',
             },
             {
@@ -798,7 +799,7 @@ export class SidebarService {
                 'SuperUsuario',
               ]),
               label: 'Salidas de insumos',
-              link: 'mantenimiento/almacen/salida-productos',
+              routerLink: '/mantenimiento/almacen/salida-productos',
               name: 'Inventarios-Salida de insumos',
             },
             {
@@ -809,7 +810,7 @@ export class SidebarService {
                 'SuperUsuario',
               ]),
               label: 'Préstamo de herramientas',
-              link: 'mantenimiento/bitacora/prestamo-herramienta',
+              routerLink: '/mantenimiento/bitacora/prestamo-herramienta',
               name: 'Inventarios-Préstamo de herramientas',
             },
           ],
@@ -823,7 +824,7 @@ export class SidebarService {
             'SuperUsuario',
           ]),
           label: 'Polizas de Mtto',
-          link: 'documento/poliza',
+          routerLink: '/documento/poliza',
           name: 'Inventarios-Polizas de mantenimiento',
         },
         {
@@ -835,7 +836,7 @@ export class SidebarService {
             'SuperUsuario',
           ]),
           label: 'Documentos',
-          link: 'documento/documento',
+          routerLink: '/documento/documento',
           name: 'Inventarios-Documentos',
         },
       ],
@@ -851,7 +852,7 @@ export class SidebarService {
       ]),
       label: '5.5-Capacitación',
       icon: 'fa-thin fa-book-open-reader',
-      subItems: [
+      items: [
         {
           visible: this.authService.onValidateRoles([
             'GerenteMantenimiento',
@@ -860,7 +861,7 @@ export class SidebarService {
             'SuperUsuario',
           ]),
           label: 'Nomenclatura',
-          link: 'capacitacion/nomenclatura',
+          routerLink: '/capacitacion/nomenclatura',
           name: 'Capacitación-Nomenclatura',
         },
         {
@@ -873,7 +874,7 @@ export class SidebarService {
             'SupervisionOperativa',
           ]),
           label: 'Manuales y procesos',
-          link: 'capacitacion/procesos',
+          routerLink: '/capacitacion/procesos',
           name: 'Capacitación-Manuales y procesos',
         },
         {
@@ -886,7 +887,7 @@ export class SidebarService {
             'SupervisionOperativa',
           ]),
           label: 'Formatos',
-          link: 'capacitacion/formatos',
+          routerLink: '/capacitacion/formatos',
           name: 'Capacitación-Formatos',
         },
         {
@@ -899,7 +900,7 @@ export class SidebarService {
             'SupervisionOperativa',
           ]),
           label: 'Comunicados internos',
-          link: 'capacitacion/comunicado',
+          routerLink: '/capacitacion/comunicado',
           name: 'Capacitación-Comunicados internos',
         },
         {
@@ -912,13 +913,13 @@ export class SidebarService {
             'SupervisionOperativa',
           ]),
           label: 'Mttos Preventivos',
-          link: 'operaciones/calendario/mantenimiento-master',
+          routerLink: '/operaciones/calendario/mantenimiento-master',
           name: 'Calendario-Mantenimientos preventivos',
         },
         {
           visible: this.authService.onValidateRoles(['SuperUsuario']),
           label: 'Calendario Maestro Equipo',
-          link: 'operaciones/calendario/calendario-maestro-equipo',
+          routerLink: '/operaciones/calendario/calendario-maestro-equipo',
           name: 'Capacitación-Guia calendario general de mtto',
         },
       ],
@@ -934,7 +935,7 @@ export class SidebarService {
       ]),
       label: '5.6-Calendarios',
       icon: 'fa-thin fa-calendar-days',
-      subItems: [
+      items: [
         {
           visible: this.authService.onValidateRoles([
             'Asistente',
@@ -944,7 +945,7 @@ export class SidebarService {
             'SupervisionOperativa',
           ]),
           label: 'Fondeos',
-          link: 'operaciones/calendario/fondeos',
+          routerLink: '/operaciones/calendario/fondeos',
           name: 'Calendario-Fondeos',
         },
         {
@@ -955,7 +956,7 @@ export class SidebarService {
             'SuperUsuario',
           ]),
           label: 'Mtto Preventivo',
-          link: 'mantenimiento/calendario-anual',
+          routerLink: '/mantenimiento/calendario-anual',
           name: 'Calendario-Mantenimiento preventivo',
         },
         {
@@ -968,7 +969,7 @@ export class SidebarService {
             'SupervisionOperativa',
           ]),
           label: 'Fiestas Judías',
-          link: 'operaciones/calendario/fiestas-judias',
+          routerLink: '/operaciones/calendario/fiestas-judias',
           name: 'Calendario-Fiestaws judias',
         },
         {
@@ -981,7 +982,7 @@ export class SidebarService {
             'SupervisionOperativa',
           ]),
           label: 'Fiestas Catolicas',
-          link: 'operaciones/calendario/fiestas-cristianas',
+          routerLink: '/operaciones/calendario/fiestas-cristianas',
           name: 'Calendario-Fiestaws catolicas',
         },
         {
@@ -995,7 +996,7 @@ export class SidebarService {
             'SupervisionOperativa',
           ]),
           label: 'Cumpleaños',
-          link: 'operaciones/calendario/cumpleanos',
+          routerLink: '/operaciones/calendario/cumpleanos',
           name: 'Calendario-Cumpleaños',
         },
       ],
@@ -1004,11 +1005,11 @@ export class SidebarService {
       visible: this.authService.onValidateRoles(['SuperUsuario']),
       label: '5.7 Comunicados',
       icon: 'fa-thin fa-file-pdf',
-      subItems: [
+      items: [
         {
           visible: this.authService.onValidateRoles(['SuperUsuario']),
           label: 'Enviar Email',
-          link: 'comunicacion/enviar-comunicado',
+          routerLink: '/comunicacion/enviar-comunicado',
           name: 'Calendario-Enviar comunicado',
         },
       ],
@@ -1024,20 +1025,20 @@ export class SidebarService {
       ]),
       label: '6.1-Directorios',
       icon: 'fa-thin fa-address-book',
-      subItems: [
+      items: [
         {
           visible: this.authService.onValidateRoles([
             'Residente',
             'SuperUsuario',
           ]),
           label: 'Organigrama',
-          link: 'directorio/organigrama-interno',
+          routerLink: '/directorio/organigrama-interno',
           name: 'Directorio-Organigrama interno',
         },
         {
           visible: this.authService.onValidateRoles(['SuperUsuario']),
           label: 'Clientes',
-          link: 'configuracion/clientes',
+          routerLink: '/configuracion/clientes',
           name: 'Directorio-Clientes',
         },
         {
@@ -1050,7 +1051,7 @@ export class SidebarService {
             'SupervisionOperativa',
           ]),
           label: 'Propiedades',
-          link: 'directorio/propiedades',
+          routerLink: '/directorio/propiedades',
           name: 'Directorio-Propiedades',
         },
         {
@@ -1063,7 +1064,7 @@ export class SidebarService {
             'SupervisionOperativa',
           ]),
           label: 'Condominos',
-          link: 'directorio/condominos',
+          routerLink: '/directorio/condominos',
           name: 'Directorio-Condominos',
         },
         {
@@ -1076,7 +1077,7 @@ export class SidebarService {
             'SupervisionOperativa',
           ]),
           label: 'Comité de vigilancia',
-          link: 'directorio/comite-vigilancia',
+          routerLink: '/directorio/comite-vigilancia',
           name: 'Directorio-Comité de vigilancia',
         },
 
@@ -1089,7 +1090,7 @@ export class SidebarService {
             'SuperUsuario',
           ]),
           label: 'Personal Interno',
-          link: 'directorio/empleados/interno',
+          routerLink: '/directorio/empleados/interno',
           name: 'Directorio-Empleados internos',
         },
         {
@@ -1102,7 +1103,7 @@ export class SidebarService {
             'SupervisionOperativa',
           ]),
           label: 'Proveedores',
-          link: 'directorio/proveedor',
+          routerLink: '/directorio/proveedor',
           name: 'Directorio-Proveedores',
         },
 
@@ -1115,13 +1116,13 @@ export class SidebarService {
             'SuperUsuario',
           ]),
           label: 'Personal Externo',
-          link: 'directorio/empleados/externo',
+          routerLink: '/directorio/empleados/externo',
           name: 'Directorio-Empleados externos',
         },
         {
           visible: this.authService.onValidateRoles(['SuperUsuario']),
           label: 'Personal General',
-          link: 'directorio/empleados-general',
+          routerLink: '/directorio/empleados-general',
           name: 'Directorio-Todos los empleados',
         },
         {
@@ -1134,7 +1135,7 @@ export class SidebarService {
             'SupervisionOperativa',
           ]),
           label: 'Emergencias',
-          link: 'directorio/telefonos-emergencia',
+          routerLink: '/directorio/telefonos-emergencia',
         },
       ],
     },
@@ -1147,7 +1148,7 @@ export class SidebarService {
       ]),
       label: '6.2-Utilidades',
       icon: 'fa-thin fa-screwdriver-wrench',
-      subItems: [
+      items: [
         {
           visible: this.authService.onValidateRoles([
             'Asistente',
@@ -1156,7 +1157,7 @@ export class SidebarService {
             'SuperUsuario',
           ]),
           label: 'Calculadora IVA',
-          link: 'utilidades/calcular-iva',
+          routerLink: '/utilidades/calcular-iva',
           name: 'utilidades-Calculadora',
         },
       ],
@@ -1170,7 +1171,7 @@ export class SidebarService {
       ]),
       label: '7.0 Reclutamiento',
       icon: 'fa-thin fa-arrows-down-to-people',
-      subItems: [
+      items: [
         {
           visible: this.authService.onValidateRoles([
             'Asistente',
@@ -1179,7 +1180,7 @@ export class SidebarService {
             'SupervisionOperativa',
           ]),
           label: 'Plantilla',
-          link: 'reclutamiento/plantilla-interna',
+          routerLink: '/reclutamiento/plantilla-interna',
           name: 'Reclutamiento-Plantilla',
         },
         {
@@ -1190,7 +1191,7 @@ export class SidebarService {
             'SupervisionOperativa',
           ]),
           label: 'Agenda Entrevistas',
-          link: 'reclutamiento/agenda-entrevistas',
+          routerLink: '/reclutamiento/agenda-entrevistas',
           name: 'agenda entrevistas',
         },
         {
@@ -1200,7 +1201,7 @@ export class SidebarService {
             'Asistente',
           ]),
           label: 'Solicitudes',
-          link: 'reclutamiento/solicitudes_cliente',
+          routerLink: '/reclutamiento/solicitudes_cliente',
           name: 'Reclutamiento-Solicitudes por cliente',
         },
         {
@@ -1209,7 +1210,7 @@ export class SidebarService {
             'Reclutamiento',
           ]),
           label: 'Solicitudes Recl',
-          link: 'reclutamiento/solicitudes/vacantes',
+          routerLink: '/reclutamiento/solicitudes/vacantes',
           name: 'Reclutamiento-Solicitudes a reclutamiento',
         },
 
@@ -1219,7 +1220,7 @@ export class SidebarService {
             'Reclutamiento',
           ]),
           label: 'Departamentos',
-          link: 'reclutamiento/departamentos',
+          routerLink: '/reclutamiento/departamentos',
           name: 'Reclutamiento-Departamentos de la empresa',
         },
         {
@@ -1228,7 +1229,7 @@ export class SidebarService {
             'Reclutamiento',
           ]),
           label: 'Profesiones',
-          link: 'reclutamiento/profesiones',
+          routerLink: '/reclutamiento/profesiones',
           name: 'Reclutamiento-Profesiones',
         },
         {
@@ -1237,7 +1238,7 @@ export class SidebarService {
             'Reclutamiento',
           ]),
           label: 'Candidatos',
-          link: 'reclutamiento/candidatos',
+          routerLink: '/reclutamiento/candidatos',
           name: 'Reclutamiento-Candidatos',
         },
       ],
@@ -1246,7 +1247,7 @@ export class SidebarService {
       visible: true,
       label: 'Salir',
       icon: 'fa-thin fa-right-from-bracket',
-      link: 'auth/login',
+      routerLink: '/auth/login',
     },
   ];
 }

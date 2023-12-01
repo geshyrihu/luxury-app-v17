@@ -12,13 +12,12 @@
             [label]="!mostrarBuscador ? 'Buscador' : 'Ver Listado'"
             (clicked)="mostrarBuscador = !mostrarBuscador"
           ></custom-button>
-
           <a
             ngbTooltip="Formato para dar de alta a proveedor"
             class="btn btn-outline-info float-end me-1"
             href="assets/documents/glb-altaproveedor.docx"
           >
-            <i class="fa-duotone fa-file-word"></i>
+            <i class="fa-regular fa-file-word"></i>
           </a>
           <a
             ngbTooltip="Guia para cargar proveedor"
@@ -26,17 +25,15 @@
             target="_blank"
             href="assets/documents/carga_proveedores.pdf"
           >
-            <i class="fa-duotone fa-file-pdf"></i>
+            <i class="fa-regular fa-file-pdf"></i>
           </a>
         </div>
       </div>
     </ngb-alert>
   </div>
 </div>
-
-<ng-container *ngIf="mostrarBuscador">
-  <app-buscador-proveedor></app-buscador-proveedor>
-</ng-container>
-<ng-container *ngIf="!mostrarBuscador">
-  <app-list-provider></app-list-provider>
-</ng-container>
+@if (mostrarBuscador) {
+<app-buscador-proveedor></app-buscador-proveedor>
+} @if (!mostrarBuscador) {
+<app-list-provider></app-list-provider>
+}

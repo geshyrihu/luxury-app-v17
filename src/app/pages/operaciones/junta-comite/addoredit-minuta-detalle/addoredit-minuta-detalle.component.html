@@ -25,11 +25,15 @@
       ></custom-input-text>
       <div class="form-group mb-2">
         <label class="form-label">Asunto</label>
-        <ckeditor
+        <!-- <ckeditor
           [config]="{ toolbar: ['heading', '|', 'bold', 'italic'] }"
           [editor]="Editor"
           formControlName="requestService"
-        ></ckeditor>
+        ></ckeditor> -->
+        <p-editor
+          formControlName="requestService"
+          [style]="{ height: '320px' }"
+        ></p-editor>
       </div>
 
       <custom-input-select

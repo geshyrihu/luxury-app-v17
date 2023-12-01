@@ -3,6 +3,7 @@
   #dt
   responsiveLayout="scroll"
   styleClass="custom-table"
+  [tableStyle]="{ 'min-width': '50rem' }"
   [value]="data"
   [rowHover]="true"
   currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
@@ -48,7 +49,7 @@
       <td class="p-column-title">
         <div class="text-center">
           <i
-            class="fa-duotone fa-dollar-sign text-info mx-1 pointer"
+            class="fa-regular fa-dollar-sign text-info mx-1 pointer"
             [routerLink]="[
               '/contabilidad/cedula-presupuestal-detalle',
               item.id

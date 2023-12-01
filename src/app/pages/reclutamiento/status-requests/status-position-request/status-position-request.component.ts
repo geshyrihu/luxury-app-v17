@@ -13,8 +13,8 @@ import {
   DataService,
   StatusSolicitudVacanteService,
 } from 'src/app/core/services/common-services';
+import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import ComponentsModule from 'src/app/shared/components.module';
-import CustomInputModule from 'src/app/shared/custom-input-form/custom-input.module';
 import PrimeNgModule from 'src/app/shared/prime-ng.module';
 import { environment } from 'src/environments/environment';
 import AddOrEditVacanteComponent from '../../list-solicitudes/list-solicitud-vacantes/addoredit-vacante.component';
@@ -71,7 +71,6 @@ export default class statuspositionrequestcomponent
         next: (resp: any) => {
           // Cuando se obtienen los datos con éxito, actualizar la variable 'data' y ocultar el mensaje de carga
           this.data = resp.body;
-          console.log('🚀 ~ resp.body:', resp.body);
           this.customToastService.onClose();
         },
         error: (err) => {

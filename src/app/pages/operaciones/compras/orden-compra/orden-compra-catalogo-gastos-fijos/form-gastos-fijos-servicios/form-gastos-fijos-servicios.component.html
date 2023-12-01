@@ -1,13 +1,14 @@
 <p-toast position="top-left" [baseZIndex]="99999"></p-toast>
-
-<p class="small text-danger text-left font-italic" *ngIf="mensajeError == true">
+@if (mensajeError == true) {
+<p class="small text-danger text-left font-italic">
   Seleccione producto y unidad
 </p>
-
+}
 <p-table
   [(selection)]="productosAgregados"
   #dc
   styleClass="custom-table"
+  [tableStyle]="{ 'min-width': '50rem' }"
   [value]="productosAgregados"
   [rows]="15"
   [rowHover]="true"
@@ -77,9 +78,11 @@
             [(ngModel)]="item.unidadMedidaId"
           >
             <option value="">Selecciona una opción</option>
-            <option [value]="item.value" *ngFor="let item of cb_unidadMedida">
+            @for (item of cb_unidadMedida; track item) {
+            <option [value]="item.value">
               {{ item.label }}
             </option>
+            }
           </select>
         </small>
       </td>
@@ -102,7 +105,6 @@
           >
             <i class="fa-thin fa-floppy-disk"></i>
           </button>
-
           <custom-button-delete
             (OnConfirm)="deleteProductoAgregado(item.id)"
           ></custom-button-delete>
@@ -111,11 +113,11 @@
     </tr>
   </ng-template>
 </p-table>
-
 <p-table
   [(selection)]="productos"
   #dt
   styleClass="custom-table"
+  [tableStyle]="{ 'min-width': '50rem' }"
   [value]="productos"
   [rows]="15"
   [paginator]="true"
@@ -176,9 +178,11 @@
             [(ngModel)]="item.unidadMedidaId"
           >
             <option value="">Selecciona una opción</option>
-            <option [value]="item.value" *ngFor="let item of cb_unidadMedida">
+            @for (item of cb_unidadMedida; track item) {
+            <option [value]="item.value">
               {{ item.label }}
             </option>
+            }
           </select>
         </small>
       </td>

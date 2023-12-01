@@ -7,14 +7,17 @@ export let menuPanel: IMenuPanel[] = [
       {
         title: 'Cuentas',
         path: '/accounts/cuentas-usuario',
+        icon: ' fa-user',
       },
       {
-        title: 'Nivel Acceso',
+        title: 'Roles',
         path: '/configuracion/roles',
+        icon: ' fa-key',
       },
       {
         title: 'Datos Email',
         path: '/accounts/datos-email',
+        icon: 'fa-envelope',
       },
     ],
   },
@@ -24,6 +27,7 @@ export let menuPanel: IMenuPanel[] = [
       {
         title: 'Descripción',
         path: '/entrega-recepcion/descripcion',
+        icon: 'fa-people-arrows',
       },
     ],
   },

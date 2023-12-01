@@ -37,7 +37,6 @@
     (clicked)="onFiltrarData(4)"
   ></custom-button>
 </div>
-
 <div class="p-card p-mb-5">
   <p-table
     #dt
@@ -58,6 +57,7 @@
     [value]="data"
     currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
     styleClass="custom-table"
+    [tableStyle]="{ 'min-width': '50rem' }"
   >
     <ng-template pTemplate="caption">
       <app-table-header
@@ -66,7 +66,6 @@
         [dt]="dt"
       ></app-table-header>
     </ng-template>
-
     <ng-template pTemplate="header">
       <tr>
         <th scope="col" style="width: 8%" pSortableColumn="code">
@@ -76,7 +75,6 @@
           CLIENTE
           <p-sortIcon field="cliente"></p-sortIcon>
         </th>
-
         <th
           scope="col"
           style="width: 28%"
@@ -100,7 +98,6 @@
         <td class="p-column-title">
           {{ item.cliente }}
         </td>
-
         <td class="p-column-title">
           <div class="h6">
             {{ item.fechaSolicitud }} {{ item.titulo | titlecase }}
@@ -112,10 +109,12 @@
         </td>
         <td class="p-column-title">
           <ul>
-            <li *ngIf="item.seguimientos.length > 0">
+            @if (item.seguimientos.length > 0) {
+            <li>
               {{ item.seguimientos[0].fecha }},
               {{ item.seguimientos[0].seguimiento }}
             </li>
+            }
           </ul>
         </td>
         <td class="p-column-title text-center">
@@ -127,9 +126,13 @@
               'bg-secondary': item.status == 2
             }"
           >
-            <i *ngIf="item.status === 0" class="fa-duotone fa-xmark"></i>
-            <i *ngIf="item.status === 1" class="fa-duotone fa-check-double"></i>
-            <i *ngIf="item.status === 2" class="fa-duotone fa-ban"></i>
+            @if (item.status === 0) {
+            <i class="fa-regular fa-xmark"></i>
+            } @if (item.status === 1) {
+            <i class="fa-regular fa-check-double"></i>
+            } @if (item.status === 2) {
+            <i class="fa-regular fa-ban"></i>
+            }
           </p>
         </td>
         <!-- Opciones -->
@@ -139,17 +142,15 @@
             <custom-button
               [customClass]="'btn-sm btn-outline-primary'"
               ngbTooltip="Ver todos los seguimientos"
-              icon="fa-duotone fa-list text-primary"
+              icon="fa-regular fa-list text-primary"
               (clicked)="onModalTodosSeguimientos(item.id)"
             ></custom-button>
-
             <custom-button
               [customClass]="'btn-sm btn-outline-info'"
               ngbTooltip="Agregar Seguimiento"
-              icon="fa-duotone fa-plus text-info"
+              icon="fa-regular fa-plus text-info"
               (clicked)="onModalAddOrEditSeguimiento(item.id, 0)"
             ></custom-button>
-
             <custom-button-edit
               (edit)="
                 onModalAddOrEditMinutaDetalle({

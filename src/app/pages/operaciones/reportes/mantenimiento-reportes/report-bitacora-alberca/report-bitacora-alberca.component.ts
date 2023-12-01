@@ -26,7 +26,7 @@ export default class ReportBitacoraAlbercaComponent implements OnInit {
   public dateService = inject(DateService);
   public periodoMonthService = inject(PeriodoMonthService);
 
-  medidores: IChartData[] = [];
+  medidores: any[] = [];
   title: string = '';
   ref: DynamicDialogRef;
   subRef$: Subscription;

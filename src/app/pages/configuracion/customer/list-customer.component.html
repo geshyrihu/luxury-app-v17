@@ -10,6 +10,7 @@
   #dt
   currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
   styleClass="custom-table"
+  [tableStyle]="{ 'min-width': '50rem' }"
 >
   <ng-template pTemplate="caption">
     <app-table-header
@@ -27,6 +28,7 @@
   <ng-template pTemplate="header">
     <tr>
       <th scope="col">#</th>
+      <th scope="col">CLIENTE</th>
       <th scope="col" colspan="2" pSortableColumn="nameCustomer">
         NOMBRE
         <p-sortIcon field="nameCustomer"></p-sortIcon>
@@ -39,6 +41,9 @@
   <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
     <tr>
       <td>{{ rowIndex + 1 }}</td>
+      <td class="p-column-title">
+        {{ item.numeroCliente }}
+      </td>
       <td class="p-column-title">
         <img
           [src]="urlBaseImg + item.photoPath"
@@ -60,8 +65,8 @@
         {{ item.adreess }}
       </td>
 
-      <td class="p-column-title">
-        <div class="d-flex align-content-center">
+      <td class="p-column-title" class="hide-print-mode">
+        <div class="d-flex justify-content-center">
           <custom-button-edit
             (edit)="onModalAddOrEdit({ id: item.id, title: 'Editar Registro' })"
           ></custom-button-edit>

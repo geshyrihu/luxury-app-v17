@@ -1,8 +1,8 @@
 <div class="row">
   <div class="col-sm-4">
+    @for (item of menu; track item) {
     <a
       class="btn btn-group me-1"
-      *ngFor="let item of menu"
       [routerLink]="['/reclutamiento/solicitudes/', item.path]"
       [ngClass]="{
         'btn-primary': isActive(item.path),
@@ -10,6 +10,7 @@
       }"
       >{{ item.label }}</a
     >
+    }
   </div>
   <div class="col-sm-3">
     <div class="input-group">
@@ -36,14 +37,15 @@
         class="form-select"
         (change)="onLoadData()"
       >
-        <option *ngFor="let item of cb_status_request" [value]="item.value">
+        @for (item of cb_status_request; track item) {
+        <option [value]="item.value">
           {{ item.label }}
         </option>
+        }
         <option [value]="''">Mostrar todos</option>
       </select>
     </div>
   </div>
-
   <div class="col-sm-2">
     <!-- Agrega el botón de exportación -->
     <div class="d-flex justify-content-end">
@@ -56,12 +58,12 @@
         (OnConfirm)="onSendReportVacants()"
         classButton="w-100 btn-info "
         label="Énviar reporte"
-        icon="fa-duotone fa-paper-plane me-3"
+        icon="fa-regular fa-paper-plane me-3"
       ></custom-button-confirmation>
       <custom-button
         customClass="btn-success ms-1"
         ngbTooltip="Exportar a excel"
-        icon="fa-duotone fa-file-excel"
+        icon="fa-regular fa-file-excel"
         (clicked)="exportToExcel()"
       ></custom-button>
     </div>

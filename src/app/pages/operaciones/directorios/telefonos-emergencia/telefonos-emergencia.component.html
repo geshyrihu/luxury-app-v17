@@ -7,7 +7,8 @@
 ></app-table-header>
 <div class="row mt-2">
   <div class="col">
-    <div class="card" *ngFor="let item of data">
+    @for (item of data; track item) {
+    <div class="card">
       <div class="card-body p-2">
         <div class="row">
           <div class="col-sm-1">
@@ -36,7 +37,7 @@
         </div>
       </div>
     </div>
-
+    }
     <!-- end card -->
   </div>
 </div>

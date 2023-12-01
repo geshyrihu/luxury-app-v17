@@ -6,12 +6,12 @@ import {
   CustomerIdService,
   DataService,
 } from 'src/app/core/services/common-services';
-import CustomButtonComponent from 'src/app/shared/custom-buttons/custom-button/custom-button.component';
+import CustomButtonModule from 'src/app/custom-components/custom-buttons/custom-button.module';
 
 @Component({
   selector: 'app-depuracion',
   templateUrl: './depuracion.component.html',
-  imports: [CustomButtonComponent],
+  imports: [CustomButtonModule],
   standalone: true,
   providers: [MessageService, CustomToastService],
 })

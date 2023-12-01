@@ -36,8 +36,8 @@ import HoursWorkPositionComponent from '../hours-work-position.component';
     NgbDropdownModule,
     NgbTooltipModule,
     RouterModule,
-    PrimeNgModule,
-  ],
+    PrimeNgModule
+],
   providers: [
     ConfirmationService,
     DialogService,

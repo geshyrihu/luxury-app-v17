@@ -1,0 +1,55 @@
+@if(hidden){
+<div class="mb-2" [ngClass]="{ 'form-group row ': horizontal }">
+  @if (horizontal) {
+  <label class="col-sm-3 form-label">{{ label }} </label>
+  <div class="col-sm-9">
+    <input
+      class="form-control"
+      placeholder="Escribir para buscar"
+      [value]="value"
+      (input)="onChange($event)"
+      (blur)="onTouch()"
+      (change)="onSelectItem($event)"
+      [attr.list]="dataListId"
+      [ngClass]="{
+        'is-invalid': control.invalid && (control.dirty || control.touched)
+      }"
+      autocomplete="off"
+    />
+    <datalist [id]="dataListId">
+      @for (item of data; track item) {
+      <option [value]="item.country + ' ' + item.prefix"></option>
+      }
+    </datalist>
+    <app-validation-errors-custom-input
+      [control]="control"
+      [placeholder]="placeholder"
+    ></app-validation-errors-custom-input>
+  </div>
+  } @if (!horizontal) {
+  <label>{{ label }} </label>
+  <input
+    class="form-control"
+    placeholder="Escribir para buscar"
+    [value]="value"
+    (input)="onChange($event)"
+    (blur)="onTouch()"
+    (change)="onSelectItem($event)"
+    [attr.list]="dataListId"
+    [ngClass]="{
+      'is-invalid': control.invalid && (control.dirty || control.touched)
+    }"
+    autocomplete="off"
+  />
+  <datalist [id]="dataListId">
+    @for (item of data; track item) {
+    <option [value]="item.country + ' ' + item.prefix"></option>
+    }
+  </datalist>
+  <app-validation-errors-custom-input
+    [control]="control"
+    [placeholder]="placeholder"
+  ></app-validation-errors-custom-input>
+  }
+</div>
+}

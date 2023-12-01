@@ -22,8 +22,8 @@ import AddoreditInventarioExtintorComponent from './addoredit-inventario-extinto
   imports: [
     ComponentsModule,
     PrimeNgModule,
-    ImageModule,
-  ],
+    ImageModule
+],
   providers: [DialogService, MessageService, CustomToastService],
 })
 export default class InventarioExtintorComponent implements OnInit, OnDestroy {

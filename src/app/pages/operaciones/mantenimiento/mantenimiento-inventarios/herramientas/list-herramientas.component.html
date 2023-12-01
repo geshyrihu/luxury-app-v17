@@ -3,6 +3,7 @@
   #dt
   [value]="data"
   styleClass="custom-table"
+  [tableStyle]="{ 'min-width': '50rem' }"
   [paginator]="true"
   [rows]="15"
   [showCurrentPageReport]="true"
@@ -23,7 +24,7 @@
       class="mt-1 btn btn-sm btn-outline-danger"
       routerLink="/mantenimiento/inventario/reporte-herramientas"
       >Informe
-      <i class="fa-duotone fa-file-pdf"></i>
+      <i class="fa-regular fa-file-pdf"></i>
     </a>
   </ng-template>
   <ng-template pTemplate="header">
@@ -37,14 +38,9 @@
         Categoria
         <p-sortIcon field="category"></p-sortIcon>
       </th>
-
-      <th
-        *ngIf="authService.onValidateRoles(['Mantenimiento', 'SuperUsuario'])"
-        scope="col"
-        style="width: 10%"
-      >
-        Opciones
-      </th>
+      @if (authService.onValidateRoles(['Mantenimiento', 'SuperUsuario'])) {
+      <th scope="col" style="width: 10%">Opciones</th>
+      }
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-item>
@@ -64,12 +60,9 @@
       <td class="p-column-title">
         <small>{{ item.category }} </small>
       </td>
-
       <!-- Opciones -->
-      <td
-        class="p-column-title"
-        *ngIf="authService.onValidateRoles(['Mantenimiento', 'SuperUsuario'])"
-      >
+      @if (authService.onValidateRoles(['Mantenimiento', 'SuperUsuario'])) {
+      <td class="p-column-title">
         <div class="d-flex justify-content-center">
           <custom-button-edit
             (edit)="
@@ -81,6 +74,7 @@
           ></custom-button-delete>
         </div>
       </td>
+      }
     </tr>
   </ng-template>
   <ng-template pTemplate="paginatorleft">

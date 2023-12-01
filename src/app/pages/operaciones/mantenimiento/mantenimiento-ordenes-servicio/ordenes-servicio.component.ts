@@ -34,8 +34,8 @@ const date = new Date();
     FormsModule,
     ComponentsModule,
     NgbTooltipModule,
-    PrimeNgModule,
-  ],
+    PrimeNgModule
+],
   providers: [DialogService, MessageService, CustomToastService],
 })
 export default class OrdenesServicioComponentComponent

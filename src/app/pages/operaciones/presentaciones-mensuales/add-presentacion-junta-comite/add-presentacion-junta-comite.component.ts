@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnDestroy, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -32,7 +32,9 @@ import ComponentsModule, {
   ],
   providers: [CustomToastService],
 })
-export default class AddPresentacionJuntaComiteComponent implements OnDestroy {
+export default class AddPresentacionJuntaComiteComponent
+  implements OnInit, OnDestroy
+{
   public dateService = inject(DateService);
   public authService = inject(AuthService);
   private formBuilder = inject(FormBuilder);
@@ -54,10 +56,13 @@ export default class AddPresentacionJuntaComiteComponent implements OnDestroy {
     fechaJunta: [''],
   });
 
-  onLoadData(id: number) {
-    flatpickrFactory();
+  ngOnInit(): void {
     this.id = this.config.data.id;
     if (this.id !== 0) this.onLoadData(this.id);
+  }
+  onLoadData(id: number) {
+    flatpickrFactory();
+
     this.subRef$ = this.dataService
       .get('PresentacionJuntaComite/Get/' + id)
       .subscribe({

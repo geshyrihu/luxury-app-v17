@@ -1,5 +1,5 @@
-aca estamos en modo edition
-<div class="card" *ngIf="category == 1 || category == 6 || category == 5">
+@if (category == 1 || category == 6 || category == 5) {
+<div class="card">
   <div class="card-body">
     <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
       <div class="row">
@@ -11,7 +11,6 @@ aca estamos en modo edition
             [data]="cb_inventoryCategory"
             [horizontal]="false"
           ></custom-input-select>
-
           <custom-input-text
             [control]="form.get('nameMachinery')"
             formControlName="nameMachinery"
@@ -19,7 +18,6 @@ aca estamos en modo edition
             placeholder="nombre"
             [horizontal]="false"
           ></custom-input-text>
-
           <custom-input-text
             [control]="form.get('brand')"
             formControlName="brand"
@@ -36,7 +34,6 @@ aca estamos en modo edition
             placeholder="modelo"
             [horizontal]="false"
           ></custom-input-text>
-
           <custom-input-text
             [control]="form.get('serie')"
             formControlName="serie"
@@ -44,7 +41,6 @@ aca estamos en modo edition
             placeholder="serie"
             [horizontal]="false"
           ></custom-input-text>
-
           <custom-input-text
             [control]="form.get('ubication')"
             formControlName="ubication"
@@ -61,7 +57,6 @@ aca estamos en modo edition
             placeholder="Compra o instalación"
             [horizontal]="false"
           ></custom-input-date>
-
           <custom-input-select
             [control]="form.get('state')"
             formControlName="state"
@@ -69,7 +64,6 @@ aca estamos en modo edition
             [data]="optionActive"
             [horizontal]="false"
           ></custom-input-select>
-
           <custom-input-select
             [control]="form.get('equipoClasificacionId')"
             formControlName="equipoClasificacionId"
@@ -78,7 +72,6 @@ aca estamos en modo edition
             [horizontal]="false"
           ></custom-input-select>
         </div>
-
         <div class="col-sm-3">
           <div class="form-group">
             <!-- Img -->
@@ -89,83 +82,33 @@ aca estamos en modo edition
               [contentHeight]="'180px'"
               [contentWidth]="'100%'"
             ></app-input-img>
-
             <!-- Img -->
           </div>
         </div>
 
         <div class="form-group col-sm-6">
           <label>Especificaciones Técnicas</label>
-          <ckeditor
+          <!-- <ckeditor
             [config]="{ toolbar: ['heading', '|', 'bold', 'italic'] }"
             [editor]="Editor"
             formControlName="technicalSpecifications"
-          ></ckeditor>
-          <!-- <p-editor
+          ></ckeditor> -->
+          <p-editor
             formControlName="technicalSpecifications"
-            [style]="{ height: '200px' }"
-          >
-            <ng-template pTemplate="header">
-              <span class="ql-formats">
-                <button
-                  type="button"
-                  class="ql-bold"
-                  aria-label="Bold"
-                ></button>
-                <button
-                  type="button"
-                  class="ql-italic"
-                  aria-label="Italic"
-                ></button>
-                <button
-                  type="button"
-                  class="ql-underline"
-                  aria-label="Underline"
-                ></button>
-              </span>
-              <span class="ql-formats">
-                <button class="ql-list" value="ordered"></button>
-                <button class="ql-list" value="bullet"></button>
-              </span>
-            </ng-template>
-          </p-editor> -->
+            [style]="{ height: '320px' }"
+          ></p-editor>
         </div>
-
         <div class="form-group col-sm-6">
           <label>Observaciones</label>
-          <ckeditor
+          <!-- <ckeditor
             [config]="{ toolbar: ['heading', '|', 'bold', 'italic'] }"
             [editor]="Editor"
             formControlName="observations"
-          ></ckeditor>
-          <!-- <p-editor
+          ></ckeditor> -->
+          <p-editor
             formControlName="observations"
-            [style]="{ height: '200px' }"
-          >
-            <ng-template pTemplate="header">
-              <span class="ql-formats">
-                <button
-                  type="button"
-                  class="ql-bold"
-                  aria-label="Bold"
-                ></button>
-                <button
-                  type="button"
-                  class="ql-italic"
-                  aria-label="Italic"
-                ></button>
-                <button
-                  type="button"
-                  class="ql-underline"
-                  aria-label="Underline"
-                ></button>
-              </span>
-              <span class="ql-formats">
-                <button class="ql-list" value="ordered"></button>
-                <button class="ql-list" value="bullet"></button>
-              </span>
-            </ng-template>
-          </p-editor> -->
+            [style]="{ height: '320px' }"
+          ></p-editor>
         </div>
       </div>
       <custom-button-submit
@@ -174,16 +117,9 @@ aca estamos en modo edition
     </form>
   </div>
 </div>
-<div
-  class="card"
-  *ngIf="
-    category == 2 ||
-    category == 3 ||
-    category == 4 ||
-    category == 8 ||
-    category == 7
-  "
->
+} @if ( category == 2 || category == 3 || category == 4 || category == 8 ||
+category == 7 ) {
+<div class="card">
   <div class="card-body">
     <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
       <div class="row">
@@ -227,7 +163,6 @@ aca estamos en modo edition
             [data]="optionActive"
             [horizontal]="false"
           ></custom-input-select>
-
           <custom-input-select
             [control]="form.get('equipoClasificacionId')"
             formControlName="equipoClasificacionId"
@@ -236,7 +171,6 @@ aca estamos en modo edition
             [horizontal]="false"
           ></custom-input-select>
         </div>
-
         <div class="col-sm-3">
           <div class="form-group">
             <!-- Img -->
@@ -247,83 +181,32 @@ aca estamos en modo edition
               [contentHeight]="'180px'"
               [contentWidth]="'100%'"
             ></app-input-img>
-
             <!-- Img -->
           </div>
         </div>
-
         <div class="form-group col-sm-6">
           <label>Especificaciones Técnicas</label>
-          <ckeditor
+          <!-- <ckeditor
             [config]="{ toolbar: ['heading', '|', 'bold', 'italic'] }"
             [editor]="Editor"
             formControlName="technicalSpecifications"
-          ></ckeditor>
-          <!-- <p-editor
+          ></ckeditor> -->
+          <p-editor
             formControlName="technicalSpecifications"
-            [style]="{ height: '200px' }"
-          >
-            <ng-template pTemplate="header">
-              <span class="ql-formats">
-                <button
-                  type="button"
-                  class="ql-bold"
-                  aria-label="Bold"
-                ></button>
-                <button
-                  type="button"
-                  class="ql-italic"
-                  aria-label="Italic"
-                ></button>
-                <button
-                  type="button"
-                  class="ql-underline"
-                  aria-label="Underline"
-                ></button>
-              </span>
-              <span class="ql-formats">
-                <button class="ql-list" value="ordered"></button>
-                <button class="ql-list" value="bullet"></button>
-              </span>
-            </ng-template>
-          </p-editor> -->
+            [style]="{ height: '320px' }"
+          ></p-editor>
         </div>
-
         <div class="form-group col-sm-6">
           <label>Observaciones</label>
-          <ckeditor
+          <!-- <ckeditor
             [config]="{ toolbar: ['heading', '|', 'bold', 'italic'] }"
             [editor]="Editor"
             formControlName="observations"
-          ></ckeditor>
-          <!-- <p-editor
+          ></ckeditor> -->
+          <p-editor
             formControlName="observations"
-            [style]="{ height: '200px' }"
-          >
-            <ng-template pTemplate="header">
-              <span class="ql-formats">
-                <button
-                  type="button"
-                  class="ql-bold"
-                  aria-label="Bold"
-                ></button>
-                <button
-                  type="button"
-                  class="ql-italic"
-                  aria-label="Italic"
-                ></button>
-                <button
-                  type="button"
-                  class="ql-underline"
-                  aria-label="Underline"
-                ></button>
-              </span>
-              <span class="ql-formats">
-                <button class="ql-list" value="ordered"></button>
-                <button class="ql-list" value="bullet"></button>
-              </span>
-            </ng-template>
-          </p-editor> -->
+            [style]="{ height: '320px' }"
+          ></p-editor>
         </div>
       </div>
       <custom-button-submit
@@ -332,3 +215,4 @@ aca estamos en modo edition
     </form>
   </div>
 </div>
+}

@@ -16,9 +16,8 @@ import TableHeaderComponent from '../table-header/table-header.component';
     TableModule,
     SharedModule,
     TableHeaderComponent,
-    FormsModule,
-    // EHabitantPipe,
-  ],
+    FormsModule
+],
 })
 export default class ListadoCondominosComponent implements OnInit {
   private selectItemService = inject(SelectItemService);

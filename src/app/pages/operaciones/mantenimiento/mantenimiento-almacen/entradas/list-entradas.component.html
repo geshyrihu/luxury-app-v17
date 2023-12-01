@@ -1,5 +1,4 @@
 <p-toast position="top-left" [baseZIndex]="99999"></p-toast>
-
 <p-table
   #dt
   [(selection)]="data"
@@ -13,6 +12,7 @@
   [value]="data"
   currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
   styleClass="custom-table"
+  [tableStyle]="{ 'min-width': '50rem' }"
 >
   <ng-template pTemplate="caption">
     <app-table-header
@@ -21,7 +21,6 @@
       [dt]="dt"
     ></app-table-header>
   </ng-template>
-
   <ng-template pTemplate="header">
     <tr>
       <th scope="col" pSortableColumn="fechaEntrada">
@@ -43,14 +42,9 @@
       <th scope="col" pSortableColumn="numeroFactura">
         Factura<p-sortIcon field="numeroFactura"></p-sortIcon>
       </th>
-
-      <th
-        *ngIf="authService.onValidateRoles(['SuperUsuario'])"
-        scope="col"
-        style="width: 5%"
-      >
-        Opciones
-      </th>
+      @if (authService.onValidateRoles(['SuperUsuario'])) {
+      <th scope="col" style="width: 5%">Opciones</th>
+      }
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-item>
@@ -86,10 +80,8 @@
         </small>
       </td>
       <!-- Opciones -->
-      <td
-        class="p-column-title"
-        *ngIf="authService.onValidateRoles(['SuperUsuario'])"
-      >
+      @if (authService.onValidateRoles(['SuperUsuario'])) {
+      <td class="p-column-title">
         <div class="d-flex justify-content-center">
           <custom-button-edit
             (edit)="
@@ -105,6 +97,7 @@
           ></custom-button-delete>
         </div>
       </td>
+      }
     </tr>
   </ng-template>
   <ng-template pTemplate="paginatorleft">

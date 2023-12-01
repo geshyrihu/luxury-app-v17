@@ -104,25 +104,6 @@ export default class OrdenCompraPdfComponent implements OnInit, OnDestroy {
       });
   }
 
-  // // //TODO: Revisar si realemnte se usa
-  // // onLoadOrdenCompraDetalle() {
-  // //   this.subRef$ = this.dataService
-  // //     .get<any>(`OrdenCompraDetalle/GetAll/${this.ordenCompraId}`)
-  // //     .subscribe({
-  // //       next: (resp: any) => {
-  // //         this.ordenCompraDetalle = resp.body;
-  // //         for (let n of this.ordenCompraDetalle) {
-  // //           this.total += n.total;
-  // //         }
-  // //         this.customToastService.onClose();
-  // //       },
-  // //       error: (err) => {
-  // //         // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-  // //         this.customToastService.onCloseToError();
-  // //         console.log(err.error);
-  // //       },
-  // //     });
-  // // }
   ngOnDestroy() {
     if (this.subRef$) this.subRef$.unsubscribe();
   }

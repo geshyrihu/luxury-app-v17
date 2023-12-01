@@ -39,8 +39,8 @@ const date = new Date();
     AddOrEditListAdministrationComponent,
     AddOrEditInvitedComponent,
     PrimeNgModule,
-    ComponentsModule,
-  ],
+    ComponentsModule
+],
   providers: [MessageService, CustomToastService],
 })
 export default class AddOrEditMeetingComponent implements OnInit, OnDestroy {

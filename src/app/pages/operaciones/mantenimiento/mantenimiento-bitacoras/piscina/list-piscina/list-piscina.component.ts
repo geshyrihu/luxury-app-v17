@@ -27,8 +27,8 @@ import AddOrEditPiscinaComponent from '../addoredit-piscina/addoredit-piscina.co
     ImageModule,
     CommonModule,
     RouterModule,
-    TooltipModule,
-  ],
+    TooltipModule
+],
   providers: [DialogService, MessageService, CustomToastService],
 })
 export default class ListPiscinaComponent implements OnInit, OnDestroy {

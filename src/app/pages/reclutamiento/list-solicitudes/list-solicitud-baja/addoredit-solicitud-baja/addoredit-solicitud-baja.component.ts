@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import {
+  AbstractControl,
   FormArray,
   FormBuilder,
   FormControl,
@@ -11,15 +12,14 @@ import {
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subscription } from 'rxjs';
 import { cb_ESiNo } from 'src/app/core/enums/si-no.enum';
-import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import {
   CustomToastService,
   DataService,
 } from 'src/app/core/services/common-services';
 import { EnumService } from 'src/app/core/services/enum-service';
+import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import ComponentsModule from 'src/app/shared/components.module';
-import CustomInputModule from 'src/app/shared/custom-input-form/custom-input.module';
 
 @Component({
   selector: 'app-addoredit-solicitud-baja',
@@ -43,9 +43,7 @@ export default class AddoreditSolicitudBajaComponent implements OnInit {
 
   submitting: boolean = false;
 
-  // cb_status: ISelectItemDto[] = onGetSelectItemFromEnum(EStatus);
   cb_status: ISelectItemDto[] = [];
-  // cb_tipo_baja: ISelectItemDto[] = onGetSelectItemFromEnum(ETypeOfDeparture);
   cb_tipo_baja: ISelectItemDto[] = [];
   cb_si_no: ISelectItemDto[] = cb_ESiNo;
 
@@ -77,11 +75,9 @@ export default class AddoreditSolicitudBajaComponent implements OnInit {
       .subscribe((resp) => {
         this.cb_tipo_baja = resp;
       });
-    this.enumService
-      .onGetSelectItemEmun('EStatus')
-      .subscribe((resp) => {
-        this.cb_status = resp;
-      });
+    this.enumService.onGetSelectItemEmun('EStatus').subscribe((resp) => {
+      this.cb_status = resp;
+    });
 
     this.subRef$ = this.dataService
       .get(`RequestDismissal/GetById/${this.id}`)
@@ -161,9 +157,17 @@ export default class AddoreditSolicitudBajaComponent implements OnInit {
     });
     this.discounts.push(discountDescription);
   }
-  isControlInvalid(control: FormControl) {
-    return control.invalid && (control.dirty || control.touched);
+  // isControlInvalid(control: FormControl) {
+  //   return control.invalid && (control.dirty || control.touched);
+  // }
+
+  isControlInvalid(control: AbstractControl | null): boolean {
+    if (control instanceof FormControl) {
+      return control.invalid && (control.touched || control.dirty);
+    }
+    return false;
   }
+
   removeDiscountDescription(index: number, id: number) {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();

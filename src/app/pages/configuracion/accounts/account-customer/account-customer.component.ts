@@ -5,13 +5,13 @@ import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subscription } from 'rxjs';
 import { IAccountDto } from 'src/app/core/interfaces/account-dto.interface';
-import CardEmployeeComponent from 'src/app/pages/operaciones/directorios/empleados/card-employee/card-employee.component';
 import PhoneFormatPipe from 'src/app/core/pipes/phone-format.pipe';
 import {
   CustomToastService,
   CustomerIdService,
   DataService,
 } from 'src/app/core/services/common-services';
+import CardEmployeeComponent from 'src/app/pages/operaciones/directorios/empleados/card-employee/card-employee.component';
 import ComponentsModule from 'src/app/shared/components.module';
 import DropdownRouteComponent from 'src/app/shared/ngb-dropdown-menu/dropdown-route.component';
 import PrimeNgModule from 'src/app/shared/prime-ng.module';
@@ -117,11 +117,6 @@ export default class AccountCustomerComponent implements OnInit, OnDestroy {
           if (registro) {
             // Modifica la propiedad 'active'
             registro.active = !registro.active; // o cualquier otro valor que desees asignar
-          } else {
-            console.log(
-              'No se encontró el registro con el ID:',
-              applicationUserId
-            );
           }
           this.customToastService.onShowSuccess();
         },
@@ -147,11 +142,6 @@ export default class AccountCustomerComponent implements OnInit, OnDestroy {
           if (registro) {
             // Modifica la propiedad 'active'
             registro.active = !registro.active; // o cualquier otro valor que desees asignar
-          } else {
-            console.log(
-              'No se encontró el registro con el ID:',
-              applicationUserId
-            );
           }
           this.customToastService.onShowSuccess();
         },

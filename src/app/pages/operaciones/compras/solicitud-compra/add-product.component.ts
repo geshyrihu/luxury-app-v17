@@ -40,8 +40,8 @@ import { environment } from 'src/environments/environment';
     FormsModule,
     CommonModule,
     ReactiveFormsModule,
-    ToastModule,
-  ],
+    ToastModule
+],
   providers: [DialogService, MessageService, CustomToastService],
 })
 export default class AddProductComponent implements OnInit, OnDestroy {

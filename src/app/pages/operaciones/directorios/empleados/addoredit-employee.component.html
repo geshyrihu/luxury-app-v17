@@ -10,7 +10,6 @@
           [horizontal]="false"
         ></custom-input-text>
       </div>
-
       <div class="col-sm-3 mb-2">
         <custom-input-text
           [control]="form.get('lastName')"
@@ -20,7 +19,6 @@
           [horizontal]="false"
         ></custom-input-text>
       </div>
-
       <div class="col-sm-3 mb-2">
         <custom-input-select
           [control]="form.get('typeContract')"
@@ -30,17 +28,15 @@
           [horizontal]="false"
         ></custom-input-select>
       </div>
-
       <div class="col-sm-3 mb-2">
-        <custom-input-email
+        <custom-input-text
           [control]="form.get('correoPersonal')"
           formControlName="correoPersonal"
           label="Email personal"
           placeholder="email personal"
           [horizontal]="false"
-        ></custom-input-email>
+        ></custom-input-text>
       </div>
-
       <div class="col-sm-3 mb-2">
         <label>País</label>
         <input
@@ -51,13 +47,11 @@
           placeholder="Escribir para buscar..."
         />
         <datalist id="prefixDatalistOptions">
-          <option
-            [value]="item.country + ' ' + item.prefix"
-            *ngFor="let item of cb_phonePrefixes"
-          ></option>
+          @for (item of cb_phonePrefixes; track item) {
+          <option [value]="item.country + ' ' + item.prefix"></option>
+          }
         </datalist>
       </div>
-
       <div class="col-sm-3 mb-2">
         <custom-input-mask
           [control]="form.get('celularPersonal')"
@@ -95,7 +89,6 @@
           [horizontal]="false"
         ></custom-input-select>
       </div>
-
       <div class="col-sm-3 mb-2">
         <custom-input-text
           [control]="form.get('curp')"
@@ -105,7 +98,6 @@
           [horizontal]="false"
         ></custom-input-text>
       </div>
-
       <div class="col-sm-3 mb-2">
         <custom-input-text
           [control]="form.get('rfc')"
@@ -124,7 +116,6 @@
           [horizontal]="false"
         ></custom-input-text>
       </div>
-
       <div class="form-group col-sm-3 mb-2">
         <custom-input-select
           [control]="form.get('bloodType')"
@@ -134,7 +125,6 @@
           [horizontal]="false"
         ></custom-input-select>
       </div>
-
       <div class="form-group col-sm-3 mb-2">
         <custom-input-mask
           [control]="form.get('localPhone')"
@@ -145,7 +135,6 @@
           [horizontal]="false"
         ></custom-input-mask>
       </div>
-
       <div class="form-group col-sm-3 mb-2">
         <custom-input-select
           [control]="form.get('maritalStatus')"
@@ -155,7 +144,6 @@
           [horizontal]="false"
         ></custom-input-select>
       </div>
-
       <div class="form-group col-sm-3 mb-2">
         <label>Nacionalidad</label>
         <input
@@ -165,15 +153,12 @@
           id="subCuentaDataList"
           placeholder="Escribir para buscar..."
         />
-
         <datalist id="subCuentaDatalistOptions">
-          <option
-            [value]="item.label"
-            *ngFor="let item of cb_nationality"
-          ></option>
+          @for (item of cb_nationality; track item) {
+          <option [value]="item.label"></option>
+          }
         </datalist>
       </div>
-
       <div class="form-group col-sm-3 mb-2">
         <custom-input-text-area
           [control]="form.get('address')"
@@ -183,7 +168,6 @@
           [horizontal]="false"
         ></custom-input-text-area>
       </div>
-
       <div class="form-group col-sm-3 mb-2">
         <custom-input-select
           [control]="form.get('educationLevel')"
@@ -202,7 +186,6 @@
           placeholder="fecha de ingreso"
         ></custom-input-date>
       </div>
-
       <div class="col-sm-3 mb-2">
         <custom-input-number
           [horizontal]="false"
@@ -212,22 +195,20 @@
           placeholder="sueldo mensual neto"
         ></custom-input-number>
       </div>
-      <div
-        class="col-sm-3 mb-2"
-        *ngIf="this.authService.onValidateRoles(['SuperUsuario'])"
-      >
+      @if (this.authService.onValidateRoles(['SuperUsuario'])) {
+      <div class="col-sm-3 mb-2">
         <!-- <label class="card-text">Cliente</label> -->
         <!-- <select
-          class="form-select form-select-sm"
-          formControlName="customerId"
-          [class.is-invalid]="
+            class="form-select form-select-sm"
+            formControlName="customerId"
+            [class.is-invalid]="
             f.customerId.invalid && (f.customerId.dirty || f.customerId.touched)
-          "
-        >
-          <option [value]="item.value" *ngFor="let item of cb_customer">
-            {{ item.label }}
-          </option>
-        </select> -->
+            "
+            >
+            <option [value]="item.value" *ngFor="let item of cb_customer">
+              {{ item.label }}
+            </option>
+          </select> -->
         <custom-input-select
           [control]="form.get('customerId')"
           formControlName="customerId"
@@ -236,6 +217,7 @@
           [horizontal]="false"
         ></custom-input-select>
       </div>
+      }
     </div>
     <custom-button-submit
       [disabled]="this.form.invalid || submitting"

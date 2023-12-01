@@ -15,6 +15,7 @@
     ]"
     [value]="data"
     styleClass="custom-table"
+    [tableStyle]="{ 'min-width': '50rem' }"
   >
     <ng-template pTemplate="caption">
       <app-table-header
@@ -68,7 +69,7 @@
             <custom-button
               [customClass]="'btn-sm btn-outline-dark'"
               ngbTooltip="Enviar mail de prueba"
-              icon="fa-duotone fa-envelope text-dark"
+              icon="fa-regular fa-envelope text-dark"
               (clicked)="onSendTestEmail(item.applicationUserId)"
             ></custom-button>
 

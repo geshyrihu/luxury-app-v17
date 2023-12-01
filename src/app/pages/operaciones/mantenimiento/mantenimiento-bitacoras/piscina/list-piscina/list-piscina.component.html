@@ -1,5 +1,4 @@
 <p-toast position="top-left" [baseZIndex]="99999"></p-toast>
-
 <div class="card">
   <p-table
     #dt
@@ -7,6 +6,7 @@
     [globalFilterFields]="['name']"
     [value]="data"
     styleClass="custom-table"
+    [tableStyle]="{ 'min-width': '50rem' }"
   >
     <ng-template pTemplate="caption">
       <app-table-header
@@ -15,7 +15,6 @@
         [dt]="dt"
       ></app-table-header>
     </ng-template>
-
     <ng-template pTemplate="header">
       <tr>
         <th scope="col">Imagen</th>
@@ -39,16 +38,11 @@
               class="me-2"
               [preview]="true"
             ></p-image>
-
-            <img
-              *ngIf="!item.pathImage"
-              src="assets/images/no-image.jpg"
-              alt=""
-              width="50"
-            />
+            @if (!item.pathImage) {
+            <img src="assets/images/no-image.jpg" alt="" width="50" />
+            }
           </div>
         </td>
-
         <td class="p-column-title">
           {{ item.name }}
         </td>
@@ -73,7 +67,6 @@
             <custom-button-delete
               (OnConfirm)="onDelete(item)"
             ></custom-button-delete>
-
             <a
               type="button"
               class="btn btn-sm btn-outline-info me-1 pointer"
@@ -84,7 +77,7 @@
                 item.id
               ]"
             >
-              <i class="fa-duotone fa-book text-primary"></i>
+              <i class="fa-regular fa-book text-primary"></i>
             </a>
           </div>
         </td>

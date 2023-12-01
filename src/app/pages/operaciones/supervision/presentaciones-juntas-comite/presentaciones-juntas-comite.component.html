@@ -1,5 +1,4 @@
 <p-toast position="top-left" [baseZIndex]="99999"></p-toast>
-
 <div class="p-card p-mb-5">
   <p-table
     #dt
@@ -10,6 +9,7 @@
     [showCurrentPageReport]="true"
     [value]="data"
     styleClass="custom-table"
+    [tableStyle]="{ 'min-width': '50rem' }"
   >
     <ng-template pTemplate="caption">
       <app-table-header
@@ -29,7 +29,6 @@
         </div>
       </div>
     </ng-template>
-
     <ng-template pTemplate="header">
       <tr>
         <th scope="col" style="width: 2%">#</th>
@@ -75,8 +74,8 @@
         </td>
         <td class="p-column-title">
           <!-- Portada -->
-
-          <div class="row" *ngIf="item.userPortada">
+          @if (item.userPortada) {
+          <div class="row">
             <div class="col-12">
               <p class="m-0">{{ item.userPortada }}</p>
             </div>
@@ -93,17 +92,18 @@
                 type="button"
                 class="btn btn-soft-danger btn-sm w-xs waves-effect btn-label waves-light me-1 hide-print-mode"
               >
-                <i class="fa-duotone fa-download fa-2x pointer label-icon"></i>
+                <i class="fa-regular fa-download fa-2x pointer label-icon"></i>
                 Pdf
               </button>
             </div>
           </div>
+          }
           <!-- Portada -->
         </td>
         <td class="p-column-title">
           <!-- CONTABLE -->
-
-          <div class="row" *ngIf="item.userContable">
+          @if (item.userContable) {
+          <div class="row">
             <div class="col-12">
               <p class="m-0">{{ item.userContable }}</p>
             </div>
@@ -120,17 +120,18 @@
                 type="button"
                 class="btn btn-soft-danger btn-sm w-xs waves-effect btn-label waves-light me-1 hide-print-mode"
               >
-                <i class="fa-duotone fa-download fa-2x pointer label-icon"></i>
+                <i class="fa-regular fa-download fa-2x pointer label-icon"></i>
                 Pdf
               </button>
             </div>
           </div>
+          }
           <!-- CONTABLE -->
         </td>
         <td class="p-column-title">
           <!-- OPERACIONES -->
-
-          <div class="row" *ngIf="item.fullName">
+          @if (item.fullName) {
+          <div class="row">
             <div class="col-12">
               <p class="m-0">{{ item.fullName }}</p>
             </div>
@@ -147,17 +148,18 @@
                 type="button"
                 class="btn btn-soft-danger btn-sm w-xs waves-effect btn-label waves-light me-1 hide-print-mode"
               >
-                <i class="fa-duotone fa-download fa-2x pointer label-icon"></i>
+                <i class="fa-regular fa-download fa-2x pointer label-icon"></i>
                 Pdf
               </button>
             </div>
           </div>
+          }
           <!-- OPERACIONES -->
         </td>
         <td>
           <!-- FINAL -->
-
-          <div class="row" *ngIf="item.userSupervisor">
+          @if (item.userSupervisor) {
+          <div class="row">
             <div class="col-12">
               <p class="m-0">{{ item.userSupervisor }}</p>
             </div>
@@ -174,11 +176,12 @@
                 type="button"
                 class="btn btn-soft-danger btn-sm w-xs waves-effect btn-label waves-light me-1 hide-print-mode"
               >
-                <i class="fa-duotone fa-download fa-2x pointer label-icon"></i>
+                <i class="fa-regular fa-download fa-2x pointer label-icon"></i>
                 Pdf
               </button>
             </div>
           </div>
+          }
           <!-- FINAL -->
         </td>
       </tr>

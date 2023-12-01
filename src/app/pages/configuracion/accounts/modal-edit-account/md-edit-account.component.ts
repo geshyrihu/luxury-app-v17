@@ -26,8 +26,8 @@ import UpdateRoleComponent from './update-roles/update-role.component';
     AccessCustomerComponent,
     UpdateRoleComponent,
     UpdatePasswordAccountComponent,
-    UpdateAccountComponent,
-  ],
+    UpdateAccountComponent
+],
   providers: [MessageService, CustomToastService],
 })
 export default class MdEditAccountComponent implements OnInit, OnDestroy {

@@ -1,6 +1,8 @@
 <div class="row">
   <div class="col-sm-6 p-fluid">
-    <label *ngIf="mostrartextDesde">Desde</label>
+    @if (mostrartextDesde) {
+      <label>Desde</label>
+    }
     <input
       class="form-control flatpickr-input"
       type="text"
@@ -10,19 +12,22 @@
       [convertModelValue]="true"
       [(ngModel)]="fechaInicioDate"
       (change)="onSendDateRange($event.target['defaultValue'], fechaFinalDate)"
-    />
-  </div>
-  <div class="col-sm-6">
-    <label *ngIf="mostrartextHasta">Hasta</label>
-    <input
-      class="form-control flatpickr-input"
-      type="text"
-      monthSelectorType="dropdown"
-      mwlFlatpickr
-      [altInput]="true"
-      [convertModelValue]="true"
-      [(ngModel)]="fechaFinalDate"
-      (change)="onSendDateRange(fechaInicioDate, $event.target['defaultValue'])"
-    />
-  </div>
-</div>
+      />
+    </div>
+    <div class="col-sm-6">
+      @if (mostrartextHasta) {
+        <label>Hasta</label>
+      }
+      <input
+        class="form-control flatpickr-input"
+        type="text"
+        monthSelectorType="dropdown"
+        mwlFlatpickr
+        [altInput]="true"
+        [convertModelValue]="true"
+        [(ngModel)]="fechaFinalDate"
+        (change)="onSendDateRange(fechaInicioDate, $event.target['defaultValue'])"
+        />
+      </div>
+    </div>
+    

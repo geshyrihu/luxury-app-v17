@@ -5,6 +5,7 @@
     [value]="data"
     [globalFilterFields]="['professionName', 'departament', 'empleado']"
     styleClass="custom-table"
+    [tableStyle]="{ 'min-width': '50rem' }"
   >
     <!-- styleClass="p-datatable-sm p-datatable-gridlines" -->
     <ng-template pTemplate="caption">
@@ -41,133 +42,99 @@
           TURNO
           <p-sortIcon field="turnoTrabajo"></p-sortIcon>
         </th>
-        <th
-          *ngIf="
-            authService.onValidateRoles([
-              'Asistente',
-              'Reclutamiento',
-              'Residente',
-              'SuperUsuario',
-              'SupervisionOperativa'
-            ])
-          "
-          style="width: 10%"
-          scope="col"
-          pSortableColumn="sueldoBaseFiltro"
-        >
+        @if ( authService.onValidateRoles([ 'Asistente', 'Reclutamiento',
+        'Residente', 'SuperUsuario', 'SupervisionOperativa' ]) ) {
+        <th style="width: 10%" scope="col" pSortableColumn="sueldoBaseFiltro">
           SUELDO PRESUPUESTADO<p-sortIcon field="sueldoBaseFiltro"></p-sortIcon>
         </th>
-        <th
-          *ngIf="
-            authService.onValidateRoles([
-              'Asistente',
-              'Reclutamiento',
-              'Residente',
-              'SuperUsuario',
-              'SupervisionOperativa'
-            ])
-          "
-          style="width: 10%"
-          scope="col"
-          pSortableColumn="sueldoFiltro"
-        >
+        } @if ( authService.onValidateRoles([ 'Asistente', 'Reclutamiento',
+        'Residente', 'SuperUsuario', 'SupervisionOperativa' ]) ) {
+        <th style="width: 10%" scope="col" pSortableColumn="sueldoFiltro">
           SUELDO ACTUAL<p-sortIcon field="sueldoFiltro"></p-sortIcon>
         </th>
-
+        }
         <th style="width: 35%" scope="col" pSortableColumn="empleado">
           COLABORADOR
           <p-sortIcon field="empleado"></p-sortIcon>
         </th>
-        <th
-          *ngIf="
-            authService.onValidateRoles([
-              'Asistente',
-              'Reclutamiento',
-              'Residente',
-              'SuperUsuario',
-              'SupervisionOperativa'
-            ])
-          "
-          style="width: 10%"
-          scope="col"
-        >
-          SOLICITUD
-        </th>
+        @if ( authService.onValidateRoles([ 'Asistente', 'Reclutamiento',
+        'Residente', 'SuperUsuario', 'SupervisionOperativa' ]) ) {
+        <th style="width: 10%" scope="col">SOLICITUD</th>
+        }
       </tr>
     </ng-template>
-
     <ng-template pTemplate="body" let-item>
       <!-- Si no hay empleado, entonces la vacangte no esta cubierta y se pone en rojo -->
-      <tr *ngIf="onValidateCustomerId(item.professionId)">
+      @if (onValidateCustomerId(item.professionId)) {
+      <tr>
         <td class="text-center">
           <div ngbDropdown container="body" class="d-inline-block">
             <i
               id="options"
               ngbDropdownToggle
-              class="fa-duotone fa-gear fa-sm pointer"
+              class="fa-regular fa-gear fa-sm pointer"
             ></i>
             <div ngbDropdownMenu aria-labelledby="options">
               <!-- Solicitar vacante para puesto de trabajo -->
+              @if ( item.positionRequest.status !== 0 &&
+              onValidateRole(item.professionId) && item.state == 0 ) {
               <custom-button
-                *ngIf="
-                  item.positionRequest.status !== 0 &&
-                  onValidateRole(item.professionId) &&
-                  item.state == 0
-                "
                 (clicked)="onModalSolicitudVacante(item.id)"
                 customClass="btn-outline-secondary  w-100 mt-1 text-start"
-                icon="fa-duotone fa-user-magnifying-glass me-2"
+                icon="fa-regular fa-user-magnifying-glass me-2"
                 label="Solicitar vacante"
               ></custom-button>
+              }
               <!-- Solicitar vacante para puesto de trabajo -->
               <!-- Solicitar baja de empleado -->
               <!-- <custom-button
-                *ngIf="
-                  item.person &&
-                  item.requestDismissal !== 0 &&
-                  item.requestDismissal !== 3 &&
-                  onValidateRole(item.professionId) &&
-                  item.state == 0
-                "
-                (clicked)="onModalSolicitudBaja(item.employeeId)"
-                customClass="btn-outline-danger   w-100 mt-1 text-start"
-                icon="fa-duotone fa-user-minus me-2"
-                label="Solicitar baja"
-              ></custom-button> -->
+                    *ngIf="
+                    item.person &&
+                    item.requestDismissal !== 0 &&
+                    item.requestDismissal !== 3 &&
+                    onValidateRole(item.professionId) &&
+                    item.state == 0
+                    "
+                    (clicked)="onModalSolicitudBaja(item.employeeId)"
+                    customClass="btn-outline-danger   w-100 mt-1 text-start"
+                    icon="fa-regular fa-user-minus me-2"
+                    label="Solicitar baja"
+                  ></custom-button> -->
               <!-- Solicitar baja de empleado -->
               <br />
               <!-- Solicitar modificación de salario -->
               <!-- <ng-contentainer
-                *ngIf="
+                  *ngIf="
                   item.person &&
                   item.requestSalaryModification !== 0 &&
                   onValidateRole(item.professionId) &&
                   item.state == 0
-                "
-              >
-                <custom-button
-                  (clicked)="onModalSolicitudModificacionSalarion(item.id)"
-                  customClass="btn-outline-success w-100 mt-1 text-start"
-                  icon="fa-duotone fa-money-bill-1 me-2"
-                  label="Solicitar mod. de salario"
-                ></custom-button>
-                <br />
-              </ng-contentainer> -->
+                  "
+                  >
+                  <custom-button
+                    (clicked)="onModalSolicitudModificacionSalarion(item.id)"
+                    customClass="btn-outline-success w-100 mt-1 text-start"
+                    icon="fa-regular fa-money-bill-1 me-2"
+                    label="Solicitar mod. de salario"
+                  ></custom-button>
+                  <br />
+                </ng-contentainer> -->
               <!-- Solicitar modificación de salario -->
               <!-- Asignar empleado -->
+              @if (authService.onValidateRoles(['SuperUsuario'])) {
               <custom-button
-                *ngIf="authService.onValidateRoles(['SuperUsuario'])"
                 (clicked)="onModalAddEmployeeToWorkPosition(item.id)"
                 customClass="btn-outline-dark w-100 mt-1 text-start"
-                icon="fa-duotone fa-user-plus me-2"
+                icon="fa-regular fa-user-plus me-2"
                 label="Editar colaborador"
               ></custom-button>
+              }
               <!-- Asignar empleado -->
               <br />
               <!-- visualizar descripcion de puesto-->
               <custom-button
                 customClass="btn-outline-primary   w-100 mt-1 text-start"
-                icon="fa-duotone fa-book me-2"
+                icon="fa-regular fa-book me-2"
                 label="Descripción de puesto"
                 (clicked)="onModalJobDescription(item.professionId)"
               ></custom-button>
@@ -176,17 +143,16 @@
               <!-- visualizar horarios de puesto de trabajo -->
               <custom-button
                 customClass="btn-outline-primary   w-100 mt-1 text-start"
-                icon="fa-duotone fa-clock me-2"
+                icon="fa-regular fa-clock me-2"
                 label="Horarios"
                 (clicked)="onModalHoursWorkPosition(item.id)"
               ></custom-button>
               <!-- visualizar horarios de puesto de trabajo -->
               <br />
-
               <!-- Editar puesto de trabajo -->
               <custom-button
                 customClass="btn-outline-info   w-100 mt-1 text-start"
-                icon="fa-duotone fa-clock me-2"
+                icon="fa-regular fa-clock me-2"
                 label="Editar"
                 (clicked)="
                   onModalAddOrEdit({
@@ -198,18 +164,18 @@
               <!-- Editar puesto de trabajo -->
               <br />
               <!-- Eliminar puesto de trabajo -->
+              @if (authService.onValidateRoles(['SuperUsuario'])) {
               <custom-button-confirmation
-                *ngIf="authService.onValidateRoles(['SuperUsuario'])"
                 title="Confirmar"
                 text="Se va a eliminar el registro"
                 classButton="btn-outline-danger   w-100 mt-1 text-start"
                 label="Eliminar"
-                icon="fa-duotone fa-clock me-2"
+                icon="fa-regular fa-clock me-2"
                 tooltipText="Se va a eliminar el registro"
                 confirmButtonText="Sí, eliminar"
                 (OnConfirm)="onDelete(item.id)"
               ></custom-button-confirmation>
-
+              }
               <!-- Eliminar puesto de trabajo -->
               <br />
             </div>
@@ -218,115 +184,86 @@
         <td>
           {{ item.folio }}
         </td>
-
         <td>
           {{ item.professionName }}
         </td>
         <td>
           {{ item.turno }}
         </td>
-        <td
-          *ngIf="
-            authService.onValidateRoles([
-              'Asistente',
-              'Reclutamiento',
-              'Residente',
-              'SuperUsuario',
-              'SupervisionOperativa'
-            ])
-          "
-        >
+        @if ( authService.onValidateRoles([ 'Asistente', 'Reclutamiento',
+        'Residente', 'SuperUsuario', 'SupervisionOperativa' ]) ) {
+        <td>
           {{ item.sueldoBase }}
         </td>
-        <td
-          *ngIf="
-            authService.onValidateRoles([
-              'Asistente',
-              'Reclutamiento',
-              'Residente',
-              'SuperUsuario',
-              'SupervisionOperativa'
-            ])
-          "
-        >
+        } @if ( authService.onValidateRoles([ 'Asistente', 'Reclutamiento',
+        'Residente', 'SuperUsuario', 'SupervisionOperativa' ]) ) {
+        <td>
           {{ item.sueldo }}
         </td>
-
+        }
         <td>
+          @if (item.personPhoto) {
           <img
             (click)="onCardEmployee(item.employeeId)"
-            *ngIf="item.personPhoto"
             [src]="pahtBaseImg + item.personPhoto"
             class="rounded avatar-sm pointer me-3"
             alt="img"
           />
-          <i
-            *ngIf="!item.personPhoto"
-            class="fa-duotone fa-user-xmark fa-2x"
-          ></i>
+          } @if (!item.personPhoto) {
+          <i class="fa-regular fa-user-xmark fa-2x"></i>
+          }
           {{ item.person }}
         </td>
-
-        <td
-          *ngIf="
-            authService.onValidateRoles([
-              'Asistente',
-              'Reclutamiento',
-              'Residente',
-              'SuperUsuario',
-              'SupervisionOperativa'
-            ])
-          "
-        >
+        @if ( authService.onValidateRoles([ 'Asistente', 'Reclutamiento',
+        'Residente', 'SuperUsuario', 'SupervisionOperativa' ]) ) {
+        <td>
           <!-- Si hay una ultima solicitud en estatus de pendiente -->
-          <div
-            class="d-flex justify-content-center"
-            *ngIf="onValidateShowTIcket(item.professionId)"
-          >
+          @if (onValidateShowTIcket(item.professionId)) {
+          <div class="d-flex justify-content-center">
             <!-- Solicitud de vacante -->
+            @if ( item.positionRequest.status === 0 ||
+            item.positionRequest.status === 3 ) {
             <custom-button
-              *ngIf="
-                item.positionRequest.status === 0 ||
-                item.positionRequest.status === 3
-              "
               ngbTooltip="Solicitud de vacante vigente"
               placement="top"
               customClass="btn-sm btn-outline-secondary"
-              icon="fa-duotone fa-tags fa-2x"
+              icon="fa-regular fa-tags fa-2x"
               (clicked)="onRouteEstatusSolicitud(item.positionRequest.id)"
             ></custom-button>
-
+            }
             <!-- Solicitud de vacante -->
             <!-- Solicitud de baja -->
-            <!-- 
-            <custom-button
-              *ngIf="item.requestDismissal === 0 || item.requestDismissal === 3"
-              ngbTooltip="Solicitud de baja vigente"
-              placement="top"
-              customClass="btn-sm btn-outline-danger"
-              icon="fa-duotone fa-tags fa-2x"
-              (clicked)="onRouteEstatusRequestDismissal(item.id)"
-            ></custom-button> -->
+            <!--
+                  <custom-button
+                    *ngIf="item.requestDismissal === 0 || item.requestDismissal === 3"
+                    ngbTooltip="Solicitud de baja vigente"
+                    placement="top"
+                    customClass="btn-sm btn-outline-danger"
+                    icon="fa-regular fa-tags fa-2x"
+                    (clicked)="onRouteEstatusRequestDismissal(item.id)"
+                  ></custom-button> -->
             <!-- Solicitud de baja -->
             <!-- Solicitud de modiicacion de salario -->
             <!-- &&                item.positionRequest.status === 3 -->
             <!-- <custom-button
-              *ngIf="item.requestSalaryModification === 0"
-              ngbTooltip="Solicitud modificacion de salario vigente"
-              placement="top"
-              customClass="btn-sm btn-outline-success"
-              icon="fa-duotone fa-tags fa-2x"
-              (clicked)="
-                onRouteEstatusSalaryModification(item.employeeId, item.id)
-              "
-            ></custom-button> -->
+                  *ngIf="item.requestSalaryModification === 0"
+                  ngbTooltip="Solicitud modificacion de salario vigente"
+                  placement="top"
+                  customClass="btn-sm btn-outline-success"
+                  icon="fa-regular fa-tags fa-2x"
+                  (clicked)="
+                  onRouteEstatusSalaryModification(item.employeeId, item.id)
+                  "
+                ></custom-button> -->
             <!-- Solicitud de modiicacion de salario -->
             <!-- fin tickets -->
           </div>
+          }
         </td>
+        }
       </tr>
+      }
     </ng-template>
-
     <ng-template pTemplate="summary">
       <div class="flex align-items-center justify-content-end">
         Total {{ data ? data.length : 0 }} puestos de trabajo.
@@ -334,10 +271,8 @@
     </ng-template>
   </p-table>
 </div>
-<button
-  class="btn btn-outline-info"
-  (click)="SendMailTest()"
-  *ngIf="authService.onValidateRoles(['SuperUsuario'])"
->
+@if (authService.onValidateRoles(['SuperUsuario'])) {
+<button class="btn btn-outline-info" (click)="SendMailTest()">
   Enviar mail de prueba
 </button>
+}

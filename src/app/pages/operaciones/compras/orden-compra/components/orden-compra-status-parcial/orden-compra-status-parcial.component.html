@@ -1,11 +1,11 @@
-<ng-container *ngIf="mostrarTabla">
+@if (mostrarTabla) {
   <div class="p-fluid">
     <button
       [disabled]="ordenCompraPresupuestoUtilizado"
       (click)="onModalOrdenCompraStatus()"
       type="button"
       class="pointer btn btn-info w-100 mb-2 p-1"
-    >
+      >
       ESTATUS DE COMPRA
     </button>
   </div>
@@ -37,4 +37,4 @@
       </tr>
     </tbody>
   </table>
-</ng-container>
+}

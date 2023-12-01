@@ -1,10 +1,10 @@
 <p-toast position="top-left" [baseZIndex]="99999"></p-toast>
-
 <div class="card">
   <p-table
     #dt
     responsiveLayout="scroll"
     styleClass="custom-table"
+    [tableStyle]="{ 'min-width': '50rem' }"
     [value]="data"
     [globalFilterFields]="['numeroCuenta', 'descripcion']"
   >
@@ -16,7 +16,6 @@
         [rolAuth]="authService.onValidateRoles(['SuperUsuario'])"
       ></app-table-header>
     </ng-template>
-
     <ng-template pTemplate="header" let-columns>
       <tr>
         <th scope="col" style="width: 30%" pSortableColumn="numeroCuenta">
@@ -27,11 +26,9 @@
           DESCRIPCIÓN DE LA CUENTA
           <p-sortIcon field="descripcion"></p-sortIcon>
         </th>
-        <th
-          scope="col"
-          *ngIf="authService.onValidateRoles(['SuperUsuario'])"
-          style="width: 5%"
-        ></th>
+        @if (authService.onValidateRoles(['SuperUsuario'])) {
+        <th scope="col" style="width: 5%"></th>
+        }
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-item let-columns="columns">
@@ -39,15 +36,11 @@
         <td class="p-column-title">
           {{ item.numeroCuenta }}
         </td>
-
         <td class="p-column-title">
           {{ item.descripcion }}
         </td>
-
-        <td
-          class="p-column-title"
-          *ngIf="authService.onValidateRoles(['SuperUsuario'])"
-        >
+        @if (authService.onValidateRoles(['SuperUsuario'])) {
+        <td class="p-column-title">
           <div class="d-flex justify-content-center">
             <custom-button-edit
               (edit)="
@@ -59,6 +52,7 @@
             ></custom-button-delete>
           </div>
         </td>
+        }
       </tr>
     </ng-template>
     <ng-template pTemplate="paginatorleft">

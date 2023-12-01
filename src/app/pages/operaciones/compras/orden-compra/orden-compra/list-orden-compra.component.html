@@ -3,6 +3,7 @@
   [(selection)]="data"
   #dt
   styleClass="custom-table"
+  [tableStyle]="{ 'min-width': '50rem' }"
   [value]="data"
   [rows]="100"
   [paginator]="true"
@@ -34,13 +35,12 @@
         ])
       "
     ></app-table-header>
-
     <div class="row mt-1">
       <div class="col-12">
         <custom-button
           (clicked)="onModalCaratula()"
           customClass="btn btn-warning float-start"
-          icon="fa-duotone fa-book me-2"
+          icon="fa-regular fa-book me-2"
           label="Caratula"
         >
         </custom-button>
@@ -55,7 +55,6 @@
           label="Pendientes"
         >
         </custom-button>
-
         <custom-button
           (clicked)="onSelectStatus(0)"
           (clicked)="statusCompra = 0"
@@ -82,7 +81,6 @@
     </div>
     <div class="col text-left"></div>
   </ng-template>
-
   <ng-template pTemplate="header">
     <tr>
       <th scope="col" style="width: 7%" pSortableColumn="folio">
@@ -105,25 +103,25 @@
         Proveedor
         <p-sortIcon field="proveedor"></p-sortIcon>
       </th>
+      @if (statusCompra === 1) {
       <th
         scope="col"
         style="width: 15%"
         pSortableColumn="ordenCompraAuth.observaciones"
-        *ngIf="statusCompra === 1"
       >
         Observaciones
         <p-sortIcon field="ordenCompraAuth.observaciones"></p-sortIcon>
       </th>
-
+      } @if (this.statusCompra === 0) {
       <th
         scope="col"
         style="width: 15%"
-        *ngIf="this.statusCompra === 0"
         pSortableColumn="ordenCompraAuth.fullName"
       >
         Autoriza
         <p-sortIcon field="ordenCompraAuth.fullName"></p-sortIcon>
       </th>
+      }
       <th scope="col" style="width: 15%" pSortableColumn="revisadoPorResidente">
         Revisada por
         <p-sortIcon field="revisadoPorResidente"></p-sortIcon>
@@ -148,50 +146,47 @@
       <td>
         {{ item.proveedor }}
       </td>
-      <td *ngIf="statusCompra === 1">
+      @if (statusCompra === 1) {
+      <td>
         {{ item.observaciones }}
       </td>
-      <td *ngIf="this.statusCompra === 0">
+      } @if (this.statusCompra === 0) {
+      <td>
         {{ item.fullName }} <br />
-
         {{ item.fechaAutorizacion | date : "short" }}
       </td>
+      }
       <td>
         {{ item.revisadoPorResidente }}
       </td>
-
       <td class="p-column-title">
         <div class="d-flex justify-content-center">
+          @if (statusCompra === 0) {
           <a
-            *ngIf="statusCompra === 0"
             class="btn btn-sm btn-outline-danger me-1"
             target="_blank"
             ngbTooltip="Solicitud de Pago pdf"
             placement="top"
             [routerLink]="['/operaciones/compras/solicitud-pago-pdf/', item.id]"
           >
-            <i class="fa-duotone fa-file-pdf"></i>
+            <i class="fa-regular fa-file-pdf"></i>
           </a>
+          } @if (statusCompra === 0) {
           <a
-            *ngIf="statusCompra === 0"
             class="btn btn-sm btn-outline-danger me-1"
             target="_blank"
             ngbTooltip="Orden de Compra pdf"
             placement="top"
             [routerLink]="['/operaciones/compras/orden-compra-pdf/', item.id]"
           >
-            <i class="fa-duotone fa-file-pdf"></i>
+            <i class="fa-regular fa-file-pdf"></i>
           </a>
+          } @if ( authService.onValidateRoles([ 'Asistente', 'Mantenimiento',
+          'Residente' ]) ) {
           <custom-button-edit
-            *ngIf="
-              authService.onValidateRoles([
-                'Asistente',
-                'Mantenimiento',
-                'Residente'
-              ])
-            "
             (edit)="onAddOrEdit(item.id)"
           ></custom-button-edit>
+          }
           <button
             type="button"
             class="btn btn-sm btn-outline-info me-1 pointer"
@@ -199,20 +194,18 @@
             placement="top"
             (click)="onOrdenCompraModal(item.id)"
           >
-            <i class="fa-duotone fa-pencil text-info"></i>
+            <i class="fa-regular fa-pencil text-info"></i>
           </button>
-
+          @if ( statusCompra === 2 && authService.onValidateRoles(['Residente'])
+          ) {
           <custom-button-delete
-            *ngIf="
-              statusCompra === 2 && authService.onValidateRoles(['Residente'])
-            "
             (OnConfirm)="onDelete(item)"
           ></custom-button-delete>
+          }
         </div>
       </td>
     </tr>
   </ng-template>
-
   <ng-template pTemplate="paginatorleft">
     <app-table-footer [data]="data"></app-table-footer>
   </ng-template>

@@ -1,9 +1,10 @@
 <p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+@if (data) {
 <p-table
-  *ngIf="data"
   [(selection)]="data"
   #dt
   styleClass="custom-table"
+  [tableStyle]="{ 'min-width': '50rem' }"
   [value]="data"
   [rows]="15"
   [paginator]="true"
@@ -57,21 +58,10 @@
         Modelo
         <p-sortIcon field="modelo"></p-sortIcon>
       </th>
-
-      <th
-        scope="col"
-        style="width: 5%"
-        *ngIf="
-          authService.onValidateRoles([
-            'Asistente',
-            'Mantenimiento',
-            'SuperUsuario',
-            'Residente'
-          ])
-        "
-      >
-        Opciones
-      </th>
+      @if ( authService.onValidateRoles([ 'Asistente', 'Mantenimiento',
+      'SuperUsuario', 'Residente' ]) ) {
+      <th scope="col" style="width: 5%">Opciones</th>
+      }
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-item>
@@ -90,36 +80,29 @@
           {{ item.nombreProducto }}
         </small>
       </td>
-
       <td class="p-column-title">
         <small> {{ item.category }} </small>
       </td>
-
       <td class="p-column-title">
         <small> {{ item.marca }} </small>
       </td>
       <td class="p-column-title">
         <small> {{ item.modelo }} </small>
       </td>
-
       <td class="p-column-title">
         <div class="d-flex justify-content-center">
+          @if ( authService.onValidateRoles([ 'SupervisionOperativa',
+          'SuperUsuario', 'Residente' ]) || item.userid === account_id ) {
           <custom-button-edit
-            *ngIf="
-              authService.onValidateRoles([
-                'SupervisionOperativa',
-                'SuperUsuario',
-                'Residente'
-              ]) || item.userid === account_id
-            "
             (edit)="
               showModalAddOrEdit({ id: item.id, title: 'Editar Registro' })
             "
           ></custom-button-edit>
+          } @if (authService.onValidateRoles(['SuperUsuario'])) {
           <custom-button-delete
-            *ngIf="authService.onValidateRoles(['SuperUsuario'])"
             (OnConfirm)="onDelete(item)"
           ></custom-button-delete>
+          }
         </div>
       </td>
     </tr>
@@ -131,3 +114,4 @@
     </div>
   </ng-template>
 </p-table>
+}

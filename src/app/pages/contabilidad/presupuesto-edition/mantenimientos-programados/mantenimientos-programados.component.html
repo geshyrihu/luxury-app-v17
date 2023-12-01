@@ -1,7 +1,13 @@
 <p-toast position="top-left" [baseZIndex]="99999"></p-toast>
 
 <div class="card">
-  <p-table #dt [value]="data" [autoLayout]="true" styleClass="custom-table">
+  <p-table
+    #dt
+    [value]="data"
+    [autoLayout]="true"
+    styleClass="custom-table"
+    [tableStyle]="{ 'min-width': '50rem' }"
+  >
     <ng-template pTemplate="header">
       <tr>
         <th scope="col">Equipo</th>

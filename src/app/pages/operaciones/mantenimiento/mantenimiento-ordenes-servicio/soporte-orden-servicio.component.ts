@@ -12,10 +12,7 @@ import { environment } from 'src/environments/environment';
   selector: 'app-soporte-orden-servicio',
   templateUrl: './soporte-orden-servicio.component.html',
   standalone: true,
-  imports: [
-    CommonModule,
-    SanitizeHtmlPipe,
-  ],
+  imports: [CommonModule, SanitizeHtmlPipe],
 })
 export default class SoporteOrdenServicioComponent
   implements OnInit, OnDestroy

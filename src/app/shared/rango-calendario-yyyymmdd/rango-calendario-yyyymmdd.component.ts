@@ -1,4 +1,4 @@
-import { NgIf } from '@angular/common';
+
 import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { FlatpickrModule } from 'angularx-flatpickr';
@@ -13,7 +13,7 @@ const date = new Date();
   selector: 'app-rango-calendario-yyyymmdd',
   templateUrl: './rango-calendario-yyyymmdd.component.html',
   standalone: true,
-  imports: [NgIf, FormsModule, FlatpickrModule],
+  imports: [FormsModule, FlatpickrModule],
 })
 export default class RangoCalendarioyyyymmddComponent
   implements OnInit, OnDestroy

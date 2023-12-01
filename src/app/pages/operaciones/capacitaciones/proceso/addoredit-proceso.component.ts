@@ -12,8 +12,8 @@ import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { SelectItemService } from 'src/app/core/services/select-item.service';
+import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import ComponentsModule from 'src/app/shared/components.module';
-import CustomInputModule from 'src/app/shared/custom-input-form/custom-input.module';
 
 @Component({
   selector: 'app-addoredit-proceso',

@@ -20,8 +20,8 @@ import { DateService } from 'src/app/core/services/date.service';
     TableModule,
     EAreaMinutasDetallesPipe,
     SanitizeHtmlPipe,
-    EStatusPipe,
-  ],
+    EStatusPipe
+],
   providers: [DialogService, MessageService, CustomToastService],
 })
 export default class AddOrEditMeetingDetailComponent

@@ -1,11 +1,11 @@
 <p-toast position="top-left" [baseZIndex]="99999"></p-toast>
-
 <div class="card">
+  @if (data) {
   <p-table
-    *ngIf="data"
     [(selection)]="data"
     #dt
     styleClass="custom-table"
+    [tableStyle]="{ 'min-width': '50rem' }"
     [value]="data"
     [rows]="15"
     [paginator]="true"
@@ -68,27 +68,20 @@
           Compra Sugerida
           <p-sortIcon field="compraRequerida"></p-sortIcon>
         </th>
-        <th
-          *ngIf="
-            authService.onValidateRoles([
-              'Asistente',
-              'Mantenimiento',
-              'Residente',
-              'SuperUsuario'
-            ])
-          "
-          scope="col"
-        >
-          Opciones
-        </th>
+        @if ( authService.onValidateRoles([ 'Asistente', 'Mantenimiento',
+        'Residente', 'SuperUsuario' ]) ) {
+        <th scope="col">Opciones</th>
+        }
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
-      <tr *ngIf="rowGroupMetadata[item.category].index === rowIndex">
+      @if (rowGroupMetadata[item.category].index === rowIndex) {
+      <tr>
         <td colspan="7">
           <span class="p-text-bold p-ml-2"> {{ item.category }}</span>
         </td>
       </tr>
+      }
       <tr>
         <td>
           <small
@@ -100,7 +93,6 @@
               alt="..."
               class="rounded avatar-lg"
             />
-
             {{ item.producto }}</small
           >
         </td>
@@ -126,29 +118,16 @@
         <td class="text-center">
           {{ item.compraRequerida }}
         </td>
-        <td
-          *ngIf="
-            authService.onValidateRoles([
-              'Asistente',
-              'Mantenimiento',
-              'Residente',
-              'SuperUsuario'
-            ])
-          "
-        >
+        @if ( authService.onValidateRoles([ 'Asistente', 'Mantenimiento',
+        'Residente', 'SuperUsuario' ]) ) {
+        <td>
           <div class="d-flex justify-content-center">
+            @if ( authService.onValidateRoles([ 'Asistente', 'Mantenimiento',
+            'Residente', 'SuperUsuario' ]) ) {
             <custom-button
-              *ngIf="
-                authService.onValidateRoles([
-                  'Asistente',
-                  'Mantenimiento',
-                  'Residente',
-                  'SuperUsuario'
-                ])
-              "
               ngbTooltip="Registrar Entrada"
               [customClass]="'btn-sm btn-outline-danger'"
-              icon="fa-duotone fa-plus text-danger"
+              icon="fa-regular fa-plus text-danger"
               (clicked)="
                 onAddEntrada({
                   id: 0,
@@ -157,18 +136,12 @@
                 })
               "
             ></custom-button>
+            } @if ( authService.onValidateRoles([ 'Asistente', 'Mantenimiento',
+            'Residente', 'SuperUsuario' ]) ) {
             <custom-button
-              *ngIf="
-                authService.onValidateRoles([
-                  'Asistente',
-                  'Mantenimiento',
-                  'Residente',
-                  'SuperUsuario'
-                ])
-              "
               ngbTooltip="Registrar Salida"
               [customClass]="'btn-sm btn-outline-success'"
-              icon="fa-duotone fa-minus text-success"
+              icon="fa-regular fa-minus text-success"
               (clicked)="
                 onAddSalida({
                   id: 0,
@@ -178,25 +151,21 @@
                 })
               "
             ></custom-button>
-
+            } @if ( authService.onValidateRoles([ 'Asistente', 'Mantenimiento',
+            'Residente', 'SuperUsuario' ]) ) {
             <custom-button-edit
-              *ngIf="
-                authService.onValidateRoles([
-                  'Asistente',
-                  'Mantenimiento',
-                  'Residente',
-                  'SuperUsuario'
-                ])
-              "
               (edit)="editProductos({ id: item.id, title: 'Editar Registro' })"
             ></custom-button-edit>
+            } @if (authService.onValidateRoles(['Mantenimiento'])) {
             <custom-button-delete
-              *ngIf="authService.onValidateRoles(['Mantenimiento'])"
               (OnConfirm)="onDelete(item)"
             ></custom-button-delete>
+            }
           </div>
         </td>
+        }
       </tr>
     </ng-template>
   </p-table>
+  }
 </div>

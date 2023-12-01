@@ -14,11 +14,7 @@ import { environment } from 'src/environments/environment';
   selector: 'app-reporte-ordenes-servicio',
   templateUrl: './reporte-ordenes-servicio.component.html',
   standalone: true,
-  imports: [
-    CommonModule,
-    SanitizeHtmlPipe,
-    DatePipe,
-  ],
+  imports: [CommonModule, SanitizeHtmlPipe, DatePipe],
   providers: [MessageService, CustomToastService],
 })
 export default class ReporteOrdenesServicioComponent

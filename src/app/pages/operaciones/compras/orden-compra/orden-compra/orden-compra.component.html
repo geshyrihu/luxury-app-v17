@@ -7,441 +7,417 @@
   [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
   [style]="{ width: '25vw' }"
 ></p-confirmDialog>
-
-<ng-container *ngIf="ordenCompra !== undefined">
-  <div class="row">
-    <!-- Datos Cotización -->
-
-    <div class="col-sm-3">
-      <app-orden-compra-datos-cotizacion
-        [ordenCompra]="ordenCompra"
-        [solicitudCompraId]="solicitudCompraId"
-        [bloqueada]="ordenCompraEstaAutorizada || revisadaPorResidente"
-        (modalOrdenCompra)="onModalOrdenCompra()"
-      >
-      </app-orden-compra-datos-cotizacion>
-    </div>
-    <!-- Datos Cotización -->
-    <!-- Datos pago -->
-
-    <div class="col-sm-3">
-      <app-orden-compra-datos-pago-parcial
-        [ordenCompra]="ordenCompra"
-        [bloqueada]="ordenCompraEstaAutorizada || revisadaPorResidente"
-        (modalOrdenCompra)="onModalOrdenCompraDatosPago()"
-      ></app-orden-compra-datos-pago-parcial>
-    </div>
-    <!-- Datos pago -->
-    <!-- Datos Autorización  -->
-    <div class="col-sm-3">
-      <!-- Boton Autorizar por Residente -->
+@if (ordenCompra !== undefined) {
+<div class="row">
+  <!-- Datos Cotización -->
+  <div class="col-sm-3">
+    <app-orden-compra-datos-cotizacion
+      [ordenCompra]="ordenCompra"
+      [solicitudCompraId]="solicitudCompraId"
+      [bloqueada]="ordenCompraEstaAutorizada || revisadaPorResidente"
+      (modalOrdenCompra)="onModalOrdenCompra()"
+    >
+    </app-orden-compra-datos-cotizacion>
+  </div>
+  <!-- Datos Cotización -->
+  <!-- Datos pago -->
+  <div class="col-sm-3">
+    <app-orden-compra-datos-pago-parcial
+      [ordenCompra]="ordenCompra"
+      [bloqueada]="ordenCompraEstaAutorizada || revisadaPorResidente"
+      (modalOrdenCompra)="onModalOrdenCompraDatosPago()"
+    ></app-orden-compra-datos-pago-parcial>
+  </div>
+  <!-- Datos pago -->
+  <!-- Datos Autorización  -->
+  <div class="col-sm-3">
+    <!-- Boton Autorizar por Residente -->
+    @if ( ordenCompra.ordenCompraAuth.statusOrdenCompra !== 'Autorizado' &&
+    ordenCompraService.getTotalPorCubrir() === 0 ) {
+    <button
+      (click)="autorizarCompra()"
+      type="button"
+      class="btn btn-success mb-2 p-1 w-100"
+    >
+      AUTORIZAR
+    </button>
+    }
+    <!-- Boton Autorizar por Residente -->
+    @if (!ordenCompra.ordenCompraStatus.sePago) {
+    <div>
+      @if (ordenCompra.ordenCompraAuth.statusOrdenCompra === 'Autorizado') {
       <button
-        (click)="autorizarCompra()"
-        *ngIf="
-          ordenCompra.ordenCompraAuth.statusOrdenCompra !== 'Autorizado' &&
-          ordenCompraService.getTotalPorCubrir() === 0
-        "
+        (click)="deautorizarCompra()"
         type="button"
-        class="btn btn-success mb-2 p-1 w-100"
+        class="btn btn-danger mb-2 p-1 w-100"
       >
-        AUTORIZAR
+        REVOCAR
       </button>
-
-      <!-- Boton Autorizar por Residente -->
-      <div *ngIf="!ordenCompra.ordenCompraStatus.sePago">
-        <button
-          *ngIf="ordenCompra.ordenCompraAuth.statusOrdenCompra === 'Autorizado'"
-          (click)="deautorizarCompra()"
-          type="button"
-          class="btn btn-danger mb-2 p-1 w-100"
-        >
-          REVOCAR
-        </button>
-      </div>
-
-      <!-- Botones -->
-
-      <!-- Botones -->
-      <table class="table table-sm">
-        <tbody>
-          <tr>
-            <td style="width: 30%">Estatus</td>
-            <td style="width: 70%">
-              {{ ordenCompra.ordenCompraAuth.statusOrdenCompra }}
-            </td>
-          </tr>
-          <tr>
-            <td style="width: 30%">Reviso</td>
-            <td style="width: 70%">
-              {{ ordenCompra.ordenCompraAuth.revisadoPorResidente }}
-            </td>
-          </tr>
-          <tr>
-            <td style="width: 30%">Autorizo</td>
-            <td style="width: 70%">
-              {{ ordenCompra.ordenCompraAuth.applicationUserAuth }} <br />
-              {{
-                ordenCompra.ordenCompraAuth.fechaAutorizacion | date : "medium"
-              }}
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <!-- Datos Autorización  -->
+      }
     </div>
-    <!-- Status de Compra  -->
-    <div class="col-sm-3">
-      <app-orden-compra-status-parcial
-        (modalOrdenCompra)="onModalOrdenCompraStatus()"
-        [ordenCompra]="ordenCompra"
-        [mostrarTabla]="
-          ordenCompra.ordenCompraAuth.statusOrdenCompra === 'Autorizado'
-        "
-        [ordenCompraPresupuestoUtilizado]="
-          ordenCompraPresupuestoUtilizado.length === 0
-        "
-      >
-      </app-orden-compra-status-parcial>
-    </div>
-    <!-- Status de Compra  -->
+    }
+    <!-- Botones -->
+    <!-- Botones -->
+    <table class="table table-sm">
+      <tbody>
+        <tr>
+          <td style="width: 30%">Estatus</td>
+          <td style="width: 70%">
+            {{ ordenCompra.ordenCompraAuth.statusOrdenCompra }}
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 30%">Reviso</td>
+          <td style="width: 70%">
+            {{ ordenCompra.ordenCompraAuth.revisadoPorResidente }}
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 30%">Autorizo</td>
+          <td style="width: 70%">
+            {{ ordenCompra.ordenCompraAuth.applicationUserAuth }} <br />
+            {{
+              ordenCompra.ordenCompraAuth.fechaAutorizacion | date : "medium"
+            }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- Datos Autorización  -->
   </div>
-
-  <!-- Tabla Presupuesto -->
-
-  <div class="row mb-2">
-    <!-- Seleccionar Presupuestos -->
-
-    <div class="col-sm-6">
-      <div>
-        <div>
-          <p-table
-            [value]="ordenCompra.ordenCompraPresupuestoUtilizado"
-            [rowHover]="true"
-            styleClass="custom-table"
-            [(contextMenuSelection)]="presupuestoSeleccionado"
-            [contextMenu]="cm"
-            dataKey="id"
-          >
-            <ng-template pTemplate="caption">
-              <div class="row">
-                <div class="col-sm-7">
-                  <button
-                    [disabled]="
-                      ordenCompraEstaAutorizada ||
-                      this.ordenCompraService.getTotalPorCubrir() === 0
-                    "
-                    (click)="onModalOrdenCompraPresupuesto()"
-                    type="button"
-                    class="btn btn-outline-dark"
-                  >
-                    SELECCIONAR PARTIDAS PRESUPUESTALES PARA CUBRIR:
-                    <span
-                      [class.text-danger]="
-                        ordenCompraService.getTotalPorCubrir() > 0 ||
-                        ordenCompraService.getTotalPorCubrir() < 0
-                      "
-                      [class.text-dark]="
-                        ordenCompraService.getTotalPorCubrir() == 0
-                      "
-                    >
-                      {{
-                        ordenCompraService.getTotalPorCubrir()
-                          | currency : "MXN"
-                      }}
-                    </span>
-                  </button>
-                </div>
-                <div class="col-sm-5 text-right">
-                  <div *ngIf="ordenCompra.folioSolicitudCompra !== ''">
-                    <p>
-                      TOTAL A PAGAR POR LA SOLICITUD:
-                      {{ totalRelacionadoConOtrasOrdenes | currency : "MXN" }}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </ng-template>
-
-            <ng-template pTemplate="header">
-              <tr>
-                <th
-                  scope="col"
-                  class="font-weight-light small"
-                  style="width: 60%"
-                >
-                  CUENTA
-                </th>
-                <th
-                  scope="col"
-                  class="font-weight-light small"
-                  style="width: 20%"
-                >
-                  DISPONIBLE
-                </th>
-                <th
-                  scope="col"
-                  class="font-weight-light small"
-                  style="width: 20%"
-                >
-                  MONTO A USAR
-                </th>
-              </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-item>
-              <tr *ngIf="revisadaPorResidente != ''">
-                <td class="small">{{ item.numeroCuenta }} {{ item.cuenta }}</td>
-                <td class="text-center small">
-                  <span
-                    class="badge bg-danger p-2 ms-1"
-                    *ngIf="item.presupuestoDisponible < item.dineroUsado"
-                  >
-                    <i class="fa-duotone fa-minus"></i>
-                    {{ item.presupuestoDisponible | currency : "MXN" }}
-                  </span>
-                  <span
-                    *ngIf="item.presupuestoDisponible >= item.dineroUsado"
-                    class="badge bg-success p-2 ms-1"
-                  >
-                    <i class="fa-duotone fa-plus"></i
-                    >{{ item.presupuestoDisponible | currency : "MXN" }}
-                  </span>
-                </td>
-                <td class="small">
-                  {{ item.dineroUsado | currency : "MXN" : "symbol" }}
-                </td>
-              </tr>
-              <tr
-                *ngIf="
-                  ordenCompra.ordenCompraAuth.statusOrdenCompra !== 'Autorizado'
-                "
-                [pContextMenuRow]="item"
-                ngbTooltip="clic derecho para editar"
-                placement="top"
-              >
-                <td>
-                  <small> {{ item.numeroCuenta }} {{ item.cuenta }} </small>
-                </td>
-                <td class="text-center">
-                  <span
-                    *ngIf="item.presupuestoDisponible < item.dineroUsado"
-                    class="badge rounded-pill bg-danger"
-                    ><i class="fa-duotone fa-minus"></i>
-                    {{ item.presupuestoDisponible | currency : "MXN" }}
-                  </span>
-                  <span
-                    *ngIf="item.presupuestoDisponible >= item.dineroUsado"
-                    class="badge rounded-pill bg-success"
-                  >
-                    <i class="fa-duotone fa-plus"> </i>
-                    {{ item.presupuestoDisponible | currency : "MXN" }}
-                  </span>
-                </td>
-                <td>
-                  <small>{{
-                    item.dineroUsado | currency : "MXN" : "symbol"
-                  }}</small>
-                </td>
-              </tr>
-            </ng-template>
-          </p-table>
-        </div>
-
-        <!-- Seleccionar Presupuestos -->
-      </div>
-    </div>
-    <div class="col-sm-4"></div>
-    <div class="col-sm-2 text-right">
-      <!-- Gastos relacionados -->
-
-      <ul class="list-group">
-        <li
-          class="list-group-item pointer"
-          *ngIf="solicitudCompraId > 0"
-          [routerLink]="[
-            '/operaciones/compras/cuadro-comparativo/',
-            solicitudCompraId
-          ]"
-        >
-          <i class="fa-duotone fa-hand-holding-dollar me-3"></i>
-          Cuadro Comparativo
-        </li>
-        <li
-          class="list-group-item pointer"
-          *ngIf="
-            isResidente &&
-            !ordenCompraEstaAutorizada &&
-            ordenCompraService.getTotalPorCubrir() == 0
-          "
-          (click)="onRevisadaPorResidente()"
-        >
-          <i
-            class="fas"
-            [ngClass]="{
-              'fa-times text-danger': revisadaPorResidente,
-              'fa-check text-success': !revisadaPorResidente
-            }"
-          ></i>
-          {{ mensajeRevision }}
-        </li>
-        <li
-          class="list-group-item pointer"
-          *ngIf="ordenCompra.ordenCompraAuth.statusOrdenCompra === 'Autorizado'"
-          placement="top"
-          [routerLink]="[
-            '/operaciones/compras/orden-compra-pdf/',
-            ordenCompraId
-          ]"
-        >
-          <i class="fa-duotone fa-cart-shopping me-3"></i>
-          Orden de Compra
-        </li>
-        <li
-          class="list-group-item pointer"
-          *ngIf="ordenCompra.ordenCompraAuth.statusOrdenCompra === 'Autorizado'"
-          placement="top"
-          [routerLink]="[
-            '/operaciones/compras/solicitud-pago-pdf/',
-            ordenCompraId
-          ]"
-        >
-          <i class="fa-duotone fa-dollar-sign me-3"></i>
-          Solicitud de Pago
-        </li>
-      </ul>
-    </div>
+  <!-- Status de Compra  -->
+  <div class="col-sm-3">
+    <app-orden-compra-status-parcial
+      (modalOrdenCompra)="onModalOrdenCompraStatus()"
+      [ordenCompra]="ordenCompra"
+      [mostrarTabla]="
+        ordenCompra.ordenCompraAuth.statusOrdenCompra === 'Autorizado'
+      "
+      [ordenCompraPresupuestoUtilizado]="
+        ordenCompraPresupuestoUtilizado.length === 0
+      "
+    >
+    </app-orden-compra-status-parcial>
   </div>
-
+  <!-- Status de Compra  -->
+</div>
+<!-- Tabla Presupuesto -->
+<div class="row mb-2">
   <!-- Seleccionar Presupuestos -->
-  <p-table
-    [value]="ordenCompraDetalle"
-    [rowHover]="true"
-    styleClass="custom-table"
-    [(contextMenuSelection)]="ordenCompraDetalleSeleccionado"
-    [contextMenu]="cmm"
-    dataKey="id"
-  >
-    <ng-template pTemplate="caption">
-      <div
-        *ngIf="!ordenCompraEstaAutorizada && !revisadaPorResidente"
-        class="text-right"
-      >
-        <button
-          (click)="onModalAgregarproducto()"
-          label=""
-          class="btn btn-sm btn-primary"
-          type="button"
+  <div class="col-sm-6">
+    <div>
+      <div>
+        <p-table
+          [value]="ordenCompra.ordenCompraPresupuestoUtilizado"
+          [rowHover]="true"
+          styleClass="custom-table"
+          [tableStyle]="{ 'min-width': '50rem' }"
+          [(contextMenuSelection)]="presupuestoSeleccionado"
+          [contextMenu]="cm"
+          dataKey="id"
         >
-          Agregar producto o servicio
-        </button>
+          <ng-template pTemplate="caption">
+            <div class="row">
+              <div class="col-sm-7">
+                <button
+                  [disabled]="
+                    ordenCompraEstaAutorizada ||
+                    this.ordenCompraService.getTotalPorCubrir() === 0
+                  "
+                  (click)="onModalOrdenCompraPresupuesto()"
+                  type="button"
+                  class="btn btn-outline-dark"
+                >
+                  SELECCIONAR PARTIDAS PRESUPUESTALES PARA CUBRIR:
+                  <span
+                    [class.text-danger]="
+                      ordenCompraService.getTotalPorCubrir() > 0 ||
+                      ordenCompraService.getTotalPorCubrir() < 0
+                    "
+                    [class.text-dark]="
+                      ordenCompraService.getTotalPorCubrir() == 0
+                    "
+                  >
+                    {{
+                      ordenCompraService.getTotalPorCubrir() | currency : "MXN"
+                    }}
+                  </span>
+                </button>
+              </div>
+              <div class="col-sm-5 text-right">
+                @if (ordenCompra.folioSolicitudCompra !== '') {
+                <div>
+                  <p>
+                    TOTAL A PAGAR POR LA SOLICITUD:
+                    {{ totalRelacionadoConOtrasOrdenes | currency : "MXN" }}
+                  </p>
+                </div>
+                }
+              </div>
+            </div>
+          </ng-template>
+          <ng-template pTemplate="header">
+            <tr>
+              <th
+                scope="col"
+                class="font-weight-light small"
+                style="width: 60%"
+              >
+                CUENTA
+              </th>
+              <th
+                scope="col"
+                class="font-weight-light small"
+                style="width: 20%"
+              >
+                DISPONIBLE
+              </th>
+              <th
+                scope="col"
+                class="font-weight-light small"
+                style="width: 20%"
+              >
+                MONTO A USAR
+              </th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-item>
+            @if (revisadaPorResidente != '') {
+            <tr>
+              <td class="small">{{ item.numeroCuenta }} {{ item.cuenta }}</td>
+              <td class="text-center small">
+                @if (item.presupuestoDisponible < item.dineroUsado) {
+                <span class="badge bg-danger p-2 ms-1">
+                  <i class="fa-regular fa-minus"></i>
+                  {{ item.presupuestoDisponible | currency : "MXN" }}
+                </span>
+                } @if (item.presupuestoDisponible >= item.dineroUsado) {
+                <span class="badge bg-success p-2 ms-1">
+                  <i class="fa-regular fa-plus"></i
+                  >{{ item.presupuestoDisponible | currency : "MXN" }}
+                </span>
+                }
+              </td>
+              <td class="small">
+                {{ item.dineroUsado | currency : "MXN" : "symbol" }}
+              </td>
+            </tr>
+            } @if ( ordenCompra.ordenCompraAuth.statusOrdenCompra !==
+            'Autorizado' ) {
+            <tr
+              [pContextMenuRow]="item"
+              ngbTooltip="clic derecho para editar"
+              placement="top"
+            >
+              <td>
+                <small> {{ item.numeroCuenta }} {{ item.cuenta }} </small>
+              </td>
+              <td class="text-center">
+                @if (item.presupuestoDisponible < item.dineroUsado) {
+                <span class="badge rounded-pill bg-danger"
+                  ><i class="fa-regular fa-minus"></i>
+                  {{ item.presupuestoDisponible | currency : "MXN" }}
+                </span>
+                } @if (item.presupuestoDisponible >= item.dineroUsado) {
+                <span class="badge rounded-pill bg-success">
+                  <i class="fa-regular fa-plus"> </i>
+                  {{ item.presupuestoDisponible | currency : "MXN" }}
+                </span>
+                }
+              </td>
+              <td>
+                <small>{{
+                  item.dineroUsado | currency : "MXN" : "symbol"
+                }}</small>
+              </td>
+            </tr>
+            }
+          </ng-template>
+        </p-table>
       </div>
-    </ng-template>
-
-    <ng-template pTemplate="header">
-      <tr>
-        <th scope="col" class="small" style="width: 2%">N°</th>
-        <th scope="col" class="small" style="width: 28%">PRODUCTO</th>
-        <th scope="col" class="small" style="width: 10%">CANTIDAD</th>
-        <th scope="col" class="small" style="width: 10%">UNIDAD</th>
-        <th scope="col" class="small" style="width: 10%">PRECIO</th>
-        <th scope="col" class="small" style="width: 10%">DESCUENTO</th>
-        <th scope="col" class="small" style="width: 10%">IVA APLICADO</th>
-        <th scope="col" class="small" style="width: 10%">IVA TOTAL</th>
-        <th scope="col" class="small" style="width: 10%">TOTAL</th>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-rowIndex="rowIndex" let-item>
-      <tr *ngIf="revisadaPorResidente">
-        <td class="small">{{ rowIndex + 1 }}</td>
-        <td class="small">
-          {{ item.producto }}
-        </td>
-        <td class="small">
-          {{ item.cantidad }}
-        </td>
-        <td class="small">
-          {{ item.unidadMedida }}
-        </td>
-        <td class="small">
-          {{ item.precio | currency : "MXN" : "symbol" }}
-        </td>
-        <td class="small">
-          {{ item.descuento | currency : "MXN" : "symbol" }}
-        </td>
-        <td class="small">
-          {{ item.ivaAplicado }}
-        </td>
-        <td class="small">
-          {{ item.iva | currency : "MXN" : "symbol" }}
-        </td>
-
-        <td class="small">
-          {{ item.total | currency : "MXN" : "symbol" }}
-        </td>
-      </tr>
-
-      <tr
-        *ngIf="!revisadaPorResidente"
-        [pContextMenuRow]="item"
-        ngbTooltip="clic derecho para editar"
-        placement="top"
+      <!-- Seleccionar Presupuestos -->
+    </div>
+  </div>
+  <div class="col-sm-4"></div>
+  <div class="col-sm-2 text-right">
+    <!-- Gastos relacionados -->
+    <ul class="list-group">
+      @if (solicitudCompraId > 0) {
+      <li
+        class="list-group-item pointer"
+        [routerLink]="[
+          '/operaciones/compras/cuadro-comparativo/',
+          solicitudCompraId
+        ]"
       >
-        <td class="small">{{ rowIndex + 1 }}</td>
-        <td class="small">
-          {{ item.producto }}
-        </td>
-        <td class="small">
-          {{ item.cantidad }}
-        </td>
-        <td class="small">
-          {{ item.unidadMedida }}
-        </td>
-        <td class="small">
-          {{ item.precio | currency : "MXN" : "symbol" }}
-        </td>
-        <td class="small">
-          {{ item.descuento | currency : "MXN" : "symbol" }}
-        </td>
-        <td class="small">
-          {{ item.ivaAplicado }}
-        </td>
-        <td class="small">
-          {{ item.iva | currency : "MXN" : "symbol" }}
-        </td>
-
-        <td class="small">
-          {{ item.total | currency : "MXN" : "symbol" }}
-        </td>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="footer">
-      <tr>
-        <td colspan="8" class="small text-end">SUBTOTAL</td>
-        <td class="small">
-          {{ subtotal | currency : "MXN" : "symbol" }}
-        </td>
-      </tr>
-      <tr>
-        <td colspan="8" class="small text-end">IVA</td>
-        <td class="small">
-          {{ iva | currency : "MXN" : "symbol" }}
-        </td>
-      </tr>
-
-      <tr>
-        <td colspan="8" class="small text-end">TOTAL</td>
-        <td class="small">
-          {{ totalOrdenCompra | currency : "MXN" : "symbol" }}
-        </td>
-      </tr>
-    </ng-template>
-  </p-table>
-
-  <!-- Orden Compra Detalle -->
-</ng-container>
+        <i class="fa-regular fa-hand-holding-dollar me-3"></i>
+        Cuadro Comparativo
+      </li>
+      } @if ( !ordenCompraEstaAutorizada &&
+      ordenCompraService.getTotalPorCubrir() == 0 ) {
+      <li class="list-group-item pointer">
+        <i
+          class="fas"
+          [ngClass]="{
+            'fa-times text-danger': revisadaPorResidente,
+            'fa-check text-success': !revisadaPorResidente
+          }"
+        ></i>
+        {{ mensajeRevision }}
+      </li>
+      } @if (ordenCompra.ordenCompraAuth.statusOrdenCompra === 'Autorizado') {
+      <li
+        class="list-group-item pointer"
+        placement="top"
+        [routerLink]="['/operaciones/compras/orden-compra-pdf/', ordenCompraId]"
+      >
+        <i class="fa-regular fa-cart-shopping me-3"></i>
+        Orden de Compra
+      </li>
+      } @if (ordenCompra.ordenCompraAuth.statusOrdenCompra === 'Autorizado') {
+      <li
+        class="list-group-item pointer"
+        placement="top"
+        [routerLink]="[
+          '/operaciones/compras/solicitud-pago-pdf/',
+          ordenCompraId
+        ]"
+      >
+        <i class="fa-regular fa-dollar-sign me-3"></i>
+        Solicitud de Pago
+      </li>
+      }
+    </ul>
+  </div>
+</div>
+<!-- Seleccionar Presupuestos -->
+<p-table
+  [value]="ordenCompraDetalle"
+  [rowHover]="true"
+  styleClass="custom-table"
+  [tableStyle]="{ 'min-width': '50rem' }"
+  [(contextMenuSelection)]="ordenCompraDetalleSeleccionado"
+  [contextMenu]="cmm"
+  dataKey="id"
+>
+  <ng-template pTemplate="caption">
+    @if (!ordenCompraEstaAutorizada && !revisadaPorResidente) {
+    <div class="text-right">
+      <button
+        (click)="onModalAgregarproducto()"
+        label=""
+        class="btn btn-sm btn-primary"
+        type="button"
+      >
+        Agregar producto o servicio
+      </button>
+    </div>
+    }
+  </ng-template>
+  <ng-template pTemplate="header">
+    <tr>
+      <th scope="col" class="small" style="width: 2%">N°</th>
+      <th scope="col" class="small" style="width: 28%">PRODUCTO</th>
+      <th scope="col" class="small" style="width: 10%">CANTIDAD</th>
+      <th scope="col" class="small" style="width: 10%">UNIDAD</th>
+      <th scope="col" class="small" style="width: 10%">PRECIO</th>
+      <th scope="col" class="small" style="width: 10%">DESCUENTO</th>
+      <th scope="col" class="small" style="width: 10%">IVA APLICADO</th>
+      <th scope="col" class="small" style="width: 10%">IVA TOTAL</th>
+      <th scope="col" class="small" style="width: 10%">TOTAL</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowIndex="rowIndex" let-item>
+    @if (revisadaPorResidente) {
+    <tr>
+      <td class="small">{{ rowIndex + 1 }}</td>
+      <td class="small">
+        {{ item.producto }}
+      </td>
+      <td class="small">
+        {{ item.cantidad }}
+      </td>
+      <td class="small">
+        {{ item.unidadMedida }}
+      </td>
+      <td class="small">
+        {{ item.precio | currency : "MXN" : "symbol" }}
+      </td>
+      <td class="small">
+        {{ item.descuento | currency : "MXN" : "symbol" }}
+      </td>
+      <td class="small">
+        {{ item.ivaAplicado }}
+      </td>
+      <td class="small">
+        {{ item.iva | currency : "MXN" : "symbol" }}
+      </td>
+      <td class="small">
+        {{ item.total | currency : "MXN" : "symbol" }}
+      </td>
+    </tr>
+    } @if (!revisadaPorResidente) {
+    <tr
+      [pContextMenuRow]="item"
+      ngbTooltip="clic derecho para editar"
+      placement="top"
+    >
+      <td class="small">{{ rowIndex + 1 }}</td>
+      <td class="small">
+        {{ item.producto }}
+      </td>
+      <td class="small">
+        {{ item.cantidad }}
+      </td>
+      <td class="small">
+        {{ item.unidadMedida }}
+      </td>
+      <td class="small">
+        {{ item.precio | currency : "MXN" : "symbol" }}
+      </td>
+      <td class="small">
+        {{ item.descuento | currency : "MXN" : "symbol" }}
+      </td>
+      <td class="small">
+        {{ item.ivaAplicado }}
+      </td>
+      <td class="small">
+        {{ item.iva | currency : "MXN" : "symbol" }}
+      </td>
+      <td class="small">
+        {{ item.total | currency : "MXN" : "symbol" }}
+      </td>
+    </tr>
+    }
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <tr>
+      <td colspan="8" class="small text-end">SUBTOTAL</td>
+      <td class="small">
+        {{ subtotal | currency : "MXN" : "symbol" }}
+      </td>
+    </tr>
+    <tr>
+      <td colspan="8" class="small text-end">IVA</td>
+      <td class="small">
+        {{ iva | currency : "MXN" : "symbol" }}
+      </td>
+    </tr>
+    <tr>
+      <td colspan="8" class="small text-end">TOTAL</td>
+      <td class="small">
+        {{ totalOrdenCompra | currency : "MXN" : "symbol" }}
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+<!-- Orden Compra Detalle -->
+}
 <!-- Temporal ajustar afectacion a cedula presupuestal Borrar -->
 <div class="row">
   <div class="col-12">
-    <div class="card" *ngIf="authService.onValidateRoles(['Proveedor'])">
+    @if (authService.onValidateRoles(['Proveedor'])) {
+    <div class="card">
       <div class="card-body">
         <!-- Tabla Presupuesto -->
         <div class="row">
@@ -510,32 +486,28 @@
                       </th>
                     </tr>
                   </thead>
-                  <tbody *ngIf="ordenCompra">
-                    <tr
-                      *ngFor="
-                        let item of ordenCompra.ordenCompraPresupuestoUtilizado
-                      "
-                    >
+                  @if (ordenCompra) {
+                  <tbody>
+                    @for ( item of ordenCompra.ordenCompraPresupuestoUtilizado ;
+                    track item) {
+                    <tr>
                       <td>
                         <small>
                           {{ item.numeroCuenta }} {{ item.cuenta }}
                         </small>
                       </td>
                       <td class="text-center">
-                        <span
-                          class="badge bg-danger p-2 ms-1"
-                          *ngIf="item.presupuestoDisponible < item.dineroUsado"
-                        >
-                          <i class="fa-duotone fa-minus"></i>
+                        @if (item.presupuestoDisponible < item.dineroUsado) {
+                        <span class="badge bg-danger p-2 ms-1">
+                          <i class="fa-regular fa-minus"></i>
                           {{ item.presupuestoDisponible | currency : "MXN" }}
                         </span>
-                        <span
-                          *ngIf="item.presupuestoDisponible >= item.dineroUsado"
-                          class="badge bg-success p-2 ms-1"
-                        >
-                          <i class="fa-duotone fa-plus"></i
+                        } @if (item.presupuestoDisponible >= item.dineroUsado) {
+                        <span class="badge bg-success p-2 ms-1">
+                          <i class="fa-regular fa-plus"></i
                           >{{ item.presupuestoDisponible | currency : "MXN" }}
                         </span>
+                        }
                       </td>
                       <td class="small">
                         <input
@@ -557,7 +529,9 @@
                         </div>
                       </td>
                     </tr>
+                    }
                   </tbody>
+                  }
                 </table>
               </div>
             </div>
@@ -565,6 +539,7 @@
         </div>
       </div>
     </div>
+    }
   </div>
 </div>
 <!-- Temporal ajustar afectacion a cedula presupuestal Borrar -->

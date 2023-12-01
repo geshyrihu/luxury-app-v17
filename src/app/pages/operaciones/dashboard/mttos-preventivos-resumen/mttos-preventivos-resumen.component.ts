@@ -19,8 +19,8 @@ import PrimeNgModule from 'src/app/shared/prime-ng.module';
   standalone: true,
   imports: [
     PrimeNgModule,
-    SanitizeHtmlPipe,
-  ],
+    SanitizeHtmlPipe
+],
   providers: [DialogService, MessageService, CustomToastService],
 })
 export default class MantenimientosPreventivosResumenComponent

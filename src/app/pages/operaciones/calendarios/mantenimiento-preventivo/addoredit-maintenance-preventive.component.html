@@ -1,12 +1,19 @@
 <div class="card">
   <div class="card-body">
     <form autocomplete="off" (ngSubmit)="submit()" [formGroup]="form">
-      <custom-input-text
-        [hidden]="true"
-        [control]="form.get('id')"
-        formControlName="id"
-        label="Id"
-      ></custom-input-text>
+      <div class="row">
+        <div class="col-sm-6">
+          <custom-input-text
+            [hidden]="true"
+            [control]="form.get('id')"
+            formControlName="id"
+            label="Id"
+            [horizontal]="false"
+          ></custom-input-text>
+        </div>
+        <div class="col-sm-6"></div>
+      </div>
+
       <div class="row">
         <div class="col-sm-6">
           <custom-input-datalist
@@ -36,7 +43,6 @@
             label="Fecha Servicio"
           ></custom-input-month>
         </div>
-
         <div class="col-sm-6">
           <custom-input-select
             [horizontal]="false"
@@ -76,36 +82,41 @@
             dataListId="cuentaNameDatalistOptions"
           ></custom-input-datalist>
         </div>
-
         <div class="col-sm-6">
           <label>Actividad</label>
-          <div
-            *ngIf="
-              f.activity.errors && (f.activity.dirty || f.activity.touched)
-            "
-            class="text-danger animate__fadeIn"
-          >
-            <small *ngIf="f.activity.errors.required">Campo Requerido</small>
-            <small *ngIf="f.activity.errors.maxLength"
-              >Maximo 200 caracteres</small
-            >
+          @if ( f.activity.errors && (f.activity.dirty || f.activity.touched) )
+          {
+          <div class="text-danger animate__fadeIn">
+            @if (f.activity.errors.required) {
+            <small>Campo Requerido</small>
+            } @if (f.activity.errors.maxLength) {
+            <small>Maximo 200 caracteres</small>
+            }
           </div>
-          <ckeditor
+          }
+          <!-- <ckeditor
             [config]="{ toolbar: ['heading', '|', 'bold', 'italic'] }"
             [editor]="Editor"
             formControlName="activity"
-          ></ckeditor>
+          ></ckeditor> -->
+          <p-editor
+            formControlName="activity"
+            [style]="{ height: '320px' }"
+          ></p-editor>
         </div>
         <div class="col-sm-6">
           <label>Observaciones</label>
-          <ckeditor
+          <!-- <ckeditor
             [config]="{ toolbar: ['heading', '|', 'bold', 'italic'] }"
             [editor]="Editor"
             formControlName="observation"
-          ></ckeditor>
+          ></ckeditor> -->
+          <p-editor
+            formControlName="observation"
+            [style]="{ height: '320px' }"
+          ></p-editor>
         </div>
       </div>
-
       <div class="mb-1"></div>
       <custom-button-submit
         [disabled]="this.form.invalid || submitting"

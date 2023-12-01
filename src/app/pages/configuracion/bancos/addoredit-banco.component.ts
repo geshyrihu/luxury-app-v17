@@ -13,8 +13,8 @@ import {
   CustomToastService,
   DataService,
 } from 'src/app/core/services/common-services';
+import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import ComponentsModule from 'src/app/shared/components.module';
-import CustomInputTextComponent from 'src/app/shared/custom-input-form/custom-input-text/custom-input-text.component';
 
 @Component({
   selector: 'app-addoredit-banco',
@@ -24,7 +24,7 @@ import CustomInputTextComponent from 'src/app/shared/custom-input-form/custom-in
     ComponentsModule,
     ReactiveFormsModule,
     CommonModule,
-    CustomInputTextComponent,
+    CustomInputModule,
   ],
   providers: [CustomToastService],
 })

@@ -21,8 +21,8 @@ import AddOrEditCondominosComponent from './addoredit-condominos.component';
   imports: [
     CommonModule,
     ComponentsModule,
-    PrimeNgModule,
-  ],
+    PrimeNgModule
+],
   providers: [DialogService, MessageService, CustomToastService],
 })
 export default class ListCondominosComponent implements OnInit, OnDestroy {

@@ -13,7 +13,6 @@
           </span>
         </a>
       </div>
-
       <!-- App Search-->
       <button
         type="button"
@@ -43,28 +42,17 @@
       </button>
       <!-- App Search-->
       <div class="app-search me-1 mt-2">
-        <select
-          class="form-control form-control-sm"
-          [(ngModel)]="customerId"
-          (change)="selectCustomer($event.target['value'])"
-        >
-          <option [value]="item.value" *ngFor="let item of cb_customer">
-            <span>
-              {{ item.label }}
-            </span>
-          </option>
-        </select>
+        <app-menu-select-customer></app-menu-select-customer>
       </div>
       <form class="app-search d-none d-lg-block mt-2">
         <div class="position-relative" (click)="onModalSearch()">
           <input type="text" class="form-control" placeholder="Buscar..." />
           <button class="btn btn-primary" type="button">
-            <i class="fa-duotone fa-magnifying-glass align-middle"></i>
+            <i class="fa-regular fa-magnifying-glass align-middle"></i>
           </button>
         </div>
       </form>
     </div>
-
     <div class="btn-group d-none d-lg-block" ngbDropdown>
       <button
         type="button"
@@ -77,16 +65,13 @@
         <span class="d-none d-xl-inline-block ms-1 fw-medium"
           >{{ dataInfo.firstName }} {{ dataInfo.lastName }}</span
         >
-
-        <i class="ms-2 fa-solid fa-caret-down"></i>
+        <i class="ms-2 fa-regular fa-caret-down"></i>
       </button>
-
       <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
         <button disabled class="btn btn-light w-100 waves-effect waves-light">
           {{ dataInfo.profession }}
         </button>
         <div class="dropdown-divider"></div>
-
         <a
           [routerLink]="['/accounts/actualizar-perfil']"
           class="btn btn-light w-100 waves-effect waves-light dropdown-item"
@@ -94,7 +79,6 @@
           <i class="fa-regular fa-key font-size-16 align-middle me-2"></i>
           Cambiar contraseña
         </a>
-
         <a
           class="btn btn-light w-100 waves-effect waves-light dropdown-item"
           (click)="logout()"

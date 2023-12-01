@@ -1,5 +1,4 @@
 <p-toast position="top-left" [baseZIndex]="99999"></p-toast>
-
 <div class="card">
   <p-table
     #dt
@@ -13,6 +12,7 @@
       'profession'
     ]"
     styleClass="custom-table"
+    [tableStyle]="{ 'min-width': '50rem' }"
   >
     <ng-template pTemplate="caption">
       <div class="row">
@@ -75,21 +75,12 @@
           EMAIL
           <p-sortIcon field="email"></p-sortIcon>
         </th>
-
-        <th
-          *ngIf="
-            authService.onValidateRoles([
-              'Asistente',
-              'Residente',
-              'SuperUsuario'
-            ])
-          "
-          scope="col"
-          style="width: 5%"
-        ></th>
+        @if ( authService.onValidateRoles([ 'Asistente', 'Residente',
+        'SuperUsuario' ]) ) {
+        <th scope="col" style="width: 5%"></th>
+        }
       </tr>
     </ng-template>
-
     <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
       <tr>
         <td>
@@ -110,29 +101,16 @@
         <td>
           {{ item.correoPersonal }}
         </td>
-
-        <td
-          class="p-column-title hide-print-mode"
-          *ngIf="
-            authService.onValidateRoles([
-              'Asistente',
-              'Residente',
-              'SuperUsuario'
-            ])
-          "
-        >
+        @if ( authService.onValidateRoles([ 'Asistente', 'Residente',
+        'SuperUsuario' ]) ) {
+        <td class="p-column-title hide-print-mode">
           <div class="d-flex justify-content-center">
+            @if ( authService.onValidateRoles([ 'SuperUsuario', 'Residente',
+            'Asistente' ]) ) {
             <custom-button
-              *ngIf="
-                authService.onValidateRoles([
-                  'SuperUsuario',
-                  'Residente',
-                  'Asistente'
-                ])
-              "
               [ngbTooltipCustom]="'Opciones'"
               customClass="btn-sm btn-outline-info"
-              icon="fa-duotone fa-ellipsis-vertical"
+              icon="fa-regular fa-ellipsis-vertical"
               (clicked)="
                 onModalEmpleadoOpciones(
                   item.applicationUserId,
@@ -141,8 +119,10 @@
                 )
               "
             ></custom-button>
+            }
           </div>
         </td>
+        }
       </tr>
     </ng-template>
   </p-table>

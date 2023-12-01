@@ -1,91 +1,98 @@
 <app-pagetitlereport title="MANTENIMIENTOS"></app-pagetitlereport>
-
-<ng-container *ngIf="data">
-  <div class="card">
-    <p-table [value]="data" styleClass="custom-table">
-      <ng-template pTemplate="header">
-        <tr>
-          <th scope="col" style="width: 22%">Mantenimiento</th>
-          <th scope="col" style="width: 13%">Total</th>
-          <th scope="col" style="width: 13%">Concluido</th>
-          <th scope="col" style="width: 13%">Pendiente</th>
-          <th scope="col" style="width: 13%">Denegado</th>
-          <th scope="col" style="width: 13%">Sin Documentación</th>
-          <th scope="col" style="width: 13%">Sin Imágenes</th>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="caption">
-        <h5 class="flex align-items-center justify-content-between">
-          MANTENIMIENTOS
-        </h5>
-      </ng-template>
-      <ng-template pTemplate="body" let-dato>
-        <tr>
-          <td>
-            {{ dato.typeMaintance }}
-          </td>
-          <td class="text-center font-size-16 text-black">
-            {{ dato.total }}
-          </td>
-          <td class="text-center font-size-16 text-black">
-            {{ dato.concluidos }}
-          </td>
-          <td class="text-center font-size-16 text-black">
-            {{ dato.pendientes }}
-          </td>
-          <td class="text-center font-size-16 text-black">
-            {{ dato.denegados }}
-          </td>
-          <td class="text-center font-size-16 text-black">
-            {{ dato.sinDocumentacion }}
-          </td>
-          <td class="text-center font-size-16 text-black">
-            {{ dato.sinImage }}
-          </td>
-        </tr>
-      </ng-template>
-    </p-table>
-  </div>
-  <!-- reportes por proveedor -->
-  <div class="card">
-    <p-table [value]="dataProvider" styleClass="custom-table">
-      <ng-template pTemplate="header">
-        <tr>
-          <th style="width: 40%" scope="col">PROVEEDOR</th>
-          <th style="width: 15%" scope="col">TOTAL</th>
-          <th style="width: 15%" scope="col">CONCLUIDOS</th>
-          <th style="width: 15%" scope="col">PENDIENTES</th>
-          <th style="width: 15%" scope="col">DENEGADOS</th>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="caption">
-        <h5 class="flex align-items-center justify-content-between">
-          REPORTES POR PROVEEDOR
-        </h5>
-      </ng-template>
-      <ng-template pTemplate="body" let-dato>
-        <tr>
-          <td>
-            {{ dato.nameProvider }}
-          </td>
-          <td class="text-center">
-            <span class="badge bg-info p-2">{{ dato.total }}</span>
-          </td>
-          <td class="text-center">
-            <span class="badge bg-success p-2">{{ dato.concluidos }}</span>
-          </td>
-          <td class="text-center">
-            <span class="badge bg-danger p-2">{{ dato.pendientes }}</span>
-          </td>
-          <td class="text-center">
-            <span class="badge bg-dark p-2">{{ dato.denegados }}</span>
-          </td>
-        </tr>
-      </ng-template>
-    </p-table>
-  </div>
-</ng-container>
-<div class="card" *ngIf="data === null">
+@if (data) {
+<div class="card">
+  <p-table
+    [value]="data"
+    styleClass="custom-table"
+    [tableStyle]="{ 'min-width': '50rem' }"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th scope="col" style="width: 22%">Mantenimiento</th>
+        <th scope="col" style="width: 13%">Total</th>
+        <th scope="col" style="width: 13%">Concluido</th>
+        <th scope="col" style="width: 13%">Pendiente</th>
+        <th scope="col" style="width: 13%">Denegado</th>
+        <th scope="col" style="width: 13%">Sin Documentación</th>
+        <th scope="col" style="width: 13%">Sin Imágenes</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="caption">
+      <h5 class="flex align-items-center justify-content-between">
+        MANTENIMIENTOS
+      </h5>
+    </ng-template>
+    <ng-template pTemplate="body" let-dato>
+      <tr>
+        <td>
+          {{ dato.typeMaintance }}
+        </td>
+        <td class="text-center font-size-16 text-black">
+          {{ dato.total }}
+        </td>
+        <td class="text-center font-size-16 text-black">
+          {{ dato.concluidos }}
+        </td>
+        <td class="text-center font-size-16 text-black">
+          {{ dato.pendientes }}
+        </td>
+        <td class="text-center font-size-16 text-black">
+          {{ dato.denegados }}
+        </td>
+        <td class="text-center font-size-16 text-black">
+          {{ dato.sinDocumentacion }}
+        </td>
+        <td class="text-center font-size-16 text-black">
+          {{ dato.sinImage }}
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+<!-- reportes por proveedor -->
+<div class="card">
+  <p-table
+    [value]="dataProvider"
+    styleClass="custom-table"
+    [tableStyle]="{ 'min-width': '50rem' }"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width: 40%" scope="col">PROVEEDOR</th>
+        <th style="width: 15%" scope="col">TOTAL</th>
+        <th style="width: 15%" scope="col">CONCLUIDOS</th>
+        <th style="width: 15%" scope="col">PENDIENTES</th>
+        <th style="width: 15%" scope="col">DENEGADOS</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="caption">
+      <h5 class="flex align-items-center justify-content-between">
+        REPORTES POR PROVEEDOR
+      </h5>
+    </ng-template>
+    <ng-template pTemplate="body" let-dato>
+      <tr>
+        <td>
+          {{ dato.nameProvider }}
+        </td>
+        <td class="text-center">
+          <span class="badge bg-info p-2">{{ dato.total }}</span>
+        </td>
+        <td class="text-center">
+          <span class="badge bg-success p-2">{{ dato.concluidos }}</span>
+        </td>
+        <td class="text-center">
+          <span class="badge bg-danger p-2">{{ dato.pendientes }}</span>
+        </td>
+        <td class="text-center">
+          <span class="badge bg-dark p-2">{{ dato.denegados }}</span>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+} @if (data === null) {
+<div class="card">
   <p-table>
     <ng-template pTemplate="caption">
       <div class="flex align-items-center justify-content-between">
@@ -94,3 +101,4 @@
     </ng-template>
   </p-table>
 </div>
+}

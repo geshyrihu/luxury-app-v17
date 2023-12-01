@@ -26,8 +26,8 @@ import DashboardMinutasResumenComponent from '../dashboard-minutas-resumen/dashb
     CommonModule,
     ComponentsModule,
     NgbAlertModule,
-    ToastModule,
-  ],
+    ToastModule
+],
   providers: [MessageService, CustomToastService],
 })
 export default class DashboardMinutasComponent implements OnInit, OnDestroy {

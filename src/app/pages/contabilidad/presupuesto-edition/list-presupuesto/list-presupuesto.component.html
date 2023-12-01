@@ -2,7 +2,8 @@
 <p-table
   [(selection)]="data"
   #dt
-  styleClass=""
+  styleClass="custom-table"
+  [tableStyle]="{ 'min-width': '50rem' }"
   [value]="data"
   [globalFilterFields]="['fromFilter', 'toFilter']"
   [autoLayout]="true"
@@ -17,68 +18,61 @@
       "
     ></app-table-header>
   </ng-template>
-
   <ng-template pTemplate="header">
     <tr>
       <th scope="col" pSortableColumn="fromFilter">
         Periodo
         <p-sortIcon field="fromFilter"></p-sortIcon>
       </th>
-
       <th scope="col">Opciones</th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-item>
     <tr>
       <td>{{ item.from }} - {{ item.to }}</td>
-
       <td class="p-column-title">
         <div class="d-flex justify-content-center">
           <!-- Start Boton para finalizar presupuesto -->
+          @if (!item.finished) {
           <custom-button
-            *ngIf="!item.finished"
             ngbTooltip="Finalizar presupuesto"
             [customClass]="'btn-outline-info btn-sm'"
-            icon="fa-duotone fa-pen-field  text-danger"
+            icon="fa-regular fa-pen-field  text-danger"
             (clicked)="onFinished(item.id, !item.finished)"
           ></custom-button>
+          }
           <!-- End Boton para finalizar presupuesto -->
           <!-- Start Boton para Habilitar presupuesto -->
+          @if (item.finished) {
           <custom-button
-            *ngIf="item.finished"
             ngbTooltip="Habilitar edición"
             [customClass]="'btn-outline-info btn-sm'"
-            icon="fa-duotone fa-check-double text-success"
+            icon="fa-regular fa-check-double text-success"
             (clicked)="onFinished(item.id, !item.finished)"
           ></custom-button>
+          }
           <!-- End Boton para Habilitar presupuesto -->
-
+          @if (authService.onValidateRoles(['SuperUsuario'])) {
           <custom-button
-            *ngIf="authService.onValidateRoles(['SuperUsuario'])"
             customClass="btn-sm btn-outline-primary"
             (clicked)="onModalAddOrEdit(item.id)"
-            icon="fa-duotone fa-pen-to-square"
+            icon="fa-regular fa-pen-to-square"
             ngbTooltip="Editar periodo"
           ></custom-button>
+          } @if ( authService.onValidateRoles([ 'Residente', 'SuperUsuario',
+          'Contador', 'SupervisorContable', 'SupervisionOperativa' ]) &&
+          !item.finished ) {
           <custom-button
-            *ngIf="
-              authService.onValidateRoles([
-                'Residente',
-                'SuperUsuario',
-                'Contador',
-                'SupervisorContable',
-                'SupervisionOperativa'
-              ]) && !item.finished
-            "
             customClass="btn-sm btn-outline-success"
             (clicked)="onGetPresupuestoDetalle(item.id)"
-            icon="fa-duotone fa-money-bill-trend-up"
+            icon="fa-regular fa-money-bill-trend-up"
             ngbTooltip="Editar el presupuesto"
           ></custom-button>
+          } @if (authService.onValidateRoles(['SuperUsuario'])) {
           <custom-button-delete
-            *ngIf="authService.onValidateRoles(['SuperUsuario'])"
             (OnConfirm)="onDelete(item)"
           ></custom-button-delete>
+          }
         </div>
       </td>
     </tr>

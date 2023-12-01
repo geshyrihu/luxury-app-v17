@@ -19,8 +19,8 @@ import ResumenOrdenesServicioGraficoComponent from '../resumen-ordenes-servicio-
     CommonModule,
     ComponentsModule,
     TableModule,
-    EStatusPipe,
-  ],
+    EStatusPipe
+],
   providers: [CustomToastService],
 })
 export default class ResumenOrdenesServicioComponent

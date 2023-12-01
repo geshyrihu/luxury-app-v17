@@ -1,35 +1,27 @@
 <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
   <!-- Hidden -->
   <!-- Fecha de Solicitud -->
-
   <input
     hidden
     class="form-control"
     type="date"
     formControlName="dateRequest"
   />
-
   <!-- Fecha de Solicitud -->
-
   <!-- Fecha de término -->
-
   <input
     hidden
     class="form-control"
     type="datetime-local"
     formControlName="dateFinished"
   />
-
   <!-- Fecha de término -->
-
   <!-- Comentario -->
   <!-- Hidden -->
-
   <div class="row">
     <!-- Fotos -->
     <div class="col-12 col-md-3 text-center">
       <!-- Img -->
-
       <app-input-img
         [title]="'Foto del Antes'"
         (fileSelected)="uploadFileBefore($event)"
@@ -41,7 +33,6 @@
       <!-- Img -->
       <!-- Img -->
       <!-- <label class="form-label">Foto del después</label> -->
-
       <app-input-img
         [title]="'Foto del después'"
         (fileSelected)="uploadFileAfter($event)"
@@ -52,10 +43,10 @@
       <!-- Img -->
     </div>
     <!-- Fotos -->
-
     <div class="col-12 col-md-9">
       <div class="row">
-        <div class="col-12" *ngIf="id > 0">
+        @if (id > 0) {
+        <div class="col-12">
           <div class="btn-group btn-group-example mb-3" role="group">
             <button
               type="button"
@@ -101,9 +92,9 @@
             </button>
           </div>
         </div>
+        }
         <div class="col-12 col-md-6">
           <!-- Actividad -->
-
           <div class="mb-3">
             <label class="form-label">Actividad</label>
             <textarea
@@ -116,16 +107,14 @@
                 f.activity.invalid && (f.activity.dirty || f.activity.touched)
               "
             ></textarea>
-            <div
-              *ngIf="
-                f.activity.invalid && (f.activity.dirty || f.activity.touched)
-              "
-              class="text-danger"
-            >
-              <small *ngIf="f.activity.errors.required">
-                Campo requerido
-              </small>
+            @if ( f.activity.invalid && (f.activity.dirty || f.activity.touched)
+            ) {
+            <div class="text-danger">
+              @if (f.activity.errors.required) {
+              <small> Campo requerido </small>
+              }
             </div>
+            }
           </div>
           <!-- Actividad -->
           <!-- Area Responsable -->
@@ -140,24 +129,20 @@
               "
             >
               <option value="">Selecciona una opción</option>
-              <option
-                *ngFor="let item of cb_area_responsable"
-                [value]="item.value"
-              >
+              @for (item of cb_area_responsable; track item) {
+              <option [value]="item.value">
                 {{ item.label }}
               </option>
+              }
             </select>
-            <div
-              *ngIf="
-                f.responsibleAreaId.invalid &&
-                (f.responsibleAreaId.dirty || f.responsibleAreaId.touched)
-              "
-              class="text-danger"
-            >
-              <small *ngIf="f.responsibleAreaId.errors.required">
-                Campo requerido
-              </small>
+            @if ( f.responsibleAreaId.invalid && (f.responsibleAreaId.dirty ||
+            f.responsibleAreaId.touched) ) {
+            <div class="text-danger">
+              @if (f.responsibleAreaId.errors.required) {
+              <small> Campo requerido </small>
+              }
             </div>
+            }
           </div>
           <!-- Area Responsable -->
           <!-- Responsable -->
@@ -176,26 +161,20 @@
               (change)="saveResponsableId($event)"
               autocomplete="off"
             />
-
             <datalist id="responsableOptions">
-              <option
-                [value]="item.label"
-                *ngFor="let item of cb_user_customers"
-              ></option>
+              @for (item of cb_user_customers; track item) {
+              <option [value]="item.label"></option>
+              }
             </datalist>
-
-            <div
-              *ngIf="
-                f.employeeResponsableId.invalid &&
-                (f.employeeResponsableId.dirty ||
-                  f.employeeResponsableId.touched)
-              "
-              class="text-danger"
-            >
-              <small *ngIf="f.employeeResponsableId.errors.required">
-                Campo requerido
-              </small>
+            @if ( f.employeeResponsableId.invalid &&
+            (f.employeeResponsableId.dirty || f.employeeResponsableId.touched) )
+            {
+            <div class="text-danger">
+              @if (f.employeeResponsableId.errors.required) {
+              <small> Campo requerido </small>
+              }
             </div>
+            }
           </div>
           <!-- Responsable -->
         </div>
@@ -208,9 +187,11 @@
               <div class="mb-3">
                 <label class="form-label">Estatus</label>
                 <select class="form-select" formControlName="status">
-                  <option *ngFor="let item of cb_status" [value]="item.value">
+                  @for (item of cb_status; track item) {
+                  <option [value]="item.value">
                     {{ item.label }}
                   </option>
+                  }
                 </select>
               </div>
             </div>
@@ -219,11 +200,12 @@
               <!-- Prioridad -->
               <div class="mb-3">
                 <label class="form-label">Prioridad</label>
-
                 <select class="form-select" formControlName="priority">
-                  <option *ngFor="let item of cb_priority" [value]="item.value">
+                  @for (item of cb_priority; track item) {
+                  <option [value]="item.value">
                     {{ item.label }}
                   </option>
+                  }
                 </select>
               </div>
               <!-- Prioridad -->
@@ -274,9 +256,7 @@
               <!-- Fecha de limite -->
             </div>
           </div>
-
           <!-- Solicita -->
-
           <!-- Solicita -->
           <!-- Observaciones -->
           <div class="mb-3">
@@ -300,7 +280,7 @@
     class="btn btn-info float-end me-1 mt-2"
     (onClick)="tipoDePut = 0"
   >
-    <i class="fa-duotone fa-paper-plane me-2"></i>
+    <i class="fa-regular fa-paper-plane me-2"></i>
     Guardar
   </button>
 </form>

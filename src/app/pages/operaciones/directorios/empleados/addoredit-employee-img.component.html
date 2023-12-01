@@ -2,18 +2,15 @@
   <div class="card-body">
     <div (click)="inputImg.click()">
       <div class="card-image text-center mt-3">
+        @if (!imgUpload) {
         <img
-          *ngIf="!imgUpload"
           [src]="photoPath"
           class="img-avatar img-thumbnail pointer"
           alt=""
         />
-        <img
-          *ngIf="imgUpload"
-          [src]="imgTemp"
-          class="img-avatar img-thumbnail pointer"
-          alt=""
-        />
+        } @if (imgUpload) {
+        <img [src]="imgTemp" class="img-avatar img-thumbnail pointer" alt="" />
+        }
       </div>
       <div class="input-group mb-3 d-none">
         <div class="custom-file">
@@ -42,7 +39,6 @@
     </div>
   </div>
 </div>
-
 <style>
   .img-avatar {
     height: 200px;

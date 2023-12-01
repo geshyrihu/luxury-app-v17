@@ -1,7 +1,7 @@
 <p-toast position="top-left" [baseZIndex]="99999"></p-toast>
 <div class="p-card p-mb-5">
+  @if (data) {
   <p-table
-    *ngIf="data"
     #dt
     [globalFilterFields]="[
       'profession',
@@ -14,6 +14,7 @@
     [rowHover]="true"
     [value]="data"
     styleClass="custom-table"
+    [tableStyle]="{ 'min-width': '50rem' }"
   >
     <ng-template pTemplate="caption">
       <app-table-header
@@ -22,7 +23,6 @@
         [dt]="dt"
       ></app-table-header>
     </ng-template>
-
     <ng-template pTemplate="header">
       <tr>
         <th pSortableColumn="numeroCliente">
@@ -50,29 +50,29 @@
         <th scope="col" style="width: 5%">Opciones</th>
       </tr>
     </ng-template>
-
     <ng-template pTemplate="body" let-item>
       <tr>
         <td>
           {{ item.cliente }}
         </td>
         <td>
+          @if (item.foto !== '') {
           <img
-            *ngIf="item.foto !== ''"
             [src]="pahtBaseImg + item.foto"
             width="50px"
             height="50px"
             class="img-avatar"
             alt=""
           />
+          } @if (item.foto === '') {
           <img
-            *ngIf="item.foto === ''"
             src="assets/img/noImg.jpg"
             width="50px"
             height="50px"
             class="img-avatar"
             alt=""
           />
+          }
         </td>
         <td class="p-column-title">
           {{ item.profession }}
@@ -87,22 +87,18 @@
           {{ item.sueldo }}
         </td>
         <td class="p-column-title" class="text-center">
-          <span
-            *ngIf="item.cubierta"
-            class="badge rounded-pill badge-soft-sucess"
-          >
-            <i class="fa-duotone fa-user-check"> </i>
+          @if (item.cubierta) {
+          <span class="badge rounded-pill badge-soft-sucess">
+            <i class="fa-regular fa-user-check"> </i>
             Vacante cubierta
           </span>
-          <span
-            *ngIf="!item.cubierta"
-            class="badge rounded-pill badge-soft-primary"
-          >
-            <i class="fa-duotone fa-xmark"></i>
+          } @if (!item.cubierta) {
+          <span class="badge rounded-pill badge-soft-primary">
+            <i class="fa-regular fa-xmark"></i>
             Vacante disponible
           </span>
+          }
         </td>
-
         <!-- Opciones -->
         <td class="p-column-title">
           <div class="d-flex justify-content-center">
@@ -114,8 +110,8 @@
           </div>
         </td>
       </tr>
-
       <!-- Opciones -->
     </ng-template>
   </p-table>
+  }
 </div>

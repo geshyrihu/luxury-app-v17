@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import {
   FormBuilder,
+  FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
@@ -17,9 +18,8 @@ import {
   DataService,
   SelectItemService,
 } from 'src/app/core/services/common-services';
-import { EnumService } from 'src/app/core/services/enum-service';
+import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import ComponentsModule from 'src/app/shared/components.module';
-import CustomInputModule from 'src/app/shared/custom-input-form/custom-input.module';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -42,7 +42,6 @@ export default class AddOrEditProductosComponent implements OnInit, OnDestroy {
   public dataService = inject(DataService);
   public selectItemService = inject(SelectItemService);
   private customToastService = inject(CustomToastService);
-  private enumService = inject(EnumService);
 
   submitting: boolean = false;
   subRef$: Subscription;
@@ -53,7 +52,7 @@ export default class AddOrEditProductosComponent implements OnInit, OnDestroy {
   photoFileUpdate: boolean = false;
   userId = '';
   form: FormGroup;
-  cb_category: any[] = [];
+  cb_category: ISelectItemDto[] = [];
   cb_clasificacion: ISelectItemDto[] = onGetSelectItemFromEnum(
     EProductClasificacion
   );
@@ -71,22 +70,29 @@ export default class AddOrEditProductosComponent implements OnInit, OnDestroy {
     });
   }
   ngOnInit(): void {
+    this.onLoadSelectItem();
     this.userId =
       this.authService.userTokenDto.infoUserAuthDto.applicationUserId;
-    this.onLoadSelectItem();
     this.id = this.config.data.id;
     if (this.id !== 0) this.onLoadData();
 
     this.form = this.formBuilder.group({
-      id: { value: this.id, disabled: true },
-      nombreProducto: ['', Validators.required],
-      categoryId: ['', Validators.required],
+      id: new FormControl({ value: this.id, disabled: true }),
       category: ['', Validators.required],
-      urlImagen: [''],
+      categoryId: ['', Validators.required],
+      clasificacion: ['', Validators.required],
+      employeeId: [this.authService.userTokenDto.infoEmployeeDto.employeeId],
       marca: [''],
       modelo: [''],
-      clasificacion: [EProductClasificacion.Producto],
-      employeeId: [this.authService.userTokenDto.infoEmployeeDto.employeeId],
+      nombreProducto: [
+        '',
+        [
+          Validators.required,
+          Validators.maxLength(45),
+          Validators.minLength(5),
+        ],
+      ],
+      urlImagen: [''],
     });
   }
 

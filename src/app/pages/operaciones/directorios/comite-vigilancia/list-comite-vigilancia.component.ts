@@ -19,8 +19,8 @@ import AddOrEditComiteVigilanciaComponent from './addoredit-comite-vigilancia.co
   standalone: true,
   imports: [
     ComponentsModule,
-    PrimeNgModule,
-  ],
+    PrimeNgModule
+],
   providers: [DialogService, MessageService, CustomToastService],
 })
 export default class ListComiteVigilanciaComponent

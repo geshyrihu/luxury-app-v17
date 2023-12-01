@@ -1,5 +1,9 @@
 <div class="card">
-  <p-table [value]="data" styleClass="custom-table">
+  <p-table
+    [value]="data"
+    styleClass="custom-table"
+    [tableStyle]="{ 'min-width': '50rem' }"
+  >
     <ng-template pTemplate="header">
       <tr>
         <th scope="col">Archivo</th>
@@ -17,7 +21,7 @@
             [href]="urlImg + item.document"
             class="pointer text-danger btn btn-soft-light btn-sm w-xs waves-effect btn-label waves-light me-1"
           >
-            <i class="fa-duotone fa-download label-icon text-danger"> </i>Pdf
+            <i class="fa-regular fa-download label-icon text-danger"> </i>Pdf
           </a>
         </td>
         <td class="p-column-title">

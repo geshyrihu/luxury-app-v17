@@ -1,9 +1,9 @@
 <p-toast position="top-left" [baseZIndex]="99999"></p-toast>
-
 <p-table
   [(selection)]="data"
   #dt
   styleClass="custom-table"
+  [tableStyle]="{ 'min-width': '50rem' }"
   [value]="data"
   [rows]="15"
   [paginator]="true"
@@ -27,7 +27,6 @@
       [dt]="dt"
     ></app-table-header>
   </ng-template>
-
   <ng-template pTemplate="header">
     <tr>
       <th scope="col" pSortableColumn="fechaSalida">
@@ -49,14 +48,9 @@
       <th scope="col" pSortableColumn="usoPrducto">
         Uso<p-sortIcon field="usoPrducto"></p-sortIcon>
       </th>
-
-      <th
-        scope="col"
-        style="width: 5%"
-        *ngIf="authService.onValidateRoles(['SuperUsuario'])"
-      >
-        Opciones
-      </th>
+      @if (authService.onValidateRoles(['SuperUsuario'])) {
+      <th scope="col" style="width: 5%">Opciones</th>
+      }
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-item>
@@ -92,10 +86,8 @@
         </small>
       </td>
       <!-- Opciones -->
-      <td
-        class="p-column-title"
-        *ngIf="authService.onValidateRoles(['SuperUsuario'])"
-      >
+      @if (authService.onValidateRoles(['SuperUsuario'])) {
+      <td class="p-column-title">
         <div class="d-flex justify-content-center">
           <custom-button-edit
             (edit)="
@@ -112,6 +104,7 @@
           ></custom-button-delete>
         </div>
       </td>
+      }
     </tr>
   </ng-template>
   <ng-template pTemplate="paginatorleft">

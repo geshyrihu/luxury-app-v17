@@ -45,16 +45,6 @@ export class DateService {
     }
   }
 
-  // formDateToString(date: Date) {
-  //   if (date === null) {
-  //     return null;
-  //   } else {
-  //     let date2 = new Date(date);
-  //     let dateFinal = date2.toISOString().slice(0, 10);
-  //     return dateFinal;
-  //   }
-  // }
-
   /**
    * Obtiene la hora actual en formato 'HH:MM'.
    * @param date Fecha de la que se obtendrá la hora.
@@ -227,16 +217,6 @@ export class DateService {
     const mm = date.getMonth() + 1;
     return [date.getFullYear(), (mm > 9 ? '' : '0') + mm].join('-');
   }
-
-  // formDateToString(date: Date) {
-  //   if (date === null) {
-  //     return null;
-  //   } else {
-  //     let date2 = new Date(date);
-  //     let dateFinal = date2.toISOString().slice(0, 10);
-  //     return dateFinal;
-  //   }
-  // }
 
   parsearErroresAPI(response: any): string[] {
     const resultado: string[] = [];

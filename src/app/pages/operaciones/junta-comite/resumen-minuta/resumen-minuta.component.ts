@@ -21,8 +21,8 @@ import ResumenMinutaGraficoComponent from '../resumen-minuta-grafico/resumen-min
     ComponentsModule,
     CommonModule,
     TableModule,
-    SanitizeHtmlPipe,
-  ],
+    SanitizeHtmlPipe
+],
   providers: [CustomToastService, MessageService],
 })
 export default class ResumenMinutaComponent implements OnInit, OnDestroy {

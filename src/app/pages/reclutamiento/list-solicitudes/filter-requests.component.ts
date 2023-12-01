@@ -8,7 +8,7 @@ import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { FilterRequestsService } from 'src/app/core/services/filter-requests.service';
-import CustomButtonModule from 'src/app/shared/custom-buttons/custom-button.module';
+import CustomButtonModule from 'src/app/custom-components/custom-buttons/custom-button.module';
 
 @Component({
   selector: 'app-filter-requests',

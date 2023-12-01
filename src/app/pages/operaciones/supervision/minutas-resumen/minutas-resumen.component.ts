@@ -23,8 +23,8 @@ import FiltroMinutasAreaComponent from '../filtro-minutas-area/filtro-minutas-ar
     CommonModule,
     FormsModule,
     TableModule,
-    MultiSelectModule,
-  ],
+    MultiSelectModule
+],
 })
 export default class MinutasResumenComponent implements OnInit, OnDestroy {
   public customToastService = inject(CustomToastService);

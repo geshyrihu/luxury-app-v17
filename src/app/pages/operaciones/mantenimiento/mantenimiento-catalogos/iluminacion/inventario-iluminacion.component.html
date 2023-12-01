@@ -15,6 +15,7 @@
     [value]="data"
     currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
     styleClass="custom-table"
+    [tableStyle]="{ 'min-width': '50rem' }"
   >
     <ng-template pTemplate="caption">
       <app-table-header
@@ -23,7 +24,6 @@
         [dt]="dt"
       ></app-table-header>
     </ng-template>
-
     <ng-template pTemplate="header">
       <tr>
         <th scope="col">Ubicación</th>
@@ -46,7 +46,8 @@
           </ngb-alert>
         </td>
       </tr>
-      <tr *ngFor="let itm of item.items; let index = index">
+      @for (itm of item.items; track itm; let index = $index) {
+      <tr>
         <td>
           {{ itm.nameMachinery }}
         </td>
@@ -72,8 +73,8 @@
           </div>
         </td>
       </tr>
+      }
     </ng-template>
-
     <ng-template pTemplate="paginatorleft">
       <div class="p-d-flex p-ai-center p-jc-between hide-print-mode">
         En total hay

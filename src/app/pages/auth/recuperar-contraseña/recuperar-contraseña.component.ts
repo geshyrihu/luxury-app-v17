@@ -13,8 +13,8 @@ import {
   CustomToastService,
   DataService,
 } from 'src/app/core/services/common-services';
-import CustomButtonComponent from 'src/app/shared/custom-buttons/custom-button/custom-button.component';
-import CustomInputModule from 'src/app/shared/custom-input-form/custom-input.module';
+import CustomButtonModule from 'src/app/custom-components/custom-buttons/custom-button.module';
+import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
   selector: 'app-recuperar-contraseña',
@@ -24,7 +24,7 @@ import CustomInputModule from 'src/app/shared/custom-input-form/custom-input.mod
     CommonModule,
     ReactiveFormsModule,
     CustomInputModule,
-    CustomButtonComponent,
+    CustomButtonModule,
   ],
   providers: [MessageService, CustomToastService],
 })

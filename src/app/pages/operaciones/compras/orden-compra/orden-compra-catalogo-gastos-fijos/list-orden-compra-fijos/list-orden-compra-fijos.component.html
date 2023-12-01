@@ -1,9 +1,9 @@
 <p-toast position="top-left" [baseZIndex]="99999"></p-toast>
-
 <p-table
   [(selection)]="data"
   #dt
   styleClass="custom-table"
+  [tableStyle]="{ 'min-width': '50rem' }"
   [value]="data"
   [rows]="30"
   [paginator]="true"
@@ -30,24 +30,20 @@
       "
     ></app-table-header>
     <br />
-
     <div class="row">
       <div class="col-12 d-flex justify-content-end">
         <button (click)="selectStatus(1)" class="btn btn-secondary me-1">
           Denegadas
         </button>
-
         <button (click)="selectStatus(0)" class="btn btn-success me-1">
           Autorizadas
         </button>
-
         <button (click)="selectStatus(2)" class="btn btn-danger me-1">
           Pendientes
         </button>
       </div>
     </div>
   </ng-template>
-
   <ng-template pTemplate="header">
     <tr>
       <th scope="col" style="width: 7%" pSortableColumn="folio">
@@ -66,20 +62,19 @@
         JUSTIFICACIÓN
         <p-sortIcon field="justificacionGasto"></p-sortIcon>
       </th>
+      @if (statusCompra === 1) {
       <th
         scope="col"
         style="width: 25%"
         pSortableColumn="ordenCompraAuth.observaciones"
-        *ngIf="statusCompra === 1"
       >
         OBSERVACIONES
         <p-sortIcon field="ordenCompraAuth.observaciones"></p-sortIcon>
       </th>
-
+      } @if (this.statusCompra === 0) {
       <th
         scope="col"
         style="width: 15%"
-        *ngIf="this.statusCompra === 0"
         pSortableColumn="ordenCompraAuth.applicationUserAuth.fullName"
       >
         AUTORIZA
@@ -87,22 +82,15 @@
           field="ordenCompraAuth.applicationUserAuth.fullName"
         ></p-sortIcon>
       </th>
+      }
       <th scope="col" style="width: 20%" pSortableColumn="revisadoPorResidente">
         REVISO
         <p-sortIcon field="revisadoPorResidente"></p-sortIcon>
       </th>
-      <th
-        scope="col"
-        style="width: 5%"
-        class="text-small"
-        *ngIf="
-          authService.onValidateRoles([
-            'Asistente',
-            'Residente',
-            'SuperUsuario'
-          ])
-        "
-      ></th>
+      @if ( authService.onValidateRoles([ 'Asistente', 'Residente',
+      'SuperUsuario' ]) ) {
+      <th scope="col" style="width: 5%" class="text-small"></th>
+      }
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-item>
@@ -119,39 +107,28 @@
       <td>
         {{ item.justificacionGasto }}
       </td>
-      <td *ngIf="statusCompra === 1">
+      @if (statusCompra === 1) {
+      <td>
         {{ item.observaciones }}
       </td>
-
-      <td *ngIf="this.statusCompra === 0">
+      } @if (this.statusCompra === 0) {
+      <td>
         {{ item.fullName }}
       </td>
-
+      }
       <td>
         {{ item.revisadoPorResidente }}
       </td>
-
-      <td
-        *ngIf="
-          authService.onValidateRoles([
-            'Asistente',
-            'Residente',
-            'SuperUsuario'
-          ])
-        "
-        class="p-column-title"
-      >
+      @if ( authService.onValidateRoles([ 'Asistente', 'Residente',
+      'SuperUsuario' ]) ) {
+      <td class="p-column-title">
         <div class="d-flex justify-content-center">
+          @if ( authService.onValidateRoles([ 'Asistente', 'Residente',
+          'SuperUsuario' ]) ) {
           <custom-button-edit
-            *ngIf="
-              authService.onValidateRoles([
-                'Asistente',
-                'Residente',
-                'SuperUsuario'
-              ])
-            "
             (edit)="onAddOrEdit(item.id)"
           ></custom-button-edit>
+          }
           <button
             type="button"
             class="btn btn-sm btn-outline-info me-1 pointer"
@@ -159,21 +136,19 @@
             placement="top"
             (click)="onOrdenCompraModal(item.id)"
           >
-            <i class="fa-duotone fa-pen-to-square text-info"></i>
+            <i class="fa-regular fa-pen-to-square text-info"></i>
           </button>
-
+          @if ( statusCompra === 2 &&
+          authService.onValidateRoles(['SuperUsuario']) ) {
           <custom-button-delete
-            *ngIf="
-              statusCompra === 2 &&
-              authService.onValidateRoles(['SuperUsuario'])
-            "
             (OnConfirm)="onDelete(item)"
           ></custom-button-delete>
+          }
         </div>
       </td>
+      }
     </tr>
   </ng-template>
-
   <ng-template pTemplate="paginatorleft">
     <app-table-footer [data]="data"></app-table-footer>
   </ng-template>

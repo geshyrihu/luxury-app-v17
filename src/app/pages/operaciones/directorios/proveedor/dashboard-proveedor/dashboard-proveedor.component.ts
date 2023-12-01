@@ -15,8 +15,8 @@ import ListProviderComponent from '../buscador-proveedor/list-provider.component
     BuscadorProvedorComponent,
     ListProviderComponent,
     CommonModule,
-    ComponentsModule,
-  ],
+    ComponentsModule
+],
 })
 export default class DashboardProveedorComponent {
   mostrarBuscador: boolean = true;

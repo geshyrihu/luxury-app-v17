@@ -1,4 +1,5 @@
 import { Injectable, inject } from '@angular/core';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
 import Swal from 'sweetalert2';
 
@@ -7,6 +8,7 @@ import Swal from 'sweetalert2';
 })
 export class CustomToastService {
   public messageService = inject(MessageService);
+  public spinner = inject(NgxSpinnerService);
 
   /**
    * Muestra un mensaje de éxito.
@@ -58,27 +60,32 @@ export class CustomToastService {
    * Muestra una ventana emergente de carga.
    */
   onLoading() {
-    Swal.fire({
-      allowOutsideClick: false,
-      icon: 'info',
-      text: 'Espere por favor...',
-    });
-    Swal.showLoading(null);
+    //   Swal.fire({
+    //     allowOutsideClick: false,
+    //     icon: 'info',
+    //     text: 'Espere por favor...',
+    //   });
+    //   Swal.showLoading(null);
+    /** spinner starts on init */
+    this.spinner.show();
   }
 
   /**
    * Cierra la ventana emergente actual.
    */
   onClose() {
-    Swal.close();
+    // Swal.close();
+    this.spinner.hide();
   }
   onCloseToSuccess() {
     this.onShowSuccess();
-    Swal.close();
+    // Swal.close();
+    this.spinner.hide();
   }
   onCloseToError() {
     this.onShowError();
-    Swal.close();
+    // Swal.close();
+    this.spinner.hide();
   }
 
   /**

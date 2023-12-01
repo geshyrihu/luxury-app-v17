@@ -17,12 +17,7 @@ import { environment } from 'src/environments/environment';
   selector: 'app-report-meeting',
   templateUrl: './report-meeting.component.html',
   standalone: true,
-  imports: [
-    ComponentsModule,
-    CommonModule,
-    TableModule,
-    SanitizeHtmlPipe,
-  ],
+  imports: [ComponentsModule, CommonModule, TableModule, SanitizeHtmlPipe],
   providers: [CustomToastService, MessageService],
 })
 export default class ReportMeetingComponent implements OnInit, OnDestroy {

@@ -16,7 +16,7 @@ import {
   CustomToastService,
   DataService,
 } from 'src/app/core/services/common-services';
-import CustomButtonSubmitComponent from 'src/app/shared/custom-buttons/custom-button-submit/custom-button-submit.component';
+import CustomButtonModule from 'src/app/custom-components/custom-buttons/custom-button.module';
 
 @Component({
   selector: 'app-update-password-account',
@@ -26,7 +26,7 @@ import CustomButtonSubmitComponent from 'src/app/shared/custom-buttons/custom-bu
     NgbModule,
     FormsModule,
     ToastModule,
-    CustomButtonSubmitComponent,
+    CustomButtonModule,
     CommonModule,
     ReactiveFormsModule,
   ],

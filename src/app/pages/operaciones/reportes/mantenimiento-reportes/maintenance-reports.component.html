@@ -10,6 +10,7 @@
     [value]="menu"
     currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
     styleClass="custom-table"
+    [tableStyle]="{ 'min-width': '50rem' }"
   >
     <ng-template pTemplate="caption">
       <app-table-header
@@ -33,7 +34,7 @@
         </td>
         <td class="p-column-title">
           <a [routerLink]="[item.route]">
-            <i class="fa-duotone fa-hand-point-right"> </i>
+            <i class="fa-regular fa-hand-point-right"> </i>
           </a>
         </td>
       </tr>

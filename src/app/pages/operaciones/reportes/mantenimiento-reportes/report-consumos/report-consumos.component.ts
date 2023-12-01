@@ -21,8 +21,8 @@ import MultiAxisChartComponent from 'src/app/shared/graficos/primeng-chart/multi
     CommonModule,
     CustomBarChartComponent,
     PagetitleReportComponent,
-    MultiAxisChartComponent,
-  ],
+    MultiAxisChartComponent
+],
   providers: [CustomToastService, MessageService],
 })
 export default class ReportConsumosComponent implements OnInit, OnDestroy {

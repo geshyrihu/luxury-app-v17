@@ -24,8 +24,8 @@ const base_urlImg = environment.base_urlImg;
     TableModule,
     CommonModule,
     ComponentsModule,
-    ReporteTicketsComponent,
-  ],
+    ReporteTicketsComponent
+],
   providers: [CustomToastService, MessageService],
 })
 export default class ReportTicketComponent implements OnInit, OnDestroy {

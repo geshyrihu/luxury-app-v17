@@ -1,9 +1,9 @@
 <p-toast position="top-left" [baseZIndex]="99999"></p-toast>
-
 <p-table
   #dt
   responsiveLayout="scroll"
   styleClass="custom-table"
+  [tableStyle]="{ 'min-width': '50rem' }"
   [value]="data"
   [rows]="15"
   [paginator]="true"
@@ -24,7 +24,6 @@
       "
     ></app-table-header>
   </ng-template>
-
   <ng-template pTemplate="header">
     <tr>
       <th
@@ -45,21 +44,10 @@
         Departamento
         <p-sortIcon field="department"></p-sortIcon>
       </th>
-
-      <th
-        *ngIf="
-          authService.onValidateRoles([
-            'Asistente',
-            'Residente',
-            'SuperUsuario'
-          ])
-        "
-        scope="col"
-        style="width: 5%"
-        class="text-small"
-      >
-        Opciones
-      </th>
+      @if ( authService.onValidateRoles([ 'Asistente', 'Residente',
+      'SuperUsuario' ]) ) {
+      <th scope="col" style="width: 5%" class="text-small">Opciones</th>
+      }
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-item>
@@ -74,17 +62,9 @@
           {{ item.department }}
         </small>
       </td>
-
-      <td
-        class="p-column-title"
-        *ngIf="
-          authService.onValidateRoles([
-            'Asistente',
-            'Residente',
-            'SuperUsuario'
-          ])
-        "
-      >
+      @if ( authService.onValidateRoles([ 'Asistente', 'Residente',
+      'SuperUsuario' ]) ) {
+      <td class="p-column-title">
         <div class="d-flex justify-content-center">
           <!-- Componente editar registro -->
           <custom-button-edit
@@ -100,9 +80,9 @@
           <!-- Componente eliminar registro -->
         </div>
       </td>
+      }
     </tr>
   </ng-template>
-
   <ng-template pTemplate="paginatorleft">
     <div class="p-d-flex p-ai-center p-jc-between">
       En total hay

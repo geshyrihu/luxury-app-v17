@@ -22,8 +22,8 @@ import OrdenCompraComponent from '../orden-compra.component';
     ComponentsModule,
     RouterModule,
     PrimeNgModule,
-    CurrencyMexicoPipe,
-  ],
+    CurrencyMexicoPipe
+],
   providers: [DialogService, MessageService, CustomToastService],
 })
 export default class OrdenCompraPagadasComponent implements OnInit, OnDestroy {

@@ -15,10 +15,10 @@ import {
   DataService,
   DateService,
 } from 'src/app/core/services/common-services';
+import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import ComponentsModule, {
   flatpickrFactory,
 } from 'src/app/shared/components.module';
-import CustomInputModule from 'src/app/shared/custom-input-form/custom-input.module';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -35,11 +35,10 @@ import { environment } from 'src/environments/environment';
 })
 export default class AddOrEditClienteComponent implements OnInit, OnDestroy {
   private dataService = inject(DataService);
-  public dateService = inject(DateService);
   private formBuilder = inject(FormBuilder);
   public config = inject(DynamicDialogConfig);
+  public dateService = inject(DateService);
   public ref = inject(DynamicDialogRef);
-
   private customToastService = inject(CustomToastService);
 
   submitting: boolean = false;
@@ -49,13 +48,14 @@ export default class AddOrEditClienteComponent implements OnInit, OnDestroy {
     { value: true, label: 'Activo' },
     { value: false, label: 'Inactivo' },
   ];
+
   urlBaseImg = `${environment.base_urlImg}Administration/customer/`;
   model: ICustomerAddOrEditDto;
   photoFileUpdate: boolean = false;
 
   form: FormGroup = this.formBuilder.group({
     id: { value: this.id, disabled: true },
-    active: [true],
+    active: [],
     adreess: ['', [Validators.required, Validators.minLength(10)]],
     latitud: ['', Validators.required],
     longitud: ['', Validators.required],
@@ -83,11 +83,17 @@ export default class AddOrEditClienteComponent implements OnInit, OnDestroy {
   onLoadData() {
     this.subRef$ = this.dataService
       .get<ICustomerAddOrEditDto>(`Customers/${this.id}`)
-      .subscribe((resp: any) => {
-        this.model = resp.body;
-        const register = this.dateService.getDateFormat(resp.body.register);
-        this.model.register = register;
-        this.form.patchValue(this.model);
+      .subscribe({
+        next: (resp: any) => {
+          this.model = resp.body;
+          const register = this.dateService.getDateFormat(resp.body.register);
+          this.model.register = register;
+          this.form.patchValue(this.model);
+        },
+        error: (err) => {
+          this.customToastService.onShowError();
+          console.log(err.error);
+        },
       });
   }
 

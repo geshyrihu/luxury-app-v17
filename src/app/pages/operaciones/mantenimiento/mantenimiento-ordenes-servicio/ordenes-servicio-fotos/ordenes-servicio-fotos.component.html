@@ -1,6 +1,7 @@
 <div class="row">
   <!-- end col -->
-  <div class="col-md-3" *ngFor="let item of data">
+  @for (item of data; track item) {
+  <div class="col-md-3">
     <div class="card">
       <div class="card-header">
         <custom-button-delete-span
@@ -20,7 +21,6 @@
         </p-image>
       </div>
       <!-- end card header -->
-
       <div class="card-body">
         <img
           [style]="{ cursor: 'pointer' }"
@@ -36,5 +36,6 @@
     </div>
     <!-- end card-body -->
   </div>
+  }
   <!-- end card -->
 </div>

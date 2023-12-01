@@ -15,80 +15,79 @@
           <i
             ngbTooltip="Agregar destinatario"
             placement="top"
-            class="fa-duotone fa-list me-2 pointer"
+            class="fa-regular fa-list me-2 pointer"
             (click)="onModalAgregarCorreoElectronico(0)"
           ></i>
           PARA
         </label>
       </div>
       <div class="col-11 mb-3">
+        @for (item of para; track item; let i = $index) {
         <div
-          *ngFor="let item of para; let i = index"
           class="btn btn-sm btn-light position-relative m-1 p-1 font-size-12"
         >
           {{ item.emailResidente }}
-
           <i
             ngbTooltip="Descartar correo"
             placement="top"
             (click)="onDeletePara(i)"
-            class="fa-duotone fa-xmark pointer ms-2"
+            class="fa-regular fa-xmark pointer ms-2"
           ></i>
         </div>
+        }
       </div>
       <div class="col-1">
         <label class="font-size-12">
           <i
             ngbTooltip="Agregar destinatario en copia"
             placement="top"
-            class="fa-duotone fa-list me-2 pointer"
+            class="fa-regular fa-list me-2 pointer"
             (click)="onModalAgregarCorreoElectronico(1)"
           ></i>
           CC
         </label>
       </div>
       <div class="col-11 mb-3">
+        @for (item of copia; track item; let i = $index) {
         <div
-          *ngFor="let item of copia; let i = index"
           class="btn btn-sm btn-light position-relative m-1 p-1 font-size-12"
         >
           {{ item.emailResidente }}
-
           <i
             ngbTooltip="Descartar correo"
             placement="top"
             (click)="onDeleteCopia(i)"
-            class="fa-duotone fa-xmark pointer ms-2"
+            class="fa-regular fa-xmark pointer ms-2"
           ></i>
         </div>
+        }
       </div>
       <div class="col-1">
         <label class="font-size-12">
           <i
             ngbTooltip="Agregar destinatario en copia oculta"
             placement="top"
-            class="fa-duotone fa-list me-2 pointer"
+            class="fa-regular fa-list me-2 pointer"
             (click)="onModalAgregarCorreoElectronico(2)"
           ></i>
           CCO
         </label>
       </div>
       <div class="col-11 mb-3">
+        @for (item of copiaOculta; track item; let i = $index) {
         <div
-          *ngFor="let item of copiaOculta; let i = index"
           class="btn btn-sm btn-light position-relative m-1 p-1 font-size-12"
         >
           {{ item.emailResidente }}
-
           <i
             ngbTooltip="Descartar correo"
             placement="top"
             (click)="onDeleteCopiaOculta(i)"
-            class="fa-duotone fa-xmark pointer ms-2"
+            class="fa-regular fa-xmark pointer ms-2"
           ></i>
         </div>
+        }
       </div>
-
       <div class="col-1">
         <label class="font-size-12">ARCHIVOS</label>
       </div>
@@ -128,18 +127,20 @@
           id="providerDataList"
           placeholder="Ingresar asunto..."
         />
-
         <datalist id="providerDatalistOptions">
-          <option [value]="item.label" *ngFor="let item of cb_asuntos"></option>
+          @for (item of cb_asuntos; track item) {
+          <option [value]="item.label"></option>
+          }
         </datalist>
       </div>
     </div>
     <div class="mb-3">
-      <ckeditor
+      <!-- <ckeditor
         [(ngModel)]="body"
         [editor]="Editor"
         data="<p>Content of the editor.</p>"
-      ></ckeditor>
+      ></ckeditor> -->
+      <p-editor [(ngModel)]="body" [style]="{ height: '320px' }"></p-editor>
     </div>
     <div class="modal-footer">
       <button
@@ -148,7 +149,7 @@
         (click)="onSubmit()"
         class="btn btn-primary"
       >
-        Enviar <i class="fa-duotone fa-paper-plane ms-1"></i>
+        Enviar <i class="fa-regular fa-paper-plane ms-1"></i>
       </button>
     </div>
   </div>

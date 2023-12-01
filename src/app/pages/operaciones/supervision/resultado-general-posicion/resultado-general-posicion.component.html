@@ -1,6 +1,11 @@
-<div class="row" *ngIf="data !== undefined">
+@if (data !== undefined) {
+<div class="row">
   <div class="col-sm-4">
-    <p-table [value]="data.posicionesMinutas" styleClass="custom-table">
+    <p-table
+      [value]="data.posicionesMinutas"
+      styleClass="custom-table"
+      [tableStyle]="{ 'min-width': '50rem' }"
+    >
       <ng-template pTemplate="caption">
         <app-table-header
           [title]="'Minutas'"
@@ -8,7 +13,6 @@
           [showAdd]="false"
         ></app-table-header>
       </ng-template>
-
       <ng-template pTemplate="header">
         <tr>
           <th scope="col">Posición</th>
@@ -32,7 +36,11 @@
     </p-table>
   </div>
   <div class="col-sm-4">
-    <p-table [value]="data.posicionesPreventivos" styleClass="custom-table">
+    <p-table
+      [value]="data.posicionesPreventivos"
+      styleClass="custom-table"
+      [tableStyle]="{ 'min-width': '50rem' }"
+    >
       <ng-template pTemplate="caption">
         <app-table-header
           [title]="'Preventivos'"
@@ -40,7 +48,6 @@
           [showAdd]="false"
         ></app-table-header>
       </ng-template>
-
       <ng-template pTemplate="header">
         <tr>
           <th scope="col">Posición</th>
@@ -64,7 +71,11 @@
     </p-table>
   </div>
   <div class="col-sm-4">
-    <p-table [value]="data.posicionesCorrectivos" styleClass="custom-table">
+    <p-table
+      [value]="data.posicionesCorrectivos"
+      styleClass="custom-table"
+      [tableStyle]="{ 'min-width': '50rem' }"
+    >
       <ng-template pTemplate="caption">
         <app-table-header
           [title]="'Correctivos'"
@@ -72,7 +83,6 @@
           [showAdd]="false"
         ></app-table-header>
       </ng-template>
-
       <ng-template pTemplate="header">
         <tr>
           <th scope="col">Posición</th>
@@ -96,3 +106,4 @@
     </p-table>
   </div>
 </div>
+}

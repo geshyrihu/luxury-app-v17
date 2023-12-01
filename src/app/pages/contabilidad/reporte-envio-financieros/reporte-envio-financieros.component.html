@@ -1,7 +1,11 @@
 <p-toast position="top-left" [baseZIndex]="99999"></p-toast>
-
 <div class="card">
-  <p-table [value]="data" [autoLayout]="true" styleClass="custom-table">
+  <p-table
+    [value]="data"
+    [autoLayout]="true"
+    styleClass="custom-table"
+    [tableStyle]="{ 'min-width': '50rem' }"
+  >
     <ng-template pTemplate="caption">
       <div class="row">
         <div class="col-9">
@@ -16,7 +20,6 @@
         </div>
       </div>
     </ng-template>
-
     <ng-template pTemplate="header">
       <tr>
         <th scope="col">Cliente</th>
@@ -49,17 +52,15 @@
           {{ item.fechaAutorizacion }}
         </td>
         <td class="p-column-title">
-          <span
-            class="badge badge-soft-success p-2 w-100"
-            *ngIf="item.estatus == 'Enviado'"
-            >{{ item.estatus }}</span
-          >
-          <span
-            class="badge badge-soft-danger p-2 w-100"
-            *ngIf="item.estatus != 'Enviado'"
-          >
+          @if (item.estatus == 'Enviado') {
+          <span class="badge badge-soft-success p-2 w-100">{{
+            item.estatus
+          }}</span>
+          } @if (item.estatus != 'Enviado') {
+          <span class="badge badge-soft-danger p-2 w-100">
             {{ item.estatus }}</span
           >
+          }
         </td>
       </tr>
     </ng-template>

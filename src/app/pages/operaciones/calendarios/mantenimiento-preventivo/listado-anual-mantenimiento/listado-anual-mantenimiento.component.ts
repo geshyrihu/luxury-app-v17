@@ -30,8 +30,8 @@ const date = new Date();
     ComponentsModule,
     TableModule,
     CurrencyMexicoPipe,
-    SanitizeHtmlPipe,
-  ],
+    SanitizeHtmlPipe
+],
   providers: [DialogService, MessageService, CustomToastService],
 })
 export default class ListadoAnualMantenimientoComponent

@@ -4,28 +4,28 @@
     <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
       <div class="row">
         <div class="col-sm-3">
-  
           <label>Estatus</label>
           <select class="form-control" formControlName="status">
             <option value="">Seleccionar opcion...</option>
-            <option [value]="item.value" *ngFor="let item of cb_status">
-              {{ item.label }}
-            </option>
+            @for (item of cb_status; track item) {
+              <option [value]="item.value">
+                {{ item.label }}
+              </option>
+            }
           </select>
           <div class="mb-3">
-
             <label>Responsable</label>
             <select class="form-control" formControlName="responsible">
               <option value="">Seleccionar opcion...</option>
-              <option
-                [value]="item.value"
-                *ngFor="let item of cb_area_responsable"
-              >
-                {{ item.label }}
-              </option>
+              @for (item of cb_area_responsable; track item) {
+                <option
+                  [value]="item.value"
+                  >
+                  {{ item.label }}
+                </option>
+              }
             </select>
           </div>
-
           <div class="mb-3">
             <label>Folios de Reporte</label>
             <select class="form-control" formControlName="folioReporte">
@@ -36,28 +36,29 @@
           </div>
         </div>
         <div class="col-sm-3">
-       
           <div class="mb-3">
             <label>Solicita</label>
             <select class="form-control" formControlName="request">
               <option value="">Seleccionar opcion...</option>
-              <option [value]="item.value" *ngFor="let item of cb_solicitantes">
-                {{ item.label }}
-              </option>
+              @for (item of cb_solicitantes; track item) {
+                <option [value]="item.value">
+                  {{ item.label }}
+                </option>
+              }
             </select>
           </div>
-
           <div class="mb-3">
             <label>Prioridad</label>
             <select class="form-control" formControlName="priority">
               <option value="">Seleccionar opcion...</option>
-              <option [value]="item.value" *ngFor="let item of cb_priority">
-                {{ item.label }}
-              </option>
+              @for (item of cb_priority; track item) {
+                <option [value]="item.value">
+                  {{ item.label }}
+                </option>
+              }
             </select>
           </div>
         </div>
-
         <div class="col-sm-3">
           <div class="mb-3">
             <custom-input-date
@@ -107,7 +108,7 @@
               type="button"
               (click)="onResetForm()"
               class="mt-1 float-end btn btn-info me-2"
-            >
+              >
               Reset
             </button>
           </div>

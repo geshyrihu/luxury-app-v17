@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import {
+  AbstractControl,
   FormArray,
   FormBuilder,
   FormControl,
@@ -21,8 +22,8 @@ import {
   DateService,
 } from 'src/app/core/services/common-services';
 import { EnumService } from 'src/app/core/services/enum-service';
+import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import ComponentsModule from 'src/app/shared/components.module';
-import CustomInputModule from 'src/app/shared/custom-input-form/custom-input.module';
 
 @Component({
   selector: 'app-solicitud-baja',
@@ -175,9 +176,17 @@ export default class SolicitudBajaComponent implements OnInit {
 
     return formData;
   }
-  isControlInvalid(control: FormControl) {
-    return control.invalid && (control.dirty || control.touched);
+  // isControlInvalid(control: FormControl) {
+  //   return control.invalid && (control.dirty || control.touched);
+  // }
+
+  isControlInvalid(control: AbstractControl | null): boolean {
+    if (control instanceof FormControl) {
+      return control.invalid && (control.touched || control.dirty);
+    }
+    return false;
   }
+
   addDiscountDescription() {
     const discountDescription = this.formBuilder.group({
       description: ['', Validators.required],

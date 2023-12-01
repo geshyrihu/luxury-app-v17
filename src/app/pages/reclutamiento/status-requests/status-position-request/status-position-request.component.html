@@ -1,5 +1,6 @@
 <p-toast position="top-left" [baseZIndex]="99999"></p-toast>
-<div class="card" *ngIf="data !== undefined && data.candidates !== undefined">
+@if (data !== undefined && data.candidates !== undefined) {
+<div class="card">
   <p-table
     #dt
     [autoLayout]="true"
@@ -7,6 +8,7 @@
     [rowHover]="true"
     [value]="data.candidates"
     styleClass="custom-table"
+    [tableStyle]="{ 'min-width': '50rem' }"
   >
     <ng-template pTemplate="caption">
       <div class="row">
@@ -25,10 +27,8 @@
             [showAdd]="true"
           ></app-table-header>
         </div>
-        <div
-          class="col-1"
-          *ngIf="authService.onValidateRoles(['SuperUsuario', 'Reclutamiento'])"
-        >
+        @if (authService.onValidateRoles(['SuperUsuario', 'Reclutamiento'])) {
+        <div class="col-1">
           <!-- Enviar por correo solo puede si es reclutamiento -->
           <custom-button-confirmation
             [disabled]="noCandidates"
@@ -43,11 +43,13 @@
             [disabled]="submitting"
           ></custom-button-confirmation>
         </div>
-        <div class="col-12 mt-2 mb-0" *ngIf="data.requestInProcess">
+        } @if (data.requestInProcess) {
+        <div class="col-12 mt-2 mb-0">
           <ngb-alert [dismissible]="false" type="success">
             Solicitud de alta en proceso
           </ngb-alert>
         </div>
+        }
       </div>
     </ng-template>
     <ng-template pTemplate="header">
@@ -67,8 +69,8 @@
     <ng-template pTemplate="body" let-item>
       <tr
         [ngClass]="{
-        'fondo-verde-tenue': item.decision == 'Aprobado',
-      }"
+          'fondo-verde-tenue': item.decision == 'Aprobado',
+          }"
       >
         <td class="p-column-title" class="text-center">
           <input
@@ -78,13 +80,12 @@
             (change)="onValueCandidates()"
           />
         </td>
-
         <td class="p-column-title" class="text-center">
-          <i
-            *ngIf="item.sendMail"
-            class="fa-duotone fa-check-double text-success"
-          ></i>
-          <i *ngIf="!item.sendMail" class="fa-duotone fa-xmark text-danger"></i>
+          @if (item.sendMail) {
+          <i class="fa-regular fa-check-double text-success"></i>
+          } @if (!item.sendMail) {
+          <i class="fa-regular fa-xmark text-danger"></i>
+          }
         </td>
         <td class="p-column-title">
           {{ item.candidate }}
@@ -96,9 +97,10 @@
           {{ item.phone }}
         </td>
         <td class="p-column-title text-center">
-          <p class="text-danger" *ngIf="!item.curriculumn">Sin cv</p>
+          @if (!item.curriculumn) {
+          <p class="text-danger">Sin cv</p>
+          } @if (item.curriculumn) {
           <a
-            *ngIf="item.curriculumn"
             [href]="pathPdf + item.curriculumn"
             _blank
             download
@@ -106,14 +108,14 @@
             placement="top"
             class="btn btn-soft-danger btn-sm w-xs waves-effect btn-label waves-light me-1 hide-print-mode"
           >
-            <i class="fa-duotone fa-download label-icon fa-2x pointer"></i>
+            <i class="fa-regular fa-download label-icon fa-2x pointer"></i>
             Pdf
           </a>
+          }
         </td>
         <td class="p-column-title">
           {{ item.date }}
         </td>
-
         <td class="p-column-title text-center">
           <p
             class="badge border-0 p-2"
@@ -130,17 +132,17 @@
           {{ item.comments }}
         </td>
         <!-- Opciones -->
-
         <td class="p-column-title">
           <div class="d-flex justify-content-center">
+            @if (!data.requestInProcess) {
             <custom-button
-              *ngIf="!data.requestInProcess"
               ngbTooltip="Solicitar alta"
               placement="top"
               customClass="btn-sm btn-outline-primary"
-              icon="fa-duotone fa-file-signature "
+              icon="fa-regular fa-file-signature "
               (clicked)="onModalSolicitudALta(item.id)"
             ></custom-button>
+            }
             <custom-button-edit
               (edit)="
                 onModalAddOrEdit({
@@ -151,10 +153,11 @@
               "
             ></custom-button-edit>
             <!-- Solo puede eliminar los candidatos que cada usuario registro -->
+            @if (applicationUserId == item.applicationUserId) {
             <custom-button-delete
-              *ngIf="applicationUserId == item.applicationUserId"
               (OnConfirm)="onDelete(item)"
             ></custom-button-delete>
+            }
             <!-- Solo puede eliminar los candidatos que cada usuario registro -->
           </div>
         </td>
@@ -169,6 +172,7 @@
     </ng-template>
   </p-table>
 </div>
+}
 <style>
   /* Definición de la clase CSS para el fondo verde tenue */
   .fondo-verde-tenue {

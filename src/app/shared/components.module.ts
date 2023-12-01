@@ -1,4 +1,3 @@
-// import { AgmCoreModule } from '@agm/core';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -14,11 +13,11 @@ import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
 import { ToolbarModule } from 'primeng/toolbar';
 import { TooltipModule } from 'primeng/tooltip';
+import CustomButtonModule from '../custom-components/custom-buttons/custom-button.module';
 import AgregarCorreoElectronicoComponent from './agregar-correo-electronico/agregar-correo-electronico.component';
 import CabeceraSolicitudPagoPdfComponent from './cabeceras/cabecera-solicitud-pago-pdf/cabecera-solicitud-pago-pdf.component';
 import PagetitleComponent from './cabeceras/pagetitle/pagetitle.component';
 import ReportHeaderComponent from './cabeceras/report-header/report-header.component';
-import CustomButtonModule from './custom-buttons/custom-button.module';
 import AdvancedPieChartComponent from './graficos/advanced-pie-chart/advanced-pie-chart.component';
 import PieChartComponent from './graficos/pie-chart/pie-chart.component';
 import HaederCustomerComponent from './haeder-customer/haeder-customer.component';

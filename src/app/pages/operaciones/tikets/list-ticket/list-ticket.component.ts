@@ -34,8 +34,8 @@ import FilterTicketComponent from '../ticket-filter/ticket-filter.component';
     CommonModule,
     ComponentsModule,
     FormsModule,
-    PrimeNgModule,
-  ],
+    PrimeNgModule
+],
   providers: [
     DialogService,
     MessageService,

@@ -1,0 +1,13 @@
+<select
+  class="form-control"
+  [(ngModel)]="customerId"
+  (change)="selectCustomer($event.target['value'])"
+>
+  @for (item of cb_customer; track item) {
+  <option [value]="item.value">
+    <span>
+      {{ item.label }}
+    </span>
+  </option>
+  }
+</select>

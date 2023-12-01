@@ -2,6 +2,7 @@
   [(selection)]="data"
   #dt
   styleClass="custom-table"
+  [tableStyle]="{ 'min-width': '50rem' }"
   [value]="data"
   [globalFilterFields]="['machinery', 'userName', 'descripcion']"
   [autoLayout]="true"
@@ -22,7 +23,6 @@
       </div>
     </div>
   </ng-template>
-
   <ng-template pTemplate="body" let-item>
     <tr>
       <td class="p-column-title">
@@ -37,13 +37,14 @@
                     </p>
                   </div>
                   <div class="col-sm-6 text-right hide-print-mode">
-                    <p *ngIf="item.emergencia">Emergencia</p>
+                    @if (item.emergencia) {
+                    <p>Emergencia</p>
+                    } @if (
+                    authServide.onValidateRoles(['GerenteMantenimiento']) ) {
                     <custom-button-delete
-                      *ngIf="
-                        authServide.onValidateRoles(['GerenteMantenimiento'])
-                      "
                       (OnConfirm)="onDelte(item)"
                     ></custom-button-delete>
+                    }
                   </div>
                 </div>
               </div>

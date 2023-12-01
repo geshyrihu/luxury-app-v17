@@ -6,25 +6,25 @@
   <div class="card-body">
     <div (click)="inputImg.click()">
       <div class="card-image text-center">
+        @if (!imgUpload) {
         <img
           class="img-thumbnail rounded me-2 pointer"
           alt="200x200"
           width="180"
           height="200"
-          *ngIf="!imgUpload"
           [src]="base_urlImg + infoEmployeeDto.photoPath"
           data-holder-rendered="true"
         />
-
+        } @if (imgUpload) {
         <img
           alt="200x200"
           width="180"
           height="200"
-          *ngIf="imgUpload"
           [src]="imgTemp"
           class="img-thumbnail rounded me-2 pointer"
           data-holder-rendered="true"
         />
+        }
       </div>
       <div class="input-group mb-3 d-none">
         <div class="custom-file">

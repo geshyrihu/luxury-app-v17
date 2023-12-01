@@ -33,8 +33,8 @@ import { environment } from 'src/environments/environment';
     FormsModule,
     PrimeNgModule,
     NgbDropdownModule,
-    MultiSelectModule,
-  ],
+    MultiSelectModule
+],
   providers: [
     DialogService,
     MessageService,

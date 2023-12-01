@@ -28,7 +28,6 @@ export {
   CaratulaFondeoService,
   CatalogoGastosFijosService,
   CronogramaMantenimientoService,
-  // CustomSwalService,
   CustomToastService,
   CustomerIdService,
   DataFilterService,
@@ -36,7 +35,6 @@ export {
   DateService,
   FilterRequestsService,
   FiltroCalendarService,
-  // InventoryCategoryService,
   OrdenCompraService,
   PeriodoMonthService,
   ReportService,
@@ -49,12 +47,3 @@ export {
   StatusSolicitudVacanteService,
   TicketFilterService,
 };
-
-//
-// public customToastService = inject(CustomToastService);
-// public authService = inject(AuthService);
-// private dataService = inject(DataService);
-// public dialogService = inject(DialogService);
-// public messageService = inject(MessageService);
-// public statusSolicitudVacanteService = inject(StatusSolicitudVacanteService);
-// private filterRequestsService = inject(FilterRequestsService);

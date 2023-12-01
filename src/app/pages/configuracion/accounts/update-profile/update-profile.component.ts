@@ -12,7 +12,7 @@ import UpdatePhotoEmployeeComponent from './update-photo-employee/update-photo-e
     CommonModule,
     RouterModule,
     UpdatePasswordAccountComponent,
-    UpdatePhotoEmployeeComponent,
-  ],
+    UpdatePhotoEmployeeComponent
+],
 })
 export default class UpdateProfilComponent {}

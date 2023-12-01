@@ -26,11 +26,14 @@ export default class ModalSearchComponent implements OnInit {
 
   private mapMenu(menuItems: MenuItem[]) {
     for (const item of menuItems) {
-      if (item.visible && item.name && item.link) {
-        this.nameLinkList.push({ name: item.name, link: item.link });
+      if (item.visible && item.name && item.routerLink) {
+        this.nameLinkList.push({
+          name: item.name,
+          link: item.routerLink,
+        });
       }
-      if (item.subItems) {
-        this.mapMenu(item.subItems);
+      if (item.items) {
+        this.mapMenu(item.items);
       }
     }
   }

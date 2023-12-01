@@ -30,8 +30,8 @@ import AddoreditSolicitudBajaComponent from './addoredit-solicitud-baja/addoredi
     NgbDropdownModule,
     PhoneFormatPipe,
     RouterModule,
-    PrimeNgModule,
-  ],
+    PrimeNgModule
+],
   providers: [DialogService, MessageService, CustomToastService],
 })
 export default class ListSolicitudBajaComponent implements OnInit {

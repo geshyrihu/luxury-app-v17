@@ -9,9 +9,7 @@ import { environment } from 'src/environments/environment';
   selector: 'app-tarjeta-producto',
   templateUrl: './tarjeta-producto.component.html',
   standalone: true,
-  imports: [
-    CommonModule,
-  ],
+  imports: [CommonModule],
 })
 export default class TarjetaProductoComponent implements OnInit, OnDestroy {
   public dataService = inject(DataService);

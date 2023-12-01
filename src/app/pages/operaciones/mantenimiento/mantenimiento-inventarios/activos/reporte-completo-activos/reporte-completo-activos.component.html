@@ -1,5 +1,4 @@
 <div class="h3">{{ titulo }}</div>
-
 <table class="table table-bordered">
   <thead>
     <tr>
@@ -9,13 +8,15 @@
       <th style="width: 30%">Observaciones</th>
     </tr>
   </thead>
-  <tbody *ngFor="let item of data">
+  @for (item of data; track item) {
+  <tbody>
     <tr>
       <td colspan="4">
         <h6 class="card-title">{{ item.ubication }}</h6>
       </td>
     </tr>
-    <tr *ngFor="let items of item.items">
+    @for (items of item.items; track items) {
+    <tr>
       <td>
         <img [src]="base_urlImg + items.photoPath" width="80px" height="60px" />
       </td>
@@ -33,5 +34,7 @@
       </td>
       <td>{{ items.Observaciones }}</td>
     </tr>
+    }
   </tbody>
+  }
 </table>

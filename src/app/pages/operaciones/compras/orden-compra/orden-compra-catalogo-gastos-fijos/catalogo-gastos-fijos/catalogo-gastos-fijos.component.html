@@ -1,5 +1,4 @@
 <p-toast position="top-left" [baseZIndex]="99999"></p-toast>
-
 <div class="p-card p-mb-5">
   <p-table
     #dt
@@ -18,6 +17,7 @@
     [value]="data"
     currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
     styleClass="custom-table"
+    [tableStyle]="{ 'min-width': '50rem' }"
   >
     <ng-template pTemplate="caption">
       <app-table-header
@@ -32,16 +32,9 @@
           ])
         "
       ></app-table-header>
-      <div
-        class="row mt-3"
-        *ngIf="
-          authService.onValidateRoles([
-            'Asistente',
-            'Residente',
-            'SuperUsuario'
-          ])
-        "
-      >
+      @if ( authService.onValidateRoles([ 'Asistente', 'Residente',
+      'SuperUsuario' ]) ) {
+      <div class="row mt-3">
         <div class="col-6">
           <div class="form-group w-50">
             <label class="font-weight-normal font-italic"
@@ -66,8 +59,8 @@
           </button>
         </div>
       </div>
+      }
     </ng-template>
-
     <ng-template pTemplate="header">
       <tr>
         <th scope="col" style="width: 10%">
@@ -111,26 +104,22 @@
           <small>Forma de pago: {{ item.formaPago }} </small>
         </td>
         <td class="p-column-title">
-          <div *ngFor="let item3 of item.producto">
+          @for (item3 of item.producto; track item3) {
+          <div>
             <small>{{ item3.producto }} </small><br />
           </div>
+          }
         </td>
         <td class="p-column-title">
-          <div *ngFor="let item2 of item.presupuesto">
+          @for (item2 of item.presupuesto; track item2) {
+          <div>
             <small> {{ item2.cedula }} </small><br />
           </div>
+          }
         </td>
-
-        <td
-          class="p-column-title"
-          *ngIf="
-            authService.onValidateRoles([
-              'Asistente',
-              'Residente',
-              'SuperUsuario'
-            ])
-          "
-        >
+        @if ( authService.onValidateRoles([ 'Asistente', 'Residente',
+        'SuperUsuario' ]) ) {
+        <td class="p-column-title">
           <div class="d-flex justify-content-center">
             <custom-button-edit
               (edit)="onModal({ id: item.id, title: 'Editar Registro' })"
@@ -140,6 +129,7 @@
             ></custom-button-delete>
           </div>
         </td>
+        }
       </tr>
     </ng-template>
     <ng-template pTemplate="paginatorleft">

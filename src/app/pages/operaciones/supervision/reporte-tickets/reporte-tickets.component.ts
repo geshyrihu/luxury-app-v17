@@ -21,8 +21,8 @@ const base_urlImg = environment.base_urlImg + 'Administration/accounts/';
     ComponentsModule,
     CommonModule,
     TableModule,
-    ReporteTicketsComponent,
-  ],
+    ReporteTicketsComponent
+],
   providers: [DialogService, MessageService, CustomToastService],
 })
 export default class ReporteTicketsComponent implements OnInit, OnDestroy {

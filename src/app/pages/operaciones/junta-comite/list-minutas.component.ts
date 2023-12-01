@@ -32,8 +32,8 @@ import AddorEditMeetingSeguimientoComponent from './addoredit-seguimiento/addor-
     CommonModule,
     PrimeNgModule,
     SanitizeHtmlPipe,
-    NgbTooltip,
-  ],
+    NgbTooltip
+],
   providers: [
     DialogService,
     MessageService,

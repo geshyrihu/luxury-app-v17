@@ -9,8 +9,8 @@ import { IFilterTicket } from 'src/app/core/interfaces/IFilterTicket.interface';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import { SelectItemService } from 'src/app/core/services/select-item.service';
 import { TicketFilterService } from 'src/app/core/services/ticket-filter.service';
+import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import { flatpickrFactory } from 'src/app/shared/components.module';
-import CustomInputModule from 'src/app/shared/custom-input-form/custom-input.module';
 
 @Component({
   selector: 'app-ticket-filter',

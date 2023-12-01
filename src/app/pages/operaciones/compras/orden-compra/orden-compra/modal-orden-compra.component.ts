@@ -17,10 +17,10 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
+import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import ComponentsModule, {
   flatpickrFactory,
 } from 'src/app/shared/components.module';
-import CustomInputModule from 'src/app/shared/custom-input-form/custom-input.module';
 
 @Component({
   selector: 'app-modal-orden-compra',
@@ -73,7 +73,6 @@ export default class ModalOrdenCompraComponent implements OnInit, OnDestroy {
     this.subRef$ = this.dataService
       .get(`OrdenCompra/GetForEdit/${this.ordenCompraId}`)
       .subscribe((resp: any) => {
-        console.log('🚀 ~ resp.body:', resp.body);
         resp.body.fechaSolicitud = this.dateService.getDateFormat(
           resp.body.fechaSolicitud
         );

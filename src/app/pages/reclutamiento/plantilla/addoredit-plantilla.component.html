@@ -1,18 +1,17 @@
-<div class="card" *ngIf="this.form">
+@if (this.form) {
+<div class="card">
   <div class="card-body">
     <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
       <!-- Id -->
-
+      @if (authService.onValidateRoles(['SuperUsuario'])) {
       <custom-input-text
-        *ngIf="authService.onValidateRoles(['SuperUsuario'])"
         [control]="form.get('id')"
         formControlName="id"
         label="Id"
         placeholder="id"
       ></custom-input-text>
-
+      } @if (authService.onValidateRoles(['SuperUsuario'])) {
       <custom-input-datalist
-        *ngIf="authService.onValidateRoles(['SuperUsuario'])"
         (propagar)="saveprofessionIdId($event)"
         [control]="form.get('professionName')"
         [data]="cb_profession"
@@ -20,9 +19,8 @@
         label="Profesion"
         dataListId="professionNameDatalistOptions"
       ></custom-input-datalist>
-
+      }
       <!-- Profesion -->
-
       <!-- Colaborador -->
       <custom-input-datalist
         (propagar)="saveemployeeIdId($event)"
@@ -33,9 +31,7 @@
         dataListId="employeeNameDatalistOptions"
       ></custom-input-datalist>
       <!-- Colaborador -->
-
       <!-- Sueldo -->
-
       <custom-input-number
         [control]="form.get('sueldoBase')"
         formControlName="sueldoBase"
@@ -49,21 +45,16 @@
         placeholder="sueldo actual"
       ></custom-input-number>
       <!-- Sueldo -->
-
       <!-- Horarios -->
-
+      @if (authService.onValidateRoles(['SuperUsuario'])) {
       <custom-input-select
-        *ngIf="authService.onValidateRoles(['SuperUsuario'])"
         [control]="form.get('turnoTrabajo')"
         formControlName="turnoTrabajo"
         label="Turno de trabajo"
         [data]="cb_turnoTrabajo"
       ></custom-input-select>
-
-      <div
-        class="form-group row mb-2"
-        *ngIf="authService.onValidateRoles(['SuperUsuario'])"
-      >
+      } @if (authService.onValidateRoles(['SuperUsuario'])) {
+      <div class="form-group row mb-2">
         <label class="font-weight-lighter col-sm-3">Lunes</label>
         <div class="col-9">
           <div class="row">
@@ -84,10 +75,8 @@
           </div>
         </div>
       </div>
-      <div
-        class="form-group row mb-2"
-        *ngIf="authService.onValidateRoles(['SuperUsuario'])"
-      >
+      } @if (authService.onValidateRoles(['SuperUsuario'])) {
+      <div class="form-group row mb-2">
         <label class="font-weight-lighter col-sm-3">Martes</label>
         <div class="col-9">
           <div class="row">
@@ -98,7 +87,6 @@
                 type="time"
               />
             </div>
-
             <div class="col-sm-6">
               <input
                 class="form-control"
@@ -109,10 +97,8 @@
           </div>
         </div>
       </div>
-      <div
-        class="form-group row mb-2"
-        *ngIf="authService.onValidateRoles(['SuperUsuario'])"
-      >
+      } @if (authService.onValidateRoles(['SuperUsuario'])) {
+      <div class="form-group row mb-2">
         <label class="font-weight-lighter col-sm-3">Miercoles</label>
         <div class="col-9">
           <div class="row">
@@ -123,7 +109,6 @@
                 type="time"
               />
             </div>
-
             <div class="col-sm-6">
               <input
                 class="form-control"
@@ -134,10 +119,8 @@
           </div>
         </div>
       </div>
-      <div
-        class="form-group row mb-2"
-        *ngIf="authService.onValidateRoles(['SuperUsuario'])"
-      >
+      } @if (authService.onValidateRoles(['SuperUsuario'])) {
+      <div class="form-group row mb-2">
         <label class="font-weight-lighter col-sm-3">Jueves</label>
         <div class="col-9">
           <div class="row">
@@ -148,7 +131,6 @@
                 type="time"
               />
             </div>
-
             <div class="col-sm-6">
               <input
                 class="form-control"
@@ -159,10 +141,8 @@
           </div>
         </div>
       </div>
-      <div
-        class="form-group row mb-2"
-        *ngIf="authService.onValidateRoles(['SuperUsuario'])"
-      >
+      } @if (authService.onValidateRoles(['SuperUsuario'])) {
+      <div class="form-group row mb-2">
         <label class="font-weight-lighter col-sm-3">Viernes</label>
         <div class="col-9">
           <div class="row">
@@ -173,7 +153,6 @@
                 type="time"
               />
             </div>
-
             <div class="col-sm-6">
               <input
                 class="form-control"
@@ -184,10 +163,8 @@
           </div>
         </div>
       </div>
-      <div
-        class="form-group row mb-2"
-        *ngIf="authService.onValidateRoles(['SuperUsuario'])"
-      >
+      } @if (authService.onValidateRoles(['SuperUsuario'])) {
+      <div class="form-group row mb-2">
         <label class="font-weight-lighter col-sm-3">Sabado</label>
         <div class="col-9">
           <div class="row">
@@ -198,7 +175,6 @@
                 type="time"
               />
             </div>
-
             <div class="col-sm-6">
               <input
                 class="form-control"
@@ -209,10 +185,8 @@
           </div>
         </div>
       </div>
-      <div
-        class="form-group row mb-2"
-        *ngIf="authService.onValidateRoles(['SuperUsuario'])"
-      >
+      } @if (authService.onValidateRoles(['SuperUsuario'])) {
+      <div class="form-group row mb-2">
         <label class="font-weight-lighter col-sm-3">Domingo</label>
         <div class="col-9">
           <div class="row">
@@ -223,7 +197,6 @@
                 type="time"
               />
             </div>
-
             <div class="col-sm-6">
               <input
                 class="form-control"
@@ -234,23 +207,25 @@
           </div>
         </div>
       </div>
+      } @if (authService.onValidateRoles(['SuperUsuario'])) {
       <custom-input-text-area
-        *ngIf="authService.onValidateRoles(['SuperUsuario'])"
         [control]="form.get('observationsWorkShift')"
         formControlName="observationsWorkShift"
         label="Obr. referentes al horario"
         placeholder="Observaciones referentes al horario"
       ></custom-input-text-area>
+      } @if (authService.onValidateRoles(['SuperUsuario'])) {
       <custom-input-select
-        *ngIf="authService.onValidateRoles(['SuperUsuario'])"
         [control]="form.get('state')"
         formControlName="state"
         label="Vacante activa"
         [data]="cb_state"
       ></custom-input-select>
+      }
       <custom-button-submit
         [disabled]="this.form.invalid || submitting"
       ></custom-button-submit>
     </form>
   </div>
 </div>
+}

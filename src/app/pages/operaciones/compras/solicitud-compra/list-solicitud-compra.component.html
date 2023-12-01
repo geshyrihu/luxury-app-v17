@@ -3,6 +3,7 @@
   [(selection)]="data"
   #dt
   styleClass="custom-table"
+  [tableStyle]="{ 'min-width': '50rem' }"
   [value]="data"
   [rows]="50"
   [paginator]="true"
@@ -45,7 +46,6 @@
         >
           Denegadas
         </button>
-
         <button
           (click)="onSelectStatus(0)"
           (click)="statusCompra = 0"
@@ -55,7 +55,6 @@
         >
           Autorizadas
         </button>
-
         <button
           (click)="onSelectStatus(2)"
           (click)="statusCompra = 2"
@@ -69,7 +68,6 @@
       </div>
     </div>
   </ng-template>
-
   <ng-template pTemplate="header">
     <tr>
       <th
@@ -140,45 +138,30 @@
         {{ item.justificacionGasto }}
       </td>
       <td class="text-center">
-        <span
-          *ngIf="item.estatus == 'Pendiente'"
-          class="badge bg-danger p-2 ms-1"
-          >{{ item.estatus }}</span
-        >
-        <span
-          *ngIf="item.estatus == 'Autorizado'"
-          class="badge bg-success p-2 ms-1"
-          >{{ item.estatus }}</span
-        >
-        <span
-          *ngIf="item.estatus == 'Denegado'"
-          class="badge bg-secondary p-2 ms-1"
-          >{{ item.estatus }}</span
-        >
+        @if (item.estatus == 'Pendiente') {
+        <span class="badge bg-danger p-2 ms-1">{{ item.estatus }}</span>
+        } @if (item.estatus == 'Autorizado') {
+        <span class="badge bg-success p-2 ms-1">{{ item.estatus }}</span>
+        } @if (item.estatus == 'Denegado') {
+        <span class="badge bg-secondary p-2 ms-1">{{ item.estatus }}</span>
+        }
       </td>
-
       <td class="p-column-title">
         <div class="d-flex justify-content-center">
+          @if ( authService.onValidateRoles([ 'Asistente', 'Mantenimiento',
+          'Residente', 'SuperUsuario' ]) ) {
           <custom-button-edit
-            *ngIf="
-              authService.onValidateRoles([
-                'Asistente',
-                'Mantenimiento',
-                'Residente',
-                'SuperUsuario'
-              ])
-            "
             (edit)="onSolicitudCompra(item.id)"
           ></custom-button-edit>
+          } @if (authService.onValidateRoles(['SuperUsuario'])) {
           <custom-button-delete
-            *ngIf="authService.onValidateRoles(['SuperUsuario'])"
             (OnConfirm)="onDelete(item)"
           ></custom-button-delete>
+          }
         </div>
       </td>
     </tr>
   </ng-template>
-
   <ng-template pTemplate="paginatorleft">
     <app-table-footer [data]="data"></app-table-footer>
   </ng-template>

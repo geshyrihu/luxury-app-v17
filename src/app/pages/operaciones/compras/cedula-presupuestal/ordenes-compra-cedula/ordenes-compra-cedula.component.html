@@ -7,6 +7,7 @@
     [value]="data"
     currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
     styleClass="custom-table"
+    [tableStyle]="{ 'min-width': '50rem' }"
   >
     <ng-template pTemplate="caption">
       <app-table-header
@@ -16,7 +17,6 @@
         [dt]="dt"
       ></app-table-header>
     </ng-template>
-
     <ng-template pTemplate="header">
       <tr>
         <th scope="col">Folio</th>
@@ -30,11 +30,10 @@
       <tr>
         <td class="p-column-title">
           {{ item.folio }}
-
           <i
             ngbTooltip="Ver"
             placement="top"
-            class="fa-duotone fa-hand-point-right pointer"
+            class="fa-regular fa-hand-point-right pointer"
             (click)="onOrdenCompraModal(item.ordenCompraId)"
           >
           </i>
@@ -55,7 +54,6 @@
         <td class="p-column-title">{{ item.total }}</td>
       </tr>
     </ng-template>
-
     <ng-template pTemplate="paginatorleft">
       <div class="p-d-flex p-ai-center p-jc-between hide-print-mode">
         En total hay
@@ -63,12 +61,13 @@
       </div>
     </ng-template>
   </p-table>
-
-  <div class="row" *ngIf="data">
+  @if (data) {
+  <div class="row">
     <div class="col">
       <h2>Pagos registrados:{{ pagadas() }}</h2>
       <h2>Pagos no registrados:{{ noPagadas() }}</h2>
       <h2></h2>
     </div>
   </div>
+  }
 </div>

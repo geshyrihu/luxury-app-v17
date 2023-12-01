@@ -25,9 +25,8 @@ import {
   DataService,
   DateService,
 } from 'src/app/core/services/common-services';
-import { EnumService } from 'src/app/core/services/enum-service';
+import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import ComponentsModule from 'src/app/shared/components.module';
-import CustomInputModule from 'src/app/shared/custom-input-form/custom-input.module';
 import PrimeNgModule from 'src/app/shared/prime-ng.module';
 import { environment } from 'src/environments/environment';
 
@@ -56,7 +55,6 @@ export default class AddOrEditActivosComponent implements OnInit, OnDestroy {
   public customerIdService = inject(CustomerIdService);
   public dialogService = inject(DialogService);
   private customToastService = inject(CustomToastService);
-  private enumService = inject(EnumService);
 
   public Editor = ClassicEditor;
 
@@ -99,7 +97,7 @@ export default class AddOrEditActivosComponent implements OnInit, OnDestroy {
       observations: [''],
       photoPath: [''],
       serie: [''],
-      state: [0, [Validators.required]],
+      state: ['', [Validators.required]],
       technicalSpecifications: [''],
       ubication: ['', [Validators.required]],
     });

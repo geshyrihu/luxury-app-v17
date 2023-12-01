@@ -42,8 +42,8 @@ import SolicitudCompraDetalleComponent from './solicitud-compra-detalle/solicitu
     SolicitudCompraDetalleComponent,
     AddProductComponent,
     ToastModule,
-    RouterModule,
-  ],
+    RouterModule
+],
   providers: [
     DialogService,
     MessageService,

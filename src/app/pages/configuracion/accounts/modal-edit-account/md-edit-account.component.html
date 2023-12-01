@@ -1,6 +1,4 @@
-<ng-container
-  *ngIf="applicationUserId !== '' && applicationUserId !== undefined"
->
+@if (applicationUserId !== '' && applicationUserId !== undefined) {
   <div class="row">
     <div class="col-sm-6">
       <app-update-account
@@ -12,22 +10,23 @@
         [applicationUserId]="applicationUserId"
       ></app-update-password-account>
     </div>
-
-    <div
-      class="col-sm-6"
-      *ngIf="this.authService.onValidateRoles(['SuperUsuario'])"
-    >
-      <app-update-role
-        [applicationUserId]="applicationUserId"
-      ></app-update-role>
-    </div>
-    <div
-      class="col-sm-6"
-      *ngIf="this.authService.onValidateRoles(['SuperUsuario'])"
-    >
-      <app-access-customer
-        [applicationUserId]="applicationUserId"
-      ></app-access-customer>
-    </div>
+    @if (this.authService.onValidateRoles(['SuperUsuario'])) {
+      <div
+        class="col-sm-6"
+        >
+        <app-update-role
+          [applicationUserId]="applicationUserId"
+        ></app-update-role>
+      </div>
+    }
+    @if (this.authService.onValidateRoles(['SuperUsuario'])) {
+      <div
+        class="col-sm-6"
+        >
+        <app-access-customer
+          [applicationUserId]="applicationUserId"
+        ></app-access-customer>
+      </div>
+    }
   </div>
-</ng-container>
+}

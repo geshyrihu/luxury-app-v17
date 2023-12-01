@@ -24,8 +24,8 @@ import AddoreditInventarioIluminacionComponent from './addoredit-inventario-ilum
     NgbAlertModule,
     CommonModule,
     TableModule,
-    ImageModule,
-  ],
+    ImageModule
+],
   providers: [DialogService, MessageService, CustomToastService],
 })
 export default class InventarioIluminacionComponent

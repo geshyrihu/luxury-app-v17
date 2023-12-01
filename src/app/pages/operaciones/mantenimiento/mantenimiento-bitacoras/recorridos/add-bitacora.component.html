@@ -1,51 +1,51 @@
-<div *ngIf="machinery">
-  <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
-    <div class="form-group">
-      <label>Equipo o Instalación</label>
-      <input
-        hidden
-        formControlName="machineryId"
-        [(ngModel)]="machinery.value"
-      />
-      <input
-        readonly
-        type="text"
-        class="form-control"
-        [(ngModel)]="machinery.label"
-        formControlName="machinery"
-      />
+@if (machinery) {
+  <div>
+    <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
+      <div class="form-group">
+        <label>Equipo o Instalación</label>
+        <input
+          hidden
+          formControlName="machineryId"
+          [(ngModel)]="machinery.value"
+          />
+          <input
+            readonly
+            type="text"
+            class="form-control"
+            [(ngModel)]="machinery.label"
+            formControlName="machinery"
+            />
+          </div>
+          <div class="form-group">
+            <label>Descripción</label>
+            <textarea
+              formControlName="descripcion"
+              class="form-control"
+              cols="30"
+              rows="10"
+            ></textarea>
+            <!-- <div
+            *ngIf="
+            f.descripcion.invalid &&
+            (f.descripcion.dirty || f.descripcion.touched)
+            "
+            class="text-danger"
+            >
+            <p *ngIf="f.descripcion.errors.required">Campo requerido</p>
+          </div> -->
+        </div>
+        <div class="form-group">
+          <label>Activar Si esta nota es alguna emergencia </label>
+          <custom-input-check
+            [control]="form.get('emergencia')"
+            formControlName="emergencia"
+            label="Emergencia"
+          ></custom-input-check>
+        </div>
+        <custom-button-submit
+          [disabled]="form.invalid || submitting"
+        ></custom-button-submit>
+      </form>
     </div>
-    <div class="form-group">
-      <label>Descripción</label>
-      <textarea
-        formControlName="descripcion"
-        class="form-control"
-        cols="30"
-        rows="10"
-      ></textarea>
-
-      <!-- <div
-        *ngIf="
-          f.descripcion.invalid &&
-          (f.descripcion.dirty || f.descripcion.touched)
-        "
-        class="text-danger"
-      >
-        <p *ngIf="f.descripcion.errors.required">Campo requerido</p>
-      </div> -->
-    </div>
-    <div class="form-group">
-      <label>Activar Si esta nota es alguna emergencia </label>
-
-      <custom-input-check
-        [control]="form.get('emergencia')"
-        formControlName="emergencia"
-        label="Emergencia"
-      ></custom-input-check>
-    </div>
-
-    <custom-button-submit
-      [disabled]="form.invalid || submitting"
-    ></custom-button-submit>
-  </form>
-</div>
+  }
+  

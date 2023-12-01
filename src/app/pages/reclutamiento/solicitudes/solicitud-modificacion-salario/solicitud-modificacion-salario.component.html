@@ -20,7 +20,6 @@
       label="Salario mensual final neto"
       placeholder="salario mensual final neto"
     ></custom-input-number>
-
     <custom-input-datalist
       (propagar)="onSaveProfessionIdToAccount($event)"
       [control]="form.get('professionNew')"
@@ -29,7 +28,6 @@
       dataListId="professionNewCondominiumDatalistOptions"
       label="Puesto nuevo"
     ></custom-input-datalist>
-
     <custom-input-date
       [control]="form.get('executionDate')"
       formControlName="executionDate"
@@ -49,7 +47,6 @@
       label="Comentarios adicionales"
       placeholder="comentarios adicionales"
     ></custom-input-text-area>
-
     <div class="form-group row mb-2">
       <label class="col-sm-3">Adjuntar soporte (máximo 10MB) </label>
       <div class="col-sm-9">
@@ -58,17 +55,17 @@
             formControlName="files"
             [animation]="true"
             (change)="onFileChange()"
-          >
+            >
           </file-upload>
-
           <!-- Mostrar mensaje de error si se supera el tamaño máximo -->
-          <div class="text-danger" *ngIf="maxSizeExceeded">
-            Los archivos adjuntos no deben superar los 10 MB.
-          </div>
+          @if (maxSizeExceeded) {
+            <div class="text-danger">
+              Los archivos adjuntos no deben superar los 10 MB.
+            </div>
+          }
         </form>
       </div>
     </div>
-
     <custom-button-send-email
       [disabled]="this.form.invalid || submitting"
     ></custom-button-send-email>

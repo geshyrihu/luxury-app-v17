@@ -1,64 +1,66 @@
-<div *ngIf="ordenesServicio">
-  <div class="row">
-    <div class="col-12">
-      <div
-        class="page-title-box d-sm-flex align-items-center justify-content-between"
-      >
-        <h4 class="mb-sm-0 font-size-18">MANTENIMIENTOS PREVENTIVOS</h4>
-        <app-mesanio (periodoEmit)="onChangePeriodo($event)"></app-mesanio>
+@if (ordenesServicio) {
+  <div>
+    <div class="row">
+      <div class="col-12">
+        <div
+          class="page-title-box d-sm-flex align-items-center justify-content-between"
+          >
+          <h4 class="mb-sm-0 font-size-18">MANTENIMIENTOS PREVENTIVOS</h4>
+          <app-mesanio (periodoEmit)="onChangePeriodo($event)"></app-mesanio>
+        </div>
+      </div>
+      <div class="col-xl-3 col-md-6 mb-2">
+        <ngb-alert
+          (click)="onClick(4)"
+          type="info"
+          [dismissible]="false"
+          class="alert-dismissible fade show px-4 mb-0 text-center custom-alert pointer"
+          >
+          <div class="h1 text-info d-block mt-2 mb-3">
+            {{ ordenesServicio.total }}
+          </div>
+          <h5 class="text-info">TOTALES</h5>
+        </ngb-alert>
+      </div>
+      <div class="col-xl-3 col-md-6 mb-2">
+        <ngb-alert
+          (click)="onClick(1)"
+          type="success"
+          [dismissible]="false"
+          class="alert-dismissible fade show px-4 mb-0 text-center custom-alert pointer"
+          >
+          <div class="h1 text-success d-block mt-2 mb-3">
+            {{ ordenesServicio.concluido }}
+          </div>
+          <h5 class="text-success">TERMINADO</h5>
+        </ngb-alert>
+      </div>
+      <div class="col-xl-3 col-md-6 mb-2">
+        <ngb-alert
+          (click)="onClick(0)"
+          type="danger"
+          [dismissible]="false"
+          class="alert-dismissible fade show px-4 mb-0 text-center custom-alert pointer"
+          >
+          <div class="h1 text-danger d-block mt-2 mb-3">
+            {{ ordenesServicio.pendiente }}
+          </div>
+          <h5 class="text-danger">PENDIENTES</h5>
+        </ngb-alert>
+      </div>
+      <div class="col-xl-3 col-md-6 mb-2">
+        <ngb-alert
+          (click)="onClick(2)"
+          type="dark"
+          [dismissible]="false"
+          class="alert-dismissible fade show px-4 mb-0 text-center custom-alert pointer"
+          >
+          <div class="h1 text-dark d-block mt-2 mb-3">
+            {{ ordenesServicio.denegado }}
+          </div>
+          <h5 class="text-dark">NO AUTORIZADO</h5>
+        </ngb-alert>
       </div>
     </div>
-    <div class="col-xl-3 col-md-6 mb-2">
-      <ngb-alert
-        (click)="onClick(4)"
-        type="info"
-        [dismissible]="false"
-        class="alert-dismissible fade show px-4 mb-0 text-center custom-alert pointer"
-      >
-        <div class="h1 text-info d-block mt-2 mb-3">
-          {{ ordenesServicio.total }}
-        </div>
-        <h5 class="text-info">TOTALES</h5>
-      </ngb-alert>
-    </div>
-    <div class="col-xl-3 col-md-6 mb-2">
-      <ngb-alert
-        (click)="onClick(1)"
-        type="success"
-        [dismissible]="false"
-        class="alert-dismissible fade show px-4 mb-0 text-center custom-alert pointer"
-      >
-        <div class="h1 text-success d-block mt-2 mb-3">
-          {{ ordenesServicio.concluido }}
-        </div>
-        <h5 class="text-success">TERMINADO</h5>
-      </ngb-alert>
-    </div>
-    <div class="col-xl-3 col-md-6 mb-2">
-      <ngb-alert
-        (click)="onClick(0)"
-        type="danger"
-        [dismissible]="false"
-        class="alert-dismissible fade show px-4 mb-0 text-center custom-alert pointer"
-      >
-        <div class="h1 text-danger d-block mt-2 mb-3">
-          {{ ordenesServicio.pendiente }}
-        </div>
-        <h5 class="text-danger">PENDIENTES</h5>
-      </ngb-alert>
-    </div>
-    <div class="col-xl-3 col-md-6 mb-2">
-      <ngb-alert
-        (click)="onClick(2)"
-        type="dark"
-        [dismissible]="false"
-        class="alert-dismissible fade show px-4 mb-0 text-center custom-alert pointer"
-      >
-        <div class="h1 text-dark d-block mt-2 mb-3">
-          {{ ordenesServicio.denegado }}
-        </div>
-        <h5 class="text-dark">NO AUTORIZADO</h5>
-      </ngb-alert>
-    </div>
   </div>
-</div>
+}

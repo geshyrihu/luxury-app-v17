@@ -1,9 +1,9 @@
 <p-toast position="top-left" [baseZIndex]="99999"></p-toast>
-
 <p-table
   [(selection)]="data"
   #dt
   styleClass="custom-table"
+  [tableStyle]="{ 'min-width': '50rem' }"
   [value]="data"
   [rows]="15"
   [paginator]="true"
@@ -20,11 +20,12 @@
       [showAdd]="false"
       [dt]="dt"
     ></app-table-header>
-    <p class="text-danger font-weight-light" *ngIf="mensajeError">
+    @if (mensajeError) {
+    <p class="text-danger font-weight-light">
       {{ mensajeError }}
     </p>
+    }
   </ng-template>
-
   <ng-template pTemplate="header">
     <tr>
       <th scope="col" pSortableColumn="nombreProducto" style="width: 35%">
@@ -75,12 +76,13 @@
           [class.invalid]="mensajeError"
         >
           <option value="0">Selecciona una opción</option>
-          <option [value]="item.value" *ngFor="let item of cb_UnidadMedida">
+          @for (item of cb_UnidadMedida; track item) {
+          <option [value]="item.value">
             {{ item.label }}
           </option>
+          }
         </select>
       </td>
-
       <td class="p-column-title">
         <input
           required

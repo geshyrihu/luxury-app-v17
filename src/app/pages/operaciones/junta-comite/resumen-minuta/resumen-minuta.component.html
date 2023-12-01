@@ -3,65 +3,75 @@
     <app-resumen-minuta-grafico></app-resumen-minuta-grafico>
   </div>
 </div>
-
-<ng-container *ngIf="data">
-  <p-table [value]="data" id="dt" styleClass="custom-table">
-    <ng-template pTemplate="header">
-      <tr>
-        <th style="width: 42%">REQUERIMIENTO</th>
-        <th style="width: 42%">SEGUIMIENTO</th>
-        <th style="width: 16%" pSortableColumn="status">
-          ESTATUS
-
-          <p-sortIcon field="status"></p-sortIcon>
-        </th>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-item>
-      <tr>
-        <td>
-          {{ item.title | uppercase }}
-          <div
-            class="text-justify"
-            [innerHTML]="item.requestService | sanitizeHtml"
-          ></div>
-        </td>
-        <td>
-          <div *ngIf="item.meetingDertailsSeguimientos.length > 0">
-            <ol [start]="item.meetingDertailsSeguimientos.length" reversed>
-              <li>
-                {{ item.meetingDertailsSeguimientos[0].fecha }},
-                {{ item.meetingDertailsSeguimientos[0].seguimiento }}
-              </li>
-            </ol>
-          </div>
-        </td>
-
-        <td class="text-center">
-          <p
-            class="border-0"
-            [ngClass]="{
-              'text-danger': item.status == 0,
-              'text-success': item.status == 1,
-              'text-secondary': item.status == 2
-            }"
-          >
-            <span *ngIf="item.status === 0">
-              <i class="fa-duotone fa-xmark text-danger"></i>
-            </span>
-            <span *ngIf="item.status === 1">
-              <i class="fa-duotone fa-check-double"></i>
-            </span>
-            <span *ngIf="item.status === 2">
-              <i class="fa-duotone fa-ban"></i>
-            </span>
-          </p>
-          <br />
-          <span *ngIf="item.status == 1">
-            {{ item.deliveryDate | date }}
+@if (data) {
+<p-table
+  [value]="data"
+  id="dt"
+  styleClass="custom-table"
+  [tableStyle]="{ 'min-width': '50rem' }"
+>
+  <ng-template pTemplate="header">
+    <tr>
+      <th style="width: 42%">REQUERIMIENTO</th>
+      <th style="width: 42%">SEGUIMIENTO</th>
+      <th style="width: 16%" pSortableColumn="status">
+        ESTATUS
+        <p-sortIcon field="status"></p-sortIcon>
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-item>
+    <tr>
+      <td>
+        {{ item.title | uppercase }}
+        <div
+          class="text-justify"
+          [innerHTML]="item.requestService | sanitizeHtml"
+        ></div>
+      </td>
+      <td>
+        @if (item.meetingDertailsSeguimientos.length > 0) {
+        <div>
+          <ol [start]="item.meetingDertailsSeguimientos.length" reversed>
+            <li>
+              {{ item.meetingDertailsSeguimientos[0].fecha }},
+              {{ item.meetingDertailsSeguimientos[0].seguimiento }}
+            </li>
+          </ol>
+        </div>
+        }
+      </td>
+      <td class="text-center">
+        <p
+          class="border-0"
+          [ngClass]="{
+            'text-danger': item.status == 0,
+            'text-success': item.status == 1,
+            'text-secondary': item.status == 2
+          }"
+        >
+          @if (item.status === 0) {
+          <span>
+            <i class="fa-regular fa-xmark text-danger"></i>
           </span>
-        </td>
-      </tr>
-    </ng-template>
-  </p-table>
-</ng-container>
+          } @if (item.status === 1) {
+          <span>
+            <i class="fa-regular fa-check-double"></i>
+          </span>
+          } @if (item.status === 2) {
+          <span>
+            <i class="fa-regular fa-ban"></i>
+          </span>
+          }
+        </p>
+        <br />
+        @if (item.status == 1) {
+        <span>
+          {{ item.deliveryDate | date }}
+        </span>
+        }
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+}

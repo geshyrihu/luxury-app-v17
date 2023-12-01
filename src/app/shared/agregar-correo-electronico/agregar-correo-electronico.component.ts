@@ -1,4 +1,4 @@
-import { NgClass, NgIf } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -7,7 +7,7 @@ import { DynamicDialogRef } from 'primeng/dynamicdialog';
   selector: 'app-agregar-correo-electronico',
   templateUrl: './agregar-correo-electronico.component.html',
   standalone: true,
-  imports: [FormsModule, NgClass, NgIf],
+  imports: [FormsModule, NgClass],
 })
 export default class AgregarCorreoElectronicoComponent {
   email: string = '';

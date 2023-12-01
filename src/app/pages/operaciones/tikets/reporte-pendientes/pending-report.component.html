@@ -1,62 +1,63 @@
 <div class="container">
   <app-report-header></app-report-header>
   <h4 class="h4">Reporte de Pendientes</h4>
-  <ng-container *ngFor="let item of data">
-    <div class="alert alert-light p-1">
-      <h5 class="h5">
-        {{ item.key }}
-      </h5>
-    </div>
-
-    <table class="table table-sm">
-      <tbody *ngFor="let detalles of item.weeklyReportPDFDTO">
-        <tr class="mb-2 breakPage">
-          <td style="width: 30%">
-            <img
-              [src]="urlImg + detalles.photoPathBefore"
-              alt=""
-              class="h-50 w-50 rounded"
-            />
-          </td>
-          <td style="width: 70%">
-            <table class="table table-sm">
-              <tbody>
-                <tr>
-                  <td style="width: 30%">Solicitud</td>
-                  <td style="width: 70%">{{ detalles.activity }}</td>
-                </tr>
-                <tr>
-                  <td style="width: 30%">Solicita</td>
-                  <td style="width: 70%">
-                    {{ detalles.employeeCargoReporte }},{{
-                      detalles.dateRequest | date : "fullDate"
-                    }}
-                  </td>
-                </tr>
-                <!--
-                <tr>
-                  <td style="width: 30%">Responsable</td>
-                  <td style="width: 70%">
-                    {{ detalles.responsable }}
-                  </td>
-                </tr>
-                <tr>
-                  <td style="width: 30%">Fecha de inicio</td>
-                  <td style="width: 70%">
-                    {{ detalles.fechaProgamacion | date : "fullDate" }}
-                  </td>
-                </tr>
-                <tr>
-                  <td style="width: 30%">Fecha de término</td>
-                  <td style="width: 70%">
-                    {{ detalles.dateFinished | date : "fullDate" }}
-                  </td>
-                </tr> -->
-              </tbody>
-            </table>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </ng-container>
+  @for (item of data; track item) {
+  <div class="alert alert-light p-1">
+    <h5 class="h5">
+      {{ item.key }}
+    </h5>
+  </div>
+  <table class="table table-sm">
+    @for (detalles of item.weeklyReportPDFDTO; track detalles) {
+    <tbody>
+      <tr class="mb-2 breakPage">
+        <td style="width: 30%">
+          <img
+            [src]="urlImg + detalles.photoPathBefore"
+            alt=""
+            class="h-50 w-50 rounded"
+          />
+        </td>
+        <td style="width: 70%">
+          <table class="table table-sm">
+            <tbody>
+              <tr>
+                <td style="width: 30%">Solicitud</td>
+                <td style="width: 70%">{{ detalles.activity }}</td>
+              </tr>
+              <tr>
+                <td style="width: 30%">Solicita</td>
+                <td style="width: 70%">
+                  {{ detalles.employeeCargoReporte }},{{
+                    detalles.dateRequest | date : "fullDate"
+                  }}
+                </td>
+              </tr>
+              <!--
+                    <tr>
+                      <td style="width: 30%">Responsable</td>
+                      <td style="width: 70%">
+                        {{ detalles.responsable }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="width: 30%">Fecha de inicio</td>
+                      <td style="width: 70%">
+                        {{ detalles.fechaProgamacion | date : "fullDate" }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="width: 30%">Fecha de término</td>
+                      <td style="width: 70%">
+                        {{ detalles.dateFinished | date : "fullDate" }}
+                      </td>
+                    </tr> -->
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+    }
+  </table>
+  }
 </div>

@@ -1,8 +1,10 @@
-<div *ngIf="data">
+@if (data) {
+<div>
   <p-table
     [value]="data"
     [rowHover]="true"
     styleClass="custom-table"
+    [tableStyle]="{ 'min-width': '50rem' }"
     #dt
     [globalFilterFields]="['customer.label', 'fecha']"
   >
@@ -24,14 +26,12 @@
         </div>
       </div>
     </ng-template>
-
     <ng-template pTemplate="header">
       <tr>
         <th scope="col" pSortableColumn="empleado" style="width: 20%">
           COLABORADOR
           <p-sortIcon field="empleado"></p-sortIcon>
         </th>
-
         <th scope="col" pSortableColumn="solicitudes" style="width: 20%">
           SOLICITUDES
           <p-sortIcon field="solicitudes"></p-sortIcon>
@@ -58,7 +58,6 @@
             {{ item.empleado }}
           </div>
         </td>
-
         <td class="text-center">
           <span class="pointer h4 card-title badge text-info p-1 w-25">
             {{ item.solicitudes }}
@@ -98,3 +97,4 @@
     </ng-template>
   </p-table>
 </div>
+}

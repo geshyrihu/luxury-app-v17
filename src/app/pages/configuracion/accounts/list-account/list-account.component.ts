@@ -6,11 +6,11 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subscription } from 'rxjs';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import { IAccountDto } from 'src/app/core/interfaces/account-dto.interface';
-import CardEmployeeComponent from 'src/app/pages/operaciones/directorios/empleados/card-employee/card-employee.component';
 import PhoneFormatPipe from 'src/app/core/pipes/phone-format.pipe';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { DataFilterService } from 'src/app/core/services/dataFilter.service';
+import CardEmployeeComponent from 'src/app/pages/operaciones/directorios/empleados/card-employee/card-employee.component';
 import ComponentsModule from 'src/app/shared/components.module';
 import DropdownRouteComponent from 'src/app/shared/ngb-dropdown-menu/dropdown-route.component';
 import PrimeNgModule from 'src/app/shared/prime-ng.module';
@@ -174,11 +174,6 @@ export default class ListAccountComponent implements OnInit, OnDestroy {
           if (registro) {
             // Modifica la propiedad 'active'
             registro.active = !registro.active; // o cualquier otro valor que desees asignar
-          } else {
-            console.log(
-              'No se encontró el registro con el ID:',
-              applicationUserId
-            );
           }
           this.customToastService.onShowSuccess();
         },

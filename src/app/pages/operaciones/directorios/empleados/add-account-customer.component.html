@@ -7,7 +7,6 @@
     y asignarlo al edificio de nuevo ingreso (esta tarea la realizaría el
     administrador del sistema)
   </p>
-
   <custom-input-text
     [control]="form.get('firstName')"
     formControlName="firstName"
@@ -15,7 +14,6 @@
     placeholder="nombre"
     (input)="searchExistingPerson($event)"
   ></custom-input-text>
-
   <custom-input-text
     [control]="form.get('lastName')"
     formControlName="lastName"
@@ -23,14 +21,12 @@
     placeholder="apellidos"
     (input)="searchExistingPerson($event)"
   ></custom-input-text>
-
   <custom-input-date
     [control]="form.get('birth')"
     formControlName="birth"
     label="Fecha de nacimiento"
     placeholder="fecha de nacimiento"
   ></custom-input-date>
-
   <custom-input-mask
     [control]="form.get('phoneNumber')"
     formControlName="phoneNumber"
@@ -40,12 +36,12 @@
     (input)="searchExistingPhone($event)"
   ></custom-input-mask>
 
-  <custom-input-email
+  <custom-input-text
     [control]="form.get('email')"
     formControlName="email"
     label="Email personal"
     placeholder="email personal"
-  ></custom-input-email>
+  ></custom-input-text>
 
   <custom-input-select
     [control]="form.get('professionId')"
@@ -53,11 +49,9 @@
     label="Profesión"
     [data]="cb_profession"
   ></custom-input-select>
-
   <!-- img -->
   <div class="form-group row mb-2">
     <label class="col-sm-3 font-weight-lighter">Fotografia</label>
-
     <div class="col-sm-9">
       <input
         type="file"
@@ -66,51 +60,46 @@
         formControlName="photoPath"
         (change)="change($event)"
       />
-      <div
-        *ngIf="
-          f.photoPath.invalid && (f.photoPath.dirty || f.photoPath.touched)
-        "
-      >
-        <small *ngIf="f.photoPath.errors.required" class="p-error"
-          >La foto es reqerida.</small
-        >
+      @if ( f.photoPath.invalid && (f.photoPath.dirty || f.photoPath.touched) )
+      {
+      <div>
+        @if (f.photoPath.errors.required) {
+        <small class="p-error">La foto es reqerida.</small>
+        }
       </div>
+      }
     </div>
   </div>
   <div class="form-group row mb-2">
     <label class="col-sm-3 font-weight-lighter"></label>
-
     <div class="col-sm-9">
-      <img
-        [src]="imgBase64"
-        *ngIf="imgBase64"
-        style="width: 120px; height: 160px"
-        alt=""
-      />
+      @if (imgBase64) {
+      <img [src]="imgBase64" style="width: 120px; height: 160px" alt="" />
+      }
     </div>
   </div>
-
   <!-- img -->
-
   <!-- Boton Submin -->
   <custom-button-submit
     [disabled]="this.form.invalid || submitting"
   ></custom-button-submit>
   <!-- Boton Submin -->
 </form>
-
 <p class="text-danger">
   <strong>Coincidencias registradas</strong> , Si hay coincidencias, solicita el
   apoyo del administrador del sistema
 </p>
-
 <div class="row">
   <div class="col-4">
     <p class="text-danger">POR NOMBRE:</p>
-    <p class="text-danger" *ngFor="let item of existingPerson">{{ item }}</p>
+    @for (item of existingPerson; track item) {
+    <p class="text-danger">{{ item }}</p>
+    }
   </div>
   <div class="col-4">
     <p class="text-danger">POR TÉLEFONO:</p>
-    <p class="text-danger" *ngFor="let item of existingPhone">{{ item }}</p>
+    @for (item of existingPhone; track item) {
+    <p class="text-danger">{{ item }}</p>
+    }
   </div>
 </div>

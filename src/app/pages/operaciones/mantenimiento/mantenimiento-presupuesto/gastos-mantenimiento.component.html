@@ -1,5 +1,37 @@
 <p-toast position="top-left" [baseZIndex]="99999"></p-toast>
 
+<div class="card">
+  <p-table
+    #dt
+    [value]="resumenGastos"
+    styleClass="custom-table"
+    [tableStyle]="{ 'min-width': '50rem' }"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Cuenta</th>
+        <th scope="col">Mensual</th>
+        <th scope="col">Anual</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+      <tr>
+        <td class="p-column-title">{{ rowIndex + 1 }}</td>
+        <td class="p-column-title">
+          {{ item.cuenta.cuenta }}
+        </td>
+        <td class="p-column-title">
+          {{ item.costoMensual }}
+        </td>
+        <td class="p-column-title">
+          {{ item.total }}
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+<!-- 
 <table class="table">
   <thead>
     <tr>
@@ -10,29 +42,32 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let item of resumenGastos; let i = index">
+    @for (item of resumenGastos; track item; let i = $index) {
+    <tr>
       <td>{{ i + 1 }}</td>
       <td>{{ item.cuenta.cuenta }}</td>
       <td>{{ item.costoMensual }}</td>
       <td>{{ item.total }}</td>
     </tr>
+    }
   </tbody>
-</table>
-
-<table class="table table-striped">
+</table> -->
+<table class="table custom-table table-striped">
   <thead>
     <tr>
       <th class="w-100"></th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let item of data">
+    @for (item of data; track item) {
+    <tr>
       <td scope="row">
         <div class="alert alert-default-info">
           {{ item.cuenta }}
         </div>
         <table class="table table-bordered table-striped">
-          <tbody *ngFor="let subCuenta of item.subCuentas">
+          @for (subCuenta of item.subCuentas; track subCuenta) {
+          <tbody>
             <tr>
               <td colspan="5">
                 <div class="alert alert-default-success">
@@ -40,38 +75,41 @@
                 </div>
               </td>
             </tr>
-            <tr *ngFor="let items of subCuenta.items">
+            @for (items of subCuenta.items; track items) {
+            <tr>
               <td style="width: 10%" class="pointer">
                 <i
-                  class="fa-duotone fa-hand-pointer"
+                  class="fa-regular fa-hand-pointer"
                   (click)="onModalItem(items)"
                 ></i>
               </td>
               <td style="width: 30%">{{ items.equipo }}</td>
               <td style="width: 20%">{{ items.recurrencia }}</td>
               <td style="width: 20">{{ items.mes }}</td>
-
               <td style="width: 20">
-                <div *ngIf="items.costo !== '$0.00'">
+                @if (items.costo !== '$0.00') {
+                <div>
                   {{ items.costo }}
                 </div>
-                <div
-                  *ngIf="items.costo === '$0.00'"
-                  class="text-warning font-bold"
-                >
+                } @if (items.costo === '$0.00') {
+                <div class="text-warning font-bold">
                   {{ items.costo }}
                 </div>
+                }
               </td>
             </tr>
+            }
             <tr>
               <td colspan="3"></td>
               <td>Total por Cuenta:</td>
               <td class="mr-auto">{{ subCuenta.costoTotal }}</td>
             </tr>
           </tbody>
+          }
         </table>
       </td>
     </tr>
+    }
   </tbody>
   <tbody>
     <tr>

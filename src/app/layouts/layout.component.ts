@@ -11,13 +11,19 @@ import {
   SIDEBAR_SIZE,
   TOPBAR,
 } from './layouts.model';
+import MenuCelularComponent from './menu-celular/menu-celular.component';
 import VerticalComponent from './vertical/vertical.component';
 
 @Component({
   selector: 'app-layout',
   templateUrl: './layout.component.html',
   standalone: true,
-  imports: [CommonModule, RouterModule, VerticalComponent],
+  imports: [
+    CommonModule,
+    RouterModule,
+    VerticalComponent,
+    MenuCelularComponent,
+  ],
 })
 
 /**

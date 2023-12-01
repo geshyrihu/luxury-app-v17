@@ -1,5 +1,4 @@
 <div class="card">
-  ahora andamos aca con los typeMaintenance
   <div class="card-body">
     <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
       <div class="row" hidden>
@@ -37,7 +36,6 @@
             placeholder="fecha de solicitud"
           ></custom-input-date>
         </div>
-
         <div class="col-sm-6">
           <custom-input-date
             [control]="form.get('executionDate')"
@@ -65,7 +63,6 @@
           ></custom-input-number>
         </div>
       </div>
-
       <div class="row">
         <div class="col-sm-6">
           <custom-input-select
@@ -74,6 +71,26 @@
             label="Tipo de Mantenimiento"
             [data]="cb_TypeMaintance"
           ></custom-input-select>
+          <!-- <select
+            class="form-select"
+            formControlName="typeMaintance"
+            [ngClass]="{
+              'is-invalid':
+                f.typeMaintance.invalid &&
+                (f.typeMaintance.dirty || f.typeMaintance.touched)
+            }"
+          >
+            <option>--Selecciona una opcón--</option>
+            @for (item of cb_TypeMaintance; track item) {
+            <option [value]="item.value">
+              {{ item.label }}
+            </option>
+            }
+          </select> -->
+          <app-validation-errors-custom-input
+            [control]="f.typeMaintance"
+            placeholder="tipo de mantenimiento"
+          ></app-validation-errors-custom-input>
         </div>
         <div class="col-sm-6">
           <custom-input-datalist
@@ -155,22 +172,23 @@
           <div class="">
             <div class="">
               <label class="form-label">Actividad</label>
-              <ckeditor
+              <!-- <ckeditor
                 [config]="{ toolbar: ['heading', '|', 'bold', 'italic'] }"
                 [editor]="Editor"
                 formControlName="activity"
-              ></ckeditor>
-
-              <div
-                *ngIf="
-                  f.activity.invalid && (f.activity.dirty || f.activity.touched)
-                "
-                class="text-danger"
-              >
-                <small *ngIf="f.activity.errors.required">
-                  Campo requerido
-                </small>
+              ></ckeditor> -->
+              <p-editor
+                formControlName="activity"
+                [style]="{ height: '320px' }"
+              ></p-editor>
+              @if ( f.activity.invalid && (f.activity.dirty ||
+              f.activity.touched) ) {
+              <div class="text-danger">
+                @if (f.activity.errors.required) {
+                <small> Campo requerido </small>
+                }
               </div>
+              }
             </div>
           </div>
         </div>
@@ -178,16 +196,19 @@
           <div class="">
             <div class="">
               <label class="form-label">Observaciones</label>
-              <ckeditor
+              <!-- <ckeditor
                 [config]="{ toolbar: ['heading', '|', 'bold', 'italic'] }"
                 [editor]="Editor"
                 formControlName="observations"
-              ></ckeditor>
+              ></ckeditor> -->
+              <p-editor
+                formControlName="observations"
+                [style]="{ height: '320px' }"
+              ></p-editor>
             </div>
           </div>
         </div>
       </div>
-
       <custom-button-submit
         [disabled]="this.form.invalid || submitting"
       ></custom-button-submit>

@@ -1,5 +1,6 @@
 <h3 class="h3">Inventario de Herramientas</h3>
-<table class="table table-bordered" *ngIf="data">
+@if (data) {
+<table class="table table-bordered">
   <thead class="thead-dark">
     <tr>
       <th style="width: 30%">
@@ -10,7 +11,8 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let item of data">
+    @for (item of data; track item) {
+    <tr>
       <td>
         <img
           [src]="base_urlImg + item.photoPath"
@@ -33,5 +35,7 @@
         ></p>
       </td>
     </tr>
+    }
   </tbody>
 </table>
+}

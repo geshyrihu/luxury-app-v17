@@ -1,9 +1,9 @@
 <p-toast position="top-left" [baseZIndex]="99999"></p-toast>
-
 <p-table
   [(selection)]="data"
   #dt
   styleClass="custom-table"
+  [tableStyle]="{ 'min-width': '50rem' }"
   [value]="data"
   [rows]="15"
   [paginator]="true"
@@ -20,26 +20,28 @@
       [showAdd]="false"
       [dt]="dt"
     ></app-table-header>
-
     <div class="form-group row">
       <label class="col-sm-2">Selecciona presupuesto</label>
-      <div class="col-sm-3" *ngIf="cedulaId !== 0">
+      @if (cedulaId !== 0) {
+      <div class="col-sm-3">
         <select
           class="form-control"
           (change)="onLoadData()"
           [(ngModel)]="cedulaId"
         >
-          <option [value]="item.value" *ngFor="let item of cb_cedulas">
+          @for (item of cb_cedulas; track item) {
+          <option [value]="item.value">
             {{ item.label }}
           </option>
+          }
         </select>
         <p class="text-danger">
           Valida estar seleccionando una partida del presupuesto correcto
         </p>
       </div>
+      }
     </div>
   </ng-template>
-
   <ng-template pTemplate="header">
     <tr>
       <th
@@ -128,32 +130,25 @@
         </small>
       </td>
       <td class="p-column-title p-fluid">
-        <div
-          class="w3-container"
-          *ngIf="
-            item.cedulaPresupuestalDetalle.presupuestoDisponible >=
-            item.dineroUsado
-          "
-        >
+        @if ( item.cedulaPresupuestalDetalle.presupuestoDisponible >=
+        item.dineroUsado ) {
+        <div class="w3-container">
           <div class="w3-tag w3-round w3-green" style="padding: 3px">
             <div class="w3-tag w3-round w3-green w3-border w3-border-white">
               {{ item.cedulaPresupuestalDetalle.presupuestoDisponible }}
             </div>
           </div>
         </div>
-        <div
-          class="w3-container"
-          *ngIf="
-            item.cedulaPresupuestalDetalle.presupuestoDisponible <
-            item.dineroUsado
-          "
-        >
+        } @if ( item.cedulaPresupuestalDetalle.presupuestoDisponible <
+        item.dineroUsado ) {
+        <div class="w3-container">
           <div class="w3-tag w3-round w3-red" style="padding: 3px">
             <div class="w3-tag w3-round w3-red w3-border w3-border-white">
               {{ item.cedulaPresupuestalDetalle.presupuestoDisponible }}
             </div>
           </div>
         </div>
+        }
       </td>
       <td class="p-fluid">
         <input

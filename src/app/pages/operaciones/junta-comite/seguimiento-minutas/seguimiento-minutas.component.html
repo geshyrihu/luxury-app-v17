@@ -1,5 +1,4 @@
 <p-toast position="top-left" [baseZIndex]="99999"></p-toast>
-
 <div class="d-flex justify-content-start">
   <custom-button
     [customClass]="' mb-1'"
@@ -58,6 +57,7 @@
     [value]="data"
     currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
     styleClass="custom-table"
+    [tableStyle]="{ 'min-width': '50rem' }"
   >
     <ng-template pTemplate="caption">
       <app-table-header
@@ -66,13 +66,11 @@
         [dt]="dt"
       ></app-table-header>
     </ng-template>
-
     <ng-template pTemplate="header">
       <tr>
         <th scope="col" style="width: 8%" pSortableColumn="areaResponsable">
           AREA <p-sortIcon field="areaResponsable"></p-sortIcon>
         </th>
-
         <th
           scope="col"
           style="width: 28%"
@@ -104,10 +102,12 @@
           ></div>
         </td>
         <td class="p-column-title">
-          <li *ngIf="item.seguimientos.length > 0">
+          @if (item.seguimientos.length > 0) {
+          <li>
             {{ item.seguimientos[0].fecha }},
             {{ item.seguimientos[0].seguimiento }}
           </li>
+          }
         </td>
         <td class="p-column-title text-center">
           <p
@@ -118,15 +118,19 @@
               'bg-secondary': item.status == 2
             }"
           >
-            <span *ngIf="item.status === 0">
-              <i class="fa-duotone fa-xmark"></i>
+            @if (item.status === 0) {
+            <span>
+              <i class="fa-regular fa-xmark"></i>
             </span>
-            <span *ngIf="item.status === 1">
-              <i class="fa-duotone fa-check-double"></i>
+            } @if (item.status === 1) {
+            <span>
+              <i class="fa-regular fa-check-double"></i>
             </span>
-            <span *ngIf="item.status === 2">
-              <i class="fa-duotone fa-ban"></i>
+            } @if (item.status === 2) {
+            <span>
+              <i class="fa-regular fa-ban"></i>
             </span>
+            }
           </p>
         </td>
         <!-- Opciones -->
@@ -135,17 +139,15 @@
             <custom-button
               [customClass]="'btn-sm btn-outline-primary'"
               ngbTooltip="Ver todos los seguimientos"
-              icon="fa-duotone fa-list text-primary"
+              icon="fa-regular fa-list text-primary"
               (clicked)="onModalTodosSeguimientos(item.id)"
             ></custom-button>
-
             <custom-button
               [customClass]="'btn-sm btn-outline-info'"
               ngbTooltip="Agregar Seguimiento"
-              icon="fa-duotone fa-plus text-info"
+              icon="fa-regular fa-plus text-info"
               (clicked)="onModalAddOrEditSeguimiento(item.id, 0)"
             ></custom-button>
-
             <custom-button-edit
               (edit)="
                 onModalAddOrEditMinutaDetalle({

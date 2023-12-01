@@ -1,4 +1,4 @@
-import { NgIf } from '@angular/common';
+import {} from '@angular/common';
 import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
 import { Subscription } from 'rxjs';
 import {
@@ -12,7 +12,7 @@ import { environment } from 'src/environments/environment';
   selector: 'app-cabecera-solicitud-pago-pdf',
   templateUrl: './cabecera-solicitud-pago-pdf.component.html',
   standalone: true,
-  imports: [NgIf],
+  imports: [],
   providers: [CustomToastService],
 })
 export default class CabeceraSolicitudPagoPdfComponent

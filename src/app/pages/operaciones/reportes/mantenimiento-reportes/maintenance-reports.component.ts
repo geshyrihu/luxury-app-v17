@@ -21,8 +21,8 @@ import ResumenMantenimientosComponent from './resumen-mantenimientos/resumen-man
     NgbTooltip,
     RouterModule,
     ResumenMantenimientosComponent,
-    PagetitleReportComponent,
-  ],
+    PagetitleReportComponent
+],
   providers: [MessageService],
 })
 export default class MaintenanceReportsComponent implements OnInit {

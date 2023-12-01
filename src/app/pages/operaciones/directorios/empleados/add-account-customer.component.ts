@@ -18,8 +18,8 @@ import {
 import { DataService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
 import { SelectItemService } from 'src/app/core/services/select-item.service';
+import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import ComponentsModule from 'src/app/shared/components.module';
-import CustomInputModule from 'src/app/shared/custom-input-form/custom-input.module';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -62,7 +62,14 @@ export default class AddAccountCustomerComponent implements OnInit, OnDestroy {
     phoneNumber: ['', Validators.required],
     professionId: ['', Validators.required],
     photoPath: ['', Validators.required],
-    email: ['', [Validators.required]],
+    email: [
+      '',
+      [
+        Validators.required,
+        Validators.email,
+        Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,3}$'),
+      ],
+    ],
   });
   register() {
     if (this.form.invalid) {

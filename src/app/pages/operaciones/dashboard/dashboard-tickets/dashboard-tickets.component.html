@@ -9,11 +9,12 @@
         [routerLink]="'/operaciones/reporte/reporte-pendientes'"
         class="btn btn-soft-danger btn-sm w-xs waves-effect btn-label waves-light me-1"
       >
-        <i class="fa-duotone fa-download label-icon fa-2x pointer"></i>PDF
+        <i class="fa-regular fa-download label-icon fa-2x pointer"></i>PDF
       </a>
     </div>
   </div>
-  <div class="col-sm-2 pointer mb-2" *ngFor="let item of data">
+  @for (item of data; track item) {
+  <div class="col-sm-2 pointer mb-2">
     <ngb-alert
       (click)="onLoadResumen(item.responsableId)"
       type="danger"
@@ -26,4 +27,5 @@
       <h5 class="text-danger">{{ item.responsable | uppercase }}</h5>
     </ngb-alert>
   </div>
+  }
 </div>

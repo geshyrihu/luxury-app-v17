@@ -24,8 +24,8 @@ import ComponentsModule from 'src/app/shared/components.module';
     TableModule,
     MultiSelectModule,
     SanitizeHtmlPipe,
-    EStatusPipe,
-  ],
+    EStatusPipe
+],
   providers: [CustomToastService],
 })
 export default class ResultadoGeneralEvaluacionAreasDetalleComponent

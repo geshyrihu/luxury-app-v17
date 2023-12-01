@@ -19,8 +19,8 @@ import { environment } from 'src/environments/environment';
     FileUploadModule,
     ComponentsModule,
     FormsModule,
-    PrimeNgModule,
-  ],
+    PrimeNgModule
+],
 })
 export default class PresupuestoEditionFileComponent
   implements OnInit, OnDestroy

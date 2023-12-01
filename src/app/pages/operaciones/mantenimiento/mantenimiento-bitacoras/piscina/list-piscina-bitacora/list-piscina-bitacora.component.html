@@ -14,6 +14,7 @@
     [value]="data"
     currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
     styleClass="custom-table"
+    [tableStyle]="{ 'min-width': '50rem' }"
   >
     <ng-template pTemplate="caption">
       <app-table-header
@@ -56,27 +57,27 @@
         <td class="p-column-title text-center">
           <i
             [ngClass]="{
-              'fa-duotone fa-check-double text-success font-size-18':
+              'fa-regular fa-check-double text-success font-size-18':
                 item.cepillado,
-              'fa-duotone fa-x text-danger font-size-18': !item.cepillado
+              'fa-regular fa-x text-danger font-size-18': !item.cepillado
             }"
           ></i>
         </td>
         <td class="p-column-title text-center">
           <i
             [ngClass]="{
-              'fa-duotone fa-check-double text-success font-size-18':
+              'fa-regular fa-check-double text-success font-size-18':
                 item.aspirado,
-              'fa-duotone fa-x text-danger font-size-18': !item.aspirado
+              'fa-regular fa-x text-danger font-size-18': !item.aspirado
             }"
           ></i>
         </td>
         <td class="p-column-title text-center">
           <i
             [ngClass]="{
-              'fa-duotone fa-check-double text-success font-size-18':
+              'fa-regular fa-check-double text-success font-size-18':
                 item.cenefas,
-              'fa-duotone fa-x text-danger font-size-18': !item.cenefas
+              'fa-regular fa-x text-danger font-size-18': !item.cenefas
             }"
           ></i>
         </td>

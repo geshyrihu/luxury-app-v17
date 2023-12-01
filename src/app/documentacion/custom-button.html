@@ -2,21 +2,21 @@
   <custom-button
     ngbTooltip="Datos de correo"
     [customClass]="'btn-outline-primary '"
-    icon="fa-duotone fa-envelope text-primary"
+    icon="fa-regular fa-envelope text-primary"
     (clicked)="onModalEmailData(item.id)"
   ></custom-button>
   <custom-button
     *ngIf="item.active"
     ngbTooltip="Desbloquear"
     [customClass]="'btn-outline-danger '"
-    icon="fa-duotone fa-user-lock text-danger"
+    icon="fa-regular fa-user-lock text-danger"
     (clicked)="onToUnlockAccount(item.id)"
   ></custom-button>
   <custom-button
     *ngIf="!item.active"
     ngbTooltip="Bloquear"
     [customClass]="'btn-outline-success '"
-    icon="fa-duotone fa-user-check text-success"
+    icon="fa-regular fa-user-check text-success"
     (clicked)="onToBlockAccount(item.id)"
   ></custom-button>
   <custom-button-edit

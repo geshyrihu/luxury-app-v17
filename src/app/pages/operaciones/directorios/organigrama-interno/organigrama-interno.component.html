@@ -1,13 +1,13 @@
 <ngb-alert [dismissible]="false" style="font-size: 16px" type="secondary">
   DIRECTORIO {{ nameCustomer }}- LUXURY BUILDING GROUP</ngb-alert
 >
-
 <div class="card">
   <p-table
     [value]="data"
     rowGroupMode="rowspan"
     groupRowsBy="index"
     styleClass="custom-table"
+    [tableStyle]="{ 'min-width': '50rem' }"
   >
     <ng-template pTemplate="header">
       <tr>
@@ -25,9 +25,11 @@
       let-rowspan="rowspan"
     >
       <tr>
-        <td *ngIf="rowgroup" [attr.rowspan]="rowspan">
+        @if (rowgroup) {
+        <td [attr.rowspan]="rowspan">
           <span class="font-bold ml-2">{{ item.eAreaOrganigrama }}</span>
         </td>
+        }
         <td style="width: 20%">{{ item.profession }}</td>
         <td style="width: 25%">{{ item.nameEmployee }}</td>
         <td style="width: 25%">

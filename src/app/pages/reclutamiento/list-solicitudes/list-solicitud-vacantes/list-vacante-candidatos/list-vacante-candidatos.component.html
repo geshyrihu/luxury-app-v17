@@ -1,6 +1,6 @@
 <p-toast position="top-left" [baseZIndex]="99999"></p-toast>
-
-<div class="card" *ngIf="data !== undefined && data.candidates !== undefined">
+@if (data !== undefined && data.candidates !== undefined) {
+<div class="card">
   <p-table
     #dt
     [autoLayout]="true"
@@ -8,6 +8,7 @@
     [rowHover]="true"
     [value]="data.candidates"
     styleClass="custom-table"
+    [tableStyle]="{ 'min-width': '50rem' }"
   >
     <ng-template pTemplate="caption">
       <div class="row">
@@ -36,7 +37,6 @@
         </div>
       </div>
     </ng-template>
-
     <ng-template pTemplate="header">
       <tr>
         <th style="width: 5%" scope="col" class="small">SELECT</th>
@@ -84,11 +84,11 @@
           />
         </td>
         <td class="p-column-title" class="text-center">
-          <i
-            *ngIf="item.sendMail"
-            class="fa-duotone fa-check-double text-success"
-          ></i>
-          <i *ngIf="!item.sendMail" class="fa-duotone fa-xmark text-danger"></i>
+          @if (item.sendMail) {
+          <i class="fa-regular fa-check-double text-success"></i>
+          } @if (!item.sendMail) {
+          <i class="fa-regular fa-xmark text-danger"></i>
+          }
         </td>
         <td class="p-column-title">
           {{ item.candidate }}
@@ -100,9 +100,10 @@
           {{ item.phone }}
         </td>
         <td class="p-column-title text-center">
-          <p class="text-danger" *ngIf="!item.curriculumn">Sin cv</p>
+          @if (!item.curriculumn) {
+          <p class="text-danger">Sin cv</p>
+          } @if (item.curriculumn) {
           <a
-            *ngIf="item.curriculumn"
             [href]="pathPdf + item.curriculumn"
             _blank
             download
@@ -110,14 +111,14 @@
             placement="top"
             class="btn btn-soft-danger btn-sm w-xs waves-effect btn-label waves-light me-1 hide-print-mode"
           >
-            <i class="fa-duotone fa-download label-icon fa-2x pointer"></i>
+            <i class="fa-regular fa-download label-icon fa-2x pointer"></i>
             Pdf
           </a>
+          }
         </td>
         <td class="p-column-title">
           {{ item.date }}
         </td>
-
         <td class="p-column-title">
           {{ item.decision }}
         </td>
@@ -152,3 +153,4 @@
     </ng-template>
   </p-table>
 </div>
+}

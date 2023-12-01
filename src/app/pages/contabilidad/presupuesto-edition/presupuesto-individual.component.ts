@@ -34,8 +34,8 @@ import PresupuestoEditionFileComponent from './presupuesto-edition-file/presupue
     ComponentsModule,
     FormsModule,
     NgbAlertModule,
-    NgbTooltipModule,
-  ],
+    NgbTooltipModule
+],
   providers: [DialogService, MessageService, CustomToastService],
 })
 export default class PresupuestoIndividualComponent implements OnInit {

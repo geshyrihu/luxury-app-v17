@@ -145,6 +145,9 @@ export default class EnviarMailEstadosFinancierosComponent {
     });
     this.destinatariosAdicionales.push(correoFiltro);
   }
+  get f() {
+    return this.form.controls;
+  }
 
   onMostrarInput(
     para: boolean,

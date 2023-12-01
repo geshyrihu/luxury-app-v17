@@ -15,8 +15,8 @@ import FormGastosFijosServiciosComponent from '../form-gastos-fijos-servicios/fo
     NgbNavModule,
     FormCatalogoGastosFijosComponent,
     FormGastosFijosServiciosComponent,
-    FormGastosFijosPresupuestoComponent,
-  ],
+    FormGastosFijosPresupuestoComponent
+],
 })
 export default class ModalOrdenCompraGrastosFijosComponent {
   public catalogoGastosFijosService = inject(CatalogoGastosFijosService);

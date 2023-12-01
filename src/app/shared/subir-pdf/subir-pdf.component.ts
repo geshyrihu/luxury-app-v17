@@ -1,4 +1,4 @@
-import { NgFor, NgIf } from '@angular/common';
+
 import { HttpHeaders } from '@angular/common/http';
 import { Component, OnInit, inject } from '@angular/core';
 import { SharedModule } from 'primeng/api';
@@ -10,7 +10,7 @@ import { environment } from 'src/environments/environment';
   selector: 'app-subir-pdf',
   templateUrl: './subir-pdf.component.html',
   standalone: true,
-  imports: [FileUploadModule, SharedModule, NgIf, NgFor],
+  imports: [FileUploadModule, SharedModule],
 })
 export default class SubirPdfComponent implements OnInit {
   public ref = inject(DynamicDialogRef);

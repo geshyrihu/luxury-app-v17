@@ -20,8 +20,8 @@ import { environment } from 'src/environments/environment';
     ComponentsModule,
     CommonModule,
     TableModule,
-    SanitizeHtmlPipe,
-  ],
+    SanitizeHtmlPipe
+],
   providers: [MessageService, CustomToastService],
 })
 export default class MantenimientosPendientesComponent

@@ -1,8 +1,10 @@
-<div *ngIf="data">
+@if (data) {
+<div>
   <p-table
     [value]="data"
     [rowHover]="true"
     styleClass="custom-table"
+    [tableStyle]="{ 'min-width': '50rem' }"
     #dt
     [globalFilterFields]="['customer.label', 'fecha']"
   >
@@ -59,7 +61,6 @@
           </button>
         </div>
       </div>
-
       <div class="row hide-print-mode">
         <div class="col-auto">
           <button
@@ -101,7 +102,6 @@
         </div>
       </div>
     </ng-template>
-
     <ng-template pTemplate="header">
       <tr [hidden]="false">
         <th scope="col" pSortableColumn="numeroCliente" style="width: 20%">
@@ -137,18 +137,13 @@
             </ng-template>
           </p-columnFilter>
         </th>
-
-        <th
-          *ngIf="mostrar"
-          scope="col"
-          pSortableColumn="solicitudesTotal"
-          style="width: 20%"
-        >
+        @if (mostrar) {
+        <th scope="col" pSortableColumn="solicitudesTotal" style="width: 20%">
           Solicitudes
           <p-sortIcon field="solicitudesTotal"></p-sortIcon>
         </th>
+        } @if (mostrar) {
         <th
-          *ngIf="mostrar"
           scope="col"
           pSortableColumn="solicitudesAtendidas"
           style="width: 20%"
@@ -156,8 +151,8 @@
           Atendidas
           <p-sortIcon field="solicitudesAtendidas"></p-sortIcon>
         </th>
+        } @if (mostrar) {
         <th
-          *ngIf="mostrar"
           scope="col"
           pSortableColumn="solicitudesPendientes"
           style="width: 20%"
@@ -165,6 +160,7 @@
           Pendientes
           <p-sortIcon field="solicitudesPendientes"></p-sortIcon>
         </th>
+        }
         <th
           scope="col"
           pSortableColumn="porcentajeEjecucionValue"
@@ -180,27 +176,32 @@
         <td>
           {{ item.customer.label }}
         </td>
-
-        <td class="text-center" *ngIf="mostrar">
+        @if (mostrar) {
+        <td class="text-center">
           <span class="pointer h4 card-title badge text-info p-1 w-25">
             {{ item.solicitudesTotal }}
           </span>
         </td>
-        <td class="text-center" *ngIf="mostrar">
+        } @if (mostrar) {
+        <td class="text-center">
           <span class="pointer h4 card-title badge text-success p-1 w-25">
             {{ item.solicitudesAtendidas }}
           </span>
         </td>
-        <td class="text-center" *ngIf="mostrar">
+        } @if (mostrar) {
+        <td class="text-center">
           <span class="pointer h4 card-title badge text-danger p-1 w-25">
             {{ item.solicitudesPendientes }}
           </span>
         </td>
+        }
         <td class="text-center">
-          <div *ngIf="item.porcentajeEjecucionValue == 0">
+          @if (item.porcentajeEjecucionValue == 0) {
+          <div>
             <small class="text-danger">0% de avance</small>
           </div>
-          <div *ngIf="item.porcentajeEjecucionValue > 0">
+          } @if (item.porcentajeEjecucionValue > 0) {
+          <div>
             <ngb-progressbar
               [value]="item.porcentajeEjecucionValue"
               height="24px"
@@ -211,8 +212,10 @@
               {{ item.porcentajeEjecucion | uppercase }}
             </ngb-progressbar>
           </div>
+          }
         </td>
       </tr>
     </ng-template>
   </p-table>
 </div>
+}

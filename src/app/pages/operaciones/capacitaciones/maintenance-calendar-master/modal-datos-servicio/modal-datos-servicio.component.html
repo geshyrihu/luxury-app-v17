@@ -18,15 +18,16 @@
     ></textarea>
     <label>Proveedores:</label>
     <ul class="list-group">
-      <li
-        *ngFor="let proveedor of proveedores"
-        (click)="onDataProveedor(proveedor.id)"
-        class="pointer list-group-item"
-      >
-        <p class="card-text">
-          {{ proveedor.nameProvider }}
-        </p>
-      </li>
+      @for (proveedor of proveedores; track proveedor) {
+        <li
+          (click)="onDataProveedor(proveedor.id)"
+          class="pointer list-group-item"
+          >
+          <p class="card-text">
+            {{ proveedor.nameProvider }}
+          </p>
+        </li>
+      }
     </ul>
   </div>
 </div>

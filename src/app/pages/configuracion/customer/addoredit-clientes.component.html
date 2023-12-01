@@ -39,22 +39,26 @@
         label="RFC"
         placeholder="rfc"
       ></custom-input-text>
-
-      <custom-input-mask
-        [control]="form.get('phoneOne')"
-        formControlName="phoneOne"
-        label="Tél. 1"
-        placeholder="teléfono"
-        customMask="(00) 0000-0000"
-      ></custom-input-mask>
-
-      <custom-input-mask
-        [control]="form.get('phoneTwo')"
-        formControlName="phoneTwo"
-        label="Tél. 2"
-        placeholder="teléfono"
-        customMask="(00) 0000-0000"
-      ></custom-input-mask>
+      <div class="row">
+        <div class="col-sm-6">
+          <custom-input-mask
+            [control]="form.get('phoneOne')"
+            formControlName="phoneOne"
+            label="Tél. 1"
+            placeholder="teléfono"
+            customMask="(00) 0000-0000"
+          ></custom-input-mask>
+        </div>
+        <div class="col-sm-6">
+          <custom-input-mask
+            [control]="form.get('phoneTwo')"
+            formControlName="phoneTwo"
+            label="Tél. 2"
+            placeholder="teléfono"
+            customMask="(00) 0000-0000"
+          ></custom-input-mask>
+        </div>
+      </div>
 
       <custom-input-text-area
         [control]="form.get('adreess')"
@@ -76,20 +80,24 @@
         label="Numero de Cliente"
         placeholder="numero de Cliente"
       ></custom-input-number>
-
-      <custom-input-text
-        [control]="form.get('longitud')"
-        formControlName="longitud"
-        label="Longitud"
-        placeholder="longitud"
-      ></custom-input-text>
-
-      <custom-input-text
-        [control]="form.get('latitud')"
-        formControlName="latitud"
-        label="Latitud"
-        placeholder="latitud"
-      ></custom-input-text>
+      <div class="row">
+        <div class="col-sm-6">
+          <custom-input-text
+            [control]="form.get('longitud')"
+            formControlName="longitud"
+            label="Longitud"
+            placeholder="longitud"
+          ></custom-input-text>
+        </div>
+        <div class="col-sm-6">
+          <custom-input-text
+            [control]="form.get('latitud')"
+            formControlName="latitud"
+            label="Latitud"
+            placeholder="latitud"
+          ></custom-input-text>
+        </div>
+      </div>
 
       <custom-input-select
         [control]="form.get('active')"

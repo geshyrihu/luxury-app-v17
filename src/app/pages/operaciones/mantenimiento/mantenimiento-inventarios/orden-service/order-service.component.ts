@@ -41,6 +41,10 @@ export default class OrderServiceComponent implements OnInit, OnDestroy {
   maintenanceCalendars: any[] = [];
   idMachinery: number = 0;
 
+  public editorConfig = {
+    readOnly: true, // Opciones del editor, incluyendo readOnly
+  };
+
   ngOnInit(): void {
     this.idMachinery = this.config.data.id;
 

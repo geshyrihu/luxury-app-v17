@@ -2,22 +2,24 @@ export interface MenuItem {
   visible: boolean;
   label: string;
   icon?: string;
-  link?: string;
+  routerLink?: string;
   name?: string;
-  subItems?: SubMenuItem[];
+  badge?: any;
+  items?: SubMenuItem[];
 }
 
 export interface SubMenuItem {
   visible: boolean;
   label: string;
-  link?: string;
+  routerLink?: string;
   name?: string;
-  subItems?: SubMenuItems[];
+  items?: SubMenuItems[];
 }
 
 export interface SubMenuItems {
   visible: boolean;
   label: string;
-  link: string;
+  routerLink: string;
   name: string;
+  parentId?: number;
 }

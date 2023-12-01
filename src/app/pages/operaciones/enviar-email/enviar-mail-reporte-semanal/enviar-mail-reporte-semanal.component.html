@@ -35,7 +35,6 @@
       >
         Agregar CCO
       </button>
-
       <div class="col-auto">
         <custom-button-confirmation
           title="Confirmar"
@@ -49,12 +48,8 @@
         ></custom-button-confirmation>
       </div>
     </div>
-    <form
-      *ngIf="mostrarPara || mostrarCo || mostrarCco"
-      [formGroup]="form"
-      (ngSubmit)="onAddCorreo()"
-      class="ms-0 mt-1"
-    >
+    @if (mostrarPara || mostrarCo || mostrarCco) {
+    <form [formGroup]="form" (ngSubmit)="onAddCorreo()" class="ms-0 mt-1">
       <div class="row">
         <div class="col-md-3">
           <input
@@ -91,34 +86,27 @@
       </div>
       <div class="row">
         <div class="col-12">
-          <div
-            *ngIf="f.email.errors && (f.email.dirty || f.email.touched)"
-            class="invalid-feedback"
-          >
-            <small
-              *ngIf="
-                f.email.errors.required && (f.email.dirty || f.email.touched)
-              "
-            >
-              Correo electronico es requerido
-            </small>
-            <small
-              *ngIf="f.email.errors.email && (f.email.dirty || f.email.touched)"
-            >
+          @if (f.email.errors && (f.email.dirty || f.email.touched)) {
+          <div class="invalid-feedback">
+            @if ( f.email.errors.required && (f.email.dirty || f.email.touched)
+            ) {
+            <small> Correo electronico es requerido </small>
+            } @if (f.email.errors.email && (f.email.dirty || f.email.touched)) {
+            <small>
               El correo electrónico debe ser una dirección de correo electrónico
               válida
             </small>
+            }
           </div>
+          }
         </div>
       </div>
     </form>
-
+    }
     <div class="row">
       <div class="col">
-        <span
-          *ngFor="let item of destinatariosAdicionales; let i = index"
-          class="badge bg-info ms-1 p-2 position-relative"
-        >
+        @for (item of destinatariosAdicionales; track item; let i = $index) {
+        <span class="badge bg-info ms-1 p-2 position-relative">
           {{ item.nivelPrivacidad }}/{{ item.emailResidente }}
           <span
             class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success"
@@ -126,10 +114,11 @@
               ngbTooltip="Descartar correo"
               placement="top"
               (click)="onDeleteDestinatariosAdicionales(i)"
-              class="fa-duotone fa-xmark pointer"
+              class="fa-regular fa-xmark pointer"
             ></i
           ></span>
         </span>
+        }
       </div>
     </div>
     <!-- end card-body -->
@@ -144,6 +133,7 @@
         [globalFilterFields]="['departamento', 'label', 'email']"
         [tableStyle]="{ 'min-width': '50rem' }"
         styleClass="custom-table"
+        [tableStyle]="{ 'min-width': '50rem' }"
       >
         <ng-template pTemplate="caption">
           <app-table-header

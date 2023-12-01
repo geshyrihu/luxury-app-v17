@@ -1,72 +1,70 @@
-<ng-container *ngIf="data">
-  <div class="row">
-    <div class="col-sm-12">
-      <div class="card">
-        <div class="card-body">
-          <div class="row">
-            <div class="col-sm order-2 order-sm-1">
-              <div class="d-flex align-items-start mt-3 mt-sm-0">
-                <div class="flex-shrink-0">
-                  <div class="avatar-xl me-3">
-                    <img
-                      [src]="
-                        baseUrlImg +
-                        'Administration/customer/' +
-                        data.cliente.photoPath
-                      "
-                      alt="..."
-                      class="rounded avatar-lg"
-                    />
-                  </div>
+@if (data) {
+<div class="row">
+  <div class="col-sm-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-sm order-2 order-sm-1">
+            <div class="d-flex align-items-start mt-3 mt-sm-0">
+              <div class="flex-shrink-0">
+                <div class="avatar-xl me-3">
+                  <img
+                    [src]="
+                      baseUrlImg +
+                      'Administration/customer/' +
+                      data.cliente.photoPath
+                    "
+                    alt="..."
+                    class="rounded avatar-lg"
+                  />
                 </div>
-                <div class="flex-grow-1">
-                  <div>
-                    <h3 class="mb-1">
-                      {{ data.cliente.nameCustomer }}
-                    </h3>
-                    <h4 class="h4">
-                      <a
-                        href="{{ data.cliente.googleMpasUbication }}"
-                        target="_blank"
-                      >
-                        <i class="fa-duotone fa-location-dot pointer"></i>
-                      </a>
-                      {{ data.cliente.adreess }}
-                    </h4>
-
-                    <div
-                      class="d-flex flex-wrap align-items-start gap-2 gap-lg-3"
+              </div>
+              <div class="flex-grow-1">
+                <div>
+                  <h3 class="mb-1">
+                    {{ data.cliente.nameCustomer }}
+                  </h3>
+                  <h4 class="h4">
+                    <a
+                      href="{{ data.cliente.googleMpasUbication }}"
+                      target="_blank"
                     >
-                      <div class="font-size-18">
-                        <i
-                          class="mdi mdi-circle-medium me-1 text-success align-middle"
-                        ></i
-                        >{{ data.cliente.rfc }}
-                      </div>
-                      <div class="font-size-18">
-                        <i
-                          class="mdi mdi-circle-medium me-1 text-success align-middle"
-                        ></i
-                        >{{ data.cliente.phoneOne }}
-                      </div>
-                      <div class="font-size-18">
-                        <i
-                          class="mdi mdi-circle-medium me-1 text-success align-middle"
-                        ></i>
-                        {{ data.cliente.phoneTwo }}
-                      </div>
-                      <div class="font-size-18">
-                        <i
-                          class="mdi mdi-circle-medium me-1 text-success align-middle"
-                        ></i>
-                        {{ data.torres }} Torres
-                      </div>
-                      <div class="font-size-18">
-                        <i
-                          class="mdi mdi-circle-medium me-1 text-success align-middle"
-                        ></i>
-                        {{ data.departamentos }} Departamentos
-                      </div>
+                      <i class="fa-regular fa-location-dot pointer"></i>
+                    </a>
+                    {{ data.cliente.adreess }}
+                  </h4>
+                  <div
+                    class="d-flex flex-wrap align-items-start gap-2 gap-lg-3"
+                  >
+                    <div class="font-size-18">
+                      <i
+                        class="mdi mdi-circle-medium me-1 text-success align-middle"
+                      ></i
+                      >{{ data.cliente.rfc }}
+                    </div>
+                    <div class="font-size-18">
+                      <i
+                        class="mdi mdi-circle-medium me-1 text-success align-middle"
+                      ></i
+                      >{{ data.cliente.phoneOne }}
+                    </div>
+                    <div class="font-size-18">
+                      <i
+                        class="mdi mdi-circle-medium me-1 text-success align-middle"
+                      ></i>
+                      {{ data.cliente.phoneTwo }}
+                    </div>
+                    <div class="font-size-18">
+                      <i
+                        class="mdi mdi-circle-medium me-1 text-success align-middle"
+                      ></i>
+                      {{ data.torres }} Torres
+                    </div>
+                    <div class="font-size-18">
+                      <i
+                        class="mdi mdi-circle-medium me-1 text-success align-middle"
+                      ></i>
+                      {{ data.departamentos }} Departamentos
                     </div>
                   </div>
                 </div>
@@ -75,68 +73,35 @@
           </div>
         </div>
       </div>
-      <div class="card">
-        <p-table
-          [value]="data.empleadosAdministracion"
-          styleClass="custom-table"
-        >
-          <ng-template pTemplate="header">
-            <tr>
-              <th colspan="5" scope="col">Personal Operativo Administrativo</th>
-            </tr>
-          </ng-template>
-          <ng-template pTemplate="body" let-item>
-            <tr>
-              <td>
-                <img
-                  [src]="baseUrlImg + item.photoEmployee"
-                  alt=""
-                  class="rounded avatar-sm"
-                />
-              </td>
-              <td>{{ item.nameEmployee }}</td>
-              <td>{{ item.profession }}</td>
-              <td>{{ item.email }}</td>
-              <td>{{ item.phoneNumber }}</td>
-            </tr>
-          </ng-template>
-        </p-table>
-      </div>
+    </div>
+    <div class="card">
+      <p-table
+        [value]="data.empleadosAdministracion"
+        styleClass="custom-table"
+        [tableStyle]="{ 'min-width': '50rem' }"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th colspan="5" scope="col">Personal Operativo Administrativo</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item>
+          <tr>
+            <td>
+              <img
+                [src]="baseUrlImg + item.photoEmployee"
+                alt=""
+                class="rounded avatar-sm"
+              />
+            </td>
+            <td>{{ item.nameEmployee }}</td>
+            <td>{{ item.profession }}</td>
+            <td>{{ item.email }}</td>
+            <td>{{ item.phoneNumber }}</td>
+          </tr>
+        </ng-template>
+      </p-table>
     </div>
   </div>
-  <div class="row">
-    <h4 class="h4">Amenidades</h4>
-    <div class="col-2 p-1" *ngFor="let item of data.amenidades">
-      <p class="text-muted font-size-13 text-truncate">
-        {{ item.nombreEquipo }}
-      </p>
-      <img
-        (click)="showModalFichatecnica(item)"
-        class="rounded me-2 pointer"
-        alt="200x200"
-        width="100%"
-        height="150px"
-        [src]="baseUrlImg + item.imagen"
-        data-holder-rendered="true"
-      />
-    </div>
-  </div>
-
-  <div class="row" *ngFor="let categoria of groupByCategory() | keyvalue">
-    <h4 class="h4">{{ categoria.key }}</h4>
-    <div class="col-2 p-1" *ngFor="let item of categoria.value">
-      <p class="text-muted font-size-13 text-truncate">
-        {{ item.nombreEquipo }}
-      </p>
-      <img
-        (click)="showModalFichatecnica(item)"
-        class="rounded me-2 pointer"
-        alt="200x200"
-        width="100%"
-        height="150px"
-        [src]="baseUrlImg + item.imagen"
-        data-holder-rendered="true"
-      />
-    </div>
-  </div>
-</ng-container>
+</div>
+}

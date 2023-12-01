@@ -1,0 +1,55 @@
+@if(hidden){
+<div class="mb-2" [ngClass]="{ 'form-group row ': horizontal }">
+  @if (horizontal) {
+  <label class="col-sm-3">{{ label }}</label>
+  <div class="col-sm-9">
+    <select
+      [value]="value"
+      class="form-select"
+      [disabled]="disabled"
+      (input)="onChange($event.target.value)"
+      (blur)="onTouch()"
+      [ngClass]="{
+        'is-invalid': control.invalid && (control.dirty || control.touched)
+      }"
+    >
+      @if(SelectDefaulOption ){
+      <option>{{ placeholder }}</option>
+      } @for (item of data; track item) {
+      <option [value]="item.value">
+        {{ item.label }}
+      </option>
+      }
+    </select>
+    <app-validation-errors-custom-input
+      [control]="control"
+      [placeholder]="placeholder"
+    ></app-validation-errors-custom-input>
+  </div>
+  } @if (!horizontal) {
+  <label>{{ label }}</label>
+  <select
+    [value]="value"
+    class="form-select"
+    [disabled]="disabled"
+    (input)="onChange($event.target.value)"
+    (blur)="onTouch()"
+    [ngClass]="{
+      'is-invalid': control.invalid && (control.dirty || control.touched)
+    }"
+  >
+    @if(SelectDefaulOption ){
+    <option>{{ placeholder }}</option>
+    } @for (item of data; track item) {
+    <option [value]="item.value">
+      {{ item.label }}
+    </option>
+    }
+  </select>
+  <app-validation-errors-custom-input
+    [control]="control"
+    [placeholder]="placeholder"
+  ></app-validation-errors-custom-input>
+  }
+</div>
+}

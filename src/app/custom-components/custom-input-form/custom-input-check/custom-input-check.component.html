@@ -1,0 +1,33 @@
+@if(hidden){
+<div class="mb-2" [ngClass]="{ 'form-group row ': horizontal }">
+  @if (horizontal) {
+  <label class="col-sm-3">{{ label }}</label>
+  <div class="col-sm-9">
+    <input
+      type="checkbox"
+      class="form-check-input"
+      [disabled]="disabled"
+      [checked]="value"
+      (change)="onChange($event.target.checked)"
+      (blur)="onTouch()"
+      [ngClass]="{
+        'is-invalid': control.invalid && (control.dirty || control.touched)
+      }"
+    />
+  </div>
+  } @if (!horizontal) {
+  <label>{{ label }}</label>
+  <input
+    type="checkbox"
+    class="form-check-input ms-2"
+    [disabled]="disabled"
+    [checked]="value"
+    (change)="onChange($event.target.checked)"
+    (blur)="onTouch()"
+    [ngClass]="{
+      'is-invalid': control.invalid && (control.dirty || control.touched)
+    }"
+  />
+  }
+</div>
+}

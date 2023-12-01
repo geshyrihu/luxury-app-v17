@@ -1,12 +1,14 @@
 <p-toast position="top-left" [baseZIndex]="99999"></p-toast>
-<p class="small text-danger text-left font-italic" *ngIf="mensajeError == true">
+@if (mensajeError == true) {
+<p class="small text-danger text-left font-italic">
   Seleccione producto y unidad
 </p>
-
+}
 <p-table
   [(selection)]="data"
   #dt
   styleClass="custom-table"
+  [tableStyle]="{ 'min-width': '50rem' }"
   [value]="data"
   [rows]="15"
   [paginator]="true"
@@ -24,7 +26,6 @@
       (add)="showModalAddOrEdit()"
     ></app-table-header>
   </ng-template>
-
   <ng-template pTemplate="header">
     <tr>
       <th scope="col" pSortableColumn="nombreProducto">
@@ -77,9 +78,11 @@
             [(ngModel)]="item.unidadMedidaId"
           >
             <option>Selecciona una opción</option>
-            <option [value]="item.value" *ngFor="let item of cb_unidadMedida">
+            @for (item of cb_unidadMedida; track item) {
+            <option [value]="item.value">
               {{ item.label }}
             </option>
+            }
           </select>
         </small>
       </td>

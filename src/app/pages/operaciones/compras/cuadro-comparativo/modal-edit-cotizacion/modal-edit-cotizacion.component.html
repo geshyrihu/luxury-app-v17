@@ -21,41 +21,36 @@
             placeholder="Escribir para buscar..."
             (change)="saveProviderId($event)"
           />
-
           <datalist id="providerDatalistOptions">
-            <option
-              [value]="item.label"
-              *ngFor="let item of cb_providers"
-            ></option>
+            @for (item of cb_providers; track item) {
+            <option [value]="item.label"></option>
+            }
           </datalist>
         </div>
       </div>
-
       <div class="col-sm-7">
         <button
           (click)="onDeleteProvider()"
           class="btn btn-outline-danger me-1 mt-3 float-end"
         >
-          <i class="me-2 font-size-14 fa-duotone fa-trash-can"></i>Eliminar
+          <i class="me-2 font-size-14 fa-regular fa-trash-can"></i>Eliminar
           cotizacion
         </button>
+        @if (cotizacionesRelacionadas.length !== 3) {
         <button
-          *ngIf="cotizacionesRelacionadas.length !== 3"
           (click)="onModalCreateOrdenCompra()"
           class="btn btn-outline-info me-1 mt-3 float-end"
         >
-          <i class="me-2 font-size-14 fa-duotone fa-cart-arrow-down"></i>Crear
+          <i class="me-2 font-size-14 fa-regular fa-cart-arrow-down"></i>Crear
           Orden de compra
         </button>
-        <button
-          *ngIf="cotizacionesRelacionadas.length === 3"
-          disabled
-          class="btn btn-outline-info me-1 mt-3 float-end"
-        >
-          <i class="me-2 font-size-14 fa-duotone fa-cart-arrow-down"
+        } @if (cotizacionesRelacionadas.length === 3) {
+        <button disabled class="btn btn-outline-info me-1 mt-3 float-end">
+          <i class="me-2 font-size-14 fa-regular fa-cart-arrow-down"
             >Ya hay 3 Ordenes</i
           >
         </button>
+        }
       </div>
       <div class="col-12 mt-2">
         <div class="row">
@@ -102,7 +97,6 @@
       </div>
     </div>
     <br />
-
     <ng-container>
       <table class="table table-sm">
         <caption></caption>
@@ -135,9 +129,10 @@
             </th>
           </tr>
         </thead>
-
-        <tbody *ngIf="posicionCotizacion === 1">
-          <tr *ngFor="let item of solicitudCompraDetalle">
+        @if (posicionCotizacion === 1) {
+        <tbody>
+          @for (item of solicitudCompraDetalle; track item) {
+          <tr>
             <td>
               <input
                 readonly
@@ -147,7 +142,6 @@
               />
               <!-- [(ngModel)]="item.producto.nombreProducto" -->
             </td>
-
             <td>
               <input
                 disabled
@@ -220,9 +214,12 @@
               />
             </td>
           </tr>
+          }
         </tbody>
-        <tbody *ngIf="posicionCotizacion === 2">
-          <tr *ngFor="let item of solicitudCompraDetalle">
+        } @if (posicionCotizacion === 2) {
+        <tbody>
+          @for (item of solicitudCompraDetalle; track item) {
+          <tr>
             <td>
               <input
                 readonly
@@ -231,7 +228,6 @@
                 [(ngModel)]="item.producto"
               />
             </td>
-
             <td>
               <input
                 disabled
@@ -304,9 +300,12 @@
               />
             </td>
           </tr>
+          }
         </tbody>
-        <tbody *ngIf="posicionCotizacion === 3">
-          <tr *ngFor="let item of solicitudCompraDetalle">
+        } @if (posicionCotizacion === 3) {
+        <tbody>
+          @for (item of solicitudCompraDetalle; track item) {
+          <tr>
             <td>
               <input
                 readonly
@@ -315,7 +314,6 @@
                 [(ngModel)]="item.producto"
               />
             </td>
-
             <td>
               <input
                 disabled
@@ -388,7 +386,9 @@
               />
             </td>
           </tr>
+          }
         </tbody>
+        }
       </table>
     </ng-container>
   </div>

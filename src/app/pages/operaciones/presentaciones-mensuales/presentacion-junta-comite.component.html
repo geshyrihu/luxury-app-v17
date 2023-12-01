@@ -1,10 +1,11 @@
 <p-toast position="top-left" [baseZIndex]="9999999"></p-toast>
-
-<div *ngIf="data">
+@if (data) {
+<div class="card">
   <p-table
     [value]="data"
     [rowHover]="true"
     styleClass="custom-table"
+    [tableStyle]="{ 'min-width': '50rem' }"
     #dt
     [globalFilterFields]="['customer.label', 'concepto.label', 'fecha']"
   >
@@ -14,7 +15,6 @@
         (add)="showModalAdd({ id: 0, titulo: 'Nuevo Registro' })"
         [dt]="dt"
       ></app-table-header>
-
       <button
         class="btn btn-sm btn-light me-1 mb-sm-1"
         pSortableColumn="fechaCorrespondienteFiltro"
@@ -29,7 +29,6 @@
         <p-sortIcon field="fechaJuntaFiltro"></p-sortIcon>
       </button>
     </ng-template>
-
     <ng-template pTemplate="header">
       <tr>
         <th scope="col" style="width: 20%" class="text-uppercase">Portada</th>
@@ -95,23 +94,19 @@
               </div>
             </div>
             <div class="col-1">
-              <div
-                class="d-flex justify-content-end"
-                *ngIf="
-                  authService.onValidateRoles(['Residente']) &&
-                  !item.archivoFinal
-                "
-              >
+              @if ( authService.onValidateRoles(['Residente']) &&
+              !item.archivoFinal ) {
+              <div class="d-flex justify-content-end">
                 <custom-button-edit
                   (edit)="
                     showModalAdd({ id: item.id, titulo: 'Editar Registro' })
                   "
                 ></custom-button-edit>
-
                 <custom-button-delete
                   (OnConfirm)="onDeleteItem(item)"
                 ></custom-button-delete>
               </div>
+              }
             </div>
           </div>
         </td>
@@ -119,13 +114,9 @@
       <tr>
         <td>
           <!-- PORTADA -->
-
-          <div
-            class="row"
-            *ngIf="
-              !item.archivoPortada && authService.onValidateRoles(['Residente'])
-            "
-          >
+          @if ( !item.archivoPortada &&
+          authService.onValidateRoles(['Residente']) ) {
+          <div class="row">
             <div class="col text-center">
               <p
                 class="badge bg-info pointer p-2"
@@ -136,11 +127,12 @@
                   })
                 "
               >
-                <i class="fa-duotone fa-upload"></i> Cargar archivo
+                <i class="fa-regular fa-upload"></i> Cargar archivo
               </p>
             </div>
           </div>
-          <div class="row" *ngIf="item.archivoPortada">
+          } @if (item.archivoPortada) {
+          <div class="row">
             <div class="col-12">
               <p class="m-0">{{ item.userPortada }}</p>
             </div>
@@ -149,17 +141,14 @@
                 {{ item.fechaCargaPortada }}
               </p>
             </div>
-
             <div class="col-12 mt-1 d-flex align-content-start">
+              @if (item.archivoPortada) {
               <custom-button-download-pdf
-                *ngIf="item.archivoPortada"
                 [urlFile]="url + item.id + '/' + item.archivoPortada"
               ></custom-button-download-pdf>
+              } @if ( authService.onValidateRoles(['Residente']) &&
+              !item.archivoFinal ) {
               <custom-button-edit
-                *ngIf="
-                  authService.onValidateRoles(['Residente']) &&
-                  !item.archivoFinal
-                "
                 (edit)="
                   showModalAddOrEdit({
                     id: item.id,
@@ -167,28 +156,22 @@
                   })
                 "
               ></custom-button-edit>
+              } @if ( authService.onValidateRoles(['Residente']) &&
+              !item.archivoFinal ) {
               <custom-button-delete
-                *ngIf="
-                  authService.onValidateRoles(['Residente']) &&
-                  !item.archivoFinal
-                "
                 (OnConfirm)="onDelete(item, 'Portada')"
               ></custom-button-delete>
+              }
             </div>
           </div>
-
+          }
           <!-- PORTADA -->
         </td>
-
         <td>
           <!-- CONTABLE -->
-
-          <div
-            class="row"
-            *ngIf="
-              !item.archivoContable && authService.onValidateRoles(['Contador'])
-            "
-          >
+          @if ( !item.archivoContable &&
+          authService.onValidateRoles(['Contador']) ) {
+          <div class="row">
             <div class="col text-center">
               <p
                 class="badge bg-info pointer p-2"
@@ -199,11 +182,12 @@
                   })
                 "
               >
-                <i class="fa-duotone fa-upload"></i> Cargar archivo
+                <i class="fa-regular fa-upload"></i> Cargar archivo
               </p>
             </div>
           </div>
-          <div class="row" *ngIf="item.archivoContable">
+          } @if (item.archivoContable) {
+          <div class="row">
             <div class="col-12">
               <p class="m-0">{{ item.userContale }}</p>
             </div>
@@ -213,17 +197,13 @@
               </p>
             </div>
             <div class="col-12 mt-1 d-flex align-content-start">
+              @if (item.archivoContable) {
               <custom-button-download-pdf
-                *ngIf="item.archivoContable"
                 [urlFile]="url + item.id + '/' + item.archivoContable"
               ></custom-button-download-pdf>
-
+              } @if ( authService.onValidateRoles(['Contador']) &&
+              !item.archivoFinal && !item.employeeSupervisorContableId ) {
               <custom-button-edit
-                *ngIf="
-                  authService.onValidateRoles(['Contador']) &&
-                  !item.archivoFinal &&
-                  !item.employeeSupervisorContableId
-                "
                 (edit)="
                   showModalAddOrEdit({
                     id: item.id,
@@ -231,19 +211,14 @@
                   })
                 "
               ></custom-button-edit>
-
+              } @if ( authService.onValidateRoles(['Contador']) &&
+              !item.archivoFinal && !item.employeeSupervisorContableId ) {
               <custom-button-delete
-                *ngIf="
-                  authService.onValidateRoles(['Contador']) &&
-                  !item.archivoFinal &&
-                  !item.employeeSupervisorContableId
-                "
                 (OnConfirm)="onDelete(item, 'Contabilidad')"
               ></custom-button-delete>
-              <div
-                class="d-flex justify-content-center"
-                *ngIf="authService.onValidateRoles(['Residente'])"
-              ></div>
+              } @if (authService.onValidateRoles(['Residente'])) {
+              <div class="d-flex justify-content-center"></div>
+              }
             </div>
             <div class="col-12">
               <p class="m-0">{{ item.employeeSupervisorContable }}</p>
@@ -254,13 +229,9 @@
               </p>
             </div>
           </div>
-
+          } @if ( authService.onValidateRoles(['Contador']) &&
+          item.archivoContable != null && item.archivoFinal == null ) {
           <button
-            *ngIf="
-              authService.onValidateRoles(['Contador']) &&
-              item.archivoContable != null &&
-              item.archivoFinal == null
-            "
             (click)="
               onValidateContabilidad(item.id, item.employeeSupervisorContableId)
             "
@@ -276,18 +247,14 @@
                 : "Revocar"
             }}
           </button>
-
+          }
           <!-- CONTABLE -->
         </td>
         <!-- ESTADOS FINANCIEROS -->
         <td>
-          <div
-            class="row"
-            *ngIf="
-              !item.archivoFinancieros &&
-              authService.onValidateRoles(['Contador'])
-            "
-          >
+          @if ( !item.archivoFinancieros &&
+          authService.onValidateRoles(['Contador']) ) {
+          <div class="row">
             <div class="col text-center">
               <p
                 class="badge bg-info pointer p-2"
@@ -298,11 +265,12 @@
                   })
                 "
               >
-                <i class="fa-duotone fa-upload"></i> Cargar archivo
+                <i class="fa-regular fa-upload"></i> Cargar archivo
               </p>
             </div>
           </div>
-          <div class="row" *ngIf="item.archivoFinancieros">
+          } @if (item.archivoFinancieros) {
+          <div class="row">
             <div class="col-12">
               <p class="m-0">{{ item.employeeFinancieros }}</p>
             </div>
@@ -312,16 +280,13 @@
               </p>
             </div>
             <div class="col-12 mt-1 d-flex align-content-start">
+              @if (item.archivoFinancieros) {
               <custom-button-download-pdf
-                *ngIf="item.archivoFinancieros"
                 [urlFile]="url + item.id + '/' + item.archivoFinancieros"
               ></custom-button-download-pdf>
-
+              } @if ( authService.onValidateRoles(['Contador']) &&
+              !item.employeeAuthFinancieros ) {
               <custom-button-edit
-                *ngIf="
-                  authService.onValidateRoles(['Contador']) &&
-                  !item.employeeAuthFinancieros
-                "
                 (edit)="
                   showModalAddOrEdit({
                     id: item.id,
@@ -329,23 +294,16 @@
                   })
                 "
               ></custom-button-edit>
-
+              } @if ( authService.onValidateRoles(['Contador']) &&
+              !item.employeeAuthFinancieros ) {
               <custom-button-delete
-                *ngIf="
-                  authService.onValidateRoles(['Contador']) &&
-                  !item.employeeAuthFinancieros
-                "
                 (OnConfirm)="onDelete(item, 'Financieros')"
               ></custom-button-delete>
-
+              }
               <!-- Envío de estados financieros -->
-              <div
-                class="d-flex justify-content-center"
-                *ngIf="
-                  authService.onValidateRoles(['Residente']) &&
-                  item.employeeAuthFinancieros
-                "
-              >
+              @if ( authService.onValidateRoles(['Residente']) &&
+              item.employeeAuthFinancieros ) {
+              <div class="d-flex justify-content-center">
                 <custom-button-confirmation
                   text="Se enviara correo electronico al tesorero"
                   tooltipText="Enviar E.F. a comité"
@@ -357,9 +315,10 @@
                   tooltipText="Enviar estados financieros a condominos"
                   (OnConfirm)="enviarEstadosFinancierosCondominos(item.id)"
                   classButton="btn-outline-warning btn-sm me-1  "
-                  icon="fa-duotone fa-paper-plane"
+                  icon="fa-regular fa-paper-plane"
                 ></custom-button-confirmation>
               </div>
+              }
               <!-- Envío de estados financieros -->
             </div>
             <div class="col-12">
@@ -371,12 +330,9 @@
               </p>
             </div>
           </div>
-
+          } @if ( authService.onValidateRoles(['Contador']) &&
+          item.archivoFinancieros != null ) {
           <button
-            *ngIf="
-              authService.onValidateRoles(['Contador']) &&
-              item.archivoFinancieros != null
-            "
             (click)="
               onValidateEstadosFinancieros(
                 item.id,
@@ -393,17 +349,14 @@
               item.employeeAuthFinancierosId == null ? "Autorizar" : "Revocar"
             }}
           </button>
+          }
         </td>
         <!-- ESTADOS FINANCIEROS -->
         <td>
           <!-- OPERACIONES -->
-
-          <div
-            class="row"
-            *ngIf="
-              !item.archivoJunta && authService.onValidateRoles(['Residente'])
-            "
-          >
+          @if ( !item.archivoJunta && authService.onValidateRoles(['Residente'])
+          ) {
+          <div class="row">
             <div class="col text-center">
               <p
                 class="badge bg-info pointer p-2"
@@ -414,11 +367,12 @@
                   })
                 "
               >
-                <i class="fa-duotone fa-upload"></i> Cargar archivo
+                <i class="fa-regular fa-upload"></i> Cargar archivo
               </p>
             </div>
           </div>
-          <div class="row" *ngIf="item.archivoJunta">
+          } @if (item.archivoJunta) {
+          <div class="row">
             <div class="col-12">
               <p class="m-0">{{ item.user }}</p>
             </div>
@@ -426,16 +380,13 @@
               <p class="m-0">{{ item.fechaCarga }}</p>
             </div>
             <div class="col-12 mt-1 d-flex align-content-end">
+              @if (item.archivoJunta) {
               <custom-button-download-pdf
-                *ngIf="item.archivoJunta"
                 [urlFile]="url + item.id + '/' + item.archivoJunta"
               ></custom-button-download-pdf>
-
+              } @if ( authService.onValidateRoles(['Residente']) &&
+              !item.archivoFinal ) {
               <custom-button-edit
-                *ngIf="
-                  authService.onValidateRoles(['Residente']) &&
-                  !item.archivoFinal
-                "
                 (edit)="
                   showModalAddOrEdit({
                     id: item.id,
@@ -443,31 +394,24 @@
                   })
                 "
               ></custom-button-edit>
+              } @if ( authService.onValidateRoles(['Residente']) &&
+              !item.archivoFinal ) {
               <custom-button-delete
-                *ngIf="
-                  authService.onValidateRoles(['Residente']) &&
-                  !item.archivoFinal
-                "
                 (OnConfirm)="onDelete(item, 'Operaciones')"
               ></custom-button-delete>
+              }
             </div>
           </div>
+          }
           <!-- OPERACIONES -->
         </td>
         <td>
           <!-- FINAL -->
-
-          <div
-            class="row"
-            *ngIf="
-              !item.archivoFinal &&
-              authService.onValidateRoles(['SupervisionOperativa']) &&
-              item.archivoPortada &&
-              item.archivoContable &&
-              item.archivoJunta &&
-              item.employeeSupervisorContableId
-            "
-          >
+          @if ( !item.archivoFinal &&
+          authService.onValidateRoles(['SupervisionOperativa']) &&
+          item.archivoPortada && item.archivoContable && item.archivoJunta &&
+          item.employeeSupervisorContableId ) {
+          <div class="row">
             <div class="col text-center">
               <custom-button-confirmation
                 title="Confirmar"
@@ -481,7 +425,8 @@
               ></custom-button-confirmation>
             </div>
           </div>
-          <div class="row" *ngIf="item.archivoFinal">
+          } @if (item.archivoFinal) {
+          <div class="row">
             <div class="col-12">
               <p class="m-0">{{ item.supervisor }}</p>
             </div>
@@ -495,29 +440,28 @@
                 ngbTooltip="Visualizar Pdf"
                 [urlFile]="url + item.id + '/' + item.archivoFinal"
               ></custom-button-download-pdf>
-
+              @if (authService.onValidateRoles(['SupervisionOperativa'])) {
               <custom-button
-                *ngIf="authService.onValidateRoles(['SupervisionOperativa'])"
                 ngbTooltip="Actualizar archivo"
                 customClass="btn-sm btn-outline-primary "
-                icon="fa-duotone fa-arrows-rotate"
+                icon="fa-regular fa-arrows-rotate"
                 (clicked)="onValidarPresentacion(item.id)"
               ></custom-button>
-
+              } @if (authService.onValidateRoles(['SupervisionOperativa'])) {
               <custom-button-delete
-                *ngIf="authService.onValidateRoles(['SupervisionOperativa'])"
                 (OnConfirm)="onDelete(item, 'Final')"
               ></custom-button-delete>
+              } @if (authService.onValidateRoles(['Residente'])) {
               <custom-button-confirmation
                 tooltipText="Enviar presentación a comité"
-                icon="fa-duotone fa-paper-plane"
+                icon="fa-regular fa-paper-plane"
                 classButton="btn-outline-secondary btn-sm me-1 waves-effect waves-light"
-                *ngIf="authService.onValidateRoles(['Residente'])"
                 (OnConfirm)="enviarMailPresentacionComite(item.id)"
               ></custom-button-confirmation>
+              }
             </div>
           </div>
-
+          }
           <!-- FINAL -->
         </td>
       </tr>
@@ -525,3 +469,4 @@
   </p-table>
   <!-- viewGeneralMinutas -->
 </div>
+}

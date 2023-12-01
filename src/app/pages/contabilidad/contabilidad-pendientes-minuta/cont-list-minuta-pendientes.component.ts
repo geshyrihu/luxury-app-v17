@@ -25,8 +25,8 @@ import ContMinutaSeguimientosComponent from './cont-minuta-seguimientos.componen
     ComponentsModule,
     PrimeNgModule,
     SanitizeHtmlPipe,
-    NgbTooltip,
-  ],
+    NgbTooltip
+],
   providers: [DialogService, MessageService, CustomToastService],
 })
 export default class ContListMinutaPendientesComponent

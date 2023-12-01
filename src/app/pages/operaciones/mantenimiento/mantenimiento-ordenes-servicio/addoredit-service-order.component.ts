@@ -20,10 +20,12 @@ import { DataService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
 import { EnumService } from 'src/app/core/services/enum-service';
 import { SelectItemService } from 'src/app/core/services/select-item.service';
+import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
+import ValidationErrorsCustomInputComponent from 'src/app/custom-components/custom-input-form/validation-errors-custom-input/validation-errors-custom-input.component';
 import ComponentsModule, {
   flatpickrFactory,
 } from 'src/app/shared/components.module';
-import CustomInputModule from 'src/app/shared/custom-input-form/custom-input.module';
+import PrimeNgModule from 'src/app/shared/prime-ng.module';
 
 @Component({
   selector: 'app-addoredit-service-order',
@@ -35,6 +37,8 @@ import CustomInputModule from 'src/app/shared/custom-input-form/custom-input.mod
     ComponentsModule,
     CustomInputModule,
     CKEditorModule,
+    ValidationErrorsCustomInputComponent,
+    PrimeNgModule,
   ],
   providers: [CustomToastService, MessageService],
 })
@@ -148,6 +152,7 @@ export default class ServiceOrderAddOrEditComponent
     this.subRef$ = this.dataService
       .get(`ServiceOrders/${this.id}`)
       .subscribe((resp: any) => {
+        console.log('🚀 ~ resp.body:', resp.body);
         resp.body.executionDate = this.dateService.getDateFormat(
           resp.body.executionDate
         );

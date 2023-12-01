@@ -1,5 +1,4 @@
 <p-toast position="top-left" [baseZIndex]="99999"></p-toast>
-
 <div class="card">
   <p-table
     #dt
@@ -18,6 +17,7 @@
     [showCurrentPageReport]="true"
     currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
     styleClass="custom-table"
+    [tableStyle]="{ 'min-width': '50rem' }"
   >
     <ng-template pTemplate="caption">
       <app-table-header
@@ -26,7 +26,6 @@
         [dt]="dt"
       ></app-table-header>
     </ng-template>
-
     <ng-template pTemplate="header">
       <tr>
         <th scope="col" pSortableColumn="fechaSolicitud">
@@ -77,55 +76,61 @@
         </td>
         <!-- Opciones -->
         <td>
-          <div [ngSwitch]="item.tipoSolicitud">
-            <div *ngSwitchCase="'Alta'" class="body-card">
+          <div>
+            @switch (item.tipoSolicitud) { @case ('Alta') {
+            <div class="body-card">
               <!-- Contenido específico para el caso 'pesificacion' -->
               <custom-button-edit
                 (edit)="
-              onModalEditSolicitudAlta({
-                id: item.id,
-              })
-            "
+                          onModalEditSolicitudAlta({
+                          id: item.id,
+                          })
+                          "
               ></custom-button-edit>
             </div>
-            <div *ngSwitchCase="'Vacante'" class="body-card">
+            } @case ('Vacante') {
+            <div class="body-card">
               <!-- Contenido específico para otro caso -->
               <custom-button-edit
                 (edit)="
-                onModalEditVacante({
-                  id: item.id,
-                })
-              "
+                          onModalEditVacante({
+                          id: item.id,
+                          })
+                          "
               ></custom-button-edit>
               <custom-button
                 ngbTooltip="Ver candidatos"
                 placement="top"
                 customNgClass="btn-sm btn-outline-primary"
-                icon="fa-duotone fa-users-viewfinder"
+                icon="fa-regular fa-users-viewfinder"
                 (clicked)="onRouteEstatusSolicitud(item.id)"
               ></custom-button>
             </div>
-            <div *ngSwitchCase="'Baja'" class="body-card">
+            } @case ('Baja') {
+            <div class="body-card">
               <!-- Contenido específico para otro caso -->
               <custom-button-edit
                 (edit)="
-                onModalEditSolicitudBaja({
-              id: item.id,
-            })
-          "
+                          onModalEditSolicitudBaja({
+                          id: item.id,
+                          })
+                          "
               ></custom-button-edit>
             </div>
-            <div *ngSwitchCase="'Modificacion'" class="body-card">
+            } @case ('Modificacion') {
+            <div class="body-card">
               <!-- Contenido específico para otro caso -->
               <custom-button-edit
                 (edit)="
-              onModalEditModificacionSalario({
-                id: item.id,
-              })
-            "
+                          onModalEditModificacionSalario({
+                          id: item.id,
+                          })
+                          "
               ></custom-button-edit>
             </div>
+            }
             <!-- Agrega más casos según tus necesidades -->
+            }
           </div>
         </td>
         <!-- Opciones -->

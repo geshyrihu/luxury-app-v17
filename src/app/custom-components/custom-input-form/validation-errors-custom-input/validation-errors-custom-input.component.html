@@ -1,0 +1,7 @@
+<div *ngIf="shouldShowErrors()">
+  <div *ngFor="let error of getErrors()">
+    <small class="text-danger">
+      <em>* {{ error }}</em>
+    </small>
+  </div>
+</div>

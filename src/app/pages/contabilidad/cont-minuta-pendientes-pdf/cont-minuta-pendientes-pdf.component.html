@@ -1,11 +1,11 @@
 <p-toast position="top-left" [baseZIndex]="99999"></p-toast>
-
 <div class="p-card p-mb-5">
   <p-table
     [(selection)]="data"
     [autoLayout]="true"
     [value]="data"
     styleClass="custom-table"
+    [tableStyle]="{ 'min-width': '50rem' }"
   >
     <ng-template pTemplate="caption">
       <h5>Pendientes en Minutas Contabilidad</h5>
@@ -17,7 +17,7 @@
           CLIENTE
           <p-sortIcon
             field="numeroCliente
-          "
+            "
           ></p-sortIcon>
         </th>
         <th scope="col" style="width: 8%" pSortableColumn="dateFiltro">
@@ -58,10 +58,12 @@
         <td class="p-column-title">
           <small>
             <ol [start]="item.seguimientos.length" reversed>
-              <li *ngFor="let seguimiento of item.seguimientos">
+              @for (seguimiento of item.seguimientos; track seguimiento) {
+              <li>
                 {{ seguimiento.fecha }},
                 {{ seguimiento.seguimiento | titlecase }}
               </li>
+              }
             </ol>
           </small>
         </td>

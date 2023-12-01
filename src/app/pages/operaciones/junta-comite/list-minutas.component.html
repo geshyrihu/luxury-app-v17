@@ -1,7 +1,7 @@
 <p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+@if (data) {
 <p-table
   #dt
-  *ngIf="data"
   [globalFilterFields]="['eTypeMeeting.label', 'date']"
   [paginator]="true"
   [rowHover]="true"
@@ -12,6 +12,7 @@
   currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
   dataKey="id"
   styleClass="custom-table"
+  [tableStyle]="{ 'min-width': '50rem' }"
 >
   <!-- Cabecera tabla -->
   <ng-template pTemplate="caption">
@@ -62,7 +63,6 @@
     </div>
   </ng-template>
   <!-- Cabecera tabla -->
-
   <ng-template pTemplate="header">
     <tr>
       <th scope="col" style="width: 3%"></th>
@@ -70,7 +70,6 @@
         Fecha
         <p-sortIcon field="date"></p-sortIcon>
       </th>
-
       <th scope="col" style="width: 15%" pSortableColumn="issues">
         Total
         <p-sortIcon field="issues"></p-sortIcon>
@@ -97,8 +96,8 @@
           <i
             [ngClass]="
               expanded
-                ? 'fa-duotone fa-chevron-down'
-                : 'fa-duotone fa-chevron-right'
+                ? 'fa-regular fa-chevron-down'
+                : 'fa-regular fa-chevron-right'
             "
           ></i>
         </button>
@@ -148,33 +147,31 @@
           NO AUTORIZADOS.- {{ item.noAutorizado }}
         </button>
       </td>
-
       <td class="p-column-title">
         <div class="d-flex justify-content-center">
           <custom-button
             customClass="btn-outline-success me-1 btn-sm"
             ngbTooltip="Exportar pendientes a excel"
-            icon="fa-duotone fa-file-excel"
+            icon="fa-regular fa-file-excel"
             (clicked)="exportToExcel(item.id)"
           ></custom-button>
           <!-- [mostrar]="emailAccount" -->
           <custom-button-confirmation
             title="Confirmar"
-            icon="fa-duotone fa-paper-plane"
+            icon="fa-regular fa-paper-plane"
             text="Enviar minuta a comite"
             tooltipText="Enviar minuta a comite"
             classButton="btn btn-sm btn-outline-dark me-1"
             confirmButtonText="Sí, enviar"
             (OnConfirm)="onSendEmailMeeting(item.id)"
           ></custom-button-confirmation>
-
           <button
             class="btn btn-sm btn-outline-danger me-1"
             (click)="onGeneretePDF(item.id)"
             ngbTooltip="Minuta PDF"
             placement="top"
           >
-            <i class="fa-duotone fa-file-pdf"></i>
+            <i class="fa-regular fa-file-pdf"></i>
           </button>
           <button
             class="btn btn-sm btn-outline-info me-1"
@@ -182,9 +179,8 @@
             ngbTooltip="Resumen minuta"
             placement="top"
           >
-            <i class="fa-duotone fa-file-pdf"></i>
+            <i class="fa-regular fa-file-pdf"></i>
           </button>
-
           <custom-button-edit
             (edit)="
               showModalAddOrEditMeeting({
@@ -193,10 +189,11 @@
               })
             "
           ></custom-button-edit>
+          @if (authService.onValidateRoles(['SupervisionOperativa'])) {
           <custom-button-delete
-            *ngIf="authService.onValidateRoles(['SupervisionOperativa'])"
             (OnConfirm)="onDelete(item)"
           ></custom-button-delete>
+          }
         </div>
       </td>
     </tr>
@@ -222,9 +219,8 @@
                     ngbTooltip="Agregar pendiente contable"
                     placement="top"
                   >
-                    <i class="fa-duotone fa-plus me-1">CONTABLE</i>
+                    <i class="fa-regular fa-plus me-1">CONTABLE</i>
                   </button>
-
                   <custom-button-confirmation
                     title="Confirmar"
                     icon=""
@@ -237,7 +233,8 @@
                   ></custom-button-confirmation>
                 </th>
               </tr>
-              <tr *ngIf="item.contable">
+              @if (item.contable) {
+              <tr>
                 <th scope="col" style="width: 2%">#</th>
                 <th scope="col" style="width: 13%" pSortableColumn="title">
                   Titulo
@@ -257,9 +254,9 @@
                   <p-sortIcon field="status"></p-sortIcon>
                 </th>
                 <th scope="col" style="width: 10%">Opt.</th>
-              </tr></ng-template
+              </tr>
+              }</ng-template
             >
-
             <ng-template pTemplate="body" let-rowIndex="rowIndex" let-detalle>
               <tr>
                 <td>{{ rowIndex + 1 }}</td>
@@ -270,10 +267,10 @@
                     [innerHTML]="detalle.requestService | sanitizeHtml"
                   ></p>
                 </td>
-
                 <td>
                   <ol [start]="detalle.seguimiento.length" reversed>
-                    <li *ngFor="let item of detalle.seguimiento">
+                    @for (item of detalle.seguimiento; track item) {
+                    <li>
                       <div class="row">
                         <div class="col-sm-9">
                           {{ item.fecha }}, {{ item.seguimiento }}
@@ -290,6 +287,7 @@
                         </div>
                       </div>
                     </li>
+                    }
                   </ol>
                 </td>
                 <td class="text-center">
@@ -302,16 +300,19 @@
                     }"
                   >
                     <!-- {{ detalle.status | eStatus | uppercase }} -->
-
-                    <span *ngIf="detalle.status === 0">
-                      <i class="fa-duotone fa-xmark text-danger"></i>
+                    @if (detalle.status === 0) {
+                    <span>
+                      <i class="fa-regular fa-xmark text-danger"></i>
                     </span>
-                    <span *ngIf="detalle.status === 1">
-                      <i class="fa-duotone fa-check-double"></i>
+                    } @if (detalle.status === 1) {
+                    <span>
+                      <i class="fa-regular fa-check-double"></i>
                     </span>
-                    <span *ngIf="detalle.status === 2">
-                      <i class="fa-duotone fa-ban"></i>
+                    } @if (detalle.status === 2) {
+                    <span>
+                      <i class="fa-regular fa-ban"></i>
                     </span>
+                    }
                   </span>
                 </td>
                 <td>
@@ -324,9 +325,8 @@
                       type="button"
                       (click)="onModalAddOrEditSeguimiento(detalle.id, 0)"
                     >
-                      <i class="fa-duotone fa-list-check"></i>
+                      <i class="fa-regular fa-list-check"></i>
                     </button>
-
                     <!-- Agregar Seguimiento -->
                     <!-- Editar  -->
                     <custom-button-edit
@@ -343,7 +343,6 @@
                     <custom-button-delete
                       (OnConfirm)="onDeleteMeetingDetail(detalle.id)"
                     ></custom-button-delete>
-
                     <!-- Borrar -->
                   </div>
                 </td>
@@ -378,11 +377,12 @@
                     ngbTooltip="Agregar pendiente Operaciones"
                     placement="top"
                   >
-                    <i class="fa-duotone fa-plus me-1">OPERACIONES</i>
+                    <i class="fa-regular fa-plus me-1">OPERACIONES</i>
                   </button>
                 </th>
               </tr>
-              <tr *ngIf="item.operaciones.length > 0">
+              @if (item.operaciones.length > 0) {
+              <tr>
                 <th scope="col" style="width: 2%">#</th>
                 <th scope="col" style="width: 13%" pSortableColumn="title">
                   Titulo
@@ -401,11 +401,10 @@
                   Estatus
                   <p-sortIcon field="status"></p-sortIcon>
                 </th>
-
                 <th scope="col" style="width: 10%">Opt.</th>
-              </tr></ng-template
+              </tr>
+              }</ng-template
             >
-
             <ng-template
               pTemplate="body"
               let-rowIndex="rowIndex"
@@ -420,10 +419,10 @@
                     [innerHTML]="operaciones.requestService | sanitizeHtml"
                   ></p>
                 </td>
-
                 <td>
                   <ol [start]="operaciones.seguimiento.length" reversed>
-                    <li *ngFor="let item of operaciones.seguimiento">
+                    @for (item of operaciones.seguimiento; track item) {
+                    <li>
                       <div class="row">
                         <div class="col-sm-9">
                           {{ item.fecha }}, {{ item.seguimiento }}
@@ -443,6 +442,7 @@
                         </div>
                       </div>
                     </li>
+                    }
                   </ol>
                 </td>
                 <td class="text-center">
@@ -455,15 +455,19 @@
                     }"
                   >
                     <!-- {{ operaciones.status | eStatus | uppercase }} -->
-                    <span *ngIf="operaciones.status === 0">
-                      <i class="fa-duotone fa-xmark text-danger"></i>
+                    @if (operaciones.status === 0) {
+                    <span>
+                      <i class="fa-regular fa-xmark text-danger"></i>
                     </span>
-                    <span *ngIf="operaciones.status === 1">
-                      <i class="fa-duotone fa-check-double"></i>
+                    } @if (operaciones.status === 1) {
+                    <span>
+                      <i class="fa-regular fa-check-double"></i>
                     </span>
-                    <span *ngIf="operaciones.status === 2">
-                      <i class="fa-duotone fa-ban"></i>
+                    } @if (operaciones.status === 2) {
+                    <span>
+                      <i class="fa-regular fa-ban"></i>
                     </span>
+                    }
                   </span>
                 </td>
                 <td>
@@ -476,9 +480,8 @@
                       type="button"
                       (click)="onModalAddOrEditSeguimiento(operaciones.id, 0)"
                     >
-                      <i class="fa-duotone fa-list-check"></i>
+                      <i class="fa-regular fa-list-check"></i>
                     </button>
-
                     <!-- Agregar Seguimiento -->
                     <!-- Editar  -->
                     <custom-button-edit
@@ -529,11 +532,10 @@
                     ngbTooltip="Agregar pendiente contable"
                     placement="top"
                   >
-                    <i class="fa-duotone fa-plus me-1">LEGAL</i>
+                    <i class="fa-regular fa-plus me-1">LEGAL</i>
                   </button>
-
+                  @if (item.legal.length > 0) {
                   <custom-button-confirmation
-                    *ngIf="item.legal.length > 0"
                     title="Confirmar"
                     icon=""
                     text="Enviar Emial a Legal"
@@ -543,9 +545,11 @@
                     confirmButtonText="Sí, eliminar"
                     (OnConfirm)="onSendEmail(item.id, 2)"
                   ></custom-button-confirmation>
+                  }
                 </th>
               </tr>
-              <tr *ngIf="item.legal.length > 0">
+              @if (item.legal.length > 0) {
+              <tr>
                 <th scope="col" style="width: 2%">#</th>
                 <th scope="col" style="width: 13%" pSortableColumn="title">
                   Titulo
@@ -564,11 +568,10 @@
                   Estatus
                   <p-sortIcon field="status"></p-sortIcon>
                 </th>
-
                 <th scope="col" style="width: 10%">Opt.</th>
-              </tr></ng-template
+              </tr>
+              }</ng-template
             >
-
             <ng-template pTemplate="body" let-rowIndex="rowIndex" let-legal>
               <tr>
                 <td>{{ rowIndex + 1 }}</td>
@@ -579,10 +582,10 @@
                     [innerHTML]="legal.requestService | sanitizeHtml"
                   ></p>
                 </td>
-
                 <td>
                   <ol [start]="legal.seguimiento.length" reversed>
-                    <li *ngFor="let item of legal.seguimiento">
+                    @for (item of legal.seguimiento; track item) {
+                    <li>
                       <div class="row">
                         <div class="col-sm-9">
                           {{ item.fecha }}, {{ item.seguimiento }}
@@ -599,6 +602,7 @@
                         </div>
                       </div>
                     </li>
+                    }
                   </ol>
                 </td>
                 <td class="text-center">
@@ -611,15 +615,19 @@
                     }"
                   >
                     <!-- {{ legal.status | eStatus | uppercase }} -->
-                    <span *ngIf="legal.status === 0">
-                      <i class="fa-duotone fa-xmark text-danger"></i>
+                    @if (legal.status === 0) {
+                    <span>
+                      <i class="fa-regular fa-xmark text-danger"></i>
                     </span>
-                    <span *ngIf="legal.status === 1">
-                      <i class="fa-duotone fa-check-double"></i>
+                    } @if (legal.status === 1) {
+                    <span>
+                      <i class="fa-regular fa-check-double"></i>
                     </span>
-                    <span *ngIf="legal.status === 2">
-                      <i class="fa-duotone fa-ban"></i>
+                    } @if (legal.status === 2) {
+                    <span>
+                      <i class="fa-regular fa-ban"></i>
                     </span>
+                    }
                   </span>
                 </td>
                 <td>
@@ -632,9 +640,8 @@
                       type="button"
                       (click)="onModalAddOrEditSeguimiento(legal.id, 0)"
                     >
-                      <i class="fa-duotone fa-list-check"></i>
+                      <i class="fa-regular fa-list-check"></i>
                     </button>
-
                     <!-- Agregar Seguimiento -->
                     <!-- Editar  -->
                     <custom-button-edit
@@ -648,7 +655,6 @@
                     ></custom-button-edit>
                     <!-- Editar  -->
                     <!-- Borrar -->
-
                     <custom-button-delete
                       (OnConfirm)="onDeleteMeetingDetail(legal.id)"
                     ></custom-button-delete>
@@ -672,7 +678,7 @@
       En total hay
       {{ data ? data.length : 0 }} registros.
     </div>
-
     <!-- <app-table-footer [data]="data"></app-table-footer> -->
   </ng-template>
 </p-table>
+}

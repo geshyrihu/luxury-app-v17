@@ -23,8 +23,8 @@ import AddoreditInventarioPinturaComponent from './addoredit-inventario-pintura.
     NgbAlert,
     CommonModule,
     PrimeNgModule,
-    ImageModule,
-  ],
+    ImageModule
+],
   providers: [DialogService, MessageService, CustomToastService],
 })
 export default class InventarioPinturaComponent implements OnInit, OnDestroy {

@@ -8,9 +8,11 @@
         <div class="mb-2">
           <select [(ngModel)]="administrationparticipante" class="form-select">
             <option value="">Selecciona una opción</option>
-            <option [value]="item.value" *ngFor="let item of cb_Administration">
+            @for (item of cb_Administration; track item) {
+            <option [value]="item.value">
               {{ item.label }}
             </option>
+            }
           </select>
         </div>
       </div>
@@ -23,22 +25,20 @@
           class="btn btn-info float-end"
           [disabled]="administrationparticipante == ''"
         >
-          <i class="fa-duotone fa-check-double"></i>
+          <i class="fa-regular fa-check-double"></i>
         </button>
       </div>
     </div>
   </small>
-  <small
-    *ngFor="let item of listaParticipantesAdministration"
-    class="list-group-item list-group-item-action"
-  >
+  @for (item of listaParticipantesAdministration; track item) {
+  <small class="list-group-item list-group-item-action">
     {{ item.cargo }} - {{ item.nombre }}
-
     <span
       (click)="onDelete(item.id)"
       ngbTooltip="Eliminar"
       placement="top"
-      class="fa-duotone fa-trash-can text-danger float-end pointer"
+      class="fa-regular fa-trash-can text-danger float-end pointer"
     ></span>
   </small>
+  }
 </div>

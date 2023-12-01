@@ -1,9 +1,9 @@
 <p-toast position="top-left" [baseZIndex]="99999"></p-toast>
-
 <p-table
   [(selection)]="data"
   #dt
   styleClass="custom-table"
+  [tableStyle]="{ 'min-width': '50rem' }"
   [value]="data"
   [rows]="30"
   [paginator]="true"
@@ -35,7 +35,6 @@
       <div class="col-sm-5 p-fluid">
         <app-calendar-range></app-calendar-range>
       </div>
-
       <div class="col-sm-7 text-end">
         <button
           ngbTooltip="Mostar tikets pendientes"
@@ -70,11 +69,12 @@
           [routerLink]="['/sistemas/reporte-pdf']"
           class="btn btn-outline-danger me-1"
         >
-          <i class="fa-duotone fa-file-pdf"></i>
+          <i class="fa-regular fa-file-pdf"></i>
         </button>
       </div>
     </div>
-    <div class="row" *ngIf="data != null">
+    @if (data != null) {
+    <div class="row">
       <div class="col-auto">
         <div class="d-flex flex-wrap gap-2">
           <button
@@ -98,8 +98,8 @@
         </div>
       </div>
     </div>
+    }
   </ng-template>
-
   <ng-template pTemplate="header">
     <tr>
       <th scope="col" style="width: 10%" pSortableColumn="responsableId">
@@ -137,15 +137,14 @@
         <small> ESTATUS </small>
         <p-sortIcon field="estatus"></p-sortIcon>
       </th>
-
       <th scope="col" style="width: 2%"></th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-item>
     <tr>
       <td class="text-center">
+        @if (item.employeeResponsableId) {
         <img
-          *ngIf="item.employeeResponsableId"
           (click)="onCardEmployee(item.employeeResponsableId)"
           [src]="url + item.employeeResponsable"
           alt="."
@@ -153,6 +152,7 @@
           style="cursor: pointer"
           class="img-circle"
         />
+        }
       </td>
       <td class="text-justify">
         <small>
@@ -187,16 +187,15 @@
       <td class="text-center">
         <i
           [ngClass]="{
-            'fa-duotone fa-xmark  text-danger': item.status === 0
+            'fa-regular fa-xmark  text-danger': item.status === 0
           }"
         >
         </i>
         <i
-          [ngClass]="{ 'fa-duotone fa-check text-success': item.status === 1 }"
+          [ngClass]="{ 'fa-regular fa-check text-success': item.status === 1 }"
         >
         </i>
       </td>
-
       <!-- Opciones -->
       <td>
         <div class="d-flex justify-content-center">
@@ -210,7 +209,6 @@
       </td>
     </tr>
   </ng-template>
-
   <ng-template pTemplate="paginatorleft">
     <app-table-footer [data]="data"></app-table-footer>
   </ng-template>

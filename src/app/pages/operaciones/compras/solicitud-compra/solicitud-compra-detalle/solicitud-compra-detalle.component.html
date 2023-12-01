@@ -1,5 +1,9 @@
 <div class="card mt-2">
-  <p-table [value]="SolicitudCompraDetalle" styleClass="custom-table">
+  <p-table
+    [value]="SolicitudCompraDetalle"
+    styleClass="custom-table"
+    [tableStyle]="{ 'min-width': '50rem' }"
+  >
     <ng-template pTemplate="header">
       <tr>
         <th scope="col" style="width: 60%">PRODUCTO</th>

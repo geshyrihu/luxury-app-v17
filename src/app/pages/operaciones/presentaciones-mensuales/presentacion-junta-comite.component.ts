@@ -133,7 +133,6 @@ export default class PresentacionJuntaComiteComponent
       .subscribe({
         next: (resp: any) => {
           this.data = resp.body;
-          console.log('🚀 ~enviadoCondominos:', resp.body[0].enviadoCondominos);
           this.customToastService.onClose();
         },
         error: (err) => {

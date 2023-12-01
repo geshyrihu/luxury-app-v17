@@ -13,13 +13,15 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let item of model">
-            <td>
-              {{ item.producto }}
-            </td>
-            <td>{{ item.cantidad }}</td>
-            <td>{{ item.unidadMedida }}</td>
-          </tr>
+          @for (item of model; track item) {
+            <tr>
+              <td>
+                {{ item.producto }}
+              </td>
+              <td>{{ item.cantidad }}</td>
+              <td>{{ item.unidadMedida }}</td>
+            </tr>
+          }
         </tbody>
       </table>
     </div>

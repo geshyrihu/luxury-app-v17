@@ -22,11 +22,11 @@ import FichaTecnicaActivoComponent from '../../operaciones/mantenimiento/manteni
   providers: [DialogService, MessageService, CustomToastService],
 })
 export default class MiEdificioComponent implements OnInit, OnDestroy {
+  public customerIdService = inject(CustomerIdService);
   public customToastService = inject(CustomToastService);
   public dataService = inject(DataService);
-  public customerIdService = inject(CustomerIdService);
-  public messageService = inject(MessageService);
   public dialogService = inject(DialogService);
+  public messageService = inject(MessageService);
 
   baseUrlImg = environment.base_urlImg;
   data: any;

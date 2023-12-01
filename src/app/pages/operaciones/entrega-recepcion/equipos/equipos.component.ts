@@ -16,8 +16,8 @@ import { environment } from 'src/environments/environment';
   standalone: true,
   imports: [
     ComponentsModule,
-    TableModule,
-  ],
+    TableModule
+],
   providers: [MessageService, CustomToastService],
 })
 export default class EquiposComponent implements OnInit, OnDestroy {

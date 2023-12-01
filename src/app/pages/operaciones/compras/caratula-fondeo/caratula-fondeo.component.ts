@@ -16,8 +16,8 @@ import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface
 import { CaratulaFondeoService } from 'src/app/core/services/caratula-fondeo.service';
 import { CustomerIdService } from 'src/app/core/services/common-services';
 import { DateService } from 'src/app/core/services/date.service';
+import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import ComponentsModule from 'src/app/shared/components.module';
-import CustomInputModule from 'src/app/shared/custom-input-form/custom-input.module';
 
 const date = new Date();
 @Component({

@@ -20,13 +20,13 @@
               f.date.invalid && (f.date.dirty || f.date.touched)
             "
           />
-
-          <div
-            *ngIf="f.date.invalid && (f.date.dirty || f.date.touched)"
-            class="text-danger"
-          >
-            <small *ngIf="f.date.errors.required"> Campo requerido </small>
+          @if (f.date.invalid && (f.date.dirty || f.date.touched)) {
+          <div class="text-danger">
+            @if (f.date.errors.required) {
+            <small> Campo requerido </small>
+            }
           </div>
+          }
         </div>
       </div>
       <div class="form-group row mb-2">
@@ -34,22 +34,20 @@
         <div class="col-sm-9 p-fluid">
           <select formControlName="eTypeMeeting" class="form-control">
             <option value="">Seleecion una opción</option>
-            <option [value]="item.value" *ngFor="let item of cb_typeMeeting">
+            @for (item of cb_typeMeeting; track item) {
+            <option [value]="item.value">
               {{ item.label }}
             </option>
+            }
           </select>
-
-          <div
-            *ngIf="
-              f.eTypeMeeting.invalid &&
-              (f.eTypeMeeting.dirty || f.eTypeMeeting.touched)
-            "
-            class="text-danger"
-          >
-            <small *ngIf="f.eTypeMeeting.errors.required">
-              Campo requerido
-            </small>
+          @if ( f.eTypeMeeting.invalid && (f.eTypeMeeting.dirty ||
+          f.eTypeMeeting.touched) ) {
+          <div class="text-danger">
+            @if (f.eTypeMeeting.errors.required) {
+            <small> Campo requerido </small>
+            }
           </div>
+          }
         </div>
       </div>
     </div>
@@ -61,15 +59,15 @@
         type="submit"
         [disabled]="form.invalid"
         class="btn btn-info float-end"
-      >
-        <i class="fa-duotone fa-check-double"></i>
+        >
+        <i class="fa-regular fa-check-double"></i>
       </button> -->
     </div>
   </div>
 </form>
 <!-- Formulario de minuta -->
-
-<div *ngIf="id !== 0">
+@if (id !== 0) {
+<div>
   <div class="row">
     <div class="col-sm-4">
       <!-- Fomrulario comité -->
@@ -97,3 +95,4 @@
     </div>
   </div>
 </div>
+}

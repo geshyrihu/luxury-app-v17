@@ -8,6 +8,7 @@
   [value]="data"
   currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
   styleClass="custom-table"
+  [tableStyle]="{ 'min-width': '50rem' }"
   rowGroupMode="subheader"
   sortField="area"
   groupRowsBy="area"
@@ -66,7 +67,7 @@
   <ng-template pTemplate="body" let-item let-index="rowIndex">
     <tr [pReorderableRow]="index">
       <td class="p-column-title text-center">
-        <i class="fa-duotone fa-bars" pReorderableRowHandle></i>
+        <i class="fa-regular fa-bars" pReorderableRowHandle></i>
       </td>
       <td class="p-column-title">
         {{ item.hierarchy }}

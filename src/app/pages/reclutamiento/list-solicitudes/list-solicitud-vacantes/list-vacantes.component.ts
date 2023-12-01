@@ -32,8 +32,8 @@ import AddOrEditVacanteComponent from './addoredit-vacante.component';
     FormsModule,
     NgbDropdownModule,
     RouterModule,
-    PrimeNgModule,
-  ],
+    PrimeNgModule
+],
   providers: [DialogService, MessageService, CustomToastService],
 })
 export default class ListVacantesComponent implements OnInit, OnDestroy {

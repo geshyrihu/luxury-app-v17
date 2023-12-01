@@ -4,11 +4,11 @@
   [style]="{ cursor: 'pointer' }"
 >
   <!-- <div class="card-header">
-    <span> {{ title }}</span>
-  </div> -->
+  <span> {{ title }}</span>
+</div> -->
+  @if (imgBase64) {
   <img
     class="img-fluid"
-    *ngIf="imgBase64"
     [src]="imgBase64"
     alt="imgBase64"
     [ngStyle]="{
@@ -16,16 +16,11 @@
       height: contentHeight + 'px'
     }"
   />
-
+  } @if (!imgBase64 && urlImgCurrent === null) {
+  <img class="img-fluid" src="assets/images/no-image.jpg" alt="CARGAR IMAGEN" />
+  } @if (!imgBase64 && urlImgCurrent !== null) {
   <img
     class="img-fluid"
-    *ngIf="!imgBase64 && urlImgCurrent === null"
-    src="assets/images/no-image.jpg"
-    alt="CARGAR IMAGEN"
-  />
-  <img
-    class="img-fluid"
-    *ngIf="!imgBase64 && urlImgCurrent !== null"
     [src]="urlImgCurrent"
     alt=""
     [ngStyle]="{
@@ -33,8 +28,8 @@
       height: contentHeight + 'px'
     }"
   />
+  }
 </div>
-
 <input
   type="file"
   hidden

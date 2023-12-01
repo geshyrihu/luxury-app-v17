@@ -1,4 +1,4 @@
-import { NgIf } from '@angular/common';
+import {} from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { imageToBase64 } from 'src/app/core/helpers/enumeration';
 import { environment } from 'src/environments/environment';
@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
   selector: 'app-input-img-report',
   templateUrl: './input-img-report.component.html',
   standalone: true,
-  imports: [NgIf],
+  imports: [],
 })
 export default class InputImgReportComponent {
   imgBase64: string = '';

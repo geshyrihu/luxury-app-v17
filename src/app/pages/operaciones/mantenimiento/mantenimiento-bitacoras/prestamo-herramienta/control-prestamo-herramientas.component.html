@@ -1,10 +1,10 @@
 <p-toast position="top-left" [baseZIndex]="99999"></p-toast>
-
+@if (data) {
 <p-table
-  *ngIf="data"
   [(selection)]="data"
   #dt
   styleClass="custom-table"
+  [tableStyle]="{ 'min-width': '50rem' }"
   [value]="data"
   [rows]="15"
   [paginator]="true"
@@ -23,7 +23,6 @@
       [rolAuth]="authService.onValidateRoles(['SuperUsuario', 'Mantenimiento'])"
     ></app-table-header>
   </ng-template>
-
   <ng-template pTemplate="header">
     <tr>
       <th scope="col" pSortableColumn="fechaSalida">
@@ -42,14 +41,9 @@
       <th scope="col" pSortableColumn="observaciones">
         Observaciones<p-sortIcon field="observaciones"></p-sortIcon>
       </th>
-
-      <th
-        *ngIf="authService.onValidateRoles(['SuperUsuario', 'Mantenimiento'])"
-        scope="col"
-        style="width: 5%"
-      >
-        Opciones
-      </th>
+      @if (authService.onValidateRoles(['SuperUsuario', 'Mantenimiento'])) {
+      <th scope="col" style="width: 5%">Opciones</th>
+      }
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-item>
@@ -80,10 +74,8 @@
         </small>
       </td>
       <!-- Opciones -->
-      <td
-        class="p-column-title"
-        *ngIf="authService.onValidateRoles(['SuperUsuario', 'Mantenimiento'])"
-      >
+      @if (authService.onValidateRoles(['SuperUsuario', 'Mantenimiento'])) {
+      <td class="p-column-title">
         <div class="d-flex justify-content-center">
           <custom-button-edit
             (edit)="onModalAddOrEdit({ id: item.id, title: 'Editar Registro' })"
@@ -93,6 +85,7 @@
           ></custom-button-delete>
         </div>
       </td>
+      }
       <!-- Opciones -->
     </tr>
   </ng-template>
@@ -103,3 +96,4 @@
     </div>
   </ng-template>
 </p-table>
+}

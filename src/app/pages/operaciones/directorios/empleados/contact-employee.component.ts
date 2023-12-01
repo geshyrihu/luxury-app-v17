@@ -31,8 +31,8 @@ import ComponentsModule from 'src/app/shared/components.module';
     ComponentsModule,
     FormsModule,
     ToastModule,
-    NgxMaskModule,
-  ],
+    NgxMaskModule
+],
   providers: [MessageService, ConfirmationService, CustomToastService],
 })
 export default class ContactEmployeeComponent implements OnInit, OnDestroy {

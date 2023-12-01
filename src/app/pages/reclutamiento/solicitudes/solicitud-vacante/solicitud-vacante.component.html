@@ -1,178 +1,217 @@
-<ng-container *ngIf="data !== null || data !== undefined">
+@if (data !== null || data !== undefined) {
   <div class="card">
     <div class="card-body">
       <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
         <table class="mb-2">
-          <tr *ngIf="data && data.professionkey">
-            <td style="width: 20%">Id Profesión:</td>
-            <td style="width: 80%">{{ data.professionkey }}</td>
-          </tr>
-          <tr *ngIf="data && data.professionName">
-            <td style="width: 20%">Nombre de la vacante:</td>
-            <td style="width: 80%">{{ data.professionName }}</td>
-          </tr>
-          <tr *ngIf="data && data.professionName">
-            <td style="width: 20%">Actividades que estara realizando:</td>
-            <td style="width: 80%">
-              Revisar descripción de puesto en LuxuryApp
-            </td>
-          </tr>
-          <tr *ngIf="data && data.professionName">
-            <td style="width: 20%">
-              Especificar restricciones de edad o sexo:
-            </td>
-            <td style="width: 80%">
-              Revisar descripción de puesto en LuxuryApp
-            </td>
-          </tr>
-          <tr *ngIf="data">
-            <td style="width: 20%">Sueldo mensual neto:</td>
-            <td style="width: 80%">{{ data.sueldoBase }}</td>
-          </tr>
+          @if (data && data.professionkey) {
+            <tr>
+              <td style="width: 20%">Id Profesión:</td>
+              <td style="width: 80%">{{ data.professionkey }}</td>
+            </tr>
+          }
+          @if (data && data.professionName) {
+            <tr>
+              <td style="width: 20%">Nombre de la vacante:</td>
+              <td style="width: 80%">{{ data.professionName }}</td>
+            </tr>
+          }
+          @if (data && data.professionName) {
+            <tr>
+              <td style="width: 20%">Actividades que estara realizando:</td>
+              <td style="width: 80%">
+                Revisar descripción de puesto en LuxuryApp
+              </td>
+            </tr>
+          }
+          @if (data && data.professionName) {
+            <tr>
+              <td style="width: 20%">
+                Especificar restricciones de edad o sexo:
+              </td>
+              <td style="width: 80%">
+                Revisar descripción de puesto en LuxuryApp
+              </td>
+            </tr>
+          }
+          @if (data) {
+            <tr>
+              <td style="width: 20%">Sueldo mensual neto:</td>
+              <td style="width: 80%">{{ data.sueldoBase }}</td>
+            </tr>
+          }
           <!-- <tr *ngIf="data && data.sueldo">
-            <td style="width: 20%">Sueldo mensual neto:</td>
-            <td style="width: 80%">{{ data.sueldo }}</td>
-          </tr> -->
-          <tr *ngIf="data && data.turnoTrabajo != undefined">
+          <td style="width: 20%">Sueldo mensual neto:</td>
+          <td style="width: 80%">{{ data.sueldo }}</td>
+        </tr> -->
+        @if (data && data.turnoTrabajo != undefined) {
+          <tr>
             <td style="width: 20%">Turno de trabajo:</td>
             <td style="width: 80%">{{ data.turnoTrabajo }}</td>
           </tr>
-
-          <tr>
-            <td colspan="2">
-              <table class="custom-table mb-2">
-                <thead>
-                  <tr>
-                    <th scope="col">EVENTO</th>
-                    <th scope="col">LUNES</th>
-                    <th scope="col">MARTES</th>
-                    <th scope="col">MIERCOLES</th>
-                    <th scope="col">JUEVES</th>
-                    <th scope="col">VIERNES</th>
-                    <th scope="col">SABADO</th>
-                    <th scope="col">DOMINGO</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>ENTRADA</td>
-                    <td>
-                      <p *ngIf="data && data.lunesEntrada">
+        }
+        <tr>
+          <td colspan="2">
+            <table class="custom-table mb-2">
+              <thead>
+                <tr>
+                  <th scope="col">EVENTO</th>
+                  <th scope="col">LUNES</th>
+                  <th scope="col">MARTES</th>
+                  <th scope="col">MIERCOLES</th>
+                  <th scope="col">JUEVES</th>
+                  <th scope="col">VIERNES</th>
+                  <th scope="col">SABADO</th>
+                  <th scope="col">DOMINGO</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>ENTRADA</td>
+                  <td>
+                    @if (data && data.lunesEntrada) {
+                      <p>
                         {{ data.lunesEntrada }}
                       </p>
-                    </td>
-                    <td>
-                      <p *ngIf="data && data.martesEntrada">
+                    }
+                  </td>
+                  <td>
+                    @if (data && data.martesEntrada) {
+                      <p>
                         {{ data.martesEntrada }}
                       </p>
-                    </td>
-                    <td>
-                      <p *ngIf="data && data.miercolesEntrada">
+                    }
+                  </td>
+                  <td>
+                    @if (data && data.miercolesEntrada) {
+                      <p>
                         {{ data.miercolesEntrada }}
                       </p>
-                    </td>
-                    <td>
-                      <p *ngIf="data && data.juevesEntrada">
+                    }
+                  </td>
+                  <td>
+                    @if (data && data.juevesEntrada) {
+                      <p>
                         {{ data.juevesEntrada }}
                       </p>
-                    </td>
-                    <td>
-                      <p *ngIf="data && data.viernesEntrada">
+                    }
+                  </td>
+                  <td>
+                    @if (data && data.viernesEntrada) {
+                      <p>
                         {{ data.viernesEntrada }}
                       </p>
-                    </td>
-                    <td>
-                      <p *ngIf="data && data.sabadoEntrada">
+                    }
+                  </td>
+                  <td>
+                    @if (data && data.sabadoEntrada) {
+                      <p>
                         {{ data.sabadoEntrada }}
                       </p>
-                    </td>
-                    <td>
-                      <p *ngIf="data && data.domingoEntrada">
+                    }
+                  </td>
+                  <td>
+                    @if (data && data.domingoEntrada) {
+                      <p>
                         {{ data.domingoEntrada }}
                       </p>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>SALIDA</td>
-                    <td>
-                      <p *ngIf="data && data.lunesSalida">
+                    }
+                  </td>
+                </tr>
+                <tr>
+                  <td>SALIDA</td>
+                  <td>
+                    @if (data && data.lunesSalida) {
+                      <p>
                         {{ data.lunesSalida }}
                       </p>
-                    </td>
-                    <td>
-                      <p *ngIf="data && data.martesSalida">
+                    }
+                  </td>
+                  <td>
+                    @if (data && data.martesSalida) {
+                      <p>
                         {{ data.martesSalida }}
                       </p>
-                    </td>
-                    <td>
-                      <p *ngIf="data && data.miercolesSalida">
+                    }
+                  </td>
+                  <td>
+                    @if (data && data.miercolesSalida) {
+                      <p>
                         {{ data.miercolesSalida }}
                       </p>
-                    </td>
-                    <td>
-                      <p *ngIf="data && data.juevesSalida">
+                    }
+                  </td>
+                  <td>
+                    @if (data && data.juevesSalida) {
+                      <p>
                         {{ data.juevesSalida }}
                       </p>
-                    </td>
-                    <td>
-                      <p *ngIf="data && data.viernesSalida">
+                    }
+                  </td>
+                  <td>
+                    @if (data && data.viernesSalida) {
+                      <p>
                         {{ data.viernesSalida }}
                       </p>
-                    </td>
-                    <td>
-                      <p *ngIf="data && data.sabadoSalida">
+                    }
+                  </td>
+                  <td>
+                    @if (data && data.sabadoSalida) {
+                      <p>
                         {{ data.sabadoSalida }}
                       </p>
-                    </td>
-                    <td>
-                      <p *ngIf="data && data.domingoSalida">
+                    }
+                  </td>
+                  <td>
+                    @if (data && data.domingoSalida) {
+                      <p>
                         {{ data.domingoSalida }}
                       </p>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </td>
-          </tr>
-          <tr *ngIf="data && data.observationsWorkShift != undefined">
+                    }
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+        @if (data && data.observationsWorkShift != undefined) {
+          <tr>
             <td style="width: 20%">Obs. referentes al horario:</td>
             <td style="width: 80%">{{ data.observationsWorkShift }}</td>
           </tr>
-          <tr>
-            <td style="width: 20%">Comentarios adicionales:</td>
-            <td style="width: 80%">
-              <textarea
-                rows="3"
-                class="form-control"
-                formControlName="additionalInformation"
-              ></textarea>
-            </td>
-          </tr>
-        </table>
-
-        <custom-button-send-email
-          [disabled]="this.form.invalid || submitting"
-        ></custom-button-send-email>
-      </form>
-    </div>
+        }
+        <tr>
+          <td style="width: 20%">Comentarios adicionales:</td>
+          <td style="width: 80%">
+            <textarea
+              rows="3"
+              class="form-control"
+              formControlName="additionalInformation"
+            ></textarea>
+          </td>
+        </tr>
+      </table>
+      <custom-button-send-email
+        [disabled]="this.form.invalid || submitting"
+      ></custom-button-send-email>
+    </form>
   </div>
-</ng-container>
-
+</div>
+}
 <style>
   table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  table td {
-    padding: 0.5em;
-    border: none;
-  }
-  table td:first-child {
-    width: 30%; /* Ajusta el ancho
+  width: 100%;
+  border-collapse: collapse;
+}
+table td {
+padding: 0.5em;
+border: none;
+}
+table td:first-child {
+width: 30%; /* Ajusta el ancho
 según tus necesidades */
-  }
-  table td strong {
-    display: inline-block;
-    width: 100px; /* Ajusta el ancho según tus necesidades */
-  }
+}
+table td strong {
+display: inline-block;
+width: 100px; /* Ajusta el ancho según tus necesidades */
+}
 </style>

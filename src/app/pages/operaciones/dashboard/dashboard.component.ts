@@ -23,8 +23,8 @@ import MantenimientosPreventivosComponent from './mttos-preventivos/mttos-preven
     MantenimientosPreventivosComponent,
     DashboardMinutasComponent,
     DashboardTicketsComponent,
-    ComponentsModule,
-  ],
+    ComponentsModule
+],
   providers: [DialogService, MessageService, CustomToastService],
 })
 export default class DashboardComponent {

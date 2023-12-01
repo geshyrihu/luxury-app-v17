@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
 import { menuPanel } from './menu-panel';
 
 @Component({
@@ -10,5 +10,11 @@ import { menuPanel } from './menu-panel';
   imports: [CommonModule, RouterModule],
 })
 export default class PanelComponent {
-  menuPanel = menuPanel;
+  private route = inject(Router);
+
+  menuPanel: any = menuPanel;
+
+  onNavigate(route: string): void {
+    this.route.navigateByUrl(route);
+  }
 }

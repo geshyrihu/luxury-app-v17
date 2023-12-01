@@ -19,8 +19,8 @@ import {
     FormsModule,
     ReactiveFormsModule,
     NgbModule,
-    ToastModule,
-  ],
+    ToastModule
+],
   providers: [MessageService, CustomToastService],
 })
 export default class AccessCustomerComponent implements OnInit, OnDestroy {

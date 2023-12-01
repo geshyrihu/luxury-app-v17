@@ -33,10 +33,6 @@ export default class SidebarComponent implements OnInit {
     this.menuItems = this.sidebarService.onLoadMenu;
   }
 
-  initialize(): void {
-    // this.menuItems = this.sidebarService.menu;
-  }
-
   /**
    * Activa el menú desplegable
    */
@@ -50,7 +46,7 @@ export default class SidebarComponent implements OnInit {
    * @param item Elemento del menú
    */
   hasItems(item: MenuItem) {
-    return item.subItems !== undefined ? item.subItems.length > 0 : false;
+    return item.items !== undefined ? item.items.length > 0 : false;
   }
 
   /**

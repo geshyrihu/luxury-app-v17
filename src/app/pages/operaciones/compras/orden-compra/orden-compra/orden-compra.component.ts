@@ -203,7 +203,6 @@ export default class OrdenCompraComponent implements OnInit, OnDestroy {
       .get(`OrdenCompra/${this.ordenCompraId}`)
       .subscribe({
         next: (resp: any) => {
-          console.log('🚀 ~ resp.body:', resp.body);
           this.customToastService.onClose();
           this.ordenCompra = resp.body;
           if (this.ordenCompra.ordenCompraDatosPago.tipoGasto === 0) {

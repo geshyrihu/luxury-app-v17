@@ -17,12 +17,11 @@ import {
   BrowserAnimationsModule,
   provideAnimations,
 } from '@angular/platform-browser/animations';
-import { ServiceWorkerModule } from '@angular/service-worker';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { TranslateModule } from '@ngx-translate/core';
 import { FlatpickrModule } from 'angularx-flatpickr';
 import { NgxMaskModule } from 'ngx-mask';
-// import { environment } from 'src/environments/environment';
-import { environment } from '../environments/environment';
+import { NgxSpinnerModule } from 'ngx-spinner';
 import { routes } from './app.routes';
 import { AutosizeDirective } from './core/directives/autosize-text-area.diective';
 import { JwtInterceptor } from './core/services/jwt-interceptor.service';
@@ -30,20 +29,18 @@ import { JwtInterceptor } from './core/services/jwt-interceptor.service';
 export const appConfig: ApplicationConfig = {
   providers: [
     importProvidersFrom(
-      AutosizeDirective,
-      HttpClientModule,
       TranslateModule.forRoot({
         defaultLanguage: 'es',
       }),
-      ServiceWorkerModule.register('ngsw-worker.js', {
-        enabled: environment.production,
-        registrationStrategy: 'registerWhenStable:30000',
-      }),
-      FlatpickrModule.forRoot(),
+      AutosizeDirective,
+      BrowserAnimationsModule,
       BrowserModule,
-      NgxMaskModule.forRoot()
+      FlatpickrModule.forRoot(),
+      HttpClientModule,
+      NgxMaskModule.forRoot(),
+      NgxSpinnerModule,
+      CKEditorModule
     ),
-    { provide: LOCALE_ID, useValue: 'es-MX' },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: JwtInterceptor,
@@ -59,7 +56,6 @@ export const appConfig: ApplicationConfig = {
     },
     provideHttpClient(withInterceptorsFromDi()),
     provideAnimations(),
-    importProvidersFrom([BrowserModule, BrowserAnimationsModule]),
     provideRouter(routes),
   ],
 };

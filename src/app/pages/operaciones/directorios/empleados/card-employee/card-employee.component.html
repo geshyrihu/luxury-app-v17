@@ -1,5 +1,5 @@
+@if (user !== undefined) {
 <div
-  *ngIf="user !== undefined"
   class="card card-outline card-info card-widget widget-user-2 shadow-sm"
   [ngClass]="{ 'card-danger': !user.active, 'card-success': user.active }"
 >
@@ -24,3 +24,4 @@
     </div>
   </div>
 </div>
+}

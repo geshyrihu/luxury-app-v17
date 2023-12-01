@@ -1,81 +1,77 @@
 <p-toast position="top-left" [baseZIndex]="99999"></p-toast>
-<ng-container *ngIf="data">
-  <div class="card">
-    <table class="custom-table">
-      <tbody>
-        <tr>
-          <td>Folio</td>
-          <td>{{ data.folio }}</td>
-        </tr>
-        <tr>
-          <td>Fecha de solicitud</td>
-          <td>{{ data.requestDate }}</td>
-        </tr>
-        <tr>
-          <td>Colaborador</td>
-          <td>
-        
-            <img
-              (click)="onCardEmployee(data.employeeId)"
-              [src]="pahtBaseImg + data.employeePhotoPath"
-              class="rounded avatar-sm pointer me-3"
-              alt=""
-            />
-            <i
-              *ngIf="!data.employeePhotoPath"
-              class="fa-duotone fa-user-xmark fa-2x"
-            ></i>
-            {{ data.employeeName }}
-          </td>
-        </tr>
-        <tr>
-          <td>Sueldo actual mensual libre</td>
-          <td>{{ data.currentSalary }}</td>
-        </tr>
-        <tr>
-          <td>Puesto actual</td>
-          <td>{{ data.professionCurrent }}</td>
-        </tr>
-        <tr>
-          <td>Sueldo final mensual libre</td>
-          <td>{{ data.finalSalary }}</td>
-        </tr>
-        <tr>
-          <td>Nuevo puesto</td>
-          <td>{{ data.professionNew }}</td>
-        </tr>
-        <tr>
-          <td>Fecha de aplicación</td>
-          <td>{{ data.executionDate }}</td>
-        </tr>
-        <tr>
-          <td>Aplicar retroactivo</td>
-          <td>{{ data.retroactive }}</td>
-        </tr>
-
-        <tr>
-          <td>Estatus</td>
-          <td>{{ data.status }}</td>
-        </tr>
-
-        <tr
-          *ngIf="authService.onValidateRoles(['SuperUsuario', 'Reclutamiento'])"
-        >
-          <td>Opciones</td>
-          <td>
-            <div class="d-flex justify-content-end">
-              <custom-button-edit
-                (edit)="
-                  onModalAddOrEdit({ id: data.id, title: 'Editar Registro' })
-                "
-              ></custom-button-edit>
-              <custom-button-delete
-                (OnConfirm)="onDelete(data.id)"
-              ></custom-button-delete>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</ng-container>
+@if (data) {
+<div class="card">
+  <table class="custom-table">
+    <tbody>
+      <tr>
+        <td>Folio</td>
+        <td>{{ data.folio }}</td>
+      </tr>
+      <tr>
+        <td>Fecha de solicitud</td>
+        <td>{{ data.requestDate }}</td>
+      </tr>
+      <tr>
+        <td>Colaborador</td>
+        <td>
+          <img
+            (click)="onCardEmployee(data.employeeId)"
+            [src]="pahtBaseImg + data.employeePhotoPath"
+            class="rounded avatar-sm pointer me-3"
+            alt=""
+          />
+          @if (!data.employeePhotoPath) {
+          <i class="fa-regular fa-user-xmark fa-2x"></i>
+          }
+          {{ data.employeeName }}
+        </td>
+      </tr>
+      <tr>
+        <td>Sueldo actual mensual libre</td>
+        <td>{{ data.currentSalary }}</td>
+      </tr>
+      <tr>
+        <td>Puesto actual</td>
+        <td>{{ data.professionCurrent }}</td>
+      </tr>
+      <tr>
+        <td>Sueldo final mensual libre</td>
+        <td>{{ data.finalSalary }}</td>
+      </tr>
+      <tr>
+        <td>Nuevo puesto</td>
+        <td>{{ data.professionNew }}</td>
+      </tr>
+      <tr>
+        <td>Fecha de aplicación</td>
+        <td>{{ data.executionDate }}</td>
+      </tr>
+      <tr>
+        <td>Aplicar retroactivo</td>
+        <td>{{ data.retroactive }}</td>
+      </tr>
+      <tr>
+        <td>Estatus</td>
+        <td>{{ data.status }}</td>
+      </tr>
+      @if (authService.onValidateRoles(['SuperUsuario', 'Reclutamiento'])) {
+      <tr>
+        <td>Opciones</td>
+        <td>
+          <div class="d-flex justify-content-end">
+            <custom-button-edit
+              (edit)="
+                onModalAddOrEdit({ id: data.id, title: 'Editar Registro' })
+              "
+            ></custom-button-edit>
+            <custom-button-delete
+              (OnConfirm)="onDelete(data.id)"
+            ></custom-button-delete>
+          </div>
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+</div>
+}

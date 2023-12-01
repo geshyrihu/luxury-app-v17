@@ -12,7 +12,7 @@ import ListadoAnualMantenimientoComponent from './listado-anual-mantenimiento/li
     ListadoAnualMantenimientoComponent,
     CronogramaAnualMantenimientoComponent,
     GeneralAnualMantenimientoComponent,
-    NgbNavModule,
-  ],
+    NgbNavModule
+],
 })
 export default class ListCalendarioMttoComponent {}

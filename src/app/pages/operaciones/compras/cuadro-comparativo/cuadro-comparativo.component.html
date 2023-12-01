@@ -1,14 +1,14 @@
 <p-toast position="top-left" [baseZIndex]="99999"></p-toast>
-<div class="row" *ngIf="solicitudCompra">
+@if (solicitudCompra) {
+<div class="row">
   <div class="col-sm-8">
     <h5 class="font-size-14">Folio de cotización {{ folio }}</h5>
     <p class="mb-1">{{ solicitudCompra.equipoOInstalacion }}</p>
     <p class="mb-1">{{ solicitudCompra.justificacionGasto }}</p>
   </div>
-
   <div class="col-sm-4">
+    @if (cotizacionProveedor.length > 1) {
     <custom-button
-      *ngIf="cotizacionProveedor.length > 1"
       ngbTooltip="Evaluar precio de manera individual"
       placement="left"
       [customNgClass]="{ active: evaluarPrecioIndependiente }"
@@ -17,24 +17,29 @@
       label="Evaluar"
     >
     </custom-button>
+    } @if (cotizacionProveedor.length !== 3) {
     <custom-button
-      *ngIf="cotizacionProveedor.length !== 3"
       ngbTooltip="Agregar Cotización"
       placement="left"
       customClass="btn-info float-end me-2"
       (clicked)="onModalAddProveedor()"
       [disabled]="cotizacionProveedor.length === 3"
-      icon="fa-duotone fa-plus me-1"
+      icon="fa-regular fa-plus me-1"
       label="Agregar cotización"
     >
     </custom-button>
+    }
   </div>
 </div>
-
+}
 <hr class="bg-dark" style="height: 4px" />
 <div class="row">
   <div class="col-sm-12">
-    <p-table [value]="solicitudCompraDetalle" styleClass="custom-table">
+    <p-table
+      [value]="solicitudCompraDetalle"
+      styleClass="custom-table"
+      [tableStyle]="{ 'min-width': '50rem' }"
+    >
       <ng-template pTemplate="header">
         <tr>
           <th style="width: 30%" scope="col" class="font-size-14">
@@ -42,6 +47,7 @@
           </th>
           <th style="width: 10%" scope="col" class="font-size-14">CANTIDAD</th>
           <th style="width: 10%" scope="col" class="font-size-14">UNIDAD</th>
+          @if (provider1 !== undefined) {
           <th
             scope="col"
             [class.one]="cotizacionProveedor.length === 1"
@@ -49,32 +55,31 @@
             [class.three]="cotizacionProveedor.length === 3"
             class="text-center font-size-14 pointer"
             (click)="onEditCotizacion(1)"
-            *ngIf="provider1 !== undefined"
           >
             {{ provider1 | uppercase }}
           </th>
+          } @if (provider2 !== undefined) {
           <th
             [class.two]="cotizacionProveedor.length === 2"
             [class.three]="cotizacionProveedor.length === 3"
             scope="col"
             class="text-center pointer font-size-14"
-            *ngIf="provider2 !== undefined"
             (click)="onEditCotizacion(2)"
           >
             {{ provider2 | uppercase }}
           </th>
+          } @if (provider3 !== undefined) {
           <th
             [class.three]="cotizacionProveedor.length === 3"
             scope="col"
             class="text-center pointer font-size-14"
-            *ngIf="provider3 !== undefined"
             (click)="onEditCotizacion(3)"
           >
             {{ provider3 | uppercase }}
           </th>
+          }
         </tr>
       </ng-template>
-
       <ng-template pTemplate="body" let-item>
         <tr>
           <td class="font-size-14">
@@ -85,7 +90,7 @@
             {{ item.unidadMedida }}
           </td>
           <!-- Total 1 -->
-
+          @if (provider1 != undefined) {
           <td
             class="font-size-14"
             [ngClass]="{
@@ -101,13 +106,13 @@
                 cotizacionProveedor.length === 3 &&
                 evaluarPrecioIndependiente
             }"
-            *ngIf="provider1 != undefined"
           >
             {{ item.total | currency : "MXN" : "symbol" : "1.0-0" }}
           </td>
-
+          }
           <!-- Total 1 -->
           <!-- Total 2 -->
+          @if (provider2 != undefined) {
           <td
             class="font-size-14"
             [ngClass]="{
@@ -123,13 +128,13 @@
                 cotizacionProveedor.length === 3 &&
                 evaluarPrecioIndependiente
             }"
-            *ngIf="provider2 != undefined"
           >
             {{ item.total2 | currency : "MXN" : "symbol" : "1.0-0" }}
           </td>
-
+          }
           <!-- Total 2 -->
           <!-- Total 3 -->
+          @if (provider3 != undefined) {
           <td
             class="font-size-14"
             [ngClass]="{
@@ -138,75 +143,70 @@
                 item.total3 < item.total2 &&
                 evaluarPrecioIndependiente
             }"
-            *ngIf="provider3 != undefined"
           >
             {{ item.total3 | currency : "MXN" : "symbol" : "1.0-0" }}
           </td>
+          }
           <!-- Total 3 -->
         </tr>
       </ng-template>
       <ng-template pTemplate="footer">
         <tr>
           <td class="font-size-14" colspan="3"></td>
+          @if (provider1 !== undefined) {
           <td
             class="font-size-14"
             (change)="onEvaluationPriceTotal()"
-            *ngIf="provider1 !== undefined"
             [ngClass]="{
               'bg-warning': amarilloTotal1
             }"
           >
             {{ total1 | currency : "MXN" : "symbol" : "1.0-0" }}
           </td>
+          } @if (provider2 !== undefined) {
           <td
             class="font-size-14"
             (change)="onEvaluationPriceTotal()"
-            *ngIf="provider2 !== undefined"
             [ngClass]="{
               'bg-warning': amarilloTotal2
             }"
           >
             {{ total2 | currency : "MXN" : "symbol" : "1.0-0" }}
           </td>
+          } @if (provider3 !== undefined) {
           <td
             class="font-size-14"
             (change)="onEvaluationPriceTotal()"
-            *ngIf="provider3 !== undefined"
             [ngClass]="{
               'bg-warning': amarilloTotal3
             }"
           >
             {{ total3 | currency : "MXN" : "symbol" : "1.0-0" }}
           </td>
+          }
         </tr>
         <!-- Totales: -->
         <br />
         <!-- Totales Mejor Opcion: -->
-        <tr *ngIf="evaluarPrecioIndependiente">
+        @if (evaluarPrecioIndependiente) {
+        <tr>
           <td class="font-size-14" colspan="3"></td>
-          <td
-            class="font-size-14"
-            (change)="onEvaluationPriceTotal()"
-            *ngIf="provider1 !== undefined"
-          >
+          @if (provider1 !== undefined) {
+          <td class="font-size-14" (change)="onEvaluationPriceTotal()">
             {{ mejorPrecioTotal1 | currency : "MXN" : "symbol" : "1.0-0" }}
           </td>
-          <td
-            class="font-size-14"
-            (change)="onEvaluationPriceTotal()"
-            *ngIf="provider2 !== undefined"
-          >
+          } @if (provider2 !== undefined) {
+          <td class="font-size-14" (change)="onEvaluationPriceTotal()">
             {{ mejorPrecioTotal2 | currency : "MXN" : "symbol" : "1.0-0" }}
           </td>
-          <td
-            class="font-size-14"
-            (change)="onEvaluationPriceTotal()"
-            *ngIf="provider3 !== undefined"
-          >
+          } @if (provider3 !== undefined) {
+          <td class="font-size-14" (change)="onEvaluationPriceTotal()">
             {{ mejorPrecioTotal3 | currency : "MXN" : "symbol" : "1.0-0" }}
           </td>
+          }
         </tr>
-        <tr *ngIf="evaluarPrecioIndependiente">
+        } @if (evaluarPrecioIndependiente) {
+        <tr>
           <td class="font-size-14" colspan="3"></td>
           <td class="font-size-14" colspan="3" class="text-center">
             <p class="font-size-14">
@@ -215,12 +215,13 @@
             {{ totalMejorPrecioTotal | currency : "MXN" : "symbol" : "1.0-0" }}
           </td>
         </tr>
+        }
       </ng-template>
     </p-table>
   </div>
 </div>
-
-<table *ngIf="cotizacionProveedor" class="custom-table w-100">
+@if (cotizacionProveedor) {
+<table class="custom-table w-100">
   <tr>
     <td
       colspan="3"
@@ -228,27 +229,26 @@
     >
       TIEMPO DE ENTREGA
     </td>
+    @if (provider1 !== undefined) {
     <td
-      *ngIf="provider1 !== undefined"
       [class.one]="cotizacionProveedor.length === 1"
       [class.two]="cotizacionProveedor.length === 2"
       [class.three]="cotizacionProveedor.length === 3"
     >
       {{ cotizacionProveedor[0].entrega }}
     </td>
+    } @if (provider2 !== undefined) {
     <td
-      *ngIf="provider2 !== undefined"
       [class.two]="cotizacionProveedor.length === 2"
       [class.three]="cotizacionProveedor.length === 3"
     >
       {{ cotizacionProveedor[1].entrega }}
     </td>
-    <td
-      *ngIf="provider3 !== undefined"
-      [class.three]="cotizacionProveedor.length === 3"
-    >
+    } @if (provider3 !== undefined) {
+    <td [class.three]="cotizacionProveedor.length === 3">
       {{ cotizacionProveedor[2].entrega }}
     </td>
+    }
   </tr>
   <tr>
     <td
@@ -257,29 +257,27 @@
     >
       GARANTIA
     </td>
+    @if (provider1 !== undefined) {
     <td
-      *ngIf="provider1 !== undefined"
       [class.one]="cotizacionProveedor.length === 1"
       [class.two]="cotizacionProveedor.length === 2"
       [class.three]="cotizacionProveedor.length === 3"
     >
       {{ cotizacionProveedor[0].garantia }}
     </td>
+    } @if (provider2 !== undefined) {
     <td
-      *ngIf="provider2 !== undefined"
       [class.two]="cotizacionProveedor.length === 2"
       [class.three]="cotizacionProveedor.length === 3"
     >
       {{ cotizacionProveedor[1].garantia }}
     </td>
-    <td
-      *ngIf="provider3 !== undefined"
-      [class.three]="cotizacionProveedor.length === 3"
-    >
+    } @if (provider3 !== undefined) {
+    <td [class.three]="cotizacionProveedor.length === 3">
       {{ cotizacionProveedor[2].garantia }}
     </td>
+    }
   </tr>
-
   <tr>
     <td
       colspan="3"
@@ -287,30 +285,29 @@
     >
       POLITICAS DE PAGO
     </td>
+    @if (provider1 !== undefined) {
     <td
-      *ngIf="provider1 !== undefined"
       [class.one]="cotizacionProveedor.length === 1"
       [class.two]="cotizacionProveedor.length === 2"
       [class.three]="cotizacionProveedor.length === 3"
     >
       {{ cotizacionProveedor[0].politicaPago }}
     </td>
+    } @if (provider2 !== undefined) {
     <td
-      *ngIf="provider2 !== undefined"
       [class.two]="cotizacionProveedor.length === 2"
       [class.three]="cotizacionProveedor.length === 3"
     >
       {{ cotizacionProveedor[1].politicaPago }}
     </td>
-    <td
-      *ngIf="provider3 !== undefined"
-      [class.three]="cotizacionProveedor.length === 3"
-    >
+    } @if (provider3 !== undefined) {
+    <td [class.three]="cotizacionProveedor.length === 3">
       {{ cotizacionProveedor[2].politicaPago }}
     </td>
+    }
   </tr>
 </table>
-
+}
 <style>
   .one {
     width: 50%;
@@ -322,11 +319,11 @@
     width: 16.66%;
   }
   /* th {
-    background: #000 !important;
-    color: white !important;
-  }
-  td {
-    color: #000 !important;
-    border-color: #000 !important;
-  } */
+background: #000 !important;
+color: white !important;
+}
+td {
+color: #000 !important;
+border-color: #000 !important;
+} */
 </style>

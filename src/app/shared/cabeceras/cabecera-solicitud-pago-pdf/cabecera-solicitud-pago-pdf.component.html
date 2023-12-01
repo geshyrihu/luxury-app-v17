@@ -1,4 +1,5 @@
-<div class="invoice-title" *ngIf="data">
+@if (data) {
+<div class="invoice-title">
   <div class="row">
     <div class="col-12 text-center mt-2">
       <h5 class="font-size-15 mb-3">{{ titulo }}</h5>
@@ -27,4 +28,5 @@
     </div>
   </div>
 </div>
+}
 <hr />

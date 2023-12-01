@@ -1,36 +1,29 @@
 <p-toast position="top-left" [baseZIndex]="99999"></p-toast>
-
 <h4 class="mb-sm-0 font-size-18">Calendario General de Mantenimiento</h4>
-
 <hr />
 <div class="row">
-  <div class="col-sm-3" *ngFor="let item of data; let i = index">
+  @for (item of data; track item; let i = $index) {
+  <div class="col-sm-3">
     <ngb-alert [dismissible]="false" type="primary"
-      >{{ item.key.mes }}
+      >{{ item.mes }}
+      @if (authService.onValidateRoles(['SuperUsuario'])) {
       <button
-        *ngIf="authService.onValidateRoles(['SuperUsuario'])"
         type="button"
         ngbTooltip="Agregar"
         placement="top"
         (click)="onModalAddOrEdit(0, i)"
         class="btn btn-sm float-end"
       >
-        <i class="fa-duotone fa-plus"></i>
+        <i class="fa-regular fa-plus"></i>
       </button>
+      }
     </ngb-alert>
-
     <ul class="list-group">
-      <li
-        *ngFor="let evento of item.items; let i = index"
-        class="pointer list-group-item mb-2"
-      >
+      @for (evento of item.items; track evento; let i = $index) {
+      <li class="pointer list-group-item mb-2">
         <div class="d-flex justify-content-start">
-          <div
-            *ngIf="authService.onValidateRoles(['SuperUsuario'])"
-            class="btn-group me-3"
-            role="group"
-            ngbDropdown
-          >
+          @if (authService.onValidateRoles(['SuperUsuario'])) {
+          <div class="btn-group me-3" role="group" ngbDropdown>
             <i
               id="btnGroupVerticalDrop1"
               type="button"
@@ -39,7 +32,7 @@
               aria-haspopup="true"
               aria-expanded="false"
               ngbDropdownToggle
-              class="fa-duotone fa-bars"
+              class="fa-regular fa-bars"
             ></i>
             <div
               class="dropdown-menu"
@@ -58,7 +51,7 @@
               </a>
             </div>
           </div>
-
+          }
           <div
             (click)="onDatosServicio(evento)"
             class="col-auto pointer"
@@ -69,6 +62,8 @@
           </div>
         </div>
       </li>
+      }
     </ul>
   </div>
+  }
 </div>

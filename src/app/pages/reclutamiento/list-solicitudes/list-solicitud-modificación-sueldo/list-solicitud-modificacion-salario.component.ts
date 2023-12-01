@@ -30,8 +30,8 @@ import AddoreditModificacionSalarioComponent from './addoredit-modificacion-sala
     FormsModule,
     NgbDropdownModule,
     RouterModule,
-    PrimeNgModule,
-  ],
+    PrimeNgModule
+],
   providers: [DialogService, MessageService, CustomToastService],
 })
 export default class ListSolicitudModificacionSalarioComponent

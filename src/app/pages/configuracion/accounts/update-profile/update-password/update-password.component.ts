@@ -28,8 +28,8 @@ import ComponentsModule from 'src/app/shared/components.module';
     ComponentsModule,
     ReactiveFormsModule,
     NgbModule,
-    ToastModule,
-  ],
+    ToastModule
+],
   providers: [MessageService, CustomToastService],
 })
 export default class UpdatePasswordComponent implements OnInit, OnDestroy {

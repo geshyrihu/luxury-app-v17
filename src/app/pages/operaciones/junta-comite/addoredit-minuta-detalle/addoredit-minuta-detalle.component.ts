@@ -17,8 +17,9 @@ import {
   DataService,
 } from 'src/app/core/services/common-services';
 import { EnumService } from 'src/app/core/services/enum-service';
+import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import ComponentsModule from 'src/app/shared/components.module';
-import CustomInputModule from 'src/app/shared/custom-input-form/custom-input.module';
+import PrimeNgModule from 'src/app/shared/prime-ng.module';
 
 @Component({
   selector: 'app-addoredit-minuta-detalle',
@@ -30,6 +31,7 @@ import CustomInputModule from 'src/app/shared/custom-input-form/custom-input.mod
     CommonModule,
     CustomInputModule,
     CKEditorModule,
+    PrimeNgModule,
   ],
   providers: [CustomToastService],
 })
@@ -62,15 +64,6 @@ export default class AddoreditMinutaDetalleComponent
     },
   ];
   cb_area: ISelectItemDto[] = [];
-  cb_responsibleArea: any[] = [
-    { value: 1, label: 'Administración' },
-    { value: 12, label: 'Mantenimiento' },
-    { value: 15, label: 'Contabilidad' },
-    { value: 16, label: 'Juridico' },
-    { value: 11, label: 'Constructora' },
-    { value: 13, label: 'Sistemas' },
-  ];
-
   id: number = 0;
   subRef$: Subscription;
   form: FormGroup = this.formBuilder.group({

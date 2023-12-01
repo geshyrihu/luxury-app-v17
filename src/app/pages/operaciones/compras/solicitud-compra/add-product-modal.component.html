@@ -1,14 +1,14 @@
 <p-toast position="top-left" [baseZIndex]="99999"></p-toast>
-
-<p class="small text-danger text-left font-italic" *ngIf="mensajeError == true">
+@if (mensajeError == true) {
+<p class="small text-danger text-left font-italic">
   Seleccione producto y unidad
 </p>
-
+} @if (data) {
 <p-table
-  *ngIf="data"
   [(selection)]="data"
   #dt
   styleClass="custom-table"
+  [tableStyle]="{ 'min-width': '50rem' }"
   [value]="data"
   [rows]="15"
   [paginator]="true"
@@ -26,7 +26,6 @@
       [showAdd]="false"
     ></app-table-header>
   </ng-template>
-
   <ng-template pTemplate="header">
     <tr>
       <th scope="col">Imagen</th>
@@ -69,9 +68,11 @@
       <td class="p-column-title">
         <select class="form-select" [(ngModel)]="rowItem.unidadMedidaId">
           <option value="">Selecciona una opción</option>
-          <option [value]="unit.value" *ngFor="let unit of cb_unidadMedida">
+          @for (unit of cb_unidadMedida; track unit) {
+          <option [value]="unit.value">
             {{ unit.label }}
           </option>
+          }
         </select>
       </td>
       <td class="p-column-title">
@@ -90,3 +91,4 @@
     <app-table-footer [data]="data"></app-table-footer>
   </ng-template>
 </p-table>
+}

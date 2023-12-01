@@ -8,6 +8,7 @@
     rowGroupMode="subheader"
     groupRowsBy="folio"
     styleClass="custom-table"
+    [tableStyle]="{ 'min-width': '50rem' }"
   >
     <ng-template pTemplate="caption">
       <app-table-header
@@ -57,7 +58,7 @@
             placement="top"
             class="btn btn-soft-danger btn-sm w-xs waves-effect btn-label waves-light me-1 hide-print-mode"
           >
-            <i class="fa-duotone fa-download label-icon fa-2x pointer"></i>
+            <i class="fa-regular fa-download label-icon fa-2x pointer"></i>
             Pdf
           </a>
           }@else{
