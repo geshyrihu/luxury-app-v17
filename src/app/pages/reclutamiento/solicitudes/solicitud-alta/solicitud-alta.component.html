@@ -1,59 +1,77 @@
 <div class="card">
   <div class="card-body">
     <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
-      <custom-input-text
-        [control]="form.get('professionName')"
-        formControlName="professionName"
-        label="Puesto"
-        placeholder="Puesto"
-      ></custom-input-text>
+      <div class="form-group row mb-2">
+        <label class="col-sm-3">Vacante que cubre</label>
+        <div class="col-sm-9">
+          <select
+            formControlName="positionRequestId"
+            class="form-select"
+            [ngClass]="{
+              'is-invalid':
+                f.positionRequestId.invalid &&
+                (f.positionRequestId.dirty || f.positionRequestId.touched)
+            }"
+          >
+            <option [value]="null">--Selecciona la vacante que cubre--</option>
+            @for (item of cb_vacantes; track item) {
+            <option [value]="item.value">
+              {{ item.label }}
+            </option>
+            }
+          </select>
+          <app-validation-errors-custom-input
+            [control]="f.positionRequestId"
+            [placeholder]="'vacante'"
+          ></app-validation-errors-custom-input>
+        </div>
+      </div>
       <custom-input-text
         [control]="form.get('candidateName')"
         formControlName="candidateName"
         label="Nombre"
         placeholder="Nombre"
       ></custom-input-text>
-      <!-- <custom-input-select
-      [control]="form.get('typeContractRegister')"
-      formControlName="typeContractRegister"
-      label="Tipo de contrato"
-      [data]="cb_typeContractRegister"
-    ></custom-input-select> -->
-    <div class="form-group row mb-2">
-      <label class="col-sm-3">Tipo de contrato</label>
-      <div class="col-sm-9">
-        <select formControlName="typeContractRegister" class="form-select">
-          @for (item of cb_typeContractRegister; track item) {
-            <option
-              [value]="item.value"
-              >
+      <custom-input-text
+        [control]="form.get('employeeId')"
+        formControlName="employeeId"
+        label="Empleado Id"
+        placeholder="Empleado Id"
+      ></custom-input-text>
+
+      <div class="form-group row mb-2">
+        <label class="col-sm-3">Tipo de contrato</label>
+        <div class="col-sm-9">
+          <select formControlName="typeContractRegister" class="form-select">
+            @for (item of cb_typeContractRegister; track item) {
+            <option [value]="item.value">
               {{ item.label }}
             </option>
-          }
-        </select>
+            }
+          </select>
+        </div>
       </div>
-    </div>
-    <custom-input-text
-      [control]="form.get('boss')"
-      formControlName="boss"
-      label="Jefe Inmediado"
-      placeholder="Jefe Inmediado"
-    ></custom-input-text>
-    <custom-input-text
-      [control]="form.get('customerAddress')"
-      formControlName="customerAddress"
-      label="Dirección de trabajo"
-      placeholder="dirección de trabajo"
-    ></custom-input-text>
-    <custom-input-text-area
-      [control]="form.get('additionalInformation')"
-      formControlName="additionalInformation"
-      label="Comentarios adicionales"
-      placeholder="comentarios adicionales"
-    ></custom-input-text-area>
-    <custom-button-send-email
-      [disabled]="this.form.invalid || submitting"
-    ></custom-button-send-email>
-  </form>
-</div>
+      <custom-input-text
+        [control]="form.get('boss')"
+        formControlName="boss"
+        label="Jefe Inmediado"
+        placeholder="Jefe Inmediado"
+      ></custom-input-text>
+      <custom-input-text
+        [control]="form.get('customerAddress')"
+        formControlName="customerAddress"
+        label="Dirección de trabajo"
+        placeholder="dirección de trabajo"
+      ></custom-input-text>
+      <custom-input-text-area
+        [control]="form.get('additionalInformation')"
+        formControlName="additionalInformation"
+        label="Comentarios adicionales"
+        placeholder="comentarios adicionales"
+      ></custom-input-text-area>
+      <custom-button-send-email
+        [disabled]="this.form.invalid || submitting"
+      ></custom-button-send-email>
+    </form>
+  </div>
 </div>

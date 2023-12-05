@@ -6,7 +6,6 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { SelectItem } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -24,6 +23,7 @@ import {
 } from 'src/app/core/services/common-services';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import ComponentsModule from 'src/app/shared/components.module';
+import PrimeNgModule from 'src/app/shared/prime-ng.module';
 
 @Component({
   selector: 'app-addoredit-maintenance-preventive',
@@ -34,21 +34,21 @@ import ComponentsModule from 'src/app/shared/components.module';
     ReactiveFormsModule,
     ComponentsModule,
     CustomInputModule,
-    CKEditorModule,
+    PrimeNgModule,
   ],
   providers: [CustomToastService],
 })
 export default class AddoreditMaintenancePreventiveComponent
   implements OnInit, OnDestroy
 {
-  public authService = inject(AuthService);
+  private customToastService = inject(CustomToastService);
   private formBuilder = inject(FormBuilder);
-  public dataService = inject(DataService);
+  public authService = inject(AuthService);
   public config = inject(DynamicDialogConfig);
+  public customerIdService = inject(CustomerIdService);
+  public dataService = inject(DataService);
   public ref = inject(DynamicDialogRef);
   public selectItemService = inject(SelectItemService);
-  public customerIdService = inject(CustomerIdService);
-  private customToastService = inject(CustomToastService);
 
   public Editor = ClassicEditor;
 
@@ -119,6 +119,9 @@ export default class AddoreditMaintenancePreventiveComponent
               machineryId: resp.body.value,
               machineryName: resp.body.label,
             });
+            this.form.patchValue({
+              typeMaintance: ETypeMaintance.Preventivo,
+            });
           },
           error: (err) => {
             console.log(err.error);
@@ -144,7 +147,6 @@ export default class AddoreditMaintenancePreventiveComponent
       }
       case 'copy': {
         this.LoadCopy();
-
         break;
       }
       default: {
@@ -163,7 +165,7 @@ export default class AddoreditMaintenancePreventiveComponent
       price: ['', Validators.required],
       providerId: ['', Validators.required],
       recurrence: ['', Validators.required],
-      typeMaintance: [, Validators.required],
+      typeMaintance: ['', Validators.required],
       customerId: [this.customerIdService.getcustomerId()],
       employeeId: [this.authService.userTokenDto.infoEmployeeDto.employeeId],
       cuentaId: ['', Validators.required],

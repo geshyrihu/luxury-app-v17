@@ -49,7 +49,7 @@
     </div>
     <div class="col-6">
       <ul class="list-group">
-        @if (!workPosition) {
+        @if(accionPermitida){ @if (!workPosition) {
         <li class="list-group-item text-danger">
           <em>
             Para solicitar baja o modificación de salario, este empleado debe
@@ -61,10 +61,20 @@
           <i class="fa-regular fa-user-minus me-3"></i>
           Solicitar Baja
         </li>
+        } @if(solicitudAltaStatus){
+        <li class="list-group-item pointer">
+          <i class="fa-regular fa-user-plus me-3 text-danger"></i>
+          <span class="text-danger"> Solicitud de alta en proceso </span>
+        </li>
+        }@else{
+        <li class="list-group-item pointer" (click)="onModalSolicitudALta()">
+          <i class="fa-regular fa-user-plus me-3"></i>
+          Solicitar Alta
+        </li>
         } @if (solicitudBajaStatus) {
-        <li class="list-group-item disabled">
-          <i class="fa-regular fa-user-minus me-3"></i>
-          Solicitar Baja en proceso
+        <li class="list-group-item">
+          <i class="fa-regular fa-user-minus me-3 text-danger"></i>
+          <span class="text-danger">Solicitar Baja en proceso</span>
         </li>
         } @if (!solicitudModificacionSalarioStatus && workPosition) {
         <li
@@ -75,11 +85,13 @@
           Solicitar modificación de salario
         </li>
         } @if (solicitudModificacionSalarioStatus) {
-        <li class="list-group-item disabled">
+        <li class="list-group-item text-danger">
           <i class="fa-regular fa-money-bill-1 me-3"></i>
-          Solicitar modificación de salario en proceso
+          <span class="text-danger"
+            >Solicitar modificación de salario en proceso</span
+          >
         </li>
-        }
+        } }
         <li class="list-group-item pointer" (click)="onShowModalAddOrEdit()">
           <i class="fa-regular fa-pen-to-square me-3"></i>
           Editar

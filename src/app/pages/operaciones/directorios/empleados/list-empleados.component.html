@@ -90,7 +90,12 @@
           {{ item.workPositionFolio }}
         </td>
         <td>
-          <img [src]="url + item.photoPath" alt="" class="rounded avatar-sm" />
+          <img
+            [src]="url + item.photoPath"
+            alt=""
+            class="rounded avatar-sm"
+            (click)="onCardEmployee(item.id)"
+          />
         </td>
         <td>
           {{ item.fullName }}

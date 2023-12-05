@@ -14,7 +14,7 @@
       }"
     >
       @if(SelectDefaulOption ){
-      <option>{{ placeholder }}</option>
+      <option value="">{{ placeholder }}</option>
       } @for (item of data; track item) {
       <option [value]="item.value">
         {{ item.label }}

@@ -58,7 +58,7 @@ export default class AddOrEditCalendarioMaestroComponent
     id: { value: this.id, disabled: true },
     calendarioMaestroEquipoId: ['', Validators.required],
     descripcionServicio: ['', Validators.required],
-    mes: [Validators.required],
+    mes: [this.config.data.mes, Validators.required],
     observaciones: [''],
     proveedores: [[]],
   });
@@ -66,9 +66,6 @@ export default class AddOrEditCalendarioMaestroComponent
   ngOnInit(): void {
     this.onLoadSelectItem();
     this.id = this.config.data.id;
-    this.form.patchValue({
-      mes: this.config.data.mes,
-    });
     if (this.id !== 0) this.onLoadData(this.id);
   }
 
@@ -80,6 +77,9 @@ export default class AddOrEditCalendarioMaestroComponent
       .get(`CalendarioMaestro/${id}`)
       .subscribe((resp: any) => {
         this.form.patchValue(resp.body);
+        this.form.patchValue({
+          mes: this.config.data.mes,
+        });
       });
   }
   onSubmit() {

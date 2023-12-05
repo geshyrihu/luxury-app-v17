@@ -6,7 +6,6 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import {
   DialogService,
@@ -40,7 +39,6 @@ import { environment } from 'src/environments/environment';
     ComponentsModule,
     PrimeNgModule,
     CustomInputModule,
-    CKEditorModule,
   ],
   providers: [DialogService, CustomToastService],
 })

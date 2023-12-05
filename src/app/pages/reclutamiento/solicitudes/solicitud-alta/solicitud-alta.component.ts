@@ -8,6 +8,7 @@ import {
 } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subscription } from 'rxjs';
+import { ETypeContract } from 'src/app/core/enums/type-contract.enum';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import {
   AuthService,
@@ -16,6 +17,7 @@ import {
 } from 'src/app/core/services/common-services';
 import { EnumService } from 'src/app/core/services/enum-service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
+import ValidationErrorsCustomInputComponent from 'src/app/custom-components/custom-input-form/validation-errors-custom-input/validation-errors-custom-input.component';
 import ComponentsModule from 'src/app/shared/components.module';
 
 @Component({
@@ -27,16 +29,17 @@ import ComponentsModule from 'src/app/shared/components.module';
     ReactiveFormsModule,
     CommonModule,
     CustomInputModule,
+    ValidationErrorsCustomInputComponent,
   ],
 })
 export default class SolicitudAltaComponent implements OnInit, OnDestroy {
-  private formBuilder = inject(FormBuilder);
-  private dataService = inject(DataService);
-  public ref = inject(DynamicDialogRef);
-  public config = inject(DynamicDialogConfig);
-  public authService = inject(AuthService);
   private customToastService = inject(CustomToastService);
+  private dataService = inject(DataService);
   private enumService = inject(EnumService);
+  private formBuilder = inject(FormBuilder);
+  public authService = inject(AuthService);
+  public config = inject(DynamicDialogConfig);
+  public ref = inject(DynamicDialogRef);
 
   requestPositionCandidateId: number = 0;
   data: any;
@@ -44,32 +47,28 @@ export default class SolicitudAltaComponent implements OnInit, OnDestroy {
 
   subRef$: Subscription;
   cb_typeContractRegister: ISelectItemDto[] = [];
+  cb_vacantes: ISelectItemDto[] = [];
 
-  // [
-  //   { value: 0, label: 'Por un mes' },
-  //   { value: 1, label: 'Por tres mes' },
-  //   { value: 2, label: 'Temporal' },
-  //   { value: 3, label: 'Indefinido' },
-  // ];
+  employeeId = this.config.data.employeeId;
+  customerId = this.config.data.customerId;
 
   form: FormGroup = this.formBuilder.group({
-    requestPositionCandidateId: [
-      this.config.data.requestPositionCandidateId,
-      Validators.required,
-    ],
+    positionRequestId: [null, Validators.required],
     boss: ['', Validators.required],
     candidateName: ['', Validators.required],
     customerAddress: ['', Validators.required],
-    professionName: ['', Validators.required],
-    salary: ['', Validators.required],
-    typeContractRegister: [1, Validators.required],
+    typeContractRegister: [ETypeContract.Interno, Validators.required],
+    employeeId: [this.config.data.employeeId, Validators.required],
     additionalInformation: [],
   });
 
   ngOnInit(): void {
-    this.requestPositionCandidateId =
-      this.config.data.requestPositionCandidateId;
-    if (this.requestPositionCandidateId !== 0) this.onLoadData();
+    this.onLoadDataVacante();
+    this.onLoadData();
+  }
+
+  get f() {
+    return this.form.controls;
   }
   onLoadData() {
     this.enumService
@@ -79,14 +78,31 @@ export default class SolicitudAltaComponent implements OnInit, OnDestroy {
       });
     this.subRef$ = this.dataService
       .get(
-        `RequestEmployeeRegister/GetEmployeeRegister/${this.requestPositionCandidateId}`
+        `RequestEmployeeRegister/GetEmployeeRegister/${this.employeeId}/${this.customerId}`
       )
       .subscribe({
         next: (resp: any) => {
           this.data = resp.body;
           this.form.patchValue(resp.body);
+          this.form.patchValue({
+            employeeId: this.config.data.employeeId,
+          });
         },
 
+        error: (err) => {
+          this.customToastService.onShowError();
+          console.log(err.error);
+        },
+      });
+  }
+
+  onLoadDataVacante() {
+    this.subRef$ = this.dataService
+      .get(`requestemployeeregister/vacantes/${this.customerId}`)
+      .subscribe({
+        next: (resp: any) => {
+          this.cb_vacantes = resp.body;
+        },
         error: (err) => {
           this.customToastService.onShowError();
           console.log(err.error);
@@ -108,7 +124,7 @@ export default class SolicitudAltaComponent implements OnInit, OnDestroy {
 
     this.subRef$ = this.dataService
       .post(
-        `SolicitudesReclutamiento/SolicitudAlta/${this.authService.infoUserAuthDto.applicationUserId}`,
+        `solicitudesreclutamiento/solicitudalta/${this.authService.infoUserAuthDto.applicationUserId}`,
         this.form.value
       )
       .subscribe({

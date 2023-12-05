@@ -1,4 +1,5 @@
 <div class="card">
+  estamos aca
   <div class="card-body">
     <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
       <!-- Id -->
@@ -15,102 +16,62 @@
             class="form-select"
             formControlName="mes"
             [class.is-invalid]="f.mes.invalid && (f.mes.dirty || f.mes.touched)"
-            >
+          >
             @for (item of cb_meses; track item) {
-              <option [value]="item.value">
-                {{ item.label }}
-              </option>
+            <option [value]="item.value">
+              {{ item.label }}
+            </option>
             }
           </select>
           @if (f.mes.invalid && (f.mes.dirty || f.mes.touched)) {
-            <div>
-              @if (f.mes.errors.required) {
-                <small class="text-danger"
-                  >El campo es reqerido.</small
-                  >
-                }
-              </div>
+          <div>
+            @if (f.mes.errors.required) {
+            <small class="text-danger">El campo es reqerido.</small>
             }
           </div>
+          }
         </div>
-        <div class="form-group row mb-1">
-          <label class="col-sm-3">Equipo</label>
-          <div class="col-sm-9">
-            <select
-              class="form-select"
-              formControlName="calendarioMaestroEquipoId"
-              [class.is-invalid]="
-              f.calendarioMaestroEquipoId.invalid &&
-              (f.calendarioMaestroEquipoId.dirty ||
-              f.calendarioMaestroEquipoId.touched)
-              "
-              >
-              <option value="">Selecciona un equipo</option>
-              @for (item of cb_equipoCalendarioMaestro; track item) {
-                <option
-                  [value]="item.value"
-                  >
-                  {{ item.label }}
-                </option>
-              }
-            </select>
-            @if (
-              f.calendarioMaestroEquipoId.invalid &&
-              (f.calendarioMaestroEquipoId.dirty ||
-              f.calendarioMaestroEquipoId.touched)
-              ) {
-              <div
-                >
-                @if (f.calendarioMaestroEquipoId.errors.required) {
-                  <small
-                    class="text-danger"
-                    >El campo es reqerido.</small
-                    >
-                  }
-                </div>
-              }
-            </div>
-          </div>
-          <!-- <custom-input-select
-          [control]="form.get('calendarioMaestroEquipoId')"
-          formControlName="calendarioMaestroEquipoId"
-          label="Nombre Equipo"
-          [data]="cb_equipoCalendarioMaestro"
-        ></custom-input-select> -->
-        <custom-input-text-area
-          [control]="form.get('descripcionServicio')"
-          formControlName="descripcionServicio"
-          label="Servicio"
-          placeholder="servicio"
-        ></custom-input-text-area>
-        <custom-input-text-area
-          [control]="form.get('observaciones')"
-          formControlName="observaciones"
-          label="Observaciones"
-          placeholder="observaciones"
-        ></custom-input-text-area>
-        <div class="form-group row mb-1">
-          <label class="col-sm-3">Proveedores </label>
-          <div class="col-sm-9">
-            <div class="multi_default">
-              <ng-select
-                formControlName="proveedores"
-                [items]="cb_providers"
-                [multiple]="true"
-                bindLabel="label"
-                [(ngModel)]="proveedoresSeleccionados"
-                >
-                <ng-template ng-optgroup-tmp let-item="item">
-                  {{ item.label || "Unnamed group" }}
-                </ng-template>
-              </ng-select>
-            </div>
+      </div>
+
+      <custom-input-select
+        [control]="form.get('calendarioMaestroEquipoId')"
+        formControlName="calendarioMaestroEquipoId"
+        label="Nombre Equipo"
+        [data]="cb_equipoCalendarioMaestro"
+      ></custom-input-select>
+      <custom-input-text-area
+        [control]="form.get('descripcionServicio')"
+        formControlName="descripcionServicio"
+        label="Servicio"
+        placeholder="servicio"
+      ></custom-input-text-area>
+      <custom-input-text-area
+        [control]="form.get('observaciones')"
+        formControlName="observaciones"
+        label="Observaciones"
+        placeholder="observaciones"
+      ></custom-input-text-area>
+      <div class="form-group row mb-1">
+        <label class="col-sm-3">Proveedores </label>
+        <div class="col-sm-9">
+          <div class="multi_default">
+            <ng-select
+              formControlName="proveedores"
+              [items]="cb_providers"
+              [multiple]="true"
+              bindLabel="label"
+              [(ngModel)]="proveedoresSeleccionados"
+            >
+              <ng-template ng-optgroup-tmp let-item="item">
+                {{ item.label || "Unnamed group" }}
+              </ng-template>
+            </ng-select>
           </div>
         </div>
-        <custom-button-submit
-          [disabled]="this.form.invalid || submitting"
-        ></custom-button-submit>
-      </form>
-    </div>
+      </div>
+      <custom-button-submit
+        [disabled]="this.form.invalid || submitting"
+      ></custom-button-submit>
+    </form>
   </div>
-  
+</div>

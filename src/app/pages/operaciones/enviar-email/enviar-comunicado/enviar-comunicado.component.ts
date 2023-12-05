@@ -7,7 +7,6 @@ import {
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import {
   FileUploadControl,
@@ -25,6 +24,7 @@ import {
 } from 'src/app/core/services/common-services';
 import AgregarCorreoElectronicoComponent from 'src/app/shared/agregar-correo-electronico/agregar-correo-electronico.component';
 import ListadoCondominosComponent from 'src/app/shared/listado-condominos/listado-condominos.component';
+import PrimeNgModule from 'src/app/shared/prime-ng.module';
 @Component({
   selector: 'app-enviar-comunicado',
   templateUrl: './enviar-comunicado.component.html',
@@ -34,8 +34,8 @@ import ListadoCondominosComponent from 'src/app/shared/listado-condominos/listad
     ReactiveFormsModule,
     FileUploadModule,
     FormsModule,
-    CKEditorModule
-],
+    PrimeNgModule,
+  ],
   providers: [DialogService, MessageService, CustomToastService],
 })
 export default class EnviarComunicadoComponent {

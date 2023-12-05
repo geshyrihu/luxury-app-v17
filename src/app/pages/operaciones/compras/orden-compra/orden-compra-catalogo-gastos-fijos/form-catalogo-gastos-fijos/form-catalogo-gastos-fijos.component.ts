@@ -70,8 +70,10 @@ export default class FormCatalogoGastosFijosComponent
     providerName: ['', Validators.required],
     providerId: ['', Validators.required],
     usoCFDIId: ['', Validators.required],
-    metodoDePagoId: [19, Validators.required],
-    formaDePagoId: [1, Validators.required],
+    metodoDePagoId: ['', Validators.required],
+    formaDePagoId: ['', Validators.required],
+    // metodoDePagoId: [19, Validators.required],
+    // formaDePagoId: [1, Validators.required],
     catalogoGastosFijosPresupuesto: this.formBuilder.array([]),
     catalogoGastosFijosDetalles: this.formBuilder.array([]),
     applicationUserId: [

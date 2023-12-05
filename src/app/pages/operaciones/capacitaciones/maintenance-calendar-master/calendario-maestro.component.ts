@@ -53,7 +53,6 @@ export default class CalendarioMaestroComponent implements OnInit, OnDestroy {
     this.subRef$ = this.dataService.get('CalendarioMaestro/GetAll').subscribe({
       next: (resp: any) => {
         this.data = resp.body;
-        console.log('🚀 ~ resp.body:', resp.body);
         this.customToastService.onClose();
       },
       error: (err) => {

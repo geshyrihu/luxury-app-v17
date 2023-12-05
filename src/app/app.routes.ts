@@ -10,14 +10,6 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'auth',
-    loadChildren: () => import('src/app/routing/auth.routing'),
-  },
-  {
-    path: 'publico',
-    loadChildren: () => import('src/app/routing/publico.routing'),
-  },
-  {
     path: 'compras',
     loadChildren: () => import('src/app/routing/compras.routing'),
     canActivate: [AuthGuard],
@@ -26,5 +18,13 @@ export const routes: Routes = [
     path: 'utillidades',
     loadChildren: () => import('src/app/routing/utillidades.routing'),
     canActivate: [AuthGuard],
+  },
+  {
+    path: 'auth',
+    loadChildren: () => import('src/app/routing/auth.routing'),
+  },
+  {
+    path: 'publico',
+    loadChildren: () => import('src/app/routing/publico.routing'),
   },
 ];

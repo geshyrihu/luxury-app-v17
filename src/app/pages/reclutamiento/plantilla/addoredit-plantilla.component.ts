@@ -8,7 +8,7 @@ import {
 } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subscription } from 'rxjs';
-import { EStatus } from 'src/app/core/enums/status.enum';
+import { EState } from 'src/app/core/enums/state.enum';
 import { ETurnoTrabajo } from 'src/app/core/enums/turno-trabajo.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { IWorkPositionAddOrEditDto } from 'src/app/core/interfaces/IEmpresaOrganigramaAddOrEditDto.interface';
@@ -51,7 +51,7 @@ export default class AddoreditPlantillaComponent implements OnInit, OnDestroy {
   cb_profession: ISelectItemDto[] = [];
   cb_employee: ISelectItemDto[] = [];
   cb_turnoTrabajo: ISelectItemDto[] = onGetSelectItemFromEnum(ETurnoTrabajo);
-  cb_state: ISelectItemDto[] = onGetSelectItemFromEnum(EStatus);
+  cb_state: ISelectItemDto[] = onGetSelectItemFromEnum(EState);
 
   subRef$: Subscription;
   form: FormGroup = this.formBuilder.group({

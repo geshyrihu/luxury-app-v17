@@ -1,29 +1,49 @@
 @if (data) {
-  <div class="card">
-    <div class="card-body">
-      <form (ngSubmit)="onSubmit()" [formGroup]="form">
-        <custom-input-text
-          [control]="form.get('nombreProducto')"
-          formControlName="nombreProducto"
-          label="Producto"
-          [readonly]="true"
-        ></custom-input-text>
-        <custom-input-number
-          [control]="form.get('cantidad')"
-          formControlName="cantidad"
-          label="Cantidad"
-          placeholder="cantidad"
-        ></custom-input-number>
-        <custom-input-select
-          [control]="form.get('unidadMedidaId')"
-          formControlName="unidadMedidaId"
-          label="Unidad"
-          [data]="cb_unidadMedida"
-        ></custom-input-select>
-        <custom-button-submit
-          [disabled]="form.invalid || submitting"
-        ></custom-button-submit>
-      </form>
-    </div>
+<div class="card">
+  <div class="card-body">
+    <form (ngSubmit)="onSubmit()" [formGroup]="form">
+      <custom-input-text
+        [control]="form.get('nombreProducto')"
+        formControlName="nombreProducto"
+        label="Producto"
+        [readonly]="true"
+      ></custom-input-text>
+      <custom-input-number
+        [control]="form.get('cantidad')"
+        formControlName="cantidad"
+        label="Cantidad"
+        placeholder="cantidad"
+      ></custom-input-number>
+
+      <div class="form-group row">
+        <label class="col-sm-3">Unidad</label>
+        <div class="col-sm-9">
+          <select
+            formControlName="unidadMedidaId"
+            class="form-select"
+            [ngClass]="{
+              'is-invalid':
+                f.unidadMedidaId.invalid &&
+                (f.unidadMedidaId.dirty || f.unidadMedidaId.touched)
+            }"
+          >
+            <option value="">--Selecciona una opción--</option>
+            @for (item of cb_unidadMedida; track item) {
+            <option [value]="item.value">
+              {{ item.label }}
+            </option>
+            }
+          </select>
+          <app-validation-errors-custom-input
+            [control]="f.unidadMedidaId"
+            [placeholder]="'Unidad'"
+          ></app-validation-errors-custom-input>
+        </div>
+      </div>
+      <custom-button-submit
+        [disabled]="form.invalid || submitting"
+      ></custom-button-submit>
+    </form>
   </div>
+</div>
 }

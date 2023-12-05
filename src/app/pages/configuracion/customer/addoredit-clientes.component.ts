@@ -55,7 +55,7 @@ export default class AddOrEditClienteComponent implements OnInit, OnDestroy {
 
   form: FormGroup = this.formBuilder.group({
     id: { value: this.id, disabled: true },
-    active: [],
+    active: [''],
     adreess: ['', [Validators.required, Validators.minLength(10)]],
     latitud: ['', Validators.required],
     longitud: ['', Validators.required],

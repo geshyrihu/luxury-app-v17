@@ -52,13 +52,13 @@ export default class SolicitudBajaComponent implements OnInit {
   id: number = 0;
   submitting: boolean = false;
   subRef$: Subscription;
-  workPositionId: number = this.config.data.workPositionId;
+  employeeId: number = this.config.data.employeeId;
 
   cb_type_departure: ISelectItemDto[] = [];
   cb_si_no: ISelectItemDto[] = cb_ESiNo;
 
   form: FormGroup = this.formBuilder.group({
-    id: [this.config.data.workPositionId],
+    id: [this.config.data.employeeId],
     professionId: ['', Validators.required],
     employeeId: ['', Validators.required],
     profession: ['', Validators.required],
@@ -83,7 +83,7 @@ export default class SolicitudBajaComponent implements OnInit {
         this.cb_type_departure = resp;
       });
     this.subRef$ = this.dataService
-      .get(`RequestDismissal/GetRequestDismissal/${this.workPositionId}`)
+      .get(`RequestDismissal/GetRequestDismissal/${this.employeeId}`)
       .subscribe({
         next: (resp: any) => {
           this.data = resp.body;
@@ -113,8 +113,8 @@ export default class SolicitudBajaComponent implements OnInit {
 
     this.dataService
       .post(
-        `SolicitudesReclutamiento/SolicitudBaja/ 
-          ${this.customerIdService.getcustomerId()}/${this.workPositionId}/${
+        `solicitudesreclutamiento/solicitudbaja/ 
+          ${this.customerIdService.getcustomerId()}/${this.employeeId}/${
           this.authService.infoUserAuthDto.applicationUserId
         }`,
         model
@@ -176,9 +176,6 @@ export default class SolicitudBajaComponent implements OnInit {
 
     return formData;
   }
-  // isControlInvalid(control: FormControl) {
-  //   return control.invalid && (control.dirty || control.touched);
-  // }
 
   isControlInvalid(control: AbstractControl | null): boolean {
     if (control instanceof FormControl) {

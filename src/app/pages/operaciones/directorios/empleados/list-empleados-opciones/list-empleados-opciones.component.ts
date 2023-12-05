@@ -10,9 +10,11 @@ import {
 import { Subject, takeUntil } from 'rxjs';
 import {
   CustomToastService,
+  CustomerIdService,
   DataService,
 } from 'src/app/core/services/common-services';
 import UpdatePasswordModalComponent from 'src/app/pages/configuracion/accounts/modal-edit-account/update-password-modal/update-password-modal.component';
+import SolicitudAltaComponent from 'src/app/pages/reclutamiento/solicitudes/solicitud-alta/solicitud-alta.component';
 import SolicitudBajaComponent from 'src/app/pages/reclutamiento/solicitudes/solicitud-baja/solicitud-baja.component';
 import SolicitudModificacionSalarioComponent from 'src/app/pages/reclutamiento/solicitudes/solicitud-modificacion-salario/solicitud-modificacion-salario.component';
 import ComponentsModule from 'src/app/shared/components.module';
@@ -34,15 +36,16 @@ export default class ListEmpleadosOpcionesComponent
   implements OnInit, OnDestroy
 {
   ngOnInit(): void {
+    this.onValidarProfession();
     this.onValidarSolicitudesAbiertas();
   }
   private dialogService = inject(DialogService);
   public customToastService = inject(CustomToastService);
+  public customerIdService = inject(CustomerIdService);
   public config = inject(DynamicDialogConfig);
   private dataService = inject(DataService);
 
   ref: DynamicDialogRef;
-  // subRef$: Subscription;
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   applicationUserId: string = this.config.data.applicationUserId;
@@ -50,6 +53,8 @@ export default class ListEmpleadosOpcionesComponent
   active: boolean = this.config.data.active;
 
   solicitudBajaStatus: any;
+  solicitudAltaStatus: any;
+  accionPermitida: boolean = false;
   solicitudModificacionSalarioStatus: any;
   workPosition: any;
 
@@ -111,6 +116,21 @@ export default class ListEmpleadosOpcionesComponent
     });
   }
 
+  // Solicitud de alta
+
+  onModalSolicitudALta() {
+    this.ref = this.dialogService.open(SolicitudAltaComponent, {
+      data: {
+        employeeId: this.employeeId,
+        customerId: this.customerIdService.customerId,
+      },
+      header: 'Solicitud de alta',
+      width: '100%',
+      height: '100%',
+      closeOnEscape: true,
+      baseZIndex: 10000,
+    });
+  }
   onDelete() {
     Swal.fire({
       title: '¿Vas elimnar este registro?',
@@ -192,7 +212,7 @@ export default class ListEmpleadosOpcionesComponent
   onModalSolicitudBaja() {
     this.ref = this.dialogService.open(SolicitudBajaComponent, {
       data: {
-        workPositionId: this.employeeId,
+        employeeId: this.employeeId,
       },
       header: 'Solicitud de baja',
       width: '100%',
@@ -243,9 +263,25 @@ export default class ListEmpleadosOpcionesComponent
       .subscribe({
         next: (resp: any) => {
           this.workPosition = resp.body.workPosition;
+          this.solicitudAltaStatus = resp.body.solicitudAlta;
           this.solicitudBajaStatus = resp.body.solicitudBaja;
           this.solicitudModificacionSalarioStatus =
             resp.body.solicitudModificacionSalario;
+        },
+        error: (err) => {
+          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
+          this.customToastService.onCloseToError();
+          console.log(err.error);
+        },
+      });
+  }
+  onValidarProfession() {
+    this.dataService
+      .get(`employees/validarprofession/${this.employeeId}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe({
+        next: (resp: any) => {
+          this.accionPermitida = resp.body;
         },
         error: (err) => {
           // En caso de error, mostrar un mensaje de error y registrar el error en la consola

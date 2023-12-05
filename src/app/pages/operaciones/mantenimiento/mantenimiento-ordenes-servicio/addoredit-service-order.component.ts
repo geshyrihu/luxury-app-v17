@@ -6,7 +6,6 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { MessageService, SelectItem } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -36,9 +35,8 @@ import PrimeNgModule from 'src/app/shared/prime-ng.module';
     ReactiveFormsModule,
     ComponentsModule,
     CustomInputModule,
-    CKEditorModule,
-    ValidationErrorsCustomInputComponent,
     PrimeNgModule,
+    ValidationErrorsCustomInputComponent,
   ],
   providers: [CustomToastService, MessageService],
 })
@@ -152,7 +150,6 @@ export default class ServiceOrderAddOrEditComponent
     this.subRef$ = this.dataService
       .get(`ServiceOrders/${this.id}`)
       .subscribe((resp: any) => {
-        console.log('🚀 ~ resp.body:', resp.body);
         resp.body.executionDate = this.dateService.getDateFormat(
           resp.body.executionDate
         );

@@ -6,7 +6,6 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subscription } from 'rxjs';
@@ -30,7 +29,6 @@ import PrimeNgModule from 'src/app/shared/prime-ng.module';
     ComponentsModule,
     CommonModule,
     CustomInputModule,
-    CKEditorModule,
     PrimeNgModule,
   ],
   providers: [CustomToastService],

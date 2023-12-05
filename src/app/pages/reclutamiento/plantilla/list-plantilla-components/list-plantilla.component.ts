@@ -36,8 +36,8 @@ import HoursWorkPositionComponent from '../hours-work-position.component';
     NgbDropdownModule,
     NgbTooltipModule,
     RouterModule,
-    PrimeNgModule
-],
+    PrimeNgModule,
+  ],
   providers: [
     ConfirmationService,
     DialogService,
@@ -75,7 +75,7 @@ export default class ListWorkPlantillaComponent implements OnInit, OnDestroy {
     this.customToastService.onLoading();
     this.subRef$ = this.dataService
       .get<IWorkPositionDto[]>(
-        'WorkPosition/GetAll/' +
+        'workposition/getall/' +
           this.customerIdService.getcustomerId() +
           '/' +
           this.state
@@ -227,10 +227,10 @@ export default class ListWorkPlantillaComponent implements OnInit, OnDestroy {
     });
   }
   //Navegar a la solicitud pendiente con sus candidatos
-  onRouteEstatusSolicitud(positionRequestId: number) {
-    this.statusSolicitudVacanteService.setPositionRequestId(positionRequestId);
-    this.router.navigate(['/reclutamiento/status-solicitud-vacante']);
-  }
+  // onRouteEstatusSolicitud(positionRequestId: number) {
+  //   this.statusSolicitudVacanteService.setPositionRequestId(positionRequestId);
+  //   this.router.navigate(['/reclutamiento/status-solicitud-vacante']);
+  // }
 
   //Solicitud vigente de modificacion de salario
   onRouteEstatusSalaryModification(employeeId: number, workPositionId: number) {

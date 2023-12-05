@@ -4,7 +4,10 @@ import { Router, RouterModule } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
-import { StatusSolicitudVacanteService } from 'src/app/core/services/common-services';
+import {
+  AuthService,
+  StatusSolicitudVacanteService,
+} from 'src/app/core/services/common-services';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DataService } from 'src/app/core/services/data.service';
@@ -29,6 +32,7 @@ export default class ListSolicitudesPorClienteComponent implements OnInit {
   public dialogService = inject(DialogService);
   public statusSolicitudVacanteService = inject(StatusSolicitudVacanteService);
   public router = inject(Router);
+  public authService = inject(AuthService);
 
   customerId$: Observable<number> = this.customerIdService.getCustomerId$();
   // Declaración e inicialización de variables
@@ -59,6 +63,7 @@ export default class ListSolicitudesPorClienteComponent implements OnInit {
         next: (resp: any) => {
           // Cuando se obtienen los datos con éxito, actualizar la variable 'data' y ocultar el mensaje de carga
           this.data = resp.body;
+          console.log('🚀 ~ resp.body:', resp.body);
           this.customToastService.onClose();
         },
         error: (err) => {

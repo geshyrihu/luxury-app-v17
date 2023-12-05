@@ -16,6 +16,7 @@ import {
   SelectItemService,
 } from 'src/app/core/services/common-services';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
+import ValidationErrorsCustomInputComponent from 'src/app/custom-components/custom-input-form/validation-errors-custom-input/validation-errors-custom-input.component';
 import ComponentsModule from 'src/app/shared/components.module';
 
 @Component({
@@ -26,6 +27,7 @@ import ComponentsModule from 'src/app/shared/components.module';
     ComponentsModule,
     CommonModule,
     CustomInputModule,
+    ValidationErrorsCustomInputComponent,
   ],
   providers: [CustomToastService],
 })
@@ -75,7 +77,7 @@ export default class EditProductoComponent implements OnInit, OnDestroy {
       productoId: [0, { validators: [Validators.required] }],
       nombreProducto: [],
       cantidad: [0, { validators: [Validators.required] }],
-      unidadMedidaId: [0, { validators: [Validators.required] }],
+      unidadMedidaId: ['', Validators.required],
       applicationUserId: [
         this.authService.userTokenDto.infoUserAuthDto.applicationUserId,
         { validators: [Validators.required] },
@@ -93,6 +95,9 @@ export default class EditProductoComponent implements OnInit, OnDestroy {
       });
   }
 
+  get f() {
+    return this.form.controls;
+  }
   onSubmit() {
     if (this.form.invalid) {
       Object.values(this.form.controls).forEach((x) => {

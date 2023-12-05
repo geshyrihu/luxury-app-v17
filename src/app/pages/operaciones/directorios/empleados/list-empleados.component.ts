@@ -15,6 +15,7 @@ import ComponentsModule from 'src/app/shared/components.module';
 import PrimeNgModule from 'src/app/shared/prime-ng.module';
 import { environment } from 'src/environments/environment';
 import AddAccountCustomerComponent from './add-account-customer.component';
+import CardEmployeeComponent from './card-employee/card-employee.component';
 import ListEmpleadosOpcionesComponent from './list-empleados-opciones/list-empleados-opciones.component';
 
 const base_urlImg = environment.base_urlImg + 'Administration/accounts/';
@@ -101,11 +102,8 @@ export default class ListEmployeeComponent implements OnInit, OnDestroy {
       closeOnEscape: true,
       styleClass: 'modal-md',
     });
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        this.customToastService.onShowSuccess();
-        this.onLoadData();
-      }
+    this.ref.onClose.subscribe(() => {
+      this.onLoadData();
     });
   }
   showModalAddAccount() {
@@ -121,6 +119,18 @@ export default class ListEmployeeComponent implements OnInit, OnDestroy {
         this.customToastService.onShowSuccess();
         this.onLoadData();
       }
+    });
+  }
+
+  onCardEmployee(employeeId: number) {
+    this.ref = this.dialogService.open(CardEmployeeComponent, {
+      data: {
+        employeeId,
+      },
+      header: 'Colaborador',
+      styleClass: 'modal-sm',
+      closeOnEscape: true,
+      baseZIndex: 10000,
     });
   }
   ngOnDestroy() {

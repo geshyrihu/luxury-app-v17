@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import {
@@ -17,12 +16,13 @@ import {
 } from 'src/app/core/services/common-services';
 import AddoreditMaintenancePreventiveComponent from 'src/app/pages/operaciones/calendarios/mantenimiento-preventivo/addoredit-maintenance-preventive.component';
 import ComponentsModule from 'src/app/shared/components.module';
+import PrimeNgModule from 'src/app/shared/prime-ng.module';
 //TODO: VALIDAR SU AUN ESTA ACTIVO ESTE MODULO
 @Component({
   selector: 'app-order-service',
   templateUrl: './order-service.component.html',
   standalone: true,
-  imports: [CommonModule, ComponentsModule, FormsModule, CKEditorModule],
+  imports: [CommonModule, ComponentsModule, FormsModule, PrimeNgModule],
   providers: [MessageService, CustomToastService],
 })
 export default class OrderServiceComponent implements OnInit, OnDestroy {
