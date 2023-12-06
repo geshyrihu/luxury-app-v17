@@ -32,8 +32,8 @@ import AddOrEditVacanteComponent from './addoredit-vacante.component';
     FormsModule,
     NgbDropdownModule,
     RouterModule,
-    PrimeNgModule
-],
+    PrimeNgModule,
+  ],
   providers: [DialogService, MessageService, CustomToastService],
 })
 export default class ListVacantesComponent implements OnInit, OnDestroy {
@@ -62,6 +62,7 @@ export default class ListVacantesComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (resp: any) => {
           this.data = resp.body;
+          console.log('🚀 ~ resp.body:', resp.body);
           this.customToastService.onClose();
         },
         error: (err) => {

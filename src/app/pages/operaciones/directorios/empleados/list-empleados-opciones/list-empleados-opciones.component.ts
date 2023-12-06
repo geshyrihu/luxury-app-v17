@@ -130,6 +130,13 @@ export default class ListEmpleadosOpcionesComponent
       closeOnEscape: true,
       baseZIndex: 10000,
     });
+    this.ref.onClose.subscribe((resp: boolean) => {
+      if (resp) {
+        // Cuando se recibe 'true', mostrar un mensaje de éxito y volver a cargar los datos
+        this.customToastService.onShowSuccess();
+        this.onValidarSolicitudesAbiertas();
+      }
+    });
   }
   onDelete() {
     Swal.fire({

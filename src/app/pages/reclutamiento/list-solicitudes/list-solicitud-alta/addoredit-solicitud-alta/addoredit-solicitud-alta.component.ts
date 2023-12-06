@@ -42,7 +42,7 @@ export default class AddOrEditSolicitudAltaComponent
   private enumService = inject(EnumService);
 
   submitting: boolean = false;
-
+  empleados: ISelectItemDto[] = [];
   // cb_status = onGetSelectItemFromEnum(EStatus);
   cb_status: ISelectItemDto[] = [];
   // cb_typeContractRegister = onGetSelectItemFromEnum(ETypeContractRegister);
@@ -51,7 +51,7 @@ export default class AddOrEditSolicitudAltaComponent
   subRef$: Subscription;
   form: FormGroup = this.formBuilder.group({
     id: { value: this.id, disabled: true },
-    requestPositionCandidateId: [],
+    requestPositionCandidateId: [null],
     requestDate: ['', Validators.required],
     folio: [],
     executionDate: ['', Validators.required],
@@ -59,12 +59,16 @@ export default class AddOrEditSolicitudAltaComponent
     status: ['', Validators.required],
     applicationUserId: [],
     confirmationFinish: [],
+    positionRequestId: [],
+    employeeId: [],
+    employee: [],
   });
   ngOnInit(): void {
     this.id = this.config.data.id;
     if (this.id !== 0) this.onLoadData();
   }
   onLoadData() {
+    this.onLoadEmpleados();
     this.enumService
       .getEnumValuesDisplay('ETypeContractRegister')
       .subscribe((resp) => {
@@ -78,12 +82,36 @@ export default class AddOrEditSolicitudAltaComponent
       .subscribe({
         next: (resp: any) => {
           this.form.patchValue(resp.body);
+          if (resp.body.employeeId !== null) {
+            let find = this.empleados.find(
+              (x) => x?.value === resp.body.employeeId
+            );
+
+            this.form.patchValue({
+              employee: find?.label,
+            });
+          }
         },
         error: (err) => {
           this.customToastService.onShowError();
           console.log(err.error);
         },
       });
+  }
+
+  onLoadEmpleados() {
+    this.enumService.getEnumValuesDisplay('EStatus').subscribe((resp) => {
+      this.cb_status = resp;
+    });
+    this.subRef$ = this.dataService.get(`Employees/EmployeeTemp`).subscribe({
+      next: (resp: any) => {
+        this.empleados = resp.body;
+      },
+      error: (err) => {
+        this.customToastService.onShowError();
+        console.log(err.error);
+      },
+    });
   }
 
   onSubmit() {
@@ -96,6 +124,10 @@ export default class AddOrEditSolicitudAltaComponent
 
     this.id = this.config.data.id;
     // Deshabilitar el botón al iniciar el envío del formulario
+
+    this.form.patchValue({
+      requestPositionCandidateId: null,
+    });
     this.submitting = true;
     if (this.id === 0) {
       this.subRef$ = this.dataService
@@ -130,6 +162,15 @@ export default class AddOrEditSolicitudAltaComponent
           },
         });
     }
+  }
+
+  //  Temporal....
+  public saveProviderId(e: any): void {
+    let find = this.empleados.find((x) => x?.label === e.target.value);
+
+    this.form.patchValue({
+      employeeId: find?.value,
+    });
   }
 
   ngOnDestroy() {

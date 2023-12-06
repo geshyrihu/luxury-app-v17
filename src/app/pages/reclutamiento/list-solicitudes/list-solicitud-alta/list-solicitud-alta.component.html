@@ -19,7 +19,7 @@
       'status',
       'numInternal',
       'folio',
-      'folioVacant',
+      'folioVacante',
       'nameCustomer',
       'nameEmployee',
       'profession',
@@ -39,9 +39,9 @@
         <th scope="col" pSortableColumn="folio">
           FOLIO <p-sortIcon field="folio"></p-sortIcon>
         </th>
-        <th scope="col" pSortableColumn="folioVacant">
+        <th scope="col" pSortableColumn="folioVacante">
           FOLIO VACANTE
-          <p-sortIcon field="folioVacant"></p-sortIcon>
+          <p-sortIcon field="folioVacante"></p-sortIcon>
         </th>
         <th scope="col" pSortableColumn="requestDateFilter">
           SOLICITUD
@@ -65,7 +65,7 @@
           {{ item.folio }}
         </td>
         <td class="p-column-title text-center">
-          {{ item.folioVacant }}
+          {{ item.folioVacante }}
         </td>
         <td class="p-column-title">
           {{ item.requestDate }}
@@ -75,6 +75,7 @@
         </td>
         <td class="p-column-title text-center">
           {{ item.nameEmployee }}
+          <small class="text-danger">{{ item.personActual }}</small>
         </td>
         <td class="p-column-title">
           {{ item.profession }}

@@ -1,8 +1,8 @@
-import { PositionRequestAgendaItemsDto } from './PositionRequestAgendaItemsDto';
+// import { PositionRequestAgendaItemsDto } from './PositionRequestAgendaItemsDto';
 
-export interface PositionRequestAgendaDto {
-  positionRequestFolio: number;
-  customerName: string;
-  professionName: string;
-  candidates: PositionRequestAgendaItemsDto[];
-}
+// export interface PositionRequestAgendaDto {
+//   positionRequestFolio: number;
+//   customerName: string;
+//   professionName: string;
+//   candidates: PositionRequestAgendaItemsDto[];
+// }

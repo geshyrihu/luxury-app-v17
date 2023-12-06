@@ -16,17 +16,6 @@
         >
           <i class="fa-regular fa-download fa-2x label-icon pointer"></i>PDF
         </a>
-        <custom-button-confirmation
-          [mostrar]="authService.onValidateRoles(['SuperUsuario'])"
-          title="Confirmar"
-          icon=""
-          text="Enviar a todos los deptos"
-          label="Enviar a todos los deptos"
-          tooltipText="Enviar a todos los deptos"
-          classButton="btn btn-soft-primary btn-sm"
-          confirmButtonText="Sí, confirmar"
-          (OnConfirm)="onSendEmailAllPendingMeeting()"
-        ></custom-button-confirmation>
       </div>
     </div>
   </div>

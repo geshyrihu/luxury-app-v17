@@ -29,8 +29,8 @@ import AddOrEditSolicitudAltaComponent from './addoredit-solicitud-alta/addoredi
     FormsModule,
     NgbDropdownModule,
     PrimeNgModule,
-    RouterModule
-],
+    RouterModule,
+  ],
   providers: [DialogService, MessageService, CustomToastService],
 })
 export default class ListSolicitudAltaComponent implements OnInit, OnDestroy {

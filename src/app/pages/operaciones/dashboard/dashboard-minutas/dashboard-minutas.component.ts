@@ -26,8 +26,8 @@ import DashboardMinutasResumenComponent from '../dashboard-minutas-resumen/dashb
     CommonModule,
     ComponentsModule,
     NgbAlertModule,
-    ToastModule
-],
+    ToastModule,
+  ],
   providers: [MessageService, CustomToastService],
 })
 export default class DashboardMinutasComponent implements OnInit, OnDestroy {
@@ -57,24 +57,6 @@ export default class DashboardMinutasComponent implements OnInit, OnDestroy {
     this.rangoCalendarioService.fechas$.subscribe((resp: IFechasFiltro) => {
       this.onLoadData();
     });
-  }
-
-  onSendEmailAllPendingMeeting() {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.subRef$ = this.dataService
-      .get(`Meetings/SendEmailAllPendingMeeting`)
-      .subscribe({
-        next: (resp: any) => {
-          this.customToastService.onShowSuccess();
-          this.customToastService.onClose();
-        },
-        error: (err) => {
-          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onCloseToError();
-          console.log(err.error);
-        },
-      });
   }
 
   onLoadData() {

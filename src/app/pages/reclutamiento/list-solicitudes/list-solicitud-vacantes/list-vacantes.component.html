@@ -32,8 +32,7 @@
           FECHA DE SOLICITUD
           <p-sortIcon field="requestDateFilter"></p-sortIcon>
         </th>
-        <!-- <th scope="col" >N° INTERNO</th>
-        <th scope="col" >N° VAC</th> -->
+
         <th scope="col">CLIENTE</th>
         <th scope="col" pSortableColumn="profession">
           PUESTO
@@ -130,13 +129,13 @@
               (OnConfirm)="onDelete(item.id)"
             ></custom-button-delete>
 
-            <custom-button
+            <!-- <custom-button
               ngbTooltip="Ver candidatos"
               placement="top"
               customNgClass="btn-sm btn-outline-primary"
               icon="fa-regular fa-users-viewfinder"
               (clicked)="onRouteEstatusSolicitud(item.id)"
-            ></custom-button>
+            ></custom-button> -->
             <!-- <i class="fa-regular fa-users-viewfinder"></i> -->
           </div>
           <!-- Opciones -->

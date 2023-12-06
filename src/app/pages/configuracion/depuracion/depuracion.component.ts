@@ -198,6 +198,22 @@ export default class DepuracionComponent implements OnDestroy {
         },
       });
   }
+  ActulaizarWorkPosition() {
+    // Mostrar un mensaje de carga
+    this.customToastService.onLoading();
+    this.subRef$ = this.dataService
+      .get('UpdateDataBase/ActulaizarWorkPosition')
+      .subscribe({
+        next: (_) => {
+          this.customToastService.onClose();
+        },
+        error: (err) => {
+          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
+          this.customToastService.onCloseToError();
+          console.log(err.error);
+        },
+      });
+  }
 
   subRef$: Subscription;
   ngOnDestroy(): void {

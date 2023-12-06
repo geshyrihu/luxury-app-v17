@@ -52,6 +52,12 @@ export class SidebarService {
           routerLink: '/contabilidad/pendientes-minutas-legal',
           name: 'Legal-Minutas',
         },
+        {
+          visible: this.authService.onValidateRoles(['Legal', 'SuperUsuario']),
+          label: 'Tickets',
+          routerLink: '/legal/list-ticket',
+          name: 'Legal-Tickets',
+        },
       ],
     },
     {
@@ -1185,17 +1191,6 @@ export class SidebarService {
         },
         {
           visible: this.authService.onValidateRoles([
-            'Asistente',
-            'Residente',
-            'SuperUsuario',
-            'SupervisionOperativa',
-          ]),
-          label: 'Agenda Entrevistas',
-          routerLink: '/reclutamiento/agenda-entrevistas',
-          name: 'agenda entrevistas',
-        },
-        {
-          visible: this.authService.onValidateRoles([
             'SuperUsuario',
             'Residente',
             'Asistente',
@@ -1231,15 +1226,6 @@ export class SidebarService {
           label: 'Profesiones',
           routerLink: '/reclutamiento/profesiones',
           name: 'Reclutamiento-Profesiones',
-        },
-        {
-          visible: this.authService.onValidateRoles([
-            'SuperUsuario',
-            'Reclutamiento',
-          ]),
-          label: 'Candidatos',
-          routerLink: '/reclutamiento/candidatos',
-          name: 'Reclutamiento-Candidatos',
         },
       ],
     },

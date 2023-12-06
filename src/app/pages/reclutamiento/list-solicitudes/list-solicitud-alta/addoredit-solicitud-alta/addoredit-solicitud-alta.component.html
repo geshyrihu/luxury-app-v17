@@ -1,6 +1,15 @@
 <div class="card">
   <div class="card-body">
     <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
+      <custom-input-datalist
+        (propagar)="saveProviderId($event)"
+        [control]="form.get('employee')"
+        [data]="empleados"
+        formControlName="employee"
+        label="Cndidato"
+        dataListId="providerDatalistOptions"
+      ></custom-input-datalist>
+
       <custom-input-text
         [control]="form.get('id')"
         formControlName="id"
