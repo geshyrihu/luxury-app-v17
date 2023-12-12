@@ -9,6 +9,8 @@ import {
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subscription } from 'rxjs';
+import { EAreaMinutasDetalles } from 'src/app/core/enums/area-minutas-detalles.enum';
+import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import {
   AuthService,
@@ -61,7 +63,7 @@ export default class AddoreditMinutaDetalleComponent
       label: 'No Autorizado',
     },
   ];
-  cb_area: ISelectItemDto[] = [];
+  cb_area: ISelectItemDto[] = onGetSelectItemFromEnum(EAreaMinutasDetalles);
   id: number = 0;
   subRef$: Subscription;
   form: FormGroup = this.formBuilder.group({
@@ -79,11 +81,11 @@ export default class AddoreditMinutaDetalleComponent
   });
 
   ngOnInit(): void {
-    this.enumService
-      .onGetSelectItemEmun('EAreaMinutasDetalles')
-      .subscribe((resp) => {
-        this.cb_area = resp;
-      });
+    // this.enumService
+    //   .onGetSelectItemEmun('EAreaMinutasDetalles')
+    //   .subscribe((resp) => {
+    //     this.cb_area = resp;
+    //   });
 
     this.id = this.config.data.id;
     if (this.id !== 0) this.onLoadData();

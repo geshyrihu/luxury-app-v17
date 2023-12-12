@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subscription } from 'rxjs';
@@ -14,12 +15,20 @@ import ComponentsModule from 'src/app/shared/components.module';
 import PrimeNgModule from 'src/app/shared/prime-ng.module';
 import { environment } from 'src/environments/environment';
 import AddOrEditClienteComponent from './addoredit-clientes.component';
+import CustomerAddressComponent from './customer-address/customer-address.component';
+import CustomerImagesComponent from './customer-images/customer-images.component';
 
 @Component({
   selector: 'app-list-customer',
   templateUrl: './list-customer.component.html',
   standalone: true,
-  imports: [CommonModule, ComponentsModule, PrimeNgModule, CelularNumberPipe],
+  imports: [
+    CommonModule,
+    ComponentsModule,
+    PrimeNgModule,
+    CelularNumberPipe,
+    NgbTooltip,
+  ],
   providers: [DialogService, MessageService, CustomToastService],
 })
 export default class ListCustomerComponent implements OnInit, OnDestroy {
@@ -80,6 +89,42 @@ export default class ListCustomerComponent implements OnInit, OnDestroy {
         id: data.id,
       },
       header: data.title,
+      styleClass: 'modal-md',
+      closeOnEscape: true,
+      baseZIndex: 10000,
+    });
+    this.ref.onClose.subscribe((resp: boolean) => {
+      if (resp) {
+        this.customToastService.onShowSuccess();
+        this.onLoadData();
+      }
+    });
+  }
+
+  onUpdateImages(customerId: number) {
+    this.ref = this.dialogService.open(CustomerImagesComponent, {
+      data: {
+        customerId,
+      },
+      header: 'Actualizar Imagenes',
+      styleClass: 'modal-md',
+      closeOnEscape: true,
+      baseZIndex: 10000,
+    });
+    this.ref.onClose.subscribe((resp: boolean) => {
+      if (resp) {
+        this.customToastService.onShowSuccess();
+        this.onLoadData();
+      }
+    });
+  }
+
+  onUpdateAddress(customerId: number) {
+    this.ref = this.dialogService.open(CustomerAddressComponent, {
+      data: {
+        customerId,
+      },
+      header: 'Actualizar Direccion',
       styleClass: 'modal-md',
       closeOnEscape: true,
       baseZIndex: 10000,

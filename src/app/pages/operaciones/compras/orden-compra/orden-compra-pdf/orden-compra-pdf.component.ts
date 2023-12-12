@@ -96,6 +96,7 @@ export default class OrdenCompraPdfComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (resp: any) => {
           this.ordenCompraPresupuesto = resp.body;
+          console.log('🚀 ~ resp.body:', resp.body);
         },
         error: (err) => {
           this.customToastService.onShowError();

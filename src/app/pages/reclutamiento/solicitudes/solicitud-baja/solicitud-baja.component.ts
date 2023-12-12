@@ -10,9 +10,12 @@ import {
   Validators,
 } from '@angular/forms';
 import { FileUploadModule, FileUploadValidators } from '@iplab/ngx-file-upload';
+import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subscription } from 'rxjs';
 import { cb_ESiNo } from 'src/app/core/enums/si-no.enum';
+import { ETipoBaja } from 'src/app/core/enums/tipo-baja.enum';
+import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import {
   AuthService,
@@ -21,7 +24,6 @@ import {
   DataService,
   DateService,
 } from 'src/app/core/services/common-services';
-import { EnumService } from 'src/app/core/services/enum-service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import ComponentsModule from 'src/app/shared/components.module';
 
@@ -35,18 +37,18 @@ import ComponentsModule from 'src/app/shared/components.module';
     ReactiveFormsModule,
     CommonModule,
     FileUploadModule,
+    NgbAlertModule,
   ],
 })
 export default class SolicitudBajaComponent implements OnInit {
+  private customToastService = inject(CustomToastService);
   private dataService = inject(DataService);
   private formBuilder = inject(FormBuilder);
-  private customToastService = inject(CustomToastService);
-  public config = inject(DynamicDialogConfig);
-  public ref = inject(DynamicDialogRef);
-  public dateService = inject(DateService);
-  public customerIdService = inject(CustomerIdService);
   public authService = inject(AuthService);
-  private enumService = inject(EnumService);
+  public config = inject(DynamicDialogConfig);
+  public customerIdService = inject(CustomerIdService);
+  public dateService = inject(DateService);
+  public ref = inject(DynamicDialogRef);
 
   data: any;
   id: number = 0;
@@ -54,9 +56,11 @@ export default class SolicitudBajaComponent implements OnInit {
   subRef$: Subscription;
   employeeId: number = this.config.data.employeeId;
 
-  cb_type_departure: ISelectItemDto[] = [];
+  cb_type_departure: ISelectItemDto[] = onGetSelectItemFromEnum(ETipoBaja);
   cb_si_no: ISelectItemDto[] = cb_ESiNo;
-
+  tipobaja: ETipoBaja = ETipoBaja.Despido;
+  mensajeRenuncia =
+    'Adjunta la renuncia firmada por el empleado, si no regreso a firmar se considera abandono de trabajo';
   form: FormGroup = this.formBuilder.group({
     id: [this.config.data.employeeId],
     professionId: ['', Validators.required],
@@ -66,8 +70,16 @@ export default class SolicitudBajaComponent implements OnInit {
     executionDate: ['', Validators.required],
     typeOfDeparture: ['', Validators.required],
     employee: ['', Validators.required],
+    lastdayofwork: ['', Validators.required],
     phoneEmployee: ['', Validators.required],
-    reasonForLeaving: ['', Validators.required],
+    reasonForLeaving: [
+      '',
+      [
+        Validators.required,
+        Validators.minLength(10),
+        Validators.maxLength(250),
+      ],
+    ],
     discountDescriptions: this.formBuilder.array([]),
     lawyerAssistance: false, // Valor booleano directo
     employeeInformed: false, // Valor booleano directo
@@ -75,13 +87,14 @@ export default class SolicitudBajaComponent implements OnInit {
 
   ngOnInit(): void {
     this.onLoadData();
+    // Suscribirse a cambios en el control 'typeOfDeparture'
+    this.form.get('typeOfDeparture').valueChanges.subscribe((newValue) => {
+      console.log('Nuevo valor:', newValue); // Puedes realizar acciones aquí cuando cambie el valor
+      // Por ejemplo, puedes llamar a una función para manejar el cambio de valor
+      this.handleValueChange(newValue);
+    });
   }
   onLoadData() {
-    this.enumService
-      .onGetSelectItemEmun('ETypeOfDeparture')
-      .subscribe((resp) => {
-        this.cb_type_departure = resp;
-      });
     this.subRef$ = this.dataService
       .get(`RequestDismissal/GetRequestDismissal/${this.employeeId}`)
       .subscribe({
@@ -96,6 +109,23 @@ export default class SolicitudBajaComponent implements OnInit {
       });
   }
 
+  handleValueChange(newValue: any) {
+    if (newValue == 0) {
+      // Hacer el campo de archivos obligatorio
+      this.filesControl.setValidators([
+        Validators.required,
+        FileUploadValidators.fileSize(20000),
+      ]);
+    } else {
+      // Eliminar la validación requerida si no se requiere
+      this.filesControl.setValidators(FileUploadValidators.fileSize(20000));
+    }
+
+    this.tipobaja = newValue;
+
+    // Actualizar la validez del control y su estado
+    this.filesControl.updateValueAndValidity();
+  }
   onSubmit() {
     if (this.form.invalid) {
       Object.values(this.form.controls).forEach((x) => {
@@ -147,6 +177,10 @@ export default class SolicitudBajaComponent implements OnInit {
     formData.append(
       'executionDate',
       this.dateService.getDateFormat(form.executionDate)
+    );
+    formData.append(
+      'lastdayofwork',
+      this.dateService.getDateFormat(form.lastdayofwork)
     );
     formData.append('typeOfDeparture', form.typeOfDeparture);
     formData.append('professionId', form.professionId);
@@ -204,7 +238,7 @@ export default class SolicitudBajaComponent implements OnInit {
 
   /**CARGA DRAG AND DROB */
 
-  private filesControl = new FormControl<File[]>(
+  filesControl = new FormControl<File[]>(
     null,
     FileUploadValidators.fileSize(20000)
   );
@@ -224,7 +258,15 @@ export default class SolicitudBajaComponent implements OnInit {
         sizeFile = sizeFile + this.filesForm.value.files[i].size;
       }
     }
-    if (sizeFile > maxFileSize) this.maxSizeExceeded = true;
+    if (sizeFile > maxFileSize) {
+      this.maxSizeExceeded = true;
+    } else {
+      // Si el tamaño del archivo está dentro del límite, y se ha seleccionado algún archivo
+      // puedes marcar el control como válido
+      if (this.filesForm.value.files && this.filesForm.value.files.length > 0) {
+        this.filesControl.setErrors(null);
+      }
+    }
   }
 }
 
@@ -242,6 +284,7 @@ export interface SolicitudBajaDto {
 }
 
 export interface DiscountDescription {
+  enviar: true;
   description: string;
   price: number;
 }

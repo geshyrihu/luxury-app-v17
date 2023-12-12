@@ -1,7 +1,8 @@
 @if(hidden){
 <div class="mb-2" [ngClass]="{ 'form-group row ': horizontal }">
-  @if (horizontal) {
-  <label class="col-sm-3">{{ label }}</label>
+  @if (horizontal) { @if(mostrarLabel){
+  <label class="col-sm-3">{{ label }}</label
+  >}
   <div class="col-sm-9">
     <textarea
       (blur)="onTouch()"
@@ -12,8 +13,8 @@
       [placeholder]="'Ingresa ' + placeholder"
       [value]="value"
       class="form-control text-justify"
-      cols="30"
-      rows="5"
+      [cols]="cols"
+      [rows]="rows"
       [ngClass]="{
         'is-invalid': control.invalid && (control.dirty || control.touched)
       }"
@@ -23,8 +24,9 @@
       [placeholder]="placeholder"
     ></app-validation-errors-custom-input>
   </div>
-  } @if (!horizontal) {
+  } @if (!horizontal) { @if(mostrarLabel){
   <label>{{ label }}</label>
+  }
   <textarea
     (blur)="onTouch()"
     (input)="onChange($event.target.value)"
@@ -34,8 +36,8 @@
     [placeholder]="'Ingresa ' + placeholder"
     [value]="value"
     class="form-control text-justify"
-    cols="30"
-    rows="5"
+    [cols]="cols"
+    [rows]="rows"
     [ngClass]="{
       'is-invalid': control.invalid && (control.dirty || control.touched)
     }"

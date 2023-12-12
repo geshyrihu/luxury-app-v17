@@ -77,4 +77,11 @@ export default [
         'src/app/pages/reclutamiento/list-solicitudes-por-cliente/list-solicitudes-por-cliente.component'
       ),
   },
+  {
+    path: 'solicitudes-baja',
+    loadComponent: () =>
+      import(
+        'src/app/pages/reclutamiento/list-solicitudes/list-solicitud-baja/list-solicitud-baja.component'
+      ),
+  },
 ] as Routes;

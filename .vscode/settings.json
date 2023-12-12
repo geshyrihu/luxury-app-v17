@@ -1,3 +1,4 @@
 {
-  "editor.inlineSuggest.showToolbar": "always"
+  "editor.inlineSuggest.showToolbar": "always",
+  "editor.fontFamily": "\"Cascadia Code, Courier New, monospace\""
 }

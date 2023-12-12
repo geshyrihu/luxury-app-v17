@@ -19,8 +19,8 @@ import {
     FormsModule,
     ReactiveFormsModule,
     NgbModule,
-    ToastModule
-],
+    ToastModule,
+  ],
   providers: [MessageService, CustomToastService],
 })
 export default class AccessCustomerComponent implements OnInit, OnDestroy {
@@ -38,7 +38,7 @@ export default class AccessCustomerComponent implements OnInit, OnDestroy {
   }
   onGetAccesCustomer() {
     this.subRef$ = this.dataService
-      .get('AccesoClientes/GetCustomers/' + this.applicationUserId)
+      .get('AccessToClients/GetCustomers/' + this.applicationUserId)
       .subscribe({
         next: (resp: any) => {
           this.clientes = resp.body;
@@ -50,7 +50,7 @@ export default class AccessCustomerComponent implements OnInit, OnDestroy {
   onUpdateAcceso(roles: any) {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    const url = `AccesoClientes/AddCustomerAccesoToUser/${this.applicationUserId}`;
+    const url = `AccessToClients/AddCustomerAccesoToUser/${this.applicationUserId}`;
     this.subRef$ = this.dataService.post(url, roles).subscribe({
       next: () => {
         this.customToastService.onCloseToSuccess();

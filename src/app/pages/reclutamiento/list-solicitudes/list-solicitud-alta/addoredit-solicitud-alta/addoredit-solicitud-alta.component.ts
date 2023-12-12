@@ -9,6 +9,9 @@ import {
 import { FlatpickrModule } from 'angularx-flatpickr';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subscription } from 'rxjs';
+import { EStatus } from 'src/app/core/enums/status.enum';
+import { ETypeContractRegister } from 'src/app/core/enums/type-contract-register.enum';
+import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import {
   CustomToastService,
@@ -43,10 +46,10 @@ export default class AddOrEditSolicitudAltaComponent
 
   submitting: boolean = false;
   empleados: ISelectItemDto[] = [];
-  // cb_status = onGetSelectItemFromEnum(EStatus);
-  cb_status: ISelectItemDto[] = [];
-  // cb_typeContractRegister = onGetSelectItemFromEnum(ETypeContractRegister);
-  cb_typeContractRegister = [];
+  cb_status = onGetSelectItemFromEnum(EStatus);
+  // cb_status: ISelectItemDto[] = [];
+  cb_typeContractRegister = onGetSelectItemFromEnum(ETypeContractRegister);
+  // cb_typeContractRegister = [];
   id: number = 0;
   subRef$: Subscription;
   form: FormGroup = this.formBuilder.group({
@@ -69,14 +72,14 @@ export default class AddOrEditSolicitudAltaComponent
   }
   onLoadData() {
     this.onLoadEmpleados();
-    this.enumService
-      .getEnumValuesDisplay('ETypeContractRegister')
-      .subscribe((resp) => {
-        this.cb_typeContractRegister = resp;
-      });
-    this.enumService.getEnumValuesDisplay('EStatus').subscribe((resp) => {
-      this.cb_status = resp;
-    });
+    // this.enumService
+    //   .getEnumValuesDisplay('ETypeContractRegister')
+    //   .subscribe((resp) => {
+    //     this.cb_typeContractRegister = resp;
+    //   });
+    // this.enumService.getEnumValuesDisplay('EStatus').subscribe((resp) => {
+    //   this.cb_status = resp;
+    // });
     this.subRef$ = this.dataService
       .get(`RequestEmployeeRegister/${this.id}`)
       .subscribe({

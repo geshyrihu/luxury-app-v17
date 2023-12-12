@@ -73,6 +73,18 @@
           <custom-button-delete
             (OnConfirm)="onDelete(item)"
           ></custom-button-delete>
+          <custom-button
+            ngbTooltip="Actualizar imagenes"
+            [customClass]="'btn-outline-primary btn-sm '"
+            icon="fa-thin fa-images text-dark"
+            (clicked)="onUpdateImages(item.id)"
+          ></custom-button>
+          <custom-button
+            ngbTooltip="Actualizar direccion"
+            [customClass]="'btn-outline-primary btn-sm '"
+            icon="fa-thin fa-location-dot text-dark"
+            (clicked)="onUpdateAddress(item.id)"
+          ></custom-button>
         </div>
       </td>
     </tr>

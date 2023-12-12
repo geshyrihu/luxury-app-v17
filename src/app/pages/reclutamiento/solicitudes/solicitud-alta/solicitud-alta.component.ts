@@ -8,7 +8,9 @@ import {
 } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subscription } from 'rxjs';
+import { ETypeContractRegister } from 'src/app/core/enums/type-contract-register.enum';
 import { ETypeContract } from 'src/app/core/enums/type-contract.enum';
+import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import {
   AuthService,
@@ -46,7 +48,7 @@ export default class SolicitudAltaComponent implements OnInit, OnDestroy {
   submitting: boolean = false;
 
   subRef$: Subscription;
-  cb_typeContractRegister: ISelectItemDto[] = [];
+  cb_typeContractRegister = onGetSelectItemFromEnum(ETypeContractRegister);
   cb_vacantes: ISelectItemDto[] = [];
 
   employeeId = this.config.data.employeeId;
@@ -71,11 +73,11 @@ export default class SolicitudAltaComponent implements OnInit, OnDestroy {
     return this.form.controls;
   }
   onLoadData() {
-    this.enumService
-      .getEnumValuesDisplay('ETypeContractRegister')
-      .subscribe((resp) => {
-        this.cb_typeContractRegister = resp;
-      });
+    // this.enumService
+    //   .getEnumValuesDisplay('ETypeContractRegister')
+    //   .subscribe((resp) => {
+    //     this.cb_typeContractRegister = resp;
+    //   });
     this.subRef$ = this.dataService
       .get(
         `RequestEmployeeRegister/GetEmployeeRegister/${this.employeeId}/${this.customerId}`

@@ -1,161 +1,330 @@
 <div class="mt-2">
   <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
-    <custom-input-text
-      [control]="form.get('profession')"
-      formControlName="profession"
-      label="Puesto"
-      placeholder="Puesto"
-      [readonly]="true"
-    ></custom-input-text>
-    <custom-input-number
-      [control]="form.get('professionId')"
-      formControlName="professionId"
-      label="professionId"
-      placeholder="professionId"
-      hidden
-    ></custom-input-number>
-    <p class="text-danger">
-      Esta fecha correponde a el día en que se llevara a cabo la baja, valida la
-      fecha correcta
-    </p>
-    <custom-input-date
-      [control]="form.get('executionDate')"
-      formControlName="executionDate"
-      label="Fecha de la baja"
-      placeholder="fecha de la baja"
-    ></custom-input-date>
-    <custom-input-text
-      [control]="form.get('employee')"
-      formControlName="employee"
-      label="Nombre del colaborador"
-      placeholder="Nombre del colaborador"
-      [readonly]="true"
-    ></custom-input-text>
-    <custom-input-text
-      [control]="form.get('phoneEmployee')"
-      formControlName="phoneEmployee"
-      label="Tél. de contacto colaborador"
-      placeholder="Nombre del colaborador"
-      [readonly]="true"
-    ></custom-input-text>
-    <custom-input-select
-      [control]="form.get('typeOfDeparture')"
-      formControlName="typeOfDeparture"
-      label="Tipo de baja"
-      [data]="cb_type_departure"
-    ></custom-input-select>
-    <custom-input-text-area
-      [control]="form.get('reasonForLeaving')"
-      formControlName="reasonForLeaving"
-      label="Motivo de la baja"
-      placeholder="motivo de la baja"
-    ></custom-input-text-area>
-    <div formArrayName="discountDescriptions">
-      <button
-        type="button"
-        class="btn btn-outline-info mb-2"
-        (click)="addDiscountDescription()"
-      >
-        Agregar descuento
-      </button>
-      @for (discount of discountDescriptions.controls; track discount; let i =
-      $index) {
-      <div>
-        <div [formGroupName]="i">
-          <div class="row">
-            <div class="col-5">
-              <div class="form-group row mb-2">
-                <label class="col-sm-3">Descripción</label>
-                <div class="col-sm-9">
-                  <input
-                    class="form-control"
-                    type="text"
-                    formControlName="description"
-                    [ngClass]="{
-                      'is-invalid': isControlInvalid(
-                        discount.get('description')
-                      )
-                    }"
-                  />
-                  @if ( isControlInvalid(discount.get('description')) &&
-                  (discount.get('description').dirty ||
-                  discount.get('description').touched) ) {
-                  <div class="invalid-feedback">
-                    La descripción es requerida.
-                  </div>
-                  }
-                </div>
-              </div>
-            </div>
-            <div class="col-5">
-              <div class="form-group row mb-2">
-                <label class="col-sm-3">Costo</label>
-                <div class="col-sm-9">
-                  <input
-                    class="form-control"
-                    type="number"
-                    formControlName="price"
-                    [ngClass]="{
-                      'is-invalid': isControlInvalid(discount.get('price'))
-                    }"
-                  />
-                  @if ( isControlInvalid(discount.get('price')) &&
-                  (discount.get('price').dirty || discount.get('price').touched)
-                  ) {
-                  <div class="invalid-feedback">El costo es requerido.</div>
-                  }
-                </div>
-              </div>
-            </div>
-            <div class="col-2">
-              <button
-                type="button"
-                class="btn btn-outline-danger w-100"
-                (click)="removeDiscountDescription(i)"
+    <ngb-alert [dismissible]="false" type="light">
+      <div class="row">
+        <div class="col-sm-4">
+          <custom-input-text
+            [control]="form.get('employee')"
+            formControlName="employee"
+            label="Nombre del excolaborador"
+            placeholder="Nombre del excolaborador"
+            [readonly]="true"
+            [horizontal]="false"
+          ></custom-input-text>
+        </div>
+        <div class="col-sm-4">
+          <custom-input-text
+            [control]="form.get('phoneEmployee')"
+            formControlName="phoneEmployee"
+            label="Teléfono de excolaborador"
+            placeholder="Teléfono de excolaborador"
+            [readonly]="true"
+            [horizontal]="false"
+          ></custom-input-text>
+        </div>
+        <div class="col-sm-4">
+          <custom-input-number
+            [control]="form.get('professionId')"
+            formControlName="professionId"
+            label="professionId"
+            placeholder="professionId"
+            hidden
+          ></custom-input-number>
+
+          <custom-input-text
+            [control]="form.get('profession')"
+            formControlName="profession"
+            label="Puesto"
+            placeholder="Puesto"
+            [readonly]="true"
+            [horizontal]="false"
+          ></custom-input-text>
+        </div>
+      </div>
+    </ngb-alert>
+
+    <div class="row">
+      <div class="col-sm-4">
+        <ngb-alert [dismissible]="false" type="danger">
+          <p class="m-0">
+            @if(tipobaja==0){
+            <strong>
+              NO OLVIDES AGREGAR LA RENUNCIA EN FORMATO PDF FIRMADA POR EL EX
+              EMPLEADO</strong
+            >
+            } @if(tipobaja==1){
+            <strong>
+              NO OLVIDES AGREGAR EVIDENCIA QUE JUSTIFIQUE EL DESPIDO Y CONFIRMAR
+              SI SE REQUIERE ABOGADO PARA GESTIONAR LA RENUNCIA</strong
+            >
+            }
+          </p>
+          <custom-input-select
+            [control]="form.get('typeOfDeparture')"
+            formControlName="typeOfDeparture"
+            label="Tipo de baja"
+            [data]="cb_type_departure"
+            [horizontal]="false"
+            [SelectDefaulOption]="false"
+          ></custom-input-select>
+
+          <p class="text-justify">
+            <strong>Renuncia:</strong> - Se coloca el ultimo día que se presento
+            a laborar.
+          </p>
+          <p class="text-justify">
+            <strong>Abandono:</strong> - Considerar 3 días naturales para enviar
+            la baja pero si el empleado se comunico o contesto al contacto de
+            seguimiento colocar el ultimo día que se presento a trabajar ya que
+            esta dando la notificación de que no se presentara más.
+          </p>
+          <p class="text-justify">
+            <strong>Despido:</strong> - Se tienen que solicitar al menos con 2
+            días hábiles de anticipación para que los abogados coordinen sus
+            agendas y en los comentarios referir se se requiere de calculo de
+            finiquito y liquidación.
+          </p>
+        </ngb-alert>
+      </div>
+      <div class="col-sm-4">
+        <ngb-alert [dismissible]="false" type="danger">
+          <p class="m-0">
+            <strong>
+              ESTA FECHA CORRESPONDE A EL DÍA EN QUE SE LLEVARA A CABO LA BAJA,
+              COLOCA LA FECHA CORRECTA
+            </strong>
+          </p>
+          <custom-input-date
+            [control]="form.get('executionDate')"
+            formControlName="executionDate"
+            label="* Fecha de la baja"
+            placeholder="fecha de la baja"
+            [horizontal]="false"
+          ></custom-input-date>
+          <p class="m-0">
+            <strong>
+              ESTA FECHA CORRESPONDE A EL ULTIMO DÍA QUE TRABAJO EL EMPLEADO
+            </strong>
+          </p>
+          <custom-input-date
+            [control]="form.get('lastdayofwork')"
+            formControlName="lastdayofwork"
+            label="* Ultimo día que trabajo"
+            placeholder="Ultimo día que trabajo"
+            [horizontal]="false"
+          ></custom-input-date>
+        </ngb-alert>
+      </div>
+
+      <div class="col-sm-4">
+        <ngb-alert [dismissible]="false" type="danger">
+          <p class="m-0">
+            <strong>
+              EN ESTE CAMPO AGREGAR <br />
+              DESCRIPCION BREVE DEL MOTIVO DE BAJA:<br />
+              HASTA QUE DIA SE LE VA A PAGAR: <br />
+              DESCUENTO DE DIAS ADICIONALES:
+            </strong>
+          </p>
+          <custom-input-text-area
+            [control]="form.get('reasonForLeaving')"
+            formControlName="reasonForLeaving"
+            placeholder="motivo de la baja, con una breve descripcción"
+            [horizontal]="false"
+            [mostrarLabel]="false"
+          ></custom-input-text-area>
+        </ngb-alert>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-8">
+        <div class="row">
+          <div class="col-sm-6">
+            <custom-input-select
+              [control]="form.get('lawyerAssistance')"
+              formControlName="lawyerAssistance"
+              label="Require abogado"
+              [data]="cb_si_no"
+              [SelectDefaulOption]="false"
+              [horizontal]="false"
+            ></custom-input-select>
+          </div>
+          <div class="col-sm-6">
+            <custom-input-select
+              [control]="form.get('employeeInformed')"
+              formControlName="employeeInformed"
+              label="Colaborador enterado de su baja"
+              [data]="cb_si_no"
+              [SelectDefaulOption]="false"
+              [horizontal]="false"
+            ></custom-input-select>
+          </div>
+          <div class="col-12">
+            <div formArrayName="discountDescriptions">
+              <ngb-alert
+                [dismissible]="false"
+                type="warning"
+                class="d-flex justify-content-between align-items-center"
               >
-                Borrar
-              </button>
+                <strong
+                  >DESCUENTOS: REVISA SI SE VAN A APLICAR DESCUENTOS POR
+                  UNIFORMES, RADIO, HERRAMIENTA, MATERIAL, ETC.</strong
+                >
+
+                <button
+                  type="button"
+                  class="btn btn-outline-info"
+                  (click)="addDiscountDescription()"
+                >
+                  Agregar descuento
+                </button>
+              </ngb-alert>
+
+              @for (discount of discountDescriptions.controls; track discount;
+              let i = $index) {
+              <div>
+                <div [formGroupName]="i">
+                  <div class="row">
+                    <div class="col-5">
+                      <div class="form-group row mb-2">
+                        <label class="col-sm-3">Descripción</label>
+                        <div class="col-sm-9">
+                          <input
+                            class="form-control"
+                            type="text"
+                            formControlName="description"
+                            [ngClass]="{
+                              'is-invalid': isControlInvalid(
+                                discount.get('description')
+                              )
+                            }"
+                          />
+                          @if ( isControlInvalid(discount.get('description')) &&
+                          (discount.get('description').dirty ||
+                          discount.get('description').touched) ) {
+                          <div class="invalid-feedback">
+                            La descripción es requerida.
+                          </div>
+                          }
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-5">
+                      <div class="form-group row mb-2">
+                        <label class="col-sm-3">Costo</label>
+                        <div class="col-sm-9">
+                          <input
+                            class="form-control"
+                            type="number"
+                            formControlName="price"
+                            [ngClass]="{
+                              'is-invalid': isControlInvalid(
+                                discount.get('price')
+                              )
+                            }"
+                          />
+                          @if ( isControlInvalid(discount.get('price')) &&
+                          (discount.get('price').dirty ||
+                          discount.get('price').touched) ) {
+                          <div class="invalid-feedback">
+                            El costo es requerido.
+                          </div>
+                          }
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-2">
+                      <button
+                        type="button"
+                        class="btn btn-outline-danger w-100"
+                        (click)="removeDiscountDescription(i)"
+                      >
+                        Borrar
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              }
             </div>
           </div>
         </div>
       </div>
-      }
-    </div>
-    <custom-input-select
-      [control]="form.get('lawyerAssistance')"
-      formControlName="lawyerAssistance"
-      label="Require abogado"
-      [data]="cb_si_no"
-      [SelectDefaulOption]="false"
-    ></custom-input-select>
-    <custom-input-select
-      [control]="form.get('employeeInformed')"
-      formControlName="employeeInformed"
-      label="Colaborador enterado de su baja"
-      [data]="cb_si_no"
-      [SelectDefaulOption]="false"
-    ></custom-input-select>
-    <div class="form-group row mb-2">
-      <label class="col-sm-3">Adjuntar evidencia (máximo 10MB) </label>
-      <div class="col-sm-9">
-        <form [formGroup]="filesForm">
-          <file-upload
-            formControlName="files"
-            [animation]="true"
-            (change)="onFileChange()"
-          >
-          </file-upload>
-          <!-- Mostrar mensaje de error si se supera el tamaño máximo -->
-          @if (maxSizeExceeded) {
-          <div class="text-danger">
-            Los archivos adjuntos no deben superar los 10 MB.
-          </div>
+      <div class="col-sm-4">
+        <div class="form-group mb-2">
+          <label>Adjuntar evidencia (máximo 10MB) </label>
+
+          @if(this.filesControl.status === 'INVALID'){
+
+          <p class="text-danger">{{ mensajeRenuncia }}</p>
           }
-        </form>
+          <form [formGroup]="filesForm">
+            <file-upload
+              formControlName="files"
+              [animation]="true"
+              (change)="onFileChange()"
+              accept=".pdf"
+            >
+              <ng-template
+                let-isFileDragDropAvailable="isFileDragDropAvailable"
+                #placeholder
+              >
+                <file-upload-drop-zone>
+                  <ng-container
+                    *ngIf="isFileDragDropAvailable; else isNotDragDropAvailable"
+                  >
+                    <b>Arrastrar y soltar archivos</b><br />
+                    o haga clic aquí
+                  </ng-container>
+                  <ng-template #isNotDragDropAvailable>
+                    <b>Haz clic aquí</b> para<br />
+                    seleccionar un archivo
+                  </ng-template>
+                </file-upload-drop-zone>
+              </ng-template>
+
+              <ng-template
+                let-i="index"
+                let-file="file"
+                let-control="control"
+                #item
+              >
+                <file-upload-list-item
+                  [index]="i"
+                  [file]="file"
+                  [control]="control"
+                  >Eliminar</file-upload-list-item
+                >
+              </ng-template>
+            </file-upload>
+            @if (maxSizeExceeded) {
+            <div class="text-danger">
+              Los archivos adjuntos no deben superar los 10 MB.
+            </div>
+            }
+            <!-- <file-upload
+              formControlName="files"
+              [animation]="true"
+              (change)="onFileChange()"
+              accept=".pdf"
+            >
+            </file-upload>
+            @if (maxSizeExceeded) {
+            <div class="text-danger">
+              Los archivos adjuntos no deben superar los 10 MB.
+            </div>
+            } -->
+          </form>
+        </div>
       </div>
     </div>
+
     <custom-button-send-email
-      [disabled]="this.form.invalid || submitting"
+      [disabled]="
+        this.form.invalid ||
+        submitting ||
+        this.filesControl.status === 'INVALID'
+      "
     ></custom-button-send-email>
   </form>
 </div>

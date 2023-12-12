@@ -9,6 +9,7 @@ import {
 import { FlatpickrModule } from 'angularx-flatpickr';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subscription } from 'rxjs';
+import { EFuenteReclutamiento } from 'src/app/core/enums/fuente-reclutamiento';
 import { EStatus } from 'src/app/core/enums/status.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
@@ -42,6 +43,7 @@ export default class AddOrEditVacanteComponent implements OnInit, OnDestroy {
   submitting: boolean = false;
 
   cb_status: ISelectItemDto[] = onGetSelectItemFromEnum(EStatus);
+  cb_fuente: ISelectItemDto[] = onGetSelectItemFromEnum(EFuenteReclutamiento);
   id: number = 0;
   subRef$: Subscription;
   form: FormGroup = this.formBuilder.group({
@@ -53,6 +55,7 @@ export default class AddOrEditVacanteComponent implements OnInit, OnDestroy {
     entryDate: [''],
     observations: [''],
     workPositionId: [this.config.data.workPositionId],
+    fuente: [this.config.data.workPositionId],
   });
   ngOnInit(): void {
     this.id = this.config.data.id;
@@ -64,6 +67,7 @@ export default class AddOrEditVacanteComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (resp: any) => {
           this.form.patchValue(resp.body);
+          console.log('🚀 ~ resp.body:', resp.body);
         },
         error: (err) => {
           this.customToastService.onShowError();

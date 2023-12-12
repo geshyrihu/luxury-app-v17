@@ -1,6 +1,6 @@
 <div class="text-center">
-  <h4 class="mb-0">Bienvenido!</h4>
-  <p class="text-muted mt-2">Inicia sesión</p>
+  <h2 class="h2 mb-0">Bienvenido!</h2>
+  <h3 class="h3 text-muted mt-2">Inicia sesión</h3>
 </div>
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
   <custom-input-text
@@ -9,6 +9,8 @@
     formControlName="email"
     label="Usuario"
     placeholder="Usuario"
+    customClass="form-control-lg"
+    class="form-control-lg"
   ></custom-input-text>
 
   <custom-input-password
@@ -17,6 +19,8 @@
     formControlName="password"
     label="Contraseña"
     placeholder="Contraseña"
+    customClass="form-control-lg"
+    class="form-control-lg"
   ></custom-input-password>
 
   <custom-input-check
@@ -24,20 +28,21 @@
     [horizontal]="false"
     formControlName="remember"
     label="Recordarme"
+    class="form-control-lg"
   ></custom-input-check>
 
-  <p class="pointer" (click)="onRecoveryPassword()">Recuperar contraseña</p>
   <div class="mt-3 d-grid">
     <custom-button
-      customClass="btn-primary w-100"
+      customClass="btn-primary btn-lg w-100"
       label="Iniciar sesión"
       type="submit"
     ></custom-button>
   </div>
 </form>
 
-<div class="mt-5 text-center">
-  <p class="text-muted mb-0">
-    ¿No tienes cuenta?, Solicitala con tu Administrador.
+<div class="mt-3 text-center">
+  <p class="mb-0 font-size-16">
+    ¿No tienes cuenta o no recuerdas tus credenciales?, Solicita soporte con tu
+    Administrador.
   </p>
 </div>

@@ -28,6 +28,9 @@ export default class CustomInputTextAreaComponent
   @Input() horizontal: boolean = true;
   @Input() label: string;
   @Input() placeholder: string;
+  @Input() rows: string = '5';
+  @Input() cols: string = '30';
+  @Input() mostrarLabel: boolean = true;
 
   value: any;
   onChange: any;

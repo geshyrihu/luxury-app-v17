@@ -12,6 +12,7 @@
       [readonly]="readonly"
       [value]="value"
       class="form-control"
+      [class]="customClass"
       type="text"
       [ngClass]="{
         'is-invalid': control.invalid && (control.dirty || control.touched)
@@ -34,6 +35,7 @@
     (input)="onChange($event.target.value)"
     [readonly]="readonly"
     (blur)="onTouch()"
+    [class]="customClass"
     [ngClass]="{
       'is-invalid': control.invalid && (control.dirty || control.touched)
     }"

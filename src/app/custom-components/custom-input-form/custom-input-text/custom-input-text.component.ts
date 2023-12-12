@@ -38,6 +38,7 @@ export default class CustomInputTextComponent
   @Input() label: string = '';
   // Placeholder del input
   @Input() placeholder: string = '';
+  @Input() customClass: string = '';
 
   @Input() readonly: boolean = false;
 

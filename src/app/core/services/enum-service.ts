@@ -15,7 +15,7 @@ export class EnumService {
     const dataSubject = new Subject<ISelectItemDto[]>();
     this.dataService
       .get<ISelectItemDto[]>(
-        `Enumeration/CapaDatos.Core.Enumerations.${enumName}`
+        `Enumeration/LuxuryApp.Shared.CapaDatos.Core.Enumerations.${enumName}`
       )
       .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({

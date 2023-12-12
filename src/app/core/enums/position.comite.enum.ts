@@ -3,4 +3,5 @@
   Tesorero,
   Vocal,
   Socio,
+  Secretario,
 }

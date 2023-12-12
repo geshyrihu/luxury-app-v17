@@ -67,7 +67,9 @@ export default class LoginComponent implements OnInit, OnDestroy {
         next: (resp: any) => {
           // Guarda los datos de autenticación y redirige al 'returnUrl'
           this.onRemember(this.form.get('remember').value);
-          this.router.navigateByUrl(localStorage.getItem('currentUrl'));
+          // this.router.navigateByUrl(localStorage.getItem('currentUrl'));
+          //TODO: Cambiar la redirección al dashboard
+          this.router.navigateByUrl(localStorage.getItem('dashboard'));
           this.securityService.setAuthData(resp.body.token);
           this.customToastService.onClose();
         },

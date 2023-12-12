@@ -28,6 +28,19 @@
         label="Estatus"
         [data]="cb_status"
       ></custom-input-select>
+      <div class="mb-2 form-group row">
+        <label class="col-sm-3">Fuente</label>
+        <div class="col-sm-9">
+          <select formControlName="fuente" class="form-select">
+            <option value="">--Selecciona una opción--</option>
+            @for (item of cb_fuente; track item) {
+            <option [value]="item.value">
+              {{ item.label }}
+            </option>
+            }
+          </select>
+        </div>
+      </div>
 
       <custom-input-date
         [control]="form.get('selectionDate')"

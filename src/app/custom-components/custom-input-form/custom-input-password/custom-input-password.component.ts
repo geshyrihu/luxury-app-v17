@@ -28,6 +28,7 @@ export default class CustomInputPasswordComponent
   @Input() horizontal: boolean = true;
   @Input() label: string;
   @Input() placeholder: string;
+  @Input() customClass: string = '';
 
   value: any;
   onChange: any;
