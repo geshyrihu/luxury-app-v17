@@ -52,12 +52,6 @@ export class SidebarService {
           routerLink: '/contabilidad/pendientes-minutas-legal',
           name: 'Legal-Minutas',
         },
-        {
-          visible: this.authService.onValidateRoles(['Legal', 'SuperUsuario']),
-          label: 'Tickets',
-          routerLink: '/legal/list-ticket',
-          name: 'Legal-Tickets',
-        },
       ],
     },
     {

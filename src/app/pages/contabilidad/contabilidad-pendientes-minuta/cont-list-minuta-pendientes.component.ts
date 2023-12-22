@@ -4,14 +4,14 @@ import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subscription } from 'rxjs';
-import AddoreditMinutaDetalleComponent from 'src/app/pages/operaciones/junta-comite/addoredit-minuta-detalle/addoredit-minuta-detalle.component';
-import AddorEditMeetingSeguimientoComponent from 'src/app/pages/operaciones/junta-comite/addoredit-seguimiento/addor-edit-meeting-seguimiento.component';
 import { SanitizeHtmlPipe } from 'src/app/core/pipes/sanitize-html.pipe';
 import {
   AuthService,
   CustomToastService,
   DataService,
 } from 'src/app/core/services/common-services';
+import AddoreditMinutaDetalleComponent from 'src/app/pages/operaciones/junta-comite/addoredit-minuta-detalle/addoredit-minuta-detalle.component';
+import AddorEditMeetingSeguimientoComponent from 'src/app/pages/operaciones/junta-comite/addoredit-seguimiento/addor-edit-meeting-seguimiento.component';
 import ComponentsModule from 'src/app/shared/components.module';
 import PrimeNgModule from 'src/app/shared/prime-ng.module';
 import ContMinutaSeguimientosComponent from './cont-minuta-seguimientos.component';
@@ -25,8 +25,8 @@ import ContMinutaSeguimientosComponent from './cont-minuta-seguimientos.componen
     ComponentsModule,
     PrimeNgModule,
     SanitizeHtmlPipe,
-    NgbTooltip
-],
+    NgbTooltip,
+  ],
   providers: [DialogService, MessageService, CustomToastService],
 })
 export default class ContListMinutaPendientesComponent
@@ -58,6 +58,7 @@ export default class ContListMinutaPendientesComponent
       .subscribe({
         next: (resp: any) => {
           this.data = resp.body;
+          console.log('🚀 ~ resp.body:', resp.body);
           this.customToastService.onClose();
         },
         error: (err) => {

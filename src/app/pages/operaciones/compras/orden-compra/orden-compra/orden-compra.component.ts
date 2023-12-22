@@ -205,6 +205,7 @@ export default class OrdenCompraComponent implements OnInit, OnDestroy {
         next: (resp: any) => {
           this.customToastService.onClose();
           this.ordenCompra = resp.body;
+          console.log('🚀 ~ resp.body:', resp.body);
           if (this.ordenCompra.ordenCompraDatosPago.tipoGasto === 0) {
             this.esGastoFijo = true;
           }

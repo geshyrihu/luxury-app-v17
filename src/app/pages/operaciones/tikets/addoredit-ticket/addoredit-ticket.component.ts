@@ -106,6 +106,7 @@ export default class AddoreditTicketComponent implements OnInit, OnDestroy {
       .onGetSelectItem('ResponsibleArea')
       .subscribe((resp) => {
         this.cb_area_responsable = resp;
+        console.log('🚀 ~ this.cb_area_responsable:', this.cb_area_responsable);
       });
     this.selectItemService
       .onGetSelectItem(
