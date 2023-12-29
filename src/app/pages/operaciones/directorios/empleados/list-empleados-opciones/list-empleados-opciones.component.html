@@ -49,7 +49,9 @@
     </div>
     <div class="col-6">
       <ul class="list-group">
-        @if(accionPermitida){ @if (!workPosition) {
+        <!-- @if (accionPermitida){  -->
+
+        @if (!workPosition) {
         <li class="list-group-item text-danger">
           <em>
             Para solicitar baja o modificación de salario, este empleado debe
@@ -91,7 +93,8 @@
             >Solicitar modificación de salario en proceso</span
           >
         </li>
-        } }
+        }
+        <!-- } -->
         <li class="list-group-item pointer" (click)="onShowModalAddOrEdit()">
           <i class="fa-regular fa-pen-to-square me-3"></i>
           Editar

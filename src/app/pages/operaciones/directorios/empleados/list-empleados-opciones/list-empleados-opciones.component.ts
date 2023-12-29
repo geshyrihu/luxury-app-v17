@@ -289,6 +289,7 @@ export default class ListEmpleadosOpcionesComponent
       .subscribe({
         next: (resp: any) => {
           this.accionPermitida = resp.body;
+          console.log('🚀 ~ this.accionPermitida:', this.accionPermitida);
         },
         error: (err) => {
           // En caso de error, mostrar un mensaje de error y registrar el error en la consola

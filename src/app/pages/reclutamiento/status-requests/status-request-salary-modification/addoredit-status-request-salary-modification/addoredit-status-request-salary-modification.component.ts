@@ -10,6 +10,7 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subscription } from 'rxjs';
 import { cb_ESiNo } from 'src/app/core/enums/si-no.enum';
 import { ETurnoTrabajo } from 'src/app/core/enums/turno-trabajo.enum';
+import { ETypeOfDeparture } from 'src/app/core/enums/type-of-departure.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
@@ -51,7 +52,8 @@ export default class AddOrEditStatusRequestSalaryModificationComponent
 
   cb_profession: ISelectItemDto[] = [];
   cb_status: ISelectItemDto[] = onGetSelectItemFromEnum(ETurnoTrabajo);
-  cb_type_departure: ISelectItemDto[] = [];
+  cb_type_departure: ISelectItemDto[] =
+    onGetSelectItemFromEnum(ETypeOfDeparture);
   cb_si_no: ISelectItemDto[] = cb_ESiNo;
 
   form: FormGroup = this.formBuilder.group({
@@ -141,11 +143,11 @@ export default class AddOrEditStatusRequestSalaryModificationComponent
     this.selectItemService.onGetSelectItem('Professions').subscribe((resp) => {
       this.cb_profession = resp;
     });
-    this.enumService
-      .onGetSelectItemEmun('ETypeOfDeparture')
-      .subscribe((resp) => {
-        this.cb_type_departure = resp;
-      });
+    // this.enumService
+    //   .onGetSelectItemEmun('ETypeOfDeparture')
+    //   .subscribe((resp) => {
+    //     this.cb_type_departure = resp;
+    //   });
   }
   ngOnDestroy() {
     if (this.subRef$) this.subRef$.unsubscribe();

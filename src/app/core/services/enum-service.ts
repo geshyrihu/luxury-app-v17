@@ -11,26 +11,26 @@ export class EnumService {
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
-  onGetSelectItemEmun(enumName: string): Observable<ISelectItemDto[]> {
-    const dataSubject = new Subject<ISelectItemDto[]>();
-    this.dataService
-      .get<ISelectItemDto[]>(
-        `Enumeration/LuxuryApp.Shared.CapaDatos.Core.Enumerations.${enumName}`
-      )
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          dataSubject.next(resp.body);
-          dataSubject.complete();
-        },
-        error: (err) => {
-          console.error(err.error);
-          // this.customToastService.onCloseToError();
-          dataSubject.error(err.error);
-        },
-      });
-    return dataSubject.asObservable();
-  }
+  // onGetSelectItemEmun(enumName: string): Observable<ISelectItemDto[]> {
+  //   const dataSubject = new Subject<ISelectItemDto[]>();
+  //   this.dataService
+  //     .get<ISelectItemDto[]>(
+  //       `Enumeration/LuxuryApp.Shared.CapaDatos.Core.Enumerations.${enumName}`
+  //     )
+  //     .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+  //     .subscribe({
+  //       next: (resp: any) => {
+  //         dataSubject.next(resp.body);
+  //         dataSubject.complete();
+  //       },
+  //       error: (err) => {
+  //         console.error(err.error);
+  //         // this.customToastService.onCloseToError();
+  //         dataSubject.error(err.error);
+  //       },
+  //     });
+  //   return dataSubject.asObservable();
+  // }
   getEnumValuesDisplay(enumName: string): Observable<ISelectItemDto[]> {
     const dataSubject = new Subject<ISelectItemDto[]>();
     this.dataService
