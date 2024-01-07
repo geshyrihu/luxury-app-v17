@@ -6,8 +6,9 @@
   "compilerOptions": {
     // Especifica la ruta base para resolver los módulos.
     "baseUrl": "./",
+
     // Si se establece en true, se asegura de que los nombres de archivo tengan una capitalización consistente.
-    "forceConsistentCasingInFileNames": false,
+    "forceConsistentCasingInFileNames": true,
     // Si se establece en false, desactiva las comprobaciones estrictas del compilador TypeScript.
     "strict": false,
     // Si se establece en true, muestra un error si un método no anula correctamente un método de la clase base.

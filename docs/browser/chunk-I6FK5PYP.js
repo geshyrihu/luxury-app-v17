@@ -1,0 +1,1 @@
+import"./chunk-G2X5OL7Z.js";var o=[{path:"reporte-operacion/:customer/:inicio/:final",loadComponent:()=>import("./chunk-7SKSEL7A.js")},{path:"reporte-minuta/:customer/:id",loadComponent:()=>import("./chunk-KSJWAC4E.js")}];export{o as default};

@@ -1,0 +1,1 @@
+import{ca as r}from"./chunk-3JZBD3P2.js";var s=(()=>{let t=class t{getRequestFondeoCaratulaDto(){return this.requestFondeoCaratulaDto}createRequestFondeoCaratulaDto(o){this.requestFondeoCaratulaDto=o}};t.\u0275fac=function(a){return new(a||t)},t.\u0275prov=r({token:t,factory:t.\u0275fac,providedIn:"root"});let e=t;return e})();export{s as a};

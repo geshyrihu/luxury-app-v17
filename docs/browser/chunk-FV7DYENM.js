@@ -1,0 +1,1 @@
+import"./chunk-G2X5OL7Z.js";var o=[{path:"documento",loadComponent:()=>import("./chunk-E4DCAZDV.js")},{path:"poliza",loadComponent:()=>import("./chunk-ZNUOF7N3.js")},{path:"documento",loadComponent:()=>import("./chunk-E4DCAZDV.js")}];export{o as default};

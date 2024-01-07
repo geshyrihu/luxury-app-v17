@@ -1,0 +1,1 @@
+var r=function(e){return e[e.Enero=0]="Enero",e[e.Febrero=1]="Febrero",e[e.Marzo=2]="Marzo",e[e.Abril=3]="Abril",e[e.Mayo=4]="Mayo",e[e.Junio=5]="Junio",e[e.Julio=6]="Julio",e[e.Agosto=7]="Agosto",e[e.Septiembre=8]="Septiembre",e[e.Octubre=9]="Octubre",e[e.Noviembre=10]="Noviembre",e[e.Diciembre=11]="Diciembre",e}(r||{});export{r as a};

@@ -1,0 +1,1 @@
+import"./chunk-G2X5OL7Z.js";var t=[{path:"inventario-productos",loadComponent:()=>import("./chunk-DZGI5FO7.js"),title:"Inventario"},{path:"salida-productos",loadComponent:()=>import("./chunk-VX4CN63C.js"),title:"Salida de inventario"},{path:"entrada-productos",loadComponent:()=>import("./chunk-PBKLHV57.js"),title:"Entrada de inventario"}];export{t as default};

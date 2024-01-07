@@ -1,0 +1,1 @@
+import{oa as i}from"./chunk-3JZBD3P2.js";var o=(()=>{let r=class r{transform(e){return isNaN(e)?"":new Intl.NumberFormat("es-MX",{style:"currency",currency:"MXN"}).format(e)}};r.\u0275fac=function(n){return new(n||r)},r.\u0275pipe=i({name:"CurrencyMexicoPipe",type:r,pure:!0,standalone:!0});let t=r;return t})();export{o as a};

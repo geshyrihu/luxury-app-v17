@@ -10,6 +10,7 @@ import { FormControl } from '@angular/forms';
 })
 export default class ValidationErrorsCustomInputComponent {
   @Input() control: FormControl;
+
   @Input() placeholder: string;
 
   shouldShowErrors(): boolean {

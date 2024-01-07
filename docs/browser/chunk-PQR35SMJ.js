@@ -1,0 +1,1 @@
+import"./chunk-G2X5OL7Z.js";var o=[{path:"productos-servicios",loadComponent:()=>import("./chunk-MGFEY7OO.js")},{path:"extintores",loadComponent:()=>import("./chunk-GCXMS34R.js")},{path:"iluminacion",loadComponent:()=>import("./chunk-CBWQCOSF.js")},{path:"pintura",loadComponent:()=>import("./chunk-W6CFGNDO.js")}];export{o as default};

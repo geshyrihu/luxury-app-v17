@@ -1,5 +1,5 @@
 {
-  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "$schema": "../../../node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
@@ -37,26 +37,19 @@
             "outputPath": "dist/luxury-app",
             "index": "src/index.html",
             "browser": "src/main.ts",
-            "polyfills": [
-              "zone.js"
-            ],
+            "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
-            "assets": [
-              "src/icon.png",
-              "src/assets"
-            ],
+            "assets": ["src/icon.png", "src/assets"],
             "styles": [
-              "src/styles.scss",
-              "node_modules/primeng/resources/primeng.min.css",
-              "node_modules/primeng/resources/themes/saga-blue/theme.css",
-              "src/assets/scss/bootstrap.scss",
-              "src/assets/scss/app.scss",
-              "src/assets/scss/icons.scss",
               "node_modules/ngx-spinner/animations/ball-atom.css",
               "node_modules/quill/dist/quill.core.css",
-              "node_modules/quill/dist/quill.snow.css"
-
+              "node_modules/quill/dist/quill.snow.css",
+              "node_modules/primeng/resources/themes/lara-light-blue/theme.css",
+              "node_modules/primeng/resources/primeng.min.css",
+              "src/assets/scss/bootstrap.scss",
+              "src/assets/scss/app.scss",
+              "src/assets/scss/icons.scss"
             ],
             "scripts": []
           },
@@ -82,7 +75,7 @@
               ],
               "outputHashing": "all"
             },
-            
+
             "development": {
               "optimization": false,
               "extractLicenses": false,
@@ -112,19 +105,11 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ],
+            "polyfills": ["zone.js", "zone.js/testing"],
             "tsConfig": "tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
-            "styles": [
-              "src/styles.scss"
-            ],
+            "assets": ["src/favicon.ico", "src/assets"],
+            "styles": ["src/styles.scss"],
             "scripts": []
           }
         }

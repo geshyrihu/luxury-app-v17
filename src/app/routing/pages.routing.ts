@@ -89,4 +89,8 @@ export default [
     path: 'comunicacion',
     loadChildren: () => import('./comunicados.routing'),
   },
+  {
+    path: 'legal',
+    loadChildren: () => import('./legal.routing'),
+  },
 ] as Routes;

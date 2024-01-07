@@ -8,6 +8,7 @@ import {
   forwardRef,
 } from '@angular/core';
 import {
+  AbstractControl,
   ControlValueAccessor,
   FormControl,
   NG_VALUE_ACCESSOR,

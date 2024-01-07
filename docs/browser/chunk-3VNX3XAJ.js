@@ -1,0 +1,1 @@
+import"./chunk-G2X5OL7Z.js";var t=[{path:"minutas",loadComponent:()=>import("./chunk-XWJM26VI.js")},{path:"resumen-minuta/:meetingId",loadComponent:()=>import("./chunk-VHNMBNX4.js")},{path:"minuta-pendientes",loadComponent:()=>import("./chunk-KW7527PV.js")},{path:"seguimiento-minutas/:area",loadComponent:()=>import("./chunk-ST3B52BI.js")}];export{t as default};
