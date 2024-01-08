@@ -12,10 +12,12 @@
             [label]="!mostrarBuscador ? 'Buscador' : 'Ver Listado'"
             (clicked)="mostrarBuscador = !mostrarBuscador"
           ></custom-button>
+          <!-- href="assets/documents/glb-altaproveedor.docx" -->
           <a
             ngbTooltip="Formato para dar de alta a proveedor"
             class="btn btn-outline-info float-end me-1"
-            href="assets/documents/glb-altaproveedor.docx"
+            [href]="filePath + 'glb-altaproveedor.docx'"
+            target="_blank"
           >
             <i class="fa-regular fa-file-word"></i>
           </a>
@@ -23,7 +25,7 @@
             ngbTooltip="Guia para cargar proveedor"
             class="btn btn-outline-danger float-end me-1"
             target="_blank"
-            href="assets/documents/carga_proveedores.pdf"
+            [href]="filePath + 'carga_proveedores.pdf'"
           >
             <i class="fa-regular fa-file-pdf"></i>
           </a>

@@ -1,1 +1,0 @@
-import"./chunk-G2X5OL7Z.js";var o=[{path:"vacantes",loadComponent:()=>import("./chunk-GIITXTCU.js")},{path:"altas",loadComponent:()=>import("./chunk-EST6XDEJ.js")},{path:"bajas",loadComponent:()=>import("./chunk-PPET5QIZ.js")},{path:"aumento-sueldo",loadComponent:()=>import("./chunk-Q2RTJZB5.js")}];export{o as default};

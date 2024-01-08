@@ -1,1 +1,0 @@
-import{oa as n}from"./chunk-3JZBD3P2.js";var u=(()=>{let t=class t{transform(s){if(!s)return"";let r=s.replace(/\D/g,""),a=r.substring(0,2),i=r.substring(2,6),o=r.substring(6);return`(${a}) ${i}-${o}`}};t.\u0275fac=function(r){return new(r||t)},t.\u0275pipe=n({name:"phoneFormat",type:t,pure:!0,standalone:!0});let e=t;return e})();export{u as a};

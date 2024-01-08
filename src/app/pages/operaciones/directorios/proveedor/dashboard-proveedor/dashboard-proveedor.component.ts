@@ -15,10 +15,11 @@ import ListProviderComponent from '../buscador-proveedor/list-provider.component
     BuscadorProvedorComponent,
     ListProviderComponent,
     CommonModule,
-    ComponentsModule
-],
+    ComponentsModule,
+  ],
 })
 export default class DashboardProveedorComponent {
+  filePath: string = environment.base_urlImg + 'Administration/formatos/';
   mostrarBuscador: boolean = true;
   url =
     environment.base_public + 'documentos/operaciones/glb-altaproveedor.docx';

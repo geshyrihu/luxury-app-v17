@@ -1,1 +1,0 @@
-import"./chunk-G2X5OL7Z.js";var o=[{path:"nomenclatura",loadComponent:()=>import("./chunk-UF3N7T4I.js")},{path:"comunicado",loadComponent:()=>import("./chunk-IDTIBYXK.js")},{path:"formatos",loadComponent:()=>import("./chunk-KP2ZC3WH.js")},{path:"procesos",loadComponent:()=>import("./chunk-FOMS5M5Q.js")}];export{o as default};

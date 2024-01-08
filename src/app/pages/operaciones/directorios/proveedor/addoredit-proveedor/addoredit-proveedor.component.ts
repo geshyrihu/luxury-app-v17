@@ -40,7 +40,6 @@ export default class AddoreditProveedorComponent implements OnInit, OnDestroy {
   private formBuilder = inject(FormBuilder);
   public ref = inject(DynamicDialogRef);
   public selectItemService = inject(SelectItemService);
-
   private customToastService = inject(CustomToastService);
 
   submitting: boolean = false;

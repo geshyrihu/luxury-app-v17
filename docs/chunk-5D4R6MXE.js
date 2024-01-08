@@ -1,2 +1,0 @@
-import{Ib as o,Jb as i,ec as s,la as a,oc as r}from"./chunk-3JZBD3P2.js";import"./chunk-G2X5OL7Z.js";var u=(()=>{let e=class e{ngOnInit(){}};e.\u0275fac=function(n){return new(n||e)},e.\u0275cmp=a({type:e,selectors:[["app-cuentas-segundo-nivel"]],standalone:!0,features:[r],decls:2,vars:0,template:function(n,l){n&1&&(o(0,"p"),s(1,` cuentas-segundo-nivel works!
-`),i())},encapsulation:2});let t=e;return t})();export{u as default};

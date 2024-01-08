@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnDestroy, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -27,13 +27,12 @@ import ComponentsModule from 'src/app/shared/components.module';
   ],
   providers: [CustomToastService],
 })
-export default class AddOrEditFormatoComponent implements OnDestroy {
+export default class AddOrEditFormatoComponent implements OnInit, OnDestroy {
   private formBuilder = inject(FormBuilder);
   public dataService = inject(DataService);
   public ref = inject(DynamicDialogRef);
   public config = inject(DynamicDialogConfig);
   public selectItemService = inject(SelectItemService);
-
   private customToastService = inject(CustomToastService);
 
   submitting: boolean = false;
@@ -51,10 +50,17 @@ export default class AddOrEditFormatoComponent implements OnDestroy {
     pathFormato: [''],
   });
 
-  onLoadData() {
-    this.onLoadSelectItem();
+  ngOnInit(): void {
     this.id = this.config.data.id;
     if (this.id !== 0) this.onLoadData();
+  }
+  onLoadData() {
+    console.log(
+      '🚀 ~ file: addoredit-formato.component.ts:61 ~ AddOrEditFormatoComponent ~ this.subRef$=this.dataService.get ~ this.id:',
+      this.id
+    );
+    this.onLoadSelectItem();
+
     this.form.patchValue({ area: this.config.data.titulo });
     this.subRef$ = this.dataService.get(`Formato/${this.id}`).subscribe({
       next: (resp: any) => {

@@ -1,1 +1,0 @@
-import"./chunk-G2X5OL7Z.js";var t=[{path:"pendientes-minutas-legal",loadComponent:()=>import("./chunk-Z5AYY4HZ.js")},{path:"list-ticket",loadComponent:()=>import("./chunk-YZWTWJCU.js")}];export{t as default};

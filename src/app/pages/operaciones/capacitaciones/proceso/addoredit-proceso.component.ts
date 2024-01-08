@@ -33,7 +33,6 @@ export default class AddOrEditProcesoComponent implements OnInit, OnDestroy {
   public ref = inject(DynamicDialogRef);
   public config = inject(DynamicDialogConfig);
   public selectItemService = inject(SelectItemService);
-
   private customToastService = inject(CustomToastService);
 
   submitting: boolean = false;

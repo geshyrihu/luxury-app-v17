@@ -43,6 +43,11 @@ export default class FormatoComponent implements OnInit, OnDestroy {
     this.subRef$ = this.dataService.get('Formato').subscribe({
       next: (resp: any) => {
         this.data = resp.body;
+        console.log(
+          '🚀 ~ file: formato.component.ts:46 ~ FormatoComponent ~ this.subRef$=this.dataService.get ~ resp.body:',
+          resp.body
+        );
+
         this.customToastService.onClose();
       },
       error: (err) => {
