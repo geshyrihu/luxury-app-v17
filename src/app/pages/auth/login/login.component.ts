@@ -7,6 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import ComponentsModule from 'app/shared/components.module';
 import { MessageService } from 'primeng/api';
 import { Subscription } from 'rxjs';
 import {
@@ -15,7 +16,6 @@ import {
   SecurityService,
 } from 'src/app/core/services/common-services';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
-import ComponentsModule from 'src/app/shared/components.module';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',

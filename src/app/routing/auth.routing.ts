@@ -7,9 +7,9 @@ export default [
       import('src/app/pages/auth/router-login/dash-panel.component'),
     children: [
       {
-        path: 'login',
         loadComponent: () => import('src/app/pages/auth/login/login.component'),
-        title: 'Login',
+        path: 'login',
+        title: 'Autenticación',
       },
       {
         path: 'restablecer-contrasena',

@@ -29,7 +29,7 @@ import { ToastModule } from 'primeng/toast';
     MenuModule,
     MultiSelectModule,
     InputTextModule,
-    EditorModule,
+    // EditorModule,
   ],
 })
 export default class PrimeNgModule {}

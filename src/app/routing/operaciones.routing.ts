@@ -43,4 +43,11 @@ export default [
     loadChildren: () => import('./mantenimiento-reportes.routing'),
     canActivate: [AuthGuard],
   },
+  {
+    path: 'mis-proveedores',
+    loadComponent: () =>
+      import(
+        'src/app/pages/operaciones/directorios/proveedor/mis-proveedores/mis-proveedores.component'
+      ),
+  },
 ] as Routes;

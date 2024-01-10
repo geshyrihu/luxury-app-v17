@@ -1,0 +1,214 @@
+<div class="card p-3">
+  <form autocomplete="off" [formGroup]="form" (ngSubmit)="submit()">
+    <div class="row">
+      <div class="col-sm-3 mb-2">
+        <custom-input-text
+          [control]="form.get('firstName')"
+          formControlName="firstName"
+          label="Nombre"
+          placeholder="nombre"
+          [horizontal]="false"
+        ></custom-input-text>
+      </div>
+      <div class="col-sm-3 mb-2">
+        <custom-input-text
+          [control]="form.get('lastName')"
+          formControlName="lastName"
+          label="Apellidos"
+          placeholder="apellidos"
+          [horizontal]="false"
+        ></custom-input-text>
+      </div>
+      <div class="col-sm-3 mb-2">
+        <custom-input-select
+          [control]="form.get('typeContract')"
+          formControlName="typeContract"
+          label="Contrato"
+          [data]="cb_type_contract"
+          [horizontal]="false"
+        ></custom-input-select>
+      </div>
+      <div class="col-sm-3 mb-2">
+        <custom-input-text
+          [control]="form.get('correoPersonal')"
+          formControlName="correoPersonal"
+          label="Email personal"
+          placeholder="email personal"
+          [horizontal]="false"
+        ></custom-input-text>
+      </div>
+      <div class="col-sm-3 mb-2">
+        <label>País</label>
+        <input
+          formControlName="phoneNumberPrefix"
+          class="form-control"
+          list="prefixDatalistOptions"
+          id="prefixDataList"
+          placeholder="Escribir para buscar..."
+        />
+        <datalist id="prefixDatalistOptions">
+          @for (item of cb_phonePrefixes; track item) {
+          <option [value]="item.country + ' ' + item.prefix"></option>
+          }
+        </datalist>
+      </div>
+      <div class="col-sm-3 mb-2">
+        <custom-input-mask
+          [control]="form.get('celularPersonal')"
+          formControlName="celularPersonal"
+          label="Télefono Celular"
+          placeholder="(00) 0000-0000"
+          customMask="(00) 0000-0000"
+          [horizontal]="false"
+        ></custom-input-mask>
+      </div>
+      <div class="col-sm-3 mb-2">
+        <custom-input-date
+          [control]="form.get('birth')"
+          [horizontal]="false"
+          formControlName="birth"
+          label="Fecha de nacimiento"
+          placeholder="fecha de nacimiento"
+        ></custom-input-date>
+      </div>
+      <div class="col-sm-3 mb-2">
+        <custom-input-select
+          [control]="form.get('sex')"
+          formControlName="sex"
+          label="Sexo"
+          [data]="cb_sex"
+          [horizontal]="false"
+        ></custom-input-select>
+      </div>
+      <div class="col-sm-3 mb-2">
+        <custom-input-select
+          [control]="form.get('professionId')"
+          formControlName="professionId"
+          label="Puesto de trabajo"
+          [data]="cb_profession"
+          [horizontal]="false"
+        ></custom-input-select>
+      </div>
+      <div class="col-sm-3 mb-2">
+        <custom-input-text
+          [control]="form.get('curp')"
+          formControlName="curp"
+          label="Curp"
+          placeholder="curp"
+          [horizontal]="false"
+        ></custom-input-text>
+      </div>
+      <div class="col-sm-3 mb-2">
+        <custom-input-text
+          [control]="form.get('rfc')"
+          formControlName="rfc"
+          label="RFC"
+          placeholder="rfc"
+          [horizontal]="false"
+        ></custom-input-text>
+      </div>
+      <div class="form-group col-sm-3 mb-2">
+        <custom-input-text
+          [control]="form.get('nss')"
+          formControlName="nss"
+          label="NSS"
+          placeholder="nss"
+          [horizontal]="false"
+        ></custom-input-text>
+      </div>
+      <div class="form-group col-sm-3 mb-2">
+        <custom-input-select
+          [control]="form.get('bloodType')"
+          formControlName="bloodType"
+          label="Tipo de Sangre"
+          [data]="cb_blood_type"
+          [horizontal]="false"
+        ></custom-input-select>
+      </div>
+      <div class="form-group col-sm-3 mb-2">
+        <custom-input-mask
+          [control]="form.get('localPhone')"
+          formControlName="localPhone"
+          label="Tél. local"
+          placeholder="(00) 0000-0000"
+          customMask="(00) 0000-0000"
+          [horizontal]="false"
+        ></custom-input-mask>
+      </div>
+      <div class="form-group col-sm-3 mb-2">
+        <custom-input-select
+          [control]="form.get('maritalStatus')"
+          formControlName="maritalStatus"
+          label="Estado civil"
+          [data]="cb_marital_status"
+          [horizontal]="false"
+        ></custom-input-select>
+      </div>
+      <div class="form-group col-sm-3 mb-2">
+        <label>Nacionalidad</label>
+        <input
+          formControlName="nationality"
+          class="form-control"
+          list="subCuentaDatalistOptions"
+          id="subCuentaDataList"
+          placeholder="Escribir para buscar..."
+        />
+        <datalist id="subCuentaDatalistOptions">
+          @for (item of cb_nationality; track item) {
+          <option [value]="item.label"></option>
+          }
+        </datalist>
+      </div>
+      <div class="form-group col-sm-3 mb-2">
+        <custom-input-text-area
+          [control]="form.get('address')"
+          formControlName="address"
+          label="Dirección"
+          placeholder="dirección"
+          [horizontal]="false"
+        ></custom-input-text-area>
+      </div>
+      <div class="form-group col-sm-3 mb-2">
+        <custom-input-select
+          [control]="form.get('educationLevel')"
+          formControlName="educationLevel"
+          label="Nivel Educativo"
+          [data]="cb_education_level"
+          [horizontal]="false"
+        ></custom-input-select>
+      </div>
+      <div class="col-sm-3 mb-2">
+        <custom-input-date
+          [control]="form.get('dateAdmission')"
+          [horizontal]="false"
+          formControlName="dateAdmission"
+          label="Fecha de ingreso"
+          placeholder="fecha de ingreso"
+        ></custom-input-date>
+      </div>
+      <div class="col-sm-3 mb-2">
+        <custom-input-number
+          [horizontal]="false"
+          [control]="form.get('salary')"
+          formControlName="salary"
+          label="Sueldo mensual neto"
+          placeholder="sueldo mensual neto"
+        ></custom-input-number>
+      </div>
+      @if (this.authService.onValidateRoles(['SuperUsuario'])) {
+      <div class="col-sm-3 mb-2">
+        <custom-input-select
+          [control]="form.get('customerId')"
+          formControlName="customerId"
+          label="Cliente"
+          [data]="cb_customer"
+          [horizontal]="false"
+        ></custom-input-select>
+      </div>
+      }
+    </div>
+    <custom-button-submit
+      [disabled]="this.form.invalid || submitting"
+    ></custom-button-submit>
+  </form>
+</div>

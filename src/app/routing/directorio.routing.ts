@@ -33,15 +33,13 @@ export default [
     path: 'empleados/:parametro',
     loadComponent: () =>
       import(
-        'src/app/pages/operaciones/directorios/empleados/list-empleados.component'
+        'src/app/pages/operaciones/directorios/empleados/list-employee-customer/list-employee-customer.component'
       ),
   },
   {
     path: 'empleados-general',
     loadComponent: () =>
-      import(
-        'src/app/pages/operaciones/directorios/empleados/list-persons.component'
-      ),
+      import('src/app/pages/person/person-list/list-persons.component'),
   },
   {
     path: 'telefonos-emergencia',

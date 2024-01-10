@@ -61,6 +61,10 @@ export let menuPanel: IMenuPanel[] = [
 
     items: [
       {
+        title: 'Supervisores de proveedores',
+        path: '/configuracion/supervisores-proveedores',
+      },
+      {
         title: 'Clasificación Equipos',
         path: '/configuracion/clasificacion-equipo',
       },

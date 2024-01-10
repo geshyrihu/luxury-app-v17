@@ -14,16 +14,16 @@ import {
   DataService,
 } from 'src/app/core/services/common-services';
 import UpdatePasswordModalComponent from 'src/app/pages/configuracion/accounts/modal-edit-account/update-password-modal/update-password-modal.component';
+import ContactEmployeeComponent from 'src/app/pages/person/addoredit-person-contact/contact-employee.component';
 import SolicitudAltaComponent from 'src/app/pages/reclutamiento/solicitudes/solicitud-alta/solicitud-alta.component';
 import SolicitudBajaComponent from 'src/app/pages/reclutamiento/solicitudes/solicitud-baja/solicitud-baja.component';
 import SolicitudModificacionSalarioComponent from 'src/app/pages/reclutamiento/solicitudes/solicitud-modificacion-salario/solicitud-modificacion-salario.component';
 import ComponentsModule from 'src/app/shared/components.module';
 import PrimeNgModule from 'src/app/shared/prime-ng.module';
 import Swal from 'sweetalert2';
+import PersonUpdatePhotoComponent from '../../../../person/person-update-photo/update-image-person.component';
 import AccountToEmployeeComponent from '../account-to-employee/account-to-employee.component';
-import AddOrEditEmployeeOnlyImgComponent from '../addoredit-employee-img.component';
-import AddOrEditEmplopyeeComponent from '../addoredit-employee.component';
-import ContactEmployeeComponent from '../contact-employee.component';
+import AddOrEditEmplopyeeComponent from '../addoredit-data-employee/addoredit-employee.component';
 
 @Component({
   selector: 'app-list-empleados-opciones',
@@ -36,6 +36,8 @@ export default class ListEmpleadosOpcionesComponent
   implements OnInit, OnDestroy
 {
   ngOnInit(): void {
+    console.log('🚀 ~ this.config.data:', this.config.data);
+
     this.onValidarProfession();
     this.onValidarSolicitudesAbiertas();
   }
@@ -49,6 +51,7 @@ export default class ListEmpleadosOpcionesComponent
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   applicationUserId: string = this.config.data.applicationUserId;
+  personId: string = this.config.data.personId;
   employeeId: number = this.config.data.employeeId;
   active: boolean = this.config.data.active;
 
@@ -76,9 +79,9 @@ export default class ListEmpleadosOpcionesComponent
   }
 
   onShowModalActualizarImagen() {
-    this.ref = this.dialogService.open(AddOrEditEmployeeOnlyImgComponent, {
+    this.ref = this.dialogService.open(PersonUpdatePhotoComponent, {
       data: {
-        applicationUserId: this.employeeId,
+        personId: this.personId,
       },
       header: 'Actualizar Foto',
       baseZIndex: 10000,

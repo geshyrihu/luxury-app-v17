@@ -45,11 +45,11 @@
               "node_modules/ngx-spinner/animations/ball-atom.css",
               "node_modules/quill/dist/quill.core.css",
               "node_modules/quill/dist/quill.snow.css",
-              "node_modules/primeng/resources/themes/lara-light-blue/theme.css",
-              "node_modules/primeng/resources/primeng.min.css",
               "src/assets/scss/bootstrap.scss",
+              "src/assets/scss/icons.scss",
               "src/assets/scss/app.scss",
-              "src/assets/scss/icons.scss"
+              "node_modules/primeng/resources/themes/lara-light-blue/theme.css",
+              "node_modules/primeng/resources/primeng.min.css"
             ],
             "scripts": []
           },

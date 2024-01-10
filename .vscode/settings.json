@@ -1,4 +1,5 @@
 {
   "editor.inlineSuggest.showToolbar": "always",
-  "editor.fontFamily": "'Cascadia Code Light', Consolas, 'Courier New', monospace"
+  "editor.fontFamily": "'Cascadia Code Light', Consolas, 'Courier New', monospace",
+  "angular.enable-strict-mode-prompt": false
 }

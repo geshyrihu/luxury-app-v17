@@ -6,14 +6,12 @@ Website: https://themesbrand.com/
 Contact: themesbrand@gmail.com
 File: Main Css File
 */
-//Custom Style Primeng
-
-@import "custom-primeng.scss";
-@import "print-mode.scss";
-@import "styles.scss";
-
 //Fonts
 @import "fonts/fonts";
+
+//Custom Style Primeng
+@import "custom-primeng.scss";
+@import "styles.scss";
 
 //Core files
 

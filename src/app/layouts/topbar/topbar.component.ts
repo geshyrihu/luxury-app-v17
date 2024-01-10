@@ -67,7 +67,10 @@ export class TopbarComponent implements OnInit {
       'Administration/accounts/' +
       this.dataInfo.photoPath;
     this.profielServiceService.imagenPerfilActualizada$.subscribe(
-      (nuevaImagenUrl: any) => (this.imagenPerfilUrl = nuevaImagenUrl.imagenUrl)
+      (nuevaImagenUrl: any) => {
+        this.imagenPerfilUrl = nuevaImagenUrl.imagenUrl;
+        console.log('🚀 ~ nuevaImagenUrl:', nuevaImagenUrl);
+      }
     );
   }
 
@@ -101,4 +104,6 @@ export class TopbarComponent implements OnInit {
   onNext() {
     this.location.forward();
   }
+
+  ngOnDestroy() {}
 }

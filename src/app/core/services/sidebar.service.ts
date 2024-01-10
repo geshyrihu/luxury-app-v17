@@ -411,6 +411,7 @@ export class SidebarService {
           routerLink: '/operaciones/reporte/tiket-mantenimiento',
           name: 'Operaciones-Tickets',
         },
+
         {
           visible: this.authService.onValidateRoles([
             'Asistente',
@@ -424,6 +425,19 @@ export class SidebarService {
           label: 'Reportes',
           routerLink: '/operaciones/reportes-mantenimiento/panel',
           name: 'Operaciones-Reporte general mensual de manteniento',
+        },
+        {
+          visible: this.authService.onValidateRoles([
+            'Asistente',
+            'GerenteMantenimiento',
+            'Residente',
+            'SuperUsuario',
+            'SupervisionOperativa',
+          ]),
+
+          label: 'Mis Proveedores',
+          routerLink: '/operaciones/mis-proveedores',
+          name: 'Operaciones-Mis proveedores',
         },
       ],
     },

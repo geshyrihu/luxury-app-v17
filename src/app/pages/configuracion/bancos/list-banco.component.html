@@ -12,9 +12,10 @@
     [rowsPerPageOptions]="[50, 75, 100, 200]"
     [showCurrentPageReport]="true"
     currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
-    styleClass="p-datatable-sm"
+    styleClass="custom-table"
     [tableStyle]="{ 'min-width': '50rem' }"
   >
+    <!-- styleClass="p-datatable-sm" -->
     <ng-template pTemplate="caption">
       <app-table-header
         [title]="'Bancos'"

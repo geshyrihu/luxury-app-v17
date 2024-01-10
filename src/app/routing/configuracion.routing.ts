@@ -36,7 +36,9 @@ export default [
   {
     path: 'historial-acceso',
     loadComponent: () =>
-      import('src/app/pages/configuracion/historial-acceso/access-log.component'),
+      import(
+        'src/app/pages/configuracion/historial-acceso/access-log.component'
+      ),
   },
   {
     path: 'categoria-medidor',
@@ -50,6 +52,13 @@ export default [
     loadComponent: () =>
       import(
         'src/app/pages/configuracion/clasificacion-equipo/list-clasificacion-equipo.component'
+      ),
+  },
+  {
+    path: 'supervisores-proveedores',
+    loadComponent: () =>
+      import(
+        'src/app/pages/configuracion/provider-support/provider-support.component'
       ),
   },
 ] as Routes;

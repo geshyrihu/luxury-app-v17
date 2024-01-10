@@ -4,6 +4,10 @@
   // Desactiva la compilación automática al guardar el archivo.
   "compileOnSave": false,
   "compilerOptions": {
+    "paths": {
+      "app/shared/*": ["./src/app/shared/*"]
+    },
+
     // Especifica la ruta base para resolver los módulos.
     "baseUrl": "./",
 

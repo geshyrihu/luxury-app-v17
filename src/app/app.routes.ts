@@ -4,19 +4,24 @@ import { LayoutComponent } from './layouts/layout.component';
 
 export const routes: Routes = [
   {
-    path: '',
+    canActivate: [AuthGuard],
     component: LayoutComponent,
     loadChildren: () => import('src/app/routing/pages.routing'),
-    canActivate: [AuthGuard],
+    path: '',
   },
   {
-    path: 'compras',
-    loadChildren: () => import('src/app/routing/compras.routing'),
     canActivate: [AuthGuard],
+    loadChildren: () => import('src/app/routing/compras.routing'),
+    path: 'compras',
   },
   {
     path: 'utillidades',
     loadChildren: () => import('src/app/routing/utillidades.routing'),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'person',
+    loadChildren: () => import('src/app/routing/person.routing'),
     canActivate: [AuthGuard],
   },
   {

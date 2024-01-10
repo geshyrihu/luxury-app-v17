@@ -12,6 +12,7 @@ import {
 } from 'src/app/core/services/common-services';
 import ComponentsModule from 'src/app/shared/components.module';
 import PrimeNgModule from 'src/app/shared/prime-ng.module';
+import { environment } from 'src/environments/environment';
 import AddoreditProveedorComponent from '../addoredit-proveedor/addoredit-proveedor.component';
 import TarjetaProveedorComponent from '../tarjeta-proveedor/tarjeta-proveedor.component';
 @Component({
@@ -36,6 +37,7 @@ export default class ListProviderComponent implements OnInit, OnDestroy {
   data: BusquedaProveedor[] = [];
   ref: DynamicDialogRef;
   subRef$: Subscription;
+  url_img = `${environment.base_urlImg}providers/`;
 
   ngOnInit(): void {
     this.onLoadData();
@@ -51,6 +53,10 @@ export default class ListProviderComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (resp: any) => {
           this.data = resp.body;
+          console.log(
+            '🚀 ~ file: list-provider.component.ts:54 ~ resp.body:',
+            resp.body
+          );
           this.customToastService.onClose();
         },
         error: (err) => {

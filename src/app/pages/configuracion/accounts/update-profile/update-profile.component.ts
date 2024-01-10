@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import UpdatePasswordAccountComponent from './update-password/update-password.component';
-import UpdatePhotoEmployeeComponent from './update-photo-employee/update-photo-employee.component';
+import UpdatePhotoEmployeeComponent from './update-photo-person/update-photo-person.component';
 
 @Component({
   selector: 'app-update-profile',
@@ -12,7 +12,7 @@ import UpdatePhotoEmployeeComponent from './update-photo-employee/update-photo-e
     CommonModule,
     RouterModule,
     UpdatePasswordAccountComponent,
-    UpdatePhotoEmployeeComponent
-],
+    UpdatePhotoEmployeeComponent,
+  ],
 })
 export default class UpdateProfilComponent {}
