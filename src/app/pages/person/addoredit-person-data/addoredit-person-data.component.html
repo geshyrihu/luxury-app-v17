@@ -1,22 +1,6 @@
-<!-- <div class="card p-3">
-  <form autocomplete="off" [formGroup]="form" (ngSubmit)="submit()">
+<div class="card p-3">
+  <form autocomplete="off" [formGroup]="form" (ngSubmit)="onSubmit()">
     <div class="row">
-      <div class="col-sm-3 mb-2">
-        <label>País</label>
-        <input
-          formControlName="phoneNumberPrefix"
-          class="form-control"
-          list="prefixDatalistOptions"
-          id="prefixDataList"
-          placeholder="Escribir para buscar..."
-        />
-        <datalist id="prefixDatalistOptions">
-          @for (item of cb_phonePrefixes; track item) {
-          <option [value]="item.country + ' ' + item.prefix"></option>
-          }
-        </datalist>
-      </div>
-
       <div class="col-sm-3 mb-2">
         <custom-input-date
           [control]="form.get('birth')"
@@ -121,4 +105,4 @@
       [disabled]="this.form.invalid || submitting"
     ></custom-button-submit>
   </form>
-</div> -->
+</div>

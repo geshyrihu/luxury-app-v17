@@ -1,0 +1,34 @@
+<form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
+  <custom-input-text
+    [control]="form.get('firstName')"
+    formControlName="firstName"
+    label="Nombre"
+    placeholder="nombre"
+  ></custom-input-text>
+  <custom-input-text
+    [control]="form.get('lastName')"
+    formControlName="lastName"
+    label="Apellidos"
+    placeholder="apellidos"
+  ></custom-input-text>
+  <custom-input-mask
+    [control]="form.get('phoneNumber')"
+    formControlName="phoneNumber"
+    label="Tél. Celular"
+    placeholder="(00) 0000-0000"
+    customMask="(00) 0000-0000"
+  ></custom-input-mask>
+
+  <custom-input-text
+    [control]="form.get('email')"
+    formControlName="email"
+    label="Email personal"
+    placeholder="email personal"
+  ></custom-input-text>
+
+  <!-- Boton Submin -->
+  <custom-button-submit
+    [disabled]="this.form.invalid || submitting"
+  ></custom-button-submit>
+  <!-- Boton Submin -->
+</form>

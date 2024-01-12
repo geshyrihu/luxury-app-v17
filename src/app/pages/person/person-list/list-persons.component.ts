@@ -11,10 +11,12 @@ import {
 import ComponentsModule from 'src/app/shared/components.module';
 import PrimeNgModule from 'src/app/shared/prime-ng.module';
 import { environment } from 'src/environments/environment';
-import AddOrEditEmplopyeeComponent from '../../operaciones/directorios/empleados/addoredit-data-employee/addoredit-employee.component';
 import CardEmployeeComponent from '../../operaciones/directorios/empleados/card-employee/card-employee.component';
 import AddoreditPersonDataComponent from '../addoredit-person-data/addoredit-person-data.component';
 import AddoreditPersonComponent from '../addoredit-person/addoredit-person.component';
+import PersonAddoreditAddressComponent from '../person-addoredit-address/person-addoredit-address.component';
+import PersonEditDataLaboralComponent from '../person-edit-data-laboral/person-edit-data-laboral.component';
+import PersonEditDataPrincipalComponent from '../person-edit-data-principal/person-edit-data-principal.component';
 import PersonUpdatePhotoComponent from '../person-update-photo/update-image-person.component';
 @Component({
   selector: 'app-list-persons',
@@ -49,7 +51,6 @@ export default class ListPersonComponent implements OnInit, OnDestroy {
     this.subRef$ = this.dataService.get(`person/all/`).subscribe({
       next: (resp: any) => {
         this.data = resp.body;
-        console.log('🚀 ~ resp.body:', resp.body);
         this.customToastService.onClose();
       },
       error: (err) => {
@@ -80,9 +81,10 @@ export default class ListPersonComponent implements OnInit, OnDestroy {
 
   // Modal datos laborales
   onModalDataLaboral(data: any) {
-    this.ref = this.dialogService.open(AddOrEditEmplopyeeComponent, {
+    this.ref = this.dialogService.open(PersonEditDataLaboralComponent, {
       data: {
-        id: data.id,
+        employeeId: data.employeeId,
+        personId: data.personId,
       },
       header: data.title,
       styleClass: 'modal-lg',
@@ -97,11 +99,29 @@ export default class ListPersonComponent implements OnInit, OnDestroy {
     });
   }
 
+  // Modal datos direccion
+  onModalDataAddress(data: any) {
+    this.ref = this.dialogService.open(PersonAddoreditAddressComponent, {
+      data: {
+        personId: data.id,
+      },
+      header: data.title,
+      styleClass: 'modal-lg',
+      baseZIndex: 10000,
+      closeOnEscape: true,
+    });
+    this.ref.onClose.subscribe((resp: boolean) => {
+      if (resp) {
+        this.customToastService.onShowSuccess();
+        this.onLoadData();
+      }
+    });
+  }
   // Modal datos personales
   onModalDataPersonal(data: any) {
     this.ref = this.dialogService.open(AddoreditPersonDataComponent, {
       data: {
-        id: data.id,
+        personId: data.id,
       },
       header: data.title,
       styleClass: 'modal-lg',
@@ -117,8 +137,25 @@ export default class ListPersonComponent implements OnInit, OnDestroy {
   }
   // Modal datos principales
 
-  onModalDataPrincipal(data: any) {
+  onModalCreatePerson(data: any) {
     this.ref = this.dialogService.open(AddoreditPersonComponent, {
+      data: {
+        personId: data.id,
+      },
+      header: data.title,
+      styleClass: 'modal-lg',
+      baseZIndex: 10000,
+      closeOnEscape: true,
+    });
+    this.ref.onClose.subscribe((resp: boolean) => {
+      if (resp) {
+        this.customToastService.onShowSuccess();
+        this.onLoadData();
+      }
+    });
+  }
+  onModalDataPrincipal(data: any) {
+    this.ref = this.dialogService.open(PersonEditDataPrincipalComponent, {
       data: {
         personId: data.id,
       },
@@ -151,7 +188,6 @@ export default class ListPersonComponent implements OnInit, OnDestroy {
 
   // Actualkizar Imagen
   onShowModalActualizarImagen(personId: number) {
-    console.log('🚀 ~ personId:', personId);
     this.ref = this.dialogService.open(PersonUpdatePhotoComponent, {
       data: {
         personId,
@@ -171,6 +207,7 @@ export default class ListPersonComponent implements OnInit, OnDestroy {
       }
     });
   }
+
   ngOnDestroy() {
     if (this.subRef$) this.subRef$.unsubscribe();
   }

@@ -65,8 +65,6 @@ export default class CustomerAddressComponent implements OnInit {
       .subscribe({
         next: (resp: any) => {
           this.form.patchValue(resp.body);
-          console.log('🚀 ~ resp.body:', resp.body);
-          console.log('🚀 ~ formulario:', this.form.value);
         },
         error: (err) => {
           this.customToastService.onShowError();
@@ -76,8 +74,6 @@ export default class CustomerAddressComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('🚀 ~ this.form.value:', this.form.value);
-
     if (this.form.invalid) {
       Object.values(this.form.controls).forEach((x) => {
         x.markAllAsTouched();

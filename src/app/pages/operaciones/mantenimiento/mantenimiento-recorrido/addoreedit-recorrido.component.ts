@@ -14,7 +14,7 @@ import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface
 import { CustomerIdService } from 'src/app/core/services/common-services';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
-import { EnumService } from 'src/app/core/services/enum-service';
+import { EnumService } from 'src/app/core/services/enum.service';
 import { SelectItemService } from 'src/app/core/services/select-item.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import ComponentsModule from 'src/app/shared/components.module';

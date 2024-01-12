@@ -15,7 +15,7 @@ import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
-import { EnumService } from 'src/app/core/services/enum-service';
+import { EnumService } from 'src/app/core/services/enum.service';
 import { SelectItemService } from 'src/app/core/services/select-item.service';
 import CustomButtonModule from 'src/app/custom-components/custom-buttons/custom-button.module';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';

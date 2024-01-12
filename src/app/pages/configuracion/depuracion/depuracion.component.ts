@@ -28,7 +28,6 @@ export default class DepuracionComponent implements OnDestroy {
       .get('Depuracion/ActualizarDatosEmpleadoContatoData')
       .subscribe({
         next: (_) => {
-          console.log('🚀 ~ _:', _);
           this.customToastService.onShowSuccess();
           this.customToastService.onClose();
         },

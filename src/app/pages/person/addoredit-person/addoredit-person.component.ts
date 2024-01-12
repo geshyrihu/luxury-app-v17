@@ -74,7 +74,6 @@ export default class AddoreditPersonComponent implements OnInit, OnDestroy {
   });
 
   onSubmit() {
-    console.log('🚀 ~ this.form:', this.form.value);
     if (this.form.invalid) {
       Object.values(this.form.controls).forEach((x) => {
         x.markAllAsTouched();
@@ -127,7 +126,6 @@ export default class AddoreditPersonComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.personId = this.config.data.personId;
-    console.log('🚀 ~ this.personId:', this.personId);
     if (this.personId !== 0) {
       this.onLoadData();
     }

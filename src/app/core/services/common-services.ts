@@ -1,5 +1,6 @@
 // common-services.ts
 
+import { ApiRequestService } from './api-request.service';
 import { AuthService } from './auth.service';
 import { CaratulaFondeoService } from './caratula-fondeo.service';
 import { CatalogoGastosFijosService } from './catalogo-gastos-fijos.service';
@@ -24,6 +25,7 @@ import { StatusSolicitudVacanteService } from './status-solicitud-vacante.servic
 import { TicketFilterService } from './ticket-filter.service';
 
 export {
+  ApiRequestService,
   AuthService,
   CaratulaFondeoService,
   CatalogoGastosFijosService,

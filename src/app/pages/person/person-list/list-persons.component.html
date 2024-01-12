@@ -2,9 +2,7 @@
 
 <p-table
   #dt
-  responsiveLayout="scroll"
   styleClass="custom-table"
-  [tableStyle]="{ 'min-width': '50rem' }"
   [value]="data"
   [rows]="100"
   [paginator]="true"
@@ -18,25 +16,20 @@
     'phoneNumber',
     'customer',
     'phoneNumber',
-    'email',
-    'state'
+    'email'
   ]"
   [autoLayout]="true"
 >
   <ng-template pTemplate="caption">
     <app-table-header
       [title]="'Listado General de Personas'"
-      (add)="onModalDataPrincipal({ id: 0, title: 'Nuevo Registro' })"
+      (add)="onModalCreatePerson({ id: 0, title: 'Nuevo Registro' })"
       [dt]="dt"
     ></app-table-header>
   </ng-template>
 
   <ng-template pTemplate="header">
     <tr>
-      <th scope="col" style="width: 30%" pSortableColumn="state">
-        State
-        <p-sortIcon field="state"></p-sortIcon>
-      </th>
       <th scope="col" style="width: 30%" pSortableColumn="fullName">
         Nombre
         <p-sortIcon field="fullName"></p-sortIcon>
@@ -59,9 +52,6 @@
   <ng-template pTemplate="body" let-item>
     <tr>
       <td>
-        {{ item.state }}
-      </td>
-      <td>
         <img
           (click)="onCardEmployee(item.employeeId)"
           [src]="url + item.photoPath"
@@ -71,7 +61,24 @@
         {{ item.fullName }}
       </td>
       <td>
-        {{ item.customer }}
+        @if(item.customer){
+        <div class="mt-1">
+          @if (item.state==='Activo') {
+          <span
+            class="w-100 badge bg-success-subtle text-success font-size-10 p-2"
+            >ACTIVO</span
+          >
+          }@else {
+          <span
+            class="w-100 badge bg-danger-subtle text-danger font-size-10 p-2"
+            >INACTIVO</span
+          >
+          }
+          <p class="mt-1 text-center">
+            {{ item.customer }}
+          </p>
+        </div>
+        }
       </td>
       <td>
         {{ item.phoneNumber }}
@@ -82,12 +89,24 @@
       <td class="p-column-title hide-print-mode">
         <div class="d-flex justify-content-center">
           <custom-button
+            ngbTooltip="Dirección"
+            customClass="btn-sm btn-sm btn-outline-primary"
+            icon="fa-duotone fa-location-dot text-primary"
+            (clicked)="
+              onModalDataAddress({
+                id: item.id,
+                title: 'Editar Registro'
+              })
+            "
+          ></custom-button>
+          <custom-button
             ngbTooltip="Datos Laborales"
             customClass="btn-sm btn-sm btn-outline-primary"
-            icon="fa-thin fa-briefcase text-primary"
+            icon="fa-duotone fa-briefcase text-primary"
             (clicked)="
               onModalDataLaboral({
-                id: item.id,
+                employeeId: item.employeeId,
+                personId: item.id,
                 title: 'Editar Registro'
               })
             "
@@ -95,7 +114,7 @@
           <custom-button
             ngbTooltip="Datos Personales"
             customClass="btn-sm btn-sm btn-outline-primary"
-            icon="fa-thin fa-memo-circle-info text-primary"
+            icon="fa-duotone fa-memo-circle-info text-primary"
             (clicked)="
               onModalDataPersonal({
                 id: item.id,
@@ -106,7 +125,7 @@
           <custom-button
             ngbTooltip="Datos Principales"
             customClass="btn-sm btn-sm btn-outline-primary"
-            icon="fa-thin fa-user-lock text-primary"
+            icon="fa-duotone fa-database text-primary"
             (clicked)="
               onModalDataPrincipal({
                 id: item.id,
@@ -117,7 +136,7 @@
           <custom-button
             ngbTooltip="Actualizar Foto"
             customClass="btn-sm btn-sm btn-outline-primary"
-            icon="fa-thin fa-camera text-primary"
+            icon="fa-duotone fa-camera text-primary"
             (clicked)="onShowModalActualizarImagen(item.id)"
           ></custom-button>
 

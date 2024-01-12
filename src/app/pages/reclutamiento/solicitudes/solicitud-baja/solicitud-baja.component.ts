@@ -89,7 +89,6 @@ export default class SolicitudBajaComponent implements OnInit {
     this.onLoadData();
     // Suscribirse a cambios en el control 'typeOfDeparture'
     this.form.get('typeOfDeparture').valueChanges.subscribe((newValue) => {
-      console.log('Nuevo valor:', newValue); // Puedes realizar acciones aquí cuando cambie el valor
       // Por ejemplo, puedes llamar a una función para manejar el cambio de valor
       this.handleValueChange(newValue);
     });
@@ -143,7 +142,7 @@ export default class SolicitudBajaComponent implements OnInit {
 
     this.dataService
       .post(
-        `solicitudesreclutamiento/solicitudbaja/ 
+        `solicitudesreclutamiento/solicitudbaja/
           ${this.customerIdService.getcustomerId()}/${this.employeeId}/${
           this.authService.infoUserAuthDto.applicationUserId
         }`,

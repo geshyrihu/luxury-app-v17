@@ -57,7 +57,6 @@ export default class OndenCompraPdfSolicitudPagoComponent
       .subscribe({
         next: (resp: any) => {
           this.model = resp.body;
-          console.log('🚀 ~ resp.body:', resp.body);
           if (this.model.ordenCompraAuth.applicationUserAuthId !== null) {
             this.nombreAutorizador = `${this.model.ordenCompraAuth.applicationUserAuth.firstName} ${this.model.ordenCompraAuth.applicationUserAuth.lastName}`;
           }

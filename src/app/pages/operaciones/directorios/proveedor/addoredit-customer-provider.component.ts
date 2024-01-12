@@ -89,7 +89,6 @@ export default class AddOrEditCustomerProviderComponent implements OnInit {
   }
 
   submit() {
-    console.log('object', this.form.value);
     if (this.form.invalid) {
       Object.values(this.form.controls).forEach((x) => {
         x.markAllAsTouched();

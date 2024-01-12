@@ -69,7 +69,6 @@ export class TopbarComponent implements OnInit {
     this.profielServiceService.imagenPerfilActualizada$.subscribe(
       (nuevaImagenUrl: any) => {
         this.imagenPerfilUrl = nuevaImagenUrl.imagenUrl;
-        console.log('🚀 ~ nuevaImagenUrl:', nuevaImagenUrl);
       }
     );
   }

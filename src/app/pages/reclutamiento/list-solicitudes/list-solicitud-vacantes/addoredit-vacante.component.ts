@@ -67,7 +67,6 @@ export default class AddOrEditVacanteComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (resp: any) => {
           this.form.patchValue(resp.body);
-          console.log('🚀 ~ resp.body:', resp.body);
         },
         error: (err) => {
           this.customToastService.onShowError();

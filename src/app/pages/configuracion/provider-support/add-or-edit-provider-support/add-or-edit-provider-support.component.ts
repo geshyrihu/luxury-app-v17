@@ -75,8 +75,6 @@ export default class AddOrEditProviderSupportComponent implements OnInit {
       .subscribe({
         next: (resp: any) => {
           this.form.patchValue(resp.body);
-          console.log('🚀 ~ resp.body:', resp.body);
-          console.log('🚀 ~ form:', this.form.value);
         },
         error: (err) => {
           this.customToastService.onShowError();

@@ -103,7 +103,6 @@ export default class PersonUpdatePhotoComponent implements OnInit, OnDestroy {
           if (resp.body.photoPath) {
             this.photoPath = `${baseUrlImg}Administration/accounts/${resp.body.photoPath}`;
             this.ref.close(true);
-            console.log('🚀 ~ this.photoPath:', this.photoPath);
           } else {
             return false;
           }

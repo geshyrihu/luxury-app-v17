@@ -1,0 +1,77 @@
+<div class="card p-3">
+  <form autocomplete="off" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="row">
+      <div class="col-sm-3 mb-2">
+        <custom-input-select
+          [control]="form.get('typeContract')"
+          formControlName="typeContract"
+          label="Contrato"
+          [data]="cb_type_contract"
+          [horizontal]="false"
+        ></custom-input-select>
+      </div>
+
+      <div class="col-sm-3 mb-2">
+        <custom-input-select
+          [control]="form.get('professionId')"
+          formControlName="professionId"
+          label="Puesto de trabajo"
+          [data]="cb_profession"
+          [horizontal]="false"
+        ></custom-input-select>
+      </div>
+
+      <div class="col-sm-3 mb-2">
+        <custom-input-select
+          [control]="form.get('active')"
+          formControlName="active"
+          label="Estatus"
+          [data]="cb_state"
+          [horizontal]="false"
+        ></custom-input-select>
+      </div>
+
+      <div class="form-group col-sm-3 mb-2">
+        <custom-input-select
+          [control]="form.get('educationLevel')"
+          formControlName="educationLevel"
+          label="Nivel Educativo"
+          [data]="cb_education_level"
+          [horizontal]="false"
+        ></custom-input-select>
+      </div>
+      <div class="col-sm-3 mb-2">
+        <custom-input-date
+          [control]="form.get('dateAdmission')"
+          [horizontal]="false"
+          formControlName="dateAdmission"
+          label="Fecha de ingreso"
+          placeholder="fecha de ingreso"
+        ></custom-input-date>
+      </div>
+      <div class="col-sm-3 mb-2">
+        <custom-input-number
+          [horizontal]="false"
+          [control]="form.get('salary')"
+          formControlName="salary"
+          label="Sueldo mensual neto"
+          placeholder="sueldo mensual neto"
+        ></custom-input-number>
+      </div>
+      @if (this.authService.onValidateRoles(['SuperUsuario'])) {
+      <div class="col-sm-3 mb-2">
+        <custom-input-select
+          [control]="form.get('customerId')"
+          formControlName="customerId"
+          label="Cliente"
+          [data]="cb_customer"
+          [horizontal]="false"
+        ></custom-input-select>
+      </div>
+      }
+    </div>
+    <custom-button-submit
+      [disabled]="this.form.invalid || submitting"
+    ></custom-button-submit>
+  </form>
+</div>

@@ -36,8 +36,6 @@ export default class ListEmpleadosOpcionesComponent
   implements OnInit, OnDestroy
 {
   ngOnInit(): void {
-    console.log('🚀 ~ this.config.data:', this.config.data);
-
     this.onValidarProfession();
     this.onValidarSolicitudesAbiertas();
   }
@@ -292,7 +290,6 @@ export default class ListEmpleadosOpcionesComponent
       .subscribe({
         next: (resp: any) => {
           this.accionPermitida = resp.body;
-          console.log('🚀 ~ this.accionPermitida:', this.accionPermitida);
         },
         error: (err) => {
           // En caso de error, mostrar un mensaje de error y registrar el error en la consola

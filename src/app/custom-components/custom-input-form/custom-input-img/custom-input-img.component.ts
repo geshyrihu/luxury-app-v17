@@ -15,7 +15,7 @@ export default class CustomInputImgComponent {
   //Ruta de Imagen por defecto
   noImg = `${environment.base_urlImg}no-img.png`;
 
-  //Ingresamos la imgan actual
+  //Ingresamos la imagen actual
   @Input()
   urlImgCurrent: string = '';
   @Input()
