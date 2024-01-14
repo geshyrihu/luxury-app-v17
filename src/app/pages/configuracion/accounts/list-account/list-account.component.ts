@@ -121,7 +121,7 @@ export default class ListAccountComponent implements OnInit, OnDestroy {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
     this.subRef$ = this.dataService
-      .get<IAccountDto[]>(`Accounts/GetAll`)
+      .get<IAccountDto[]>(`accounts/getall`)
       .subscribe({
         next: (resp: any) => {
           this.data = resp.body;

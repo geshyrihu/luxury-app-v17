@@ -34,8 +34,8 @@
       [data]="cb_profession"
     ></custom-input-select>
     }
+    <!-- [hidden]="!this.authService.onValidateRoles(['SuperUsuario'])" -->
     <custom-input-mask
-      [hidden]="!this.authService.onValidateRoles(['SuperUsuario'])"
       [control]="form.get('phoneNumber')"
       formControlName="phoneNumber"
       label="Tél. Celular"
@@ -44,10 +44,10 @@
     ></custom-input-mask>
     <custom-input-datalist
       (propagar)="onSaveEmployeeToAccount($event)"
-      [control]="form.get('employeeName')"
+      [control]="form.get('personName')"
       [data]="cb_employee"
-      dataListId="employeeNameCondominiumDatalistOptions"
-      formControlName="employeeName"
+      dataListId="personNameCondominiumDatalistOptions"
+      formControlName="personName"
       label="Colaborador"
     ></custom-input-datalist>
 

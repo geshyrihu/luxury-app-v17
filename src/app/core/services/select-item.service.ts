@@ -44,7 +44,7 @@ export class SelectItemService {
 
   onGetAllEmployee() {
     this.subRef$ = this.dataService
-      .get('SelectItem/GetAllEmployeeActive')
+      .get('selectitem/getallemployeeactive')
       .subscribe({
         next: (resp: any) => {
           this.allEmployeeActive = resp.body;
@@ -58,7 +58,7 @@ export class SelectItemService {
   onGetEmployeeFromCustomer() {
     this.subRef$ = this.dataService
       .get(
-        `SelectItem/GetAllEmployeeActive/${this.customerIdService.getcustomerId()}`
+        `selectitem/getallemployeeactive/${this.customerIdService.getcustomerId()}`
       )
       .subscribe({
         next: (resp: any) => {

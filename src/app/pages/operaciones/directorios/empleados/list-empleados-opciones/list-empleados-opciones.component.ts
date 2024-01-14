@@ -40,6 +40,7 @@ export default class ListEmpleadosOpcionesComponent
   implements OnInit, OnDestroy
 {
   ngOnInit(): void {
+    console.log('🚀 ~ ListEmpleadosOpcionesComponent:', this.config.data);
     this.onValidarProfession();
     this.onValidarSolicitudesAbiertas();
   }
@@ -186,7 +187,10 @@ export default class ListEmpleadosOpcionesComponent
   }
   onModalAccountToEmployee() {
     this.ref = this.dialogService.open(AccountToEmployeeComponent, {
-      data: { id: this.employeeId, applicationUserId: this.applicationUserId },
+      data: {
+        personId: this.personId,
+        applicationUserId: this.applicationUserId,
+      },
       header: 'Asignar cuenta de usuario',
       styleClass: 'modal-lg',
       baseZIndex: 10000,

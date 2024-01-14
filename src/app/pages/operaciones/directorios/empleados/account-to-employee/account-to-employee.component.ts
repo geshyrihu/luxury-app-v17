@@ -21,29 +21,18 @@ export default class AccountToEmployeeComponent implements OnInit {
   public config = inject(DynamicDialogConfig);
   private dataService = inject(DataService);
   private customToastService = inject(CustomToastService);
-
   private customerIdService = inject(CustomerIdService);
 
   submitting: boolean = false;
-  id: number = 0;
+  personId: number = 0;
   applicationUserId: string = this.config.data.applicationUserId;
   applicationUserList: any[] = [];
   subRef$: Subscription;
 
   ngOnInit() {
-    this.id = this.config.data.id;
-    if (this.id !== 0) this.onLoadData();
-
+    this.personId = this.config.data.personId;
+    console.log('🚀 ~ this.config.data:', this.config.data);
     this.onLoadAccount();
-  }
-  onLoadData() {
-    this.subRef$ = this.dataService.get(`Banks/${this.id}`).subscribe({
-      next: (resp: any) => {},
-      error: (err) => {
-        this.customToastService.onShowError();
-        console.log(err.error);
-      },
-    });
   }
 
   onRadioChange(newValue: string) {
@@ -53,7 +42,6 @@ export default class AccountToEmployeeComponent implements OnInit {
   }
 
   onSubmit() {
-    this.id = this.config.data.id;
     // Deshabilitar el botón al iniciar el envío del formulario
     this.submitting = true;
     // Mostrar un mensaje de carga
@@ -61,7 +49,7 @@ export default class AccountToEmployeeComponent implements OnInit {
 
     this.subRef$ = this.dataService
       .get(
-        `Accounts/UpdateAccountToEmployee/${this.id}/${this.applicationUserId}`
+        `accounts/updateaccounttoemployee/${this.personId}/${this.applicationUserId}`
       )
       .subscribe({
         next: () => {
@@ -81,7 +69,7 @@ export default class AccountToEmployeeComponent implements OnInit {
   onLoadAccount() {
     this.subRef$ = this.dataService
       .get(
-        `Employees/GetListAccountUser/${this.customerIdService.customerId}/${this.id}`
+        `Employees/GetListAccountUser/${this.customerIdService.customerId}/${this.personId}`
       )
       .subscribe({
         next: (resp: any) => {

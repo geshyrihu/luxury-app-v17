@@ -37,10 +37,10 @@ import ComponentsModule from 'src/app/shared/components.module';
   providers: [MessageService, CustomToastService],
 })
 export default class UpdateAccountComponent implements OnInit, OnDestroy {
-  private formBuilder = inject(FormBuilder);
-  private dataService = inject(DataService);
-  private selectItemService = inject(SelectItemService);
   private customToastService = inject(CustomToastService);
+  private dataService = inject(DataService);
+  private formBuilder = inject(FormBuilder);
+  private selectItemService = inject(SelectItemService);
   public authService = inject(AuthService);
   public customerIdService = inject(CustomerIdService);
 
@@ -65,9 +65,9 @@ export default class UpdateAccountComponent implements OnInit, OnDestroy {
     professionId: ['', Validators.required],
     customerId: ['', Validators.required],
     phoneNumber: [''],
-    employeeId: [''],
-    employeeActualId: [''],
-    employeeName: [''],
+    personId: [''],
+    personActualId: [''],
+    personName: [''],
   });
 
   ngOnInit(): void {
@@ -80,7 +80,7 @@ export default class UpdateAccountComponent implements OnInit, OnDestroy {
   onLoadData() {
     this.subRef$ = this.dataService
       .get<IEditarCuentaDto>(
-        `Accounts/GetApplicationUser/${this.applicationUserId}`
+        `accounts/getapplicationuser/${this.applicationUserId}`
       )
       .subscribe({
         next: (resp: any) => {
@@ -106,12 +106,12 @@ export default class UpdateAccountComponent implements OnInit, OnDestroy {
     this.submitting = true;
 
     this.form.patchValue({
-      employeeName: '',
+      personName: '',
     });
 
     this.subRef$ = this.dataService
       .put<IEditarCuentaDto>(
-        `Accounts/UpdateApplicationUser/${this.applicationUserId}`,
+        `accounts/updateapplicationuser/${this.applicationUserId}`,
         this.form.value
       )
       .subscribe({
@@ -135,7 +135,7 @@ export default class UpdateAccountComponent implements OnInit, OnDestroy {
       (x) => x.label.toLowerCase() === e.target.value.toLowerCase()
     );
     this.form.patchValue({
-      employeeId: find?.value,
+      personId: find?.value,
     });
   }
 

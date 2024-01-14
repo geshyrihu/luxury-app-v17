@@ -65,6 +65,8 @@ export default class LoginComponent implements OnInit, OnDestroy {
       .post('Auth/login', this.form.value)
       .subscribe({
         next: (resp: any) => {
+          console.log('🚀 ~ resp.body:', resp.body);
+
           // Guarda los datos de autenticación y redirige al 'returnUrl'
           this.onRemember(this.form.get('remember').value);
           // this.router.navigateByUrl(localStorage.getItem('currentUrl'));
