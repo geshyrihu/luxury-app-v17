@@ -1,14 +1,6 @@
 <div class="card">
   <div class="card-body">
     <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
-      <custom-input-text
-        [control]="form.get('firstName')"
-        formControlName="firstName"
-        label="Nombre"
-        placeholder="nombre"
-        [horizontal]="false"
-      ></custom-input-text>
-
       @if(cb_providers.length == 0){
       <div class="text-center">
         <p>Cargando listado de proveedores</p>
@@ -26,7 +18,30 @@
         [horizontal]="false"
         dataListId="nameProviderDatalistOptions"
       ></custom-input-datalist>
-      } @if(cb_professions.length == 0){
+      }
+
+      <!--  -->
+      @if(cb_persons.length == 0){
+      <div class="text-center">
+        <p>Cargando listado de personas</p>
+        <div class="spinner-border text-info m-1" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+      }@else {
+      <custom-input-datalist
+        (propagar)="savePersonId($event)"
+        [control]="form.get('namePerson')"
+        [data]="cb_persons"
+        formControlName="namePerson"
+        label="Personas"
+        [horizontal]="false"
+        dataListId="namePersonDatalistOptions"
+      ></custom-input-datalist>
+      }
+      <!--  -->
+
+      @if(cb_professions.length == 0){
       <div class="text-center">
         <p>Cargando listado de categorias</p>
         <div class="spinner-border text-info m-1" role="status">
@@ -46,9 +61,8 @@
       ></custom-input-datalist>
       }
 
-      <custom-button-submit
-        [disabled]="this.form.invalid || submitting"
-      ></custom-button-submit>
+      <!-- [disabled]="this.form.invalid || submitting" -->
+      <custom-button-submit />
     </form>
   </div>
 </div>

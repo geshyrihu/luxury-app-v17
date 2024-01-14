@@ -18,7 +18,12 @@
 
     <ng-template pTemplate="header">
       <tr>
-        <th colspan="2" scope="col" pSortableColumn="nameComercial">
+        <th
+          colspan="2"
+          scope="col"
+          style="width: 30%"
+          pSortableColumn="nameComercial"
+        >
           Proveedor <p-sortIcon field="nameComercial"></p-sortIcon>
         </th>
         <th scope="col" pSortableColumn="fullName">
@@ -42,38 +47,32 @@
     </ng-template>
     <ng-template pTemplate="body" let-item>
       <tr>
-        <td class="p-column-title">
+        <td>
           <img
             [src]="url_img + item.pathPhoto"
             alt="noImg"
             class="rounded avatar-lg"
           />
         </td>
-        <td class="p-column-title">
+        <td>
           <h4 class="m-0 h4">{{ item.nameComercial }}</h4>
           <p>{{ item.nameProvider }}</p>
         </td>
-        <td class="p-column-title">
+        <td>
           {{ item.fullName }}
         </td>
-        <td class="p-column-title">
+        <td>
           {{ item.email }}
         </td>
-        <td class="p-column-title">
+        <td>
           {{ item.phoneNumber }}
         </td>
-        <td class="p-column-title">
+        <td>
           {{ item.nameProfession }}
         </td>
         <!-- Opciones -->
-        <td class="p-column-title" class="hide-print-mode">
+        <td class="hide-print-mode">
           <div class="d-flex justify-content-center">
-            <custom-button
-              ngbTooltip="Asignar clientes"
-              [customClass]="'btn-sm btn-outline-primary'"
-              icon="fa-regular fa-user-lock text-primary"
-              (clicked)="onModalAddOrEditCustomer(item.id)"
-            ></custom-button>
             <custom-button-edit
               (edit)="
                 onModalAddOrEdit({ id: item.id, title: 'Editar Registro' })

@@ -14,7 +14,11 @@ import {
   DataService,
 } from 'src/app/core/services/common-services';
 import UpdatePasswordModalComponent from 'src/app/pages/configuracion/accounts/modal-edit-account/update-password-modal/update-password-modal.component';
-import ContactEmployeeComponent from 'src/app/pages/person/addoredit-person-contact/contact-employee.component';
+import AddoreditPersonDataComponent from 'src/app/pages/person/addoredit-person-data/addoredit-person-data.component';
+import ListPersonEmergencyContactComponent from 'src/app/pages/person/list-person-emergency-contact/list-person-emergency-contact.component';
+import PersonAddoreditAddressComponent from 'src/app/pages/person/person-addoredit-address/person-addoredit-address.component';
+import PersonEditDataLaboralComponent from 'src/app/pages/person/person-edit-data-laboral/person-edit-data-laboral.component';
+import PersonEditDataPrincipalComponent from 'src/app/pages/person/person-edit-data-principal/person-edit-data-principal.component';
 import SolicitudAltaComponent from 'src/app/pages/reclutamiento/solicitudes/solicitud-alta/solicitud-alta.component';
 import SolicitudBajaComponent from 'src/app/pages/reclutamiento/solicitudes/solicitud-baja/solicitud-baja.component';
 import SolicitudModificacionSalarioComponent from 'src/app/pages/reclutamiento/solicitudes/solicitud-modificacion-salario/solicitud-modificacion-salario.component';
@@ -59,13 +63,86 @@ export default class ListEmpleadosOpcionesComponent
   solicitudModificacionSalarioStatus: any;
   workPosition: any;
 
-  onShowModalcontactEmployee() {
-    this.ref = this.dialogService.open(ContactEmployeeComponent, {
+  // Datos Principales
+  onShowModalDatosPrincipales() {
+    this.ref = this.dialogService.open(PersonEditDataPrincipalComponent, {
       data: {
-        id: this.employeeId,
+        personId: this.personId,
+      },
+      header: 'Datos Principales',
+      styleClass: 'modal-w-100',
+      baseZIndex: 10000,
+      closeOnEscape: true,
+    });
+    this.ref.onClose.subscribe((resp: boolean) => {
+      if (resp) {
+        this.customToastService.onShowSuccess();
+      }
+    });
+  }
+  // Datos Personales
+  onShowModalDatosPersonales() {
+    this.ref = this.dialogService.open(AddoreditPersonDataComponent, {
+      data: {
+        personId: this.personId,
+      },
+      header: 'Datos Personales',
+      styleClass: 'modal-w-100',
+      baseZIndex: 10000,
+      closeOnEscape: true,
+    });
+    this.ref.onClose.subscribe((resp: boolean) => {
+      if (resp) {
+        this.customToastService.onShowSuccess();
+      }
+    });
+  }
+  // Datos Laborales
+  onShowModalDatosLaboral() {
+    this.ref = this.dialogService.open(PersonEditDataLaboralComponent, {
+      data: {
+        employeeId: this.employeeId,
+        personId: this.personId,
+      },
+      header: 'Datos laborales',
+      styleClass: 'modal-w-100',
+      baseZIndex: 10000,
+      closeOnEscape: true,
+    });
+    this.ref.onClose.subscribe((resp: boolean) => {
+      if (resp) {
+        this.customToastService.onShowSuccess();
+      }
+    });
+  }
+
+  // Modal datos direccion
+  onModalDataAddress() {
+    this.ref = this.dialogService.open(PersonAddoreditAddressComponent, {
+      data: {
+        personId: this.personId,
+      },
+      header: 'Dirección',
+      styleClass: 'modal-lg',
+      baseZIndex: 10000,
+      closeOnEscape: true,
+    });
+    this.ref.onClose.subscribe((resp: boolean) => {
+      if (resp) {
+        this.customToastService.onShowSuccess();
+        if (resp) {
+          this.customToastService.onShowSuccess();
+        }
+      }
+    });
+  }
+  onShowModalEmergencyContact() {
+    this.ref = this.dialogService.open(ListPersonEmergencyContactComponent, {
+      data: {
+        personId: this.personId,
       },
       header: 'Contactos de Emergencia',
-      styleClass: 'modal-w-100',
+      styleClass: 'modal-lg',
       baseZIndex: 10000,
       closeOnEscape: true,
     });
@@ -198,6 +275,7 @@ export default class ListEmpleadosOpcionesComponent
       }
     });
   }
+
   onShowModalAddOrEdit() {
     this.ref = this.dialogService.open(AddOrEditEmplopyeeComponent, {
       data: {

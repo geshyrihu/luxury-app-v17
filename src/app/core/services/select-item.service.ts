@@ -72,7 +72,7 @@ export class SelectItemService {
 
   onGetSelectItem(urlApi: string): Observable<ISelectItemDto[]> {
     const dataSubject = new Subject<ISelectItemDto[]>();
-    this.dataService.get<ISelectItemDto[]>('SelectItem/' + urlApi).subscribe({
+    this.dataService.get<ISelectItemDto[]>('selectitem/' + urlApi).subscribe({
       next: (resp: any) => {
         dataSubject.next(resp.body);
         dataSubject.complete();

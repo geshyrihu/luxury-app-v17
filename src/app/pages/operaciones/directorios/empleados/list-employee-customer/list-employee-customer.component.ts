@@ -100,9 +100,10 @@ export default class ListEmployeeComponent implements OnInit, OnDestroy {
         employeeId,
         active,
       },
+      header: 'Opciones',
       baseZIndex: 10000,
       closeOnEscape: true,
-      styleClass: 'modal-md',
+      styleClass: 'modal-lg',
     });
     this.ref.onClose.subscribe(() => {
       this.onLoadData();

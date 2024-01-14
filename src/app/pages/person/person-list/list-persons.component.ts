@@ -135,8 +135,8 @@ export default class ListPersonComponent implements OnInit, OnDestroy {
       }
     });
   }
-  // Modal datos principales
 
+  // Modal datos principales
   onModalCreatePerson(data: any) {
     this.ref = this.dialogService.open(AddoreditPersonComponent, {
       data: {

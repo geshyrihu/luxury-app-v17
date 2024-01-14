@@ -434,7 +434,6 @@ export class SidebarService {
             'SuperUsuario',
             'SupervisionOperativa',
           ]),
-
           label: 'Mis Proveedores',
           routerLink: '/operaciones/mis-proveedores',
           name: 'Operaciones-Mis proveedores',

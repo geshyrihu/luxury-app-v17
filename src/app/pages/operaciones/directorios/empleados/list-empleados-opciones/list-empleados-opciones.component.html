@@ -1,14 +1,38 @@
 <p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+
+Nueo
 <div class="card p-3">
   <div class="row">
-    <div class="col-6">
+    <div class="col-4">
+      <div class="card-title">Empleado</div>
+
       <ul class="list-group">
+        <!-- Editar datos -->
+        <li
+          class="list-group-item pointer"
+          (click)="onShowModalDatosPrincipales()"
+        >
+          <i class="fa-duotone fa-database me-3"></i>
+          Datos principales
+        </li>
+        <li
+          class="list-group-item pointer"
+          (click)="onShowModalDatosPersonales()"
+        >
+          <i class="fa-duotone fa-memo-circle-info me-3"></i>
+          Datos personales
+        </li>
+
+        <li class="list-group-item pointer" (click)="onModalDataAddress()">
+          <i class="fa-duotone fa-location-dot me-3"></i>
+          Dirección
+        </li>
         <!-- Inicio contactos de emergencia -->
         <li
           class="list-group-item pointer"
-          (click)="onShowModalcontactEmployee()"
+          (click)="onShowModalEmergencyContact()"
         >
-          <i class="fa-regular fa-family-pants me-3"></i>
+          <i class="fa-duotone fa-family-pants me-3"></i>
           Contactos de Emergencia
         </li>
         <!-- Final contactos de emergencia -->
@@ -17,13 +41,18 @@
           class="list-group-item pointer"
           (click)="onShowModalActualizarImagen()"
         >
-          <i class="fa-regular fa-camera me-3"></i>
+          <i class="fa-duotone fa-camera me-3"></i>
           Cambiar foto
         </li>
         <!-- Final cambiar foto de perfil -->
+      </ul>
+    </div>
+    <div class="col-4">
+      <div class="card-title">Laborales</div>
+      <ul class="list-group">
         <!-- Inicio restablecer contraseña -->
         <li class="list-group-item pointer" (click)="onModalUpdatePassword()">
-          <i class="fa-regular fa-key me-3"></i>
+          <i class="fa-duotone fa-key me-3"></i>
           Restablecer contraseña
         </li>
         <!-- Final restablecer contraseña  -->
@@ -31,26 +60,35 @@
           class="list-group-item pointer"
           (click)="onModalAccountToEmployee()"
         >
-          <i class="fa-regular fa-image-user me-3"></i>
+          <i class="fa-duotone fa-image-user me-3"></i>
           Asignar cuenta de usuario
         </li>
         @if (!active) {
         <li class="list-group-item pointer" (click)="onBlockEmployee()">
-          <i class="fa-regular fa-user-xmark me-3"></i>
+          <i class="fa-duotone fa-user-xmark me-3"></i>
           Activar empleado
         </li>
         } @if (active) {
         <li class="list-group-item pointer" (click)="onBlockEmployee()">
-          <i class="fa-regular fa-user-xmark me-3"></i>
+          <i class="fa-duotone fa-user-xmark me-3"></i>
           Desactivar empleado
         </li>
         }
+        <li class="list-group-item pointer" (click)="onShowModalDatosLaboral()">
+          <i class="fa-duotone fa-briefcase me-3"></i>
+          Datos laborales
+        </li>
+
+        <li class="list-group-item pointer" (click)="onDelete()">
+          <i class="fa-duotone fa-trash me-3"></i>
+          Eliminar
+        </li>
       </ul>
     </div>
-    <div class="col-6">
-      <ul class="list-group">
-        <!-- @if (accionPermitida){  -->
 
+    <div class="col-4">
+      <div class="card-title">Reclutamiento</div>
+      <ul class="list-group">
         @if (!workPosition) {
         <li class="list-group-item text-danger">
           <em>
@@ -58,51 +96,52 @@
             estar cubriendo una vacante.
           </em>
         </li>
-        } @if (!solicitudBajaStatus && workPosition) {
+        }
+        <!--  -->
+        @if (!solicitudBajaStatus && workPosition) {
         <li class="list-group-item pointer" (click)="onModalSolicitudBaja()">
-          <i class="fa-regular fa-user-minus me-3"></i>
+          <i class="fa-duotone fa-user-minus me-3"></i>
           Solicitar Baja
         </li>
-        } @if(solicitudAltaStatus){
+        }
+        <!--  -->
+        @if(solicitudAltaStatus){
         <li class="list-group-item pointer">
-          <i class="fa-regular fa-user-plus me-3 text-danger"></i>
+          <i class="fa-duotone fa-user-plus me-3 text-danger"></i>
           <span class="text-danger"> Solicitud de alta en proceso </span>
         </li>
         }@else{
         <li class="list-group-item pointer" (click)="onModalSolicitudALta()">
-          <i class="fa-regular fa-user-plus me-3"></i>
+          <i class="fa-duotone fa-user-plus me-3"></i>
           Solicitar Alta
         </li>
-        } @if (solicitudBajaStatus) {
+        }
+        <!--  -->
+        @if (solicitudBajaStatus) {
         <li class="list-group-item">
-          <i class="fa-regular fa-user-minus me-3 text-danger"></i>
+          <i class="fa-duotone fa-user-minus me-3 text-danger"></i>
           <span class="text-danger">Solicitar Baja en proceso</span>
         </li>
-        } @if (!solicitudModificacionSalarioStatus && workPosition) {
+        }
+        <!--  -->
+        @if (!solicitudModificacionSalarioStatus && workPosition) {
         <li
           class="list-group-item pointer"
           (click)="onModalSolicitudModificacionSalarion()"
         >
-          <i class="fa-regular fa-money-bill-1 me-3"></i>
+          <i class="fa-duotone fa-money-bill-1 me-3"></i>
           Solicitar modificación de salario
         </li>
-        } @if (solicitudModificacionSalarioStatus) {
+        }
+        <!--  -->
+        @if (solicitudModificacionSalarioStatus) {
         <li class="list-group-item text-danger">
-          <i class="fa-regular fa-money-bill-1 me-3"></i>
+          <i class="fa-duotone fa-money-bill-1 me-3"></i>
           <span class="text-danger"
             >Solicitar modificación de salario en proceso</span
           >
         </li>
         }
-        <!-- } -->
-        <li class="list-group-item pointer" (click)="onShowModalAddOrEdit()">
-          <i class="fa-regular fa-pen-to-square me-3"></i>
-          Editar
-        </li>
-        <li class="list-group-item pointer" (click)="onDelete()">
-          <i class="fa-regular fa-trash me-3"></i>
-          Eliminar
-        </li>
       </ul>
     </div>
   </div>

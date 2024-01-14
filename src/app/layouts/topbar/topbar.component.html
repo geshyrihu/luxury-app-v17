@@ -79,7 +79,24 @@
           <i class="fa-regular fa-key font-size-16 align-middle me-2"></i>
           Cambiar contraseña
         </a>
-
+        <button
+          (click)="onModalDataAddress()"
+          class="btn btn-light w-100 waves-effect waves-light dropdown-item"
+        >
+          <i
+            class="fa-duotone fa-location-dot font-size-16 align-middle me-2"
+          ></i>
+          Actualizar mi dirección
+        </button>
+        <button
+          (click)="onShowModalDatosPersonales()"
+          class="btn btn-light w-100 waves-effect waves-light dropdown-item"
+        >
+          <i
+            class="fa-duotone fa-memo-circle-info font-size-16 align-middle me-2"
+          ></i>
+          Complementar mi datos
+        </button>
         <a
           class="btn btn-light w-100 waves-effect waves-light dropdown-item"
           (click)="logout()"

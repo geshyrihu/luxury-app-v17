@@ -1,14 +1,19 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
+  FormsModule,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import ComponentsModule from 'app/shared/components.module';
+import { NgxMaskModule } from 'ngx-mask';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { ToastModule } from 'primeng/toast';
 import { Subscription } from 'rxjs';
+import { ERelationEmployee } from 'src/app/core/enums/relation-employee.enum';
+import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import {
   CustomToastService,
@@ -16,57 +21,70 @@ import {
   SelectItemService,
 } from 'src/app/core/services/common-services';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
+import ComponentsModule from 'src/app/shared/components.module';
 
 @Component({
-  selector: 'app-add-or-edit-provider-support',
-  templateUrl: './add-or-edit-provider-support.component.html',
+  selector: 'app-addoredit-person-emergency-contact',
+  templateUrl: './addoredit-person-emergency-contact.component.html',
   standalone: true,
   imports: [
-    ComponentsModule,
-    ReactiveFormsModule,
     CommonModule,
+    ReactiveFormsModule,
+    ComponentsModule,
     CustomInputModule,
+    FormsModule,
+    ToastModule,
+    NgxMaskModule,
   ],
-  providers: [CustomToastService],
+  providers: [MessageService, ConfirmationService, CustomToastService],
 })
-export default class AddOrEditProviderSupportComponent implements OnInit {
-  private config = inject(DynamicDialogConfig);
-  private customToastService = inject(CustomToastService);
-  private dataService = inject(DataService);
+export default class AddoreditPersonEmergencyContactComponent
+  implements OnInit, OnDestroy
+{
   private formBuilder = inject(FormBuilder);
-  private ref = inject(DynamicDialogRef);
-  private selectItemService = inject(SelectItemService);
+  public config = inject(DynamicDialogConfig);
+  public customToastService = inject(CustomToastService);
+  public dataService = inject(DataService);
+  public messageService = inject(MessageService);
+  public ref = inject(DynamicDialogRef);
+  public selectItemService = inject(SelectItemService);
 
-  submitting: boolean = false;
   id: string = '';
-  subRef$: Subscription;
 
   cb_persons: ISelectItemDto[] = [];
-  cb_professions: ISelectItemDto[] = [];
-  cb_providers: ISelectItemDto[] = [];
+  cb_relacion: ISelectItemDto[] = onGetSelectItemFromEnum(ERelationEmployee);
+  submitting: boolean = false;
+  subRef$: Subscription;
 
   form: FormGroup = this.formBuilder.group({
-    id: { value: this.id, disabled: true },
-    personId: ['', [Validators.required]],
-    namePerson: ['', [Validators.required]],
-    providerId: ['', [Validators.required]],
-    nameProvider: ['', [Validators.required]],
-    professionId: ['', [Validators.required]],
-    nameProfession: ['', [Validators.required]],
+    id: { value: this.config.data.id, disabled: true },
+    personId: [this.config.data.personId],
+    namePerson: ['', Validators.required],
+    personContactId: ['', Validators.required],
+    relacion: ['', Validators.required],
   });
 
-  ngOnInit() {
-    this.onLoadSelectItem();
+  ngOnInit(): void {
     this.id = this.config.data.id;
-    if (this.id !== '') this.onLoadData();
+    this.onLoadSelectItem();
+    if (this.id != '') {
+      this.onLoadData();
+    }
+  }
+  onLoadSelectItem() {
+    // Carga de listado de personas
+    this.selectItemService.onGetSelectItem('persons').subscribe((resp) => {
+      this.cb_persons = resp;
+    });
   }
 
   onLoadData() {
     this.subRef$ = this.dataService
-      .get(`providersupport/${this.id}`)
+      .get(`personemergencycontact/${this.id}`)
       .subscribe({
         next: (resp: any) => {
           this.form.patchValue(resp.body);
+          console.log('🚀 ~ resp.body:', resp.body);
         },
         error: (err) => {
           this.customToastService.onShowError();
@@ -76,14 +94,14 @@ export default class AddOrEditProviderSupportComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('🚀 ~ this.form.invalid:', this.form.value);
+    console.log('🚀 ~ fomulario:', this.form.value);
+
     if (this.form.invalid) {
       Object.values(this.form.controls).forEach((x) => {
         x.markAllAsTouched();
       });
       return;
     }
-    this.id = this.config.data.id;
     // Deshabilitar el botón al iniciar el envío del formulario
     this.submitting = true;
     // Mostrar un mensaje de carga
@@ -91,7 +109,7 @@ export default class AddOrEditProviderSupportComponent implements OnInit {
 
     if (this.id === '') {
       this.subRef$ = this.dataService
-        .post(`providersupport`, this.form.value)
+        .post(`personemergencycontact`, this.form.value)
         .subscribe({
           next: () => {
             this.ref.close(true);
@@ -107,7 +125,7 @@ export default class AddOrEditProviderSupportComponent implements OnInit {
         });
     } else {
       this.subRef$ = this.dataService
-        .put(`providersupport/${this.id}`, this.form.value)
+        .put(`personemergencycontact/${this.id}`, this.form.value)
         .subscribe({
           next: () => {
             this.ref.close(true);
@@ -124,44 +142,10 @@ export default class AddOrEditProviderSupportComponent implements OnInit {
     }
   }
 
-  onLoadSelectItem() {
-    // Carga de listado de proveedores
-    this.selectItemService.onGetSelectItem('providers').subscribe((resp) => {
-      this.cb_providers = resp;
-      console.log('🚀 ~ this.cb_providers:', this.cb_providers);
-    });
-    // Carga de listado de categorias
-    this.selectItemService.onGetSelectItem('professions').subscribe((resp) => {
-      this.cb_professions = resp;
-      console.log('🚀 ~ this.cb_professions:', this.cb_professions);
-    });
-    // Carga de listado de personas
-    this.selectItemService.onGetSelectItem('persons').subscribe((resp) => {
-      this.cb_persons = resp;
-      console.log('🚀 ~ this.cb_persons:', this.cb_persons);
-    });
-  }
-
-  saveProviderId(e: any) {
-    let find = this.cb_providers.find((x) => x?.label === e.target.value);
-    this.form.patchValue({
-      providerId: find?.value,
-      nameProvider: find?.label,
-    });
-    console.log('🚀 ~ this.form.invalid:', this.form.value);
-  }
-  saveProfessionsId(e: any) {
-    let find = this.cb_professions.find((x) => x?.label === e.target.value);
-    this.form.patchValue({
-      professionId: find?.value,
-      nameProfession: find?.label,
-    });
-    console.log('🚀 ~ this.form.invalid:', this.form.value);
-  }
   savePersonId(e: any) {
     let find = this.cb_persons.find((x) => x?.label === e.target.value);
     this.form.patchValue({
-      personId: find?.value,
+      personContactId: find?.value,
       namePerson: find?.label,
     });
     console.log('🚀 ~ this.form.invalid:', this.form.value);
