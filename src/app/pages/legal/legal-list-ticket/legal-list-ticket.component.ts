@@ -3,6 +3,7 @@ import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject } from 'rxjs';
 import { CustomToastService } from 'src/app/core/services/common-services';
+import { OnDestroyService } from 'src/app/core/services/on-destroy.service';
 import ComponentsModule from 'src/app/shared/components.module';
 import PrimeNgModule from 'src/app/shared/prime-ng.module';
 import { LegalTicketRequestComponent } from '../legal-ticket-request/legal-ticket-request.component';
@@ -17,6 +18,7 @@ import { LegalTicketRequestComponent } from '../legal-ticket-request/legal-ticke
 export default class LegalListTicketComponent implements OnInit {
   public customToastService = inject(CustomToastService);
   public dialogService = inject(DialogService);
+  public OnDestroy = inject(OnDestroyService);
 
   data: any[] = [];
   ref: DynamicDialogRef; // Referencia a un cuadro de diálogo modal
@@ -28,7 +30,7 @@ export default class LegalListTicketComponent implements OnInit {
 
   onLoadData() {}
 
-  // Función para abrir un cuadro de diálogo modal para agregar o editar información sobre un banco
+  // Función para abrir un cuadro de diálogo modal para con el listado de opciones de ticket para area legal
   onModalRequest(data: any) {
     this.ref = this.dialogService.open(LegalTicketRequestComponent, {
       data: {
@@ -50,9 +52,13 @@ export default class LegalListTicketComponent implements OnInit {
     });
   }
 
+  // el ngOnDestroy de mi componente
+
   ngOnDestroy(): void {
     // Cuando se destruye el componente, desvincular y liberar recursos
-    this.destroy$.next();
-    this.destroy$.complete();
+    // this.destroy$.next();
+    // this.destroy$.complete();
+
+    this.OnDestroy.ngOnDestroy();
   }
 }

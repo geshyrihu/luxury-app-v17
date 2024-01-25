@@ -24,6 +24,7 @@ export const routes: Routes = [
     loadChildren: () => import('src/app/routing/person.routing'),
     canActivate: [AuthGuard],
   },
+
   {
     path: 'auth',
     loadChildren: () => import('src/app/routing/auth.routing'),

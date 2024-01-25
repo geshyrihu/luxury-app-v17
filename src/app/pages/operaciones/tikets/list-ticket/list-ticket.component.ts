@@ -6,7 +6,6 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subscription } from 'rxjs';
 import { IFilterTicket } from 'src/app/core/interfaces/IFilterTicket.interface';
-import CardEmployeeComponent from 'src/app/pages/operaciones/directorios/empleados/card-employee/card-employee.component';
 import {
   AuthService,
   CustomerIdService,
@@ -16,12 +15,14 @@ import {
   ReportService,
   TicketFilterService,
 } from 'src/app/core/services/common-services';
+import CardEmployeeComponent from 'src/app/pages/operaciones/directorios/empleados/card-employee/card-employee.component';
 import ComponentsModule from 'src/app/shared/components.module';
 import PrimeNgModule from 'src/app/shared/prime-ng.module';
 import { environment } from 'src/environments/environment';
 import EnviarMailReporteSemanalComponent from '../../enviar-email/enviar-mail-reporte-semanal/enviar-mail-reporte-semanal.component';
 import AddoreditTicketComponent from '../addoredit-ticket/addoredit-ticket.component';
 import FilterWorkplanComponent from '../filter-workplan/filter-workplan.component';
+import SendWorkPlanComponent from '../send-work-plan/send-work-plan.component';
 import TicketSeguimientoComponent from '../ticket-comentario/ticket-seguimiento.component';
 import FilterTicketComponent from '../ticket-filter/ticket-filter.component';
 
@@ -211,6 +212,16 @@ export default class ListTicketComponent implements OnInit, OnDestroy {
       }
     });
   }
+  onModalSendWorkPlan() {
+    this.ref = this.dialogService.open(SendWorkPlanComponent, {
+      data: {
+        panelDto: this.filterTicket,
+      },
+      styleClass: 'modal-sm',
+      baseZIndex: 10000,
+      closeOnEscape: true,
+    });
+  }
 
   onDelete(item: any) {
     // Mostrar un mensaje de carga
@@ -270,6 +281,19 @@ export default class ListTicketComponent implements OnInit, OnDestroy {
         },
       });
   }
+  onSendProviders() {
+    // Mostrar un mensaje de carga
+    this.customToastService.onLoading();
+    this.subRef$ = this.dataService.get(`ticket/sendproviders/`).subscribe({
+      next: () => {
+        this.customToastService.onClose();
+      },
+      error: (err) => {
+        this.customToastService.onClose();
+        console.log(err.error);
+      },
+    });
+  }
 
   onCreateLiga() {
     if (
@@ -302,23 +326,6 @@ export default class ListTicketComponent implements OnInit, OnDestroy {
 
   onLoadTicketsAll() {
     this.data = this.dataCompleta;
-  }
-
-  SetFolios() {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.subRef$ = this.dataService
-      .get('Ticket/SetFolios/' + this.customerIdService.getcustomerId())
-      .subscribe({
-        next: (_) => {
-          this.customToastService.onClose();
-        },
-        error: (err) => {
-          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onCloseToError();
-          console.log(err.error);
-        },
-      });
   }
 
   ngOnDestroy() {

@@ -87,6 +87,7 @@ Nueo
     </div>
 
     <div class="col-4">
+      @if (tienePermiso) {
       <div class="card-title">Reclutamiento</div>
       <ul class="list-group">
         @if (!workPosition) {
@@ -143,6 +144,7 @@ Nueo
         </li>
         }
       </ul>
+      }
     </div>
   </div>
 </div>

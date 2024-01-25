@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { TableModule } from 'primeng/table';
 import { Observable, Subscription } from 'rxjs';
+import StripTagsPipe from 'src/app/core/pipes/StripTags.pipe';
 import {
   CustomToastService,
   CustomerIdService,
@@ -14,10 +15,7 @@ import { environment } from 'src/environments/environment';
   selector: 'app-equipos',
   templateUrl: './equipos.component.html',
   standalone: true,
-  imports: [
-    ComponentsModule,
-    TableModule
-],
+  imports: [ComponentsModule, TableModule, StripTagsPipe],
   providers: [MessageService, CustomToastService],
 })
 export default class EquiposComponent implements OnInit, OnDestroy {
@@ -42,12 +40,13 @@ export default class EquiposComponent implements OnInit, OnDestroy {
     this.customToastService.onLoading();
     this.subRef$ = this.dataService
       .get(
-        'EntregaRecepcion/InventarioEquipos/' +
+        'entregarecepcion/inventarioequipos/' +
           this.customerIdService.customerId
       )
       .subscribe({
         next: (resp: any) => {
           this.data = resp.body;
+          console.log('🚀 ~ resp.body:', resp.body);
           this.customToastService.onClose();
         },
         error: (err) => {

@@ -82,11 +82,11 @@ export default [
         'src/app/pages/contabilidad/reporte-envio-financieros/reporte-envio-financieros.component'
       ),
   },
-  // {
-  //   path: 'cedula-presupuestal-detalle/:id',
-  //   loadComponent: () =>
-  //     import(
-  //       'src/app/pages/administrativa/contabilidad/presupuesto/detalle-cedula-presupuestal.component'
-  //     ),
-  // },
+  {
+    path: 'estados-financieros',
+    loadComponent: () =>
+      import(
+        'src/app/pages/contabilidad/estados-financieros/estado-financiero-list.component'
+      ),
+  },
 ] as Routes;

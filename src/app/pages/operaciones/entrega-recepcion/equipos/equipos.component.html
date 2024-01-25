@@ -52,7 +52,17 @@
           class="shadow-4"
         />
       </td>
-      <td class="small">{{ item.nombre }}</td>
+      <td class="small">
+        {{ item.nombre }}
+        <br />
+        {{ item.marca }}
+        <br />
+        {{ item.modelo }}
+        <br />
+        @if (item.datosTecnicos !='null' ) {
+        {{ item.datosTecnicos | striptags }}
+        }
+      </td>
       <td class="small">{{ item.sistema }}</td>
       <td class="small">{{ item.ubicacion }}</td>
       <td class="small text-center">

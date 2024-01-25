@@ -82,10 +82,12 @@ export class CustomToastService {
     // Swal.close();
     this.spinner.hide();
   }
-  onCloseToError() {
+  onCloseToError(err: any = null): void {
     this.onShowError();
     // Swal.close();
     this.spinner.hide();
+    // Imprimir en consola el error ocurrido
+    console.log('Error:', err.error);
   }
 
   /**

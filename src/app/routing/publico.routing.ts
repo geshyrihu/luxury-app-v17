@@ -11,4 +11,11 @@ export default [
     loadComponent: () =>
       import('src/app/pages/publico/report-meeting/report-meeting.component'),
   },
+  {
+    path: 'reporte-ticket-pendientes-proveedor/:customerId/:departamentId',
+    loadComponent: () =>
+      import(
+        'src/app/pages/publico/reporte-ticket-pendientes-proveedor/reporte-ticket-pendientes-proveedor.component'
+      ),
+  },
 ] as Routes;

@@ -47,6 +47,8 @@ export default class ListSolicitudesPorClienteComponent implements OnInit {
     });
   }
 
+  // Si es administrador vamos a evitar que traiga todas las solicitudes que sean de administrador y asisntente
+
   // Función para cargar los datos de los bancos
   onLoadData() {
     // Mostrar un mensaje de carga
@@ -56,13 +58,16 @@ export default class ListSolicitudesPorClienteComponent implements OnInit {
     this.dataService
       .get(
         'SolicitudesReclutamiento/solicitudesporcliente/' +
-          this.customerIdService.getcustomerId()
+          this.customerIdService.getcustomerId() +
+          '/' +
+          this.authService.infoEmployeeDto.employeeId
       )
       .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           // Cuando se obtienen los datos con éxito, actualizar la variable 'data' y ocultar el mensaje de carga
           this.data = resp.body;
+          console.log('🚀 ~ resp.body:', resp.body);
           this.customToastService.onClose();
         },
         error: (err) => {

@@ -1,399 +1,396 @@
-// 
+//
 // _header.scss
-// 
+//
 
 #page-topbar {
-    position: fixed;
-    top: 0;
-    right: 0;
-    left: 0;
-    z-index: 1054;
-    background-color: var(--#{$prefix}header-bg);
-    border-bottom: 1px solid var(--#{$prefix}border-color);
+  position: fixed; /* La barra superior se mantiene fija en la pantalla */
+  top: 0; /* En la parte superior de la pantalla */
+  right: 0; /* Alineado a la derecha de la pantalla */
+  left: 0; /* Alineado a la izquierda de la pantalla */
+  z-index: 1054; /* Nivel de apilamiento, determina la posición en la pila de elementos */
+  background-color: var(--#{$prefix}header-bg); /* Color de fondo */
+  border-bottom: 1px solid var(--#{$prefix}border-color); /* Borde inferior de 1 píxel sólido */
 }
 
 .navbar-header {
-    display: flex;
-    -ms-flex-pack: justify;
-    justify-content: space-between;
-    align-items: center;
-    margin: 0 auto;
-    height: $header-height;
-    padding: 0 $grid-gutter-width 0 0;
+  display: flex; /* Usa el modelo de caja flexible para el diseño */
+  -ms-flex-pack: justify; /* Para navegadores antiguos de Microsoft */
+  justify-content: space-between; /* Distribución equitativa de espacio entre los elementos hijos */
+  align-items: center; /* Centra verticalmente los elementos hijos */
+  margin: 0 auto; /* Sin margen superior e inferior, centrado horizontalmente */
+  height: $header-height; /* Altura específica definida por la variable $header-height */
+  padding: 0 $grid-gutter-width 0 0; /* Relleno (padding) específico */
 
-    .dropdown .show {
-        &.header-item {
-            background-color: var(--#{$prefix}gray-100);
-        }
+  .dropdown .show {
+    &.header-item {
+      background-color: var(
+        --#{$prefix}gray-100
+      ); /* Color de fondo para elementos específicos dentro de la clase .dropdown .show.header-item */
     }
+  }
 }
 
 .navbar-brand-box {
-    padding: 0 1.5rem;
-    width: $navbar-brand-box-width;
-    background: var(--#{$prefix}sidebar-bg);
-    border-right: 1px solid $sidebar-border-color;
-    box-shadow: 0px 2px 2px var(--#{$prefix}sidebar-bg);
+  padding: 0 1.5rem; /* Relleno específico en los lados izquierdo y derecho */
+  width: $navbar-brand-box-width; /* Ancho definido por la variable $navbar-brand-box-width */
+  background: var(--#{$prefix}sidebar-bg); /* Color de fondo */
+  border-right: 1px solid $sidebar-border-color; /* Borde derecho de 1 píxel sólido con color definido por la variable $sidebar-border-color */
+  box-shadow: 0px 2px 2px var(--#{$prefix}sidebar-bg); /* Sombra específica */
 }
 
 .logo {
-    line-height: 69px;
-    color: inherit !important;
+  line-height: 69px; /* Altura de línea específica */
+  color: inherit !important; /* Color del texto heredado, !important para anular otras reglas */
 
-    .logo-sm {
-        display: none;
-    }
+  .logo-sm {
+    display: none; /* La clase .logo-sm está oculta por defecto */
+  }
 }
 
 .logo-txt {
-    font-weight: 700;
-    font-size: 18px;
-    vertical-align: middle;
-    margin-left: 5px;
+  font-weight: 700;
+  font-size: 18px;
+  vertical-align: middle;
+  margin-left: 5px;
 }
 
 .logo-light {
-    display: none;
+  display: none;
 }
 
-
 body:not([data-sidebar-size="sm"]) {
-    #vertical-menu-btn {
-        margin-left: -52px;
-        margin-right: 20px;
+  #vertical-menu-btn {
+    margin-left: -52px;
+    margin-right: 20px;
 
-        @media (max-width: 991.98px) {
-            margin-left: 0;
-        }
+    @media (max-width: 991.98px) {
+      margin-left: 0;
     }
+  }
 }
 
 /* Search */
 
 .app-search {
-    padding: calc(#{$header-height - 40px} / 2) 0;
-    position: relative;
+  padding: calc(#{$header-height - 40px} / 2) 0;
+  position: relative;
 
-    .form-control {
-        border: $search-width solid var(--#{$prefix}search-border-color);
-        height: 40px;
-        padding-left: 17px;
-        padding-right: 50px;
-        background-color: $topbar-search-bg;
-        box-shadow: none;
-    }
+  .form-control {
+    border: $search-width solid var(--#{$prefix}search-border-color);
+    height: 40px;
+    padding-left: 17px;
+    padding-right: 50px;
+    background-color: $topbar-search-bg;
+    box-shadow: none;
+  }
 
-    .btn {
-        position: absolute;
-        right: 3px;
-        top: 3px;
-        height: 34px;
-        padding: 0 10px;
-    }
+  .btn {
+    position: absolute;
+    right: 3px;
+    top: 3px;
+    height: 34px;
+    padding: 0 10px;
+  }
 }
 
 .layout-mode-light {
-    display: none;
+  display: none;
 }
 
 body[data-bs-theme="dark"] {
-    .layout-mode-dark {
-        display: none;
-    }
+  .layout-mode-dark {
+    display: none;
+  }
 
-    .layout-mode-light {
-        display: inline-block;
-    }
+  .layout-mode-light {
+    display: inline-block;
+  }
 }
 
-
 [data-bs-theme="dark"] [data-topbar="light"] {
-    .logo-dark {
-        .logo-txt {
-            color: $white;
-        }
+  .logo-dark {
+    .logo-txt {
+      color: $white;
     }
+  }
 }
 
 [data-bs-theme="dark"] [data-layout="horizontal"][data-topbar="light"] {
-    .logo-dark {
-        .logo-txt {
-            color: $dark;
-        }
+  .logo-dark {
+    .logo-txt {
+      color: $dark;
     }
+  }
 }
 
 // Mega menu
 
 .megamenu-list {
-    li {
-        position: relative;
-        padding: 5px 0px;
+  li {
+    position: relative;
+    padding: 5px 0px;
 
-        a {
-            color: $dropdown-color;
-        }
+    a {
+      color: $dropdown-color;
     }
+  }
 }
 
 @media (max-width: 992px) {
-    .navbar-brand-box {
-        width: auto;
+  .navbar-brand-box {
+    width: auto;
+  }
+
+  .logo {
+    span.logo-lg {
+      display: none;
     }
 
-    .logo {
-
-        span.logo-lg {
-            display: none;
-        }
-
-        span.logo-sm {
-            display: inline-block;
-        }
+    span.logo-sm {
+      display: inline-block;
     }
+  }
 }
 
 .page-content {
-    padding: calc(#{$header-height} + #{$grid-gutter-width}) calc(#{$grid-gutter-width} * 0.75) $footer-height calc(#{$grid-gutter-width} * 0.75);
+  padding: calc(#{$header-height} + #{$grid-gutter-width})
+    calc(#{$grid-gutter-width} * 0.75) $footer-height
+    calc(#{$grid-gutter-width} * 0.75);
 }
 
 .header-item {
-    height: $header-height;
-    box-shadow: none !important;
-    color: $header-item-color;
-    border: 0;
-    border-radius: 0px;
+  height: $header-height;
+  box-shadow: none !important;
+  color: $header-item-color;
+  border: 0;
+  border-radius: 0px;
 
-    &:hover {
-        color: $header-item-color;
-    }
+  &:hover {
+    color: $header-item-color;
+  }
 }
 
 .header-profile-user {
-    height: 36px;
-    width: 36px;
-    background-color: var(--#{$prefix}gray-600);
-    padding: 3px;
+  height: 36px;
+  width: 36px;
+  background-color: var(--#{$prefix}gray-600);
+  padding: 3px;
 }
 
 .noti-icon {
-    i {
-        font-size: 22px;
-        color: $header-item-color;
-    }
+  i {
+    font-size: 22px;
+    color: $header-item-color;
+  }
 
-    .badge {
-        position: absolute;
-        top: 12px;
-        right: 4px;
-    }
+  .badge {
+    position: absolute;
+    top: 12px;
+    right: 4px;
+  }
 }
 
 .notification-item {
-    .d-flex {
-        padding: 0.75rem 1rem;
+  .d-flex {
+    padding: 0.75rem 1rem;
 
-        &:hover {
-            background-color: $dropdown-link-hover-bg;
-        }
+    &:hover {
+      background-color: $dropdown-link-hover-bg;
     }
+  }
 }
 
 // Dropdown with Icons
 .dropdown-icon-item {
+  display: block;
+  border-radius: 3px;
+  line-height: 34px;
+  text-align: center;
+  padding: 15px 0 9px;
+  display: block;
+  color: $gray-600;
+
+  img {
+    height: 24px;
+  }
+
+  span {
     display: block;
-    border-radius: 3px;
-    line-height: 34px;
-    text-align: center;
-    padding: 15px 0 9px;
-    display: block;
-    color: $gray-600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 
-    img {
-        height: 24px;
-    }
-
-    span {
-        display: block;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
-
-    &:hover {
-        background-color: var(--#{$prefix}tertiary-bg);
-        color: var(--#{$prefix}dark);
-
-    }
+  &:hover {
+    background-color: var(--#{$prefix}tertiary-bg);
+    color: var(--#{$prefix}dark);
+  }
 }
 
 // Full Screen
 .fullscreen-enable {
-    [data-toggle="fullscreen"] {
-        .bx-fullscreen::before {
-            content: "\ea3f";
-        }
+  [data-toggle="fullscreen"] {
+    .bx-fullscreen::before {
+      content: "\ea3f";
     }
+  }
 }
 
 body[data-bs-theme="dark"],
 [data-topbar="light"] {
+  .app-search .form-control {
+    border: none !important;
+  }
 
-    .app-search .form-control {
-        border: none !important;
+  .header-item {
+    color: $gray-600;
+  }
+
+  &.bg-light-subtle {
+    background-color: #f6f6f9 !important;
+    border-color: #e9e9ef !important;
+  }
+
+  #page-topbar {
+    background-color: var(--#{$prefix}white);
+    color: $gray-700;
+    border-color: $gray-100;
+  }
+}
+
+body[data-topbar="dark"] {
+  #page-topbar {
+    background-color: var(--#{$prefix}header-bg);
+    border-color: var(--#{$prefix}border-color);
+  }
+
+  .navbar-brand-box {
+    background-color: $header-dark-bg;
+    border-color: $header-dark-bg;
+    box-shadow: 0px 0px 2px var(--#{$prefix}header-bg);
+
+    .logo {
+      color: $white !important;
+    }
+  }
+
+  .navbar-header {
+    .dropdown .show {
+      &.header-item {
+        background-color: rgba($white, 0.05);
+      }
     }
 
-    .header-item {
-        color: $gray-600;
+    .waves-effect .waves-ripple {
+      background: rgba($white, 0.4);
+    }
+  }
+
+  .header-item {
+    color: $header-dark-item-color;
+
+    &:hover {
+      color: $header-dark-item-color;
+    }
+
+    &.border-start,
+    &.border-end {
+      border-color: rgba($white, 0.1) !important;
     }
 
     &.bg-light-subtle {
-        background-color: #f6f6f9 !important;
-        border-color: #e9e9ef !important;
+      background-color: rgba($white, 0.04) !important;
+    }
+  }
+
+  .header-profile-user {
+    background-color: rgba($white, 0.25);
+  }
+
+  .noti-icon {
+    i {
+      color: $header-dark-item-color;
+    }
+  }
+
+  .logo-dark {
+    display: none;
+  }
+
+  .logo-light {
+    display: block;
+  }
+
+  .app-search {
+    .form-control {
+      background-color: var(--#{$prefix}topbar-dark-search-bg);
+      color: var(--#{$prefix}gray-500);
     }
 
-    #page-topbar {
-        background-color: var(--#{$prefix}white);
-        color: $gray-700;
-        border-color: $gray-100;
+    span,
+    input.form-control::-webkit-input-placeholder {
+      color: rgba($white, 0.5);
     }
+  }
 }
-
-
-body[data-topbar="dark"] {
-    #page-topbar {
-        background-color: var(--#{$prefix}header-bg);
-        border-color: var(--#{$prefix}border-color);
-    }
-
-    .navbar-brand-box {
-        background-color: $header-dark-bg;
-        border-color: $header-dark-bg;
-        box-shadow: 0px 0px 2px var(--#{$prefix}header-bg);
-
-        .logo {
-            color: $white !important;
-        }
-    }
-
-    .navbar-header {
-        .dropdown .show {
-            &.header-item {
-                background-color: rgba($white, 0.05);
-            }
-        }
-
-        .waves-effect .waves-ripple {
-            background: rgba($white, 0.4);
-        }
-    }
-
-    .header-item {
-        color: $header-dark-item-color;
-
-        &:hover {
-            color: $header-dark-item-color;
-        }
-
-        &.border-start,
-        &.border-end {
-            border-color: rgba($white, 0.1) !important;
-        }
-
-        &.bg-light-subtle {
-            background-color: rgba($white, 0.04) !important;
-        }
-    }
-
-    .header-profile-user {
-        background-color: rgba($white, 0.25);
-    }
-
-    .noti-icon {
-        i {
-            color: $header-dark-item-color;
-        }
-    }
-
-    .logo-dark {
-        display: none;
-    }
-
-    .logo-light {
-        display: block;
-    }
-
-    .app-search {
-
-        .form-control {
-            background-color: var(--#{$prefix}topbar-dark-search-bg);
-            color: var(--#{$prefix}gray-500);
-        }
-
-        span,
-        input.form-control::-webkit-input-placeholder {
-            color: rgba($white, 0.5);
-        }
-    }
-}
-
 
 @media (max-width: 600px) {
-    .navbar-header {
-        .dropdown {
-            position: static;
+  .navbar-header {
+    .dropdown {
+      position: static;
 
-            .dropdown-menu {
-                left: 10px !important;
-                right: 10px !important;
-            }
-        }
+      .dropdown-menu {
+        left: 10px !important;
+        right: 10px !important;
+      }
     }
+  }
 }
 
 @media (max-width: 380px) {
-    .navbar-brand-box {
-        display: none;
-    }
+  .navbar-brand-box {
+    display: none;
+  }
 }
 
 body[data-layout="horizontal"] {
+  .navbar-brand-box {
+    width: auto;
+    border: 0;
+    background-color: transparent;
+    box-shadow: none;
+
+    @media (min-width: 992px) {
+      padding-left: 0;
+      margin-right: 10px;
+    }
+  }
+
+  .page-content {
+    margin-top: $header-height;
+    padding: calc(55px + #{$grid-gutter-width}) calc(#{$grid-gutter-width} / 2)
+      $footer-height calc(#{$grid-gutter-width} / 2);
+  }
+
+  .navbar-header {
+    @media (min-width: 992px) {
+      padding-left: $grid-gutter-width;
+      padding-right: $grid-gutter-width;
+    }
+  }
+
+  &[data-sidebar="dark"] {
     .navbar-brand-box {
-        width: auto;
-        border: 0;
-        background-color: transparent;
-        box-shadow: none;
-
-        @media (min-width: 992px) {
-            padding-left: 0;
-            margin-right: 10px;
-        }
+      background-color: transparent;
+      box-shadow: none;
     }
-
-    .page-content {
-        margin-top: $header-height;
-        padding: calc(55px + #{$grid-gutter-width}) calc(#{$grid-gutter-width} / 2) $footer-height calc(#{$grid-gutter-width} / 2);
-    }
-
-    .navbar-header {
-        @media (min-width: 992px) {
-            padding-left: $grid-gutter-width;
-            padding-right: $grid-gutter-width;
-        }
-    }
-
-    &[data-sidebar=dark] {
-        .navbar-brand-box {
-            background-color: transparent;
-            box-shadow: none;
-        }
-    }
+  }
 }
 
 @media (max-width: 992px) {
-    body[data-layout="horizontal"] {
-        .page-content {
-            margin-top: 15px;
-        }
+  body[data-layout="horizontal"] {
+    .page-content {
+      margin-top: 15px;
     }
+  }
 }

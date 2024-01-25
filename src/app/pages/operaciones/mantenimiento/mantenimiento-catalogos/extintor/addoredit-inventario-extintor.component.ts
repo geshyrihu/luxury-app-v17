@@ -8,6 +8,8 @@ import {
 } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subscription } from 'rxjs';
+import { EExtintor } from 'src/app/core/enums/extintor.enum';
+import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { IInventarioExtintorDto } from 'src/app/core/interfaces/IInventarioExtintorDto.interface';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import {
@@ -36,18 +38,18 @@ import { environment } from 'src/environments/environment';
 export default class AddoreditInventarioExtintorComponent
   implements OnInit, OnDestroy
 {
-  private formBuilder = inject(FormBuilder);
-  public dataService = inject(DataService);
-  public ref = inject(DynamicDialogRef);
-  public config = inject(DynamicDialogConfig);
-  public customerIdService = inject(CustomerIdService);
-  public authService = inject(AuthService);
   private customToastService = inject(CustomToastService);
   private enumService = inject(EnumService);
+  private formBuilder = inject(FormBuilder);
+  public authService = inject(AuthService);
+  public config = inject(DynamicDialogConfig);
+  public customerIdService = inject(CustomerIdService);
+  public dataService = inject(DataService);
+  public ref = inject(DynamicDialogRef);
 
   submitting: boolean = false;
   subRef$: Subscription;
-  cb_extintor: ISelectItemDto[] = [];
+  cb_extintor: ISelectItemDto[] = onGetSelectItemFromEnum(EExtintor);
   urlBaseImg = `${environment.base_urlImg}customers/`;
   photoFileUpdate: boolean = false;
   id: number = 0;
@@ -67,9 +69,9 @@ export default class AddoreditInventarioExtintorComponent
   }
 
   ngOnInit(): void {
-    this.enumService.getEnumValuesDisplay('EExtintor').subscribe((resp) => {
-      this.cb_extintor = resp;
-    });
+    // this.enumService.getEnumValuesDisplay('EExtintor').subscribe((resp) => {
+    //   this.cb_extintor = resp;
+    // });
     this.id = this.config.data.id;
     if (this.id !== 0) this.onLoadData();
   }

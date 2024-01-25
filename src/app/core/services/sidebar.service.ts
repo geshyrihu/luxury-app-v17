@@ -19,6 +19,7 @@ export class SidebarService {
       routerLink: '/configuracion/panel',
       name: 'Configuración',
     },
+
     {
       visible: this.authService.onValidateRoles(['Residente']),
       label: 'Accesos',
@@ -87,6 +88,12 @@ export class SidebarService {
           label: 'Minutas',
           routerLink: '/contabilidad/pendientes-minutas',
           name: 'Contabilidad-Pendientes-Minutas',
+        },
+        {
+          visible: this.authService.onValidateRoles(['SuperUsuario']),
+          label: 'Estados Financieros',
+          routerLink: '/contabilidad/estados-financieros',
+          name: 'Estados financieros',
         },
         {
           visible: this.authService.onValidateRoles([
@@ -325,6 +332,14 @@ export class SidebarService {
         },
       ],
     },
+
+    {
+      visible: this.authService.onValidateRoles(['SuperUsuario']),
+      label: 'Tickets',
+      icon: 'fa-thin fa-ticket',
+      routerLink: '/tickets/panel',
+      name: 'Tickets',
+    },
     {
       visible: this.authService.onValidateRoles([
         'Asistente',
@@ -388,13 +403,6 @@ export class SidebarService {
           label: 'Mtto Preventivo',
           routerLink: '/reporte/mantenimiento-preventivo',
           name: 'Operaciones-Mantenimientos preventivos',
-        },
-        {
-          visible: this.authService.onValidateRoles(['SuperUsuario']),
-
-          label: 'Tickets V2',
-          routerLink: '/operaciones/reporte/tiket-mantenimiento-v2',
-          name: 'Operaciones-Tickets-v2',
         },
         {
           visible: this.authService.onValidateRoles([

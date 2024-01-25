@@ -28,7 +28,7 @@
     </ng-template>
     <ng-template pTemplate="header">
       <tr>
-        <th style="width: 19%" colspan="2" scope="col" pSortableColumn="folio">
+        <th style="width: 19%" scope="col" pSortableColumn="folio">
           CODIGO <p-sortIcon field="folio"></p-sortIcon>
         </th>
         <th
@@ -61,12 +61,68 @@
         'Residente', 'SuperUsuario', 'SupervisionOperativa' ]) ) {
         <th style="width: 10%" scope="col">SOLICITUD</th>
         }
+        <th></th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-item>
       <!-- Si no hay empleado, entonces la vacangte no esta cubierta y se pone en rojo -->
       @if (onValidateCustomerId(item.professionId)) {
       <tr>
+        <td>
+          {{ item.folio }}
+        </td>
+        <td>
+          {{ item.professionName }}
+        </td>
+        <td>
+          {{ item.turno }}
+        </td>
+        @if ( authService.onValidateRoles([ 'Asistente', 'Reclutamiento',
+        'Residente', 'SuperUsuario', 'SupervisionOperativa' ]) ) {
+        <td>
+          {{ item.sueldoBase }}
+        </td>
+        } @if ( authService.onValidateRoles([ 'Asistente', 'Reclutamiento',
+        'Residente', 'SuperUsuario', 'SupervisionOperativa' ]) ) {
+        <td>
+          {{ item.sueldo }}
+        </td>
+        }
+        <td>
+          @if (item.personPhoto) {
+          <img
+            (click)="onCardEmployee(item.employeeId)"
+            [src]="pahtBaseImg + item.personPhoto"
+            class="rounded avatar-sm pointer me-3"
+            alt="img"
+          />
+          } @if (!item.personPhoto) {
+          <i class="fa-regular fa-user-xmark fa-2x"></i>
+          }
+          {{ item.person }}
+        </td>
+        @if ( authService.onValidateRoles([ 'Asistente', 'Reclutamiento',
+        'Residente', 'SuperUsuario', 'SupervisionOperativa' ]) ) {
+        <td>
+          <!-- Si hay una ultima solicitud en estatus de pendiente -->
+          @if (onValidateShowTIcket(item.professionId)) {
+          <div class="d-flex justify-content-center">
+            <!-- Solicitud de vacante -->
+            @if ( item.positionRequest.status === 0 ||
+            item.positionRequest.status === 3 ) {
+            <custom-button
+              ngbTooltip="Solicitud de vacante vigente"
+              placement="top"
+              customClass="btn-sm btn-outline-secondary"
+              icon="fa-regular fa-tags fa-2x"
+            ></custom-button>
+            }
+            <!-- (clicked)="onRouteEstatusSolicitud(item.positionRequest.id)" -->
+            <!-- Solicitud de vacante -->
+          </div>
+          }
+        </td>
+        }
         <td class="text-center">
           <div ngbDropdown container="body" class="d-inline-block">
             <i
@@ -147,61 +203,6 @@
             </div>
           </div>
         </td>
-        <td>
-          {{ item.folio }}
-        </td>
-        <td>
-          {{ item.professionName }}
-        </td>
-        <td>
-          {{ item.turno }}
-        </td>
-        @if ( authService.onValidateRoles([ 'Asistente', 'Reclutamiento',
-        'Residente', 'SuperUsuario', 'SupervisionOperativa' ]) ) {
-        <td>
-          {{ item.sueldoBase }}
-        </td>
-        } @if ( authService.onValidateRoles([ 'Asistente', 'Reclutamiento',
-        'Residente', 'SuperUsuario', 'SupervisionOperativa' ]) ) {
-        <td>
-          {{ item.sueldo }}
-        </td>
-        }
-        <td>
-          @if (item.personPhoto) {
-          <img
-            (click)="onCardEmployee(item.employeeId)"
-            [src]="pahtBaseImg + item.personPhoto"
-            class="rounded avatar-sm pointer me-3"
-            alt="img"
-          />
-          } @if (!item.personPhoto) {
-          <i class="fa-regular fa-user-xmark fa-2x"></i>
-          }
-          {{ item.person }}
-        </td>
-        @if ( authService.onValidateRoles([ 'Asistente', 'Reclutamiento',
-        'Residente', 'SuperUsuario', 'SupervisionOperativa' ]) ) {
-        <td>
-          <!-- Si hay una ultima solicitud en estatus de pendiente -->
-          @if (onValidateShowTIcket(item.professionId)) {
-          <div class="d-flex justify-content-center">
-            <!-- Solicitud de vacante -->
-            @if ( item.positionRequest.status === 0 ||
-            item.positionRequest.status === 3 ) {
-            <custom-button
-              ngbTooltip="Solicitud de vacante vigente"
-              placement="top"
-              customClass="btn-sm btn-outline-secondary"
-              icon="fa-regular fa-tags fa-2x"
-            ></custom-button>
-            }
-            <!-- (clicked)="onRouteEstatusSolicitud(item.positionRequest.id)" -->
-            <!-- Solicitud de vacante -->
-          </div>
-          }
-        </td>
-        }
       </tr>
       }
     </ng-template>

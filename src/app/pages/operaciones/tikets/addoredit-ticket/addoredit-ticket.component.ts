@@ -44,11 +44,11 @@ const diaActual = new Date(Date.now());
 })
 export default class AddoreditTicketComponent implements OnInit, OnDestroy {
   private customerSelectListService = inject(CustomerIdService);
+  private customToastService = inject(CustomToastService);
   private dataService = inject(DataService);
   private dateService = inject(DateService);
   private formBuilder = inject(FormBuilder);
   private selectItemService = inject(SelectItemService);
-  private customToastService = inject(CustomToastService);
   public authService = inject(AuthService);
   public config = inject(DynamicDialogConfig);
   public ref = inject(DynamicDialogRef);

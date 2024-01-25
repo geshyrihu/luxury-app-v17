@@ -9,6 +9,7 @@ import {
   CustomToastService,
   DataService,
 } from 'src/app/core/services/common-services';
+import { OnDestroyService } from 'src/app/core/services/on-destroy.service';
 import ComponentsModule from 'src/app/shared/components.module';
 import PrimeNgModule from 'src/app/shared/prime-ng.module';
 import AddOrEditBancoComponent from './addoredit-banco.component';
@@ -26,6 +27,7 @@ export default class ListBancoComponent implements OnInit, OnDestroy {
   public customToastService = inject(CustomToastService);
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
+  public OnDestroy = inject(OnDestroyService);
 
   // Declaración e inicialización de variables
   data: IBankDto[] = [];
@@ -54,8 +56,7 @@ export default class ListBancoComponent implements OnInit, OnDestroy {
         },
         error: (err) => {
           // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onCloseToError();
-          console.log(err.error);
+          this.customToastService.onCloseToError(err);
         },
       });
   }
@@ -105,9 +106,17 @@ export default class ListBancoComponent implements OnInit, OnDestroy {
     });
   }
 
+  // ngOnDestroy(): void {
+  //   // Cuando se destruye el componente, desvincular y liberar recursos
+  //   this.destroy$.next();
+  //   this.destroy$.complete();
+  // }
+
   ngOnDestroy(): void {
     // Cuando se destruye el componente, desvincular y liberar recursos
-    this.destroy$.next();
-    this.destroy$.complete();
+    // this.destroy$.next();
+    // this.destroy$.complete();
+
+    this.OnDestroy.ngOnDestroy();
   }
 }

@@ -9,6 +9,7 @@ import {
 } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import {
+  AuthService,
   CustomToastService,
   CustomerIdService,
   DataService,
@@ -39,16 +40,32 @@ import AddOrEditEmplopyeeComponent from '../addoredit-data-employee/addoredit-em
 export default class ListEmpleadosOpcionesComponent
   implements OnInit, OnDestroy
 {
+  private dataService = inject(DataService);
+  private dialogService = inject(DialogService);
+  public authService = inject(AuthService);
+  public config = inject(DynamicDialogConfig);
+  public customerIdService = inject(CustomerIdService);
+  public customToastService = inject(CustomToastService);
+
+  tienePermiso: boolean = true;
   ngOnInit(): void {
-    console.log('🚀 ~ ListEmpleadosOpcionesComponent:', this.config.data);
+    // Validamos si el usuario authentiucado es admin o asistente
+    if (
+      this.authService.infoEmployeeDto.professionId == 5 ||
+      this.authService.infoEmployeeDto.professionId == 57 ||
+      this.authService.infoEmployeeDto.professionId == 58 ||
+      this.authService.infoEmployeeDto.professionId == 6
+    ) {
+      console.log(
+        '🚀 ~ Si es administrador o asistente ',
+        this.authService.infoEmployeeDto.professionId
+      );
+      this.onValidarAdminAsis();
+    }
+    console.log('🚀 ~ tienePermiso:', this.tienePermiso);
     this.onValidarProfession();
     this.onValidarSolicitudesAbiertas();
   }
-  private dialogService = inject(DialogService);
-  public customToastService = inject(CustomToastService);
-  public customerIdService = inject(CustomerIdService);
-  public config = inject(DynamicDialogConfig);
-  private dataService = inject(DataService);
 
   ref: DynamicDialogRef;
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
@@ -63,6 +80,38 @@ export default class ListEmpleadosOpcionesComponent
   accionPermitida: boolean = false;
   solicitudModificacionSalarioStatus: any;
   workPosition: any;
+
+  // comparar la profession del usuario que ha iniciado sesion, con la profession del empleado a editar,
+  // si es usuario es asistente o administrador no podria editar empleados que son asistentes o administradores
+  onValidarAdminAsis() {
+    // ProfessionId Administrador= 5, Asistente = 6
+
+    this.dataService
+      .get(`employees/validaradminasis/${this.employeeId}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe({
+        next: (resp: any) => {
+          this.tienePermiso = resp.body;
+
+          if (!this.tienePermiso) {
+            console.log(
+              'No tiene permiso para editar este empleado',
+              this.tienePermiso
+            );
+          } else {
+            console.log(
+              'Si tiene permiso para editar este empleado',
+              this.tienePermiso
+            );
+          }
+        },
+        error: (err) => {
+          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
+          this.customToastService.onCloseToError();
+          console.log(err.error);
+        },
+      });
+  }
 
   // Datos Principales
   onShowModalDatosPrincipales() {
@@ -365,6 +414,8 @@ export default class ListEmpleadosOpcionesComponent
         },
       });
   }
+
+  // Validar si el usuario tiene una profesion asignada valida para solicitar estas acciones
   onValidarProfession() {
     this.dataService
       .get(`employees/validarprofession/${this.employeeId}`)

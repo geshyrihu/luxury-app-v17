@@ -93,4 +93,9 @@ export default [
     path: 'legal',
     loadChildren: () => import('./legal.routing'),
   },
+  {
+    path: 'tickets',
+    loadChildren: () => import('src/app/routing/tickets.routing'),
+    canActivate: [AuthGuard],
+  },
 ] as Routes;

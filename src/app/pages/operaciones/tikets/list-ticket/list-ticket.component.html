@@ -1,11 +1,3 @@
-@if (authService.onValidateRoles(['SuperUsuario'])) {
-<custom-button
-  (clicked)="SetFolios()"
-  customClass="btn-outline-primary me-1 mb-1"
-  label="SetFolios"
->
-</custom-button>
-}
 <div class="row">
   <div class="col hide-print-mode">
     <button
@@ -17,14 +9,25 @@
       <i class="fa-regular fa-filter"></i>
       Filtrar
     </button>
-    <button
+
+    <!-- [routerLink]="['/tickets/line-time']" -->
+    <a
+      (click)="onModalWorkPlan()"
       class="btn btn-outline-info w-sm me-1 mb-1"
       type="button"
-      (click)="onModalWorkPlan()"
       ngbTooltip="Filtrar"
     >
       <i class="fa-regular fa-list-check"></i>
       Plan de trabajo
+    </a>
+    <button
+      class="btn btn-outline-info w-sm me-1 mb-1"
+      type="button"
+      (click)="onModalSendWorkPlan()"
+      ngbTooltip="Enviar plan de trabajo"
+    >
+      <i class="fa-regular fa-list-check"></i>
+      Enviar plan de trabajo
     </button>
     <button
       class="btn btn-outline-success w-sm me-1 mb-1"
@@ -96,6 +99,16 @@
     >
       Todos los Tickets
     </button>
+    @if(authService.onValidateRoles(['SuperUsuario'])){
+
+    <button
+      class="btn btn-outline-info w-sm me-1 mb-1"
+      ngbTooltip="Ver mis tickets asignados"
+      (click)="onSendProviders()"
+    >
+      Enviar a proveedores
+    </button>
+    }
   </div>
 </div>
 @if (ligaReporte) {

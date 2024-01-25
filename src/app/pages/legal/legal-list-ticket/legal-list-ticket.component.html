@@ -3,22 +3,22 @@
 <div class="card">
   <p-table
     #dt
-    [value]="data"
     [autoLayout]="true"
-    [globalFilterFields]="['shortName', 'largeName']"
+    [globalFilterFields]="['']"
     [paginator]="true"
     [rowHover]="true"
     [rows]="50"
     [rowsPerPageOptions]="[50, 75, 100, 200]"
     [showCurrentPageReport]="true"
+    [tableStyle]="{ 'min-width': '50rem' }"
+    [value]="data"
     currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
     styleClass="custom-table"
-    [tableStyle]="{ 'min-width': '50rem' }"
   >
     <ng-template pTemplate="caption">
       <app-table-header
-        [title]="'Legal Tickets'"
-        (add)="onModalRequest({ id: 0, title: 'Nuevo Registro' })"
+        title="TICKETS LEGAL"
+        (add)="onModalRequest({ id: 0, title: 'Seleccionar Solicitud' })"
         [dt]="dt"
       ></app-table-header>
     </ng-template>
@@ -26,29 +26,62 @@
     <ng-template pTemplate="header">
       <tr>
         <th scope="col" pSortableColumn="folio">
-          Folio <p-sortIcon field="folio"></p-sortIcon>
+          No <p-sortIcon field="folio"></p-sortIcon>
         </th>
         <th scope="col" pSortableColumn="shortName">
-          Nombre
+          Fecha Solicitud
           <p-sortIcon field="shortName"></p-sortIcon>
         </th>
         <th scope="col" pSortableColumn="largeName">
-          Razón social<p-sortIcon field="largeName"></p-sortIcon>
+          Cliente<p-sortIcon field="largeName"></p-sortIcon>
         </th>
-        <th scope="col" style="width: 5%" class="hide-print-mode">Opciones</th>
+        <th scope="col" pSortableColumn="largeName">
+          Solicita<p-sortIcon field="largeName"></p-sortIcon>
+        </th>
+        <th scope="col" pSortableColumn="largeName">
+          Asunto<p-sortIcon field="largeName"></p-sortIcon>
+        </th>
+        <th scope="col" pSortableColumn="largeName">
+          Descripcion<p-sortIcon field="largeName"></p-sortIcon>
+        </th>
+        <th scope="col" pSortableColumn="largeName">
+          Carga de Documentos en luxuryCloud<p-sortIcon
+            field="largeName"
+          ></p-sortIcon>
+        </th>
+        <th scope="col" pSortableColumn="largeName">
+          Estatus<p-sortIcon field="largeName"></p-sortIcon>
+        </th>
+        <th scope="col" pSortableColumn="largeName">
+          Fecha<p-sortIcon field="largeName"></p-sortIcon>
+        </th>
+        <th scope="col" pSortableColumn="largeName">
+          Contador días<p-sortIcon field="largeName"></p-sortIcon>
+        </th>
+        <th scope="col" pSortableColumn="largeName">
+          Responsable<p-sortIcon field="largeName"></p-sortIcon>
+        </th>
+        <th scope="col" pSortableColumn="largeName">
+          Seguimiento<p-sortIcon field="largeName"></p-sortIcon>
+        </th>
+        <th scope="col" style="width: 5%" class="hide-print-mode"></th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-item>
       <tr>
-        <td class="p-column-title">
-          {{ item.code }}
-        </td>
-        <td class="p-column-title">
-          {{ item.shortName }}
-        </td>
-        <td class="p-column-title">
-          {{ item.largeName }}
-        </td>
+        <td class="p-column-title"></td>
+        <td class="p-column-title"></td>
+        <td class="p-column-title"></td>
+        <td class="p-column-title"></td>
+        <td class="p-column-title"></td>
+        <td class="p-column-title"></td>
+        <td class="p-column-title"></td>
+        <td class="p-column-title"></td>
+        <td class="p-column-title"></td>
+        <td class="p-column-title"></td>
+        <td class="p-column-title"></td>
+        <td class="p-column-title"></td>
+
         <!-- Opciones -->
         <td class="p-column-title" class="hide-print-mode">
           <div class="d-flex justify-content-center">

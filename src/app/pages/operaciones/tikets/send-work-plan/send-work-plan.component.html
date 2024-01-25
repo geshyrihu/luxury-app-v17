@@ -1,0 +1,17 @@
+<div class="card p-3">
+  <div class="mb-3">
+    <label for="work-week-input" class="form-label"
+      >Seleccionar la semana correspondiente</label
+    >
+    <input
+      class="form-control"
+      type="week"
+      id="work-week-input"
+      [(ngModel)]="numeroSemanaSeleccionada"
+    />
+
+    <button class="btn btn-primary float-end mt-2" (click)="onSendPlan()">
+      Enviar
+    </button>
+  </div>
+</div>
