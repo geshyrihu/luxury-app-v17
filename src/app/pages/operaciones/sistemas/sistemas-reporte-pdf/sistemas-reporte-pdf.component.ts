@@ -50,9 +50,8 @@ export default class SistemasReportePdfComponent implements OnInit, OnDestroy {
         next: (resp: any) => {
           this.datosUser = resp.body;
         },
-        error: (err) => {
-          this.customToastService.onShowError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }

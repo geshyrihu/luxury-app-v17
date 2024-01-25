@@ -144,15 +144,15 @@ export default class AddoreditTicketComponent implements OnInit, OnDestroy {
   }
 
   onLoadData(id: number) {
-    this.subRef$ = this.dataService.get(`Ticket/${id}`).subscribe(
-      (resp: any) => {
+    this.subRef$ = this.dataService.get(`Ticket/${id}`).subscribe({
+      next: (resp: any) => {
         this.model = resp.body;
         this.form.patchValue(resp.body);
       },
-      (err) => {
-        console.log(err.error);
-      }
-    );
+      error: (error) => {
+        this.customToastService.onCloseToError(error);
+      },
+    });
   }
   validarImagen(model: any): string | null {
     if (model) {
@@ -170,9 +170,8 @@ export default class AddoreditTicketComponent implements OnInit, OnDestroy {
           this.onticketConcluido(status, model);
           this.ref.close(true);
         },
-        error: (err) => {
-          this.customToastService.onShowError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -188,10 +187,8 @@ export default class AddoreditTicketComponent implements OnInit, OnDestroy {
           this.ref.close(true);
           this.customToastService.onClose();
         },
-        error: (err) => {
-          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onCloseToError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -218,12 +215,10 @@ export default class AddoreditTicketComponent implements OnInit, OnDestroy {
           this.ref.close(true);
           this.customToastService.onClose();
         },
-        error: (err) => {
+        error: (error) => {
           // Habilitar el botón nuevamente al finalizar el envío del formulario
           this.submitting = false;
-          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onCloseToError();
-          console.log(err.error);
+          this.customToastService.onCloseToError(error);
         },
       });
     } else {
@@ -234,12 +229,10 @@ export default class AddoreditTicketComponent implements OnInit, OnDestroy {
             this.ref.close(true);
             this.customToastService.onClose();
           },
-          error: (err) => {
+          error: (error) => {
             // Habilitar el botón nuevamente al finalizar el envío del formulario
             this.submitting = false;
-            // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-            this.customToastService.onCloseToError();
-            console.log(err.error);
+            this.customToastService.onCloseToError(error);
           },
         });
     }

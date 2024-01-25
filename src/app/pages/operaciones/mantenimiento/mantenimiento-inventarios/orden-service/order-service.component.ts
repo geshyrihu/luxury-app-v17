@@ -60,9 +60,8 @@ export default class OrderServiceComponent implements OnInit, OnDestroy {
         next: (resp: any) => {
           this.maintenanceCalendars = resp.body;
         },
-        error: (err) => {
-          this.customToastService.onShowError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -81,9 +80,8 @@ export default class OrderServiceComponent implements OnInit, OnDestroy {
               this.customToastService.onShowSuccess();
               this.onLoadData();
             },
-            error: (err) => {
-              this.customToastService.onShowError();
-              console.log(err.error);
+            error: (error) => {
+              this.customToastService.onCloseToError(error);
             },
           });
       },
@@ -121,9 +119,8 @@ export default class OrderServiceComponent implements OnInit, OnDestroy {
           this.customToastService.onShowSuccess();
           this.onLoadData();
         },
-        error: (err) => {
-          this.customToastService.onShowError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }

@@ -46,9 +46,8 @@ export default class PersonUpdatePhotoComponent implements OnInit, OnDestroy {
         next: (resp: any) => {
           this.photoPath = `${baseUrlImg}${resp.body.photoPath}`;
         },
-        error: (err) => {
-          this.customToastService.onShowError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -108,12 +107,10 @@ export default class PersonUpdatePhotoComponent implements OnInit, OnDestroy {
           }
           this.customToastService.onClose();
         },
-        error: (err) => {
+        error: (error) => {
           // Habilitar el botón nuevamente al finalizar el envío del formulario
           this.submitting = false;
-          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onCloseToError();
-          console.log(err.error);
+          this.customToastService.onCloseToError(error);
         },
       });
   }

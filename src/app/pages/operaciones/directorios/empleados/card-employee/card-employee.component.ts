@@ -39,9 +39,8 @@ export default class CardEmployeeComponent implements OnInit, OnDestroy {
           this.user = resp.body;
           this.urlImage = `${environment.base_urlImg}Administration/accounts/${this.user.photoPath}`;
         },
-        error: (err) => {
-          this.customToastService.onShowError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }

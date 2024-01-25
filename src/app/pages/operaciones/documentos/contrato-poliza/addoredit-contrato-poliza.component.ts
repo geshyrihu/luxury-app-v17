@@ -46,7 +46,6 @@ export default class AddoreditContratoPolizaComponent
   private formBuilder = inject(FormBuilder);
   public selectItemService = inject(SelectItemService);
   public ref = inject(DynamicDialogRef);
-
   private customToastService = inject(CustomToastService);
 
   submitting: boolean = false;
@@ -122,12 +121,10 @@ export default class AddoreditContratoPolizaComponent
             this.ref.close(true);
             this.customToastService.onClose();
           },
-          error: (err) => {
+          error: (error) => {
             // Habilitar el botón nuevamente al finalizar el envío del formulario
             this.submitting = false;
-            // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-            this.customToastService.onCloseToError();
-            console.log(err.error);
+            this.customToastService.onCloseToError(error);
           },
         });
     } else {
@@ -138,12 +135,10 @@ export default class AddoreditContratoPolizaComponent
             this.ref.close(true);
             this.customToastService.onClose();
           },
-          error: (err) => {
+          error: (error) => {
             // Habilitar el botón nuevamente al finalizar el envío del formulario
             this.submitting = false;
-            // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-            this.customToastService.onCloseToError();
-            console.log(err.error);
+            this.customToastService.onCloseToError(error);
           },
         });
     }

@@ -19,7 +19,6 @@ import {
   DateService,
   SelectItemService,
 } from 'src/app/core/services/common-services';
-import { EnumService } from 'src/app/core/services/enum.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import ComponentsModule from 'src/app/shared/components.module';
 import { environment } from 'src/environments/environment';
@@ -46,7 +45,6 @@ export default class AddoreditSistemasReporteComponent
   public ref = inject(DynamicDialogRef);
   private dateService = inject(DateService);
   private customToastService = inject(CustomToastService);
-  private enumService = inject(EnumService);
 
   submitting: boolean = false;
 
@@ -153,12 +151,10 @@ export default class AddoreditSistemasReporteComponent
             this.ref.close(true);
             this.customToastService.onClose();
           },
-          error: (err) => {
+          error: (error) => {
             // Habilitar el botón nuevamente al finalizar el envío del formulario
             this.submitting = false;
-            // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-            this.customToastService.onCloseToError();
-            console.log(err.error);
+            this.customToastService.onCloseToError(error);
           },
         });
     } else {
@@ -168,11 +164,10 @@ export default class AddoreditSistemasReporteComponent
           next: () => {
             this.ref.close(true);
           },
-          error: (err) => {
+          error: (error) => {
             // Habilitar el botón nuevamente al finalizar el envío del formulario
             this.submitting = false;
-            this.customToastService.onCloseToError();
-            console.log(err.error);
+            this.customToastService.onCloseToError(error);
           },
         });
     }
@@ -222,9 +217,8 @@ export default class AddoreditSistemasReporteComponent
         next: (resp: any) => {
           this.cb_user = resp.body;
         },
-        error: (err) => {
-          this.customToastService.onShowError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }

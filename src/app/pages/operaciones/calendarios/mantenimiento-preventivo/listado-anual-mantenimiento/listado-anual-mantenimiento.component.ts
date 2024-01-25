@@ -30,8 +30,8 @@ const date = new Date();
     ComponentsModule,
     TableModule,
     CurrencyMexicoPipe,
-    SanitizeHtmlPipe
-],
+    SanitizeHtmlPipe,
+  ],
   providers: [DialogService, MessageService, CustomToastService],
 })
 export default class ListadoAnualMantenimientoComponent
@@ -71,10 +71,8 @@ export default class ListadoAnualMantenimientoComponent
           this.data = resp.body;
           this.customToastService.onClose();
         },
-        error: (err) => {
-          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onCloseToError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -101,10 +99,8 @@ export default class ListadoAnualMantenimientoComponent
           this.onLoadData();
           this.customToastService.onCloseToSuccess();
         },
-        error: (err) => {
-          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onCloseToError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }

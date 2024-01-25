@@ -75,10 +75,8 @@ export default class SendWorkPlanComponent {
           // Cuando se completa la eliminación con éxito, mostrar un mensaje de éxito y volver a cargar los datos
           this.customToastService.onCloseToSuccess();
         },
-        error: (err) => {
-          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onCloseToError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }

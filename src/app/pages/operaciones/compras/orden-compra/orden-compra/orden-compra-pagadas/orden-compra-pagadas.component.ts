@@ -22,8 +22,8 @@ import OrdenCompraComponent from '../orden-compra.component';
     ComponentsModule,
     RouterModule,
     PrimeNgModule,
-    CurrencyMexicoPipe
-],
+    CurrencyMexicoPipe,
+  ],
   providers: [DialogService, MessageService, CustomToastService],
 })
 export default class OrdenCompraPagadasComponent implements OnInit, OnDestroy {
@@ -59,10 +59,8 @@ export default class OrdenCompraPagadasComponent implements OnInit, OnDestroy {
           this.data = resp.body;
           this.customToastService.onClose();
         },
-        error: (err) => {
-          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onCloseToError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }

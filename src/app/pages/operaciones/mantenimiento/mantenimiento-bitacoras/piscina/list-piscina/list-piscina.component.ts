@@ -27,8 +27,8 @@ import AddOrEditPiscinaComponent from '../addoredit-piscina/addoredit-piscina.co
     ImageModule,
     CommonModule,
     RouterModule,
-    TooltipModule
-],
+    TooltipModule,
+  ],
   providers: [DialogService, MessageService, CustomToastService],
 })
 export default class ListPiscinaComponent implements OnInit, OnDestroy {
@@ -61,14 +61,11 @@ export default class ListPiscinaComponent implements OnInit, OnDestroy {
       .get<any[]>('piscina/getall/' + this.customerIdService.customerId)
       .subscribe({
         next: (resp: any) => {
-          // Cuando se obtienen los datos con éxito, actualizar la variable 'data' y ocultar el mensaje de carga
           this.data = resp.body;
           this.customToastService.onClose();
         },
-        error: (err) => {
-          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onCloseToError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -95,14 +92,11 @@ export default class ListPiscinaComponent implements OnInit, OnDestroy {
     this.customToastService.onLoading();
     this.subRef$ = this.dataService.delete(`piscina/${data.id}`).subscribe({
       next: () => {
-        // Cuando se obtienen los datos con éxito, actualizar la variable 'data' y ocultar el mensaje de carga
         this.customToastService.onClose();
         this.onLoadData();
       },
-      error: (err) => {
-        // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-        this.customToastService.onCloseToError();
-        console.log(err.error);
+      error: (error) => {
+        this.customToastService.onCloseToError(error);
       },
     });
   }

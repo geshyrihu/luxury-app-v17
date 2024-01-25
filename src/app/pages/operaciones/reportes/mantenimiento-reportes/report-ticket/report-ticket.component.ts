@@ -4,12 +4,12 @@ import { MessageService } from 'primeng/api';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { TableModule } from 'primeng/table';
 import { Observable, Subscription } from 'rxjs';
-import ReporteTicketsComponent from 'src/app/pages/operaciones/supervision/reporte-tickets/reporte-tickets.component';
 import { CustomerIdService } from 'src/app/core/services/common-services';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
 import { PeriodoMonthService } from 'src/app/core/services/periodo-month.service';
+import ReporteTicketsComponent from 'src/app/pages/operaciones/supervision/reporte-tickets/reporte-tickets.component';
 import PagetitleReportComponent from 'src/app/shared/cabeceras/pagetitlereport/pagetitlereport.component';
 import ComponentsModule from 'src/app/shared/components.module';
 import { environment } from 'src/environments/environment';
@@ -24,8 +24,8 @@ const base_urlImg = environment.base_urlImg;
     TableModule,
     CommonModule,
     ComponentsModule,
-    ReporteTicketsComponent
-],
+    ReporteTicketsComponent,
+  ],
   providers: [CustomToastService, MessageService],
 })
 export default class ReportTicketComponent implements OnInit, OnDestroy {
@@ -68,14 +68,11 @@ export default class ReportTicketComponent implements OnInit, OnDestroy {
       )
       .subscribe({
         next: (resp: any) => {
-          // Cuando se obtienen los datos con éxito, actualizar la variable 'data' y ocultar el mensaje de carga
           this.data = resp.body;
           this.customToastService.onClose();
         },
-        error: (err) => {
-          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onCloseToError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
     this.subRef$ = this.dataService
@@ -91,10 +88,8 @@ export default class ReportTicketComponent implements OnInit, OnDestroy {
           this.dataResponsable = resp.body;
           this.customToastService.onClose();
         },
-        error: (err) => {
-          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onCloseToError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
     this.subRef$ = this.dataService
@@ -110,10 +105,8 @@ export default class ReportTicketComponent implements OnInit, OnDestroy {
           this.dataCargaTicket = resp.body;
           this.customToastService.onClose();
         },
-        error: (err) => {
-          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onCloseToError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }

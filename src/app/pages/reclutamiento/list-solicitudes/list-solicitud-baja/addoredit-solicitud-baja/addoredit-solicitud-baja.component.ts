@@ -20,7 +20,6 @@ import {
   CustomToastService,
   DataService,
 } from 'src/app/core/services/common-services';
-import { EnumService } from 'src/app/core/services/enum.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import ComponentsModule from 'src/app/shared/components.module';
 
@@ -42,7 +41,6 @@ export default class AddoreditSolicitudBajaComponent implements OnInit {
   public ref = inject(DynamicDialogRef);
   public config = inject(DynamicDialogConfig);
   private customToastService = inject(CustomToastService);
-  private enumService = inject(EnumService);
 
   submitting: boolean = false;
 
@@ -99,9 +97,8 @@ export default class AddoreditSolicitudBajaComponent implements OnInit {
             );
           });
         },
-        error: (err) => {
-          this.customToastService.onShowError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -125,12 +122,10 @@ export default class AddoreditSolicitudBajaComponent implements OnInit {
             this.customToastService.onClose();
             this.ref.close(true);
           },
-          error: (err) => {
-            console.log(err.error);
-            this.customToastService.onShowError();
+          error: (error) => {
             // Habilitar el botón nuevamente al finalizar el envío del formulario
-            this.customToastService.onClose();
             this.submitting = false;
+            this.customToastService.onCloseToError(error);
           },
         });
     } else {
@@ -141,12 +136,10 @@ export default class AddoreditSolicitudBajaComponent implements OnInit {
             this.customToastService.onClose();
             this.ref.close(true);
           },
-          error: (err) => {
-            console.log(err.error);
-            this.customToastService.onShowError();
+          error: (error) => {
             // Habilitar el botón nuevamente al finalizar el envío del formulario
-            this.customToastService.onClose();
             this.submitting = false;
+            this.customToastService.onCloseToError(error);
           },
         });
     }
@@ -181,10 +174,8 @@ export default class AddoreditSolicitudBajaComponent implements OnInit {
           this.customToastService.onCloseToSuccess();
           this.discounts.removeAt(index);
         },
-        error: (err) => {
-          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onCloseToError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }

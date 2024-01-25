@@ -53,7 +53,7 @@ export default class AddAccountCustomerComponent implements OnInit, OnDestroy {
 
   imagen: File;
   cb_profession: any[] = [];
-  dataError = '';
+  // dataError = '';
   data: UserInfoDto;
   form: FormGroup = this.formBuilder.group({
     firstName: ['', Validators.required],
@@ -91,15 +91,10 @@ export default class AddAccountCustomerComponent implements OnInit, OnDestroy {
           this.ref.close(true);
           this.customToastService.onClose();
         },
-        error: (err) => {
-          console.log(err.error);
-          err.error.forEach((x) => {
-            this.dataError = this.dataError + x['description'] + ' ';
-          });
-          this.customToastService.onLoadingError(this.dataError);
+        error: (error) => {
           // Habilitar el botón nuevamente al finalizar el envío del formulario
           this.submitting = false;
-          this.customToastService.onClose();
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -154,12 +149,10 @@ export default class AddAccountCustomerComponent implements OnInit, OnDestroy {
         next: (resp) => {
           this.existingPerson = resp.body;
         },
-        error: (err) => {
+        error: (error) => {
           // Habilitar el botón nuevamente al finalizar el envío del formulario
           this.submitting = false;
-          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onCloseToError();
-          console.log(err.error);
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -173,8 +166,8 @@ export default class AddAccountCustomerComponent implements OnInit, OnDestroy {
         next: (resp) => {
           this.existingPhone = resp.body;
         },
-        error: (err) => {
-          console.log(err.error);
+        error: (error) => {
+          console.log(error.error);
         },
       });
   }

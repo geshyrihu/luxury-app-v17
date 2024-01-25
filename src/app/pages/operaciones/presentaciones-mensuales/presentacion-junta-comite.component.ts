@@ -135,10 +135,8 @@ export default class PresentacionJuntaComiteComponent
           this.data = resp.body;
           this.customToastService.onClose();
         },
-        error: (err) => {
-          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onCloseToError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -191,9 +189,8 @@ export default class PresentacionJuntaComiteComponent
           this.onLoadData();
           this.customToastService.onShowSuccess();
         },
-        error: (err) => {
-          this.customToastService.onShowError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -206,9 +203,8 @@ export default class PresentacionJuntaComiteComponent
           this.onLoadData();
           this.customToastService.onShowSuccess();
         },
-        error: (err) => {
-          this.customToastService.onShowError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -226,9 +222,8 @@ export default class PresentacionJuntaComiteComponent
           this.onLoadData();
           this.customToastService.onShowSuccess();
         },
-        error: (err) => {
-          console.log(err.error);
-          this.customToastService.onShowError();
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -258,9 +253,8 @@ export default class PresentacionJuntaComiteComponent
           this.onLoadData();
           this.customToastService.onShowSuccess();
         },
-        error: (err) => {
-          console.log(err.error);
-          this.customToastService.onShowError();
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -279,8 +273,8 @@ export default class PresentacionJuntaComiteComponent
       if (result.value) {
         this.subRef$ = this.dataService
           .get('PresentacionJuntaComite/RevocarContable/' + id)
-          .subscribe(
-            (resp: any) => {
+          .subscribe({
+            next: (resp: any) => {
               this.onLoadData();
               Swal.fire(
                 'Completado!',
@@ -288,11 +282,10 @@ export default class PresentacionJuntaComiteComponent
                 'success'
               );
             },
-            (err) => {
-              console.log(err.error);
-              this.customToastService.onShowError();
-            }
-          );
+            error: (error) => {
+              this.customToastService.onCloseToError(error);
+            },
+          });
       }
     });
   }
@@ -316,8 +309,8 @@ export default class PresentacionJuntaComiteComponent
               '/' +
               this.authService.userTokenDto.infoEmployeeDto.employeeId
           )
-          .subscribe(
-            (resp: any) => {
+          .subscribe({
+            next: (_) => {
               this.onLoadData();
               Swal.fire(
                 'Completado!',
@@ -325,11 +318,10 @@ export default class PresentacionJuntaComiteComponent
                 'success'
               );
             },
-            (err) => {
-              console.log(err.error);
-              this.customToastService.onShowError();
-            }
-          );
+            error: (error) => {
+              this.customToastService.onCloseToError(error);
+            },
+          });
       }
     });
   }
@@ -348,8 +340,8 @@ export default class PresentacionJuntaComiteComponent
       if (result.value) {
         this.subRef$ = this.dataService
           .get('PresentacionJuntaComite/RevocarEstadosFinancieros/' + id)
-          .subscribe(
-            (resp: any) => {
+          .subscribe({
+            next: (resp: any) => {
               this.onLoadData();
               Swal.fire(
                 'Completado!',
@@ -357,11 +349,10 @@ export default class PresentacionJuntaComiteComponent
                 'success'
               );
             },
-            (err) => {
-              console.log(err.error);
-              this.customToastService.onShowError();
-            }
-          );
+            error: (error) => {
+              this.customToastService.onCloseToError(error);
+            },
+          });
       }
     });
   }
@@ -387,9 +378,8 @@ export default class PresentacionJuntaComiteComponent
           this.onLoadData();
           this.customToastService.onCloseToSuccess();
         },
-        error: (err) => {
-          this.customToastService.onShowError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -404,9 +394,8 @@ export default class PresentacionJuntaComiteComponent
           this.onLoadData();
           this.customToastService.onCloseToSuccess();
         },
-        error: (err) => {
-          this.customToastService.onShowError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }

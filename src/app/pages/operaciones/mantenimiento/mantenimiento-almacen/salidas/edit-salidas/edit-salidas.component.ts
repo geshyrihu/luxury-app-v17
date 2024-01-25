@@ -44,7 +44,6 @@ export default class EditSalidasComponent implements OnInit, OnDestroy {
   private selectItemService = inject(SelectItemService);
   public authService = inject(AuthService);
   private customerIdService = inject(CustomerIdService);
-
   private customToastService = inject(CustomToastService);
 
   submitting: boolean = false;
@@ -85,9 +84,8 @@ export default class EditSalidasComponent implements OnInit, OnDestroy {
             this.existenciaAlmacen = resp.body.existencia;
           }
         },
-        error: (err) => {
-          this.customToastService.onShowError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -127,19 +125,21 @@ export default class EditSalidasComponent implements OnInit, OnDestroy {
   }
 
   onLoadData() {
-    this.subRef$ = this.dataService.get(`SalidaProductos/${this.id}`).subscribe(
-      (resp: any) => {
-        this.nombreProducto = resp.body.producto;
-        this.cantidadActualUsada = resp.body.cantidad;
-        resp.body.fechaSalida = this.dateService.getDateFormat(
-          resp.body.fechaSalida
-        );
-        this.form.patchValue(resp.body);
-      },
-      (err) => {
-        console.log(err.error);
-      }
-    );
+    this.subRef$ = this.dataService
+      .get(`SalidaProductos/${this.id}`)
+      .subscribe({
+        next: (resp: any) => {
+          this.nombreProducto = resp.body.producto;
+          this.cantidadActualUsada = resp.body.cantidad;
+          resp.body.fechaSalida = this.dateService.getDateFormat(
+            resp.body.fechaSalida
+          );
+          this.form.patchValue(resp.body);
+        },
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
+        },
+      });
   }
   onSubmit() {
     this.id = this.config.data.id;
@@ -156,12 +156,10 @@ export default class EditSalidasComponent implements OnInit, OnDestroy {
             this.ref.close(true);
             this.customToastService.onClose();
           },
-          error: (err) => {
+          error: (error) => {
             // Habilitar el botón nuevamente al finalizar el envío del formulario
             this.submitting = false;
-            // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-            this.customToastService.onCloseToError();
-            console.log(err.error);
+            this.customToastService.onCloseToError(error);
           },
         });
     } else {
@@ -175,12 +173,10 @@ export default class EditSalidasComponent implements OnInit, OnDestroy {
             this.ref.close(true);
             this.customToastService.onClose();
           },
-          error: (err) => {
+          error: (error) => {
             // Habilitar el botón nuevamente al finalizar el envío del formulario
             this.submitting = false;
-            // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-            this.customToastService.onCloseToError();
-            console.log(err.error);
+            this.customToastService.onCloseToError(error);
           },
         });
     }

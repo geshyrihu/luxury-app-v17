@@ -6,13 +6,13 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subscription } from 'rxjs';
-import CardEmployeeComponent from 'src/app/pages/operaciones/directorios/empleados/card-employee/card-employee.component';
 import {
   AuthService,
   CustomToastService,
   CustomerIdService,
   DataService,
 } from 'src/app/core/services/common-services';
+import CardEmployeeComponent from 'src/app/pages/operaciones/directorios/empleados/card-employee/card-employee.component';
 
 @Component({
   selector: 'app-birthday',
@@ -74,10 +74,8 @@ export default class BirthdayComponent implements OnInit, OnDestroy {
           };
           this.customToastService.onClose();
         },
-        error: (err) => {
-          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onCloseToError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }

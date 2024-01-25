@@ -86,7 +86,7 @@ export class CustomToastService {
     this.onShowError();
     // Swal.close();
     this.spinner.hide();
-    // Imprimir en consola el error ocurrido
+    // En caso de error, mostrar un mensaje de error y registrar el error en la consola
     console.log('Error:', err.error);
   }
 

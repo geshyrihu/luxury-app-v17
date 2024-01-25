@@ -14,7 +14,6 @@ import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface
 import { CustomerIdService } from 'src/app/core/services/common-services';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
-import { EnumService } from 'src/app/core/services/enum.service';
 import { SelectItemService } from 'src/app/core/services/select-item.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import ComponentsModule from 'src/app/shared/components.module';
@@ -39,7 +38,6 @@ export default class RecorridoAddOrEditComponent implements OnInit, OnDestroy {
   public ref = inject(DynamicDialogRef);
   public customerIdService = inject(CustomerIdService);
   private customToastService = inject(CustomToastService);
-  private enumService = inject(EnumService);
 
   submitting: boolean = false;
 
@@ -85,9 +83,8 @@ export default class RecorridoAddOrEditComponent implements OnInit, OnDestroy {
       next: (resp: any) => {
         this.form.patchValue(resp.body);
       },
-      error: (err) => {
-        this.customToastService.onShowError();
-        console.log(err.error);
+      error: (error) => {
+        this.customToastService.onCloseToError(error);
       },
     });
   }
@@ -123,12 +120,10 @@ export default class RecorridoAddOrEditComponent implements OnInit, OnDestroy {
             this.ref.close(true);
             this.customToastService.onClose();
           },
-          error: (err) => {
+          error: (error) => {
             // Habilitar el botón nuevamente al finalizar el envío del formulario
             this.submitting = false;
-            // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-            this.customToastService.onCloseToError();
-            console.log(err.error);
+            this.customToastService.onCloseToError(error);
           },
         });
     } else {
@@ -139,12 +134,10 @@ export default class RecorridoAddOrEditComponent implements OnInit, OnDestroy {
             this.ref.close(true);
             this.customToastService.onClose();
           },
-          error: (err) => {
+          error: (error) => {
             // Habilitar el botón nuevamente al finalizar el envío del formulario
             this.submitting = false;
-            // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-            this.customToastService.onCloseToError();
-            console.log(err.error);
+            this.customToastService.onCloseToError(error);
           },
         });
     }

@@ -4,11 +4,11 @@ import { FormsModule } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subscription } from 'rxjs';
-import AddPartidaCedulaComponent from 'src/app/pages/contabilidad/presupuesto/add-partida-cedula.component';
-import EditPartidaCedulaComponent from 'src/app/pages/contabilidad/presupuesto/edit-partida-cedula.component';
 import { CustomerIdService } from 'src/app/core/services/common-services';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
+import AddPartidaCedulaComponent from 'src/app/pages/contabilidad/presupuesto/add-partida-cedula.component';
+import EditPartidaCedulaComponent from 'src/app/pages/contabilidad/presupuesto/edit-partida-cedula.component';
 import ComponentsModule from 'src/app/shared/components.module';
 import PrimeNgModule from 'src/app/shared/prime-ng.module';
 import AddoreditPeriodoCedulaPresupuestalComponent from './addoredit-periodo-cedula.component';
@@ -84,9 +84,9 @@ export default class CedulaClienteComponent implements OnInit, OnDestroy {
 
           this.loading = false;
         },
-        error: (err) => {
-          console.log(err.error);
+        error: (error) => {
           this.loading = false;
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -102,9 +102,8 @@ export default class CedulaClienteComponent implements OnInit, OnDestroy {
         next: (resp: any) => {
           this.cb_cedulas = resp.body;
         },
-        error: (err) => {
-          this.customToastService.onShowError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -173,9 +172,8 @@ export default class CedulaClienteComponent implements OnInit, OnDestroy {
           this.customToastService.onShowSuccess();
           this.onLoadData();
         },
-        error: (err) => {
-          this.customToastService.onShowError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }

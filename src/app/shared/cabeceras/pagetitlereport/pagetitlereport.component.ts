@@ -52,9 +52,8 @@ export default class PagetitleReportComponent {
           this.nameCustomer = resp.body.nameCustomer;
           this.logoCustomer = `${environment.base_urlImg}Administration/customer/${resp.body.photoPath}`;
         },
-        error: (err) => {
-          this.customToastService.onShowError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }

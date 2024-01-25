@@ -32,8 +32,8 @@ import AddorEditMeetingSeguimientoComponent from './addoredit-seguimiento/addor-
     CommonModule,
     PrimeNgModule,
     SanitizeHtmlPipe,
-    NgbTooltip
-],
+    NgbTooltip,
+  ],
   providers: [
     DialogService,
     MessageService,
@@ -80,10 +80,8 @@ export default class ListMinutasComponent implements OnInit, OnDestroy {
           this.data = resp.body;
           this.customToastService.onClose();
         },
-        error: (err) => {
-          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onCloseToError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -101,9 +99,8 @@ export default class ListMinutasComponent implements OnInit, OnDestroy {
           // Utiliza la función saveAs del paquete 'file-saver' para descargar el archivo
           saveAs(blob, 'Pendientes Minuta');
         },
-        error: (err) => {
-          this.customToastService.onShowError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -115,10 +112,8 @@ export default class ListMinutasComponent implements OnInit, OnDestroy {
         this.onLoadData(this.tipoJunta);
         this.customToastService.onCloseToSuccess();
       },
-      error: (err) => {
-        // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-        this.customToastService.onCloseToError();
-        console.log(err.error);
+      error: (error) => {
+        this.customToastService.onCloseToError(error);
       },
     });
   }
@@ -132,10 +127,8 @@ export default class ListMinutasComponent implements OnInit, OnDestroy {
         next: () => {
           this.customToastService.onCloseToSuccess();
         },
-        error: (err) => {
-          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onCloseToError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -215,10 +208,8 @@ export default class ListMinutasComponent implements OnInit, OnDestroy {
         next: () => {
           this.customToastService.onCloseToSuccess();
         },
-        error: (err) => {
-          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onCloseToError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -259,10 +250,8 @@ export default class ListMinutasComponent implements OnInit, OnDestroy {
           this.onLoadData(this.tipoJunta);
           this.customToastService.onCloseToSuccess();
         },
-        error: (err) => {
-          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onCloseToError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -275,10 +264,8 @@ export default class ListMinutasComponent implements OnInit, OnDestroy {
         this.customToastService.onCloseToSuccess();
         this.onLoadData(this.tipoJunta);
       },
-      error: (err) => {
-        // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-        this.customToastService.onCloseToError();
-        console.log(err.error);
+      error: (error) => {
+        this.customToastService.onCloseToError(error);
       },
     });
   }

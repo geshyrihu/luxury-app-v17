@@ -7,6 +7,7 @@ import { DataService } from './data.service';
 })
 export class OrdenCompraService {
   private dataService = inject(DataService);
+  // private customToastService = inject(CustomToastService);
 
   subRef$: Subscription;
 
@@ -64,13 +65,14 @@ export class OrdenCompraService {
                     (this.totalOrdenCompra - this.totalCubierto) * 100
                   ) / 100;
               },
-              error: (err) => {
-                console.log(err.error);
+              error: (error) => {
+                console.log(error.error);
+                // this.customToastService.onCloseToError(error);
               },
             });
         },
-        error: (err) => {
-          console.log(err.error);
+        error: (error) => {
+          console.log(error.error);
         },
       });
   }

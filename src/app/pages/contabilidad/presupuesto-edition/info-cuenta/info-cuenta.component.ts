@@ -10,6 +10,7 @@ import {
   selector: 'app-info-cuenta',
   templateUrl: './info-cuenta.component.html',
   standalone: true,
+  providers: [CustomToastService],
 })
 export default class InfoCuentaComponent implements OnInit, OnDestroy {
   public config = inject(DynamicDialogConfig);
@@ -30,9 +31,8 @@ export default class InfoCuentaComponent implements OnInit, OnDestroy {
       next: (resp: any) => {
         this.info = resp.body.information;
       },
-      error: (err) => {
-        this.customToastService.onShowError();
-        console.log(err.error);
+      error: (error) => {
+        this.customToastService.onCloseToError(error);
       },
     });
   }

@@ -46,9 +46,8 @@ export default class AddOrEditInvitedComponent implements OnInit, OnDestroy {
           this.customToastService.onShowSuccess();
           this.onLoadData();
         },
-        error: (err) => {
-          console.log(err.error);
-          this.customToastService.onShowError();
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -62,10 +61,8 @@ export default class AddOrEditInvitedComponent implements OnInit, OnDestroy {
           this.onLoadData();
           this.customToastService.onCloseToSuccess();
         },
-        error: (err) => {
-          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onCloseToError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -78,9 +75,8 @@ export default class AddOrEditInvitedComponent implements OnInit, OnDestroy {
           this.listaInvitados = resp.body;
           this.invitado = '';
         },
-        error: (err) => {
-          this.customToastService.onShowError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }

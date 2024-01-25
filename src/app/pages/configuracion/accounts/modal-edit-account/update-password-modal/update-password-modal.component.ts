@@ -72,9 +72,8 @@ export default class UpdatePasswordModalComponent implements OnInit, OnDestroy {
             this.celularPersonal = resp.body.celularPersonal;
           }
         },
-        error: (err) => {
-          this.customToastService.onShowError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -92,10 +91,8 @@ export default class UpdatePasswordModalComponent implements OnInit, OnDestroy {
         next: () => {
           this.customToastService.onCloseToSuccess();
         },
-        error: (err) => {
-          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onCloseToError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -115,10 +112,8 @@ export default class UpdatePasswordModalComponent implements OnInit, OnDestroy {
         next: () => {
           this.customToastService.onCloseToSuccess();
         },
-        error: (err) => {
-          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onCloseToError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -137,10 +132,8 @@ export default class UpdatePasswordModalComponent implements OnInit, OnDestroy {
         next: () => {
           this.customToastService.onCloseToSuccess();
         },
-        error: (err) => {
-          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onCloseToError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }

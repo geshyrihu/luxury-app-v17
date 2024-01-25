@@ -46,9 +46,8 @@ export default class ReportClientComponent implements OnInit, OnDestroy {
       next: (resp: any) => {
         this.data = resp.body;
       },
-      error: (err) => {
-        this.customToastService.onShowError();
-        console.log(err.error);
+      error: (error) => {
+        this.customToastService.onCloseToError(error);
       },
     });
   }

@@ -70,9 +70,8 @@ export default class ModalEditCotizacionComponent implements OnInit, OnDestroy {
         next: (resp: any) => {
           this.cb_providers = resp.body;
         },
-        error: (err) => {
-          this.customToastService.onShowError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -99,9 +98,8 @@ export default class ModalEditCotizacionComponent implements OnInit, OnDestroy {
           this.solicitudCompra = resp.body;
           this.solicitudCompraDetalle = resp.body.solicitudCompraDetalle;
         },
-        error: (err) => {
-          this.customToastService.onShowError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -121,9 +119,8 @@ export default class ModalEditCotizacionComponent implements OnInit, OnDestroy {
         next: (resp: any) => {
           this.customToastService.onShowSuccess();
         },
-        error: (err) => {
-          this.customToastService.onShowError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -162,9 +159,8 @@ export default class ModalEditCotizacionComponent implements OnInit, OnDestroy {
           this.onLoadData();
           this.customToastService.onShowSuccess();
         },
-        error: (err) => {
-          this.customToastService.onShowError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -181,10 +177,8 @@ export default class ModalEditCotizacionComponent implements OnInit, OnDestroy {
           this.ref.close(true);
           this.customToastService.onClose();
         },
-        error: (err) => {
-          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onCloseToError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -218,9 +212,8 @@ export default class ModalEditCotizacionComponent implements OnInit, OnDestroy {
         next: (resp: any) => {
           this.cotizacionesRelacionadas = resp.body;
         },
-        error: (err) => {
-          this.customToastService.onShowError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }

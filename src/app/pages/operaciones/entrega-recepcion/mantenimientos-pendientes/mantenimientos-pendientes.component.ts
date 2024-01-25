@@ -16,12 +16,7 @@ import { environment } from 'src/environments/environment';
   selector: 'app-mantenimientos-pendientes',
   templateUrl: './mantenimientos-pendientes.component.html',
   standalone: true,
-  imports: [
-    ComponentsModule,
-    CommonModule,
-    TableModule,
-    SanitizeHtmlPipe
-],
+  imports: [ComponentsModule, CommonModule, TableModule, SanitizeHtmlPipe],
   providers: [MessageService, CustomToastService],
 })
 export default class MantenimientosPendientesComponent
@@ -53,10 +48,8 @@ export default class MantenimientosPendientesComponent
           this.data = resp.body;
           this.customToastService.onClose();
         },
-        error: (err) => {
-          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onCloseToError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }

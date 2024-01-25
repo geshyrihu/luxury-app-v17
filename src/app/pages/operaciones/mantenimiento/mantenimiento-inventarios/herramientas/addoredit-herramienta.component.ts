@@ -35,6 +35,7 @@ import { environment } from 'src/environments/environment';
     ReactiveFormsModule,
     CustomInputModule,
   ],
+  providers: [CustomToastService],
 })
 export default class AddoreditToolsComponent implements OnInit, OnDestroy {
   public authService = inject(AuthService);
@@ -128,12 +129,10 @@ export default class AddoreditToolsComponent implements OnInit, OnDestroy {
           this.ref.close(true);
           this.customToastService.onClose();
         },
-        error: (err) => {
+        error: (error) => {
           // Habilitar el botón nuevamente al finalizar el envío del formulario
           this.submitting = false;
-          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onCloseToError();
-          console.log(err.error);
+          this.customToastService.onCloseToError(error);
         },
       });
     } else {
@@ -144,12 +143,10 @@ export default class AddoreditToolsComponent implements OnInit, OnDestroy {
             this.ref.close(true);
             this.customToastService.onClose();
           },
-          error: (err) => {
+          error: (error) => {
             // Habilitar el botón nuevamente al finalizar el envío del formulario
             this.submitting = false;
-            // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-            this.customToastService.onCloseToError();
-            console.log(err.error);
+            this.customToastService.onCloseToError(error);
           },
         });
     }

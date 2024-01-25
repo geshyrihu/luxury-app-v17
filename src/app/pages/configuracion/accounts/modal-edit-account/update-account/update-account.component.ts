@@ -45,12 +45,14 @@ export default class UpdateAccountComponent implements OnInit, OnDestroy {
   public customerIdService = inject(CustomerIdService);
 
   cb_customer: ISelectItemDto[] = [];
-  cb_employee: ISelectItemDto[] = !this.authService.onValidateRoles([
-    'SuperUsuario',
-  ])
-    ? this.selectItemService.employeeFromCustomer
-    : this.selectItemService.allEmployeeActive;
-  cb_profession: ISelectItemDto[] = this.selectItemService.professions;
+  cb_employee: ISelectItemDto[] = [];
+  // cb_employee: ISelectItemDto[] = !this.authService.onValidateRoles([
+  //   'SuperUsuario',
+  // ])
+  //   ? this.selectItemService.employeeFromCustomer
+  //   : this.selectItemService.allEmployeeActive;
+  // cb_profession: ISelectItemDto[] = this.selectItemService.professions;
+  cb_profession: ISelectItemDto[] = [];
   submitting: boolean = false;
 
   @Input()
@@ -71,10 +73,33 @@ export default class UpdateAccountComponent implements OnInit, OnDestroy {
   });
 
   ngOnInit(): void {
+    this.onLoadEmployee();
+    this.onLoadData();
+  }
+
+  onLoadEmployee() {
+    if (!this.authService.onValidateRoles(['SuperUsuario'])) {
+      this.selectItemService
+        .onGetSelectItem(
+          `getallemployeeactive/${this.customerIdService.getcustomerId()}`
+        )
+        .subscribe((resp) => {
+          this.cb_employee = resp;
+        });
+    } else {
+      this.selectItemService
+        .onGetSelectItem('getallemployeeactive')
+        .subscribe((resp) => {
+          this.cb_employee = resp;
+        });
+    }
+
     this.selectItemService.onGetSelectItem('customers').subscribe((resp) => {
       this.cb_customer = resp;
     });
-    this.onLoadData();
+    this.selectItemService.onGetSelectItem('professions').subscribe((resp) => {
+      this.cb_profession = resp;
+    });
   }
 
   onLoadData() {
@@ -89,9 +114,8 @@ export default class UpdateAccountComponent implements OnInit, OnDestroy {
             employeeActualId: resp.body.employeeId,
           });
         },
-        error: (err) => {
-          this.customToastService.onShowError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -120,12 +144,10 @@ export default class UpdateAccountComponent implements OnInit, OnDestroy {
           this.submitting = false;
           this.customToastService.onCloseToSuccess();
         },
-        error: (err) => {
+        error: (error) => {
           // Habilitar el botón nuevamente al finalizar el envío del formulario
           this.submitting = false;
-          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onCloseToError();
-          console.log(err.error);
+          this.customToastService.onCloseToError(error);
         },
       });
   }

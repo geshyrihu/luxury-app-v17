@@ -64,10 +64,8 @@ export default class ListVacantesComponent implements OnInit, OnDestroy {
           this.data = resp.body;
           this.customToastService.onClose();
         },
-        error: (err) => {
-          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onCloseToError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -80,10 +78,8 @@ export default class ListVacantesComponent implements OnInit, OnDestroy {
         this.customToastService.onCloseToSuccess();
         this.onLoadData();
       },
-      error: (err) => {
-        // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-        this.customToastService.onCloseToError();
-        console.log(err.error);
+      error: (error) => {
+        this.customToastService.onCloseToError(error);
       },
     });
   }

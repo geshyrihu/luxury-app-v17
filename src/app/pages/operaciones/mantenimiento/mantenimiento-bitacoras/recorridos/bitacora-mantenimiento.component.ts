@@ -5,7 +5,6 @@ import { LocaleSettings } from 'primeng/calendar';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subscription } from 'rxjs';
 import { IFechasFiltro } from 'src/app/core/interfaces/IFechasFiltro.interface';
-import CardEmployeeComponent from 'src/app/pages/operaciones/directorios/empleados/card-employee/card-employee.component';
 import {
   AuthService,
   CustomToastService,
@@ -14,6 +13,7 @@ import {
   DateService,
   FiltroCalendarService,
 } from 'src/app/core/services/common-services';
+import CardEmployeeComponent from 'src/app/pages/operaciones/directorios/empleados/card-employee/card-employee.component';
 import ComponentsModule from 'src/app/shared/components.module';
 import PrimeNgModule from 'src/app/shared/prime-ng.module';
 import FormBitacoraMantenimientoComponent from './form-bitacora-mantenimiento.component';
@@ -75,9 +75,8 @@ export default class BitacoraMantenimientoComponent
           this.customToastService.onShowSuccess();
           this.onLoadData();
         },
-        error: (err) => {
-          this.customToastService.onShowError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -124,10 +123,8 @@ export default class BitacoraMantenimientoComponent
           this.data = resp.body;
           this.customToastService.onClose();
         },
-        error: (err) => {
-          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onCloseToError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }

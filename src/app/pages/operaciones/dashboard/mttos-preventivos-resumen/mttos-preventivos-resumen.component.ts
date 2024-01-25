@@ -17,10 +17,7 @@ import PrimeNgModule from 'src/app/shared/prime-ng.module';
   selector: 'app-mttos-preventivos-resumen',
   templateUrl: './mttos-preventivos-resumen.component.html',
   standalone: true,
-  imports: [
-    PrimeNgModule,
-    SanitizeHtmlPipe
-],
+  imports: [PrimeNgModule, SanitizeHtmlPipe],
   providers: [DialogService, MessageService, CustomToastService],
 })
 export default class MantenimientosPreventivosResumenComponent
@@ -60,10 +57,8 @@ export default class MantenimientosPreventivosResumenComponent
           this.data = resp.body;
           this.customToastService.onClose();
         },
-        error: (err) => {
-          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onCloseToError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }

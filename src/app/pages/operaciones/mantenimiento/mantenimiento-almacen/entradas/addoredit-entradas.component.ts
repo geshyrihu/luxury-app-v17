@@ -108,25 +108,29 @@ export default class AddOrEditEntradasComponent implements OnInit, OnDestroy {
     if (this.id !== 0) this.onLoadData();
   }
   onLoadData() {
-    this.subRef$ = this.dataService.get(`EntradaProducto/${this.id}`).subscribe(
-      (resp: any) => {
-        this.nombreProducto = resp.body.nombreProducto;
-        this.cantidadActual = resp.body.cantidad;
-        this.form.patchValue(resp.body);
-        this.form.patchValue({
-          fechaEntrada: this.dateService.getDateFormat(resp.body.fechaEntrada),
-        });
-        this.form.patchValue({
-          providerId: resp.body.providerId,
-        });
-        this.form.patchValue({
-          providerName: resp.body.provider,
-        });
-      },
-      (err) => {
-        console.log(err.error);
-      }
-    );
+    this.subRef$ = this.dataService
+      .get(`EntradaProducto/${this.id}`)
+      .subscribe({
+        next: (resp: any) => {
+          this.nombreProducto = resp.body.nombreProducto;
+          this.cantidadActual = resp.body.cantidad;
+          this.form.patchValue(resp.body);
+          this.form.patchValue({
+            fechaEntrada: this.dateService.getDateFormat(
+              resp.body.fechaEntrada
+            ),
+          });
+          this.form.patchValue({
+            providerId: resp.body.providerId,
+          });
+          this.form.patchValue({
+            providerName: resp.body.provider,
+          });
+        },
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
+        },
+      });
   }
 
   // convenience getter for easy access to form fields
@@ -146,12 +150,10 @@ export default class AddOrEditEntradasComponent implements OnInit, OnDestroy {
             this.ref.close(true);
             this.customToastService.onClose();
           },
-          error: (err) => {
+          error: (error) => {
             // Habilitar el botón nuevamente al finalizar el envío del formulario
             this.submitting = false;
-            // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-            this.customToastService.onCloseToError();
-            console.log(err.error);
+            this.customToastService.onCloseToError(error);
           },
         });
     } else {
@@ -165,12 +167,10 @@ export default class AddOrEditEntradasComponent implements OnInit, OnDestroy {
             this.ref.close(true);
             this.customToastService.onClose();
           },
-          error: (err) => {
+          error: (error) => {
             // Habilitar el botón nuevamente al finalizar el envío del formulario
             this.submitting = false;
-            // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-            this.customToastService.onCloseToError();
-            console.log(err.error);
+            this.customToastService.onCloseToError(error);
           },
         });
     }

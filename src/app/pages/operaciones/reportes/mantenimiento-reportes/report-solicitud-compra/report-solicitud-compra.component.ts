@@ -20,8 +20,8 @@ import ComponentsModule from 'src/app/shared/components.module';
     PagetitleReportComponent,
     TableModule,
     CommonModule,
-    ComponentsModule
-],
+    ComponentsModule,
+  ],
   providers: [CustomToastService, MessageService],
 })
 export default class ReportSolicitudCompraComponent
@@ -71,10 +71,8 @@ export default class ReportSolicitudCompraComponent
           this.ordenesCompra = resp.body.ordenesCompra;
           this.customToastService.onClose();
         },
-        error: (err) => {
-          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onCloseToError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }

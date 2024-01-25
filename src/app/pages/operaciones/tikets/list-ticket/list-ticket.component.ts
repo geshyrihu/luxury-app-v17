@@ -94,10 +94,8 @@ export default class ListTicketComponent implements OnInit, OnDestroy {
           this.dataCompleta = resp.body;
           this.customToastService.onClose();
         },
-        error: (err) => {
-          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onCloseToError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -199,16 +197,15 @@ export default class ListTicketComponent implements OnInit, OnDestroy {
               resp.fechaInicial
             )}/${this.dateService.getDateFormat(resp.fechaFinal)}`
           )
-          .subscribe(
-            (resp: any) => {
+          .subscribe({
+            next: (resp: any) => {
               this.data = resp.body;
               this.customToastService.onShowSuccess();
             },
-            (err) => {
-              console.log(err.error);
-              this.customToastService.onShowError();
-            }
-          );
+            error: (error) => {
+              this.customToastService.onCloseToError(error);
+            },
+          });
       }
     });
   }
@@ -235,10 +232,8 @@ export default class ListTicketComponent implements OnInit, OnDestroy {
           this.onLoadData();
           this.customToastService.onCloseToSuccess();
         },
-        error: (err) => {
-          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onCloseToError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -275,9 +270,8 @@ export default class ListTicketComponent implements OnInit, OnDestroy {
         next: () => {
           this.customToastService.onClose();
         },
-        error: (err) => {
-          this.customToastService.onClose();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -286,11 +280,10 @@ export default class ListTicketComponent implements OnInit, OnDestroy {
     this.customToastService.onLoading();
     this.subRef$ = this.dataService.get(`ticket/sendproviders/`).subscribe({
       next: () => {
-        this.customToastService.onClose();
+        this.customToastService.onCloseToSuccess();
       },
-      error: (err) => {
-        this.customToastService.onClose();
-        console.log(err.error);
+      error: (error) => {
+        this.customToastService.onCloseToError(error);
       },
     });
   }

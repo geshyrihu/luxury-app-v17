@@ -21,6 +21,7 @@ import {
   templateUrl: './ticket-seguimiento.component.html',
   standalone: true,
   imports: [ReactiveFormsModule, FormsModule, CommonModule],
+  providers: [CustomToastService],
 })
 export default class TicketSeguimientoComponent implements OnInit, OnDestroy {
   private formBuilder = inject(FormBuilder);
@@ -28,7 +29,6 @@ export default class TicketSeguimientoComponent implements OnInit, OnDestroy {
   public ref = inject(DynamicDialogRef);
   public config = inject(DynamicDialogConfig);
   public authService = inject(AuthService);
-
   private customToastService = inject(CustomToastService);
 
   seguimientos: ITicketseguimiento[] = [];
@@ -83,9 +83,8 @@ export default class TicketSeguimientoComponent implements OnInit, OnDestroy {
           this.seguimientos = resp.body;
           this.loading = false;
         },
-        error: (err) => {
-          this.customToastService.onShowError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -116,12 +115,10 @@ export default class TicketSeguimientoComponent implements OnInit, OnDestroy {
           this.seguimientoLenght = 200;
           this.customToastService.onCloseToSuccess();
         },
-        error: (err) => {
+        error: (error) => {
           // Habilitar el botón nuevamente al finalizar el envío del formulario
           this.submitting = false;
-          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onCloseToError();
-          console.log(err.error);
+          this.customToastService.onCloseToError(error);
         },
       });
   }

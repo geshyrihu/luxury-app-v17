@@ -9,7 +9,6 @@ import { IAccountDto } from 'src/app/core/interfaces/account-dto.interface';
 import PhoneFormatPipe from 'src/app/core/pipes/phone-format.pipe';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
-import { DataFilterService } from 'src/app/core/services/dataFilter.service';
 import CardEmployeeComponent from 'src/app/pages/operaciones/directorios/empleados/card-employee/card-employee.component';
 import ComponentsModule from 'src/app/shared/components.module';
 import DropdownRouteComponent from 'src/app/shared/ngb-dropdown-menu/dropdown-route.component';
@@ -38,7 +37,6 @@ export default class ListAccountComponent implements OnInit, OnDestroy {
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
   public customToastService = inject(CustomToastService);
-  public dataFilterService = inject(DataFilterService);
 
   cb_customer: ISelectItemDto[] = [];
   cb_profession: ISelectItemDto[] = [];
@@ -127,10 +125,8 @@ export default class ListAccountComponent implements OnInit, OnDestroy {
           this.data = resp.body;
           this.customToastService.onClose();
         },
-        error: (err) => {
-          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onCloseToError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -152,9 +148,8 @@ export default class ListAccountComponent implements OnInit, OnDestroy {
           }
           this.customToastService.onShowSuccess();
         },
-        error: (err) => {
-          this.customToastService.onShowError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -177,9 +172,8 @@ export default class ListAccountComponent implements OnInit, OnDestroy {
           }
           this.customToastService.onShowSuccess();
         },
-        error: (err) => {
-          this.customToastService.onShowError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -191,9 +185,8 @@ export default class ListAccountComponent implements OnInit, OnDestroy {
           this.customToastService.onShowSuccess();
           this.onLoadData();
         },
-        error: (err) => {
-          this.customToastService.onShowError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }

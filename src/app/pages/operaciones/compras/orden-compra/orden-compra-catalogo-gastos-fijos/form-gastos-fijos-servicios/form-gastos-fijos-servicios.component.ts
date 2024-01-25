@@ -62,9 +62,8 @@ export default class FormGastosFijosServiciosComponent
         next: (resp: any) => {
           this.productosAgregados = resp.body;
         },
-        error: (err) => {
-          this.customToastService.onShowError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -79,10 +78,8 @@ export default class FormGastosFijosServiciosComponent
           this.onLoadProductsAgregados();
           this.customToastService.onCloseToSuccess();
         },
-        error: (err) => {
-          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onCloseToError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -96,9 +93,8 @@ export default class FormGastosFijosServiciosComponent
         next: (resp: any) => {
           this.productos = resp.body;
         },
-        error: (err) => {
-          this.customToastService.onShowError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -119,9 +115,8 @@ export default class FormGastosFijosServiciosComponent
           this.onLoadProducts();
           this.onLoadProductsAgregados();
         },
-        error: (err) => {
-          this.customToastService.onShowError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -136,9 +131,8 @@ export default class FormGastosFijosServiciosComponent
           this.onLoadProducts();
           this.onLoadProductsAgregados();
         },
-        error: (err) => {
-          this.customToastService.onShowError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }

@@ -74,9 +74,8 @@ export default class EntregaRecepcionClienteComponent
       .get('EntregaRecepcionCliente/GenerateData')
       .subscribe({
         next: (resp: any) => {},
-        error: (err) => {
-          this.customToastService.onShowError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
     // * Peticion para generar los items de entrega recepcion
@@ -92,10 +91,8 @@ export default class EntregaRecepcionClienteComponent
           this.data = resp.body;
           this.customToastService.onClose();
         },
-        error: (err) => {
-          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onCloseToError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -138,9 +135,8 @@ export default class EntregaRecepcionClienteComponent
           this.onLoadData();
           this.customToastService.onShowSuccess();
         },
-        error: (err) => {
-          this.customToastService.onShowError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -152,9 +148,8 @@ export default class EntregaRecepcionClienteComponent
           this.onLoadData();
           this.customToastService.onShowSuccess();
         },
-        error: (err) => {
-          this.customToastService.onShowError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -167,9 +162,8 @@ export default class EntregaRecepcionClienteComponent
           this.customToastService.onShowSuccess();
           this.onLoadData();
         },
-        error: (err) => {
-          this.customToastService.onShowError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }

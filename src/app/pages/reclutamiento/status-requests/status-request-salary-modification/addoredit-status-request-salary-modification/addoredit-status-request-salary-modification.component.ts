@@ -86,9 +86,8 @@ export default class AddOrEditStatusRequestSalaryModificationComponent
         next: (resp: any) => {
           this.form.patchValue(resp.body);
         },
-        error: (err) => {
-          this.customToastService.onShowError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -113,12 +112,10 @@ export default class AddOrEditStatusRequestSalaryModificationComponent
             this.customToastService.onClose();
             this.ref.close(true);
           },
-          error: (err) => {
-            console.log(err.error);
-            this.customToastService.onShowError();
+          error: (error) => {
             // Habilitar el botón nuevamente al finalizar el envío del formulario
             this.submitting = false;
-            this.customToastService.onClose();
+            this.customToastService.onCloseToError(error);
           },
         });
     } else {
@@ -129,12 +126,10 @@ export default class AddOrEditStatusRequestSalaryModificationComponent
             this.customToastService.onClose();
             this.ref.close(true);
           },
-          error: (err) => {
-            console.log(err.error);
-            this.customToastService.onShowError();
+          error: (error) => {
             // Habilitar el botón nuevamente al finalizar el envío del formulario
             this.submitting = false;
-            this.customToastService.onClose();
+            this.customToastService.onCloseToError(error);
           },
         });
     }

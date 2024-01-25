@@ -61,10 +61,8 @@ export default class ListerramientasComponent implements OnInit, OnDestroy {
           this.reporteHerramientasPdfService.setData(this.data);
           this.customToastService.onClose();
         },
-        error: (err) => {
-          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onCloseToError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -77,10 +75,8 @@ export default class ListerramientasComponent implements OnInit, OnDestroy {
         this.onLoadData();
         this.customToastService.onCloseToSuccess();
       },
-      error: (err) => {
-        // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-        this.customToastService.onCloseToError();
-        console.log(err.error);
+      error: (error) => {
+        this.customToastService.onCloseToError(error);
       },
     });
   }

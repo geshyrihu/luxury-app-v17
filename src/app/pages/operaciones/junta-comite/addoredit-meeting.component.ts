@@ -39,8 +39,8 @@ const date = new Date();
     AddOrEditListAdministrationComponent,
     AddOrEditInvitedComponent,
     PrimeNgModule,
-    ComponentsModule
-],
+    ComponentsModule,
+  ],
   providers: [MessageService, CustomToastService],
 })
 export default class AddOrEditMeetingComponent implements OnInit, OnDestroy {
@@ -101,10 +101,8 @@ export default class AddOrEditMeetingComponent implements OnInit, OnDestroy {
               this.onLoadData();
               this.customToastService.onClose();
             },
-            error: (err) => {
-              // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-              this.customToastService.onCloseToError();
-              console.log(err.error);
+            error: (error) => {
+              this.customToastService.onCloseToError(error);
             },
           });
       } else {
@@ -116,10 +114,8 @@ export default class AddOrEditMeetingComponent implements OnInit, OnDestroy {
             this.onLoadData();
             this.customToastService.onClose();
           },
-          error: (err) => {
-            // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-            this.customToastService.onCloseToError();
-            console.log(err.error);
+          error: (error) => {
+            this.customToastService.onCloseToError(error);
           },
         });
       }

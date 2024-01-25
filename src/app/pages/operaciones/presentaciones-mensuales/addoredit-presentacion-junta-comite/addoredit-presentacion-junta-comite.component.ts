@@ -14,6 +14,7 @@ import ComponentsModule from 'src/app/shared/components.module';
   templateUrl: './addoredit-presentacion-junta-comite.component.html',
   standalone: true,
   imports: [ComponentsModule, ReactiveFormsModule],
+  providers: [CustomToastService],
 })
 export default class AddoreditPresentacionJuntaComiteComponent
   implements OnInit, OnDestroy
@@ -67,12 +68,10 @@ export default class AddoreditPresentacionJuntaComiteComponent
           this.ref.close(true);
           this.customToastService.onClose();
         },
-        error: (err) => {
+        error: (error) => {
           // Habilitar el botón nuevamente al finalizar el envío del formulario
           this.submitting = false;
-          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onCloseToError();
-          console.log(err.error);
+          this.customToastService.onCloseToError(error);
         },
       });
   }

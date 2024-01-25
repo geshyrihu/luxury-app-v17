@@ -105,10 +105,8 @@ export default class ListEmpleadosOpcionesComponent
             );
           }
         },
-        error: (err) => {
-          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onCloseToError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -290,10 +288,8 @@ export default class ListEmpleadosOpcionesComponent
             next: () => {
               this.customToastService.onCloseToSuccess();
             },
-            error: (err) => {
-              // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-              this.customToastService.onCloseToError();
-              console.log(err.error);
+            error: (error) => {
+              this.customToastService.onCloseToError(error);
             },
           });
       }
@@ -319,10 +315,8 @@ export default class ListEmpleadosOpcionesComponent
               this.customToastService.onCloseToSuccess();
               this.active = !this.active;
             },
-            error: (err) => {
-              // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-              this.customToastService.onCloseToError();
-              console.log(err.error);
+            error: (error) => {
+              this.customToastService.onCloseToError(error);
             },
           });
       }
@@ -407,10 +401,8 @@ export default class ListEmpleadosOpcionesComponent
           this.solicitudModificacionSalarioStatus =
             resp.body.solicitudModificacionSalario;
         },
-        error: (err) => {
-          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onCloseToError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -424,10 +416,8 @@ export default class ListEmpleadosOpcionesComponent
         next: (resp: any) => {
           this.accionPermitida = resp.body;
         },
-        error: (err) => {
-          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onCloseToError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }

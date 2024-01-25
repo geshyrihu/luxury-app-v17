@@ -7,13 +7,13 @@ import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
-import EditPartidaCedulaComponent from 'src/app/pages/contabilidad/presupuesto/edit-partida-cedula.component';
 import {
   AuthService,
   CustomToastService,
   DataService,
 } from 'src/app/core/services/common-services';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
+import EditPartidaCedulaComponent from 'src/app/pages/contabilidad/presupuesto/edit-partida-cedula.component';
 import ComponentsModule from 'src/app/shared/components.module';
 import PrimeNgModule from 'src/app/shared/prime-ng.module';
 import OrdenesCompraCedulaComponent from '../../operaciones/compras/cedula-presupuestal/ordenes-compra-cedula/ordenes-compra-cedula.component';
@@ -34,8 +34,8 @@ import PresupuestoEditionFileComponent from './presupuesto-edition-file/presupue
     ComponentsModule,
     FormsModule,
     NgbAlertModule,
-    NgbTooltipModule
-],
+    NgbTooltipModule,
+  ],
   providers: [DialogService, MessageService, CustomToastService],
 })
 export default class PresupuestoIndividualComponent implements OnInit {
@@ -72,14 +72,11 @@ export default class PresupuestoIndividualComponent implements OnInit {
       .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
-          // Cuando se obtienen los datos con éxito, actualizar la variable 'data' y ocultar el mensaje de carga
           this.data = resp.body;
           this.customToastService.onClose();
         },
-        error: (err) => {
-          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onCloseToError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -128,10 +125,8 @@ export default class PresupuestoIndividualComponent implements OnInit {
           // Forza una actualización de la vista
           this.cdr.detectChanges();
         },
-        error: (err) => {
-          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onCloseToError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -257,10 +252,8 @@ export default class PresupuestoIndividualComponent implements OnInit {
           // Oculta el mensaje de carga
           // this.customToastService.onCloseToSuccess();
         },
-        error: (err) => {
-          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onShowError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -314,9 +307,8 @@ export default class PresupuestoIndividualComponent implements OnInit {
             };
           }
         },
-        error: (err) => {
-          // Maneja errores si es necesario
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }

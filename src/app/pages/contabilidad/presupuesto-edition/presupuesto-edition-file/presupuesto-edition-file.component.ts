@@ -19,8 +19,8 @@ import { environment } from 'src/environments/environment';
     FileUploadModule,
     ComponentsModule,
     FormsModule,
-    PrimeNgModule
-],
+    PrimeNgModule,
+  ],
 })
 export default class PresupuestoEditionFileComponent
   implements OnInit, OnDestroy
@@ -58,9 +58,8 @@ export default class PresupuestoEditionFileComponent
           this.description = resp.body.description;
           this.presupuestoDetalleSoporteId = resp.body.id;
         },
-        error: (err) => {
-          this.customToastService.onShowError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -71,9 +70,8 @@ export default class PresupuestoEditionFileComponent
         next: (resp: any) => {
           this.files = resp.body;
         },
-        error: (err) => {
-          this.customToastService.onShowError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -88,11 +86,8 @@ export default class PresupuestoEditionFileComponent
         next: () => {
           this.customToastService.onShowSuccess();
         },
-        error: (err) => {
-          // Habilitar el botón nuevamente al finalizar el envío del formulario
-          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onCloseToError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -121,10 +116,8 @@ export default class PresupuestoEditionFileComponent
           this.files.splice(recordIndex, 1);
         }
       },
-      error: (err) => {
-        // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-        this.customToastService.onCloseToError();
-        console.log(err.error);
+      error: (error) => {
+        this.customToastService.onCloseToError(error);
       },
     });
   }

@@ -135,10 +135,8 @@ export default class CuadroComparativoComponent implements OnInit, OnDestroy {
           this.ontotalPreciosMenores(this.solicitudCompraDetalle);
           this.customToastService.onClose();
         },
-        error: (err) => {
-          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onCloseToError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }

@@ -69,10 +69,10 @@ export default class RecuperarContraseñaComponent implements OnInit, OnDestroy 
           this.customToastService.onClose();
           this.sendEmail = true;
         },
-        error: (err) => {
-          console.log(err.error);
+        error: (error) => {
+          console.log(error.error);
           this.customToastService.onLoadingError(
-            err.error[''].errors[0].errorMessage
+            error.error[''].errors[0].errorMessage
           );
         },
       });

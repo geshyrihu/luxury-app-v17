@@ -76,11 +76,9 @@ export default class LoginComponent implements OnInit, OnDestroy {
           this.securityService.setAuthData(resp.body.token);
           this.customToastService.onClose();
         },
-        error: (err) => {
-          // Maneja los errores y muestra mensajes de error
-          console.log(err.error);
-          this.customToastService.onClose();
-          this.customToastService.onLoadingError(err.error['description']);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
+          this.customToastService.onLoadingError(error.error['description']);
         },
       });
   }

@@ -44,14 +44,11 @@ export default class ListPiscinaBitacoraComponent implements OnInit, OnDestroy {
       .get('piscinabitacora/getall/' + this.piscinaId)
       .subscribe({
         next: (resp: any) => {
-          // Cuando se obtienen los datos con éxito, actualizar la variable 'data' y ocultar el mensaje de carga
           this.data = resp.body;
           this.customToastService.onClose();
         },
-        error: (err) => {
-          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onCloseToError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -67,10 +64,8 @@ export default class ListPiscinaBitacoraComponent implements OnInit, OnDestroy {
           // Mostrar un mensaje de éxito y cerrar Loading....
           this.customToastService.onCloseToSuccess();
         },
-        error: (err) => {
-          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onCloseToError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }

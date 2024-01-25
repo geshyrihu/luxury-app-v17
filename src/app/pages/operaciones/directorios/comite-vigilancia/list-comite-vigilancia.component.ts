@@ -17,10 +17,7 @@ import AddOrEditComiteVigilanciaComponent from './addoredit-comite-vigilancia.co
   selector: 'app-list-comite-vigilancia',
   templateUrl: './list-comite-vigilancia.component.html',
   standalone: true,
-  imports: [
-    ComponentsModule,
-    PrimeNgModule
-],
+  imports: [ComponentsModule, PrimeNgModule],
   providers: [DialogService, MessageService, CustomToastService],
 })
 export default class ListComiteVigilanciaComponent
@@ -58,10 +55,8 @@ export default class ListComiteVigilanciaComponent
           this.data = resp.body;
           this.customToastService.onClose();
         },
-        error: (err) => {
-          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onCloseToError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -75,10 +70,8 @@ export default class ListComiteVigilanciaComponent
           this.onLoadData();
           this.customToastService.onCloseToSuccess();
         },
-        error: (err) => {
-          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onCloseToError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }

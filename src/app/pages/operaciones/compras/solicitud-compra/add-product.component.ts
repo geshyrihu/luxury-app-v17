@@ -20,7 +20,6 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ToastModule } from 'primeng/toast';
 import { Subscription } from 'rxjs';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
-import TarjetaProductoComponent from 'src/app/pages/operaciones/mantenimiento/mantenimiento-catalogos/tarjeta-producto/tarjeta-producto.component';
 import {
   AuthService,
   CustomToastService,
@@ -28,6 +27,7 @@ import {
   SelectItemService,
 } from 'src/app/core/services/common-services';
 import { SolicitudCompraService } from 'src/app/core/services/solicitud-compra.service';
+import TarjetaProductoComponent from 'src/app/pages/operaciones/mantenimiento/mantenimiento-catalogos/tarjeta-producto/tarjeta-producto.component';
 import ComponentsModule from 'src/app/shared/components.module';
 import { environment } from 'src/environments/environment';
 
@@ -40,8 +40,8 @@ import { environment } from 'src/environments/environment';
     FormsModule,
     CommonModule,
     ReactiveFormsModule,
-    ToastModule
-],
+    ToastModule,
+  ],
   providers: [DialogService, MessageService, CustomToastService],
 })
 export default class AddProductComponent implements OnInit, OnDestroy {
@@ -92,9 +92,8 @@ export default class AddProductComponent implements OnInit, OnDestroy {
         next: (resp: any) => {
           this.products = resp.body;
         },
-        error: (err) => {
-          this.customToastService.onShowError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -114,9 +113,8 @@ export default class AddProductComponent implements OnInit, OnDestroy {
           this.onLoadProduct();
           this.form.reset();
         },
-        error: (err) => {
-          this.customToastService.onShowError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }

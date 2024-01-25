@@ -31,9 +31,8 @@ export default class DescripcionPuestoComponent implements OnInit, OnDestroy {
         next: (resp: any) => {
           this.profesion = resp.body;
         },
-        error: (err) => {
-          this.customToastService.onShowError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }

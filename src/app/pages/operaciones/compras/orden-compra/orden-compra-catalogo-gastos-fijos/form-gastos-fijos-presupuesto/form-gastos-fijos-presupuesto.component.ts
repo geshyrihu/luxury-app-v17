@@ -62,10 +62,8 @@ export default class FormGastosFijosPresupuestoComponent
           this.onLoadPresupuestoAgregados();
           this.customToastService.onClose();
         },
-        error: (err) => {
-          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onCloseToError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -87,10 +85,8 @@ export default class FormGastosFijosPresupuestoComponent
           this.onLoadPresupuesto();
           this.customToastService.onClose();
         },
-        error: (err) => {
-          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onCloseToError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -104,9 +100,8 @@ export default class FormGastosFijosPresupuestoComponent
         next: (resp: any) => {
           this.presupuestoAgregados = resp.body;
         },
-        error: (err) => {
-          this.customToastService.onShowError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -122,10 +117,8 @@ export default class FormGastosFijosPresupuestoComponent
           this.onLoadPresupuestoAgregados();
           this.customToastService.onCloseToSuccess();
         },
-        error: (err) => {
-          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onCloseToError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -138,9 +131,8 @@ export default class FormGastosFijosPresupuestoComponent
           this.customToastService.onShowSuccess();
           this.onLoadPresupuestoAgregados();
         },
-        error: (err) => {
-          this.customToastService.onShowError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -157,9 +149,8 @@ export default class FormGastosFijosPresupuestoComponent
           }
           this.cb_cedulas = resp.body;
         },
-        error: (err) => {
-          this.customToastService.onShowError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }

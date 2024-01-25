@@ -51,9 +51,8 @@ export default class ReportMeetingComponent implements OnInit, OnDestroy {
           this.onLoadCustomer();
           this.customToastService.onClose();
         },
-        error: (err) => {
-          this.customToastService.onShowError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }

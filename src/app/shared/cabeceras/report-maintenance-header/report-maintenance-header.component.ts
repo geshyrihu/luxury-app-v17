@@ -1,6 +1,9 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { CustomerIdService } from 'src/app/core/services/common-services';
+import {
+  CustomToastService,
+  CustomerIdService,
+} from 'src/app/core/services/common-services';
 import { DataService } from 'src/app/core/services/data.service';
 import { TicketFilterService } from 'src/app/core/services/ticket-filter.service';
 import { environment } from 'src/environments/environment';
@@ -16,6 +19,7 @@ export default class ReportMaintenanceHeaderComponent
   public dataService = inject(DataService);
   public customerIdService = inject(CustomerIdService);
   public filterReportOperationService = inject(TicketFilterService);
+  public customToastService = inject(CustomToastService);
 
   nameCustomer: string = '';
   logoCustomer: string = '';
@@ -39,9 +43,8 @@ export default class ReportMaintenanceHeaderComponent
           this.nameCustomer = resp.body.nameCustomer;
           this.logoCustomer = `${environment.base_urlImg}Administration/customer/${resp.body.photoPath}`;
         },
-        error: (err) => {
-          this.customToastService.onShowError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }

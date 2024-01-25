@@ -80,9 +80,8 @@ export default class AddoreditPiscinaBitacoraComponent
           this.model = resp.body;
           this.form.patchValue(resp.body);
         },
-        error: (err) => {
-          this.customToastService.onShowError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -109,12 +108,10 @@ export default class AddoreditPiscinaBitacoraComponent
             this.customToastService.onClose();
             this.ref.close(true);
           },
-          error: (err) => {
-            console.log(err.error);
-            this.customToastService.onShowError();
+          error: (error) => {
             // Habilitar el botón nuevamente al finalizar el envío del formulario
-            this.customToastService.onClose();
             this.submitting = false;
+            this.customToastService.onCloseToError(error);
           },
         });
     } else {
@@ -125,12 +122,10 @@ export default class AddoreditPiscinaBitacoraComponent
             this.customToastService.onClose();
             this.ref.close(true);
           },
-          error: (err) => {
-            console.log(err.error);
-            this.customToastService.onShowError();
+          error: (error) => {
             // Habilitar el botón nuevamente al finalizar el envío del formulario
-            this.customToastService.onClose();
             this.submitting = false;
+            this.customToastService.onCloseToError(error);
           },
         });
     }

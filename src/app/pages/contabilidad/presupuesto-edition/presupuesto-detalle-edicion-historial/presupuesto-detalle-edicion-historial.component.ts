@@ -10,6 +10,7 @@ import PrimeNgModule from 'src/app/shared/prime-ng.module';
   templateUrl: './presupuesto-detalle-edicion-historial.component.html',
   standalone: true,
   imports: [PrimeNgModule],
+  providers: [CustomToastService],
 })
 export default class PresupuestoDetalleEdicionHistorialComponent
   implements OnInit, OnDestroy
@@ -41,10 +42,8 @@ export default class PresupuestoDetalleEdicionHistorialComponent
           // Cuando se completa la eliminación con éxito, mostrar un mensaje de éxito y volver a cargar los datos
           this.customToastService.onClose();
         },
-        error: (err) => {
-          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onCloseToError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }

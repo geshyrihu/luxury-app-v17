@@ -24,8 +24,8 @@ import ComponentsModule from 'src/app/shared/components.module';
     FormsModule,
     NgbModule,
     TableModule,
-    MultiSelectModule
-],
+    MultiSelectModule,
+  ],
   providers: [DialogService, MessageService, CustomToastService],
 })
 export default class ResultadoGeneralDashboardComponent
@@ -88,10 +88,8 @@ export default class ResultadoGeneralDashboardComponent
           this.data = resp.body;
           this.customToastService.onClose();
         },
-        error: (err) => {
-          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onCloseToError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -112,10 +110,8 @@ export default class ResultadoGeneralDashboardComponent
           this.reporteFiltro = reporteFiltro;
           this.customToastService.onClose();
         },
-        error: (err) => {
-          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onCloseToError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -136,10 +132,8 @@ export default class ResultadoGeneralDashboardComponent
           this.reporteFiltro = 'MANTENIMIENTOS PREVENTIVOS';
           this.customToastService.onClose();
         },
-        error: (err) => {
-          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onCloseToError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -160,10 +154,8 @@ export default class ResultadoGeneralDashboardComponent
           this.reporteFiltro = 'TICKETS';
           this.customToastService.onClose();
         },
-        error: (err) => {
-          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onCloseToError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }

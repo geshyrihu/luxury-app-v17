@@ -23,8 +23,8 @@ import FiltroMinutasAreaComponent from '../filtro-minutas-area/filtro-minutas-ar
     CommonModule,
     FormsModule,
     TableModule,
-    MultiSelectModule
-],
+    MultiSelectModule,
+  ],
 })
 export default class MinutasResumenComponent implements OnInit, OnDestroy {
   public customToastService = inject(CustomToastService);
@@ -79,10 +79,8 @@ export default class MinutasResumenComponent implements OnInit, OnDestroy {
           this.customToastService.onClose();
         },
 
-        error: (err) => {
-          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onCloseToError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
     this.subRef$ = this.dataService
@@ -94,10 +92,8 @@ export default class MinutasResumenComponent implements OnInit, OnDestroy {
           this.generalMinutasGrupo = resp.body;
           this.customToastService.onClose();
         },
-        error: (err) => {
-          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onCloseToError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }

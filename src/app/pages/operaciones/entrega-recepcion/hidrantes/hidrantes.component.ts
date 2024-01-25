@@ -13,10 +13,7 @@ import { environment } from 'src/environments/environment';
   selector: 'app-hidrantes',
   templateUrl: './hidrantes.component.html',
   standalone: true,
-  imports: [
-    ComponentsModule,
-    TableModule
-],
+  imports: [ComponentsModule, TableModule],
   providers: [MessageService, CustomToastService],
 })
 export default class HidrantesComponent implements OnInit, OnDestroy {
@@ -47,10 +44,8 @@ export default class HidrantesComponent implements OnInit, OnDestroy {
           this.data = resp.body;
           this.customToastService.onClose();
         },
-        error: (err) => {
-          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onCloseToError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }

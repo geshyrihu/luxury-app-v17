@@ -57,14 +57,11 @@ export default class EvaluacionAreasComponent implements OnInit, OnDestroy {
       .get(`ResumenGeneral/EvaluacionAreas/${fechaInicio}/${fechaFinal}`)
       .subscribe({
         next: (resp: any) => {
-          // Cuando se obtienen los datos con éxito, actualizar la variable 'data' y ocultar el mensaje de carga
           this.data = resp.body;
           this.customToastService.onClose();
         },
-        error: (err) => {
-          console.log(err.error);
-          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onCloseToError();
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }

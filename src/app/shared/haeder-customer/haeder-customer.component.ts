@@ -43,8 +43,8 @@ export default class HaederCustomerComponent implements OnInit, OnDestroy {
           this.nameCustomer = resp.body.nameCustomer;
           this.logoCustomer = `${environment.base_urlImg}Administration/customer/${resp.body.photoPath}`;
         },
-        error: (err) => {
-          console.log(err.error);
+        error: (error) => {
+          console.log(error.error);
         },
       });
   }

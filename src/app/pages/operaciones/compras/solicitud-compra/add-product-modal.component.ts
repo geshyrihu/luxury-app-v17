@@ -8,13 +8,13 @@ import {
   DynamicDialogRef,
 } from 'primeng/dynamicdialog';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
-import TarjetaProductoComponent from 'src/app/pages/operaciones/mantenimiento/mantenimiento-catalogos/tarjeta-producto/tarjeta-producto.component';
 import {
   AuthService,
   CustomToastService,
   DataService,
   SelectItemService,
 } from 'src/app/core/services/common-services';
+import TarjetaProductoComponent from 'src/app/pages/operaciones/mantenimiento/mantenimiento-catalogos/tarjeta-producto/tarjeta-producto.component';
 import ComponentsModule from 'src/app/shared/components.module';
 import PrimeNgModule from 'src/app/shared/prime-ng.module';
 import { environment } from 'src/environments/environment';
@@ -74,14 +74,11 @@ export default class AddProductModalComponent implements OnInit {
       )
       .subscribe({
         next: (resp: any) => {
-          // Cuando se obtienen los datos con éxito, actualizar la variable 'data' y ocultar el mensaje de carga
           this.data = resp.body;
           this.customToastService.onClose();
         },
-        error: (err) => {
-          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onCloseToError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -103,9 +100,8 @@ export default class AddProductModalComponent implements OnInit {
         this.mensajeError = false;
         this.onLoadProduct();
       },
-      error: (err) => {
-        this.customToastService.onShowError();
-        console.log(err.error);
+      error: (error) => {
+        this.customToastService.onCloseToError(error);
       },
     });
   }

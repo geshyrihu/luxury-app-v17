@@ -8,13 +8,13 @@ import {
   DynamicDialogRef,
 } from 'primeng/dynamicdialog';
 import { Subscription } from 'rxjs';
-import AddProductosAlmacenComponent from 'src/app/pages/operaciones/mantenimiento/mantenimiento-almacen/inventario-productos/add-productos-almacen.component';
 import {
   AuthService,
   CustomToastService,
   DataService,
   SelectItemService,
 } from 'src/app/core/services/common-services';
+import AddProductosAlmacenComponent from 'src/app/pages/operaciones/mantenimiento/mantenimiento-almacen/inventario-productos/add-productos-almacen.component';
 import ComponentsModule from 'src/app/shared/components.module';
 import PrimeNgModule from 'src/app/shared/prime-ng.module';
 import { environment } from 'src/environments/environment';
@@ -68,10 +68,8 @@ export default class OrdenCompraDetalleAddProductoComponent
           this.data = resp.body;
           this.customToastService.onClose();
         },
-        error: (err) => {
-          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onCloseToError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -93,9 +91,8 @@ export default class OrdenCompraDetalleAddProductoComponent
           this.onLoadProduct();
           this.ref.close(true);
         },
-        error: (err) => {
-          this.customToastService.onShowError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }

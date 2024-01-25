@@ -21,8 +21,8 @@ import MultiAxisChartComponent from 'src/app/shared/graficos/primeng-chart/multi
     CommonModule,
     CustomBarChartComponent,
     PagetitleReportComponent,
-    MultiAxisChartComponent
-],
+    MultiAxisChartComponent,
+  ],
   providers: [CustomToastService, MessageService],
 })
 export default class ReportConsumosComponent implements OnInit, OnDestroy {
@@ -55,10 +55,8 @@ export default class ReportConsumosComponent implements OnInit, OnDestroy {
           this.medidores = resp.body;
           this.customToastService.onClose();
         },
-        error: (err) => {
-          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onCloseToError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }

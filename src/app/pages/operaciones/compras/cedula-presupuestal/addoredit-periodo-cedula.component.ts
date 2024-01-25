@@ -91,12 +91,10 @@ export default class AddoreditPeriodoCedulaPresupuestalComponent
             this.customToastService.onClose();
             this.ref.close(true);
           },
-          error: (err) => {
-            console.log(err.error);
-            this.customToastService.onShowError();
+          error: (error) => {
             // Habilitar el botón nuevamente al finalizar el envío del formulario
-            this.customToastService.onClose();
             this.submitting = false;
+            this.customToastService.onCloseToError(error);
           },
         });
     } else {
@@ -107,12 +105,10 @@ export default class AddoreditPeriodoCedulaPresupuestalComponent
             this.customToastService.onClose();
             this.ref.close(true);
           },
-          error: (err) => {
-            console.log(err.error);
-            this.customToastService.onShowError();
+          error: (error) => {
             // Habilitar el botón nuevamente al finalizar el envío del formulario
-            this.customToastService.onClose();
             this.submitting = false;
+            this.customToastService.onCloseToError(error);
           },
         });
     }

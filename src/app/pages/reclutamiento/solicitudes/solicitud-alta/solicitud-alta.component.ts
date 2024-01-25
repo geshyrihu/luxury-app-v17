@@ -17,7 +17,6 @@ import {
   CustomToastService,
   DataService,
 } from 'src/app/core/services/common-services';
-import { EnumService } from 'src/app/core/services/enum.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import ValidationErrorsCustomInputComponent from 'src/app/custom-components/custom-input-form/validation-errors-custom-input/validation-errors-custom-input.component';
 import ComponentsModule from 'src/app/shared/components.module';
@@ -37,7 +36,6 @@ import ComponentsModule from 'src/app/shared/components.module';
 export default class SolicitudAltaComponent implements OnInit, OnDestroy {
   private customToastService = inject(CustomToastService);
   private dataService = inject(DataService);
-  private enumService = inject(EnumService);
   private formBuilder = inject(FormBuilder);
   public authService = inject(AuthService);
   public config = inject(DynamicDialogConfig);
@@ -91,9 +89,8 @@ export default class SolicitudAltaComponent implements OnInit, OnDestroy {
           });
         },
 
-        error: (err) => {
-          this.customToastService.onShowError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -105,9 +102,8 @@ export default class SolicitudAltaComponent implements OnInit, OnDestroy {
         next: (resp: any) => {
           this.cb_vacantes = resp.body;
         },
-        error: (err) => {
-          this.customToastService.onShowError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -134,12 +130,10 @@ export default class SolicitudAltaComponent implements OnInit, OnDestroy {
           this.ref.close(true);
           this.customToastService.onClose();
         },
-        error: (err) => {
+        error: (error) => {
           // Habilitar el botón nuevamente al finalizar el envío del formulario
           this.submitting = false;
-          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onCloseToError();
-          console.log(err.error);
+          this.customToastService.onCloseToError(error);
         },
       });
   }

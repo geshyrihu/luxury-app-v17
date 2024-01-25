@@ -104,12 +104,10 @@ export default class AddOrEditPiscinaComponent implements OnInit, OnDestroy {
           this.ref.close(true);
           this.customToastService.onClose();
         },
-        error: (err) => {
+        error: (error) => {
           // Habilitar el botón nuevamente al finalizar el envío del formulario
           this.submitting = false;
-          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onCloseToError();
-          console.log(err.error);
+          this.customToastService.onCloseToError(error);
         },
       });
     } else {
@@ -120,12 +118,10 @@ export default class AddOrEditPiscinaComponent implements OnInit, OnDestroy {
             this.customToastService.onClose();
             this.ref.close(true);
           },
-          error: (err) => {
-            console.log(err.error);
-            this.customToastService.onShowError();
+          error: (error) => {
             // Habilitar el botón nuevamente al finalizar el envío del formulario
-            this.customToastService.onClose();
             this.submitting = false;
+            this.customToastService.onCloseToError(error);
           },
         });
     }

@@ -71,10 +71,8 @@ export default class BuscadorProvedorComponent implements OnInit, OnDestroy {
         this.customToastService.onCloseToSuccess();
         this.buscar();
       },
-      error: (err) => {
-        // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-        this.customToastService.onCloseToError();
-        console.log(err.error);
+      error: (error) => {
+        this.customToastService.onCloseToError(error);
       },
     });
   }
@@ -145,9 +143,8 @@ export default class BuscadorProvedorComponent implements OnInit, OnDestroy {
           this.buscar();
           // this.onLoadData(this.stateProvider);
         },
-        error: (err) => {
-          this.customToastService.onShowError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -166,9 +163,8 @@ export default class BuscadorProvedorComponent implements OnInit, OnDestroy {
           this.resultados = resp.body;
           this.loading = false;
         },
-        error: (err) => {
-          this.customToastService.onShowError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }

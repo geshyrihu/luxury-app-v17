@@ -19,8 +19,8 @@ import ResumenOrdenesServicioGraficoComponent from '../resumen-ordenes-servicio-
     CommonModule,
     ComponentsModule,
     TableModule,
-    EStatusPipe
-],
+    EStatusPipe,
+  ],
   providers: [CustomToastService],
 })
 export default class ResumenOrdenesServicioComponent
@@ -64,10 +64,8 @@ export default class ResumenOrdenesServicioComponent
           this.data = resp.body;
           this.customToastService.onClose();
         },
-        error: (err) => {
-          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onCloseToError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
     this.subRef$ = this.dataService
@@ -85,10 +83,8 @@ export default class ResumenOrdenesServicioComponent
           this.reporteOrdenesServicioService.setDateGrafico(this.dataGraficos);
           this.customToastService.onClose();
         },
-        error: (err) => {
-          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onCloseToError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }

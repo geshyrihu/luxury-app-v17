@@ -84,9 +84,9 @@ export default class PersonEditDataPrincipalComponent implements OnInit {
           this.ref.close(true);
           this.customToastService.onClose();
         },
-        error: (err) => {
-          console.log(err.error);
-          err.error.forEach((x) => {
+        error: (error) => {
+          console.log(error.error);
+          error.error.forEach((x: any) => {
             this.dataError = this.dataError + x['description'] + ' ';
           });
           this.customToastService.onLoadingError(this.dataError);
@@ -109,9 +109,8 @@ export default class PersonEditDataPrincipalComponent implements OnInit {
       next: (resp: any) => {
         this.form.patchValue(resp.body);
       },
-      error: (err) => {
-        this.customToastService.onShowError();
-        console.log(err.error);
+      error: (error) => {
+        this.customToastService.onCloseToError(error);
       },
     });
   }

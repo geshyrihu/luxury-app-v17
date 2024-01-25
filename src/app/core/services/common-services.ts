@@ -8,7 +8,6 @@ import { CronogramaMantenimientoService } from './cronograma-mantenimiento.servi
 import { CustomToastService } from './custom-toast.service';
 import { CustomerIdService } from './customer-id.service';
 import { DataService } from './data.service';
-import { DataFilterService } from './dataFilter.service';
 import { DateService } from './date.service';
 import { FilterRequestsService } from './filter-requests.service';
 import { FiltroCalendarService } from './filtro-calendar.service';
@@ -32,7 +31,6 @@ export {
   CronogramaMantenimientoService,
   CustomToastService,
   CustomerIdService,
-  DataFilterService,
   DataService,
   DateService,
   FilterRequestsService,
