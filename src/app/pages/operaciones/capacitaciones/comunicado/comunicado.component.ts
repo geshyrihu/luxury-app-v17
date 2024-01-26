@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import {
   AuthService,
   CustomToastService,
@@ -27,7 +27,8 @@ export default class ComunicadoComponent implements OnInit, OnDestroy {
   public messageService = inject(MessageService);
   data: any[] = [];
   ref: DynamicDialogRef;
-  subRef$: Subscription;
+
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   filePath: string = environment.base_urlImg + 'Administration/comunicados/';
   ngOnInit(): void {
@@ -37,28 +38,33 @@ export default class ComunicadoComponent implements OnInit, OnDestroy {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
 
-    this.subRef$ = this.dataService.get('Comunicado').subscribe({
-      next: (resp: any) => {
-        this.data = resp.body;
-        this.customToastService.onClose();
-      },
-      error: (error) => {
-        this.customToastService.onCloseToError(error);
-      },
-    });
+    this.dataService
+      .get('Comunicado')
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe({
+        next: (resp: any) => {
+          this.data = this.customToastService.onCloseOnGetData(resp.body);
+        },
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
+        },
+      });
   }
   onDelete(data: any) {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService.delete(`Comunicado/${data.id}`).subscribe({
-      next: () => {
-        this.onLoadData();
-        this.customToastService.onCloseToSuccess();
-      },
-      error: (error) => {
-        this.customToastService.onCloseToError(error);
-      },
-    });
+    this.dataService
+      .delete(`Comunicado/${data.id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe({
+        next: () => {
+          this.onLoadData();
+          this.customToastService.onCloseToSuccess();
+        },
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
+        },
+      });
   }
 
   onModalAddOrEdit(data: any) {
@@ -80,6 +86,6 @@ export default class ComunicadoComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.subRef$) this.subRef$.unsubscribe();
+    this.dataService.ngOnDestroy();
   }
 }

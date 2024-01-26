@@ -3,7 +3,7 @@ import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { LocaleSettings } from 'primeng/calendar';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { IFechasFiltro } from 'src/app/core/interfaces/IFechasFiltro.interface';
 import {
   AuthService,
@@ -38,7 +38,6 @@ export default class BitacoraMantenimientoComponent
   public rangoCalendarioService = inject(FiltroCalendarService);
 
   customerList: any[] = [];
-  subRef$: Subscription;
 
   fechaInicial: string = this.dateService.getDateFormat(
     this.rangoCalendarioService.fechaInicioDateFull
@@ -49,6 +48,8 @@ export default class BitacoraMantenimientoComponent
   es: LocaleSettings;
   data: any[];
   ref: DynamicDialogRef;
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   customerId$: Observable<number> = this.customerIdService.getCustomerId$();
 
   ngOnInit(): void {
@@ -68,8 +69,9 @@ export default class BitacoraMantenimientoComponent
   }
 
   onDelte(item: any) {
-    this.subRef$ = this.dataService
+    this.dataService
       .delete(`BitacoraMantenimiento/${item.id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           this.customToastService.onShowSuccess();
@@ -114,21 +116,21 @@ export default class BitacoraMantenimientoComponent
   onLoadData() {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService
+    this.dataService
       .get(
         `BitacoraMantenimiento/GetAll/${this.customerIdService.customerId}/${this.fechaInicial}/${this.fechaFinal}`
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
-          this.data = resp.body;
-          this.customToastService.onClose();
+          this.data = this.customToastService.onCloseOnGetData(resp.body);
         },
         error: (error) => {
           this.customToastService.onCloseToError(error);
         },
       });
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

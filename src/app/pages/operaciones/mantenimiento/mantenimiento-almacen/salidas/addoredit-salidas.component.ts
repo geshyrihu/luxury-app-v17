@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import {
   AuthService,
   CustomToastService,
@@ -35,18 +35,18 @@ import ComponentsModule, {
 })
 export default class CrudSalidasComponent implements OnInit, OnDestroy {
   private customerIdService = inject(CustomerIdService);
+  private customToastService = inject(CustomToastService);
   private dataService = inject(DataService);
   private dateService = inject(DateService);
   private formBuilder = inject(FormBuilder);
   private selectItemService = inject(SelectItemService);
-
-  private customToastService = inject(CustomToastService);
   public authService = inject(AuthService);
   public config = inject(DynamicDialogConfig);
   public ref = inject(DynamicDialogRef);
 
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   submitting: boolean = false;
-  subRef$: Subscription;
 
   form: FormGroup;
   id = 0;
@@ -68,10 +68,11 @@ export default class CrudSalidasComponent implements OnInit, OnDestroy {
         this.cb_measurement_unit = resp;
       });
 
-    this.subRef$ = this.dataService
+    this.dataService
       .get(
         `InventarioProducto/GetExistenciaProducto/${this.customerIdService.customerId}/${this.config.data.idProducto}`
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           if (resp.body !== null) {
@@ -115,8 +116,9 @@ export default class CrudSalidasComponent implements OnInit, OnDestroy {
     return this.form.controls;
   }
   onLoadData() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`SalidaProductos/${this.id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.nombreProducto = resp.body.producto;
@@ -140,8 +142,9 @@ export default class CrudSalidasComponent implements OnInit, OnDestroy {
     this.customToastService.onLoading();
 
     if (this.id === 0) {
-      this.subRef$ = this.dataService
+      this.dataService
         .post('SalidaProductos', this.form.value)
+        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
         .subscribe({
           next: () => {
             this.ref.close(true);
@@ -154,7 +157,7 @@ export default class CrudSalidasComponent implements OnInit, OnDestroy {
           },
         });
     } else {
-      this.subRef$ = this.dataService
+      this.dataService
         .put(
           `SalidaProductos/${this.id}/${this.cantidadActual}`,
           this.form.value
@@ -172,7 +175,7 @@ export default class CrudSalidasComponent implements OnInit, OnDestroy {
         });
     }
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

@@ -9,7 +9,7 @@ import {
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ToastModule } from 'primeng/toast';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import {
   AuthService,
   CustomToastService,
@@ -47,9 +47,12 @@ export default class BuscadorProvedorComponent implements OnInit, OnDestroy {
   public messageService = inject(MessageService);
   public dialogService = inject(DialogService);
   public authService = inject(AuthService);
+
   incluirInactivos: boolean = false;
   url_img = `${environment.base_urlImg}providers/`;
-  subRef$: Subscription;
+
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   ref: DynamicDialogRef;
 
   filtro: string = '';
@@ -66,15 +69,18 @@ export default class BuscadorProvedorComponent implements OnInit, OnDestroy {
   onDelete(data: any) {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService.delete(`Providers/${data.id}`).subscribe({
-      next: () => {
-        this.customToastService.onCloseToSuccess();
-        this.buscar();
-      },
-      error: (error) => {
-        this.customToastService.onCloseToError(error);
-      },
-    });
+    this.dataService
+      .delete(`Providers/${data.id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe({
+        next: () => {
+          this.customToastService.onCloseToSuccess();
+          this.buscar();
+        },
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
+        },
+      });
   }
 
   showModalCardProveedor(data: any) {
@@ -136,8 +142,9 @@ export default class BuscadorProvedorComponent implements OnInit, OnDestroy {
     return restult;
   }
   onActivateProvider(data: any) {
-    this.subRef$ = this.dataService
+    this.dataService
       .put(`Providers/ChangeState/${data.providerId}/${data.state}`, null)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.buscar();
@@ -154,10 +161,11 @@ export default class BuscadorProvedorComponent implements OnInit, OnDestroy {
     this.resultados = [];
     this.loading = true;
 
-    this.subRef$ = this.dataService
+    this.dataService
       .get(
         'proveedor/buscarProveedor/' + this.incluirInactivos + '/' + this.filtro
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.resultados = resp.body;
@@ -170,6 +178,6 @@ export default class BuscadorProvedorComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.subRef$) this.subRef$.unsubscribe();
+    this.dataService.ngOnDestroy();
   }
 }

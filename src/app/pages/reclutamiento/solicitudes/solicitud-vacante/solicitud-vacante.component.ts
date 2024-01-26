@@ -8,7 +8,7 @@ import {
 } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { TableModule } from 'primeng/table';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { AutosizeDirective } from 'src/app/core/directives/autosize-text-area.diective';
 import { ETurnoTrabajo } from 'src/app/core/enums/turno-trabajo.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
@@ -44,12 +44,13 @@ export default class SolicitudVacanteComponent implements OnInit, OnDestroy {
   public authService = inject(AuthService);
 
   workPositionId: number = this.config.data.workPositionId;
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   data: any;
   submitting: boolean = false;
 
   id: number = 0;
-  subRef$: Subscription;
+
   cb_turnoTrabajo: ISelectItemDto[] = onGetSelectItemFromEnum(ETurnoTrabajo);
   form: FormGroup = this.formBuilder.group({
     id: [this.config.data.workPositionId],
@@ -79,11 +80,12 @@ export default class SolicitudVacanteComponent implements OnInit, OnDestroy {
   }
 
   onLoadData() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`WorkPosition/${this.workPositionId}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
-          this.data = resp.body;
+          this.data = this.customToastService.onCloseOnGetData(resp.body);
           this.form.patchValue(resp.body);
         },
         error: (error) => {
@@ -103,11 +105,12 @@ export default class SolicitudVacanteComponent implements OnInit, OnDestroy {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
 
-    this.subRef$ = this.dataService
+    this.dataService
       .post(
         `SolicitudesReclutamiento/SolicitudVacante/${this.authService.infoUserAuthDto.applicationUserId}`,
         this.form.value
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           this.ref.close(true);
@@ -122,6 +125,6 @@ export default class SolicitudVacanteComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.subRef$) this.subRef$.unsubscribe();
+    this.dataService.ngOnDestroy();
   }
 }

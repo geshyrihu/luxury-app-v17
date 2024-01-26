@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { SelectItemService } from 'src/app/core/services/select-item.service';
@@ -36,11 +36,12 @@ export default class OrdenCompraEditDetalleComponent
   public config = inject(DynamicDialogConfig);
   public selectItemService = inject(SelectItemService);
   public customToastService = inject(CustomToastService);
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   submitting: boolean = false;
 
   id: number = 0;
-  subRef$: Subscription;
+
   cb_unidadMedida: any[] = [];
   form: FormGroup = this.formBuilder.group({
     id: { value: this.config.data.id, disabled: true },
@@ -68,7 +69,7 @@ export default class OrdenCompraEditDetalleComponent
   }
 
   onLoadData() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`OrdenCompraDetalle/${this.id}`)
       .subscribe((resp: any) => {
         this.form.patchValue(resp.body);
@@ -89,8 +90,9 @@ export default class OrdenCompraEditDetalleComponent
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
 
-    this.subRef$ = this.dataService
+    this.dataService
       .put(`OrdenCompraDetalle/${this.id}`, this.form.value)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           this.ref.close(true);
@@ -103,7 +105,7 @@ export default class OrdenCompraEditDetalleComponent
         },
       });
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

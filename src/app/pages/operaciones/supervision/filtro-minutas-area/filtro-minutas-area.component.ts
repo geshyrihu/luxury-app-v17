@@ -3,7 +3,7 @@ import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { TableModule } from 'primeng/table';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { EAreaMinutasDetalles } from 'src/app/core/enums/area-minutas-detalles.enum';
 import {
   onGetNameEnumeration,
@@ -38,6 +38,8 @@ export default class FiltroMinutasAreaComponent implements OnInit, OnDestroy {
   public config = inject(DynamicDialogConfig);
   public customToastService = inject(CustomToastService);
 
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   data: any[] = [];
   meetingId: number;
   area: number;
@@ -45,7 +47,6 @@ export default class FiltroMinutasAreaComponent implements OnInit, OnDestroy {
   titleEstatus: string = '';
   estatus: number;
   customerName: string = '';
-  subRef$: Subscription;
 
   ngOnInit(): void {
     this.onLoadConfInitial();
@@ -67,23 +68,21 @@ export default class FiltroMinutasAreaComponent implements OnInit, OnDestroy {
   onLoadData() {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService
+    this.dataService
       .get(
         `Dashboard/FiltroMinutasArea/${this.meetingId}/${this.area}/${this.estatus}`
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
-          this.data = resp.body;
-          this.customToastService.onClose();
+          this.data = this.customToastService.onCloseOnGetData(resp.body);
         },
-        error: (err) => {
-          // En caso de error, mostrar un mensaje de error y registrar el error en la consola
-          this.customToastService.onCloseToError();
-          console.log(err.error);
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
         },
       });
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

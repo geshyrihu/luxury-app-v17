@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MessageService } from 'primeng/api';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import {
   AuthService,
   CatalogoGastosFijosService,
@@ -31,6 +31,8 @@ export default class FormGastosFijosServiciosComponent
   public messageService = inject(MessageService);
   public catalogoGastosFijosService = inject(CatalogoGastosFijosService);
 
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   catalogoGastosFijosId: number = 0;
   productos: any[] = [];
   urlImagenProducto = environment.base_urlImg + 'Administration/products/';
@@ -39,7 +41,6 @@ export default class FormGastosFijosServiciosComponent
   id: any;
   cb_unidadMedida: any[] = [];
   productosAgregados: any[] = [];
-  subRef$: Subscription;
 
   ngOnInit(): void {
     this.selectItemService
@@ -54,10 +55,11 @@ export default class FormGastosFijosServiciosComponent
     this.onLoadProductsAgregados();
   }
   onLoadProductsAgregados() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(
         `CatalogoGastosFijosDetalles/DetallesOrdenCompraFijos/${this.catalogoGastosFijosId}`
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.productosAgregados = resp.body;
@@ -71,8 +73,9 @@ export default class FormGastosFijosServiciosComponent
   deleteProductoAgregado(id: number) {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService
+    this.dataService
       .delete(`CatalogoGastosFijosDetalles/${id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           this.onLoadProductsAgregados();
@@ -84,11 +87,12 @@ export default class FormGastosFijosServiciosComponent
       });
   }
   onLoadProducts() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(
         'CatalogoGastosFijosDetalles/GetALLCatalogoGastosFijosProductoDto/' +
           this.catalogoGastosFijosId
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.productos = resp.body;
@@ -106,8 +110,9 @@ export default class FormGastosFijosServiciosComponent
     }
 
     item.catalogoGastosFijosId = this.catalogoGastosFijosId;
-    this.subRef$ = this.dataService
+    this.dataService
       .post<any>(`CatalogoGastosFijosDetalles/`, item)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.customToastService.onShowSuccess();
@@ -122,8 +127,9 @@ export default class FormGastosFijosServiciosComponent
   }
 
   onUpdateProductoAgregado(item: any) {
-    this.subRef$ = this.dataService
+    this.dataService
       .put(`CatalogoGastosFijosDetalles/${item.id}`, item)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.customToastService.onShowSuccess();
@@ -136,7 +142,7 @@ export default class FormGastosFijosServiciosComponent
         },
       });
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

@@ -5,7 +5,7 @@ import * as FileSaver from 'file-saver';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ToastModule } from 'primeng/toast';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { IMedidorDto } from 'src/app/core/interfaces/IMedidorDto.interface';
 import {
   AuthService,
@@ -39,7 +39,8 @@ export default class ListMedidorComponent implements OnInit, OnDestroy {
   data: IMedidorDto[] = [];
   ref: DynamicDialogRef;
   customerId$: Observable<number> = this.customerIdService.getCustomerId$();
-  subRef$: Subscription;
+
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   ngOnInit(): void {
     this.onLoadData();
@@ -51,12 +52,12 @@ export default class ListMedidorComponent implements OnInit, OnDestroy {
   onLoadData() {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService
+    this.dataService
       .get<IMedidorDto[]>(`Medidor/GetAll/${this.customerIdService.customerId}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
-          this.data = resp.body;
-          this.customToastService.onClose();
+          this.data = this.customToastService.onCloseOnGetData(resp.body);
         },
         error: (error) => {
           this.customToastService.onCloseToError(error);
@@ -66,15 +67,18 @@ export default class ListMedidorComponent implements OnInit, OnDestroy {
   onDelete(data: any) {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService.delete(`Medidor/${data.id}`).subscribe({
-      next: () => {
-        this.onLoadData();
-        this.customToastService.onCloseToSuccess();
-      },
-      error: (error) => {
-        this.customToastService.onCloseToError(error);
-      },
-    });
+    this.dataService
+      .delete(`Medidor/${data.id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe({
+        next: () => {
+          this.onLoadData();
+          this.customToastService.onCloseToSuccess();
+        },
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
+        },
+      });
   }
 
   modalAddEdit(data: any) {
@@ -116,8 +120,9 @@ export default class ListMedidorComponent implements OnInit, OnDestroy {
 
   datosExcel: any[] = [];
   exportExcel(id: number) {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`MedidorLectura/ExportExcel/${id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.datosExcel = resp.body;
@@ -153,7 +158,7 @@ export default class ListMedidorComponent implements OnInit, OnDestroy {
     });
     FileSaver.saveAs(data, fileName + EXCEL_EXTENSION, { autoBom: false });
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

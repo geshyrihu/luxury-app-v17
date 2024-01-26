@@ -1,6 +1,6 @@
 import {} from '@angular/common';
 import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import {
   CustomToastService,
   CustomerIdService,
@@ -23,7 +23,8 @@ export default class CabeceraSolicitudPagoPdfComponent
   public customToastService = inject(CustomToastService);
 
   data: any;
-  subRef$: Subscription;
+
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   url: string = environment.base_urlImg + 'Administration/customer/';
   @Input()
@@ -40,12 +41,12 @@ export default class CabeceraSolicitudPagoPdfComponent
   onloadData() {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService
+    this.dataService
       .get('Customers/' + this.customerIdService.getcustomerId())
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
-          this.data = resp.body;
-          this.customToastService.onClose();
+          this.data = this.customToastService.onCloseOnGetData(resp.body);
         },
         error: (error) => {
           this.customToastService.onCloseToError(error);
@@ -53,7 +54,7 @@ export default class CabeceraSolicitudPagoPdfComponent
       });
   }
 
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

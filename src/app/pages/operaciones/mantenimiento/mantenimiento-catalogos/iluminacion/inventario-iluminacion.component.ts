@@ -5,7 +5,7 @@ import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ImageModule } from 'primeng/image';
 import { TableModule } from 'primeng/table';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import {
   AuthService,
   CustomToastService,
@@ -42,7 +42,8 @@ export default class InventarioIluminacionComponent
   data: any[] = [];
 
   ref: DynamicDialogRef;
-  subRef$: Subscription;
+
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   customerId$: Observable<number> = this.customerIdService.getCustomerId$();
 
@@ -59,14 +60,14 @@ export default class InventarioIluminacionComponent
   onLoadData() {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService
+    this.dataService
       .get<any[]>(
         'InventarioIluminacion/GetAll/' + this.customerIdService.getcustomerId()
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
-          this.data = resp.body;
-          this.customToastService.onClose();
+          this.data = this.customToastService.onCloseOnGetData(resp.body);
         },
         error: (error) => {
           this.customToastService.onCloseToError(error);
@@ -76,8 +77,9 @@ export default class InventarioIluminacionComponent
   onDelete(data: any) {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService
+    this.dataService
       .delete(`InventarioIluminacion/${data.id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           this.onLoadData();
@@ -110,7 +112,7 @@ export default class InventarioIluminacionComponent
       }
     });
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

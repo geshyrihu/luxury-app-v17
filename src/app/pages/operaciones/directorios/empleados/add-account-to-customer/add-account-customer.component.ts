@@ -8,7 +8,7 @@ import {
 } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { imageToBase64 } from 'src/app/core/helpers/enumeration';
 import { UserInfoDto } from 'src/app/core/interfaces/user-info.interface';
 import {
@@ -46,7 +46,8 @@ export default class AddAccountCustomerComponent implements OnInit, OnDestroy {
   public ref = inject(DynamicDialogRef);
 
   submitting: boolean = false;
-  subRef$: Subscription;
+
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   noImg = `${environment.base_urlImg}no-img.png`;
   imgBase64: string = '';
@@ -84,8 +85,9 @@ export default class AddAccountCustomerComponent implements OnInit, OnDestroy {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
 
-    this.subRef$ = this.dataService
+    this.dataService
       .post('Employees/CreateEmployee', formData)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           this.ref.close(true);
@@ -100,9 +102,12 @@ export default class AddAccountCustomerComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.selectItemService.onGetSelectItem('Professions').subscribe((resp) => {
-      this.cb_profession = resp;
-    });
+    this.selectItemService
+      .onGetSelectItem('Professions')
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe((resp) => {
+        this.cb_profession = resp;
+      });
   }
 
   get f() {
@@ -143,8 +148,9 @@ export default class AddAccountCustomerComponent implements OnInit, OnDestroy {
 
   searchExistingPerson(fullName: any) {
     this.existingPerson = [];
-    this.subRef$ = this.dataService
+    this.dataService
       .get('Employees/SearchExistingPerson/' + fullName.target.value)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp) => {
           this.existingPerson = resp.body;
@@ -160,19 +166,20 @@ export default class AddAccountCustomerComponent implements OnInit, OnDestroy {
   existingPhone: any;
   searchExistingPhone(phone: any) {
     this.existingPhone = [];
-    this.subRef$ = this.dataService
+    this.dataService
       .get('Employees/SearchExistingPhone/' + phone.target.value)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp) => {
           this.existingPhone = resp.body;
         },
         error: (error) => {
-          console.log(error.error);
+          this.customToastService.onCloseToError(error);
         },
       });
   }
 
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

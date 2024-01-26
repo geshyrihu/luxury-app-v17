@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import {
   CustomToastService,
@@ -35,13 +35,14 @@ export default class AddOrEditCatalogoDescripcionComponent
   public config = inject(DynamicDialogConfig);
   public dataService = inject(DataService);
   public ref = inject(DynamicDialogRef);
-
   private customToastService = inject(CustomToastService);
+
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   submitting: boolean = false;
 
   id: number = 0;
-  subRef$: Subscription;
+
   cb_area_responsable: ISelectItemDto[] = [
     { value: 'CONTABLE', label: 'CONTABLE' },
     { value: 'OPERACIONES', label: ' OPERACIONES' },
@@ -69,8 +70,9 @@ export default class AddOrEditCatalogoDescripcionComponent
     if (this.id !== 0) this.onLoadData();
   }
   onLoadData() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`CatalogoEntregaRecepcionDescripcion/${this.id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.form.patchValue(resp.body);
@@ -81,8 +83,9 @@ export default class AddOrEditCatalogoDescripcionComponent
       });
   }
   onLoadGrupos() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`CatalogoEntregaRecepcionDescripcion/grupos`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.cb_grupo = resp.body;
@@ -106,7 +109,7 @@ export default class AddOrEditCatalogoDescripcionComponent
     this.customToastService.onLoading();
 
     if (this.id === 0) {
-      this.subRef$ = this.dataService
+      this.dataService
         .post(`CatalogoEntregaRecepcionDescripcion`, this.form.value)
         .subscribe({
           next: () => {
@@ -120,7 +123,7 @@ export default class AddOrEditCatalogoDescripcionComponent
           },
         });
     } else {
-      this.subRef$ = this.dataService
+      this.dataService
         .put(`CatalogoEntregaRecepcionDescripcion/${this.id}`, this.form.value)
         .subscribe({
           next: () => {
@@ -135,7 +138,7 @@ export default class AddOrEditCatalogoDescripcionComponent
         });
     }
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

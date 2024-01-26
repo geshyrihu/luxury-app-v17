@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { DataService } from 'src/app/core/services/data.service';
 import { environment } from 'src/environments/environment';
 
@@ -15,7 +15,7 @@ export default class TarjetaProductoComponent implements OnInit, OnDestroy {
   public dataService = inject(DataService);
   public config = inject(DynamicDialogConfig);
 
-  subRef$: Subscription;
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   productoId: number = 0;
   producto: any;
@@ -23,13 +23,14 @@ export default class TarjetaProductoComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.productoId = this.config.data.productoId;
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`Productos/${this.productoId}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe((resp) => {
         this.producto = resp.body;
       });
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

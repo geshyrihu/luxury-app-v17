@@ -7,7 +7,6 @@ import {
   Validators,
 } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
 import { IDirectoryCondominiumAddOrEditDto } from 'src/app/core/interfaces/IDirectoryCondominiumAddOrEditDto.interface';
 import {
   AuthService,
@@ -42,7 +41,6 @@ export default class AddOrEditPropiedadesComponent
   private customToastService = inject(CustomToastService);
 
   submitting: boolean = false;
-  subRef$: Subscription;
 
   id: number = 0;
   customerId: number = this.customerIdService.customerId;
@@ -74,7 +72,7 @@ export default class AddOrEditPropiedadesComponent
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
     if (this.id === 0) {
-      this.subRef$ = this.dataService
+      this.dataService
         .post<IDirectoryCondominiumAddOrEditDto>(
           `DirectoryCondominium/`,
           this.form.value
@@ -91,7 +89,7 @@ export default class AddOrEditPropiedadesComponent
           },
         });
     } else {
-      this.subRef$ = this.dataService
+      this.dataService
         .put<IDirectoryCondominiumAddOrEditDto>(
           `DirectoryCondominium/${this.id}`,
           this.form.value
@@ -110,13 +108,13 @@ export default class AddOrEditPropiedadesComponent
     }
   }
   getImem() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get<IDirectoryCondominiumAddOrEditDto>(`DirectoryCondominium/${this.id}`)
       .subscribe((resp: any) => {
         this.form.patchValue(resp.body);
       });
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import {
   CustomToastService,
   DataService,
@@ -26,7 +26,9 @@ export default class ListAreaResponsableComponent implements OnInit, OnDestroy {
 
   data: any[] = [];
   ref: DynamicDialogRef;
-  subRef$: Subscription;
+
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   ngOnInit(): void {
     this.onLoadData();
   }
@@ -34,29 +36,34 @@ export default class ListAreaResponsableComponent implements OnInit, OnDestroy {
   onLoadData() {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService.get('Departament/').subscribe({
-      next: (resp: any) => {
-        this.data = resp.body;
-        this.customToastService.onClose();
-      },
-      error: (error) => {
-        this.customToastService.onCloseToError(error);
-      },
-    });
+    this.dataService
+      .get('Departament/')
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe({
+        next: (resp: any) => {
+          this.data = this.customToastService.onCloseOnGetData(resp.body);
+        },
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
+        },
+      });
   }
 
   onDelete(data: any) {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService.delete('Departament/' + data.id).subscribe({
-      next: () => {
-        this.customToastService.onCloseToSuccess();
-        this.onLoadData();
-      },
-      error: (error) => {
-        this.customToastService.onCloseToError(error);
-      },
-    });
+    this.dataService
+      .delete('Departament/' + data.id)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe({
+        next: () => {
+          this.customToastService.onCloseToSuccess();
+          this.onLoadData();
+        },
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
+        },
+      });
   }
 
   showModalAddOrEdit(data: any) {
@@ -78,6 +85,6 @@ export default class ListAreaResponsableComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.subRef$) this.subRef$.unsubscribe();
+    this.dataService.ngOnDestroy();
   }
 }

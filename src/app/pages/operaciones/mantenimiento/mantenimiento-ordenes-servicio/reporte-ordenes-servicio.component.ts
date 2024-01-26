@@ -1,7 +1,7 @@
 import { CommonModule, DatePipe } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { MessageService } from 'primeng/api';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { SanitizeHtmlPipe } from 'src/app/core/pipes/sanitize-html.pipe';
 import { CustomerIdService } from 'src/app/core/services/common-services';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
@@ -27,8 +27,9 @@ export default class ReporteOrdenesServicioComponent
   public dateService = inject(DateService);
   public periodoMonthService = inject(PeriodoMonthService);
 
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
   data: any[] = [];
-  subRef$: Subscription;
+
   urlImg: string = '';
   fecha: string = '';
   dataCustomer: any;
@@ -42,7 +43,7 @@ export default class ReporteOrdenesServicioComponent
   }
   //TODO: Centralizar obtener ifno de customer...
   onLoadDataCXustomer() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`Customers/${this.customerIdService.customerId}`)
       .subscribe((resp: any) => {
         this.dataCustomer = resp.body;
@@ -55,7 +56,7 @@ export default class ReporteOrdenesServicioComponent
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
 
-    this.subRef$ = this.dataService
+    this.dataService
       .get(
         'ServiceOrders/ReporteOrdenesServicio/' +
           this.customerIdService.customerId +
@@ -65,19 +66,19 @@ export default class ReporteOrdenesServicioComponent
           ) +
           '-01'
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
-          this.data = resp.body;
+          this.data = this.customToastService.onCloseOnGetData(resp.body);
           this.nameCarpetaFecha = this.data[0].nameFolder;
           this.urlImg = `${environment.base_urlImg}customers/${this.customerIdService.customerId}/ordenServicio/${this.nameCarpetaFecha}/`;
-          this.customToastService.onClose();
         },
         error: (error) => {
           this.customToastService.onCloseToError(error);
         },
       });
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

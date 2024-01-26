@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import {
   AuthService,
   CustomToastService,
@@ -51,7 +51,8 @@ export default class ListRecorridoComponent implements OnInit, OnDestroy {
   pathImg = environment.base_urlImg;
   data: any[] = [];
 
-  subRef$: Subscription;
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   ref: DynamicDialogRef;
   customerId$: Observable<number> = this.customerIdService.getCustomerId$();
   value: number = 0;
@@ -84,16 +85,16 @@ export default class ListRecorridoComponent implements OnInit, OnDestroy {
       this.customToastService.onLoading();
     }
 
-    this.subRef$ = this.dataService
+    this.dataService
       .get(
         `Routes/GetAll/${this.customerIdService.getcustomerId()}/${value}/${
           this.filterValue
         }`
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
-          this.data = resp.body;
-          this.customToastService.onClose();
+          this.data = this.customToastService.onCloseOnGetData(resp.body);
         },
         error: (error) => {
           this.customToastService.onCloseToError(error);
@@ -104,29 +105,35 @@ export default class ListRecorridoComponent implements OnInit, OnDestroy {
   onDelete(id: number) {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService.delete(`Routes/${id}`).subscribe({
-      next: () => {
-        this.customToastService.onCloseToSuccess();
-        this.onLoadData(this.value);
-      },
-      error: (error) => {
-        this.customToastService.onCloseToError(error);
-      },
-    });
+    this.dataService
+      .delete(`Routes/${id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe({
+        next: () => {
+          this.customToastService.onCloseToSuccess();
+          this.onLoadData(this.value);
+        },
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
+        },
+      });
   }
 
   onDeleteTask(taskId: number) {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService.delete(`RouteTask/${taskId}`).subscribe({
-      next: () => {
-        this.customToastService.onCloseToSuccess();
-        this.onLoadData(this.value);
-      },
-      error: (error) => {
-        this.customToastService.onCloseToError(error);
-      },
-    });
+    this.dataService
+      .delete(`RouteTask/${taskId}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe({
+        next: () => {
+          this.customToastService.onCloseToSuccess();
+          this.onLoadData(this.value);
+        },
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
+        },
+      });
   }
 
   onModalAddOrEdit(data: any) {
@@ -168,15 +175,18 @@ export default class ListRecorridoComponent implements OnInit, OnDestroy {
   eliminarRecorrido(id: number) {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService.delete('Routes/' + id).subscribe({
-      next: () => {
-        this.customToastService.onCloseToSuccess();
-        this.onLoadData(this.value);
-      },
-      error: (error) => {
-        this.customToastService.onCloseToError(error);
-      },
-    });
+    this.dataService
+      .delete('Routes/' + id)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe({
+        next: () => {
+          this.customToastService.onCloseToSuccess();
+          this.onLoadData(this.value);
+        },
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
+        },
+      });
   }
   onModalBitacora(machineryId: number) {
     this.ref = this.dialogService.open(AddBitacoraComponent, {
@@ -207,7 +217,7 @@ export default class ListRecorridoComponent implements OnInit, OnDestroy {
       }
     });
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

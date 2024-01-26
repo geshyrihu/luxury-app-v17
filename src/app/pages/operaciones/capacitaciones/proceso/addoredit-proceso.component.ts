@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
@@ -40,7 +40,9 @@ export default class AddOrEditProcesoComponent implements OnInit, OnDestroy {
 
   errorMessage: string = '';
   file: any = null;
-  subRef$: Subscription;
+
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   cb_area_responsable: ISelectItemDto[] = [];
 
   form: FormGroup = this.formBuilder.group({
@@ -58,14 +60,17 @@ export default class AddOrEditProcesoComponent implements OnInit, OnDestroy {
   }
 
   onLoadData() {
-    this.subRef$ = this.dataService.get(`FormatoProceso/${this.id}`).subscribe({
-      next: (resp: any) => {
-        this.form.patchValue(resp.body);
-      },
-      error: (error) => {
-        this.customToastService.onCloseToError(error);
-      },
-    });
+    this.dataService
+      .get(`FormatoProceso/${this.id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe({
+        next: (resp: any) => {
+          this.form.patchValue(resp.body);
+        },
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
+        },
+      });
   }
 
   public saveAreResponsableId(e: any): void {
@@ -91,20 +96,24 @@ export default class AddOrEditProcesoComponent implements OnInit, OnDestroy {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
     if (this.id === 0) {
-      this.subRef$ = this.dataService.post(`FormatoProceso`, model).subscribe({
-        next: () => {
-          this.ref.close(true);
-          this.customToastService.onClose();
-        },
-        error: (error) => {
-          // Habilitar el botón nuevamente al finalizar el envío del formulario
-          this.submitting = false;
-          this.customToastService.onCloseToError(error);
-        },
-      });
+      this.dataService
+        .post(`FormatoProceso`, model)
+        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+        .subscribe({
+          next: () => {
+            this.ref.close(true);
+            this.customToastService.onClose();
+          },
+          error: (error) => {
+            // Habilitar el botón nuevamente al finalizar el envío del formulario
+            this.submitting = false;
+            this.customToastService.onCloseToError(error);
+          },
+        });
     } else {
-      this.subRef$ = this.dataService
+      this.dataService
         .put(`FormatoProceso/${this.id}`, model)
+        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
         .subscribe({
           next: () => {
             this.ref.close(true);
@@ -120,7 +129,7 @@ export default class AddOrEditProcesoComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.subRef$) this.subRef$.unsubscribe();
+    this.dataService.ngOnDestroy();
   }
   uploadFile(event: any) {
     this.file = event.target.files[0];

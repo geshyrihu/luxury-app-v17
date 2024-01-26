@@ -3,7 +3,7 @@ import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { ICustomerDto } from 'src/app/core/interfaces/ICustomerDto.interface';
 import { CelularNumberPipe } from 'src/app/core/pipes/celular-number.pipe';
 import {
@@ -45,6 +45,8 @@ export default class ListCustomerComponent implements OnInit, OnDestroy {
   state = true;
   mostrar = true;
 
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   ngOnInit(): void {
     this.onLoadData();
   }
@@ -52,12 +54,12 @@ export default class ListCustomerComponent implements OnInit, OnDestroy {
   onLoadData() {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`Customers/GetAllAsync/${this.state}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
-          this.data = resp.body;
-          this.customToastService.onClose();
+          this.data = this.customToastService.onCloseOnGetData(resp.body);
         },
         error: (error) => {
           this.customToastService.onCloseToError(error);
@@ -68,15 +70,18 @@ export default class ListCustomerComponent implements OnInit, OnDestroy {
   onDelete(data: any) {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService.delete('Customers/' + data.id).subscribe({
-      next: () => {
-        this.onLoadData();
-        this.customToastService.onCloseToSuccess();
-      },
-      error: (error) => {
-        this.customToastService.onCloseToError(error);
-      },
-    });
+    this.dataService
+      .delete('Customers/' + data.id)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe({
+        next: () => {
+          this.onLoadData();
+          this.customToastService.onCloseToSuccess();
+        },
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
+        },
+      });
   }
 
   onModalAddOrEdit(data: any) {
@@ -138,8 +143,8 @@ export default class ListCustomerComponent implements OnInit, OnDestroy {
     this.state === true ? (this.title = 'Activos') : (this.title = 'Inctivos');
     this.onLoadData();
   }
-  subRef$: Subscription;
+
   ngOnDestroy(): void {
-    if (this.subRef$) this.subRef$.unsubscribe();
+    this.dataService.ngOnDestroy();
   }
 }

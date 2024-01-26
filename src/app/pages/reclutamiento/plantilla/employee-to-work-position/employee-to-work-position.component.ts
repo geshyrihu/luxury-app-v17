@@ -1,8 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { CustomerIdService } from 'src/app/core/services/common-services';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
@@ -16,8 +15,9 @@ import Swal from 'sweetalert2';
   standalone: true,
   imports: [CommonModule],
 })
-export default class EmployeeToWorkPositionComponent implements OnInit {
-  private formBuilder = inject(FormBuilder);
+export default class EmployeeToWorkPositionComponent
+  implements OnInit, OnDestroy
+{
   public config = inject(DynamicDialogConfig);
   public customerIdService = inject(CustomerIdService);
   public dataService = inject(DataService);
@@ -26,8 +26,10 @@ export default class EmployeeToWorkPositionComponent implements OnInit {
   public selectItemService = inject(SelectItemService);
   public customToastService = inject(CustomToastService);
 
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   submitting: boolean = false;
-  subRef$: Subscription;
+
   workPositionId: number = 0;
   ngOnInit() {
     this.workPositionId = this.config.data.workPositionId;
@@ -35,8 +37,9 @@ export default class EmployeeToWorkPositionComponent implements OnInit {
 
   searchExistingPerson(fullName: any) {
     this.existingPerson = [];
-    this.subRef$ = this.dataService
+    this.dataService
       .get('Employees/SearchExistingPersonModal/' + fullName.target.value)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp) => {
           this.existingPerson = resp.body;
@@ -63,7 +66,7 @@ export default class EmployeeToWorkPositionComponent implements OnInit {
       if (result.value) {
         // Mostrar un mensaje de carga
         this.customToastService.onLoading();
-        this.subRef$ = this.dataService
+        this.dataService
           .get(`WorkPosition/AssignEmployee/${personId}/${this.workPositionId}`)
           .subscribe({
             next: () => {
@@ -75,5 +78,8 @@ export default class EmployeeToWorkPositionComponent implements OnInit {
           });
       }
     });
+  }
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

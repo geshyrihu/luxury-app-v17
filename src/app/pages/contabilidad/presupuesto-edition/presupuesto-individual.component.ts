@@ -72,8 +72,7 @@ export default class PresupuestoIndividualComponent implements OnInit {
       .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
-          this.data = resp.body;
-          this.customToastService.onClose();
+          this.data = this.customToastService.onCloseOnGetData(resp.body);
         },
         error: (error) => {
           this.customToastService.onCloseToError(error);
@@ -288,6 +287,7 @@ export default class PresupuestoIndividualComponent implements OnInit {
     this.dataService
       .post(`Presupuesto/UpdateAccount/`, data)
       .pipe(takeUntil(this.destroy$))
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           // Cuando se actualiza el elemento con éxito, buscar su índice en la matriz

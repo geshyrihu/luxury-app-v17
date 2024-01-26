@@ -26,6 +26,14 @@
         >
           Proveedor <p-sortIcon field="nameComercial"></p-sortIcon>
         </th>
+        <th
+          colspan="2"
+          scope="col"
+          style="width: 30%"
+          pSortableColumn="nameCustomer"
+        >
+          Cliente <p-sortIcon field="nameCustomer"></p-sortIcon>
+        </th>
         <th scope="col" pSortableColumn="fullName">
           Nombre
           <p-sortIcon field="fullName"></p-sortIcon>
@@ -57,6 +65,9 @@
         <td>
           <h4 class="m-0 h4">{{ item.nameComercial }}</h4>
           <p>{{ item.nameProvider }}</p>
+        </td>
+        <td>
+          {{ item.nameCustomer }}
         </td>
         <td>
           {{ item.fullName }}

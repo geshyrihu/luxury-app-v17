@@ -56,13 +56,8 @@ export default class ListEmpleadosOpcionesComponent
       this.authService.infoEmployeeDto.professionId == 58 ||
       this.authService.infoEmployeeDto.professionId == 6
     ) {
-      console.log(
-        '🚀 ~ Si es administrador o asistente ',
-        this.authService.infoEmployeeDto.professionId
-      );
       this.onValidarAdminAsis();
     }
-    console.log('🚀 ~ tienePermiso:', this.tienePermiso);
     this.onValidarProfession();
     this.onValidarSolicitudesAbiertas();
   }
@@ -92,18 +87,6 @@ export default class ListEmpleadosOpcionesComponent
       .subscribe({
         next: (resp: any) => {
           this.tienePermiso = resp.body;
-
-          if (!this.tienePermiso) {
-            console.log(
-              'No tiene permiso para editar este empleado',
-              this.tienePermiso
-            );
-          } else {
-            console.log(
-              'Si tiene permiso para editar este empleado',
-              this.tienePermiso
-            );
-          }
         },
         error: (error) => {
           this.customToastService.onCloseToError(error);

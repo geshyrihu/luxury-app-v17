@@ -8,7 +8,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { ITicketseguimiento } from 'src/app/core/interfaces/ITicketseguimiento.interface';
 import {
   AuthService,
@@ -31,6 +31,8 @@ export default class TicketSeguimientoComponent implements OnInit, OnDestroy {
   public authService = inject(AuthService);
   private customToastService = inject(CustomToastService);
 
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   seguimientos: ITicketseguimiento[] = [];
   submitting: boolean = false;
 
@@ -39,7 +41,7 @@ export default class TicketSeguimientoComponent implements OnInit, OnDestroy {
   seguimientoConst: string = '';
   weeklyReportId: number = this.config.data.id;
   id: number = 0;
-  subRef$: Subscription;
+
   form: FormGroup = this.formBuilder.group({
     id: { value: this.id, disabled: true },
     weeklyReportId: [this.weeklyReportId, Validators.required],
@@ -74,10 +76,11 @@ export default class TicketSeguimientoComponent implements OnInit, OnDestroy {
 
   onCargaListaseguimientos() {
     this.loading = true;
-    this.subRef$ = this.dataService
+    this.dataService
       .get<ITicketseguimiento[]>(
         `TicketSeguimiento/seguimientos/${this.weeklyReportId}`
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.seguimientos = resp.body;
@@ -104,8 +107,9 @@ export default class TicketSeguimientoComponent implements OnInit, OnDestroy {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
 
-    this.subRef$ = this.dataService
+    this.dataService
       .post(`TicketSeguimiento`, this.form.value)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (_) => {
           this.onCargaListaseguimientos();
@@ -122,7 +126,7 @@ export default class TicketSeguimientoComponent implements OnInit, OnDestroy {
         },
       });
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

@@ -6,7 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import {
   AuthService,
   CustomToastService,
@@ -36,6 +36,7 @@ export default class AddoreditCuentasPrimerNivelComponent
 
   id: any = 0;
   form: FormGroup;
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   ngOnInit(): void {
     this.id = this.config.data.id;
@@ -62,8 +63,9 @@ export default class AddoreditCuentasPrimerNivelComponent
     this.customToastService.onLoading();
 
     if (this.id === 0) {
-      this.subRef$ = this.dataService
+      this.dataService
         .post(`Cuentas/`, this.form.value)
+        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
         .subscribe({
           next: () => {
             this.ref.close(true);
@@ -76,8 +78,9 @@ export default class AddoreditCuentasPrimerNivelComponent
           },
         });
     } else {
-      this.subRef$ = this.dataService
+      this.dataService
         .put(`Cuentas/${this.id}`, this.form.value)
+        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
         .subscribe({
           next: () => {
             this.ref.close(true);
@@ -94,19 +97,21 @@ export default class AddoreditCuentasPrimerNivelComponent
   onLoadData() {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService.get(`Cuentas/${this.id}`).subscribe({
-      next: (resp) => {
-        this.form.patchValue(resp.body);
-        this.customToastService.onClose();
-      },
-      error: (error) => {
-        this.customToastService.onCloseToError(error);
-      },
-    });
+    this.dataService
+      .get(`Cuentas/${this.id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe({
+        next: (resp) => {
+          this.form.patchValue(resp.body);
+          this.customToastService.onClose();
+        },
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
+        },
+      });
   }
 
-  subRef$: Subscription;
   ngOnDestroy(): void {
-    if (this.subRef$) this.subRef$.unsubscribe();
+    this.dataService.ngOnDestroy();
   }
 }

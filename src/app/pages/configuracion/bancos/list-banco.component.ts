@@ -9,6 +9,10 @@ import {
   CustomToastService,
   DataService,
 } from 'src/app/core/services/common-services';
+import {
+  DialogHandlerService,
+  DialogSize,
+} from 'src/app/core/services/dialog-handler.service';
 import { OnDestroyService } from 'src/app/core/services/on-destroy.service';
 import ComponentsModule from 'src/app/shared/components.module';
 import PrimeNgModule from 'src/app/shared/prime-ng.module';
@@ -19,7 +23,12 @@ import AddOrEditBancoComponent from './addoredit-banco.component';
   templateUrl: './list-banco.component.html',
   standalone: true,
   imports: [ComponentsModule, PrimeNgModule],
-  providers: [DialogService, MessageService, CustomToastService],
+  providers: [
+    DialogService,
+    MessageService,
+    DialogHandlerService,
+    CustomToastService,
+  ],
 })
 export default class ListBancoComponent implements OnInit, OnDestroy {
   private dataService = inject(DataService);
@@ -28,14 +37,15 @@ export default class ListBancoComponent implements OnInit, OnDestroy {
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
   public OnDestroy = inject(OnDestroyService);
+  public dialogHandlerService = inject(DialogHandlerService);
+
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   // Declaración e inicialización de variables
   data: IBankDto[] = [];
   ref: DynamicDialogRef; // Referencia a un cuadro de diálogo modal
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   ngOnInit(): void {
-    // Cuando se inicia el componente, cargar los datos de los bancos
     this.onLoadData();
   }
 
@@ -43,15 +53,13 @@ export default class ListBancoComponent implements OnInit, OnDestroy {
   onLoadData() {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-
     // Realizar una solicitud HTTP para obtener datos de bancos
     this.dataService
       .get<IBankDto[]>('Banks')
       .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
-          this.data = resp.body;
-          this.customToastService.onClose();
+          this.data = this.customToastService.onCloseOnGetData(resp.body);
         },
         error: (error) => {
           this.customToastService.onCloseToError(error);
@@ -63,7 +71,6 @@ export default class ListBancoComponent implements OnInit, OnDestroy {
   onDelete(data: any) {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-
     // Realizar una solicitud HTTP para eliminar un banco específico
     this.dataService
       .delete(`Banks/${data.id}`)
@@ -80,29 +87,19 @@ export default class ListBancoComponent implements OnInit, OnDestroy {
       });
   }
 
-  // Función para abrir un cuadro de diálogo modal para agregar o editar información sobre un banco
+  // Función para abrir un cuadro de diálogo modal para agregar o editar o crear
   onModalAddOrEdit(data: any) {
-    this.ref = this.dialogService.open(AddOrEditBancoComponent, {
-      data: {
-        id: data.id,
-      },
-      header: data.title,
-      styleClass: 'modal-md ',
-      closeOnEscape: true,
-      baseZIndex: 10000,
-    });
-
-    // Escuchar el evento 'onClose' cuando se cierra el cuadro de diálogo
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        // Cuando se recibe 'true', mostrar un mensaje de éxito y volver a cargar los datos
-        this.customToastService.onShowSuccess();
-        this.onLoadData();
-      }
-    });
+    this.dialogHandlerService
+      .openDialog(AddOrEditBancoComponent, data, data.title, DialogSize.md)
+      .then((result: boolean) => {
+        if (result) {
+          this.onLoadData();
+        }
+      });
   }
 
+  // Destruir componente
   ngOnDestroy(): void {
-    this.OnDestroy.ngOnDestroy();
+    this.dataService.ngOnDestroy();
   }
 }

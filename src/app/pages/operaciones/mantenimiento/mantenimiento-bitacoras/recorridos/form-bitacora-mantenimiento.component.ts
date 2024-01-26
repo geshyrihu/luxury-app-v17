@@ -8,7 +8,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import {
   AuthService,
   CustomToastService,
@@ -40,8 +40,9 @@ export default class FormBitacoraMantenimientoComponent
   public ref = inject(DynamicDialogRef);
   public customToastService = inject(CustomToastService);
 
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   submitting: boolean = false;
-  subRef$: Subscription;
 
   userId = '';
   form: FormGroup;
@@ -94,8 +95,9 @@ export default class FormBitacoraMantenimientoComponent
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
 
-    this.subRef$ = this.dataService
+    this.dataService
       .post(`BitacoraMantenimiento`, this.form.value)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           this.ref.close(true);
@@ -111,10 +113,11 @@ export default class FormBitacoraMantenimientoComponent
   }
 
   onLoadMachinery() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(
         `SelectItem/ListadoInstalaciones/${this.customerIdService.getcustomerId()}`
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.maquinarias = resp.body;
@@ -128,7 +131,7 @@ export default class FormBitacoraMantenimientoComponent
       });
   }
 
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

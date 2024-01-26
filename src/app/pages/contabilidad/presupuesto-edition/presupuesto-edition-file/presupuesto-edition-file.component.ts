@@ -3,7 +3,7 @@ import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { FileUploadModule } from 'primeng/fileupload';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { DataService } from 'src/app/core/services/common-services';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import ComponentsModule from 'src/app/shared/components.module';
@@ -35,7 +35,9 @@ export default class PresupuestoEditionFileComponent
   uploadedFiles: any[] = [];
   data: any[] = [];
   description: string = '';
-  subRef$: Subscription;
+
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   presupuestoDetalleSoporteId: string = '';
   files: any[] = [];
 
@@ -51,8 +53,9 @@ export default class PresupuestoEditionFileComponent
   }
 
   onGetDescription() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`Cuentas/Description/${this.id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.description = resp.body.description;
@@ -64,8 +67,9 @@ export default class PresupuestoEditionFileComponent
       });
   }
   onGetFiles() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`Cuentas/SoporteFileList/${this.id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.files = resp.body;
@@ -80,8 +84,9 @@ export default class PresupuestoEditionFileComponent
       description: this.description,
       id: this.presupuestoDetalleSoporteId,
     };
-    this.subRef$ = this.dataService
+    this.dataService
       .put(`Cuentas/UpdateDescription`, data)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           this.customToastService.onShowSuccess();
@@ -98,32 +103,35 @@ export default class PresupuestoEditionFileComponent
     this.customToastService.onLoading();
 
     // Realizar una solicitud HTTP para eliminar un banco específico
-    this.dataService.delete(`Cuentas/File/${id}`).subscribe({
-      next: () => {
-        // Cuando se completa la eliminación con éxito, mostrar un mensaje de éxito y volver a cargar los datos
-        this.customToastService.onCloseToSuccess();
-        // Eliminar solo el registro afectado en lugar de toda la lista
-        // Supongamos que has recibido la respuesta HTTP y tienes el `id` del archivo a eliminar
-        const deleteRecordId = id; // Reemplaza 123 con el ID real del archivo que deseas eliminar
+    this.dataService
+      .delete(`Cuentas/File/${id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe({
+        next: () => {
+          // Cuando se completa la eliminación con éxito, mostrar un mensaje de éxito y volver a cargar los datos
+          this.customToastService.onCloseToSuccess();
+          // Eliminar solo el registro afectado en lugar de toda la lista
+          // Supongamos que has recibido la respuesta HTTP y tienes el `id` del archivo a eliminar
+          const deleteRecordId = id; // Reemplaza 123 con el ID real del archivo que deseas eliminar
 
-        // Encuentra el índice del registro a eliminar en la lista
-        const recordIndex = this.files.findIndex(
-          (record) => record.id === deleteRecordId
-        );
+          // Encuentra el índice del registro a eliminar en la lista
+          const recordIndex = this.files.findIndex(
+            (record) => record.id === deleteRecordId
+          );
 
-        if (recordIndex !== -1) {
-          // Si se encuentra el registro, elimínalo de la lista
-          this.files.splice(recordIndex, 1);
-        }
-      },
-      error: (error) => {
-        this.customToastService.onCloseToError(error);
-      },
-    });
+          if (recordIndex !== -1) {
+            // Si se encuentra el registro, elimínalo de la lista
+            this.files.splice(recordIndex, 1);
+          }
+        },
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
+        },
+      });
   }
 
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }
 interface UploadEvent {

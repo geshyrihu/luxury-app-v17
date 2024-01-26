@@ -9,7 +9,7 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { ResetPasswordDto } from 'src/app/core/interfaces/reset-password.interface';
 import {
   CustomToastService,
@@ -37,7 +37,8 @@ export default class RestaurarContraseñaComponent implements OnInit, OnDestroy 
   public customToastService = inject(CustomToastService);
   private dataService = inject(DataService);
 
-  subRef$: Subscription;
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   form: FormGroup;
   private _fieldTextType!: boolean;
   public get fieldTextType(): boolean {
@@ -88,8 +89,9 @@ export default class RestaurarContraseñaComponent implements OnInit, OnDestroy 
 
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService
+    this.dataService
       .post('Auth/ResetPassword', this.data)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           this.customToastService.onClose();
@@ -119,6 +121,6 @@ export default class RestaurarContraseñaComponent implements OnInit, OnDestroy 
   }
 
   ngOnDestroy(): void {
-    if (this.subRef$) this.subRef$.unsubscribe();
+    this.dataService.ngOnDestroy();
   }
 }

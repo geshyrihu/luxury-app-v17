@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { EState } from 'src/app/core/enums/state.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
@@ -11,7 +11,6 @@ import {
   CustomerIdService,
   DataService,
 } from 'src/app/core/services/common-services';
-import { EnumService } from 'src/app/core/services/enum.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import ComponentsModule from 'src/app/shared/components.module';
 
@@ -32,10 +31,10 @@ export default class CrudEntregaRecepcionClienteComponent
   public config = inject(DynamicDialogConfig);
   public customerIdService = inject(CustomerIdService);
   private customToastService = inject(CustomToastService);
-  private enumService = inject(EnumService);
+
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   id: number = 0;
-  subRef$: Subscription;
 
   cb_estatus: ISelectItemDto[] = onGetSelectItemFromEnum(EState);
   form: FormGroup = this.formBuilder.group({
@@ -68,13 +67,14 @@ export default class CrudEntregaRecepcionClienteComponent
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
 
-    this.subRef$ = this.dataService
+    this.dataService
       .put(
         `EntregaRecepcionCliente/${this.id}/${
           this.authService.userTokenDto.infoEmployeeDto.employeeId
         }/${this.customerIdService.getcustomerId()}`,
         model
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           this.ref.close(true);
@@ -88,8 +88,9 @@ export default class CrudEntregaRecepcionClienteComponent
       });
   }
   onLoadData() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`EntregaRecepcionDescripcion/${this.id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.form.patchValue(resp.body);
@@ -120,6 +121,6 @@ export default class CrudEntregaRecepcionClienteComponent
   }
 
   ngOnDestroy(): void {
-    if (this.subRef$) this.subRef$.unsubscribe();
+    this.dataService.ngOnDestroy();
   }
 }

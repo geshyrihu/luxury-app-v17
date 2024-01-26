@@ -8,7 +8,7 @@ import {
 } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import {
   AuthService,
@@ -43,7 +43,8 @@ export default class AddoreditProveedorComponent implements OnInit, OnDestroy {
   private customToastService = inject(CustomToastService);
 
   submitting: boolean = false;
-  subRef$: Subscription;
+
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   id = 0;
   cb_category: ISelectItemDto[] = [];
@@ -71,13 +72,19 @@ export default class AddoreditProveedorComponent implements OnInit, OnDestroy {
     return this.form.controls;
   }
   onLoadSelectItem() {
-    this.selectItemService.onGetSelectItem('Categories').subscribe((resp) => {
-      this.cb_category = resp;
-    });
+    this.selectItemService
+      .onGetSelectItem('Categories')
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe((resp) => {
+        this.cb_category = resp;
+      });
 
-    this.selectItemService.onGetSelectItem('Bank').subscribe((resp) => {
-      this.cb_bancos = resp;
-    });
+    this.selectItemService
+      .onGetSelectItem('Bank')
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe((resp) => {
+        this.cb_bancos = resp;
+      });
   }
 
   public saveBancoId(e: any): void {
@@ -128,8 +135,9 @@ export default class AddoreditProveedorComponent implements OnInit, OnDestroy {
   }
 
   getItem() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`Proveedor/${this.id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe((resp: any) => {
         this.form.patchValue(resp.body);
         this.form.patchValue({ bankId: resp.body.bankId });
@@ -151,20 +159,24 @@ export default class AddoreditProveedorComponent implements OnInit, OnDestroy {
     this.customToastService.onLoading();
 
     if (this.id === 0) {
-      this.subRef$ = this.dataService.post(`Proveedor/`, model).subscribe({
-        next: () => {
-          this.ref.close(true);
-          this.customToastService.onClose();
-        },
-        error: (error) => {
-          // Habilitar el botón nuevamente al finalizar el envío del formulario
-          this.submitting = false;
-          this.customToastService.onCloseToError(error);
-        },
-      });
+      this.dataService
+        .post(`Proveedor/`, model)
+        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+        .subscribe({
+          next: () => {
+            this.ref.close(true);
+            this.customToastService.onClose();
+          },
+          error: (error) => {
+            // Habilitar el botón nuevamente al finalizar el envío del formulario
+            this.submitting = false;
+            this.customToastService.onCloseToError(error);
+          },
+        });
     } else {
-      this.subRef$ = this.dataService
+      this.dataService
         .put(`Proveedor/${this.id}`, model)
+        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
         .subscribe({
           next: () => {
             this.ref.close(true);
@@ -235,8 +247,9 @@ export default class AddoreditProveedorComponent implements OnInit, OnDestroy {
   }
 
   onValidarRFC() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get('Providers/ValidarRfc/' + this.valueRfc)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.rfcCoincidente = resp.body;
@@ -250,7 +263,7 @@ export default class AddoreditProveedorComponent implements OnInit, OnDestroy {
   change(file: any) {
     this.form.patchValue({ constanciaFiscal: file });
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

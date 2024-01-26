@@ -5,7 +5,7 @@ import {
   DynamicDialogConfig,
   DynamicDialogRef,
 } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { IFechasFiltro } from 'src/app/core/interfaces/IFechasFiltro.interface';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
@@ -34,7 +34,9 @@ export default class PresupuestoAddComponent implements OnInit {
   public authService = inject(AuthService);
 
   periodo: IPresupuestoAdd;
-  subRef$: Subscription;
+
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   id: number = 0;
 
   ngOnInit() {
@@ -63,8 +65,9 @@ export default class PresupuestoAddComponent implements OnInit {
     if (this.id === 0) {
       // Mostrar un mensaje de carga
       this.customToastService.onLoading();
-      this.subRef$ = this.dataService
+      this.dataService
         .post(`Presupuesto/Create`, this.periodo)
+        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
         .subscribe({
           next: () => {
             this.customToastService.onClose();
@@ -75,7 +78,7 @@ export default class PresupuestoAddComponent implements OnInit {
           },
         });
     } else {
-      this.subRef$ = this.dataService
+      this.dataService
         .put(`Presupuesto/UpdatePresupuesto/${this.id}`, this.periodo)
         .subscribe({
           next: () => {
@@ -89,18 +92,21 @@ export default class PresupuestoAddComponent implements OnInit {
     }
   }
   onLoadData() {
-    this.subRef$ = this.dataService.get(`Presupuesto/${this.id}`).subscribe({
-      next: (resp: any) => {
-        this.periodo = {
-          customerId: this.customerIdService.customerId,
-          from: resp.fechaInicio,
-          to: resp.fechaFinal,
-        };
-      },
-      error: (error) => {
-        this.customToastService.onCloseToError(error);
-      },
-    });
+    this.dataService
+      .get(`Presupuesto/${this.id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe({
+        next: (resp: any) => {
+          this.periodo = {
+            customerId: this.customerIdService.customerId,
+            from: resp.fechaInicio,
+            to: resp.fechaFinal,
+          };
+        },
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
+        },
+      });
   }
 }
 export interface IPresupuestoAdd {

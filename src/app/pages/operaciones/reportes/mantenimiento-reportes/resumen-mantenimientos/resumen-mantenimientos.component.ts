@@ -3,7 +3,7 @@ import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { TableModule } from 'primeng/table';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { CustomerIdService } from 'src/app/core/services/common-services';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
@@ -36,7 +36,9 @@ export default class ResumenMantenimientosComponent
 
   dataProvider: any = [];
   ref: DynamicDialogRef;
-  subRef$: Subscription;
+
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   customerId$: Observable<number> = this.customerIdService.getCustomerId$();
 
   periodoInicial$: Observable<Date> =
@@ -55,7 +57,7 @@ export default class ResumenMantenimientosComponent
   onLoadData() {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService
+    this.dataService
       .get(
         `MaintenanceReport/resumen/${
           this.customerIdService.customerId
@@ -63,16 +65,16 @@ export default class ResumenMantenimientosComponent
           this.periodoMonthService.getPeriodoInicio
         )}`
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
-          this.data = resp.body;
-          this.customToastService.onClose();
+          this.data = this.customToastService.onCloseOnGetData(resp.body);
         },
         error: (error) => {
           this.customToastService.onCloseToError(error);
         },
       });
-    this.subRef$ = this.dataService
+    this.dataService
       .get(
         `MaintenanceReport/proveedor/${
           this.customerIdService.customerId
@@ -80,6 +82,7 @@ export default class ResumenMantenimientosComponent
           this.periodoMonthService.getPeriodoInicio
         )}`
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.dataProvider = resp.body;
@@ -92,6 +95,6 @@ export default class ResumenMantenimientosComponent
   }
 
   ngOnDestroy(): void {
-    if (this.subRef$) this.subRef$.unsubscribe();
+    this.dataService.ngOnDestroy();
   }
 }

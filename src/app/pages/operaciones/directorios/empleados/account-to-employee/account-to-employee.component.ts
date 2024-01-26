@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import {
   CustomToastService,
   CustomerIdService,
@@ -22,16 +22,15 @@ export default class AccountToEmployeeComponent implements OnInit {
   private dataService = inject(DataService);
   private customToastService = inject(CustomToastService);
   private customerIdService = inject(CustomerIdService);
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   submitting: boolean = false;
   personId: number = 0;
   applicationUserId: string = this.config.data.applicationUserId;
   applicationUserList: any[] = [];
-  subRef$: Subscription;
 
   ngOnInit() {
     this.personId = this.config.data.personId;
-    console.log('🚀 ~ this.config.data:', this.config.data);
     this.onLoadAccount();
   }
 
@@ -47,10 +46,11 @@ export default class AccountToEmployeeComponent implements OnInit {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
 
-    this.subRef$ = this.dataService
+    this.dataService
       .get(
         `accounts/updateaccounttoemployee/${this.personId}/${this.applicationUserId}`
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           this.ref.close(true);
@@ -65,10 +65,11 @@ export default class AccountToEmployeeComponent implements OnInit {
   }
 
   onLoadAccount() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(
         `Employees/GetListAccountUser/${this.customerIdService.customerId}/${this.personId}`
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.applicationUserList = resp.body;
@@ -78,7 +79,7 @@ export default class AccountToEmployeeComponent implements OnInit {
         },
       });
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

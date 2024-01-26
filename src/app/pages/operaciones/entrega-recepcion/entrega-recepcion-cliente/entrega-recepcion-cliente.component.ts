@@ -3,7 +3,7 @@ import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import {
   AuthService,
   CustomToastService,
@@ -42,7 +42,9 @@ export default class EntregaRecepcionClienteComponent
     { value: 'OPERACIONES Y MANTENIMIENTO' },
   ];
   ref: DynamicDialogRef;
-  subRef$: Subscription;
+
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   departamento = this.cb_departamento[0].value;
 
   onValidarCargo() {
@@ -70,8 +72,9 @@ export default class EntregaRecepcionClienteComponent
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
     // * Peticion para generar los items de entrega recepcion
-    this.subRef$ = this.dataService
+    this.dataService
       .get('EntregaRecepcionCliente/GenerateData')
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {},
         error: (error) => {
@@ -79,17 +82,17 @@ export default class EntregaRecepcionClienteComponent
         },
       });
     // * Peticion para generar los items de entrega recepcion
-    this.subRef$ = this.dataService
+    this.dataService
       .get(
         'EntregaRecepcionCliente/' +
           this.customerIdService.customerId +
           '/' +
           this.departamento
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
-          this.data = resp.body;
-          this.customToastService.onClose();
+          this.data = this.customToastService.onCloseOnGetData(resp.body);
         },
         error: (error) => {
           this.customToastService.onCloseToError(error);
@@ -125,11 +128,12 @@ export default class EntregaRecepcionClienteComponent
   }
 
   onValidarDocument(id: number) {
-    this.subRef$ = this.dataService
+    this.dataService
       .put(
         `EntregaRecepcionCliente/ValidarArchivo/${this.authService.userTokenDto.infoEmployeeDto.employeeId}/${id}`,
         null
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           this.onLoadData();
@@ -141,8 +145,9 @@ export default class EntregaRecepcionClienteComponent
       });
   }
   onInvalidarDocument(id: number) {
-    this.subRef$ = this.dataService
+    this.dataService
       .put(`EntregaRecepcionCliente/InvalidarArchivo/${id}`, null)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           this.onLoadData();
@@ -155,8 +160,9 @@ export default class EntregaRecepcionClienteComponent
   }
 
   onDeleteFile(id: number) {
-    this.subRef$ = this.dataService
+    this.dataService
       .delete(`EntregaRecepcionCliente/DeleteFile/${id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           this.customToastService.onShowSuccess();
@@ -168,7 +174,7 @@ export default class EntregaRecepcionClienteComponent
       });
   }
 
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

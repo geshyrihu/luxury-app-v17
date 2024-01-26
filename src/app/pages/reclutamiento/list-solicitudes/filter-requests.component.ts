@@ -3,7 +3,7 @@ import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import saveAs from 'file-saver';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
@@ -23,16 +23,18 @@ export default class FilterRequestsComponent implements OnInit, OnDestroy {
   private router = inject(Router);
   private filterRequestsService = inject(FilterRequestsService);
   public customToastService = inject(CustomToastService);
+
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   menu = [
     { label: 'Vacantes', path: 'vacantes' },
     { label: 'Altas', path: 'altas' },
     { label: 'Bajas', path: 'bajas' },
     { label: 'Modificación de salario', path: 'aumento-sueldo' },
   ];
-  subRef$: Subscription;
+
   fechaInicial = new Date(new Date().getFullYear(), 0, 1);
   fechaFormateada = this.fechaInicial.toISOString().slice(0, 7);
-  // params = new HttpParams();
   statusRequestValue: string = 'Pendiente';
 
   @Input() noCandidates: number = 0;
@@ -47,8 +49,9 @@ export default class FilterRequestsComponent implements OnInit, OnDestroy {
   @Input() nameFile: string;
 
   exportToExcel(): void {
-    this.subRef$ = this.dataService
+    this.dataService
       .getFile(this.apiUrl, this.filterRequestsService.getParams())
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: Blob) => {
           // Crea un objeto de tipo Blob a partir de la respuesta
@@ -67,8 +70,9 @@ export default class FilterRequestsComponent implements OnInit, OnDestroy {
   onSendReportVacants() {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`solicitudesreclutamiento/sendreportvacants`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (_) => {
           this.customToastService.onCloseToSuccess();
@@ -97,6 +101,6 @@ export default class FilterRequestsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.subRef$) this.subRef$.unsubscribe();
+    this.dataService.ngOnDestroy();
   }
 }

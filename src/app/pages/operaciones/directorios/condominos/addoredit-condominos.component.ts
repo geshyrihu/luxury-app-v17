@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { EHabitant } from 'src/app/core/enums/habitant.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
@@ -18,7 +18,6 @@ import {
   DataService,
   SelectItemService,
 } from 'src/app/core/services/common-services';
-import { EnumService } from 'src/app/core/services/enum.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import ComponentsModule from 'src/app/shared/components.module';
 
@@ -43,10 +42,10 @@ export default class AddOrEditCondominosComponent implements OnInit, OnDestroy {
   public selectItemService = inject(SelectItemService);
   public customerIdService = inject(CustomerIdService);
   private customToastService = inject(CustomToastService);
-  private enumService = inject(EnumService);
+
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   submitting: boolean = false;
-  subRef$: Subscription;
 
   id: number = 0;
   customerId: number = this.customerIdService.customerId;
@@ -114,8 +113,9 @@ export default class AddOrEditCondominosComponent implements OnInit, OnDestroy {
     this.customToastService.onLoading();
 
     if (this.id === 0) {
-      this.subRef$ = this.dataService
+      this.dataService
         .post(`ListCondomino/`, this.form.value)
+        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
         .subscribe({
           next: () => {
             this.ref.close(true);
@@ -128,7 +128,7 @@ export default class AddOrEditCondominosComponent implements OnInit, OnDestroy {
           },
         });
     } else {
-      this.subRef$ = this.dataService
+      this.dataService
         .put(`ListCondomino/${this.id}`, this.form.value)
         .subscribe({
           next: () => {
@@ -144,8 +144,9 @@ export default class AddOrEditCondominosComponent implements OnInit, OnDestroy {
     }
   }
   getImem() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`ListCondomino/${this.id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe((resp: any) => {
         this.form.patchValue(resp.body);
 
@@ -154,7 +155,7 @@ export default class AddOrEditCondominosComponent implements OnInit, OnDestroy {
         });
       });
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

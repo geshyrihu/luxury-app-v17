@@ -11,7 +11,7 @@ import {
   DynamicDialogConfig,
   DynamicDialogRef,
 } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { CedulaPresupuestalDetalleAddOrEdit } from 'src/app/core/interfaces/ICedulaPresupuestalDetalleAddOrEdit.interface';
 import {
   AuthService,
@@ -38,8 +38,9 @@ export default class EditPartidaCedulaComponent implements OnInit, OnDestroy {
   public messageService = inject(MessageService);
   public ref = inject(DynamicDialogRef);
 
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   submitting: boolean = false;
-  subRef$: Subscription;
 
   applicationUserId: string =
     this.authService.userTokenDto.infoUserAuthDto.applicationUserId;
@@ -65,7 +66,7 @@ export default class EditPartidaCedulaComponent implements OnInit, OnDestroy {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
     if (this.id === 0) {
-      this.subRef$ = this.dataService
+      this.dataService
         .post(`CedulaPresupuestalDetalles`, budgetCardDTO)
         .subscribe({
           next: () => {
@@ -79,7 +80,7 @@ export default class EditPartidaCedulaComponent implements OnInit, OnDestroy {
           },
         });
     } else {
-      this.subRef$ = this.dataService
+      this.dataService
         .put(`CedulaPresupuestalDetalles/${this.id}`, budgetCardDTO)
         .subscribe({
           next: () => {
@@ -104,8 +105,9 @@ export default class EditPartidaCedulaComponent implements OnInit, OnDestroy {
       applicationUserId: [''],
       presupuestoEjercido: [],
     });
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`CedulaPresupuestalDetalles/${this.id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.form.patchValue(resp.body);
@@ -119,7 +121,7 @@ export default class EditPartidaCedulaComponent implements OnInit, OnDestroy {
       });
   }
 
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

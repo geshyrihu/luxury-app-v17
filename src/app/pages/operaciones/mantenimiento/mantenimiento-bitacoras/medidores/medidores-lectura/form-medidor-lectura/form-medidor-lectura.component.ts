@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { IMedidorLecturaDto } from 'src/app/core/interfaces/IMedidorLecturaDto.interface';
 import {
   AuthService,
@@ -33,8 +33,8 @@ export default class FormMedidorLecturaComponent implements OnInit, OnDestroy {
   public ref = inject(DynamicDialogRef);
   private customToastService = inject(CustomToastService);
 
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
   submitting: boolean = false;
-  subRef$: Subscription;
 
   dateString: string = this.dateService.getDateFormat(date);
   dateStringUltimoRegistro: string = '';
@@ -56,8 +56,9 @@ export default class FormMedidorLecturaComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.id = this.config.data.id;
     this.medidorId = this.config.data.medidorId;
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`MedidorLectura/UltimaLectura/${this.medidorId}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           if (resp.body !== null) {
@@ -83,7 +84,7 @@ export default class FormMedidorLecturaComponent implements OnInit, OnDestroy {
     });
   }
   onLoadData() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get<IMedidorLecturaDto>(`MedidorLectura/${this.id}`)
       .subscribe((resp: any) => {
         this.form.patchValue(resp.body);
@@ -105,8 +106,9 @@ export default class FormMedidorLecturaComponent implements OnInit, OnDestroy {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
     if (this.id === 0) {
-      this.subRef$ = this.dataService
+      this.dataService
         .post(`MedidorLectura`, this.form.value)
+        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
         .subscribe({
           next: () => {
             this.ref.close(true);
@@ -119,7 +121,7 @@ export default class FormMedidorLecturaComponent implements OnInit, OnDestroy {
           },
         });
     } else {
-      this.subRef$ = this.dataService
+      this.dataService
         .put(`MedidorLectura/${this.id}`, this.form.value)
         .subscribe({
           next: () => {
@@ -145,8 +147,8 @@ export default class FormMedidorLecturaComponent implements OnInit, OnDestroy {
       this.laLecturaEsMenor = false;
     }
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
   get f() {
     return this.form.controls;

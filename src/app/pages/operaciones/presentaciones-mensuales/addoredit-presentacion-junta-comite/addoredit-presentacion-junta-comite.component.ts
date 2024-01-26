@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import {
   AuthService,
   CustomToastService,
@@ -26,11 +26,13 @@ export default class AddoreditPresentacionJuntaComiteComponent
   public dataService = inject(DataService);
   public ref = inject(DynamicDialogRef);
 
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   submitting: boolean = false;
   id: number = 0;
   filePath: string = '';
   errorMessage: string = '';
-  subRef$: Subscription;
+
   form: FormGroup = this.formBuilder.group({
     id: { value: this.id, disabled: true },
     archivo: [''],
@@ -61,8 +63,9 @@ export default class AddoreditPresentacionJuntaComiteComponent
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
 
-    this.subRef$ = this.dataService
+    this.dataService
       .post(`PresentacionJuntaComite/AddFile`, model)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           this.ref.close(true);
@@ -77,7 +80,7 @@ export default class AddoreditPresentacionJuntaComiteComponent
   }
 
   ngOnDestroy(): void {
-    if (this.subRef$) this.subRef$.unsubscribe();
+    this.dataService.ngOnDestroy();
   }
 
   onCreateFormData(dto: any) {

@@ -8,7 +8,7 @@ import {
 } from '@angular/forms';
 import { FlatpickrModule } from 'angularx-flatpickr';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { EStatus } from 'src/app/core/enums/status.enum';
 import { ETypeContractRegister } from 'src/app/core/enums/type-contract-register.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
@@ -17,7 +17,6 @@ import {
   CustomToastService,
   DataService,
 } from 'src/app/core/services/common-services';
-import { EnumService } from 'src/app/core/services/enum.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import ComponentsModule from 'src/app/shared/components.module';
 
@@ -42,16 +41,15 @@ export default class AddOrEditSolicitudAltaComponent
   public ref = inject(DynamicDialogRef);
   public config = inject(DynamicDialogConfig);
   private customToastService = inject(CustomToastService);
-  private enumService = inject(EnumService);
 
   submitting: boolean = false;
   empleados: ISelectItemDto[] = [];
   cb_status = onGetSelectItemFromEnum(EStatus);
-  // cb_status: ISelectItemDto[] = [];
   cb_typeContractRegister = onGetSelectItemFromEnum(ETypeContractRegister);
-  // cb_typeContractRegister = [];
   id: number = 0;
-  subRef$: Subscription;
+
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   form: FormGroup = this.formBuilder.group({
     id: { value: this.id, disabled: true },
     requestPositionCandidateId: [null],
@@ -72,16 +70,10 @@ export default class AddOrEditSolicitudAltaComponent
   }
   onLoadData() {
     this.onLoadEmpleados();
-    // this.enumService
-    //   .getEnumValuesDisplay('ETypeContractRegister')
-    //   .subscribe((resp) => {
-    //     this.cb_typeContractRegister = resp;
-    //   });
-    // this.enumService.getEnumValuesDisplay('EStatus').subscribe((resp) => {
-    //   this.cb_status = resp;
-    // });
-    this.subRef$ = this.dataService
+
+    this.dataService
       .get(`RequestEmployeeRegister/${this.id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.form.patchValue(resp.body);
@@ -102,17 +94,17 @@ export default class AddOrEditSolicitudAltaComponent
   }
 
   onLoadEmpleados() {
-    this.enumService.getEnumValuesDisplay('EStatus').subscribe((resp) => {
-      this.cb_status = resp;
-    });
-    this.subRef$ = this.dataService.get(`Employees/EmployeeTemp`).subscribe({
-      next: (resp: any) => {
-        this.empleados = resp.body;
-      },
-      error: (error) => {
-        this.customToastService.onCloseToError(error);
-      },
-    });
+    this.dataService
+      .get(`Employees/EmployeeTemp`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe({
+        next: (resp: any) => {
+          this.empleados = resp.body;
+        },
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
+        },
+      });
   }
 
   onSubmit() {
@@ -131,7 +123,7 @@ export default class AddOrEditSolicitudAltaComponent
     });
     this.submitting = true;
     if (this.id === 0) {
-      this.subRef$ = this.dataService
+      this.dataService
         .post(`RequestEmployeeRegister`, this.form.value)
         .subscribe({
           next: () => {
@@ -145,7 +137,7 @@ export default class AddOrEditSolicitudAltaComponent
           },
         });
     } else {
-      this.subRef$ = this.dataService
+      this.dataService
         .put(`RequestEmployeeRegister/${this.id}`, this.form.value)
         .subscribe({
           next: () => {
@@ -170,7 +162,7 @@ export default class AddOrEditSolicitudAltaComponent
     });
   }
 
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

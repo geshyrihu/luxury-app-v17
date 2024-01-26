@@ -5,7 +5,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgChartsModule } from 'ng2-charts';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { IChartType } from 'src/app/core/interfaces/IChartType.interface';
 import { IDataSet } from 'src/app/core/interfaces/IDataSet.interface';
 import { IFechasFiltro } from 'src/app/core/interfaces/IFechasFiltro.interface';
@@ -29,7 +29,7 @@ export default class ChartLecturaComponent implements OnInit, OnDestroy {
   public filtroCalendarService = inject(FiltroCalendarService);
   public customToastService = inject(CustomToastService);
 
-  subRef$: Subscription;
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   data: IDataSet;
   title: string = '';
@@ -86,13 +86,14 @@ export default class ChartLecturaComponent implements OnInit, OnDestroy {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
 
-    this.subRef$ = this.dataService
+    this.dataService
       .get(
         `MedidorLectura/DataGraficoDiaria/${this.medidorId}/${this.fechaInicial}/${this.fechaFinal}`
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
-          this.data = resp.body;
+          this.data = this.customToastService.onCloseOnGetData(resp.body);
           this.onLoadChart(
             this.data.label,
             this.data.backgroundColor,
@@ -100,7 +101,6 @@ export default class ChartLecturaComponent implements OnInit, OnDestroy {
             this.data.labels,
             this.data.data
           );
-          this.customToastService.onClose();
         },
         error: (error) => {
           this.customToastService.onCloseToError(error);
@@ -112,13 +112,14 @@ export default class ChartLecturaComponent implements OnInit, OnDestroy {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
 
-    this.subRef$ = this.dataService
+    this.dataService
       .get(
         `MedidorLectura/DataGraficoMensual/${this.medidorId}/${fechaInicial}/${fechaFinal}`
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
-          this.data = resp.body;
+          this.data = this.customToastService.onCloseOnGetData(resp.body);
           this.onLoadChart(
             this.data.label,
             this.data.backgroundColor,
@@ -126,7 +127,6 @@ export default class ChartLecturaComponent implements OnInit, OnDestroy {
             this.data.labels,
             this.data.data
           );
-          this.customToastService.onClose();
         },
         error: (error) => {
           this.customToastService.onCloseToError(error);
@@ -181,7 +181,7 @@ export default class ChartLecturaComponent implements OnInit, OnDestroy {
       },
     };
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

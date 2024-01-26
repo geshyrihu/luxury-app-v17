@@ -3,7 +3,7 @@ import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import {
   AuthService,
@@ -33,7 +33,7 @@ export default class ListCedulasPresupuestalesComponent
   public messageService = inject(MessageService);
   public dialogService = inject(DialogService);
 
-  subRef$: Subscription;
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   cb_customer: any[] = [];
   applicationUserId: string =
@@ -49,11 +49,14 @@ export default class ListCedulasPresupuestalesComponent
       .subscribe((items: ISelectItemDto[]) => {
         this.cb_customer = items;
       });
-    this.selectItemService.onGetSelectItem(`GetAllYears`).subscribe({
-      next: (resp: any) => {
-        this.cb_Year = resp.body;
-      },
-    });
+    this.selectItemService
+      .onGetSelectItem(`GetAllYears`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe({
+        next: (resp: any) => {
+          this.cb_Year = resp.body;
+        },
+      });
   }
   ngOnInit(): void {
     this.onLoadSelectItem();
@@ -65,12 +68,12 @@ export default class ListCedulasPresupuestalesComponent
   onLoadData() {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`CedulaPresupuestal/GetAllAsync/`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
-          this.data = resp.body;
-          this.customToastService.onClose();
+          this.data = this.customToastService.onCloseOnGetData(resp.body);
         },
         error: (error) => {
           this.customToastService.onCloseToError(error);
@@ -79,8 +82,9 @@ export default class ListCedulasPresupuestalesComponent
   }
 
   onDelete(data: any) {
-    this.subRef$ = this.dataService
+    this.dataService
       .delete(`CedulaPresupuestal/${data.id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           this.customToastService.onShowSuccess();
@@ -91,7 +95,7 @@ export default class ListCedulasPresupuestalesComponent
         },
       });
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

@@ -8,7 +8,7 @@ import {
 } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
@@ -42,7 +42,8 @@ export default class CreateAccountComponent implements OnInit, OnDestroy {
 
   cb_profession: ISelectItemDto[] = [];
   cb_customer: ISelectItemDto[] = [];
-  subRef$: Subscription;
+
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   form: FormGroup = this.formBuilder.group({
     userName: ['', Validators.required],
@@ -57,14 +58,17 @@ export default class CreateAccountComponent implements OnInit, OnDestroy {
   }
 
   onLoadSelectItem() {
-    this.subRef$ = this.selectItemService
+    this.selectItemService
       .onGetSelectItem('customers')
       .subscribe((items: ISelectItemDto[]) => {
         this.cb_customer = items;
       });
-    this.selectItemService.onGetSelectItem('Professions').subscribe((resp) => {
-      this.cb_profession = resp;
-    });
+    this.selectItemService
+      .onGetSelectItem('Professions')
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe((resp) => {
+        this.cb_profession = resp;
+      });
   }
 
   onSubmit() {
@@ -81,8 +85,9 @@ export default class CreateAccountComponent implements OnInit, OnDestroy {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
 
-    this.subRef$ = this.dataService
+    this.dataService
       .post('Auth/CreateAccount', this.form.value)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           this.ref.close(true);
@@ -97,6 +102,6 @@ export default class CreateAccountComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.subRef$) this.subRef$.unsubscribe();
+    this.dataService.ngOnDestroy();
   }
 }

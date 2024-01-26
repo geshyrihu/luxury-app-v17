@@ -6,7 +6,7 @@ import {
   DynamicDialogConfig,
   DynamicDialogRef,
 } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import {
   CustomToastService,
   CustomerIdService,
@@ -32,7 +32,7 @@ export default class ActivosDocumentosComponent {
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
 
-  subRef$: Subscription;
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   data: any[] = [];
   machineryId: number = 0;
@@ -44,12 +44,12 @@ export default class ActivosDocumentosComponent {
     }customers/${this.customerIdService.getcustomerId()}/machinery/`;
     this.machineryId = this.config.data.machineryId;
     if (this.machineryId !== 0) this.onLoadData();
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`MachineryDocument/GetAll/${this.machineryId}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
-          this.data = resp.body;
-          this.customToastService.onClose();
+          this.data = this.customToastService.onCloseOnGetData(resp.body);
         },
         error: (error) => {
           this.customToastService.onCloseToError(error);
@@ -59,8 +59,9 @@ export default class ActivosDocumentosComponent {
   onDelete(data: any) {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService
+    this.dataService
       .delete('Machineries/DeleteDocument/' + data.id)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           this.onLoadData();
@@ -89,7 +90,7 @@ export default class ActivosDocumentosComponent {
       }
     });
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

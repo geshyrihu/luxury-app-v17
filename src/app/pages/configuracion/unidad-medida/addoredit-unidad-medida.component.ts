@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import {
   CustomToastService,
   DataService,
@@ -37,6 +37,7 @@ export default class AddOrEditUnidadMedidaComponent
   private customToastService = inject(CustomToastService);
 
   submitting: boolean = false;
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   id: any = 0;
   form: FormGroup = this.formBuilder.group({
@@ -56,14 +57,17 @@ export default class AddOrEditUnidadMedidaComponent
   }
 
   onLoadData() {
-    this.subRef$ = this.dataService.get(`UnidadMedida/${this.id}`).subscribe({
-      next: (resp) => {
-        this.form.patchValue(resp.body);
-      },
-      error: (error) => {
-        this.customToastService.onCloseToError(error);
-      },
-    });
+    this.dataService
+      .get(`UnidadMedida/${this.id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe({
+        next: (resp) => {
+          this.form.patchValue(resp.body);
+        },
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
+        },
+      });
   }
 
   onSubmit() {
@@ -79,8 +83,9 @@ export default class AddOrEditUnidadMedidaComponent
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
     if (this.id === 0) {
-      this.subRef$ = this.dataService
+      this.dataService
         .post(`UnidadMedida/`, this.form.value)
+        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
         .subscribe({
           next: () => {
             this.ref.close(true);
@@ -93,7 +98,7 @@ export default class AddOrEditUnidadMedidaComponent
           },
         });
     } else {
-      this.subRef$ = this.dataService
+      this.dataService
         .put(`UnidadMedida/${this.id}`, this.form.value)
         .subscribe({
           next: () => {
@@ -108,8 +113,8 @@ export default class AddOrEditUnidadMedidaComponent
         });
     }
   }
-  subRef$: Subscription;
+
   ngOnDestroy(): void {
-    if (this.subRef$) this.subRef$.unsubscribe();
+    this.dataService.ngOnDestroy();
   }
 }

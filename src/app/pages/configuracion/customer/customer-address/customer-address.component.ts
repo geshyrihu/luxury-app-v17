@@ -6,7 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { CustomerAddressAddOrEditDto } from 'src/app/core/interfaces/CustomerAddressAddOrEditDto';
 import {
   CustomToastService,
@@ -35,9 +35,11 @@ export default class CustomerAddressComponent implements OnInit {
   public config = inject(DynamicDialogConfig);
   private customToastService = inject(CustomToastService);
 
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   submitting: boolean = false;
   customerId: number = 0;
-  subRef$: Subscription;
+
   form: FormGroup = this.formBuilder.group({
     id: [],
     customerId: ['', Validators.required],
@@ -58,10 +60,11 @@ export default class CustomerAddressComponent implements OnInit {
     if (this.customerId !== 0) this.onLoadData();
   }
   onLoadData() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get<CustomerAddressAddOrEditDto>(
         `customers/customeraddress/${this.customerId}`
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.form.patchValue(resp.body);
@@ -85,11 +88,12 @@ export default class CustomerAddressComponent implements OnInit {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
 
-    this.subRef$ = this.dataService
+    this.dataService
       .put<CustomerAddressAddOrEditDto>(
         `customers/updatecustomeraddress`,
         this.form.value
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           this.ref.close(true);
@@ -102,7 +106,7 @@ export default class CustomerAddressComponent implements OnInit {
         },
       });
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

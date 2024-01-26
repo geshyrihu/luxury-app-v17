@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import {
   AuthService,
   CustomToastService,
@@ -40,8 +40,8 @@ export default class AddoreditPiscinaBitacoraComponent
   public customerIdService = inject(CustomerIdService);
   private customToastService = inject(CustomToastService);
 
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
   submitting: boolean = false;
-  subRef$: Subscription;
 
   id: number = 0;
   urlBaseImg = '';
@@ -73,8 +73,9 @@ export default class AddoreditPiscinaBitacoraComponent
   }
 
   onLoadData() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`piscinabitacora/${this.id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.model = resp.body;
@@ -101,8 +102,9 @@ export default class AddoreditPiscinaBitacoraComponent
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
     if (this.id === 0) {
-      this.subRef$ = this.dataService
+      this.dataService
         .post('piscinabitacora', this.form.value)
+        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
         .subscribe({
           next: () => {
             this.customToastService.onClose();
@@ -115,7 +117,7 @@ export default class AddoreditPiscinaBitacoraComponent
           },
         });
     } else {
-      this.subRef$ = this.dataService
+      this.dataService
         .put(`piscinabitacora/${this.id}`, this.form.value)
         .subscribe({
           next: () => {
@@ -132,7 +134,7 @@ export default class AddoreditPiscinaBitacoraComponent
     this.submitting = false;
   }
 
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

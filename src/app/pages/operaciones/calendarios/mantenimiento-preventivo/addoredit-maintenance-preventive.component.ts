@@ -9,7 +9,7 @@ import {
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { SelectItem } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { ERecurrence } from 'src/app/core/enums/recurrence.enum';
 import { ETypeMaintance } from 'src/app/core/enums/type-maintance.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
@@ -59,7 +59,8 @@ export default class AddoreditMaintenancePreventiveComponent
   cb_TypeMaintance: SelectItem[] = onGetSelectItemFromEnum(ETypeMaintance);
 
   submitting: boolean = false;
-  subRef$: Subscription;
+
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   form: FormGroup;
   id: any = 0;
@@ -97,9 +98,12 @@ export default class AddoreditMaintenancePreventiveComponent
       .subscribe((resp: any) => {
         this.cb_machinery = resp;
       });
-    this.selectItemService.onGetSelectItem('Providers').subscribe((resp) => {
-      this.cb_providers = resp;
-    });
+    this.selectItemService
+      .onGetSelectItem('Providers')
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe((resp) => {
+        this.cb_providers = resp;
+      });
     this.selectItemService
       .onGetSelectItem('CuentasContables')
       .subscribe((resp: any) => {
@@ -109,7 +113,7 @@ export default class AddoreditMaintenancePreventiveComponent
 
   onGetMachinerySelectItem() {
     if (this.config.data.idMachinery !== 0) {
-      this.subRef$ = this.dataService
+      this.dataService
         .get(
           `Machineries/GetMachinerySelectItem/${this.config.data.idMachinery}`
         )
@@ -176,7 +180,7 @@ export default class AddoreditMaintenancePreventiveComponent
     });
   }
   LoadCopy() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`MaintenanceCalendars/Get/${this.config.data.id}`)
       .subscribe((resp: any) => {
         this.id = 0;
@@ -184,7 +188,7 @@ export default class AddoreditMaintenancePreventiveComponent
       });
   }
   onLoadData() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`MaintenanceCalendars/Get/${this.config.data.id}`)
       .subscribe((resp: any) => {
         this.id = resp.body.id;
@@ -228,8 +232,9 @@ export default class AddoreditMaintenancePreventiveComponent
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
     if (this.id === 0) {
-      this.subRef$ = this.dataService
+      this.dataService
         .post(`MaintenanceCalendars`, this.form.value)
+        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
         .subscribe({
           next: () => {
             this.ref.close(true);
@@ -242,7 +247,7 @@ export default class AddoreditMaintenancePreventiveComponent
           },
         });
     } else {
-      this.subRef$ = this.dataService
+      this.dataService
         .put(`MaintenanceCalendars/${this.id}`, this.form.value)
         .subscribe({
           next: () => {
@@ -257,7 +262,7 @@ export default class AddoreditMaintenancePreventiveComponent
         });
     }
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

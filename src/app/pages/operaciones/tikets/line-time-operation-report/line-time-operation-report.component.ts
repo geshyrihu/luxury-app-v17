@@ -5,7 +5,7 @@ import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ToastModule } from 'primeng/toast';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import {
   AuthService,
   CustomToastService,
@@ -41,7 +41,6 @@ export default class LineTimeOperationReportComponent
   data: any = [];
   url = `${environment.base_urlImg}Administration/accounts/`;
   customerId$: Observable<number> = this.customerIdService.getCustomerId$();
-  subRef$: Subscription;
 
   base_urlImg = '';
 
@@ -54,8 +53,7 @@ export default class LineTimeOperationReportComponent
       this.year = +params['year']; // Convierte a número
       this.week = +params['week']; // Convierte a número
     });
-    console.log('🚀 ~ this.year:', this.year);
-    console.log('🚀 ~ this.week:', this.week);
+
     this.onLoadData();
     this.customerId$ = this.customerIdService.getCustomerId$();
     this.customerId$.subscribe(() => {
@@ -65,7 +63,7 @@ export default class LineTimeOperationReportComponent
 
   onLoadData() {}
 
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

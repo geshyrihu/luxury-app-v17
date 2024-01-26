@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { IUserCardDto } from 'src/app/core/interfaces/IUserCardDto.interface';
 import PhoneFormatPipe from 'src/app/core/pipes/phone-format.pipe';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
@@ -21,7 +21,8 @@ export default class CardEmployeeComponent implements OnInit, OnDestroy {
   public config = inject(DynamicDialogConfig);
   public customToastService = inject(CustomToastService);
 
-  subRef$: Subscription;
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   urlImage: string = '';
   employeeId: number = 0;
   user: IUserCardDto;
@@ -32,8 +33,9 @@ export default class CardEmployeeComponent implements OnInit, OnDestroy {
   }
 
   onLoadData() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get<IUserCardDto>(`Auth/CardUser/${this.employeeId}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.user = resp.body;
@@ -44,7 +46,7 @@ export default class CardEmployeeComponent implements OnInit, OnDestroy {
         },
       });
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

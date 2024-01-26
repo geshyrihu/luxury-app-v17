@@ -13,7 +13,7 @@ import {
   DynamicDialogConfig,
   DynamicDialogRef,
 } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { IDestinatariosMailReporte } from 'src/app/core/interfaces/IDestinatariosMailReporte.interface';
 import { CustomerIdService } from 'src/app/core/services/common-services';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
@@ -49,7 +49,8 @@ export default class EnviarMailReporteSemanalComponent
   public ref = inject(DynamicDialogRef);
   public customToastService = inject(CustomToastService);
 
-  subRef$: Subscription;
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   fechaInicial: Date;
   fechaFinal: Date;
   destinatarios: any[] = [];
@@ -95,13 +96,14 @@ export default class EnviarMailReporteSemanalComponent
   onEnviarEmail() {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService
+    this.dataService
       .post(
         `SendEmail/ReporteSemanal/${this.customerIdService.getcustomerId()}/${
           this.fechaInicial
         }/${this.fechaFinal}`,
         this.onFilterDestinatarios()
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           this.customToastService.onCloseToSuccess();
@@ -175,7 +177,7 @@ export default class EnviarMailReporteSemanalComponent
   onDeleteDestinatariosAdicionales(indexArr: any) {
     this.destinatariosAdicionales.splice(indexArr, 1);
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

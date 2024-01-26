@@ -9,7 +9,7 @@ import {
   DynamicDialogRef,
 } from 'primeng/dynamicdialog';
 import { ToastModule } from 'primeng/toast';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { SelectItemService } from 'src/app/core/services/select-item.service';
@@ -33,7 +33,7 @@ export default class ModalEditCotizacionComponent implements OnInit, OnDestroy {
   public messageService = inject(MessageService);
   public router = inject(Router);
 
-  subRef$: Subscription;
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   cotizacionProveedorId = 0;
   cotizacionProveedor: any;
@@ -54,9 +54,12 @@ export default class ModalEditCotizacionComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.solicitudCompraId = this.config.data.solicitudCompraId;
     this.posicionCotizacion = this.config.data.posicionCotizacion;
-    this.selectItemService.onGetSelectItem('Providers').subscribe((resp) => {
-      this.cb_providers = resp;
-    });
+    this.selectItemService
+      .onGetSelectItem('Providers')
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe((resp) => {
+        this.cb_providers = resp;
+      });
     this.onLoadSelectItemProvider();
     this.onGetCotizacioProveedor();
     this.onCotizacionesRelacionadas();
@@ -64,8 +67,9 @@ export default class ModalEditCotizacionComponent implements OnInit, OnDestroy {
   }
 
   onLoadSelectItemProvider() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get('CotizacionProveedor/GetProviders/' + this.solicitudCompraId)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.cb_providers = resp.body;
@@ -77,7 +81,7 @@ export default class ModalEditCotizacionComponent implements OnInit, OnDestroy {
   }
 
   onGetCotizacioProveedor() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get<any>(
         `CotizacionProveedor/GetPosicionCotizacion/${this.solicitudCompraId}/${this.posicionCotizacion}`
       )
@@ -91,8 +95,9 @@ export default class ModalEditCotizacionComponent implements OnInit, OnDestroy {
       });
   }
   onLoadData() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get<any>(`SolicitudCompra/${this.solicitudCompraId}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.solicitudCompra = resp.body;
@@ -110,11 +115,12 @@ export default class ModalEditCotizacionComponent implements OnInit, OnDestroy {
     this.cotizacionProveedor.entrega = this.entrega;
     this.cotizacionProveedor.politicaPago = this.politicaPago;
 
-    this.subRef$ = this.dataService
+    this.dataService
       .put(
         `CotizacionProveedor/UpdateProvider/${this.cotizacionProveedor.id}`,
         this.cotizacionProveedor
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.customToastService.onShowSuccess();
@@ -152,8 +158,9 @@ export default class ModalEditCotizacionComponent implements OnInit, OnDestroy {
       total3: item.total3,
       unidadMedidaId: item.unidadMedidaId,
     };
-    this.subRef$ = this.dataService
+    this.dataService
       .put(`SolicitudCompraDetalle/UpdatePrice/${item.id}`, data)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           this.onLoadData();
@@ -168,10 +175,11 @@ export default class ModalEditCotizacionComponent implements OnInit, OnDestroy {
   onDeleteProvider() {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService
+    this.dataService
       .delete(
         `solicitudCompra/DeleteProvider/${this.solicitudCompraId}/${this.providerId}`
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           this.ref.close(true);
@@ -206,8 +214,9 @@ export default class ModalEditCotizacionComponent implements OnInit, OnDestroy {
   }
 
   onCotizacionesRelacionadas() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`OrdenCompra/CotizacionesRelacionadas/${this.solicitudCompraId}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.cotizacionesRelacionadas = resp.body;
@@ -223,7 +232,7 @@ export default class ModalEditCotizacionComponent implements OnInit, OnDestroy {
     this.onUpdateProvider();
   }
 
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

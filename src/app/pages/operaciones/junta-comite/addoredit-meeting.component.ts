@@ -8,7 +8,7 @@ import {
 } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { ETypeMeeting } from 'src/app/core/enums/type-meeting.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
@@ -53,7 +53,7 @@ export default class AddOrEditMeetingComponent implements OnInit, OnDestroy {
   public messageService = inject(MessageService);
   public customToastService = inject(CustomToastService);
 
-  subRef$: Subscription;
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   dateNow = new Date(
     date.getTime() + new Date().getTimezoneOffset() * -60 * 1000
@@ -94,8 +94,9 @@ export default class AddOrEditMeetingComponent implements OnInit, OnDestroy {
       if (this.id !== 0) {
         // Mostrar un mensaje de carga
         this.customToastService.onLoading();
-        this.subRef$ = this.dataService
+        this.dataService
           .put(`Meetings/${this.id}`, model)
+          .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
           .subscribe({
             next: () => {
               this.onLoadData();
@@ -108,16 +109,19 @@ export default class AddOrEditMeetingComponent implements OnInit, OnDestroy {
       } else {
         // Mostrar un mensaje de carga
         this.customToastService.onLoading();
-        this.subRef$ = this.dataService.post(`Meetings`, model).subscribe({
-          next: (resp: any) => {
-            this.id = resp.body.id;
-            this.onLoadData();
-            this.customToastService.onClose();
-          },
-          error: (error) => {
-            this.customToastService.onCloseToError(error);
-          },
-        });
+        this.dataService
+          .post(`Meetings`, model)
+          .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+          .subscribe({
+            next: (resp: any) => {
+              this.id = resp.body.id;
+              this.onLoadData();
+              this.customToastService.onClose();
+            },
+            error: (error) => {
+              this.customToastService.onCloseToError(error);
+            },
+          });
       }
     }
   }
@@ -126,13 +130,14 @@ export default class AddOrEditMeetingComponent implements OnInit, OnDestroy {
     return this.form.controls;
   }
   onLoadData() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`Meetings/${this.id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe((resp: any) => {
         this.form.patchValue(resp.body);
       });
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

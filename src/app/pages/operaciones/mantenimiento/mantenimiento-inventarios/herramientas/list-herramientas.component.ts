@@ -3,7 +3,7 @@ import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import {
   AuthService,
   CustomToastService,
@@ -35,7 +35,9 @@ export default class ListerramientasComponent implements OnInit, OnDestroy {
   data: any[] = [];
 
   ref: DynamicDialogRef;
-  subRef$: Subscription;
+
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   customerId$: Observable<number> = this.customerIdService.getCustomerId$();
 
   ngOnInit(): void {
@@ -53,13 +55,13 @@ export default class ListerramientasComponent implements OnInit, OnDestroy {
   onLoadData() {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`Tools/${this.customerIdService.customerId}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
-          this.data = resp.body;
+          this.data = this.customToastService.onCloseOnGetData(resp.body);
           this.reporteHerramientasPdfService.setData(this.data);
-          this.customToastService.onClose();
         },
         error: (error) => {
           this.customToastService.onCloseToError(error);
@@ -70,15 +72,18 @@ export default class ListerramientasComponent implements OnInit, OnDestroy {
   onDelete(data: any) {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService.delete('Tools/' + data.id).subscribe({
-      next: () => {
-        this.onLoadData();
-        this.customToastService.onCloseToSuccess();
-      },
-      error: (error) => {
-        this.customToastService.onCloseToError(error);
-      },
-    });
+    this.dataService
+      .delete('Tools/' + data.id)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe({
+        next: () => {
+          this.onLoadData();
+          this.customToastService.onCloseToSuccess();
+        },
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
+        },
+      });
   }
 
   showModalAddOrEdit(data: any) {
@@ -98,7 +103,7 @@ export default class ListerramientasComponent implements OnInit, OnDestroy {
       }
     });
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

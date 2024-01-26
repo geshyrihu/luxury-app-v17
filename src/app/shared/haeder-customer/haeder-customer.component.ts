@@ -1,7 +1,10 @@
 import {} from '@angular/common';
 import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
 import { Observable, Subject, takeUntil } from 'rxjs';
-import { CustomerIdService } from 'src/app/core/services/common-services';
+import {
+  CustomToastService,
+  CustomerIdService,
+} from 'src/app/core/services/common-services';
 import { DataService } from 'src/app/core/services/data.service';
 import { TicketFilterService } from 'src/app/core/services/ticket-filter.service';
 import { environment } from 'src/environments/environment';
@@ -11,11 +14,14 @@ import { environment } from 'src/environments/environment';
   templateUrl: './haeder-customer.component.html',
   standalone: true,
   imports: [],
+  providers: [CustomToastService],
 })
 export default class HaederCustomerComponent implements OnInit, OnDestroy {
   public dataService = inject(DataService);
   public customerIdService = inject(CustomerIdService);
   public filterReportOperationService = inject(TicketFilterService);
+  public customToastService = inject(CustomToastService);
+
   logoCustomer = '';
   nameCustomer = '';
   customerId$: Observable<number> = this.customerIdService.getCustomerId$();
@@ -38,19 +44,18 @@ export default class HaederCustomerComponent implements OnInit, OnDestroy {
     this.dataService
       .get(`Customers/${this.customerIdService.customerId}`)
       .pipe(takeUntil(this.destroy$))
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.nameCustomer = resp.body.nameCustomer;
           this.logoCustomer = `${environment.base_urlImg}Administration/customer/${resp.body.photoPath}`;
         },
         error: (error) => {
-          console.log(error.error);
+          this.customToastService.onCloseToError(error);
         },
       });
   }
-  ngOnDestroy() {
-    // Cuando se destruye el componente, desvincular y liberar recursos
-    this.destroy$.next();
-    this.destroy$.complete();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

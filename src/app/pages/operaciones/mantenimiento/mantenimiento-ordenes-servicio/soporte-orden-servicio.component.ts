@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
 import { SanitizeHtmlPipe } from 'src/app/core/pipes/sanitize-html.pipe';
 import { CustomerIdService } from 'src/app/core/services/common-services';
 import { DataService } from 'src/app/core/services/data.service';
@@ -22,8 +21,6 @@ export default class SoporteOrdenServicioComponent
   private dataService = inject(DataService);
   private customerIdService = inject(CustomerIdService);
 
-  subRef$: Subscription;
-
   id: string = '';
   item: any;
   dataCustomer: any;
@@ -38,7 +35,7 @@ export default class SoporteOrdenServicioComponent
     this.onLoadData();
   }
   onLoadItem() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`ServiceOrders/SoporteOrdenServicio/${this.id}`)
       .subscribe((resp: any) => {
         this.nameCarpetaFecha = this.dateService.getDateFormat(
@@ -49,7 +46,7 @@ export default class SoporteOrdenServicioComponent
       });
   }
   onLoadData() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`Customers/${this.customerIdService.customerId}`)
       .subscribe((resp: any) => {
         this.dataCustomer = resp.body;
@@ -57,7 +54,7 @@ export default class SoporteOrdenServicioComponent
         this.logoCustomer = `${environment.base_urlImg}Administration/customer/${resp.body.photoPath}`;
       });
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

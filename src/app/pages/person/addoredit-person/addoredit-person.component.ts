@@ -9,7 +9,7 @@ import {
 import ComponentsModule from 'app/shared/components.module';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { imageToBase64 } from 'src/app/core/helpers/enumeration';
 import { UserInfoDto } from 'src/app/core/interfaces/user-info.interface';
 import {
@@ -46,7 +46,8 @@ export default class AddoreditPersonComponent implements OnInit, OnDestroy {
   public ref = inject(DynamicDialogRef);
 
   submitting: boolean = false;
-  subRef$: Subscription;
+
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   public personId: number = 0;
   existingPerson: any;
@@ -86,20 +87,24 @@ export default class AddoreditPersonComponent implements OnInit, OnDestroy {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
     if (this.personId === 0) {
-      this.subRef$ = this.dataService.post('Person', formData).subscribe({
-        next: () => {
-          this.ref.close(true);
-          this.customToastService.onClose();
-        },
-        error: (error) => {
-          // Habilitar el botón nuevamente al finalizar el envío del formulario
-          this.submitting = false;
-          this.customToastService.onCloseToError(error);
-        },
-      });
+      this.dataService
+        .post('Person', formData)
+        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+        .subscribe({
+          next: () => {
+            this.ref.close(true);
+            this.customToastService.onClose();
+          },
+          error: (error) => {
+            // Habilitar el botón nuevamente al finalizar el envío del formulario
+            this.submitting = false;
+            this.customToastService.onCloseToError(error);
+          },
+        });
     } else {
-      this.subRef$ = this.dataService
+      this.dataService
         .put('person/' + this.personId, formData)
+        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
         .subscribe({
           next: () => {
             this.ref.close(true);
@@ -122,14 +127,17 @@ export default class AddoreditPersonComponent implements OnInit, OnDestroy {
   }
 
   onLoadData() {
-    this.subRef$ = this.dataService.get(`person/${this.personId}`).subscribe({
-      next: (resp: any) => {
-        this.form.patchValue(resp.body);
-      },
-      error: (error) => {
-        this.customToastService.onCloseToError(error);
-      },
-    });
+    this.dataService
+      .get(`person/${this.personId}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe({
+        next: (resp: any) => {
+          this.form.patchValue(resp.body);
+        },
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
+        },
+      });
   }
   get f() {
     return this.form.controls;
@@ -161,8 +169,9 @@ export default class AddoreditPersonComponent implements OnInit, OnDestroy {
 
   searchExistingPerson(fullName: any) {
     this.existingPerson = [];
-    this.subRef$ = this.dataService
+    this.dataService
       .get('Employees/SearchExistingPerson/' + fullName.target.value)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp) => {
           this.existingPerson = resp.body;
@@ -177,19 +186,20 @@ export default class AddoreditPersonComponent implements OnInit, OnDestroy {
 
   searchExistingPhone(phone: any) {
     this.existingPhone = [];
-    this.subRef$ = this.dataService
+    this.dataService
       .get('Employees/SearchExistingPhone/' + phone.target.value)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp) => {
           this.existingPhone = resp.body;
         },
         error: (error) => {
-          console.log(error.error);
+          this.customToastService.onCloseToError(error);
         },
       });
   }
 
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

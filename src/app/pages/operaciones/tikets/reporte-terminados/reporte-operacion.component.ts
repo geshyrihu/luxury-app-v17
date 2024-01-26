@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { MessageService } from 'primeng/api';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { IFilterTicket } from 'src/app/core/interfaces/IFilterTicket.interface';
 import {
   AuthService,
@@ -40,7 +40,8 @@ export default class ReporteOperacionComponent implements OnInit, OnDestroy {
   fechaFinal = '';
 
   customerId$: Observable<number> = this.customerIdService.getCustomerId$();
-  subRef$: Subscription;
+
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   ngOnInit(): void {
     this.fechaInicial = this.ticketFilterService.filterTicket.finishedStart;
@@ -57,15 +58,15 @@ export default class ReporteOperacionComponent implements OnInit, OnDestroy {
     this.customToastService.onLoading();
     this.urlImg = `${environment.base_urlImg}customers/${this.ticketFilterService.filterTicket.customer}/report/`;
 
-    this.subRef$ = this.dataService
+    this.dataService
       .post<IFilterTicket>(
         'Ticket/GetReportWeekly',
         this.ticketFilterService.filterTicket
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
-          this.data = resp.body;
-          this.customToastService.onClose();
+          this.data = this.customToastService.onCloseOnGetData(resp.body);
         },
         error: (error) => {
           this.customToastService.onCloseToError(error);
@@ -73,7 +74,7 @@ export default class ReporteOperacionComponent implements OnInit, OnDestroy {
       });
   }
 
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

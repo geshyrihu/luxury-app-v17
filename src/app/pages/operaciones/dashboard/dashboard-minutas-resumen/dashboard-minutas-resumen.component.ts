@@ -7,7 +7,7 @@ import {
   DynamicDialogRef,
 } from 'primeng/dynamicdialog';
 import { TableModule } from 'primeng/table';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { SanitizeHtmlPipe } from 'src/app/core/pipes/sanitize-html.pipe';
 import {
   CustomToastService,
@@ -34,7 +34,9 @@ export default class DashboardMinutasResumenComponent
 
   data: any[] = [];
   ref: DynamicDialogRef;
-  subRef$: Subscription;
+
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   eAreaMinutasDetalles: any;
 
   ngOnInit(): void {
@@ -44,16 +46,16 @@ export default class DashboardMinutasResumenComponent
   onLoadData() {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService
+    this.dataService
       .get(
         `Dashboard/MinutasPendientesResumen/${this.customerIdService.getcustomerId()}/${
           this.eAreaMinutasDetalles
         }`
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
-          this.data = resp.body;
-          this.customToastService.onClose();
+          this.data = this.customToastService.onCloseOnGetData(resp.body);
         },
         error: (error) => {
           this.customToastService.onCloseToError(error);
@@ -62,6 +64,6 @@ export default class DashboardMinutasResumenComponent
   }
 
   ngOnDestroy(): void {
-    if (this.subRef$) this.subRef$.unsubscribe();
+    this.dataService.ngOnDestroy();
   }
 }

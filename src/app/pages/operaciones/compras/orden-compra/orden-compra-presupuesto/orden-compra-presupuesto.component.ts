@@ -3,7 +3,7 @@ import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import {
   AuthService,
   CustomToastService,
@@ -35,6 +35,8 @@ export default class OrdenCompraPresupuestoComponent
   public messageService = inject(MessageService);
   public customerIdService = inject(CustomerIdService);
 
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   anio: number = fechaActual.getFullYear();
   data: any[] = [];
   total: number = 0;
@@ -42,7 +44,6 @@ export default class OrdenCompraPresupuestoComponent
   totalConRetencionIva = 0;
   cedulaId: number = 0;
   cb_cedulas: any[] = [];
-  subRef$: Subscription;
 
   ngOnInit(): void {
     this.onLoadCedulasCustomer(this.customerIdService.getcustomerId());
@@ -52,21 +53,21 @@ export default class OrdenCompraPresupuestoComponent
   onLoadData() {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService
+    this.dataService
       .get(
         // `OrdenCompraPresupuesto/GetAll/${this.customerIdService.customerId}/${this.cedulaId}/${this.ordenCompraId}`
         `OrdenCompraPresupuesto/GetAll/${this.cedulaId}/${this.ordenCompraId}`
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
-          this.data = resp.body;
+          this.data = this.customToastService.onCloseOnGetData(resp.body);
           this.data.forEach(
             (x) => (
               (x.dineroUsado = this.total),
               (x.ordenCompraId = this.ordenCompraId)
             )
           );
-          this.customToastService.onClose();
         },
         error: (error) => {
           this.customToastService.onCloseToError(error);
@@ -76,8 +77,9 @@ export default class OrdenCompraPresupuestoComponent
   onSubmit(partidaPresupuestal: any) {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService
+    this.dataService
       .post(`OrdenCompraPresupuesto`, partidaPresupuestal)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           const valor =
@@ -100,8 +102,9 @@ export default class OrdenCompraPresupuestoComponent
   }
 
   onLoadCedulasCustomer(customerId: number) {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`CedulaPresupuestal/GetCedulas/${customerId}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           if (resp.body) {
@@ -116,7 +119,7 @@ export default class OrdenCompraPresupuestoComponent
         },
       });
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

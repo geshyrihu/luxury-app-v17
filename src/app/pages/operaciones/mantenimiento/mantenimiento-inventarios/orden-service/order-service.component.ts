@@ -8,7 +8,7 @@ import {
   DynamicDialogConfig,
   DynamicDialogRef,
 } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import {
   AuthService,
   CustomToastService,
@@ -35,9 +35,10 @@ export default class OrderServiceComponent implements OnInit, OnDestroy {
   public ref = inject(DynamicDialogRef);
   public confirmationService = inject(ConfirmationService);
 
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   public Editor = ClassicEditor;
 
-  subRef$: Subscription;
   maintenanceCalendars: any[] = [];
   idMachinery: number = 0;
 
@@ -54,8 +55,9 @@ export default class OrderServiceComponent implements OnInit, OnDestroy {
   }
 
   onLoadData() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`MaintenanceCalendars/ListService/${this.idMachinery}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.maintenanceCalendars = resp.body;
@@ -73,8 +75,9 @@ export default class OrderServiceComponent implements OnInit, OnDestroy {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         //confirm action
-        this.subRef$ = this.dataService
+        this.dataService
           .delete(`MaintenanceCalendars/${id}`)
+          .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
           .subscribe({
             next: () => {
               this.customToastService.onShowSuccess();
@@ -112,8 +115,9 @@ export default class OrderServiceComponent implements OnInit, OnDestroy {
     });
   }
   deleteMaintenanceOrder(data: any) {
-    this.subRef$ = this.dataService
+    this.dataService
       .delete(`MaintenanceCalendars/${data.id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           this.customToastService.onShowSuccess();
@@ -124,7 +128,7 @@ export default class OrderServiceComponent implements OnInit, OnDestroy {
         },
       });
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

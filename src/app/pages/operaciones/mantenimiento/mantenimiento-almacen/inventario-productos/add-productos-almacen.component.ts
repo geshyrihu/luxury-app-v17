@@ -3,7 +3,7 @@ import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { IProductoListAddDto } from 'src/app/core/interfaces/IProductoListAddDto.interface.interface';
 import {
   AuthService,
@@ -35,7 +35,8 @@ export default class AddProductosAlmacenComponent implements OnInit, OnDestroy {
   data: any[] = [];
   cb_UnidadMedida: any[] = [];
   mensajeError = '';
-  subRef$: Subscription;
+
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   onLoadSelectItem() {
     this.selectItemService
@@ -71,14 +72,14 @@ export default class AddProductosAlmacenComponent implements OnInit, OnDestroy {
   onLoadData() {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService
+    this.dataService
       .get(
         `InventarioProducto/GetProductoDropdownDto/${this.customerIdService.customerId}`
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
-          this.data = resp.body;
-          this.customToastService.onClose();
+          this.data = this.customToastService.onCloseOnGetData(resp.body);
         },
         error: (error) => {
           this.customToastService.onCloseToError(error);
@@ -102,8 +103,9 @@ export default class AddProductosAlmacenComponent implements OnInit, OnDestroy {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
 
-    this.subRef$ = this.dataService
+    this.dataService
       .post(`InventarioProducto/`, item)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           this.mensajeError = '';
@@ -115,7 +117,7 @@ export default class AddProductosAlmacenComponent implements OnInit, OnDestroy {
         },
       });
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ToastModule } from 'primeng/toast';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import {
   CustomToastService,
   DataService,
@@ -29,8 +29,10 @@ export default class OrdenCompraStatusComponent implements OnInit, OnDestroy {
   public ref = inject(DynamicDialogRef);
   public config = inject(DynamicDialogConfig);
   public messageService = inject(MessageService);
+
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   submitting: boolean = false;
-  subRef$: Subscription;
 
   ordenCompraId: number = 0;
   ordenCompraStatus: any;
@@ -49,8 +51,9 @@ export default class OrdenCompraStatusComponent implements OnInit, OnDestroy {
   }
 
   onLoadData() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`OrdenCompraStatus/${this.ordenCompraId}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.ordenCompraStatus = resp.body;
@@ -66,8 +69,9 @@ export default class OrdenCompraStatusComponent implements OnInit, OnDestroy {
     this.customToastService.onLoading();
     // Deshabilitar el botón al iniciar el envío del formulario
     this.submitting = true;
-    this.subRef$ = this.dataService
+    this.dataService
       .put(`OrdenCompraStatus/${this.ordenCompraStatus.id}`, this.form.value)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           this.ref.close(true);
@@ -80,7 +84,7 @@ export default class OrdenCompraStatusComponent implements OnInit, OnDestroy {
         },
       });
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

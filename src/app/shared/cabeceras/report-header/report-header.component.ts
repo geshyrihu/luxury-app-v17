@@ -1,6 +1,6 @@
 import {} from '@angular/common';
 import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { CustomerIdService } from 'src/app/core/services/common-services';
 import { DataService } from 'src/app/core/services/data.service';
 import { TicketFilterService } from 'src/app/core/services/ticket-filter.service';
@@ -24,7 +24,6 @@ export default class ReportHeaderComponent implements OnInit, OnDestroy {
   logoCustomer: string = '';
 
   customerId$: Observable<number> = this.customerIdService.getCustomerId$();
-  subRef$: Subscription;
 
   ngOnInit(): void {
     this.onLoadData();
@@ -37,14 +36,14 @@ export default class ReportHeaderComponent implements OnInit, OnDestroy {
     });
   }
   onLoadData() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`Customers/${this.customerIdService.customerId}`)
       .subscribe((resp: any) => {
         this.nameCustomer = resp.body.nameCustomer;
         this.logoCustomer = `${environment.base_urlImg}Administration/customer/${resp.body.photoPath}`;
       });
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

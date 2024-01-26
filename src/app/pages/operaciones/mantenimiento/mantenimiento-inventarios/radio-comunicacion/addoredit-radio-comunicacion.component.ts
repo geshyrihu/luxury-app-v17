@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { IRadioComunicacionAddOrEditDto } from 'src/app/core/interfaces/IRadioComunicacionAddOrEditDto.interface';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import {
@@ -53,8 +53,9 @@ export default class AddOrEditRadioComunicacionComponent implements OnInit {
   public customerIdService = inject(CustomerIdService);
   private customToastService = inject(CustomToastService);
 
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   submitting: boolean = false;
-  subRef$: Subscription;
 
   id: number = 0;
   urlBaseImg = '';
@@ -79,7 +80,7 @@ export default class AddOrEditRadioComunicacionComponent implements OnInit {
   });
 
   onLoadData() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get<IRadioComunicacionAddOrEditDto>(`RadioComunicacion/${this.id}`)
       .subscribe((resp) => {
         this.urlBaseImg = `${environment.base_urlImg}customers/${resp.body.customerId}/radios/${resp.body.fotografia}`;
@@ -107,8 +108,9 @@ export default class AddOrEditRadioComunicacionComponent implements OnInit {
     this.customToastService.onLoading();
 
     if (this.id === 0) {
-      this.subRef$ = this.dataService
+      this.dataService
         .post('RadioComunicacion', formData)
+        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
         .subscribe({
           next: () => {
             this.ref.close(true);
@@ -121,8 +123,9 @@ export default class AddOrEditRadioComunicacionComponent implements OnInit {
           },
         });
     } else {
-      this.subRef$ = this.dataService
+      this.dataService
         .put(`RadioComunicacion/${this.id}`, formData)
+        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
         .subscribe({
           next: () => {
             this.ref.close(true);
@@ -196,7 +199,7 @@ export default class AddOrEditRadioComunicacionComponent implements OnInit {
         this.cb_area_responsable = resp;
       });
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

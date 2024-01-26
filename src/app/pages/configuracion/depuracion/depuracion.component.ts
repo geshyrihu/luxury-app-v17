@@ -1,6 +1,6 @@
 import { Component, OnDestroy, inject } from '@angular/core';
 import { MessageService } from 'primeng/api';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import {
   CustomToastService,
   CustomerIdService,
@@ -21,11 +21,14 @@ export default class DepuracionComponent implements OnDestroy {
   public messageService = inject(MessageService);
   public customerIdService = inject(CustomerIdService);
 
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   ActualizarDatosEmpleadoContatoData() {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService
+    this.dataService
       .get('Depuracion/ActualizarDatosEmpleadoContatoData')
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (_) => {
           this.customToastService.onShowSuccess();
@@ -40,19 +43,21 @@ export default class DepuracionComponent implements OnDestroy {
   UpdateAccounts() {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService.get('depuracion/updateaccounts').subscribe({
-      next: (_) => {
-        this.customToastService.onShowSuccess();
-        this.customToastService.onClose();
-      },
-      error: (error) => {
-        this.customToastService.onCloseToError(error);
-      },
-    });
+    this.dataService
+      .get('depuracion/updateaccounts')
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe({
+        next: (_) => {
+          this.customToastService.onShowSuccess();
+          this.customToastService.onClose();
+        },
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
+        },
+      });
   }
 
-  subRef$: Subscription;
   ngOnDestroy(): void {
-    if (this.subRef$) this.subRef$.unsubscribe();
+    this.dataService.ngOnDestroy();
   }
 }

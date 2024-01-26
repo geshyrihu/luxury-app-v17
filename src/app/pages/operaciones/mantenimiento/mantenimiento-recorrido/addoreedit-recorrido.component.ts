@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { ERouteRecurrence } from 'src/app/core/enums/route-recurrence.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
@@ -41,7 +41,8 @@ export default class RecorridoAddOrEditComponent implements OnInit, OnDestroy {
 
   submitting: boolean = false;
 
-  subRef$: Subscription;
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   form: FormGroup;
   id: number = 0;
   cb_machinery: ISelectItemDto[] = [];
@@ -58,11 +59,6 @@ export default class RecorridoAddOrEditComponent implements OnInit, OnDestroy {
       .subscribe((resp: any) => {
         this.cb_machinery = resp;
       });
-    // this.enumService
-    //   .onGetSelectItemEmun('ERouteRecurrence')
-    //   .subscribe((resp) => {
-    //     this.cb_RouteRecurrence = resp;
-    //   });
   }
 
   public saveMachineryId(e): void {
@@ -79,14 +75,17 @@ export default class RecorridoAddOrEditComponent implements OnInit, OnDestroy {
   }
 
   onLoadData() {
-    this.subRef$ = this.dataService.get('Routes/' + this.id).subscribe({
-      next: (resp: any) => {
-        this.form.patchValue(resp.body);
-      },
-      error: (error) => {
-        this.customToastService.onCloseToError(error);
-      },
-    });
+    this.dataService
+      .get('Routes/' + this.id)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe({
+        next: (resp: any) => {
+          this.form.patchValue(resp.body);
+        },
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
+        },
+      });
   }
 
   onLoadForm() {
@@ -113,8 +112,9 @@ export default class RecorridoAddOrEditComponent implements OnInit, OnDestroy {
     this.customToastService.onLoading();
 
     if (this.id === 0) {
-      this.subRef$ = this.dataService
+      this.dataService
         .post(`Routes`, this.form.value)
+        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
         .subscribe({
           next: () => {
             this.ref.close(true);
@@ -127,8 +127,9 @@ export default class RecorridoAddOrEditComponent implements OnInit, OnDestroy {
           },
         });
     } else {
-      this.subRef$ = this.dataService
+      this.dataService
         .put(`Routes/${this.id}`, this.form.value)
+        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
         .subscribe({
           next: () => {
             this.ref.close(true);
@@ -149,7 +150,7 @@ export default class RecorridoAddOrEditComponent implements OnInit, OnDestroy {
       routeRecurrence: form.routeRecurrence,
     };
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

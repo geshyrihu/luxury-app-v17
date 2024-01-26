@@ -3,7 +3,7 @@ import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ToastModule } from 'primeng/toast';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import {
   CustomToastService,
   CustomerIdService,
@@ -26,12 +26,13 @@ export default class GastosMantenimientoComponent implements OnInit, OnDestroy {
   public messageService = inject(MessageService);
   public dialogService = inject(DialogService);
 
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   data: any[] = [];
   resumenGastos: any[] = [];
   customerId$: Observable<number> = this.customerIdService.getCustomerId$();
   totalGasto: number = 0;
   ref: DynamicDialogRef;
-  subRef$: Subscription;
 
   ngOnInit(): void {
     this.onLoadData();
@@ -42,10 +43,11 @@ export default class GastosMantenimientoComponent implements OnInit, OnDestroy {
   onLoadData() {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService
+    this.dataService
       .get(
         `MaintenanceCalendars/SummaryOfExpenses/${this.customerIdService.getcustomerId()}`
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.data = resp.body.items;
@@ -56,10 +58,11 @@ export default class GastosMantenimientoComponent implements OnInit, OnDestroy {
           this.customToastService.onCloseToError(error);
         },
       });
-    this.subRef$ = this.dataService
+    this.dataService
       .get(
         `MaintenanceCalendars/Resumengastos/${this.customerIdService.getcustomerId()}`
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.resumenGastos = resp.body;
@@ -91,7 +94,7 @@ export default class GastosMantenimientoComponent implements OnInit, OnDestroy {
       }
     });
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

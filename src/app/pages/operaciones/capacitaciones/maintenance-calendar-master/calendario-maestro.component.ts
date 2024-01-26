@@ -8,7 +8,7 @@ import {
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ToastModule } from 'primeng/toast';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import {
   AuthService,
   CustomToastService,
@@ -40,7 +40,8 @@ export default class CalendarioMaestroComponent implements OnInit, OnDestroy {
   public authService = inject(AuthService);
   data: any[] = [];
   ref: DynamicDialogRef;
-  subRef$: Subscription;
+
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   ngOnInit(): void {
     this.onLoadData();
@@ -50,15 +51,17 @@ export default class CalendarioMaestroComponent implements OnInit, OnDestroy {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
 
-    this.subRef$ = this.dataService.get('CalendarioMaestro/GetAll').subscribe({
-      next: (resp: any) => {
-        this.data = resp.body;
-        this.customToastService.onClose();
-      },
-      error: (error) => {
-        this.customToastService.onCloseToError(error);
-      },
-    });
+    this.dataService
+      .get('CalendarioMaestro/GetAll')
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe({
+        next: (resp: any) => {
+          this.data = this.customToastService.onCloseOnGetData(resp.body);
+        },
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
+        },
+      });
   }
 
   onDatosServicio(data: any) {
@@ -75,8 +78,9 @@ export default class CalendarioMaestroComponent implements OnInit, OnDestroy {
     });
   }
   onDelete(data: any): any {
-    this.subRef$ = this.dataService
+    this.dataService
       .delete(`CalendarioMaestro/${data.id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           this.onLoadData();
@@ -109,6 +113,6 @@ export default class CalendarioMaestroComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.subRef$) this.subRef$.unsubscribe();
+    this.dataService.ngOnDestroy();
   }
 }

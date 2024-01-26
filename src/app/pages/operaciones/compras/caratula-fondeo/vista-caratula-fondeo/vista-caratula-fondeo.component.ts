@@ -12,7 +12,7 @@ import {
 import { ITable } from 'pdfmake-wrapper/lib/interfaces';
 import { MenuItem, MessageService } from 'primeng/api';
 import { ContextMenuModule } from 'primeng/contextmenu';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { IFondeoCaratulaDto } from 'src/app/core/interfaces/IFondeoCaratulaDto.interface';
 import {
   IItemsFondeoCaratulaDto,
@@ -28,7 +28,6 @@ import { environment } from 'src/environments/environment';
 const date = new Date();
 
 PdfMakeWrapper.useFont('roboto');
-subRef$: Subscription;
 
 @Component({
   selector: 'app-vista-caratula-fondeo',
@@ -44,7 +43,7 @@ export default class VistaCaratulaFondeoComponent implements OnInit, OnDestroy {
   public router = inject(Router);
   public customToastService = inject(CustomToastService);
 
-  subRef$: Subscription;
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   data: IFondeoCaratulaDto;
   dataSelect: any;
@@ -79,7 +78,7 @@ export default class VistaCaratulaFondeoComponent implements OnInit, OnDestroy {
       // Mostrar un mensaje de carga
       this.customToastService.onLoading();
 
-      this.subRef$ = this.dataService
+      this.dataService
         .post(
           'OrdenCompra/Fondeo/',
           this.caratulaFondeoService.requestFondeoCaratulaDto
@@ -87,8 +86,7 @@ export default class VistaCaratulaFondeoComponent implements OnInit, OnDestroy {
         .subscribe({
           next: (resp: any) => {
             this.data = undefined;
-            this.data = resp.body;
-            this.customToastService.onCloseToSuccess();
+            this.data = this.customToastService.onCloseOnGetData(resp.body);
           },
           error: (error) => {
             this.customToastService.onCloseToError(error);
@@ -242,8 +240,9 @@ export default class VistaCaratulaFondeoComponent implements OnInit, OnDestroy {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
 
-    this.subRef$ = this.dataService
+    this.dataService
       .post('ExportExcel/GetCaratulaFondeo', this.data)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (_) => this.customToastService.onClose(),
         error: (error) => {
@@ -251,7 +250,7 @@ export default class VistaCaratulaFondeoComponent implements OnInit, OnDestroy {
         },
       });
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

@@ -7,6 +7,7 @@ import {
   DynamicDialogConfig,
   DynamicDialogRef,
 } from 'primeng/dynamicdialog';
+import { Subject, takeUntil } from 'rxjs';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import {
   AuthService,
@@ -40,6 +41,8 @@ export default class AddProductModalComponent implements OnInit {
   urlImagenProducto = environment.base_urlImg + 'Administration/products/';
   mensajeError = false;
 
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   solicitudCompraId: number = 0;
   cb_unidadMedida: ISelectItemDto[] = [];
 
@@ -72,10 +75,10 @@ export default class AddProductModalComponent implements OnInit {
       .get(
         `SolicitudCompraDetalle/AddProductoToSolicitudDto/${this.solicitudCompraId}`
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
-          this.data = resp.body;
-          this.customToastService.onClose();
+          this.data = this.customToastService.onCloseOnGetData(resp.body);
         },
         error: (error) => {
           this.customToastService.onCloseToError(error);
@@ -94,16 +97,19 @@ export default class AddProductModalComponent implements OnInit {
     }
 
     item.EmployeeId = this.authService.infoEmployeeDto.employeeId;
-    this.dataService.post<any>(`SolicitudCompraDetalle/`, item).subscribe({
-      next: () => {
-        this.customToastService.onShowSuccess();
-        this.mensajeError = false;
-        this.onLoadProduct();
-      },
-      error: (error) => {
-        this.customToastService.onCloseToError(error);
-      },
-    });
+    this.dataService
+      .post<any>(`SolicitudCompraDetalle/`, item)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe({
+        next: () => {
+          this.customToastService.onShowSuccess();
+          this.mensajeError = false;
+          this.onLoadProduct();
+        },
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
+        },
+      });
   }
 
   onModalTarjetaProducto(productoId: number): void {

@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import {
   AuthService,
   CustomToastService,
@@ -37,11 +37,11 @@ export default class AddoreditDocumentoComponent implements OnInit, OnDestroy {
   public config = inject(DynamicDialogConfig);
   public ref = inject(DynamicDialogRef);
   private serviceIdCustomer = inject(CustomerIdService);
-
   private customToastService = inject(CustomToastService);
 
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   submitting: boolean = false;
-  subRef$: Subscription;
 
   id: number = 0;
   checked: boolean = false;
@@ -66,7 +66,7 @@ export default class AddoreditDocumentoComponent implements OnInit, OnDestroy {
     }
   }
   onLoadData() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`DocumentoCustomer/${this.id}`)
       .subscribe((resp: any) => {
         this.id = resp.body.id;
@@ -90,8 +90,9 @@ export default class AddoreditDocumentoComponent implements OnInit, OnDestroy {
     this.customToastService.onLoading();
 
     if (this.id === 0) {
-      this.subRef$ = this.dataService
+      this.dataService
         .post(`DocumentoCustomer`, formData)
+        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
         .subscribe({
           next: () => {
             this.ref.close(true);
@@ -104,8 +105,9 @@ export default class AddoreditDocumentoComponent implements OnInit, OnDestroy {
           },
         });
     } else {
-      this.subRef$ = this.dataService
+      this.dataService
         .put(`DocumentoCustomer/${this.id}`, formData)
+        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
         .subscribe({
           next: () => {
             this.ref.close(true);
@@ -136,8 +138,8 @@ export default class AddoreditDocumentoComponent implements OnInit, OnDestroy {
     );
     return formData;
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 
   get f() {

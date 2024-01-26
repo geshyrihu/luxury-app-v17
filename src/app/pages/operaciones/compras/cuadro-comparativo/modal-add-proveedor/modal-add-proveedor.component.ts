@@ -12,7 +12,7 @@ import {
   DynamicDialogConfig,
   DynamicDialogRef,
 } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import {
   CustomToastService,
@@ -43,8 +43,9 @@ export default class ModalAddProveedorComponent implements OnInit, OnDestroy {
   public dialogService = inject(DialogService);
   public customToastService = inject(CustomToastService);
 
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   submitting: boolean = false;
-  subRef$: Subscription;
 
   form: FormGroup;
   cb_providers: ISelectItemDto[] = [];
@@ -74,7 +75,7 @@ export default class ModalAddProveedorComponent implements OnInit, OnDestroy {
   }
 
   onLoadProviders() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(
         `CotizacionProveedor/GetProviders/${this.config.data.solicitudCompraId}`
       )
@@ -88,8 +89,9 @@ export default class ModalAddProveedorComponent implements OnInit, OnDestroy {
     this.submitting = true;
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService
+    this.dataService
       .post('CotizacionProveedor', this.form.value)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           this.ref.close(true);
@@ -103,7 +105,7 @@ export default class ModalAddProveedorComponent implements OnInit, OnDestroy {
       });
   }
 
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

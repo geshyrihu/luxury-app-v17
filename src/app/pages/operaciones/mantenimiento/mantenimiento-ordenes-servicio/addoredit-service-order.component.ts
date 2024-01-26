@@ -9,7 +9,7 @@ import {
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { MessageService, SelectItem } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { EStatusTask } from 'src/app/core/enums/estatus-task.enum';
 import { ETypeMaintance } from 'src/app/core/enums/type-maintance.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
@@ -56,7 +56,8 @@ export default class ServiceOrderAddOrEditComponent
   public Editor = ClassicEditor;
 
   submitting: boolean = false;
-  subRef$: Subscription;
+
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   cb_machinery: any[] = [];
   cb_providers: any[] = [];
@@ -92,9 +93,12 @@ export default class ServiceOrderAddOrEditComponent
         this.cb_machinery = resp;
       });
 
-    this.selectItemService.onGetSelectItem('Providers').subscribe((resp) => {
-      this.cb_providers = resp;
-    });
+    this.selectItemService
+      .onGetSelectItem('Providers')
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe((resp) => {
+        this.cb_providers = resp;
+      });
 
     this.selectItemService
       .onGetSelectItem(`GetUserCustomer/${this.customerId}`)
@@ -147,8 +151,9 @@ export default class ServiceOrderAddOrEditComponent
   }
 
   onLoadData() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`ServiceOrders/${this.id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe((resp: any) => {
         resp.body.executionDate = this.dateService.getDateFormat(
           resp.body.executionDate
@@ -173,8 +178,9 @@ export default class ServiceOrderAddOrEditComponent
     this.customToastService.onLoading();
 
     if (this.id === 0) {
-      this.subRef$ = this.dataService
+      this.dataService
         .post(`ServiceOrders`, this.form.value)
+        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
         .subscribe({
           next: () => {
             this.ref.close(true);
@@ -187,7 +193,7 @@ export default class ServiceOrderAddOrEditComponent
           },
         });
     } else {
-      this.subRef$ = this.dataService
+      this.dataService
         .put(`ServiceOrders/${this.id}`, this.form.value)
         .subscribe({
           next: () => {
@@ -205,7 +211,7 @@ export default class ServiceOrderAddOrEditComponent
   get f() {
     return this.form.controls;
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

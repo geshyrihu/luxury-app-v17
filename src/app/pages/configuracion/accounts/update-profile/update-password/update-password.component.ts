@@ -9,7 +9,7 @@ import {
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { passwordValidation } from 'src/app/core/directives/password-validation.directive';
 import { ChangePassword } from 'src/app/core/interfaces/change-password.interface';
 import {
@@ -38,8 +38,10 @@ export default class UpdatePasswordComponent implements OnInit, OnDestroy {
   private formBuilder = inject(FormBuilder);
   public customToastService = inject(CustomToastService);
 
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   submitting: boolean = false;
-  subRef$: Subscription;
+
   formUpdatePassword!: UntypedFormGroup;
 
   ngOnInit(): void {
@@ -85,8 +87,9 @@ export default class UpdatePasswordComponent implements OnInit, OnDestroy {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
 
-    this.subRef$ = this.dataService
+    this.dataService
       .put(`Users/ChangePassword/${id}`, model)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           this.customToastService.onCloseToSuccess();
@@ -119,6 +122,6 @@ export default class UpdatePasswordComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.subRef$) this.subRef$.unsubscribe();
+    this.dataService.ngOnDestroy();
   }
 }

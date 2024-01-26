@@ -8,7 +8,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import {
   CustomToastService,
   DataService,
@@ -34,9 +34,11 @@ export default class RecuperarContraseñaComponent implements OnInit, OnDestroy 
   private router = inject(Router);
   public customToastService = inject(CustomToastService);
 
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   form: FormGroup;
   sendEmail: boolean = false;
-  subRef$: Subscription;
+
   ngOnInit(): void {
     this.onLoadForm();
   }
@@ -62,18 +64,16 @@ export default class RecuperarContraseñaComponent implements OnInit, OnDestroy 
     }
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService
+    this.dataService
       .post('Auth/RecoverPassword', this.form.value)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           this.customToastService.onClose();
           this.sendEmail = true;
         },
         error: (error) => {
-          console.log(error.error);
-          this.customToastService.onLoadingError(
-            error.error[''].errors[0].errorMessage
-          );
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -82,6 +82,6 @@ export default class RecuperarContraseñaComponent implements OnInit, OnDestroy 
     this.router.navigateByUrl('/auth/login');
   }
   ngOnDestroy(): void {
-    if (this.subRef$) this.subRef$.unsubscribe();
+    this.dataService.ngOnDestroy();
   }
 }

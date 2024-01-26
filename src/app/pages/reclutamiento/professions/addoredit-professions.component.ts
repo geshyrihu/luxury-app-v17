@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { IProfessionAddOrEditDto } from 'src/app/core/interfaces/IProfessionAddOrEditDto.interface';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
@@ -38,8 +38,8 @@ export default class AddOrEditProfessionsComponent
   public ref = inject(DynamicDialogRef);
   private customToastService = inject(CustomToastService);
 
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
   submitting: boolean = false;
-  subRef$: Subscription;
 
   id: number = 0;
 
@@ -72,7 +72,7 @@ export default class AddOrEditProfessionsComponent
   }
 
   onLoadData(id: number) {
-    this.subRef$ = this.dataService
+    this.dataService
       .get<IProfessionAddOrEditDto>(`Professions/${id}`)
       .subscribe((resp: any) => {
         this.form.patchValue(resp.body);
@@ -95,8 +95,9 @@ export default class AddOrEditProfessionsComponent
 
     if (this.id === 0) {
       // ...Creación de registro
-      this.subRef$ = this.dataService
+      this.dataService
         .post(`Professions`, this.form.value)
+        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
         .subscribe({
           next: () => {
             this.customToastService.onClose();
@@ -110,7 +111,7 @@ export default class AddOrEditProfessionsComponent
         });
     } else {
       // ...Actualización de registro
-      this.subRef$ = this.dataService
+      this.dataService
         .put(`Professions/${this.id}`, this.form.value)
         .subscribe({
           next: () => {
@@ -125,7 +126,7 @@ export default class AddOrEditProfessionsComponent
         });
     }
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

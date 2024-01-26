@@ -3,7 +3,7 @@ import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { IFechasFiltro } from 'src/app/core/interfaces/IFechasFiltro.interface';
 import {
   AuthService,
@@ -39,7 +39,9 @@ export default class BitacoraDiariaComponent implements OnInit, OnDestroy {
   rangeDates: Date[] = [];
   ref: DynamicDialogRef;
   data: any[] = [];
-  subRef$: Subscription;
+
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   cb_user: any[] = [];
   cb_customers: any[] = [];
   cb_estatus: any[] = ['Concluido', 'Pendiente'];
@@ -61,9 +63,12 @@ export default class BitacoraDiariaComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.onLoadUserSupervisor();
-    this.selectItemService.getCustomersNombreCorto().subscribe((resp) => {
-      this.cb_customers = resp;
-    });
+    this.selectItemService
+      .getCustomersNombreCorto()
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe((resp) => {
+        this.cb_customers = resp;
+      });
     this.rangoCalendarioService.fechas$.subscribe((resp: IFechasFiltro) => {
       this.fechaInicial = resp.fechaInicio;
       this.fechaFinal = resp.fechaFinal;
@@ -75,12 +80,12 @@ export default class BitacoraDiariaComponent implements OnInit, OnDestroy {
   onLoadData() {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`AgendaSupervision/GetAll/${this.fechaInicial}/${this.fechaFinal}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
-          this.data = resp.body;
-          this.customToastService.onClose();
+          this.data = this.customToastService.onCloseOnGetData(resp.body);
         },
         error: (error) => {
           this.customToastService.onCloseToError(error);
@@ -89,8 +94,9 @@ export default class BitacoraDiariaComponent implements OnInit, OnDestroy {
   }
 
   onLoadUserSupervisor() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get('SelectItem/getlistsupervision')
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.cb_user = resp.body;
@@ -122,8 +128,9 @@ export default class BitacoraDiariaComponent implements OnInit, OnDestroy {
   onDelete(data: any) {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService
+    this.dataService
       .delete('AgendaSupervision/' + data.id)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           this.customToastService.onCloseToSuccess();
@@ -135,6 +142,6 @@ export default class BitacoraDiariaComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.subRef$) this.subRef$.unsubscribe();
+    this.dataService.ngOnDestroy();
   }
 }

@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import PrimeNgModule from 'app/shared/prime-ng.module';
 import { NgxMaskModule } from 'ngx-mask';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -10,7 +10,7 @@ import {
   DynamicDialogRef,
 } from 'primeng/dynamicdialog';
 import { ToastModule } from 'primeng/toast';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import {
   CustomToastService,
   DataService,
@@ -37,7 +37,6 @@ import AddoreditPersonEmergencyContactComponent from '../addoredit-person-emerge
 export default class ListPersonEmergencyContactComponent
   implements OnInit, OnDestroy
 {
-  private formBuilder = inject(FormBuilder);
   public config = inject(DynamicDialogConfig);
   public customToastService = inject(CustomToastService);
   public dataService = inject(DataService);
@@ -46,10 +45,10 @@ export default class ListPersonEmergencyContactComponent
   public selectItemService = inject(SelectItemService);
   public dialogService = inject(DialogService);
 
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
   personId: number = 0;
   id: string = '';
   contactEmployeeAdd: any;
-  subRef$: Subscription;
 
   data: any[] = [];
   ngOnInit(): void {
@@ -58,13 +57,12 @@ export default class ListPersonEmergencyContactComponent
   }
 
   onLoadData() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`personemergencycontact/listtoperson/${this.personId}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
-          this.data = resp.body;
-          console.log('🚀 ~ resp.body:', resp.body);
-          this.customToastService.onClose();
+          this.data = this.customToastService.onCloseOnGetData(resp.body);
         },
         error: (error) => {
           this.customToastService.onCloseToError(error);
@@ -75,8 +73,9 @@ export default class ListPersonEmergencyContactComponent
   onDelete(item: any) {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService
+    this.dataService
       .delete(`ContactEmployees/${item.id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           this.onLoadData();
@@ -111,7 +110,7 @@ export default class ListPersonEmergencyContactComponent
       }
     });
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

@@ -6,7 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { EState } from 'src/app/core/enums/state.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
@@ -36,6 +36,7 @@ export default class AddoreditLedgerAccountsComponent
   private customToastService = inject(CustomToastService);
 
   submitting: boolean = false;
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   cb_state: ISelectItemDto[] = onGetSelectItemFromEnum(EState);
 
@@ -71,8 +72,9 @@ export default class AddoreditLedgerAccountsComponent
     this.customToastService.onLoading();
 
     if (this.id === 0) {
-      this.subRef$ = this.dataService
+      this.dataService
         .post(`Cuentas/`, this.form.value)
+        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
         .subscribe({
           next: () => {
             this.ref.close(true);
@@ -85,8 +87,9 @@ export default class AddoreditLedgerAccountsComponent
           },
         });
     } else {
-      this.subRef$ = this.dataService
+      this.dataService
         .put(`Cuentas/${this.id}`, this.form.value)
+        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
         .subscribe({
           next: () => {
             this.ref.close(true);
@@ -103,19 +106,21 @@ export default class AddoreditLedgerAccountsComponent
   onLoadData() {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService.get(`Cuentas/${this.id}`).subscribe({
-      next: (resp) => {
-        this.form.patchValue(resp.body);
-        this.customToastService.onClose();
-      },
-      error: (error) => {
-        this.customToastService.onCloseToError(error);
-      },
-    });
+    this.dataService
+      .get(`Cuentas/${this.id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe({
+        next: (resp) => {
+          this.form.patchValue(resp.body);
+          this.customToastService.onClose();
+        },
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
+        },
+      });
   }
 
-  subRef$: Subscription;
   ngOnDestroy(): void {
-    if (this.subRef$) this.subRef$.unsubscribe();
+    this.dataService.ngOnDestroy();
   }
 }

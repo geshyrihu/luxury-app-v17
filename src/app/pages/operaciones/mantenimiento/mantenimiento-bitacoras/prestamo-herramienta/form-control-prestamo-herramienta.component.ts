@@ -7,7 +7,6 @@ import {
   Validators,
 } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
 import {
   AuthService,
   CustomToastService,
@@ -43,7 +42,6 @@ export default class FormControlPrestamoHerramientaComponent
   private customToastService = inject(CustomToastService);
 
   submitting: boolean = false;
-  subRef$: Subscription;
 
   id: number = 0;
   cb_employee: any[] = [];
@@ -97,7 +95,7 @@ export default class FormControlPrestamoHerramientaComponent
     return this.form.controls;
   }
   onLoadData() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`ControlPrestamoHerramientas/${this.id}`)
       .subscribe((resp: any) => {
         this.form.patchValue(resp.body);
@@ -129,7 +127,7 @@ export default class FormControlPrestamoHerramientaComponent
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
     if (this.id === 0) {
-      this.subRef$ = this.dataService
+      this.dataService
         .post(`ControlPrestamoHerramientas`, this.form.value)
         .subscribe({
           next: () => {
@@ -143,7 +141,7 @@ export default class FormControlPrestamoHerramientaComponent
           },
         });
     } else {
-      this.subRef$ = this.dataService
+      this.dataService
         .put(`ControlPrestamoHerramientas/${this.id}`, this.form.value)
         .subscribe({
           next: () => {
@@ -159,7 +157,7 @@ export default class FormControlPrestamoHerramientaComponent
     }
   }
 
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

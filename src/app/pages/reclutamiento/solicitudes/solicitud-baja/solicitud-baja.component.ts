@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import {
   AbstractControl,
   FormArray,
@@ -12,7 +12,7 @@ import {
 import { FileUploadModule, FileUploadValidators } from '@iplab/ngx-file-upload';
 import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { cb_ESiNo } from 'src/app/core/enums/si-no.enum';
 import { ETipoBaja } from 'src/app/core/enums/tipo-baja.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
@@ -41,7 +41,7 @@ import ComponentsModule from 'src/app/shared/components.module';
   ],
   providers: [CustomToastService],
 })
-export default class SolicitudBajaComponent implements OnInit {
+export default class SolicitudBajaComponent implements OnInit, OnDestroy {
   private customToastService = inject(CustomToastService);
   private dataService = inject(DataService);
   private formBuilder = inject(FormBuilder);
@@ -51,10 +51,12 @@ export default class SolicitudBajaComponent implements OnInit {
   public dateService = inject(DateService);
   public ref = inject(DynamicDialogRef);
 
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   data: any;
   id: number = 0;
   submitting: boolean = false;
-  subRef$: Subscription;
+
   employeeId: number = this.config.data.employeeId;
 
   cb_type_departure: ISelectItemDto[] = onGetSelectItemFromEnum(ETipoBaja);
@@ -95,11 +97,12 @@ export default class SolicitudBajaComponent implements OnInit {
     });
   }
   onLoadData() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`RequestDismissal/GetRequestDismissal/${this.employeeId}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
-          this.data = resp.body;
+          this.data = this.customToastService.onCloseOnGetData(resp.body);
           this.form.patchValue(resp.body);
         },
         error: (error) => {
@@ -148,6 +151,7 @@ export default class SolicitudBajaComponent implements OnInit {
         }`,
         model
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           this.ref.close(true);
@@ -264,6 +268,9 @@ export default class SolicitudBajaComponent implements OnInit {
         this.filesControl.setErrors(null);
       }
     }
+  }
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }
 

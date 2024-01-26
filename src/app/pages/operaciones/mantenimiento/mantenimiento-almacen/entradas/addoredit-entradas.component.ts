@@ -12,7 +12,7 @@ import {
   DynamicDialogConfig,
   DynamicDialogRef,
 } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import {
   AuthService,
   CustomToastService,
@@ -51,7 +51,8 @@ export default class AddOrEditEntradasComponent implements OnInit, OnDestroy {
   public ref = inject(DynamicDialogRef);
 
   submitting: boolean = false;
-  subRef$: Subscription;
+
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   form: FormGroup = this.formBuilder.group({
     id: { value: 0, disabled: true },
@@ -92,9 +93,12 @@ export default class AddOrEditEntradasComponent implements OnInit, OnDestroy {
       .subscribe((resp) => {
         this.cb_measurement_unit = resp;
       });
-    this.selectItemService.onGetSelectItem('Providers').subscribe((resp) => {
-      this.cb_providers = resp;
-    });
+    this.selectItemService
+      .onGetSelectItem('Providers')
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe((resp) => {
+        this.cb_providers = resp;
+      });
     this.form.patchValue({ productoId: this.config.data.idProducto });
     this.id = this.config.data.id;
     if (this.config.data.idProducto == 0) {
@@ -108,8 +112,9 @@ export default class AddOrEditEntradasComponent implements OnInit, OnDestroy {
     if (this.id !== 0) this.onLoadData();
   }
   onLoadData() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`EntradaProducto/${this.id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.nombreProducto = resp.body.nombreProducto;
@@ -143,8 +148,9 @@ export default class AddOrEditEntradasComponent implements OnInit, OnDestroy {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
     if (this.id === 0) {
-      this.subRef$ = this.dataService
+      this.dataService
         .post('EntradaProducto', this.form.value)
+        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
         .subscribe({
           next: () => {
             this.ref.close(true);
@@ -157,7 +163,7 @@ export default class AddOrEditEntradasComponent implements OnInit, OnDestroy {
           },
         });
     } else {
-      this.subRef$ = this.dataService
+      this.dataService
         .put(
           `EntradaProducto/${this.id}/${this.cantidadActual}`,
           this.form.value
@@ -175,7 +181,7 @@ export default class AddOrEditEntradasComponent implements OnInit, OnDestroy {
         });
     }
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

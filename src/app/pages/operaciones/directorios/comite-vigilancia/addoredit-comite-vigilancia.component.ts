@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { EPosicionComite } from 'src/app/core/enums/position.comite.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { IComiteVigilanciaAddOrEditDto } from 'src/app/core/interfaces/IComiteVigilanciaAddOrEditDto.interface';
@@ -15,7 +15,6 @@ import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface
 import { CustomerIdService } from 'src/app/core/services/common-services';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
-import { EnumService } from 'src/app/core/services/enum.service';
 import { SelectItemService } from 'src/app/core/services/select-item.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import ComponentsModule from 'src/app/shared/components.module';
@@ -41,8 +40,8 @@ export default class AddOrEditComiteVigilanciaComponent
   public ref = inject(DynamicDialogRef);
   public config = inject(DynamicDialogConfig);
   private customToastService = inject(CustomToastService);
-  private enumService = inject(EnumService);
 
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
   submitting: boolean = false;
 
   cb_position: ISelectItemDto[] = onGetSelectItemFromEnum(EPosicionComite);
@@ -55,12 +54,11 @@ export default class AddOrEditComiteVigilanciaComponent
     ePosicionComite: [0, [Validators.required]],
     customerId: [],
   });
-  subRef$: Subscription;
 
   //
 
   ngOnInit(): void {
-    this.subRef$ = this.selectItemService
+    this.selectItemService
       .onGetSelectItem(
         `ListCondomino/${this.customerIdService.getcustomerId()}`
       )
@@ -84,7 +82,7 @@ export default class AddOrEditComiteVigilanciaComponent
   }
 
   onLoadData() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get<IComiteVigilanciaAddOrEditDto>(`ComiteVigilancia/${this.id}`)
       .subscribe((resp: any) => {
         this.form.patchValue(resp.body);
@@ -106,8 +104,9 @@ export default class AddOrEditComiteVigilanciaComponent
     this.customToastService.onLoading();
 
     if (this.id === 0) {
-      this.subRef$ = this.dataService
+      this.dataService
         .post(`ComiteVigilancia`, this.form.value)
+        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
         .subscribe({
           next: () => {
             this.ref.close(true);
@@ -120,7 +119,7 @@ export default class AddOrEditComiteVigilanciaComponent
           },
         });
     } else {
-      this.subRef$ = this.dataService
+      this.dataService
         .put(`ComiteVigilancia/${this.id}`, this.form.value)
         .subscribe({
           next: () => {
@@ -137,6 +136,6 @@ export default class AddOrEditComiteVigilanciaComponent
   }
 
   ngOnDestroy(): void {
-    if (this.subRef$) this.subRef$.unsubscribe();
+    this.dataService.ngOnDestroy();
   }
 }

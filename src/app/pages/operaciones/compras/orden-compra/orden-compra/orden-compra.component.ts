@@ -6,7 +6,6 @@ import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ContextMenuModule } from 'primeng/contextmenu';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
 import {
   AuthService,
   CustomToastService,
@@ -25,6 +24,7 @@ import OrdenCompraPresupuestoComponent from '../orden-compra-presupuesto/orden-c
 import OrdenCompraStatusComponent from '../orden-compra-status/orden-compra-status.component';
 import OrdenCompraDenegadaComponent from './../orden-compra-denegada/orden-compra-denegada.component';
 // import ModalOrdenCompraComponent from './modal-orden-compra.component';
+import { Subject, takeUntil } from 'rxjs';
 import ModalOrdenCompraComponent from './modal-orden-compra.component';
 import OrdenCompraEditDetalleComponent from './orden-compra-edit-detalle.component';
 import OrdenCompraEditPresupustoUtilizadoComponent from './orden-compra-edit-presupusto-utilizado.component';
@@ -62,8 +62,10 @@ export default class OrdenCompraComponent implements OnInit, OnDestroy {
   public ordenCompraService = inject(OrdenCompraService);
   public selectItemService = inject(SelectItemService);
   public confirmationService = inject(ConfirmationService);
+
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   ref: DynamicDialogRef;
-  subRef$: Subscription;
 
   ordenCompraId: number = 0;
   ordenCompra: any;
@@ -185,7 +187,7 @@ export default class OrdenCompraComponent implements OnInit, OnDestroy {
   }
 
   validarOrdenesCompraMismoFolioSolicituCompra() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(
         'OrdenCompra/ValidarOrdenesCompraMismoFolioSolicituCompra/' +
           this.ordenCompraId
@@ -199,8 +201,9 @@ export default class OrdenCompraComponent implements OnInit, OnDestroy {
     this.esGastoFijo = false;
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`OrdenCompra/${this.ordenCompraId}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.customToastService.onClose();
@@ -219,7 +222,7 @@ export default class OrdenCompraComponent implements OnInit, OnDestroy {
           //... Obtener Id SolicitudCompra
 
           if (this.ordenCompra.folioSolicitudCompra) {
-            this.subRef$ = this.dataService
+            this.dataService
               .get(
                 `SolicitudCompra/GetIdSolicitudCompra/${this.ordenCompra.folioSolicitudCompra}/${this.ordenCompra.customerId}`
               )
@@ -275,10 +278,11 @@ export default class OrdenCompraComponent implements OnInit, OnDestroy {
 
   autorizarCompra() {
     // this.onRevisadaPorResidente();
-    this.subRef$ = this.dataService
+    this.dataService
       .get(
         `OrdenCompraAuth/Autorizar/${this.ordenCompraId}/${this.authService.userTokenDto.infoEmployeeDto.employeeId}`
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.onLoadData();
@@ -290,8 +294,9 @@ export default class OrdenCompraComponent implements OnInit, OnDestroy {
   }
 
   deautorizarCompra() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`OrdenCompraAuth/Desautorizar/${this.ordenCompraId}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.nombreAutorizador = '';
@@ -452,8 +457,9 @@ export default class OrdenCompraComponent implements OnInit, OnDestroy {
   }
   // ... Editar presupeusto del que se va a disponer
   onEditOrdenCompraPresupuesto(item: any): void {
-    this.subRef$ = this.dataService
+    this.dataService
       .put(`OrdenCompraPresupuesto/${item.id}`, item)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           this.onLoadData();
@@ -467,8 +473,9 @@ export default class OrdenCompraComponent implements OnInit, OnDestroy {
   onDeleteOrdenCompraPresupuesto(id: number): void {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService
+    this.dataService
       .delete(`OrdenCompraPresupuesto/${id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           this.onLoadData();
@@ -483,8 +490,9 @@ export default class OrdenCompraComponent implements OnInit, OnDestroy {
   onDeleteProduct(data: any) {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService
+    this.dataService
       .delete(`OrdenCompraDetalle/${data.id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           this.onLoadData();
@@ -509,8 +517,9 @@ export default class OrdenCompraComponent implements OnInit, OnDestroy {
       total: item.total,
       unidadMedidaId: item.unidadMedidaId,
     };
-    this.subRef$ = this.dataService
+    this.dataService
       .put(`OrdenCompraDetalle/${item.id}`, data)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           this.onLoadData();
@@ -540,7 +549,7 @@ export default class OrdenCompraComponent implements OnInit, OnDestroy {
     this.subtotal = subTotal;
     this.totalOrdenCompra = this.subtotal + this.iva - this.retencionIva;
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

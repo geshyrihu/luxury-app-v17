@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import {
   CustomToastService,
   DataService,
@@ -33,8 +33,10 @@ export default class CuadroComparativoComponent implements OnInit, OnDestroy {
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
   public confirmationService = inject(ConfirmationService);
+
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   ref: DynamicDialogRef;
-  subRef$: Subscription;
 
   solicitudCompra: any;
   solicitudCompraDetalle: any[];
@@ -88,8 +90,9 @@ export default class CuadroComparativoComponent implements OnInit, OnDestroy {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
     this.onResetProvider();
-    this.subRef$ = this.dataService
+    this.dataService
       .get<any>(`SolicitudCompra/CuadroComparativo/${this.solicitudCompraId}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.folio = resp.body.folio;
@@ -320,7 +323,7 @@ export default class CuadroComparativoComponent implements OnInit, OnDestroy {
     this.mejorPrecioTotal3 = 0;
     this.totalMejorPrecioTotal = 0;
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

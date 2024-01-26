@@ -12,7 +12,7 @@ import {
   DynamicDialogConfig,
   DynamicDialogRef,
 } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { EInventoryCategory } from 'src/app/core/enums/inventory-category.enum';
 import { EState } from 'src/app/core/enums/state.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
@@ -57,7 +57,8 @@ export default class AddOrEditActivosComponent implements OnInit, OnDestroy {
   public Editor = ClassicEditor;
 
   submitting: boolean = false;
-  subRef$: Subscription;
+
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   urlBaseImg = '';
   public id: number = 0;
@@ -106,8 +107,9 @@ export default class AddOrEditActivosComponent implements OnInit, OnDestroy {
     this.form.patchValue({ photoPath: file });
   }
   onLoadData(id: number) {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`Machineries/${id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe((resp: any) => {
         this.id = resp.body.id;
         resp.body.dateOfPurchase = this.getdateService.getDateFormat(
@@ -130,20 +132,24 @@ export default class AddOrEditActivosComponent implements OnInit, OnDestroy {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
     if (this.id === 0) {
-      this.subRef$ = this.dataService.post('Machineries', model).subscribe({
-        next: () => {
-          this.ref.close(true);
-          this.customToastService.onClose();
-        },
-        error: (error) => {
-          // Habilitar el botón nuevamente al finalizar el envío del formulario
-          this.submitting = false;
-          this.customToastService.onCloseToError(error);
-        },
-      });
+      this.dataService
+        .post('Machineries', model)
+        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+        .subscribe({
+          next: () => {
+            this.ref.close(true);
+            this.customToastService.onClose();
+          },
+          error: (error) => {
+            // Habilitar el botón nuevamente al finalizar el envío del formulario
+            this.submitting = false;
+            this.customToastService.onCloseToError(error);
+          },
+        });
     } else {
-      this.subRef$ = this.dataService
+      this.dataService
         .put(`Machineries/${this.id}`, model)
+        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
         .subscribe({
           next: () => {
             this.ref.close(true);
@@ -193,8 +199,9 @@ export default class AddOrEditActivosComponent implements OnInit, OnDestroy {
   }
 
   onLoadEquipoClasificacion() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get('EquipoClasificacion/SelectItem')
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.cb_equipoClasificacion = resp.body;
@@ -208,7 +215,7 @@ export default class AddOrEditActivosComponent implements OnInit, OnDestroy {
   get f() {
     return this.form.controls;
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

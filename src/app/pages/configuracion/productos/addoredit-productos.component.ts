@@ -8,7 +8,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { EProductClasificacion } from 'src/app/core/enums/product-clasificacion.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
@@ -44,7 +44,8 @@ export default class AddOrEditProductosComponent implements OnInit, OnDestroy {
   private customToastService = inject(CustomToastService);
 
   submitting: boolean = false;
-  subRef$: Subscription;
+
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   id: any = 0;
   urlBaseImg = '';
@@ -58,9 +59,12 @@ export default class AddOrEditProductosComponent implements OnInit, OnDestroy {
   );
 
   onLoadSelectItem() {
-    this.selectItemService.onGetSelectItem('Categories').subscribe((resp) => {
-      this.cb_category = resp;
-    });
+    this.selectItemService
+      .onGetSelectItem('Categories')
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe((resp) => {
+        this.cb_category = resp;
+      });
   }
 
   public savecategoryId(e: any): void {
@@ -103,8 +107,9 @@ export default class AddOrEditProductosComponent implements OnInit, OnDestroy {
   }
 
   onLoadData() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`Productos/${this.id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe((resp: any) => {
         this.urlBaseImg = `${environment.base_urlImg}Administration/products/${resp.body.urlImagen}`;
         this.form.patchValue(resp.body);
@@ -126,20 +131,24 @@ export default class AddOrEditProductosComponent implements OnInit, OnDestroy {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
     if (this.id === 0) {
-      this.subRef$ = this.dataService.post('Productos', formData).subscribe({
-        next: () => {
-          this.ref.close(true);
-          this.customToastService.onClose();
-        },
-        error: (error) => {
-          // Habilitar el botón nuevamente al finalizar el envío del formulario
-          this.submitting = false;
-          this.customToastService.onCloseToError(error);
-        },
-      });
+      this.dataService
+        .post('Productos', formData)
+        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+        .subscribe({
+          next: () => {
+            this.ref.close(true);
+            this.customToastService.onClose();
+          },
+          error: (error) => {
+            // Habilitar el botón nuevamente al finalizar el envío del formulario
+            this.submitting = false;
+            this.customToastService.onCloseToError(error);
+          },
+        });
     } else {
-      this.subRef$ = this.dataService
+      this.dataService
         .put(`Productos/${this.id}`, formData)
+        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
         .subscribe({
           next: () => {
             this.ref.close(true);
@@ -176,7 +185,7 @@ export default class AddOrEditProductosComponent implements OnInit, OnDestroy {
 
     return formData;
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

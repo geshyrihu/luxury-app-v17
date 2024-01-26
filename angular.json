@@ -42,7 +42,6 @@
             "inlineStyleLanguage": "scss",
             "assets": ["src/icon.png", "src/assets"],
             "styles": [
-              "node_modules/ngx-spinner/animations/ball-atom.css",
               "node_modules/quill/dist/quill.core.css",
               "node_modules/quill/dist/quill.snow.css",
               "src/assets/scss/bootstrap.scss",

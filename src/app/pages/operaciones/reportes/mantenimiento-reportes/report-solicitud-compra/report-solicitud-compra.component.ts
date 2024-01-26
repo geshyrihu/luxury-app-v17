@@ -3,7 +3,7 @@ import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { TableModule } from 'primeng/table';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { CustomerIdService } from 'src/app/core/services/common-services';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
@@ -33,12 +33,14 @@ export default class ReportSolicitudCompraComponent
   public dateService = inject(DateService);
   public periodoMonthService = inject(PeriodoMonthService);
 
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   solicitudes: any;
   ordenesCompra: any;
 
   dataProvider: any = [];
   ref: DynamicDialogRef;
-  subRef$: Subscription;
+
   customerId$: Observable<number> = this.customerIdService.getCustomerId$();
 
   periodoInicial$: Observable<Date> =
@@ -57,7 +59,7 @@ export default class ReportSolicitudCompraComponent
   onLoadData() {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService
+    this.dataService
       .get(
         `MaintenanceReport/solicitudinsumos/${
           this.customerIdService.customerId
@@ -65,6 +67,7 @@ export default class ReportSolicitudCompraComponent
           this.periodoMonthService.getPeriodoInicio
         )}`
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.solicitudes = resp.body.solicitudes;
@@ -78,6 +81,6 @@ export default class ReportSolicitudCompraComponent
   }
 
   ngOnDestroy(): void {
-    if (this.subRef$) this.subRef$.unsubscribe();
+    this.dataService.ngOnDestroy();
   }
 }

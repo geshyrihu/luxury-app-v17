@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import {
   CustomToastService,
@@ -39,8 +39,9 @@ export default class AddoreditInventarioPinturaComponent
   public customerIdService = inject(CustomerIdService);
   private customToastService = inject(CustomToastService);
 
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   submitting: boolean = false;
-  subRef$: Subscription;
 
   cb_machinery: ISelectItemDto[] = [];
   cb_producto: ISelectItemDto[] = [];
@@ -74,7 +75,7 @@ export default class AddoreditInventarioPinturaComponent
     });
   }
   onLoadData() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get<any>(`InventarioPintura/${this.id}`)
       .subscribe((resp: any) => {
         this.form.patchValue(resp.body);
@@ -108,8 +109,9 @@ export default class AddoreditInventarioPinturaComponent
     this.customToastService.onLoading();
 
     if (this.id === 0) {
-      this.subRef$ = this.dataService
+      this.dataService
         .post(`InventarioPintura`, model)
+        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
         .subscribe({
           next: () => {
             this.ref.close(true);
@@ -122,8 +124,9 @@ export default class AddoreditInventarioPinturaComponent
           },
         });
     } else {
-      this.subRef$ = this.dataService
+      this.dataService
         .put(`InventarioPintura/${this.id}`, model)
+        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
         .subscribe({
           next: () => {
             this.ref.close(true);
@@ -138,7 +141,7 @@ export default class AddoreditInventarioPinturaComponent
     }
   }
   onLoadMachinery() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(
         'Machineries/GetAutocompeteInv/' +
           this.customerIdService.getcustomerId()
@@ -148,13 +151,13 @@ export default class AddoreditInventarioPinturaComponent
       });
   }
   onLoadProducto() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get('Productos/GetAutoCompleteSelectItem/')
       .subscribe((resp: any) => {
         this.cb_producto = resp.body;
       });
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

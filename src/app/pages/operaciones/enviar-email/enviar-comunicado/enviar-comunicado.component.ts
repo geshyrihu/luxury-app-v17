@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import {
-  FormBuilder,
   FormControl,
   FormGroup,
   FormsModule,
@@ -15,7 +14,7 @@ import {
 } from '@iplab/ngx-file-upload';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { IDestinatariosMailReporte } from 'src/app/core/interfaces/IDestinatariosMailReporte.interface';
 import {
   CustomToastService,
@@ -40,15 +39,15 @@ import PrimeNgModule from 'src/app/shared/prime-ng.module';
 })
 export default class EnviarComunicadoComponent {
   public customToastService = inject(CustomToastService);
-  private formBuilder = inject(FormBuilder);
   public dialogService = inject(DialogService);
   public dataService = inject(DataService);
   public customerIdService = inject(CustomerIdService);
 
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   public animation: boolean = false;
 
   submitting: boolean = false;
-  subRef$: Subscription;
 
   ref: DynamicDialogRef;
   cb_asuntos: any[] = [
@@ -135,8 +134,9 @@ export default class EnviarComunicadoComponent {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
 
-    this.subRef$ = this.dataService
+    this.dataService
       .post('SendEmail/SendComunicado', model)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         error: (error) => {
           // Habilitar el botón nuevamente al finalizar el envío del formulario
@@ -174,7 +174,7 @@ export default class EnviarComunicadoComponent {
     }
     return formData;
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

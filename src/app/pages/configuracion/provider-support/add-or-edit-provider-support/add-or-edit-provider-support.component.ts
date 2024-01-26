@@ -8,7 +8,7 @@ import {
 } from '@angular/forms';
 import ComponentsModule from 'app/shared/components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import {
   CustomToastService,
@@ -39,11 +39,13 @@ export default class AddOrEditProviderSupportComponent implements OnInit {
 
   submitting: boolean = false;
   id: string = '';
-  subRef$: Subscription;
+
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   cb_persons: ISelectItemDto[] = [];
   cb_professions: ISelectItemDto[] = [];
   cb_providers: ISelectItemDto[] = [];
+  cb_customers: ISelectItemDto[] = [];
 
   form: FormGroup = this.formBuilder.group({
     id: { value: this.id, disabled: true },
@@ -53,6 +55,8 @@ export default class AddOrEditProviderSupportComponent implements OnInit {
     nameProvider: ['', [Validators.required]],
     professionId: ['', [Validators.required]],
     nameProfession: ['', [Validators.required]],
+    customerId: ['', [Validators.required]],
+    nameCustomer: ['', [Validators.required]],
   });
 
   ngOnInit() {
@@ -62,8 +66,9 @@ export default class AddOrEditProviderSupportComponent implements OnInit {
   }
 
   onLoadData() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`providersupport/${this.id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.form.patchValue(resp.body);
@@ -75,7 +80,6 @@ export default class AddOrEditProviderSupportComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('🚀 ~ this.form.invalid:', this.form.value);
     if (this.form.invalid) {
       Object.values(this.form.controls).forEach((x) => {
         x.markAllAsTouched();
@@ -89,8 +93,9 @@ export default class AddOrEditProviderSupportComponent implements OnInit {
     this.customToastService.onLoading();
 
     if (this.id === '') {
-      this.subRef$ = this.dataService
+      this.dataService
         .post(`providersupport`, this.form.value)
+        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
         .subscribe({
           next: () => {
             this.ref.close(true);
@@ -103,7 +108,7 @@ export default class AddOrEditProviderSupportComponent implements OnInit {
           },
         });
     } else {
-      this.subRef$ = this.dataService
+      this.dataService
         .put(`providersupport/${this.id}`, this.form.value)
         .subscribe({
           next: () => {
@@ -121,20 +126,33 @@ export default class AddOrEditProviderSupportComponent implements OnInit {
 
   onLoadSelectItem() {
     // Carga de listado de proveedores
-    this.selectItemService.onGetSelectItem('providers').subscribe((resp) => {
-      this.cb_providers = resp;
-      console.log('🚀 ~ this.cb_providers:', this.cb_providers);
-    });
+    this.selectItemService
+      .onGetSelectItem('providers')
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe((resp) => {
+        this.cb_providers = resp;
+      });
     // Carga de listado de categorias
-    this.selectItemService.onGetSelectItem('professions').subscribe((resp) => {
-      this.cb_professions = resp;
-      console.log('🚀 ~ this.cb_professions:', this.cb_professions);
-    });
+    this.selectItemService
+      .onGetSelectItem('professions')
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe((resp) => {
+        this.cb_professions = resp;
+      });
     // Carga de listado de personas
-    this.selectItemService.onGetSelectItem('persons').subscribe((resp) => {
-      this.cb_persons = resp;
-      console.log('🚀 ~ this.cb_persons:', this.cb_persons);
-    });
+    this.selectItemService
+      .onGetSelectItem('persons')
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe((resp) => {
+        this.cb_persons = resp;
+      });
+    // Carga de listado de clientes
+    this.selectItemService
+      .onGetSelectItem('customers')
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe((resp) => {
+        this.cb_customers = resp;
+      });
   }
 
   saveProviderId(e: any) {
@@ -143,7 +161,6 @@ export default class AddOrEditProviderSupportComponent implements OnInit {
       providerId: find?.value,
       nameProvider: find?.label,
     });
-    console.log('🚀 ~ this.form.invalid:', this.form.value);
   }
   saveProfessionsId(e: any) {
     let find = this.cb_professions.find((x) => x?.label === e.target.value);
@@ -151,7 +168,6 @@ export default class AddOrEditProviderSupportComponent implements OnInit {
       professionId: find?.value,
       nameProfession: find?.label,
     });
-    console.log('🚀 ~ this.form.invalid:', this.form.value);
   }
   savePersonId(e: any) {
     let find = this.cb_persons.find((x) => x?.label === e.target.value);
@@ -159,9 +175,16 @@ export default class AddOrEditProviderSupportComponent implements OnInit {
       personId: find?.value,
       namePerson: find?.label,
     });
-    console.log('🚀 ~ this.form.invalid:', this.form.value);
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+
+  saveCustomerId(e: any) {
+    let find = this.cb_customers.find((x) => x?.label === e.target.value);
+    this.form.patchValue({
+      customerId: find?.value,
+      nameCustomer: find?.label,
+    });
+  }
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

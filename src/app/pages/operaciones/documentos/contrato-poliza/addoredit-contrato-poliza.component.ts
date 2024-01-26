@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import {
   AuthService,
@@ -49,7 +49,8 @@ export default class AddoreditContratoPolizaComponent
   private customToastService = inject(CustomToastService);
 
   submitting: boolean = false;
-  subRef$: Subscription;
+
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   id: number = 0;
   urlBaseImg = environment.base_urlImg;
@@ -69,9 +70,12 @@ export default class AddoreditContratoPolizaComponent
 
   ngOnInit(): void {
     this.id = this.config.data.id;
-    this.selectItemService.onGetSelectItem('Providers').subscribe((resp) => {
-      this.cb_providers = resp;
-    });
+    this.selectItemService
+      .onGetSelectItem('Providers')
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe((resp) => {
+        this.cb_providers = resp;
+      });
 
     flatpickrFactory();
     if (this.id !== 0) this.onLoadData();
@@ -85,8 +89,9 @@ export default class AddoreditContratoPolizaComponent
   }
 
   onLoadData() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`ContratoPoliza/${this.id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe((resp: any) => {
         this.id = resp.body.id;
         this.form.patchValue(resp.body);
@@ -114,8 +119,9 @@ export default class AddoreditContratoPolizaComponent
     this.customToastService.onLoading();
 
     if (this.id === 0) {
-      this.subRef$ = this.dataService
+      this.dataService
         .post(`ContratoPoliza`, formData)
+        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
         .subscribe({
           next: () => {
             this.ref.close(true);
@@ -128,8 +134,9 @@ export default class AddoreditContratoPolizaComponent
           },
         });
     } else {
-      this.subRef$ = this.dataService
+      this.dataService
         .put(`ContratoPoliza/${this.id}`, formData)
+        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
         .subscribe({
           next: () => {
             this.ref.close(true);
@@ -167,7 +174,7 @@ export default class AddoreditContratoPolizaComponent
 
     return formData;
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

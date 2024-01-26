@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { IRolesDto } from 'src/app/core/interfaces/IRolesDto.interface';
 import {
   CustomToastService,
@@ -28,13 +28,14 @@ export default class UpdateRoleComponent implements OnInit, OnDestroy {
 
   @Input()
   applicationUserId: string = '';
-  subRef$: Subscription;
+
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   ngOnInit(): void {
     this.getRoles();
   }
   getRoles() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get('Accounts/GetRole/' + this.applicationUserId)
       .subscribe((resp: any) => {
         this.roles = resp.body;
@@ -47,16 +48,19 @@ export default class UpdateRoleComponent implements OnInit, OnDestroy {
     this.customToastService.onLoading();
 
     const url = `Accounts/AddRoleToUser/${this.applicationUserId}`;
-    this.subRef$ = this.dataService.post(url, roles).subscribe({
-      next: () => {
-        this.customToastService.onCloseToSuccess();
-      },
-      error: (error) => {
-        this.customToastService.onCloseToError(error);
-      },
-    });
+    this.dataService
+      .post(url, roles)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe({
+        next: () => {
+          this.customToastService.onCloseToSuccess();
+        },
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
+        },
+      });
   }
   ngOnDestroy(): void {
-    if (this.subRef$) this.subRef$.unsubscribe();
+    this.dataService.ngOnDestroy();
   }
 }

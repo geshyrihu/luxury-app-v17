@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import {
   AuthService,
   CustomToastService,
@@ -38,7 +38,8 @@ export default class AddoreditFormaPagoComponent implements OnInit, OnDestroy {
   private customToastService = inject(CustomToastService);
 
   submitting: boolean = false;
-  subRef$: Subscription;
+
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   id: any = 0;
   form: FormGroup;
@@ -61,15 +62,18 @@ export default class AddoreditFormaPagoComponent implements OnInit, OnDestroy {
   onLoadItem() {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService.get<any>(`FormaPago/${this.id}`).subscribe({
-      next: (resp) => {
-        this.form.patchValue(resp.body);
-        this.customToastService.onClose();
-      },
-      error: (error) => {
-        this.customToastService.onCloseToError(error);
-      },
-    });
+    this.dataService
+      .get<any>(`FormaPago/${this.id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe({
+        next: (resp) => {
+          this.form.patchValue(resp.body);
+          this.customToastService.onClose();
+        },
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
+        },
+      });
   }
 
   onSubmit() {
@@ -85,8 +89,9 @@ export default class AddoreditFormaPagoComponent implements OnInit, OnDestroy {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
     if (this.id === 0) {
-      this.subRef$ = this.dataService
+      this.dataService
         .post<any>(`FormaPago/`, this.form.value)
+        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
         .subscribe({
           next: () => {
             this.ref.close(true);
@@ -99,7 +104,7 @@ export default class AddoreditFormaPagoComponent implements OnInit, OnDestroy {
           },
         });
     } else {
-      this.subRef$ = this.dataService
+      this.dataService
         .put<any>(`FormaPago/${this.id}`, this.form.value)
         .subscribe({
           next: () => {
@@ -114,7 +119,7 @@ export default class AddoreditFormaPagoComponent implements OnInit, OnDestroy {
         });
     }
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

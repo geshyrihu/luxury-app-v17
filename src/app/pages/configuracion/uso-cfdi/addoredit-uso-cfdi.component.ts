@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { IUseCFDIAddOrEditDto } from 'src/app/core/interfaces/IUseCFDIAddOrEditDto.interface';
 import {
   AuthService,
@@ -35,11 +35,11 @@ export default class AddoreditUsoCFDIComponent implements OnInit, OnDestroy {
   public config = inject(DynamicDialogConfig);
   public ref = inject(DynamicDialogRef);
   public authService = inject(AuthService);
-
   private customToastService = inject(CustomToastService);
 
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   submitting: boolean = false;
-  subRef$: Subscription;
 
   id: number = 0;
   form: FormGroup;
@@ -58,8 +58,9 @@ export default class AddoreditUsoCFDIComponent implements OnInit, OnDestroy {
   }
 
   onLoadItem() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get<IUseCFDIAddOrEditDto>(`UsoCfdi/${this.id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp) => {
           this.form.patchValue(resp.body);
@@ -80,7 +81,7 @@ export default class AddoreditUsoCFDIComponent implements OnInit, OnDestroy {
     // Deshabilitar el botón al iniciar el envío del formulario
     this.submitting = true;
     if (this.id === 0) {
-      this.subRef$ = this.dataService
+      this.dataService
         .post<IUseCFDIAddOrEditDto>(`UsoCfdi/`, this.form.value)
         .subscribe({
           next: () => {
@@ -94,7 +95,7 @@ export default class AddoreditUsoCFDIComponent implements OnInit, OnDestroy {
           },
         });
     } else {
-      this.subRef$ = this.dataService
+      this.dataService
         .put<IUseCFDIAddOrEditDto>(`UsoCfdi/${this.id}`, this.form.value)
         .subscribe({
           next: () => {
@@ -109,7 +110,7 @@ export default class AddoreditUsoCFDIComponent implements OnInit, OnDestroy {
         });
     }
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

@@ -9,7 +9,7 @@ import {
 } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { EMonth } from 'src/app/core/enums/month.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
@@ -44,7 +44,7 @@ export default class AddOrEditCalendarioMaestroComponent
   public ref = inject(DynamicDialogRef);
   private customToastService = inject(CustomToastService);
 
-  subRef$: Subscription;
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   proveedoresSeleccionados: ISelectItemDto[] = [];
   cb_equipoCalendarioMaestro: ISelectItemDto[] = [];
@@ -73,8 +73,9 @@ export default class AddOrEditCalendarioMaestroComponent
     return this.form.controls;
   }
   onLoadData(id: number) {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`CalendarioMaestro/${id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe((resp: any) => {
         this.form.patchValue(resp.body);
         this.form.patchValue({
@@ -95,8 +96,9 @@ export default class AddOrEditCalendarioMaestroComponent
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
     if (this.id === 0) {
-      this.subRef$ = this.dataService
+      this.dataService
         .post('CalendarioMaestro', this.form.value)
+        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
         .subscribe({
           next: () => {
             this.ref.close(true);
@@ -109,7 +111,7 @@ export default class AddOrEditCalendarioMaestroComponent
           },
         });
     } else {
-      this.subRef$ = this.dataService
+      this.dataService
         .put(`CalendarioMaestro/${this.id}`, this.form.value)
         .subscribe({
           next: () => {
@@ -126,17 +128,20 @@ export default class AddOrEditCalendarioMaestroComponent
   }
 
   onLoadSelectItem() {
-    this.subRef$ = this.selectItemService
+    this.selectItemService
       .onGetSelectItem('EquipoCalendarioMaestro')
       .subscribe((items: ISelectItemDto[]) => {
         this.cb_equipoCalendarioMaestro = items;
       });
-    this.selectItemService.onGetSelectItem('Providers').subscribe((resp) => {
-      this.cb_providers = resp;
-    });
+    this.selectItemService
+      .onGetSelectItem('Providers')
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe((resp) => {
+        this.cb_providers = resp;
+      });
   }
 
   ngOnDestroy(): void {
-    if (this.subRef$) this.subRef$.unsubscribe();
+    this.dataService.ngOnDestroy();
   }
 }

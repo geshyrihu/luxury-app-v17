@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { SanitizeHtmlPipe } from 'src/app/core/pipes/sanitize-html.pipe';
 import {
   AuthService,
@@ -33,7 +33,9 @@ export default class SeguimientoMinutaComponent implements OnInit, OnDestroy {
   data: any[] = [];
 
   ref: DynamicDialogRef;
-  subRef$: Subscription;
+
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   statusFiltro: number = 0;
   customerId$: Observable<number> = this.customerIdService.getCustomerId$();
 
@@ -47,14 +49,14 @@ export default class SeguimientoMinutaComponent implements OnInit, OnDestroy {
   onLoadData(filtro: number) {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService
+    this.dataService
       .get(
         `Meetings/SeguimientoMinutas/${this.customerIdService.customerId}/${filtro}`
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
-          this.data = resp.body;
-          this.customToastService.onClose();
+          this.data = this.customToastService.onCloseOnGetData(resp.body);
         },
         error: (error) => {
           this.customToastService.onCloseToError(error);
@@ -106,8 +108,9 @@ export default class SeguimientoMinutaComponent implements OnInit, OnDestroy {
   onDeleteSeguimiento(id: number) {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService
+    this.dataService
       .delete(`MeetingDertailsSeguimiento/${id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           this.onLoadData(this.statusFiltro);
@@ -120,7 +123,7 @@ export default class SeguimientoMinutaComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.subRef$) this.subRef$.unsubscribe();
+    this.dataService.ngOnDestroy();
   }
 
   onModalTodosSeguimientos(idItem: number) {

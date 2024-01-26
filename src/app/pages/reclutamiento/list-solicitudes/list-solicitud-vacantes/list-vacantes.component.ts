@@ -6,7 +6,7 @@ import { Router, RouterModule } from '@angular/router';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import {
   AuthService,
   CustomToastService,
@@ -48,7 +48,8 @@ export default class ListVacantesComponent implements OnInit, OnDestroy {
 
   data: any[] = [];
   ref: DynamicDialogRef;
-  subRef$: Subscription;
+
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   paramsEmit$: Observable<HttpParams> = this.filterRequestsService.getParams$();
   ngOnInit(): void {
@@ -57,12 +58,12 @@ export default class ListVacantesComponent implements OnInit, OnDestroy {
   }
 
   onLoadData() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`RequestPosition/`, this.filterRequestsService.getParams())
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
-          this.data = resp.body;
-          this.customToastService.onClose();
+          this.data = this.customToastService.onCloseOnGetData(resp.body);
         },
         error: (error) => {
           this.customToastService.onCloseToError(error);
@@ -73,15 +74,18 @@ export default class ListVacantesComponent implements OnInit, OnDestroy {
   onDelete(id: number) {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService.delete(`RequestPosition/${id}`).subscribe({
-      next: () => {
-        this.customToastService.onCloseToSuccess();
-        this.onLoadData();
-      },
-      error: (error) => {
-        this.customToastService.onCloseToError(error);
-      },
-    });
+    this.dataService
+      .delete(`RequestPosition/${id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe({
+        next: () => {
+          this.customToastService.onCloseToSuccess();
+          this.onLoadData();
+        },
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
+        },
+      });
   }
 
   onModalAddOrEdit(data: any) {
@@ -144,6 +148,6 @@ export default class ListVacantesComponent implements OnInit, OnDestroy {
     this.router.navigate(['/reclutamiento/status-solicitud-vacante']);
   }
   ngOnDestroy(): void {
-    if (this.subRef$) this.subRef$.unsubscribe();
+    this.dataService.ngOnDestroy();
   }
 }

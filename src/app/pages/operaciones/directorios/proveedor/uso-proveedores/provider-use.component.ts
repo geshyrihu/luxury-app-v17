@@ -24,19 +24,19 @@ export default class ProviderUseComponent implements OnInit, OnDestroy {
   }
 
   onLoadData(providerId: number) {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`Providers/Coincidencias/${providerId}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
-          this.data = resp.body;
-          this.customToastService.onClose();
+          this.data = this.customToastService.onCloseOnGetData(resp.body);
         },
         error: (error) => {
           this.customToastService.onCloseToError(error);
         },
       });
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

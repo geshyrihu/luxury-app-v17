@@ -8,7 +8,7 @@ import {
 } from '@angular/forms';
 import ComponentsModule from 'app/shared/components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { EEducationLevel } from 'src/app/core/enums/education-level.enum';
 import { ETypeContract } from 'src/app/core/enums/type-contract.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
@@ -48,7 +48,8 @@ export default class PersonEditDataLaboralComponent implements OnInit {
   personId: number = 0;
 
   submitting: boolean = false;
-  subRef$: Subscription;
+
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   cb_education_level: ISelectItemDto[] =
     onGetSelectItemFromEnum(EEducationLevel);
@@ -81,19 +82,26 @@ export default class PersonEditDataLaboralComponent implements OnInit {
 
   ngOnInit() {
     this.personId = this.config.data.personId;
-    this.selectItemService.onGetSelectItem('Professions').subscribe((resp) => {
-      this.cb_profession = resp;
-    });
-    this.selectItemService.onGetSelectItem('Customers').subscribe((resp) => {
-      this.cb_customer = resp;
-    });
+    this.selectItemService
+      .onGetSelectItem('Professions')
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe((resp) => {
+        this.cb_profession = resp;
+      });
+    this.selectItemService
+      .onGetSelectItem('Customers')
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe((resp) => {
+        this.cb_customer = resp;
+      });
     this.employeeId = this.config.data.employeeId;
     if (this.employeeId !== 0) this.onLoadData();
   }
 
   onLoadData() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`employees/getemployeeid/${this.employeeId}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.form.patchValue(resp.body);
@@ -112,8 +120,9 @@ export default class PersonEditDataLaboralComponent implements OnInit {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
 
-    this.subRef$ = this.dataService
+    this.dataService
       .put(`employees/${this.employeeId}/${this.personId}`, this.form.value)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           this.ref.close(true);
@@ -127,7 +136,7 @@ export default class PersonEditDataLaboralComponent implements OnInit {
       });
   }
 
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

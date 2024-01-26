@@ -3,7 +3,7 @@ import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import {
   AuthService,
   CustomToastService,
@@ -40,8 +40,8 @@ export default class SistemasReporteComponent implements OnInit, OnDestroy {
   public sistemasReporteService = inject(SistemasReporteService);
   private filtroCalendarService = inject(FiltroCalendarService);
 
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
   ref: DynamicDialogRef;
-  subRef$: Subscription;
 
   base_urlImg = `${environment.base_urlImg}customers/`;
   data: any[] = [];
@@ -83,20 +83,20 @@ export default class SistemasReporteComponent implements OnInit, OnDestroy {
   onLoadData(fechaInicio: string, fechaFinal: string): void {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService
+    this.dataService
       .get(
         `Ticket/SolicitudesSistemas/${fechaInicio}/${fechaFinal}/${this.pendiente}/${this.concluido}/${this.employeeId}`
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
-          this.data = resp.body;
+          this.data = this.customToastService.onCloseOnGetData(resp.body);
 
           if (this.data !== null) {
             this.pendientes = this.onFilterItems(resp.body, 0);
             this.concluidos = this.onFilterItems(resp.body, 1);
           }
           this.sistemasReporteService.setData(this.data);
-          this.customToastService.onClose();
         },
         error: (error) => {
           this.customToastService.onCloseToError(error);
@@ -145,8 +145,9 @@ export default class SistemasReporteComponent implements OnInit, OnDestroy {
   }
 
   eliminarTiket(id: number) {
-    this.subRef$ = this.dataService
+    this.dataService
       .delete('Ticket/DeleteFinal/' + id)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           this.onLoadData(
@@ -177,7 +178,7 @@ export default class SistemasReporteComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

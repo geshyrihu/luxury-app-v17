@@ -3,7 +3,7 @@ import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import {
   CustomToastService,
   DataService,
@@ -22,7 +22,7 @@ export default class AddOrEditInvitedComponent implements OnInit, OnDestroy {
   public config = inject(DynamicDialogConfig);
   public messageService = inject(MessageService);
 
-  subRef$: Subscription;
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   @Input()
   customerId: number;
@@ -37,10 +37,11 @@ export default class AddOrEditInvitedComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(
         `MeetingInvitado/AgregarParticipantesInvitado/${this.meetingId}/${this.invitado}`
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           this.customToastService.onShowSuccess();
@@ -54,8 +55,9 @@ export default class AddOrEditInvitedComponent implements OnInit, OnDestroy {
   onDelete(idParticipant: number): void {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService
+    this.dataService
       .delete(`MeetingInvitado/${idParticipant}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           this.onLoadData();
@@ -68,8 +70,9 @@ export default class AddOrEditInvitedComponent implements OnInit, OnDestroy {
   }
 
   onLoadData() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`MeetingInvitado/ParticipantesInvitado/${this.meetingId}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.listaInvitados = resp.body;
@@ -80,7 +83,7 @@ export default class AddOrEditInvitedComponent implements OnInit, OnDestroy {
         },
       });
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { IFilterTicket } from 'src/app/core/interfaces/IFilterTicket.interface';
 import {
   AuthService,
@@ -64,7 +64,9 @@ export default class ListTicketComponent implements OnInit, OnDestroy {
   ligaReporte: string = '';
   ref: DynamicDialogRef;
   url = `${environment.base_urlImg}Administration/accounts/`;
-  subRef$: Subscription;
+
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   ngOnInit(): void {
     this.setDataFilter();
     this.customerId$ = this.customerIdService.getCustomerId$();
@@ -86,13 +88,13 @@ export default class ListTicketComponent implements OnInit, OnDestroy {
     }customers/${this.ticketFilterService.getIdCustomer()}/report/`;
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService
+    this.dataService
       .post<IFilterTicket>('Ticket', this.ticketFilterService.getfilterTicket)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
-          this.data = resp.body;
+          this.data = this.customToastService.onCloseOnGetData(resp.body);
           this.dataCompleta = resp.body;
-          this.customToastService.onClose();
         },
         error: (error) => {
           this.customToastService.onCloseToError(error);
@@ -199,8 +201,7 @@ export default class ListTicketComponent implements OnInit, OnDestroy {
           )
           .subscribe({
             next: (resp: any) => {
-              this.data = resp.body;
-              this.customToastService.onShowSuccess();
+              this.data = this.customToastService.onCloseOnGetData(resp.body);
             },
             error: (error) => {
               this.customToastService.onCloseToError(error);
@@ -223,10 +224,11 @@ export default class ListTicketComponent implements OnInit, OnDestroy {
   onDelete(item: any) {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService
+    this.dataService
       .delete(
         `Ticket/onDelete/${item.id}/${this.authService.userTokenDto.infoUserAuthDto.applicationUserId}`
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           this.onLoadData();
@@ -262,10 +264,11 @@ export default class ListTicketComponent implements OnInit, OnDestroy {
   onUpdateStateTicket(item: any) {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService
+    this.dataService
       .get(
         `Ticket/ActualizarStateEnviarReporte/${item.id}/${item.folioReporte}`
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           this.customToastService.onClose();
@@ -278,14 +281,17 @@ export default class ListTicketComponent implements OnInit, OnDestroy {
   onSendProviders() {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService.get(`ticket/sendproviders/`).subscribe({
-      next: () => {
-        this.customToastService.onCloseToSuccess();
-      },
-      error: (error) => {
-        this.customToastService.onCloseToError(error);
-      },
-    });
+    this.dataService
+      .get(`ticket/sendproviders/`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe({
+        next: () => {
+          this.customToastService.onCloseToSuccess();
+        },
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
+        },
+      });
   }
 
   onCreateLiga() {
@@ -321,7 +327,7 @@ export default class ListTicketComponent implements OnInit, OnDestroy {
     this.data = this.dataCompleta;
   }
 
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

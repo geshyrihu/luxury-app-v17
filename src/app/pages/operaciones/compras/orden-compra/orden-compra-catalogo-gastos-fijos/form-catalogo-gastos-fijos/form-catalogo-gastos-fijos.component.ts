@@ -9,7 +9,7 @@ import {
 } from '@angular/forms';
 import { MessageService, SelectItem } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import {
   AuthService,
   CatalogoGastosFijosService,
@@ -51,7 +51,8 @@ export default class FormCatalogoGastosFijosComponent
   public catalogoGastosFijosService = inject(CatalogoGastosFijosService);
   public customerIdService = inject(CustomerIdService);
   submitting: boolean = false;
-  subRef$: Subscription;
+
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   @Input()
   id: number = 0;
@@ -82,20 +83,29 @@ export default class FormCatalogoGastosFijosComponent
   });
 
   ngOnInit(): void {
-    this.selectItemService.onGetSelectItem('Providers').subscribe((resp) => {
-      this.cb_providers = resp;
-    });
-    this.selectItemService.onGetSelectItem('UseCFDI').subscribe((resp) => {
-      this.cb_use_cfdi = resp;
-    });
+    this.selectItemService
+      .onGetSelectItem('Providers')
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe((resp) => {
+        this.cb_providers = resp;
+      });
+    this.selectItemService
+      .onGetSelectItem('UseCFDI')
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe((resp) => {
+        this.cb_use_cfdi = resp;
+      });
     this.selectItemService
       .onGetSelectItem('PaymentMethod')
       .subscribe((resp) => {
         this.cb_metodoDePago = resp;
       });
-    this.selectItemService.onGetSelectItem('WayToPay').subscribe((resp) => {
-      this.cb_formaDePago = resp;
-    });
+    this.selectItemService
+      .onGetSelectItem('WayToPay')
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe((resp) => {
+        this.cb_formaDePago = resp;
+      });
 
     this.id = this.catalogoGastosFijosService.getCatalogoGastosFijosId();
     if (this.id !== 0) this.onLoadData();
@@ -112,8 +122,9 @@ export default class FormCatalogoGastosFijosComponent
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
 
-    this.subRef$ = this.dataService
+    this.dataService
       .get<any>(`CatalogoGastosFijos/${this.id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.catalogoGastosFijosService.setCatalogoGastosFijosId(
@@ -144,8 +155,9 @@ export default class FormCatalogoGastosFijosComponent
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
     if (this.id === 0) {
-      this.subRef$ = this.dataService
+      this.dataService
         .post(`CatalogoGastosFijos`, this.form.value)
+        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
         .subscribe({
           next: (resp: any) => {
             this.id = resp.body.id;
@@ -159,7 +171,7 @@ export default class FormCatalogoGastosFijosComponent
           },
         });
     } else {
-      this.subRef$ = this.dataService
+      this.dataService
         .put(`CatalogoGastosFijos/${this.id}`, this.form.value)
         .subscribe({
           next: () => {
@@ -175,7 +187,7 @@ export default class FormCatalogoGastosFijosComponent
     }
   }
 
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

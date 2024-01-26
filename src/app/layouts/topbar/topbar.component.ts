@@ -96,8 +96,8 @@ export class TopbarComponent implements OnInit {
     this.router.navigate(['/auth/login']);
 
     this.dataService
-      .get('Auth/Logout/' + this.authService.infoUserAuthDto.applicationUserId)
-      .subscribe(() => {});
+      .get(`Auth/Logout/${this.authService.infoUserAuthDto.applicationUserId}`)
+      .subscribe();
   }
 
   // Datos Personales

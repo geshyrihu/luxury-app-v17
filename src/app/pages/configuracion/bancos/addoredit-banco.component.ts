@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { IBankAddOrEditDto } from 'src/app/core/interfaces/IBankAddOrEditDto.interface';
 import {
   CustomToastService,
@@ -29,15 +29,17 @@ import ComponentsModule from 'src/app/shared/components.module';
   providers: [CustomToastService],
 })
 export default class AddOrEditBancoComponent implements OnInit, OnDestroy {
-  private formBuilder = inject(FormBuilder);
-  private dataService = inject(DataService);
-  public ref = inject(DynamicDialogRef);
-  public config = inject(DynamicDialogConfig);
   private customToastService = inject(CustomToastService);
+  private dataService = inject(DataService);
+  private formBuilder = inject(FormBuilder);
+  public config = inject(DynamicDialogConfig);
+  public ref = inject(DynamicDialogRef);
 
   submitting: boolean = false;
   id: number = 0;
-  subRef$: Subscription;
+
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   form: FormGroup = this.formBuilder.group({
     id: { value: this.id, disabled: true },
     code: ['', [Validators.required, Validators.maxLength(3)]],
@@ -54,8 +56,9 @@ export default class AddOrEditBancoComponent implements OnInit, OnDestroy {
     if (this.id !== 0) this.onLoadData();
   }
   onLoadData() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get<IBankAddOrEditDto>(`Banks/${this.id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.form.patchValue(resp.body);
@@ -79,20 +82,24 @@ export default class AddOrEditBancoComponent implements OnInit, OnDestroy {
     this.customToastService.onLoading();
 
     if (this.id === 0) {
-      this.subRef$ = this.dataService.post(`Banks`, this.form.value).subscribe({
-        next: () => {
-          this.ref.close(true);
-          this.customToastService.onClose();
-        },
-        error: (error) => {
-          // Habilitar el botón nuevamente al finalizar el envío del formulario
-          this.submitting = false;
-          this.customToastService.onCloseToError(error);
-        },
-      });
+      this.dataService
+        .post(`Banks`, this.form.value)
+        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+        .subscribe({
+          next: () => {
+            this.ref.close(true);
+            this.customToastService.onClose();
+          },
+          error: (error) => {
+            // Habilitar el botón nuevamente al finalizar el envío del formulario
+            this.submitting = false;
+            this.customToastService.onCloseToError(error);
+          },
+        });
     } else {
-      this.subRef$ = this.dataService
+      this.dataService
         .put(`Banks/${this.id}`, this.form.value)
+        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
         .subscribe({
           next: () => {
             this.ref.close(true);
@@ -106,7 +113,7 @@ export default class AddOrEditBancoComponent implements OnInit, OnDestroy {
         });
     }
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

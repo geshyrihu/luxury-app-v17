@@ -4,7 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import PhoneFormatPipe from 'src/app/core/pipes/phone-format.pipe';
 import {
   AuthService,
@@ -19,7 +20,6 @@ import ComponentsModule from 'src/app/shared/components.module';
 import PrimeNgModule from 'src/app/shared/prime-ng.module';
 import { environment } from 'src/environments/environment';
 import AddOrEditStatusRequestSalaryModificationComponent from './addoredit-status-request-salary-modification/addoredit-status-request-salary-modification.component';
-
 @Component({
   selector: 'app-status-request-salary-modification',
   templateUrl: './status-request-salary-modification.component.html',
@@ -49,7 +49,9 @@ export default class StatusRequestSalaryModificationComponent
   workPositionId = this.statusSolicitudVacanteService.getworkPositionId();
   employeeId = this.statusSolicitudVacanteService.getemployeeId();
   ref: DynamicDialogRef;
-  subRef$: Subscription;
+
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   data: any;
   noCandidates: boolean = true;
   pahtBaseImg = environment.base_urlImg + 'Administration/accounts/';
@@ -65,14 +67,14 @@ export default class StatusRequestSalaryModificationComponent
   onLoadData() {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService
+    this.dataService
       .get(
         `RequestSalaryModification/${this.workPositionId}/${this.employeeId}`
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
-          this.data = resp.body;
-          this.customToastService.onClose();
+          this.data = this.customToastService.onCloseOnGetData(resp.body);
         },
         error: (error) => {
           this.customToastService.onCloseToError(error);
@@ -118,8 +120,9 @@ export default class StatusRequestSalaryModificationComponent
   onDelete(id: number) {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService
+    this.dataService
       .delete(`RequestSalaryModification/${id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           this.onLoadData();
@@ -132,7 +135,7 @@ export default class StatusRequestSalaryModificationComponent
       });
   }
 
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

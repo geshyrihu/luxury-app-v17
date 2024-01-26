@@ -3,7 +3,7 @@ import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { TableModule } from 'primeng/table';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { EAreaMinutasDetalles } from 'src/app/core/enums/area-minutas-detalles.enum';
 import { EStatusTask } from 'src/app/core/enums/estatus-task.enum';
 import { SanitizeHtmlPipe } from 'src/app/core/pipes/sanitize-html.pipe';
@@ -36,7 +36,8 @@ export default class ResultadoGeneralEvaluacionAreasDetalleComponent
   public customToastService = inject(CustomToastService);
 
   data: any;
-  subRef$: Subscription;
+
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   ngOnInit() {
     this.onLoadData(
@@ -49,19 +50,19 @@ export default class ResultadoGeneralEvaluacionAreasDetalleComponent
   onLoadData(fecha: string, area: EAreaMinutasDetalles, status?: EStatusTask) {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`ResumenGeneral/EvaluacionAreasDetalle/${fecha}/${area}/${status}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
-          this.data = resp.body;
-          this.customToastService.onClose();
+          this.data = this.customToastService.onCloseOnGetData(resp.body);
         },
         error: (error) => {
           this.customToastService.onCloseToError(error);
         },
       });
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

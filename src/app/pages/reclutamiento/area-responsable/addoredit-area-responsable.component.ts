@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { ECompanyArea } from 'src/app/core/enums/company-area.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
@@ -36,13 +36,14 @@ export default class AddOrEditAreaResponsableComponent
   private formBuilder = inject(FormBuilder);
   public config = inject(DynamicDialogConfig);
   public ref = inject(DynamicDialogRef);
-
   private customToastService = inject(CustomToastService);
+
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   submitting: boolean = false;
 
   id: number = 0;
-  subRef$: Subscription;
+
   form: FormGroup;
   cb_area_empresa: ISelectItemDto[] = onGetSelectItemFromEnum(ECompanyArea);
 
@@ -53,8 +54,9 @@ export default class AddOrEditAreaResponsableComponent
   }
 
   onLoadData(id: number) {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`Departament/${id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe((resp: any) => {
         this.form.patchValue(resp.body);
       });
@@ -82,8 +84,9 @@ export default class AddOrEditAreaResponsableComponent
     this.customToastService.onLoading();
 
     if (this.id === 0) {
-      this.subRef$ = this.dataService
+      this.dataService
         .post(`Departament`, this.form.value)
+        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
         .subscribe({
           next: () => {
             this.ref.close(true);
@@ -96,7 +99,7 @@ export default class AddOrEditAreaResponsableComponent
           },
         });
     } else {
-      this.subRef$ = this.dataService
+      this.dataService
         .put(`Departament/${this.id}`, this.form.value)
         .subscribe({
           next: () => {
@@ -112,6 +115,6 @@ export default class AddOrEditAreaResponsableComponent
     }
   }
   ngOnDestroy(): void {
-    if (this.subRef$) this.subRef$.unsubscribe();
+    this.dataService.ngOnDestroy();
   }
 }

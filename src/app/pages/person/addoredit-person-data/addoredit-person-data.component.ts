@@ -8,7 +8,7 @@ import {
 } from '@angular/forms';
 import ComponentsModule from 'app/shared/components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { EEducationLevel } from 'src/app/core/enums/education-level.enum';
 import { EMaritalStatus } from 'src/app/core/enums/marital.status';
 import { ECountry } from 'src/app/core/enums/paises.enum';
@@ -51,7 +51,8 @@ export default class AddoreditPersonDataComponent implements OnInit, OnDestroy {
 
   personId = 0;
   submitting: boolean = false;
-  subRef$: Subscription;
+
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   cb_blood_type = onGetSelectItemFromEnum(EBloodType);
   cb_education_level = onGetSelectItemFromEnum(EEducationLevel);
@@ -67,12 +68,18 @@ export default class AddoreditPersonDataComponent implements OnInit, OnDestroy {
   form: FormGroup;
 
   ngOnInit(): void {
-    this.selectItemService.onGetSelectItem('Professions').subscribe((resp) => {
-      this.cb_profession = resp;
-    });
-    this.selectItemService.onGetSelectItem('Customers').subscribe((resp) => {
-      this.cb_customer = resp;
-    });
+    this.selectItemService
+      .onGetSelectItem('Professions')
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe((resp) => {
+        this.cb_profession = resp;
+      });
+    this.selectItemService
+      .onGetSelectItem('Customers')
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe((resp) => {
+        this.cb_customer = resp;
+      });
 
     flatpickrFactory();
     this.personId = this.config.data.personId;
@@ -107,8 +114,9 @@ export default class AddoreditPersonDataComponent implements OnInit, OnDestroy {
     this.submitting = true;
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService
+    this.dataService
       .put(`persondata/${this.personId}`, this.form.value)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (_) => {
           this.submitting = false;
@@ -124,8 +132,9 @@ export default class AddoreditPersonDataComponent implements OnInit, OnDestroy {
   }
 
   onLoadData() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`persondata/${this.personId}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           resp.body;
@@ -137,7 +146,7 @@ export default class AddoreditPersonDataComponent implements OnInit, OnDestroy {
       });
   }
 
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

@@ -10,7 +10,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { cb_ESiNo } from 'src/app/core/enums/si-no.enum';
 import { EStatus } from 'src/app/core/enums/status.enum';
 import { ETypeOfDeparture } from 'src/app/core/enums/type-of-departure.enum';
@@ -42,6 +42,8 @@ export default class AddoreditSolicitudBajaComponent implements OnInit {
   public config = inject(DynamicDialogConfig);
   private customToastService = inject(CustomToastService);
 
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   submitting: boolean = false;
 
   cb_status: ISelectItemDto[] = onGetSelectItemFromEnum(EStatus);
@@ -49,7 +51,7 @@ export default class AddoreditSolicitudBajaComponent implements OnInit {
   cb_si_no: ISelectItemDto[] = cb_ESiNo;
 
   id: number = 0;
-  subRef$: Subscription;
+
   form: FormGroup = this.formBuilder.group({
     id: { value: this.id, disabled: true },
     reasonForLeaving: [],
@@ -71,17 +73,9 @@ export default class AddoreditSolicitudBajaComponent implements OnInit {
     if (this.id !== 0) this.onLoadData();
   }
   onLoadData() {
-    // this.enumService
-    //   .onGetSelectItemEmun('ETypeOfDeparture')
-    //   .subscribe((resp) => {
-    //     this.cb_tipo_baja = resp;
-    //   });
-    // this.enumService.onGetSelectItemEmun('EStatus').subscribe((resp) => {
-    //   this.cb_status = resp;
-    // });
-
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`RequestDismissal/GetById/${this.id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.form.patchValue(resp.body);
@@ -115,8 +109,9 @@ export default class AddoreditSolicitudBajaComponent implements OnInit {
     // Deshabilitar el botón al iniciar el envío del formulario
     this.submitting = true;
     if (this.id === 0) {
-      this.subRef$ = this.dataService
+      this.dataService
         .post(`RequestDismissal/`, this.form.value)
+        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
         .subscribe({
           next: () => {
             this.customToastService.onClose();
@@ -129,7 +124,7 @@ export default class AddoreditSolicitudBajaComponent implements OnInit {
           },
         });
     } else {
-      this.subRef$ = this.dataService
+      this.dataService
         .put(`RequestDismissal/${this.id}`, this.form.value)
         .subscribe({
           next: () => {
@@ -167,8 +162,9 @@ export default class AddoreditSolicitudBajaComponent implements OnInit {
   removeDiscountDescription(index: number, id: number) {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService
+    this.dataService
       .delete(`RequestDismissalDiscount/${id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           this.customToastService.onCloseToSuccess();
@@ -184,7 +180,7 @@ export default class AddoreditSolicitudBajaComponent implements OnInit {
     return this.form.get('discounts') as FormArray;
   }
 
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

@@ -3,7 +3,7 @@ import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { CustomerIdService } from 'src/app/core/services/common-services';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
@@ -34,7 +34,7 @@ export default class CedulaClienteComponent implements OnInit, OnDestroy {
   public messageService = inject(MessageService);
   public customToastService = inject(CustomToastService);
 
-  subRef$: Subscription;
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   id: number = 0;
   data: any[] = [];
@@ -63,10 +63,11 @@ export default class CedulaClienteComponent implements OnInit, OnDestroy {
 
   onLoadData() {
     this.loading = true;
-    this.subRef$ = this.dataService
+    this.dataService
       .get(
         `CedulaPresupuestal/GetCedulaPresupuestal/${this.customerIdService.customerId}/${this.id}`
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           if (resp.body !== null) {
@@ -96,8 +97,9 @@ export default class CedulaClienteComponent implements OnInit, OnDestroy {
     this.onLoadData();
   }
   onLoadCedulasCustomer(customerId: number) {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`CedulaPresupuestal/GetCedulas/${customerId}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.cb_cedulas = resp.body;
@@ -165,8 +167,9 @@ export default class CedulaClienteComponent implements OnInit, OnDestroy {
   }
 
   onDelete(data: any) {
-    this.subRef$ = this.dataService
+    this.dataService
       .delete(`CedulaPresupuestal/CedulaPresupuestalDetalle/${data.id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           this.customToastService.onShowSuccess();
@@ -199,7 +202,7 @@ export default class CedulaClienteComponent implements OnInit, OnDestroy {
       }
     });
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

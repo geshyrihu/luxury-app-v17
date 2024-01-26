@@ -38,7 +38,6 @@ export default class OrganigramaInternoComponent implements OnInit, OnDestroy {
   }
 
   onLoadData() {
-    console.log(this.customerIdService.getcustomerId());
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
     this.dataService
@@ -46,8 +45,7 @@ export default class OrganigramaInternoComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
-          this.data = resp.body;
-          this.customToastService.onClose();
+          this.data = this.customToastService.onCloseOnGetData(resp.body);
         },
         error: (error) => {
           this.customToastService.onCloseToError(error);

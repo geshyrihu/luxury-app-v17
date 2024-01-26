@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { EState } from 'src/app/core/enums/state.enum';
 import { ETurnoTrabajo } from 'src/app/core/enums/turno-trabajo.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
@@ -53,7 +53,8 @@ export default class AddoreditPlantillaComponent implements OnInit, OnDestroy {
   cb_turnoTrabajo: ISelectItemDto[] = onGetSelectItemFromEnum(ETurnoTrabajo);
   cb_state: ISelectItemDto[] = onGetSelectItemFromEnum(EState);
 
-  subRef$: Subscription;
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   form: FormGroup = this.formBuilder.group({
     id: { value: this.id, disabled: true },
     customerId: [this.customerIdService.getcustomerId(), Validators.required],
@@ -92,8 +93,9 @@ export default class AddoreditPlantillaComponent implements OnInit, OnDestroy {
     if (this.id !== 0) this.onLoadData();
   }
   onLoadData() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get<IWorkPositionAddOrEditDto>(`WorkPosition/GetForEdit/${this.id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.form.patchValue(resp.body);
@@ -128,8 +130,9 @@ export default class AddoreditPlantillaComponent implements OnInit, OnDestroy {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
     if (this.id === 0) {
-      this.subRef$ = this.dataService
+      this.dataService
         .post(`WorkPosition`, this.form.value)
+        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
         .subscribe({
           next: () => {
             this.customToastService.onClose();
@@ -142,7 +145,7 @@ export default class AddoreditPlantillaComponent implements OnInit, OnDestroy {
           },
         });
     } else {
-      this.subRef$ = this.dataService
+      this.dataService
         .put(`WorkPosition/${this.id}`, this.form.value)
         .subscribe({
           next: () => {
@@ -157,14 +160,17 @@ export default class AddoreditPlantillaComponent implements OnInit, OnDestroy {
         });
     }
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 
   onProfessionSelectItem() {
-    this.selectItemService.onGetSelectItem('Professions').subscribe((resp) => {
-      this.cb_profession = resp;
-    });
+    this.selectItemService
+      .onGetSelectItem('Professions')
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe((resp) => {
+        this.cb_profession = resp;
+      });
   }
 
   onLoadSelectItem() {

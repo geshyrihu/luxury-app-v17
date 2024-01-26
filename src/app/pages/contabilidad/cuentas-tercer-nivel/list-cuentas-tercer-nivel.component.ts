@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import {
   AuthService,
   CustomToastService,
@@ -30,6 +30,8 @@ export default class ListCuentasTercerNivelComponent
 
   data: any[] = [];
   ref: DynamicDialogRef;
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   state: boolean = true;
 
   ngOnInit(): void {
@@ -40,12 +42,12 @@ export default class ListCuentasTercerNivelComponent
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
     this.state = state;
-    this.subRef$ = this.dataService
+    this.dataService
       .get('Cuentas/GetList/' + (state ? 0 : 1))
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
-          this.data = resp.body;
-          this.customToastService.onClose();
+          this.data = this.customToastService.onCloseOnGetData(resp.body);
         },
         error: (error) => {
           this.customToastService.onCloseToError(error);
@@ -56,15 +58,18 @@ export default class ListCuentasTercerNivelComponent
   onDelete(data: any) {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService.delete(`Cuentas/${data.id}`).subscribe({
-      next: () => {
-        this.customToastService.onCloseToSuccess();
-        this.onLoadData(this.state);
-      },
-      error: (error) => {
-        this.customToastService.onCloseToError(error);
-      },
-    });
+    this.dataService
+      .delete(`Cuentas/${data.id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe({
+        next: () => {
+          this.customToastService.onCloseToSuccess();
+          this.onLoadData(this.state);
+        },
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
+        },
+      });
   }
 
   showModalAddOrEdit(data: any) {
@@ -85,9 +90,9 @@ export default class ListCuentasTercerNivelComponent
       }
     });
   }
-  subRef$: Subscription;
+
   ngOnDestroy(): void {
-    if (this.subRef$) this.subRef$.unsubscribe();
+    this.dataService.ngOnDestroy();
   }
 
   organizeData(rawData: any[]): any[] {

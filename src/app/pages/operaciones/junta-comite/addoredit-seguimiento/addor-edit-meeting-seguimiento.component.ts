@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { IMeetingDertailsSeguimientoAddOrEditDto } from 'src/app/core/interfaces/IMeetingDertailsSeguimientoAddOrEditDto.interface';
 import {
   AuthService,
@@ -42,12 +42,14 @@ export default class AddorEditMeetingSeguimientoComponent
   public config = inject(DynamicDialogConfig);
   public authService = inject(AuthService);
 
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   private customToastService = inject(CustomToastService);
 
   submitting: boolean = false;
 
   id: number = 0;
-  subRef$: Subscription;
+
   form: FormGroup = this.formBuilder.group({
     id: { value: this.id, disabled: true },
     meetingDetailsId: [this.config.data.meetingDetailsId, Validators.required],
@@ -65,8 +67,9 @@ export default class AddorEditMeetingSeguimientoComponent
     if (this.id !== 0) this.onLoadData();
   }
   onLoadData() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`MeetingDertailsSeguimiento/${this.id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           resp.body.fecha = this.dateService.getDateFormat(resp.body.fecha);
@@ -91,7 +94,7 @@ export default class AddorEditMeetingSeguimientoComponent
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
     if (this.id === 0) {
-      this.subRef$ = this.dataService
+      this.dataService
         .post<IMeetingDertailsSeguimientoAddOrEditDto>(
           `MeetingDertailsSeguimiento`,
           this.form.value
@@ -108,7 +111,7 @@ export default class AddorEditMeetingSeguimientoComponent
           },
         });
     } else {
-      this.subRef$ = this.dataService
+      this.dataService
         .put<IMeetingDertailsSeguimientoAddOrEditDto>(
           `MeetingDertailsSeguimiento/${this.id}`,
           this.form.value
@@ -126,7 +129,7 @@ export default class AddorEditMeetingSeguimientoComponent
         });
     }
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

@@ -9,7 +9,7 @@ import {
 } from '@angular/forms';
 import { FlatpickrModule } from 'angularx-flatpickr';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { EStatusTask } from 'src/app/core/enums/estatus-task.enum';
 import { EPriority } from 'src/app/core/enums/priority.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
@@ -53,7 +53,7 @@ export default class AddoreditTicketComponent implements OnInit, OnDestroy {
   public config = inject(DynamicDialogConfig);
   public ref = inject(DynamicDialogRef);
 
-  subRef$: Subscription;
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   cb_priority = onGetSelectItemFromEnum(EPriority);
   cb_area_responsable: any[] = [];
@@ -144,15 +144,18 @@ export default class AddoreditTicketComponent implements OnInit, OnDestroy {
   }
 
   onLoadData(id: number) {
-    this.subRef$ = this.dataService.get(`Ticket/${id}`).subscribe({
-      next: (resp: any) => {
-        this.model = resp.body;
-        this.form.patchValue(resp.body);
-      },
-      error: (error) => {
-        this.customToastService.onCloseToError(error);
-      },
-    });
+    this.dataService
+      .get(`Ticket/${id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe({
+        next: (resp: any) => {
+          this.model = resp.body;
+          this.form.patchValue(resp.body);
+        },
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
+        },
+      });
   }
   validarImagen(model: any): string | null {
     if (model) {
@@ -163,8 +166,9 @@ export default class AddoreditTicketComponent implements OnInit, OnDestroy {
   }
   onCerrarFolio(status: EStatusTask) {
     const model = this.createFormData(this.form.value);
-    this.subRef$ = this.dataService
+    this.dataService
       .put(`Ticket/UpdateInfo/${this.id}`, model)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           this.onticketConcluido(status, model);
@@ -180,8 +184,9 @@ export default class AddoreditTicketComponent implements OnInit, OnDestroy {
     // Deshabilitar el botón al iniciar el envío del formulario
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService
+    this.dataService
       .put(`Ticket/${this.id}/${status}`, model)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           this.ref.close(true);
@@ -210,20 +215,24 @@ export default class AddoreditTicketComponent implements OnInit, OnDestroy {
     this.customToastService.onLoading();
 
     if (this.id === 0) {
-      this.subRef$ = this.dataService.post(`Ticket/Create`, model).subscribe({
-        next: () => {
-          this.ref.close(true);
-          this.customToastService.onClose();
-        },
-        error: (error) => {
-          // Habilitar el botón nuevamente al finalizar el envío del formulario
-          this.submitting = false;
-          this.customToastService.onCloseToError(error);
-        },
-      });
+      this.dataService
+        .post(`Ticket/Create`, model)
+        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+        .subscribe({
+          next: () => {
+            this.ref.close(true);
+            this.customToastService.onClose();
+          },
+          error: (error) => {
+            // Habilitar el botón nuevamente al finalizar el envío del formulario
+            this.submitting = false;
+            this.customToastService.onCloseToError(error);
+          },
+        });
     } else {
-      this.subRef$ = this.dataService
+      this.dataService
         .put(`Ticket/UpdateInfo/${this.id}`, model)
+        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
         .subscribe({
           next: () => {
             this.ref.close(true);
@@ -295,7 +304,7 @@ export default class AddoreditTicketComponent implements OnInit, OnDestroy {
     this.form.patchValue({ photoPathBefore: file });
   }
 
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

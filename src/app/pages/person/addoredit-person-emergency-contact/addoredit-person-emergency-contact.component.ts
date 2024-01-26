@@ -11,7 +11,7 @@ import { NgxMaskModule } from 'ngx-mask';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ToastModule } from 'primeng/toast';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { ERelationEmployee } from 'src/app/core/enums/relation-employee.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
@@ -54,7 +54,8 @@ export default class AddoreditPersonEmergencyContactComponent
   cb_persons: ISelectItemDto[] = [];
   cb_relacion: ISelectItemDto[] = onGetSelectItemFromEnum(ERelationEmployee);
   submitting: boolean = false;
-  subRef$: Subscription;
+
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   form: FormGroup = this.formBuilder.group({
     id: { value: this.config.data.id, disabled: true },
@@ -73,18 +74,21 @@ export default class AddoreditPersonEmergencyContactComponent
   }
   onLoadSelectItem() {
     // Carga de listado de personas
-    this.selectItemService.onGetSelectItem('persons').subscribe((resp) => {
-      this.cb_persons = resp;
-    });
+    this.selectItemService
+      .onGetSelectItem('persons')
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe((resp) => {
+        this.cb_persons = resp;
+      });
   }
 
   onLoadData() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`personemergencycontact/${this.id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.form.patchValue(resp.body);
-          console.log('🚀 ~ resp.body:', resp.body);
         },
         error: (error) => {
           this.customToastService.onCloseToError(error);
@@ -93,8 +97,6 @@ export default class AddoreditPersonEmergencyContactComponent
   }
 
   onSubmit() {
-    console.log('🚀 ~ fomulario:', this.form.value);
-
     if (this.form.invalid) {
       Object.values(this.form.controls).forEach((x) => {
         x.markAllAsTouched();
@@ -107,7 +109,7 @@ export default class AddoreditPersonEmergencyContactComponent
     this.customToastService.onLoading();
 
     if (this.id === '') {
-      this.subRef$ = this.dataService
+      this.dataService
         .post(`personemergencycontact`, this.form.value)
         .subscribe({
           next: () => {
@@ -121,7 +123,7 @@ export default class AddoreditPersonEmergencyContactComponent
           },
         });
     } else {
-      this.subRef$ = this.dataService
+      this.dataService
         .put(`personemergencycontact/${this.id}`, this.form.value)
         .subscribe({
           next: () => {
@@ -143,9 +145,8 @@ export default class AddoreditPersonEmergencyContactComponent
       personContactId: find?.value,
       namePerson: find?.label,
     });
-    console.log('🚀 ~ this.form.invalid:', this.form.value);
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

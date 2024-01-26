@@ -7,7 +7,6 @@ import {
   Validators,
 } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
 import {
   AuthService,
   CustomToastService,
@@ -51,7 +50,6 @@ export default class CreateOrdenCompraComponent implements OnInit, OnDestroy {
   date: string = '';
   proveedorIdRecibido: number = 0;
   posicionCotizacion: number = 0;
-  subRef$: Subscription;
 
   ngOnInit(): void {
     flatpickrFactory();
@@ -83,7 +81,7 @@ export default class CreateOrdenCompraComponent implements OnInit, OnDestroy {
   }
 
   onLoadSolicitudCompra() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`SolicitudCompra/${this.solicitudCompraId}`)
       .subscribe((resp: any) => {
         this.solicitudCompra = resp.body;
@@ -144,7 +142,7 @@ export default class CreateOrdenCompraComponent implements OnInit, OnDestroy {
         });
     }
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

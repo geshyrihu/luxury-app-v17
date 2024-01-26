@@ -18,7 +18,7 @@ import {
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ToastModule } from 'primeng/toast';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import {
   AuthService,
@@ -54,11 +54,12 @@ export default class AddProductComponent implements OnInit, OnDestroy {
   private formBuilder = inject(FormBuilder);
   private solicitudCompraService = inject(SolicitudCompraService);
 
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   id: any = 0;
   products: any[] = [];
   urlImagenProducto = environment.base_urlImg + 'Administration/products/';
   ref: DynamicDialogRef;
-  subRef$: Subscription;
 
   @Input()
   solicitudCompraId: number = 0;
@@ -84,10 +85,11 @@ export default class AddProductComponent implements OnInit, OnDestroy {
   }
 
   onLoadProduct() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(
         `SolicitudCompraDetalle/AddProductoToSolicitudDto/${this.solicitudCompraId}`
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.products = resp.body;
@@ -104,8 +106,9 @@ export default class AddProductComponent implements OnInit, OnDestroy {
       employeeId: this.authService.userTokenDto.infoEmployeeDto.employeeId,
     });
     // this.onSelectProduct(this.form.get('productName')?.value);
-    this.subRef$ = this.dataService
+    this.dataService
       .post<any>(`SolicitudCompraDetalle/`, this.form.value)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           this.customToastService.onShowSuccess();
@@ -132,8 +135,8 @@ export default class AddProductComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 
   form: FormGroup = this.formBuilder.group({

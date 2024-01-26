@@ -8,7 +8,7 @@ import {
 } from '@angular/forms';
 import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { EmailDataAddOrEditDto } from 'src/app/core/interfaces/email-data-add-or-edit.interface';
 import {
   AuthService,
@@ -38,13 +38,12 @@ export default class AddOrEditEmailDataComponent implements OnInit, OnDestroy {
   public ref = inject(DynamicDialogRef);
   public authService = inject(AuthService);
   private customToastService = inject(CustomToastService);
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   id: number = 0;
   applicationUserId: number = 0;
   testEmailMessage: string = '';
   submitting: boolean = false;
-
-  subRef$: Subscription;
 
   form: FormGroup = this.formBuilder.group({
     id: this.formBuilder.control({
@@ -70,8 +69,9 @@ export default class AddOrEditEmailDataComponent implements OnInit, OnDestroy {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
     if (this.id === 0) {
-      this.subRef$ = this.dataService
+      this.dataService
         .post(`EmailData`, this.form.value)
+        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
         .subscribe({
           next: () => {
             this.ref.close(true);
@@ -84,8 +84,9 @@ export default class AddOrEditEmailDataComponent implements OnInit, OnDestroy {
           },
         });
     } else {
-      this.subRef$ = this.dataService
+      this.dataService
         .put(`EmailData/${this.id}`, this.form.value)
+        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
         .subscribe({
           next: () => {
             this.ref.close(true);
@@ -105,10 +106,11 @@ export default class AddOrEditEmailDataComponent implements OnInit, OnDestroy {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
 
-    this.subRef$ = this.dataService
+    this.dataService
       .get(
         `SendEmail/TestEmail/${this.applicationUserId}/${this.authService.infoEmployeeDto.personId}`
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.testEmailMessage = resp.body.message;
@@ -130,10 +132,11 @@ export default class AddOrEditEmailDataComponent implements OnInit, OnDestroy {
   }
 
   onLoadData() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get<EmailDataAddOrEditDto>(
         `EmailData/GetByAccountId/${this.applicationUserId}`
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           if (resp.body !== null) {
@@ -146,7 +149,7 @@ export default class AddOrEditEmailDataComponent implements OnInit, OnDestroy {
         },
       });
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

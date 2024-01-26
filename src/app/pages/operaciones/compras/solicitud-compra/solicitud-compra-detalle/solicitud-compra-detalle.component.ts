@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { TableModule } from 'primeng/table';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { SolicitudCompraService } from 'src/app/core/services/solicitud-compra.service';
@@ -20,7 +20,7 @@ export default class SolicitudCompraDetalleComponent {
   public dataService = inject(DataService);
   private solicitudCompraService = inject(SolicitudCompraService);
 
-  subRef$: Subscription;
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   @Input()
   SolicitudCompraDetalle: any[] = [];
@@ -57,8 +57,9 @@ export default class SolicitudCompraDetalleComponent {
   onDeleteProduct(data: any) {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService
+    this.dataService
       .delete(`SolicitudCompraDetalle/${data.id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           this.onUpdateData();
@@ -70,7 +71,7 @@ export default class SolicitudCompraDetalleComponent {
         },
       });
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import {
   CustomToastService,
   DataService,
@@ -34,13 +34,14 @@ export default class AddoreditClasificacionEquipoComponent
   private dataService = inject(DataService);
   public ref = inject(DynamicDialogRef);
   public config = inject(DynamicDialogConfig);
-
   private customToastService = inject(CustomToastService);
+
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   submitting: boolean = false;
 
   id: number = 0;
-  subRef$: Subscription;
+
   form: FormGroup = this.formBuilder.group({
     id: { value: this.id, disabled: true },
     descripcion: ['', Validators.required],
@@ -51,7 +52,7 @@ export default class AddoreditClasificacionEquipoComponent
     if (this.id !== 0) this.onLoadData();
   }
   onLoadData() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`EquipoClasificacion/${this.id}`)
       .subscribe((resp: any) => {
         this.form.patchValue(resp.body);
@@ -71,8 +72,9 @@ export default class AddoreditClasificacionEquipoComponent
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
     if (this.id === 0) {
-      this.subRef$ = this.dataService
+      this.dataService
         .post(`EquipoClasificacion`, this.form.value)
+        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
         .subscribe({
           next: () => {
             this.ref.close(true);
@@ -85,7 +87,7 @@ export default class AddoreditClasificacionEquipoComponent
           },
         });
     } else {
-      this.subRef$ = this.dataService
+      this.dataService
         .put(`EquipoClasificacion/${this.id}`, this.form.value)
         .subscribe({
           next: () => {
@@ -100,7 +102,7 @@ export default class AddoreditClasificacionEquipoComponent
         });
     }
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

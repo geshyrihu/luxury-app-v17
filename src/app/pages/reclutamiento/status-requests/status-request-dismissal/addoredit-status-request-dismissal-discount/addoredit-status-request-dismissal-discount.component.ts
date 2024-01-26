@@ -7,14 +7,14 @@ import {
   Validators,
 } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import {
   CustomToastService,
   DataService,
 } from 'src/app/core/services/common-services';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import ComponentsModule from 'src/app/shared/components.module';
-
 @Component({
   selector: 'app-addoredit-status-request-dismissal-discount',
   templateUrl: './addoredit-status-request-dismissal-discount.component.html',
@@ -36,10 +36,11 @@ export default class AddOrEditStatusRequestDismissalDiscountComponent
   public config = inject(DynamicDialogConfig);
   private customToastService = inject(CustomToastService);
 
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
   submitting: boolean = false;
 
   id: number = 0;
-  subRef$: Subscription;
+
   form: FormGroup = this.formBuilder.group({
     id: { value: this.id, disabled: true },
     requestBajaId: ['', Validators.required, ,],
@@ -52,8 +53,9 @@ export default class AddOrEditStatusRequestDismissalDiscountComponent
     if (this.id !== 0) this.onLoadData();
   }
   onLoadData() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`RequestDismissalDiscount/${this.id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.form.patchValue(resp.body);
@@ -76,7 +78,7 @@ export default class AddOrEditStatusRequestDismissalDiscountComponent
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
     if (this.id === 0) {
-      this.subRef$ = this.dataService
+      this.dataService
         .post(`RequestDismissalDiscount`, this.form.value)
         .subscribe({
           next: () => {
@@ -90,7 +92,7 @@ export default class AddOrEditStatusRequestDismissalDiscountComponent
           },
         });
     } else {
-      this.subRef$ = this.dataService
+      this.dataService
         .put(`RequestDismissalDiscount/${this.id}`, this.form.value)
         .subscribe({
           next: () => {
@@ -105,7 +107,7 @@ export default class AddOrEditStatusRequestDismissalDiscountComponent
         });
     }
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

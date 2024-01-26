@@ -8,7 +8,7 @@ import {
 } from '@angular/forms';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { EAreaMinutasDetalles } from 'src/app/core/enums/area-minutas-detalles.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
@@ -17,7 +17,6 @@ import {
   CustomToastService,
   DataService,
 } from 'src/app/core/services/common-services';
-import { EnumService } from 'src/app/core/services/enum.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import ComponentsModule from 'src/app/shared/components.module';
 import PrimeNgModule from 'src/app/shared/prime-ng.module';
@@ -44,7 +43,8 @@ export default class AddoreditMinutaDetalleComponent
   public config = inject(DynamicDialogConfig);
   public authService = inject(AuthService);
   private customToastService = inject(CustomToastService);
-  private enumService = inject(EnumService);
+
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   public Editor = ClassicEditor;
   submitting: boolean = false;
@@ -65,7 +65,7 @@ export default class AddoreditMinutaDetalleComponent
   ];
   cb_area: ISelectItemDto[] = onGetSelectItemFromEnum(EAreaMinutasDetalles);
   id: number = 0;
-  subRef$: Subscription;
+
   form: FormGroup = this.formBuilder.group({
     id: { value: this.id, disabled: true },
     responsibleAreaId: [1, Validators.required],
@@ -81,17 +81,11 @@ export default class AddoreditMinutaDetalleComponent
   });
 
   ngOnInit(): void {
-    // this.enumService
-    //   .onGetSelectItemEmun('EAreaMinutasDetalles')
-    //   .subscribe((resp) => {
-    //     this.cb_area = resp;
-    //   });
-
     this.id = this.config.data.id;
     if (this.id !== 0) this.onLoadData();
   }
   onLoadData() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`MeetingsDetails/${this.id}`)
       .subscribe((resp: any) => {
         this.form.patchValue(resp.body);
@@ -114,8 +108,9 @@ export default class AddoreditMinutaDetalleComponent
     this.customToastService.onLoading();
 
     if (this.id === 0) {
-      this.subRef$ = this.dataService
+      this.dataService
         .post(`MeetingsDetails`, this.form.value)
+        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
         .subscribe({
           next: () => {
             this.ref.close(true);
@@ -128,7 +123,7 @@ export default class AddoreditMinutaDetalleComponent
           },
         });
     } else {
-      this.subRef$ = this.dataService
+      this.dataService
         .put(
           `MeetingsDetails/${this.id}/${this.authService.userTokenDto.infoEmployeeDto.employeeId}`,
           this.form.value
@@ -146,7 +141,7 @@ export default class AddoreditMinutaDetalleComponent
         });
     }
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

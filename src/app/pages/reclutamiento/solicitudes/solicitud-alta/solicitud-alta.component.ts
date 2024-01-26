@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { ETypeContractRegister } from 'src/app/core/enums/type-contract-register.enum';
 import { ETypeContract } from 'src/app/core/enums/type-contract.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
@@ -41,11 +41,12 @@ export default class SolicitudAltaComponent implements OnInit, OnDestroy {
   public config = inject(DynamicDialogConfig);
   public ref = inject(DynamicDialogRef);
 
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   requestPositionCandidateId: number = 0;
   data: any;
   submitting: boolean = false;
 
-  subRef$: Subscription;
   cb_typeContractRegister = onGetSelectItemFromEnum(ETypeContractRegister);
   cb_vacantes: ISelectItemDto[] = [];
 
@@ -71,18 +72,14 @@ export default class SolicitudAltaComponent implements OnInit, OnDestroy {
     return this.form.controls;
   }
   onLoadData() {
-    // this.enumService
-    //   .getEnumValuesDisplay('ETypeContractRegister')
-    //   .subscribe((resp) => {
-    //     this.cb_typeContractRegister = resp;
-    //   });
-    this.subRef$ = this.dataService
+    this.dataService
       .get(
         `RequestEmployeeRegister/GetEmployeeRegister/${this.employeeId}/${this.customerId}`
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
-          this.data = resp.body;
+          this.data = this.customToastService.onCloseOnGetData(resp.body);
           this.form.patchValue(resp.body);
           this.form.patchValue({
             employeeId: this.config.data.employeeId,
@@ -96,8 +93,9 @@ export default class SolicitudAltaComponent implements OnInit, OnDestroy {
   }
 
   onLoadDataVacante() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`requestemployeeregister/vacantes/${this.customerId}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.cb_vacantes = resp.body;
@@ -120,11 +118,12 @@ export default class SolicitudAltaComponent implements OnInit, OnDestroy {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
 
-    this.subRef$ = this.dataService
+    this.dataService
       .post(
         `solicitudesreclutamiento/solicitudalta/${this.authService.infoUserAuthDto.applicationUserId}`,
         this.form.value
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           this.ref.close(true);
@@ -137,7 +136,7 @@ export default class SolicitudAltaComponent implements OnInit, OnDestroy {
         },
       });
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

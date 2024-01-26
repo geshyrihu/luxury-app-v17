@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
-import { Injectable, inject } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Injectable, OnDestroy, inject } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 const urlBase = environment.base_url;
@@ -8,7 +8,7 @@ const urlBase = environment.base_url;
 @Injectable({
   providedIn: 'root',
 })
-export class DataService {
+export class DataService implements OnDestroy {
   private http = inject(HttpClient);
 
   /**
@@ -97,5 +97,14 @@ export class DataService {
     // }
 
     return httpHeaders;
+  }
+
+  // Utilizado para la gestión de recursos al destruir el componente
+  private destroy$ = new Subject<void>();
+
+  ngOnDestroy(): void {
+    // Cuando se destruye el componente, desvincular y liberar recursos
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

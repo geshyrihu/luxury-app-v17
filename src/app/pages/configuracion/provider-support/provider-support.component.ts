@@ -10,7 +10,6 @@ import {
   DataService,
 } from 'src/app/core/services/common-services';
 import { environment } from 'src/environments/environment';
-import AddOrEditCustomerprovidersupportComponent from './add-or-edit-customer-provider-support/add-or-edit-customer-provider-support.component';
 import AddOrEditprovidersupportComponent from './add-or-edit-provider-support/add-or-edit-provider-support.component';
 
 @Component({
@@ -49,8 +48,7 @@ export default class providersupportComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
-          this.data = resp.body;
-          this.customToastService.onClose();
+          this.data = this.customToastService.onCloseOnGetData(resp.body);
         },
         error: (error) => {
           this.customToastService.onCloseToError(error);
@@ -91,32 +89,6 @@ export default class providersupportComponent implements OnInit, OnDestroy {
       closeOnEscape: true,
       baseZIndex: 10000,
     });
-
-    // Escuchar el evento 'onClose' cuando se cierra el cuadro de diálogo
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        // Cuando se recibe 'true', mostrar un mensaje de éxito y volver a cargar los datos
-        this.customToastService.onShowSuccess();
-        this.onLoadData();
-      }
-    });
-  }
-
-  //Modal Agregar o Eliminar clientes
-  // Función para abrir un cuadro de diálogo modal para agregar o editar información sobre un banco
-  onModalAddOrEditCustomer(data: any) {
-    this.ref = this.dialogService.open(
-      AddOrEditCustomerprovidersupportComponent,
-      {
-        data: {
-          id: data.id,
-        },
-        header: data.title,
-        styleClass: 'modal-md ',
-        closeOnEscape: true,
-        baseZIndex: 10000,
-      }
-    );
 
     // Escuchar el evento 'onClose' cuando se cierra el cuadro de diálogo
     this.ref.onClose.subscribe((resp: boolean) => {

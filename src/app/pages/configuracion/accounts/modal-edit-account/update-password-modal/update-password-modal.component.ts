@@ -11,7 +11,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ToastModule } from 'primeng/toast';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { ResetPasswordDto } from 'src/app/core/interfaces/user-info.interface';
 import {
   CustomToastService,
@@ -36,13 +36,14 @@ import CustomButtonModule from 'src/app/custom-components/custom-buttons/custom-
 export default class UpdatePasswordModalComponent implements OnInit, OnDestroy {
   private dataService = inject(DataService);
   private customToastService = inject(CustomToastService);
-
   public config = inject(DynamicDialogConfig);
   public ref = inject(DynamicDialogRef);
 
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   applicationUserId: string = this.config.data.applicationUserId;
   userInfoDto: ResetPasswordDto;
-  subRef$: Subscription;
+
   form: FormGroup;
 
   correoPersonal: string = '';
@@ -61,10 +62,11 @@ export default class UpdatePasswordModalComponent implements OnInit, OnDestroy {
   }
 
   onLoadDataEmployee() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(
         `Employees/DataEmployeeForRecoveryPassword/${this.applicationUserId}`
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           if (resp.body !== null) {
@@ -85,8 +87,9 @@ export default class UpdatePasswordModalComponent implements OnInit, OnDestroy {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
 
-    this.subRef$ = this.dataService
+    this.dataService
       .post('Auth/ResetPasswordAdmin', this.form.value)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           this.customToastService.onCloseToSuccess();
@@ -101,13 +104,14 @@ export default class UpdatePasswordModalComponent implements OnInit, OnDestroy {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
 
-    this.subRef$ = this.dataService
+    this.dataService
       .get(
         'Auth/SendPasswordNewEmail/' +
           this.correoPersonal +
           '/' +
           this.applicationUserId
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           this.customToastService.onCloseToSuccess();
@@ -121,13 +125,14 @@ export default class UpdatePasswordModalComponent implements OnInit, OnDestroy {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
 
-    this.subRef$ = this.dataService
+    this.dataService
       .get(
         'Auth/SendPasswordWhatsApp/' +
           this.celularPersonal +
           '/' +
           this.applicationUserId
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           this.customToastService.onCloseToSuccess();
@@ -138,6 +143,6 @@ export default class UpdatePasswordModalComponent implements OnInit, OnDestroy {
       });
   }
   ngOnDestroy(): void {
-    if (this.subRef$) this.subRef$.unsubscribe();
+    this.dataService.ngOnDestroy();
   }
 }

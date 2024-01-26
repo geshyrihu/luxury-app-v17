@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import {
   CustomToastService,
@@ -42,7 +42,9 @@ export default class AddOrEditCustomerProviderComponent implements OnInit {
   cb_providers: ISelectItemDto[] = [];
   cb_categories: ISelectItemDto[] = [];
   customerId: number = this.customerIdService.customerId;
-  subRef$: Subscription;
+
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   submitting: boolean = false;
 
   id: string = '';
@@ -53,7 +55,7 @@ export default class AddOrEditCustomerProviderComponent implements OnInit {
     this.onLoadForm();
   }
   onLoadData() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`customerprovider/getById/${this.config.data.id}`)
       .subscribe((resp: any) => {
         this.form.patchValue(resp.body);
@@ -79,13 +81,19 @@ export default class AddOrEditCustomerProviderComponent implements OnInit {
 
   onLoadSelectItem() {
     // Carga de listado de proveedores
-    this.selectItemService.onGetSelectItem('providers').subscribe((resp) => {
-      this.cb_providers = resp;
-    });
+    this.selectItemService
+      .onGetSelectItem('providers')
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe((resp) => {
+        this.cb_providers = resp;
+      });
     // Carga de listado de categorias
-    this.selectItemService.onGetSelectItem('categories').subscribe((resp) => {
-      this.cb_categories = resp;
-    });
+    this.selectItemService
+      .onGetSelectItem('categories')
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe((resp) => {
+        this.cb_categories = resp;
+      });
   }
 
   submit() {
@@ -101,8 +109,9 @@ export default class AddOrEditCustomerProviderComponent implements OnInit {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
     if (this.id === '') {
-      this.subRef$ = this.dataService
+      this.dataService
         .post(`customerprovider`, this.form.value)
+        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
         .subscribe({
           next: () => {
             this.ref.close(true);
@@ -115,7 +124,7 @@ export default class AddOrEditCustomerProviderComponent implements OnInit {
           },
         });
     } else {
-      this.subRef$ = this.dataService
+      this.dataService
         .put(`customerprovider/${this.id}`, this.form.value)
         .subscribe({
           next: () => {

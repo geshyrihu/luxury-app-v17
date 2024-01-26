@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { ETipoGasto } from 'src/app/core/enums/tipo-gasto.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
@@ -40,7 +40,8 @@ export default class OrdenCompraDatosPagoComponent
   private customToastService = inject(CustomToastService);
 
   submitting: boolean = false;
-  subRef$: Subscription;
+
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   ordenCompraDatosPagoId = 0;
   cb_providers: ISelectItemDto[] = [];
@@ -70,23 +71,33 @@ export default class OrdenCompraDatosPagoComponent
   ngOnInit(): void {
     this.ordenCompraDatosPagoId =
       this.config.data.ordenCompra.ordenCompraDatosPago.id;
-    this.selectItemService.onGetSelectItem('Providers').subscribe((resp) => {
-      this.cb_providers = resp;
-    });
+    this.selectItemService
+      .onGetSelectItem('Providers')
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe((resp) => {
+        this.cb_providers = resp;
+      });
     this.selectItemService
       .onGetSelectItem('PaymentMethod')
       .subscribe((resp) => {
         this.cb_payment_method = resp;
       });
-    this.selectItemService.onGetSelectItem('UseCFDI').subscribe((resp) => {
-      this.cb_usoCfdi = resp;
-    });
-    this.selectItemService.onGetSelectItem('WayToPay').subscribe((resp) => {
-      this.cb_formaPago = resp;
-    });
+    this.selectItemService
+      .onGetSelectItem('UseCFDI')
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe((resp) => {
+        this.cb_usoCfdi = resp;
+      });
+    this.selectItemService
+      .onGetSelectItem('WayToPay')
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe((resp) => {
+        this.cb_formaPago = resp;
+      });
 
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`OrdenCompraDatosPago/${this.ordenCompraDatosPagoId}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.form.patchValue(resp.body);
@@ -99,11 +110,12 @@ export default class OrdenCompraDatosPagoComponent
   onSubmit() {
     // Deshabilitar el botón al iniciar el envío del formulario
     this.submitting = true;
-    this.subRef$ = this.dataService
+    this.dataService
       .put(
         `OrdenCompraDatosPago/${this.ordenCompraDatosPagoId}`,
         this.form.value
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           this.ref.close(true);
@@ -116,7 +128,7 @@ export default class OrdenCompraDatosPagoComponent
         },
       });
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

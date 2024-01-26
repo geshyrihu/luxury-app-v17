@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { ICustomerAddOrEditDto } from 'src/app/core/interfaces/ICustomerAddOrEditDto.interface';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import {
@@ -40,6 +40,8 @@ export default class AddOrEditClienteComponent implements OnInit, OnDestroy {
   public dateService = inject(DateService);
   public ref = inject(DynamicDialogRef);
   private customToastService = inject(CustomToastService);
+
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   submitting: boolean = false;
 
@@ -81,8 +83,9 @@ export default class AddOrEditClienteComponent implements OnInit, OnDestroy {
   }
 
   onLoadData() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get<ICustomerAddOrEditDto>(`Customers/${this.id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.model = resp.body;
@@ -111,7 +114,7 @@ export default class AddOrEditClienteComponent implements OnInit, OnDestroy {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
     if (this.id === 0) {
-      this.subRef$ = this.dataService
+      this.dataService
         .post<ICustomerAddOrEditDto>('Customers', formData)
         .subscribe({
           next: () => {
@@ -125,7 +128,7 @@ export default class AddOrEditClienteComponent implements OnInit, OnDestroy {
           },
         });
     } else {
-      this.subRef$ = this.dataService
+      this.dataService
         .put<ICustomerAddOrEditDto>(`Customers/${this.id}`, formData)
         .subscribe({
           next: () => {
@@ -164,8 +167,8 @@ export default class AddOrEditClienteComponent implements OnInit, OnDestroy {
     formData.append('numeroCliente', customerAdCustomerAddOrEdit.numeroCliente);
     return formData;
   }
-  subRef$: Subscription;
+
   ngOnDestroy(): void {
-    if (this.subRef$) this.subRef$.unsubscribe();
+    this.dataService.ngOnDestroy();
   }
 }

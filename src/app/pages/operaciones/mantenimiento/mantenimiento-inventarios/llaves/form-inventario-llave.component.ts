@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { IInventarioLlaveAddOrEditDto } from 'src/app/core/interfaces/IInventarioLlaveAddOrEditDto.interface';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import {
@@ -40,10 +40,11 @@ export default class FormInventarioLlaveComponent implements OnInit, OnDestroy {
   public authService = inject(AuthService);
   private customToastService = inject(CustomToastService);
 
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
   submitting: boolean = false;
 
   id: number = 0;
-  subRef$: Subscription;
+
   cb_equipoClasificacion: ISelectItemDto[] = [];
   form: FormGroup = this.formBuilder.group({
     id: { value: this.id, disabled: true },
@@ -66,8 +67,9 @@ export default class FormInventarioLlaveComponent implements OnInit, OnDestroy {
   }
 
   onLoadData() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get<IInventarioLlaveAddOrEditDto>(`InventarioLlave/${this.id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.form.patchValue(resp.body);
@@ -91,8 +93,9 @@ export default class FormInventarioLlaveComponent implements OnInit, OnDestroy {
     this.customToastService.onLoading();
 
     if (this.id === 0) {
-      this.subRef$ = this.dataService
+      this.dataService
         .post(`InventarioLlave`, this.form.value)
+        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
         .subscribe({
           next: () => {
             this.ref.close(true);
@@ -105,7 +108,7 @@ export default class FormInventarioLlaveComponent implements OnInit, OnDestroy {
           },
         });
     } else {
-      this.subRef$ = this.dataService
+      this.dataService
         .put(`InventarioLlave/${this.id}`, this.form.value)
         .subscribe({
           next: () => {
@@ -120,12 +123,13 @@ export default class FormInventarioLlaveComponent implements OnInit, OnDestroy {
         });
     }
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
   onLoadEquipoClasificacion() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get('EquipoClasificacion/SelectItem')
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.cb_equipoClasificacion = resp.body;

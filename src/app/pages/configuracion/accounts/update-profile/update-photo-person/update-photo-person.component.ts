@@ -3,7 +3,7 @@ import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { InfoEmployeeAuthDto } from 'src/app/core/interfaces/user-token.interface';
 import {
   AuthService,
@@ -26,11 +26,12 @@ export default class UpdatePhotoEmployeeComponent implements OnInit, OnDestroy {
   public customToastService = inject(CustomToastService);
   public profielServiceService = inject(ProfielServiceService);
 
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   base_urlImg = environment.base_urlImg + 'Administration/accounts/';
   personId?: number = 0;
   infoEmployeeDto: InfoEmployeeAuthDto;
   errorMessage: string = '';
-  subRef$: Subscription;
 
   ngOnInit(): void {
     this.infoEmployeeDto = this.authService.userTokenDto.infoEmployeeDto;
@@ -63,8 +64,9 @@ export default class UpdatePhotoEmployeeComponent implements OnInit, OnDestroy {
     this.customToastService.onLoading();
     const formData = new FormData();
     formData.append('file', this.imgUpload);
-    this.subRef$ = this.dataService
+    this.dataService
       .put('person/updateImg/' + this.personId, formData)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           if (resp.body) {
@@ -82,6 +84,6 @@ export default class UpdatePhotoEmployeeComponent implements OnInit, OnDestroy {
       });
   }
   ngOnDestroy(): void {
-    if (this.subRef$) this.subRef$.unsubscribe();
+    this.dataService.ngOnDestroy();
   }
 }

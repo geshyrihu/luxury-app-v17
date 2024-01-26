@@ -1,5 +1,4 @@
-
-import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { FlatpickrModule } from 'angularx-flatpickr';
 import { Subscription } from 'rxjs';
@@ -15,9 +14,7 @@ const date = new Date();
   standalone: true,
   imports: [FormsModule, FlatpickrModule],
 })
-export default class RangoCalendarioyyyymmddComponent
-  implements OnInit, OnDestroy
-{
+export default class RangoCalendarioyyyymmddComponent implements OnInit {
   public dateService = inject(DateService);
   fechaInicioDate: Date = new Date(date.getFullYear(), date.getMonth(), 1); //Dia primero del mes actual
   fechaFinalDate: Date = new Date(date.getFullYear(), date.getMonth() + 1, 0); //Dia Ultimo del mes Actual
@@ -26,7 +23,7 @@ export default class RangoCalendarioyyyymmddComponent
   mostrartextDesde: boolean = true;
   @Input()
   mostrartextHasta: boolean = true;
-  subRef$: Subscription;
+
   constructor(private rangoCalendarioService: FiltroCalendarService) {}
 
   ngOnInit(): void {
@@ -45,8 +42,5 @@ export default class RangoCalendarioyyyymmddComponent
       };
       this.rangoCalendarioService.fechas$.emit(fechasFiltro);
     }
-  }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
   }
 }

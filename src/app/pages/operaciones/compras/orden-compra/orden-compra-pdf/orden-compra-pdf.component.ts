@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MessageService } from 'primeng/api';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { SelectItemService } from 'src/app/core/services/select-item.service';
@@ -22,7 +22,7 @@ export default class OrdenCompraPdfComponent implements OnInit, OnDestroy {
   public selectItemService = inject(SelectItemService);
   public messageService = inject(MessageService);
 
-  subRef$: Subscription;
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   url: string = environment.base_urlImg + 'Administration/customer/';
   model: any;
@@ -46,8 +46,9 @@ export default class OrdenCompraPdfComponent implements OnInit, OnDestroy {
   onLoadData() {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`ordencompra/Pdf/${this.ordenCompraId}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.model = resp.body;
@@ -87,10 +88,11 @@ export default class OrdenCompraPdfComponent implements OnInit, OnDestroy {
   }
 
   onGetOrdenCompraPresupuesto() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get<any>(
         `OrdenCompraPresupuesto/GetAllForOrdenCompra/${this.ordenCompraId}`
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.ordenCompraPresupuesto = resp.body;
@@ -101,7 +103,7 @@ export default class OrdenCompraPdfComponent implements OnInit, OnDestroy {
       });
   }
 
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

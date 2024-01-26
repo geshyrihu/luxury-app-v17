@@ -5,7 +5,7 @@ import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import saveAs from 'file-saver';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { IMeetingIndexDto } from 'src/app/core/interfaces/IMeetingIndexDto.interface';
 import { SanitizeHtmlPipe } from 'src/app/core/pipes/sanitize-html.pipe';
 import {
@@ -55,7 +55,8 @@ export default class ListMinutasComponent implements OnInit, OnDestroy {
   data: IMeetingIndexDto[] = [];
   tipoJunta: string = 'Comité';
   ref: DynamicDialogRef;
-  subRef$: Subscription;
+
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   customerId$: Observable<number> = this.customerIdService.getCustomerId$();
 
@@ -71,14 +72,14 @@ export default class ListMinutasComponent implements OnInit, OnDestroy {
     this.tipoJunta = tipoJunta;
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService
+    this.dataService
       .get<IMeetingIndexDto[]>(
         `Meetings/GetAll/${this.customerIdService.customerId}/${this.tipoJunta}`
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
-          this.data = resp.body;
-          this.customToastService.onClose();
+          this.data = this.customToastService.onCloseOnGetData(resp.body);
         },
         error: (error) => {
           this.customToastService.onCloseToError(error);
@@ -87,8 +88,9 @@ export default class ListMinutasComponent implements OnInit, OnDestroy {
   }
 
   exportToExcel(meetingId: number) {
-    this.subRef$ = this.dataService
+    this.dataService
       .getFile(`MeetingDertailsSeguimiento/ExportSummaryToExcel/${meetingId}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: Blob) => {
           // Crea un objeto de tipo Blob a partir de la respuesta
@@ -107,22 +109,26 @@ export default class ListMinutasComponent implements OnInit, OnDestroy {
   onDelete(data: any) {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService.delete('Meetings/' + data.id).subscribe({
-      next: () => {
-        this.onLoadData(this.tipoJunta);
-        this.customToastService.onCloseToSuccess();
-      },
-      error: (error) => {
-        this.customToastService.onCloseToError(error);
-      },
-    });
+    this.dataService
+      .delete('Meetings/' + data.id)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe({
+        next: () => {
+          this.onLoadData(this.tipoJunta);
+          this.customToastService.onCloseToSuccess();
+        },
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
+        },
+      });
   }
 
   onSendEmailMeeting(meetingId: number) {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService
+    this.dataService
       .get<IMeetingIndexDto[]>(`SendEmail/Meeting/${meetingId}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           this.customToastService.onCloseToSuccess();
@@ -198,12 +204,13 @@ export default class ListMinutasComponent implements OnInit, OnDestroy {
   onSendEmailResponsible(id: number, eAreaMinutasDetalles: number) {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService
+    this.dataService
       .get(
         `Meetings/SendEmailResponsible/${id}/${this.customerIdService.getcustomerId()}/${eAreaMinutasDetalles}/${
           this.authService.infoUserAuthDto.applicationUserId
         }`
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           this.customToastService.onCloseToSuccess();
@@ -243,8 +250,9 @@ export default class ListMinutasComponent implements OnInit, OnDestroy {
   onDeleteSeguimiento(id: number) {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService
+    this.dataService
       .delete(`MeetingDertailsSeguimiento/${id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           this.onLoadData(this.tipoJunta);
@@ -259,17 +267,20 @@ export default class ListMinutasComponent implements OnInit, OnDestroy {
   onDeleteMeetingDetail(id: number) {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService.delete(`MeetingsDetails/${id}`).subscribe({
-      next: () => {
-        this.customToastService.onCloseToSuccess();
-        this.onLoadData(this.tipoJunta);
-      },
-      error: (error) => {
-        this.customToastService.onCloseToError(error);
-      },
-    });
+    this.dataService
+      .delete(`MeetingsDetails/${id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe({
+        next: () => {
+          this.customToastService.onCloseToSuccess();
+          this.onLoadData(this.tipoJunta);
+        },
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
+        },
+      });
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

@@ -3,7 +3,7 @@ import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import {
   CustomToastService,
@@ -23,8 +23,7 @@ export default class AddOrEditComiteComponent implements OnInit, OnDestroy {
   public config = inject(DynamicDialogConfig);
   public messageService = inject(MessageService);
 
-  subRef$: Subscription;
-
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
   @Input()
   customerId: number;
   @Input()
@@ -40,13 +39,14 @@ export default class AddOrEditComiteComponent implements OnInit, OnDestroy {
     this.onLoadData();
   }
   onLoadCB() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(
         'SelectItem/GetListComiteMinuta/' +
           this.customerId +
           '/' +
           this.meetingId
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.cb_ParticipantComite = resp.body;
@@ -58,10 +58,11 @@ export default class AddOrEditComiteComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(
         `MeetingComite/AgregarParticipantesComite/${this.meetingId}/${this.comiteparticipante}`
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.customToastService.onShowSuccess();
@@ -76,8 +77,9 @@ export default class AddOrEditComiteComponent implements OnInit, OnDestroy {
   onDelete(idParticipant: number): void {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService
+    this.dataService
       .delete(`MeetingComite/${idParticipant}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           this.onLoadData();
@@ -93,13 +95,13 @@ export default class AddOrEditComiteComponent implements OnInit, OnDestroy {
   onLoadData() {
     this.comiteparticipante = '';
 
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`MeetingComite/ParticipantesComite/${this.meetingId}`)
       .subscribe((resp: any) => {
         this.listaParticipantesComite = resp.body;
       });
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

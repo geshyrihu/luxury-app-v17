@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { TableModule } from 'primeng/table';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { EStatusPipe } from 'src/app/core/pipes/status.pipe';
 import { CustomerIdService } from 'src/app/core/services/common-services';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
@@ -39,7 +39,9 @@ export default class ResumenOrdenesServicioComponent
   grafico: any;
   // date: Date;
   urlImg: string = '';
-  subRef$: Subscription;
+
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   customerId: Number;
 
   ngOnInit(): void {
@@ -50,7 +52,7 @@ export default class ResumenOrdenesServicioComponent
   onLoadData() {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService
+    this.dataService
       .get(
         'MeetingDertailsSeguimiento/ResumenPreventivosPresentacion/' +
           this.customerId +
@@ -59,16 +61,16 @@ export default class ResumenOrdenesServicioComponent
             this.reporteOrdenesServicioService.getDate()
           )
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
-          this.data = resp.body;
-          this.customToastService.onClose();
+          this.data = this.customToastService.onCloseOnGetData(resp.body);
         },
         error: (error) => {
           this.customToastService.onCloseToError(error);
         },
       });
-    this.subRef$ = this.dataService
+    this.dataService
       .get(
         'MeetingDertailsSeguimiento/ResumenPreventivosGraficoPresentacion/' +
           this.customerId +
@@ -77,6 +79,7 @@ export default class ResumenOrdenesServicioComponent
             this.reporteOrdenesServicioService.getDate()
           )
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.dataGraficos = resp.body;
@@ -90,6 +93,6 @@ export default class ResumenOrdenesServicioComponent
   }
 
   ngOnDestroy(): void {
-    if (this.subRef$) this.subRef$.unsubscribe();
+    this.dataService.ngOnDestroy();
   }
 }

@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, inject } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
+import { Component, Input, OnDestroy, inject } from '@angular/core';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { CustomerIdService } from 'src/app/core/services/common-services';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
@@ -18,15 +18,16 @@ import { environment } from 'src/environments/environment';
 /**
  * Page Title Component
  */
-export default class PagetitleReportComponent {
+export default class PagetitleReportComponent implements OnDestroy {
   public customerIdService = inject(CustomerIdService);
   public dataService = inject(DataService);
   public periodoMonthService = inject(PeriodoMonthService);
   public dateService = inject(DateService);
   public customToastService = inject(CustomToastService);
 
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   @Input() title: string | undefined;
-  // @Input() titulo: string;
   @Input() periodo: string = this.dateService.formatDateTimeToMMMMAAAA(
     this.periodoMonthService.getPeriodoInicio
   );
@@ -34,7 +35,6 @@ export default class PagetitleReportComponent {
   nameCustomer: string = '';
   logoCustomer: string = '';
 
-  subRef$: Subscription;
   customerId$: Observable<number> = this.customerIdService.getCustomerId$();
 
   ngOnInit(): void {
@@ -45,8 +45,9 @@ export default class PagetitleReportComponent {
     });
   }
   onLoadData() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`Customers/${this.customerIdService.customerId}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.nameCustomer = resp.body.nameCustomer;
@@ -57,7 +58,7 @@ export default class PagetitleReportComponent {
         },
       });
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

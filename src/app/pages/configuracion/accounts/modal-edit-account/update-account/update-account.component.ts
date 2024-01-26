@@ -9,7 +9,7 @@ import {
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { IEditarCuentaDto } from 'src/app/core/interfaces/IEditarCuentaDto.interface';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import {
@@ -46,19 +46,13 @@ export default class UpdateAccountComponent implements OnInit, OnDestroy {
 
   cb_customer: ISelectItemDto[] = [];
   cb_employee: ISelectItemDto[] = [];
-  // cb_employee: ISelectItemDto[] = !this.authService.onValidateRoles([
-  //   'SuperUsuario',
-  // ])
-  //   ? this.selectItemService.employeeFromCustomer
-  //   : this.selectItemService.allEmployeeActive;
-  // cb_profession: ISelectItemDto[] = this.selectItemService.professions;
   cb_profession: ISelectItemDto[] = [];
   submitting: boolean = false;
 
   @Input()
   applicationUserId: string = '';
 
-  subRef$: Subscription;
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   form: FormGroup = this.formBuilder.group({
     id: { value: this.applicationUserId, disabled: true },
@@ -94,19 +88,26 @@ export default class UpdateAccountComponent implements OnInit, OnDestroy {
         });
     }
 
-    this.selectItemService.onGetSelectItem('customers').subscribe((resp) => {
-      this.cb_customer = resp;
-    });
-    this.selectItemService.onGetSelectItem('professions').subscribe((resp) => {
-      this.cb_profession = resp;
-    });
+    this.selectItemService
+      .onGetSelectItem('customers')
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe((resp) => {
+        this.cb_customer = resp;
+      });
+    this.selectItemService
+      .onGetSelectItem('professions')
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe((resp) => {
+        this.cb_profession = resp;
+      });
   }
 
   onLoadData() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get<IEditarCuentaDto>(
         `accounts/getapplicationuser/${this.applicationUserId}`
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.form.patchValue(resp.body);
@@ -133,11 +134,12 @@ export default class UpdateAccountComponent implements OnInit, OnDestroy {
       personName: '',
     });
 
-    this.subRef$ = this.dataService
+    this.dataService
       .put<IEditarCuentaDto>(
         `accounts/updateapplicationuser/${this.applicationUserId}`,
         this.form.value
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           this.onLoadData();
@@ -161,7 +163,7 @@ export default class UpdateAccountComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

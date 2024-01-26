@@ -9,7 +9,7 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import ComponentsModule from 'app/shared/components.module';
 import { MessageService } from 'primeng/api';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import {
   CustomToastService,
   DataService,
@@ -36,9 +36,11 @@ export default class LoginComponent implements OnInit, OnDestroy {
   private securityService = inject(SecurityService);
   public customToastService = inject(CustomToastService);
 
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   fieldTextType!: boolean;
   form: FormGroup;
-  subRef$: Subscription;
+
   returnUrl: string;
 
   ngOnInit(): void {
@@ -61,12 +63,11 @@ export default class LoginComponent implements OnInit, OnDestroy {
     // Muestra un mensaje de carga
     this.customToastService.onLoading();
     // Realiza la solicitud de inicio de sesión
-    this.subRef$ = this.dataService
+    this.dataService
       .post('Auth/login', this.form.value)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
-          console.log('🚀 ~ resp.body:', resp.body);
-
           // Guarda los datos de autenticación y redirige al 'returnUrl'
           this.onRemember(this.form.get('remember').value);
           // this.router.navigateByUrl(localStorage.getItem('currentUrl'));
@@ -112,8 +113,7 @@ export default class LoginComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    // Desuscribe la subscripción para evitar fugas de memoria
-    if (this.subRef$) this.subRef$.unsubscribe();
+    this.dataService.ngOnDestroy();
   }
 
   onRecoveryPassword() {

@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import {
   AuthService,
   CustomToastService,
@@ -32,7 +32,9 @@ export default class AccessLogComponent implements OnInit, OnDestroy {
 
   urlImgApi = environment.base_urlImg + 'Administration/accounts/';
   data: any[] = [];
-  subRef$: Subscription;
+
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   customerId$: Observable<number> = this.customerIdService.getCustomerId$();
   dates$: Observable<Date[]> = this.filtroCalendarService.getDates$();
 
@@ -58,7 +60,7 @@ export default class AccessLogComponent implements OnInit, OnDestroy {
   onLoadData(fechaInicial: string, fechaFinal: string): void {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService
+    this.dataService
       .get(
         'HistorialAcceso/Customer/' +
           this.customerIdService.customerId +
@@ -67,17 +69,17 @@ export default class AccessLogComponent implements OnInit, OnDestroy {
           '/' +
           fechaFinal
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
-          this.data = resp.body;
-          this.customToastService.onClose();
+          this.data = this.customToastService.onCloseOnGetData(resp.body);
         },
         error: (error) => {
           this.customToastService.onCloseToError(error);
         },
       });
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

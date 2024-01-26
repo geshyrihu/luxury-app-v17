@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { AutosizeDirective } from 'src/app/core/directives/autosize-text-area.diective';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
@@ -17,16 +17,18 @@ export default class DescripcionPuestoComponent implements OnInit, OnDestroy {
   public dataService = inject(DataService);
   public config = inject(DynamicDialogConfig);
   public customToastService = inject(CustomToastService);
+
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
   profesion: any;
-  subRef$: Subscription;
 
   ngOnInit(): void {
     this.onLoadData();
   }
 
   onLoadData() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get('Professions/' + this.config.data.id)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.profesion = resp.body;
@@ -37,7 +39,7 @@ export default class DescripcionPuestoComponent implements OnInit, OnDestroy {
       });
   }
 
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

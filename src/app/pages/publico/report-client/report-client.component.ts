@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MessageService } from 'primeng/api';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { CustomerIdService } from 'src/app/core/services/common-services';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
@@ -20,7 +20,8 @@ export default class ReportClientComponent implements OnInit, OnDestroy {
   public customerIdService = inject(CustomerIdService);
   public customToastService = inject(CustomToastService);
 
-  subRef$: Subscription;
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   data: any = [];
   imgBase = environment.base_urlImg + 'Administration/customer/';
   urlImgBase = environment.base_urlImg;
@@ -42,16 +43,19 @@ export default class ReportClientComponent implements OnInit, OnDestroy {
       this.final;
     this.urlImgBase = `${environment.base_urlImg}customers/${this.customer}/report/`;
 
-    this.subRef$ = this.dataService.get(this.rutaFinal).subscribe({
-      next: (resp: any) => {
-        this.data = resp.body;
-      },
-      error: (error) => {
-        this.customToastService.onCloseToError(error);
-      },
-    });
+    this.dataService
+      .get(this.rutaFinal)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe({
+        next: (resp: any) => {
+          this.data = this.customToastService.onCloseOnGetData(resp.body);
+        },
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
+        },
+      });
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

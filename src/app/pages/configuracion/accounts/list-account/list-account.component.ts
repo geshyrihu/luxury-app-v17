@@ -3,7 +3,7 @@ import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { NgbDropdownModule, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import { IAccountDto } from 'src/app/core/interfaces/account-dto.interface';
 import PhoneFormatPipe from 'src/app/core/pipes/phone-format.pipe';
@@ -47,7 +47,8 @@ export default class ListAccountComponent implements OnInit, OnDestroy {
   state: boolean = true;
   title: string = '';
   urlImgApi = environment.base_urlImg + 'Administration/accounts/';
-  subRef$: Subscription;
+
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   ngOnInit(): void {
     this.onLoadData();
@@ -118,12 +119,12 @@ export default class ListAccountComponent implements OnInit, OnDestroy {
   onLoadData(): void {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService
+    this.dataService
       .get<IAccountDto[]>(`accounts/getall`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
-          this.data = resp.body;
-          this.customToastService.onClose();
+          this.data = this.customToastService.onCloseOnGetData(resp.body);
         },
         error: (error) => {
           this.customToastService.onCloseToError(error);
@@ -132,8 +133,9 @@ export default class ListAccountComponent implements OnInit, OnDestroy {
   }
 
   onToBlockAccount(applicationUserId: string): void {
-    this.subRef$ = this.dataService
+    this.dataService
       .get('Accounts/ToBlockAccount/' + applicationUserId)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           const registro = this.data.find(
@@ -155,8 +157,9 @@ export default class ListAccountComponent implements OnInit, OnDestroy {
   }
 
   onToUnlockAccount(applicationUserId: string): void {
-    this.subRef$ = this.dataService
+    this.dataService
       .get('Accounts/ToUnlockAccount/' + applicationUserId)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           // this.onLoadData();
@@ -178,8 +181,9 @@ export default class ListAccountComponent implements OnInit, OnDestroy {
       });
   }
   onDelete(applicationUserId: string): void {
-    this.subRef$ = this.dataService
+    this.dataService
       .delete('Accounts/' + applicationUserId)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           this.customToastService.onShowSuccess();
@@ -192,6 +196,6 @@ export default class ListAccountComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.subRef$) this.subRef$.unsubscribe();
+    this.dataService.ngOnDestroy();
   }
 }

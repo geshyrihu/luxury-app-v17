@@ -8,7 +8,7 @@ import {
 } from '@angular/forms';
 import { FlatpickrModule } from 'angularx-flatpickr';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { cb_ESiNo } from 'src/app/core/enums/si-no.enum';
 import { EStatus } from 'src/app/core/enums/status.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
@@ -42,12 +42,14 @@ export default class AddoreditModificacionSalarioComponent
   public config = inject(DynamicDialogConfig);
   public ref = inject(DynamicDialogRef);
 
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   submitting: boolean = false;
 
   cb_status: ISelectItemDto[] = onGetSelectItemFromEnum(EStatus);
   cb_si_no: ISelectItemDto[] = cb_ESiNo;
   id: number = 0;
-  subRef$: Subscription;
+
   form: FormGroup = this.formBuilder.group({
     id: { value: this.id, disabled: true },
     applicationUserId: [, Validators.required],
@@ -70,8 +72,9 @@ export default class AddoreditModificacionSalarioComponent
     if (this.id !== 0) this.onLoadData();
   }
   onLoadData() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`requestsalarymodification/getbyid/${this.id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.form.patchValue(resp.body);
@@ -94,8 +97,9 @@ export default class AddoreditModificacionSalarioComponent
     // Deshabilitar el botón al iniciar el envío del formulario
     this.submitting = true;
 
-    this.subRef$ = this.dataService
+    this.dataService
       .put(`requestsalarymodification/${this.id}`, this.form.value)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           this.ref.close(true);
@@ -109,8 +113,8 @@ export default class AddoreditModificacionSalarioComponent
       });
   }
 
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }
 

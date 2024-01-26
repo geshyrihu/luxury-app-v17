@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subject, Subscription, takeUntil } from 'rxjs';
 import {
   AuthService,
   CustomToastService,
@@ -50,13 +50,14 @@ export default class OrdenesServicioComponentComponent
   public dateService = inject(DateService);
   public customToastService = inject(CustomToastService);
 
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   mm = date.getMonth() + 1;
   fecha = [date.getFullYear(), (this.mm > 9 ? '' : '0') + this.mm].join('-');
 
   data: any[] = [];
   observations: [''];
   ref: DynamicDialogRef;
-  subRef$: Subscription;
 
   urlImg: string = '';
   nameCarpetaFecha = '';
@@ -174,15 +175,16 @@ export default class OrdenesServicioComponentComponent
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
 
-    this.subRef$ = this.dataService
+    this.dataService
       .get(
         `ServiceOrders/GetAllPintura/${
           this.customerIdService.customerId
         }/${this.dateService.getDateFormat(converToDate)}`
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
-          this.data = resp.body;
+          this.data = this.customToastService.onCloseOnGetData(resp.body);
           this.reporteOrdenesServicioService.setData(this.data);
 
           if (this.data.length !== 0) {
@@ -191,7 +193,6 @@ export default class OrdenesServicioComponentComponent
             );
             this.urlImg = `${environment.base_urlImg}customers/${this.customerIdService.customerId}/ordenServicio/${this.nameCarpetaFecha}/`;
           }
-          this.customToastService.onClose();
         },
         error: (error) => {
           this.customToastService.onCloseToError(error);
@@ -204,15 +205,16 @@ export default class OrdenesServicioComponentComponent
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
 
-    this.subRef$ = this.dataService
+    this.dataService
       .get(
         `ServiceOrders/GetAll/${
           this.customerIdService.customerId
         }/${this.dateService.getDateFormat(converToDate)}/${this.filtroId}`
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
-          this.data = resp.body;
+          this.data = this.customToastService.onCloseOnGetData(resp.body);
           this.reporteOrdenesServicioService.setData(this.data);
 
           if (this.data.length !== 0) {
@@ -221,7 +223,6 @@ export default class OrdenesServicioComponentComponent
             );
             this.urlImg = `${environment.base_urlImg}customers/${this.customerIdService.customerId}/ordenServicio/${this.nameCarpetaFecha}/`;
           }
-          this.customToastService.onClose();
         },
         error: (error) => {
           this.customToastService.onCloseToError(error);
@@ -253,8 +254,9 @@ export default class OrdenesServicioComponentComponent
   onDelete(data: any) {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService
+    this.dataService
       .delete(`ServiceOrders/${data.id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           this.onLoadData();
@@ -266,8 +268,8 @@ export default class OrdenesServicioComponentComponent
       });
   }
 
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
   ngOnChanges() {
     this.subscriber?.unsubscribe();

@@ -7,7 +7,7 @@ import {
 } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { RatingModule } from 'primeng/rating';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import {
   AuthService,
   CustomToastService,
@@ -29,11 +29,11 @@ export default class CalificacionProveedorComponent
   public dataService = inject(DataService);
   private formBuilder = inject(FormBuilder);
   public ref = inject(DynamicDialogRef);
-
   private customToastService = inject(CustomToastService);
 
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   submitting: boolean = false;
-  subRef$: Subscription;
 
   providerId: number = 0;
   qualificationProviderId: number = 0;
@@ -54,10 +54,11 @@ export default class CalificacionProveedorComponent
   }
 
   onLoadData() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(
         `ProveedorCalificacion/${this.authService.userTokenDto.infoEmployeeDto.employeeId}/${this.providerId}`
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           if (resp.body !== null) {
@@ -84,7 +85,7 @@ export default class CalificacionProveedorComponent
     this.customToastService.onLoading();
 
     if (this.qualificationProviderId === 0) {
-      this.subRef$ = this.dataService
+      this.dataService
         .post(`ProveedorCalificacion`, this.form.value)
         .subscribe({
           next: () => {
@@ -98,7 +99,7 @@ export default class CalificacionProveedorComponent
           },
         });
     } else {
-      this.subRef$ = this.dataService
+      this.dataService
         .put(
           `ProveedorCalificacion/${this.qualificationProviderId}`,
           this.form.value
@@ -116,7 +117,7 @@ export default class CalificacionProveedorComponent
         });
     }
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

@@ -5,7 +5,7 @@ import esLocale from '@fullcalendar/core/locales/es';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import {
   AuthService,
   CustomToastService,
@@ -28,7 +28,7 @@ export default class BirthdayComponent implements OnInit, OnDestroy {
   public customToastService = inject(CustomToastService);
   public dialogService = inject(DialogService);
 
-  subRef$: Subscription;
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   calendarOptions: CalendarOptions = {
     locale: esLocale, // Agrega el idioma español
@@ -54,8 +54,9 @@ export default class BirthdayComponent implements OnInit, OnDestroy {
     this.customerId$ = this.customerIdService.getCustomerId$();
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService
+    this.dataService
       .get('Employees/AllCumpleanos/' + this.customerIdService.customerId)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.calendarOptions = {
@@ -97,7 +98,7 @@ export default class BirthdayComponent implements OnInit, OnDestroy {
       this.onLoadData();
     });
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

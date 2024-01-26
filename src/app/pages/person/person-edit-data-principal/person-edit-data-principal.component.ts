@@ -9,7 +9,7 @@ import {
 import ComponentsModule from 'app/shared/components.module';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import {
   DataService,
   DateService,
@@ -43,7 +43,8 @@ export default class PersonEditDataPrincipalComponent implements OnInit {
   public ref = inject(DynamicDialogRef);
 
   submitting: boolean = false;
-  subRef$: Subscription;
+
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   public personId: number = 0;
 
@@ -77,22 +78,18 @@ export default class PersonEditDataPrincipalComponent implements OnInit {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
 
-    this.subRef$ = this.dataService
+    this.dataService
       .put('person/' + this.personId, this.form.value)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           this.ref.close(true);
           this.customToastService.onClose();
         },
         error: (error) => {
-          console.log(error.error);
-          error.error.forEach((x: any) => {
-            this.dataError = this.dataError + x['description'] + ' ';
-          });
-          this.customToastService.onLoadingError(this.dataError);
           // Habilitar el botón nuevamente al finalizar el envío del formulario
           this.submitting = false;
-          this.customToastService.onClose();
+          this.customToastService.onCloseToError(error);
         },
       });
   }
@@ -105,20 +102,23 @@ export default class PersonEditDataPrincipalComponent implements OnInit {
   }
 
   onLoadData() {
-    this.subRef$ = this.dataService.get(`person/${this.personId}`).subscribe({
-      next: (resp: any) => {
-        this.form.patchValue(resp.body);
-      },
-      error: (error) => {
-        this.customToastService.onCloseToError(error);
-      },
-    });
+    this.dataService
+      .get(`person/${this.personId}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe({
+        next: (resp: any) => {
+          this.form.patchValue(resp.body);
+        },
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
+        },
+      });
   }
   get f() {
     return this.form.controls;
   }
 
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

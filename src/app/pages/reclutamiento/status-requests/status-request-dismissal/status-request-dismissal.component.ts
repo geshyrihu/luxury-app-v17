@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import PhoneFormatPipe from 'src/app/core/pipes/phone-format.pipe';
 import {
   AuthService,
@@ -48,7 +48,9 @@ export default class StatusRequestDismissalComponent
 
   workPositionId = this.statusSolicitudVacanteService.getworkPositionId();
   ref: DynamicDialogRef;
-  subRef$: Subscription;
+
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   data: any;
   noCandidates: boolean = true;
   pahtBaseImg = environment.base_urlImg + 'Administration/accounts/';
@@ -64,12 +66,12 @@ export default class StatusRequestDismissalComponent
   onLoadData() {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService
+    this.dataService
       .get('RequestDismissal/' + this.workPositionId)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
-          this.data = resp.body;
-          this.customToastService.onClose();
+          this.data = this.customToastService.onCloseOnGetData(resp.body);
         },
         error: (error) => {
           this.customToastService.onCloseToError(error);
@@ -116,16 +118,19 @@ export default class StatusRequestDismissalComponent
   onDelete(id: number) {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService.delete(`RequestDismissal/${id}`).subscribe({
-      next: () => {
-        // Cuando se completa la eliminación con éxito, mostrar un mensaje de éxito y volver a cargar los datos
-        this.customToastService.onCloseToSuccess();
-        this.onLoadData();
-      },
-      error: (error) => {
-        this.customToastService.onCloseToError(error);
-      },
-    });
+    this.dataService
+      .delete(`RequestDismissal/${id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe({
+        next: () => {
+          // Cuando se completa la eliminación con éxito, mostrar un mensaje de éxito y volver a cargar los datos
+          this.customToastService.onCloseToSuccess();
+          this.onLoadData();
+        },
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
+        },
+      });
   }
   //Editar solicitud de Discounts
   onModalAddOrEditDiscounts(data: any) {
@@ -152,8 +157,9 @@ export default class StatusRequestDismissalComponent
   onDeleteDiscounts(id: number) {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService
+    this.dataService
       .delete(`RequestDismissalDiscount/${id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           this.onLoadData();
@@ -166,7 +172,7 @@ export default class StatusRequestDismissalComponent
       });
   }
 
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

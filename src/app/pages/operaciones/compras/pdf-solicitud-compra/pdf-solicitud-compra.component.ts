@@ -8,7 +8,6 @@ import {
   inject,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
 import { DataService } from 'src/app/core/services/data.service';
 import ComponentsModule from 'src/app/shared/components.module';
 @Component({
@@ -24,11 +23,10 @@ export default class PdfSolicitudCompraComponent implements OnInit, OnDestroy {
   idSolicituCompra: any;
   folioCotizacion = '';
   model: any;
-  subRef$: Subscription;
 
   ngOnInit(): void {
     this.idSolicituCompra = this.route.snapshot.paramMap.get('id');
-    this.subRef$ = this.dataService
+    this.dataService
       .get(
         `SolicitudCompra/GetSolicitudCompraIndividual/${this.idSolicituCompra}`
       )
@@ -37,7 +35,7 @@ export default class PdfSolicitudCompraComponent implements OnInit, OnDestroy {
         this.model = resp.body.solicitudCompraDetalle;
       });
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

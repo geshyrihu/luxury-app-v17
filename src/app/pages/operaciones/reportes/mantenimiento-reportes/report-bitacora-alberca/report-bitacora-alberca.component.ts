@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { IChartData } from 'src/app/core/interfaces/chart-data.interface';
 import { CustomerIdService } from 'src/app/core/services/common-services';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
@@ -26,10 +26,11 @@ export default class ReportBitacoraAlbercaComponent implements OnInit {
   public dateService = inject(DateService);
   public periodoMonthService = inject(PeriodoMonthService);
 
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   medidores: any[] = [];
   title: string = '';
   ref: DynamicDialogRef;
-  subRef$: Subscription;
 
   ngOnInit() {
     this.onLoadData();
@@ -38,12 +39,13 @@ export default class ReportBitacoraAlbercaComponent implements OnInit {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
 
-    this.subRef$ = this.dataService
+    this.dataService
       .get<IChartData[]>(
         `MaintenanceReport/bitacoraalbercaparametros/${this.customerIdService.getcustomerId()}/${this.dateService.getDateFormat(
           this.periodoMonthService.getPeriodoInicio
         )}`
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.medidores = resp.body;
@@ -55,7 +57,7 @@ export default class ReportBitacoraAlbercaComponent implements OnInit {
       });
   }
 
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

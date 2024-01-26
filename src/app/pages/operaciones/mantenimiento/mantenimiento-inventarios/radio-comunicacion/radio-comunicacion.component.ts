@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, inject } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { IRadioComunicacionDto } from 'src/app/core/interfaces/IRadioComunicacionDto.interface';
 import {
   AuthService,
@@ -31,7 +31,9 @@ export default class RadioComunicacionComponent implements OnDestroy {
   data: IRadioComunicacionDto[] = [];
 
   ref: DynamicDialogRef;
-  subRef$: Subscription;
+
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   urlBaseImg: string = `${environment.base_urlImg}customers/${this.customerIdService.customerId}/radios/`;
   customerId$: Observable<number> = this.customerIdService.getCustomerId$();
 
@@ -47,14 +49,14 @@ export default class RadioComunicacionComponent implements OnDestroy {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
 
-    this.subRef$ = this.dataService
+    this.dataService
       .get<IRadioComunicacionDto[]>(
         `RadioComunicacion/GetAll/${this.customerIdService.customerId}`
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
-          this.data = resp.body;
-          this.customToastService.onClose();
+          this.data = this.customToastService.onCloseOnGetData(resp.body);
         },
         error: (error) => {
           this.customToastService.onCloseToError(error);
@@ -64,8 +66,9 @@ export default class RadioComunicacionComponent implements OnDestroy {
   onDelete(data: any) {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService
+    this.dataService
       .delete(`RadioComunicacion/${data.id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           this.onLoadData();
@@ -96,6 +99,6 @@ export default class RadioComunicacionComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.subRef$) this.subRef$.unsubscribe();
+    this.dataService.ngOnDestroy();
   }
 }

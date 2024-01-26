@@ -9,7 +9,7 @@ import {
 } from '@angular/forms';
 import { FileUploadModule, FileUploadValidators } from '@iplab/ngx-file-upload';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { cb_ESiNo } from 'src/app/core/enums/si-no.enum';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import {
@@ -47,12 +47,13 @@ export default class SolicitudModificacionSalarioComponent {
   public ref = inject(DynamicDialogRef);
   public authService = inject(AuthService);
 
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   workPositionId: number = this.config.data.workPositionId;
   data: any;
   submitting: boolean = false;
 
   id: number = 0;
-  subRef$: Subscription;
 
   cb_profession: ISelectItemDto[] = [];
   cb_si_no: ISelectItemDto[] = cb_ESiNo;
@@ -72,21 +73,23 @@ export default class SolicitudModificacionSalarioComponent {
   });
 
   ngOnInit(): void {
-    this.subRef$ = this.selectItemService
+    this.selectItemService
       .onGetSelectItem(`Professions`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe((resp) => {
         this.cb_profession = resp;
       });
     this.onLoadData();
   }
   onLoadData() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(
         `RequestSalaryModification/GetDataForModificacionSalario/${this.workPositionId}`
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
-          this.data = resp.body;
+          this.data = this.customToastService.onCloseOnGetData(resp.body);
           this.form.patchValue(resp.body);
         },
         error: (error) => {
@@ -117,6 +120,7 @@ export default class SolicitudModificacionSalarioComponent {
         } `,
         model
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           this.ref.close(true);

@@ -36,8 +36,9 @@ export default class ReportMaintenanceHeaderComponent
     });
   }
   onLoadData() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`Customers/${this.customerIdService.customerId}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.nameCustomer = resp.body.nameCustomer;
@@ -48,7 +49,7 @@ export default class ReportMaintenanceHeaderComponent
         },
       });
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

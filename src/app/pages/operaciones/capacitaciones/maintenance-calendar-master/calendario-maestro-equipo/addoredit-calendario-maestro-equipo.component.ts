@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import {
   CustomToastService,
@@ -35,10 +35,9 @@ export default class AddOrEditCalendarioMaestroEquipoComponent
   public dataService = inject(DataService);
   public ref = inject(DynamicDialogRef);
   public config = inject(DynamicDialogConfig);
-
   private customToastService = inject(CustomToastService);
 
-  subRef$: Subscription;
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   cb_equipoClasificacion: ISelectItemDto[] = [];
   id: number = 0;
@@ -57,7 +56,7 @@ export default class AddOrEditCalendarioMaestroEquipoComponent
   }
 
   onLoadData(id: number) {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`CalendarioMaestroEquipo/${id}`)
       .subscribe((resp: any) => {
         this.form.patchValue(resp.body);
@@ -76,7 +75,7 @@ export default class AddOrEditCalendarioMaestroEquipoComponent
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
     if (this.id === 0) {
-      this.subRef$ = this.dataService
+      this.dataService
         .post('CalendarioMaestroEquipo', this.form.value)
         .subscribe({
           next: () => {
@@ -90,7 +89,7 @@ export default class AddOrEditCalendarioMaestroEquipoComponent
           },
         });
     } else {
-      this.subRef$ = this.dataService
+      this.dataService
         .put(`CalendarioMaestroEquipo/${this.id}`, this.form.value)
         .subscribe({
           next: () => {
@@ -108,8 +107,9 @@ export default class AddOrEditCalendarioMaestroEquipoComponent
 
   //TODO: Hacer servicio ISelectItem
   onLoadEquipoClasificacion() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get('EquipoClasificacion/SelectItem')
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.cb_equipoClasificacion = resp.body;
@@ -120,7 +120,7 @@ export default class AddOrEditCalendarioMaestroEquipoComponent
       });
   }
 
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

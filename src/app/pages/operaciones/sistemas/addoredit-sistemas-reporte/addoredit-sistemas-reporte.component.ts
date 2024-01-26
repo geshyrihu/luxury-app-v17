@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { EStatusTask } from 'src/app/core/enums/estatus-task.enum';
 import { EPriority } from 'src/app/core/enums/priority.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
@@ -46,11 +46,11 @@ export default class AddoreditSistemasReporteComponent
   private dateService = inject(DateService);
   private customToastService = inject(CustomToastService);
 
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   submitting: boolean = false;
 
   id: any = 0;
-
-  subRef$: Subscription;
 
   //TODOñ REVISAR ESTE CustomerId
   _customerId: number = 0;
@@ -122,8 +122,9 @@ export default class AddoreditSistemasReporteComponent
   }
 
   loadData(id: number) {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`Ticket/FromSistemas/${id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe((resp: any) => {
         this.model = resp.body;
         this.form.patchValue(resp.body);
@@ -144,8 +145,9 @@ export default class AddoreditSistemasReporteComponent
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
     if (this.id === 0) {
-      this.subRef$ = this.dataService
+      this.dataService
         .post(`Ticket/CreateFromSistemas`, model)
+        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
         .subscribe({
           next: () => {
             this.ref.close(true);
@@ -158,8 +160,9 @@ export default class AddoreditSistemasReporteComponent
           },
         });
     } else {
-      this.subRef$ = this.dataService
+      this.dataService
         .put(`Ticket/FromSistemas/${this.id}`, model)
+        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
         .subscribe({
           next: () => {
             this.ref.close(true);
@@ -211,8 +214,9 @@ export default class AddoreditSistemasReporteComponent
   }
 
   onLoadApplicationUser() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get('SelectItem/AplicationUser/')
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.cb_user = resp.body;
@@ -222,7 +226,7 @@ export default class AddoreditSistemasReporteComponent
         },
       });
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

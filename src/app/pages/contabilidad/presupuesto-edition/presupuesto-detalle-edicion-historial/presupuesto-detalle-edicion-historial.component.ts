@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
 import PrimeNgModule from 'src/app/shared/prime-ng.module';
@@ -20,9 +20,9 @@ export default class PresupuestoDetalleEdicionHistorialComponent
   public config = inject(DynamicDialogConfig);
   private customToastService = inject(CustomToastService);
 
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
   data: any[] = [];
   id: number = 0;
-  subRef$: Subscription;
 
   ngOnInit() {
     this.id = this.config.data.id;
@@ -34,13 +34,12 @@ export default class PresupuestoDetalleEdicionHistorialComponent
     this.customToastService.onLoading();
 
     // Realizar una solicitud HTTP para eliminar un banco específico
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`Presupuesto/HistorialToEdition/${this.id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
-          this.data = resp.body;
-          // Cuando se completa la eliminación con éxito, mostrar un mensaje de éxito y volver a cargar los datos
-          this.customToastService.onClose();
+          this.data = this.customToastService.onCloseOnGetData(resp.body);
         },
         error: (error) => {
           this.customToastService.onCloseToError(error);
@@ -48,6 +47,6 @@ export default class PresupuestoDetalleEdicionHistorialComponent
       });
   }
   ngOnDestroy(): void {
-    if (this.subRef$) this.subRef$.unsubscribe();
+    this.dataService.ngOnDestroy();
   }
 }

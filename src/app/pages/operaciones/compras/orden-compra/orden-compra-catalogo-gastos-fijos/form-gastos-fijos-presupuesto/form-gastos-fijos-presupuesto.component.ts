@@ -3,7 +3,7 @@ import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { CatalogoGastosFijosService } from 'src/app/core/services/catalogo-gastos-fijos.service';
 import {
   AuthService,
@@ -33,7 +33,7 @@ export default class FormGastosFijosPresupuestoComponent
   public catalogoGastosFijosService = inject(CatalogoGastosFijosService);
   public customerIdService = inject(CustomerIdService);
 
-  subRef$: Subscription;
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   data: any[] = [];
   presupuestoAgregados: any[] = [];
@@ -52,15 +52,15 @@ export default class FormGastosFijosPresupuestoComponent
   onLoadPresupuesto() {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService
+    this.dataService
       .get(
         `OrdenCompraPresupuesto/GetAllForGastosFijos/${this.customerIdService.customerId}/${this.cedulaId}/${this.catalogoGastosFijosId}`
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
-          this.data = resp.body;
+          this.data = this.customToastService.onCloseOnGetData(resp.body);
           this.onLoadPresupuestoAgregados();
-          this.customToastService.onClose();
         },
         error: (error) => {
           this.customToastService.onCloseToError(error);
@@ -77,8 +77,9 @@ export default class FormGastosFijosPresupuestoComponent
     };
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService
+    this.dataService
       .post(`CatalogoGastosFijosPresupuesto`, model)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           this.onLoadPresupuestoAgregados();
@@ -92,10 +93,11 @@ export default class FormGastosFijosPresupuestoComponent
   }
 
   onLoadPresupuestoAgregados() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(
         `CatalogoGastosFijosPresupuesto/PresupuestoOrdenCompraFijos/${this.catalogoGastosFijosId}`
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.presupuestoAgregados = resp.body;
@@ -109,8 +111,9 @@ export default class FormGastosFijosPresupuestoComponent
   deletePresupuestoAgregado(id: number) {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService
+    this.dataService
       .delete(`CatalogoGastosFijosPresupuesto/${id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           this.onLoadPresupuesto();
@@ -124,8 +127,9 @@ export default class FormGastosFijosPresupuestoComponent
   }
 
   onUpdatePresupuestoAgregado(item: any) {
-    this.subRef$ = this.dataService
+    this.dataService
       .put(`CatalogoGastosFijosPresupuesto/${item.id}`, item)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.customToastService.onShowSuccess();
@@ -138,10 +142,11 @@ export default class FormGastosFijosPresupuestoComponent
   }
 
   onLoadCedulas() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(
         `CedulaPresupuestal/GetCedulas/${this.customerIdService.getcustomerId()}`
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           if (resp.body) {
@@ -154,7 +159,7 @@ export default class FormGastosFijosPresupuestoComponent
         },
       });
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

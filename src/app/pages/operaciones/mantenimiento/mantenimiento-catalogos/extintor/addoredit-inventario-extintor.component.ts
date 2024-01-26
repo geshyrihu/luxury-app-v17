@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { EExtintor } from 'src/app/core/enums/extintor.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { IInventarioExtintorDto } from 'src/app/core/interfaces/IInventarioExtintorDto.interface';
@@ -18,7 +18,6 @@ import {
   CustomerIdService,
   DataService,
 } from 'src/app/core/services/common-services';
-import { EnumService } from 'src/app/core/services/enum.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import ComponentsModule from 'src/app/shared/components.module';
 import { environment } from 'src/environments/environment';
@@ -39,7 +38,6 @@ export default class AddoreditInventarioExtintorComponent
   implements OnInit, OnDestroy
 {
   private customToastService = inject(CustomToastService);
-  private enumService = inject(EnumService);
   private formBuilder = inject(FormBuilder);
   public authService = inject(AuthService);
   public config = inject(DynamicDialogConfig);
@@ -47,8 +45,10 @@ export default class AddoreditInventarioExtintorComponent
   public dataService = inject(DataService);
   public ref = inject(DynamicDialogRef);
 
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   submitting: boolean = false;
-  subRef$: Subscription;
+
   cb_extintor: ISelectItemDto[] = onGetSelectItemFromEnum(EExtintor);
   urlBaseImg = `${environment.base_urlImg}customers/`;
   photoFileUpdate: boolean = false;
@@ -69,14 +69,11 @@ export default class AddoreditInventarioExtintorComponent
   }
 
   ngOnInit(): void {
-    // this.enumService.getEnumValuesDisplay('EExtintor').subscribe((resp) => {
-    //   this.cb_extintor = resp;
-    // });
     this.id = this.config.data.id;
     if (this.id !== 0) this.onLoadData();
   }
   onLoadData() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get<IInventarioExtintorDto>(`InventarioExtintor/${this.id}`)
       .subscribe((resp: any) => {
         this.urlBaseImg = `${environment.base_urlImg}/customers/${resp.body.customerId}/extintor/${resp.body.photo}`;
@@ -101,8 +98,9 @@ export default class AddoreditInventarioExtintorComponent
     this.customToastService.onLoading();
 
     if (this.id === 0) {
-      this.subRef$ = this.dataService
+      this.dataService
         .post(`InventarioExtintor`, formData)
+        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
         .subscribe({
           next: () => {
             this.ref.close(true);
@@ -115,7 +113,7 @@ export default class AddoreditInventarioExtintorComponent
           },
         });
     } else {
-      this.subRef$ = this.dataService
+      this.dataService
         .put(`InventarioExtintor/${this.id}`, formData)
         .subscribe({
           next: () => {
@@ -145,7 +143,7 @@ export default class AddoreditInventarioExtintorComponent
     }
     return formData;
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

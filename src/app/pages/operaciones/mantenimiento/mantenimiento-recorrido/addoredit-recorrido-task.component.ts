@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import {
   CustomToastService,
   DataService,
@@ -30,14 +30,15 @@ import ComponentsModule from 'src/app/shared/components.module';
 export default class RecorridoTaskAddOrEditComponent
   implements OnInit, OnDestroy
 {
-  public dataService = inject(DataService);
+  private customToastService = inject(CustomToastService);
   private formBuilder = inject(FormBuilder);
   public config = inject(DynamicDialogConfig);
+  public dataService = inject(DataService);
   public ref = inject(DynamicDialogRef);
-  private customToastService = inject(CustomToastService);
+
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   submitting: boolean = false;
-  subRef$: Subscription;
 
   form: FormGroup;
   id: number = 0;
@@ -59,8 +60,9 @@ export default class RecorridoTaskAddOrEditComponent
   }
 
   onLoadData() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`RouteTask/${this.id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe((resp: any) => {
         this.form.patchValue(resp.body);
       });
@@ -79,8 +81,9 @@ export default class RecorridoTaskAddOrEditComponent
     this.customToastService.onLoading();
 
     if (this.id === 0) {
-      this.subRef$ = this.dataService
+      this.dataService
         .post(`RouteTask`, this.form.value)
+        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
         .subscribe({
           next: () => {
             this.ref.close(true);
@@ -93,8 +96,9 @@ export default class RecorridoTaskAddOrEditComponent
           },
         });
     } else {
-      this.subRef$ = this.dataService
+      this.dataService
         .put(`RouteTask/${this.id}`, this.form.value)
+        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
         .subscribe({
           next: () => {
             this.ref.close(true);
@@ -108,7 +112,7 @@ export default class RecorridoTaskAddOrEditComponent
         });
     }
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

@@ -60,32 +60,32 @@ export class CustomToastService {
    * Muestra una ventana emergente de carga.
    */
   onLoading() {
-    //   Swal.fire({
-    //     allowOutsideClick: false,
-    //     icon: 'info',
-    //     text: 'Espere por favor...',
-    //   });
-    //   Swal.showLoading(null);
-    /** spinner starts on init */
-    this.spinner.show();
+    Swal.fire({
+      allowOutsideClick: false,
+      icon: 'info',
+      text: 'Espere por favor...',
+    });
+    Swal.showLoading(null);
   }
 
   /**
    * Cierra la ventana emergente actual.
    */
+
+  onCloseOnGetData(data: any) {
+    Swal.close();
+    return data;
+  }
   onClose() {
-    // Swal.close();
-    this.spinner.hide();
+    Swal.close();
   }
   onCloseToSuccess() {
     this.onShowSuccess();
-    // Swal.close();
-    this.spinner.hide();
+    Swal.close();
   }
   onCloseToError(err: any = null): void {
     this.onShowError();
-    // Swal.close();
-    this.spinner.hide();
+    Swal.close();
     // En caso de error, mostrar un mensaje de error y registrar el error en la consola
     console.log('Error:', err.error);
   }

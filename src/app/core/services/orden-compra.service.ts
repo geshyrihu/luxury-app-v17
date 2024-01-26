@@ -1,15 +1,14 @@
-import { Injectable, inject } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Injectable, OnDestroy, inject } from '@angular/core';
+import { Subject, takeUntil } from 'rxjs';
 import { DataService } from './data.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class OrdenCompraService {
+export class OrdenCompraService implements OnDestroy {
   private dataService = inject(DataService);
-  // private customToastService = inject(CustomToastService);
 
-  subRef$: Subscription;
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   ordenCompraId: number = 0;
 
@@ -42,15 +41,16 @@ export class OrdenCompraService {
     this.totalCubierto = 0;
     this.totalPorCubrir = 0;
 
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`OrdenCompraDetalle/GetAllTotal/${ordenCompraId}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           for (let n of resp.body) {
             this.totalOrdenCompra += n.total;
           }
 
-          this.subRef$ = this.dataService
+          this.dataService
             .get(
               `OrdenCompraPresupuesto/GetAllForOrdenCompraTotal/${ordenCompraId}`
             )
@@ -86,7 +86,7 @@ export class OrdenCompraService {
   getStatusCompras(): number {
     return this.statusCompras;
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

@@ -3,7 +3,7 @@ import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { TableModule } from 'primeng/table';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { CedulaPresupuestalDetalleAddOrEdit } from 'src/app/core/interfaces/ICedulaPresupuestalDetalleAddOrEdit.interface';
 import {
   AuthService,
@@ -26,11 +26,12 @@ export default class AddPartidaCedulaComponent implements OnInit, OnDestroy {
   public ref = inject(DynamicDialogRef);
   private customToastService = inject(CustomToastService);
 
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   data: any[] = [];
   cedulaPresupuestalId: number = 0;
   applicationUserId: string = '';
   submitting: boolean = false;
-  subRef$: Subscription;
 
   ngOnInit(): void {
     this.applicationUserId =
@@ -41,10 +42,11 @@ export default class AddPartidaCedulaComponent implements OnInit, OnDestroy {
   onLoadData() {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService
+    this.dataService
       .get(
         `SelectItem/AddCuentaCedulaPresupuestal/${this.config.data.idBudgetCard}`
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.data = resp.body.map(function (cuenta: any) {
@@ -77,8 +79,9 @@ export default class AddPartidaCedulaComponent implements OnInit, OnDestroy {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
 
-    this.subRef$ = this.dataService
+    this.dataService
       .post(`CedulaPresupuestalDetalles`, model)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           this.customToastService.onShowSuccess();
@@ -92,7 +95,7 @@ export default class AddPartidaCedulaComponent implements OnInit, OnDestroy {
       });
   }
 
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

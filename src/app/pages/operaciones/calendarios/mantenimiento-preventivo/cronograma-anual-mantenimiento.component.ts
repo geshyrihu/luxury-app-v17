@@ -5,7 +5,7 @@ import * as FileSaver from 'file-saver';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { TableModule } from 'primeng/table';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import {
   CustomToastService,
   CustomerIdService,
@@ -33,7 +33,9 @@ export default class CronogramaAnualMantenimientoComponent
   public cronogramaMantenimientoService = inject(
     CronogramaMantenimientoService
   );
-  subRef$: Subscription;
+
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   customerId$: Observable<number> = this.customerIdService.getCustomerId$();
   cronogramaAnual: any = [];
   itemsInventario: any = [];
@@ -72,7 +74,7 @@ export default class CronogramaAnualMantenimientoComponent
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
     if (this.filtroId == 10) {
-      this.subRef$ = this.dataService
+      this.dataService
         .get(
           `MaintenanceCalendars/CronogramaAnual/${this.customerIdService.customerId}`
         )
@@ -88,7 +90,7 @@ export default class CronogramaAnualMantenimientoComponent
           },
         });
     } else {
-      this.subRef$ = this.dataService
+      this.dataService
         .get(
           `MaintenanceCalendars/CronogramaAnual/${this.customerIdService.customerId}/${this.filtroId}`
         )
@@ -109,10 +111,11 @@ export default class CronogramaAnualMantenimientoComponent
 
   exportExcel() {
     let dataCalendar = [];
-    this.subRef$ = this.dataService
+    this.dataService
       .get(
         `MaintenanceCalendars/ExportCalendar/${this.customerIdService.customerId}`
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           dataCalendar = resp.body;
@@ -170,7 +173,7 @@ export default class CronogramaAnualMantenimientoComponent
       }
     });
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

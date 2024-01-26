@@ -12,7 +12,7 @@ import {
   DynamicDialogConfig,
   DynamicDialogRef,
 } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
@@ -45,8 +45,8 @@ export default class ModalOrdenCompraComponent implements OnInit, OnDestroy {
   public messageService = inject(MessageService);
   public ref = inject(DynamicDialogRef);
 
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
   submitting: boolean = false;
-  subRef$: Subscription;
 
   ordenCompraId: number = 0;
   model: any;
@@ -70,7 +70,7 @@ export default class ModalOrdenCompraComponent implements OnInit, OnDestroy {
   }
 
   onLoadData() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`OrdenCompra/GetForEdit/${this.ordenCompraId}`)
       .subscribe((resp: any) => {
         resp.body.fechaSolicitud = this.dateService.getDateFormat(
@@ -85,8 +85,9 @@ export default class ModalOrdenCompraComponent implements OnInit, OnDestroy {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
 
-    this.subRef$ = this.dataService
+    this.dataService
       .put(`OrdenCompra/${this.ordenCompraId}`, this.form.value)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           this.ref.close(true);
@@ -100,7 +101,7 @@ export default class ModalOrdenCompraComponent implements OnInit, OnDestroy {
       });
   }
 
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

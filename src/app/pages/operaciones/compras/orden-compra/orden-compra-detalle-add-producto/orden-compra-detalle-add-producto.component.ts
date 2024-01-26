@@ -7,7 +7,7 @@ import {
   DynamicDialogConfig,
   DynamicDialogRef,
 } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import {
   AuthService,
   CustomToastService,
@@ -38,7 +38,7 @@ export default class OrdenCompraDetalleAddProductoComponent
   public messageService = inject(MessageService);
   public dialogService = inject(DialogService);
 
-  subRef$: Subscription;
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   ordenCompraId: number = 0;
   data: any[] = [];
@@ -61,12 +61,12 @@ export default class OrdenCompraDetalleAddProductoComponent
   onLoadProduct() {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`OrdenCompraDetalle/AddProductoToOrder/${this.ordenCompraId}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
-          this.data = resp.body;
-          this.customToastService.onClose();
+          this.data = this.customToastService.onCloseOnGetData(resp.body);
         },
         error: (error) => {
           this.customToastService.onCloseToError(error);
@@ -82,8 +82,9 @@ export default class OrdenCompraDetalleAddProductoComponent
 
     item.applicationUserId =
       this.authService.userTokenDto.infoUserAuthDto.applicationUserId;
-    this.subRef$ = this.dataService
+    this.dataService
       .post<any>(`OrdenCompraDetalle/`, item)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
           this.customToastService.onShowSuccess();
@@ -110,7 +111,7 @@ export default class OrdenCompraDetalleAddProductoComponent
       baseZIndex: 10000,
     });
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

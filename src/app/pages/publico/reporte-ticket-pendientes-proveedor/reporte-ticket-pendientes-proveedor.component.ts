@@ -3,7 +3,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import ComponentsModule from 'app/shared/components.module';
 import { MessageService } from 'primeng/api';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import {
   AuthService,
   CustomToastService,
@@ -29,6 +29,8 @@ export default class ReporteTicketPendientesProveedorComponent
   public customToastService = inject(CustomToastService);
   public routerActivate = inject(ActivatedRoute);
 
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   customerId: string;
   departamentId: string;
 
@@ -36,8 +38,6 @@ export default class ReporteTicketPendientesProveedorComponent
   data: any[] = [];
   nameCustomer: string = '';
   logoCustomer: string = '';
-
-  subRef$: Subscription;
 
   ngOnInit(): void {
     this.customerId = this.routerActivate.snapshot.params['customerId'];
@@ -50,16 +50,14 @@ export default class ReporteTicketPendientesProveedorComponent
     this.customToastService.onLoading();
     this.urlImg = `${environment.base_urlImg}customers/${this.customerId}/report/`;
 
-    console.log('🚀 ~ this.urlImg:', this.urlImg);
-    this.subRef$ = this.dataService
+    this.dataService
       .get(
         `ticket/getreportpendingprovider/${this.customerId}/${this.departamentId}`
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
-          this.data = resp.body;
-          console.log('🚀 ~ resp.body:', resp.body);
-          this.customToastService.onClose();
+          this.data = this.customToastService.onCloseOnGetData(resp.body);
         },
         error: (error) => {
           this.customToastService.onCloseToError(error);
@@ -67,7 +65,7 @@ export default class ReporteTicketPendientesProveedorComponent
       });
   }
 
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

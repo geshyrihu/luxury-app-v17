@@ -12,7 +12,7 @@ import {
   DynamicDialogConfig,
   DynamicDialogRef,
 } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import {
   AuthService,
   CustomToastService,
@@ -47,10 +47,12 @@ export default class AddoreditPeriodoCedulaPresupuestalComponent
   public ref = inject(DynamicDialogRef);
   public selectItemService = inject(SelectItemService);
 
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   submitting: boolean = false;
 
   id: number = 0;
-  subRef$: Subscription;
+
   form: FormGroup = this.formBuilder.group({
     id: { value: this.id, disabled: true },
     desde: ['', Validators.required],
@@ -64,7 +66,7 @@ export default class AddoreditPeriodoCedulaPresupuestalComponent
     this.onLoadItem();
   }
   onLoadItem() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get<any>(`CedulaPresupuestal/GetCedulaPresuppuestal/${this.id}`)
       .subscribe((resp: any) => {
         this.form.patchValue(resp.body);
@@ -84,8 +86,9 @@ export default class AddoreditPeriodoCedulaPresupuestalComponent
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
     if (this.id === 0) {
-      this.subRef$ = this.dataService
+      this.dataService
         .post(`CedulaPresupuestal`, cedulaDto)
+        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
         .subscribe({
           next: () => {
             this.customToastService.onClose();
@@ -98,7 +101,7 @@ export default class AddoreditPeriodoCedulaPresupuestalComponent
           },
         });
     } else {
-      this.subRef$ = this.dataService
+      this.dataService
         .put(`CedulaPresupuestal/Actualizar/${this.id}`, cedulaDto)
         .subscribe({
           next: () => {
@@ -113,7 +116,7 @@ export default class AddoreditPeriodoCedulaPresupuestalComponent
         });
     }
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

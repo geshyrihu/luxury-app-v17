@@ -6,7 +6,7 @@ import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { TableModule } from 'primeng/table';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
@@ -40,7 +40,9 @@ export default class ResultadoGeneralDashboardComponent
   public customToastService = inject(CustomToastService);
 
   reporteFiltro: string = 'MINUTAS GENERAL';
-  subRef$: Subscription;
+
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   ref: DynamicDialogRef;
   data: any[] = [];
   cb_customers: any[] = [];
@@ -49,9 +51,12 @@ export default class ResultadoGeneralDashboardComponent
   mostrar: boolean = false;
 
   ngOnInit(): void {
-    this.selectItemService.getCustomersNombreCorto().subscribe((resp) => {
-      this.cb_customers = resp;
-    });
+    this.selectItemService
+      .getCustomersNombreCorto()
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe((resp) => {
+        this.cb_customers = resp;
+      });
     this.periodo = this.dateService.getNameMontYear(
       this.periodoMonthService.fechaInicial
     );
@@ -75,7 +80,7 @@ export default class ResultadoGeneralDashboardComponent
     this.reporteFiltro = 'MINUTAS GENERAL';
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService
+    this.dataService
       .get(
         `ResumenGeneral/ReporteResumenMinutas/${this.dateService.getDateFormat(
           this.periodoMonthService.getPeriodoInicio
@@ -83,10 +88,10 @@ export default class ResultadoGeneralDashboardComponent
           this.periodoMonthService.getPeriodoFin
         )}/${this.nivelReporte}`
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
-          this.data = resp.body;
-          this.customToastService.onClose();
+          this.data = this.customToastService.onCloseOnGetData(resp.body);
         },
         error: (error) => {
           this.customToastService.onCloseToError(error);
@@ -96,7 +101,7 @@ export default class ResultadoGeneralDashboardComponent
   onLoadDataMinutaFiltro(EAreaMinutasDetalles: number, reporteFiltro: string) {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService
+    this.dataService
       .get(
         `ResumenGeneral/ReporteResumenMinutasFiltro/${this.dateService.getDateFormat(
           this.periodoMonthService.getPeriodoInicio
@@ -104,11 +109,11 @@ export default class ResultadoGeneralDashboardComponent
           this.periodoMonthService.getPeriodoFin
         )}/${EAreaMinutasDetalles}/${this.nivelReporte}`
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
-          this.data = resp.body;
+          this.data = this.customToastService.onCloseOnGetData(resp.body);
           this.reporteFiltro = reporteFiltro;
-          this.customToastService.onClose();
         },
         error: (error) => {
           this.customToastService.onCloseToError(error);
@@ -118,7 +123,7 @@ export default class ResultadoGeneralDashboardComponent
   onLoadDataPreventivos() {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService
+    this.dataService
       .get(
         `ResumenGeneral/ReporteResumenPreventivos/${this.dateService.getDateFormat(
           this.periodoMonthService.getPeriodoInicio
@@ -126,11 +131,11 @@ export default class ResultadoGeneralDashboardComponent
           this.periodoMonthService.getPeriodoFin
         )}`
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
-          this.data = resp.body;
+          this.data = this.customToastService.onCloseOnGetData(resp.body);
           this.reporteFiltro = 'MANTENIMIENTOS PREVENTIVOS';
-          this.customToastService.onClose();
         },
         error: (error) => {
           this.customToastService.onCloseToError(error);
@@ -140,7 +145,7 @@ export default class ResultadoGeneralDashboardComponent
   onLoadDataTickets() {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService
+    this.dataService
       .get(
         `ResumenGeneral/ReporteResumenTicket/${this.dateService.getDateFormat(
           this.periodoMonthService.getPeriodoInicio
@@ -148,11 +153,11 @@ export default class ResultadoGeneralDashboardComponent
           this.periodoMonthService.getPeriodoFin
         )}`
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
-          this.data = resp.body;
+          this.data = this.customToastService.onCloseOnGetData(resp.body);
           this.reporteFiltro = 'TICKETS';
-          this.customToastService.onClose();
         },
         error: (error) => {
           this.customToastService.onCloseToError(error);
@@ -174,6 +179,6 @@ export default class ResultadoGeneralDashboardComponent
     return color;
   }
   ngOnDestroy(): void {
-    if (this.subRef$) this.subRef$.unsubscribe();
+    this.dataService.ngOnDestroy();
   }
 }

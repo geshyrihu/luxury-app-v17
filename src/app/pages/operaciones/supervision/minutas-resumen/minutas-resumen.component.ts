@@ -5,7 +5,7 @@ import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { TableModule } from 'primeng/table';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
@@ -33,6 +33,9 @@ export default class MinutasResumenComponent implements OnInit, OnDestroy {
   public dialogService = inject(DialogService);
   public periodoMonthService = inject(PeriodoMonthService);
   public selectItemService = inject(SelectItemService);
+
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   ref: DynamicDialogRef;
   cb_customers: any[] = [];
   generalMinutas: any[] = [];
@@ -45,9 +48,12 @@ export default class MinutasResumenComponent implements OnInit, OnDestroy {
     this.periodo = this.dateService.getNameMontYear(
       this.periodoMonthService.fechaInicial
     );
-    this.selectItemService.getCustomersNombreCorto().subscribe((resp) => {
-      this.cb_customers = resp;
-    });
+    this.selectItemService
+      .getCustomersNombreCorto()
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe((resp) => {
+        this.cb_customers = resp;
+      });
     this.onLoadData(
       this.dateService.getDateFormat(this.periodoMonthService.getPeriodoInicio),
       this.dateService.getDateFormat(this.periodoMonthService.getPeriodoFin)
@@ -69,10 +75,11 @@ export default class MinutasResumenComponent implements OnInit, OnDestroy {
   onLoadData(fehcaInicio: string, fechaFinal: string) {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService
+    this.dataService
       .get(
         `ResumenGeneral/ResumenMinutasGeneralLista/${fehcaInicio}/${fechaFinal}`
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.generalMinutas = resp.body;
@@ -83,10 +90,11 @@ export default class MinutasResumenComponent implements OnInit, OnDestroy {
           this.customToastService.onCloseToError(error);
         },
       });
-    this.subRef$ = this.dataService
+    this.dataService
       .get(
         `ResumenGeneral/ResumenMinutasGeneralGrupo/${fehcaInicio}/${fechaFinal}`
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.generalMinutasGrupo = resp.body;
@@ -119,8 +127,8 @@ export default class MinutasResumenComponent implements OnInit, OnDestroy {
       styleClass: 'customFullModal',
     });
   }
-  subRef$: Subscription;
+
   ngOnDestroy(): void {
-    if (this.subRef$) this.subRef$.unsubscribe();
+    this.dataService.ngOnDestroy();
   }
 }

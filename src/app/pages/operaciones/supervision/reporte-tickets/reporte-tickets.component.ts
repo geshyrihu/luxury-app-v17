@@ -3,7 +3,7 @@ import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
 import { TableModule } from 'primeng/table';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { CustomerIdService } from 'src/app/core/services/common-services';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
@@ -33,10 +33,13 @@ export default class ReporteTicketsComponent implements OnInit, OnDestroy {
   public messageService = inject(MessageService);
   public periodoMonthService = inject(PeriodoMonthService);
   public customToastService = inject(CustomToastService);
+
   base_urlImg = '';
   data: any[] = [];
   customerId$: Observable<number> = this.customerIdService.getCustomerId$();
   url = base_urlImg;
+
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   ngOnInit(): void {
     this.onLoadData();
@@ -58,7 +61,7 @@ export default class ReporteTicketsComponent implements OnInit, OnDestroy {
   onLoadData() {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService
+    this.dataService
       .get(
         `ResumenGeneral/ReporteResumenTicket/${
           this.customerIdService.customerId
@@ -69,10 +72,10 @@ export default class ReporteTicketsComponent implements OnInit, OnDestroy {
         )}`
       )
 
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
-          this.data = resp.body;
-          this.customToastService.onClose();
+          this.data = this.customToastService.onCloseOnGetData(resp.body);
         },
         error: (error) => {
           this.customToastService.onCloseToError(error);
@@ -97,8 +100,8 @@ export default class ReporteTicketsComponent implements OnInit, OnDestroy {
       pendientes,
     };
   }
-  subRef$: Subscription;
+
   ngOnDestroy(): void {
-    if (this.subRef$) this.subRef$.unsubscribe();
+    this.dataService.ngOnDestroy();
   }
 }

@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { cb_ESiNo } from 'src/app/core/enums/si-no.enum';
 import { ETurnoTrabajo } from 'src/app/core/enums/turno-trabajo.enum';
 import { ETypeOfDeparture } from 'src/app/core/enums/type-of-departure.enum';
@@ -15,7 +15,6 @@ import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
-import { EnumService } from 'src/app/core/services/enum.service';
 import { SelectItemService } from 'src/app/core/services/select-item.service';
 import CustomButtonModule from 'src/app/custom-components/custom-buttons/custom-button.module';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
@@ -43,12 +42,12 @@ export default class AddOrEditStatusRequestSalaryModificationComponent
   public config = inject(DynamicDialogConfig);
   public selectItemService = inject(SelectItemService);
   private customToastService = inject(CustomToastService);
-  private enumService = inject(EnumService);
 
   submitting: boolean = false;
 
   id: number = 0;
-  subRef$: Subscription;
+
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   cb_profession: ISelectItemDto[] = [];
   cb_status: ISelectItemDto[] = onGetSelectItemFromEnum(ETurnoTrabajo);
@@ -80,8 +79,9 @@ export default class AddOrEditStatusRequestSalaryModificationComponent
     if (this.id !== 0) this.onLoadData();
   }
   onLoadData() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`RequestSalaryModification/GetById/${this.id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.form.patchValue(resp.body);
@@ -105,7 +105,7 @@ export default class AddOrEditStatusRequestSalaryModificationComponent
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
     if (this.id === 0) {
-      this.subRef$ = this.dataService
+      this.dataService
         .post(`RequestSalaryModification`, this.form.value)
         .subscribe({
           next: () => {
@@ -119,7 +119,7 @@ export default class AddOrEditStatusRequestSalaryModificationComponent
           },
         });
     } else {
-      this.subRef$ = this.dataService
+      this.dataService
         .put(`RequestSalaryModification/${this.id}`, this.form.value)
         .subscribe({
           next: () => {
@@ -135,16 +135,14 @@ export default class AddOrEditStatusRequestSalaryModificationComponent
     }
   }
   onProfessionSelectItem() {
-    this.selectItemService.onGetSelectItem('Professions').subscribe((resp) => {
-      this.cb_profession = resp;
-    });
-    // this.enumService
-    //   .onGetSelectItemEmun('ETypeOfDeparture')
-    //   .subscribe((resp) => {
-    //     this.cb_type_departure = resp;
-    //   });
+    this.selectItemService
+      .onGetSelectItem('Professions')
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe((resp) => {
+        this.cb_profession = resp;
+      });
   }
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

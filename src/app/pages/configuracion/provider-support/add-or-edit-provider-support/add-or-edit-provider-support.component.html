@@ -61,6 +61,27 @@
       ></custom-input-datalist>
       }
 
+      <!--  Customers-->
+
+      @if(cb_customers.length == 0){
+      <div class="text-center">
+        <p>Cargando listado de clientes</p>
+        <div class="spinner-border text-info m-1" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+      } @else {
+
+      <custom-input-datalist
+        (propagar)="saveCustomerId($event)"
+        [control]="form.get('nameCustomer')"
+        [data]="cb_customers"
+        formControlName="nameCustomer"
+        label="Cargo"
+        [horizontal]="false"
+        dataListId="nameCustomerDatalistOptions"
+      ></custom-input-datalist>
+      }
       <!-- [disabled]="this.form.invalid || submitting" -->
       <custom-button-submit />
     </form>

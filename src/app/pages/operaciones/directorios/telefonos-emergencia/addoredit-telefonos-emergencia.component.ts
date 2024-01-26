@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import {
   CustomToastService,
   DataService,
@@ -33,11 +33,11 @@ export default class AddOrEditTelefonosEmergenciaComponent {
   public config = inject(DynamicDialogConfig);
   public ref = inject(DynamicDialogRef);
   public dataService = inject(DataService);
-
   private customToastService = inject(CustomToastService);
 
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   submitting: boolean = false;
-  subRef$: Subscription;
 
   id: any = 0;
   urlBaseImg = '';
@@ -66,7 +66,7 @@ export default class AddOrEditTelefonosEmergenciaComponent {
   }
 
   onLoadData() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`TelefonosEmergencia/${this.id}`)
       .subscribe((resp: any) => {
         this.urlBaseImg = `${environment.base_urlImg}Administration/tel-emergencia/${resp.body.logo}`;
@@ -88,8 +88,9 @@ export default class AddOrEditTelefonosEmergenciaComponent {
     this.customToastService.onLoading();
 
     if (this.id === 0) {
-      this.subRef$ = this.dataService
+      this.dataService
         .post('TelefonosEmergencia', formData)
+        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
         .subscribe({
           next: () => {
             this.ref.close(true);
@@ -102,7 +103,7 @@ export default class AddOrEditTelefonosEmergenciaComponent {
           },
         });
     } else {
-      this.subRef$ = this.dataService
+      this.dataService
         .put(`TelefonosEmergencia/${this.id}`, formData)
         .subscribe({
           next: () => {
@@ -131,7 +132,7 @@ export default class AddOrEditTelefonosEmergenciaComponent {
     return formData;
   }
 
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }

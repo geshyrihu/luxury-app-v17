@@ -7,7 +7,7 @@ import {
 } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { IWorkPositionDto } from 'src/app/core/interfaces/IEmpresaOrganigramaDto.interface';
 import {
   AuthService,
@@ -60,7 +60,9 @@ export default class ListWorkPlantillaComponent implements OnInit, OnDestroy {
   data: any[] = [];
   pahtBaseImg = environment.base_urlImg + 'Administration/accounts/';
   ref: DynamicDialogRef;
-  subRef$: Subscription;
+
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   state = 0;
   ngOnInit(): void {
     this.customerId$ = this.customerIdService.getCustomerId$();
@@ -73,17 +75,17 @@ export default class ListWorkPlantillaComponent implements OnInit, OnDestroy {
   onLoadData() {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService
+    this.dataService
       .get<IWorkPositionDto[]>(
         'workposition/getall/' +
           this.customerIdService.getcustomerId() +
           '/' +
           this.state
       )
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
-          this.data = resp.body;
-          this.customToastService.onClose();
+          this.data = this.customToastService.onCloseOnGetData(resp.body);
         },
         error: (error) => {
           this.customToastService.onCloseToError(error);
@@ -278,21 +280,25 @@ export default class ListWorkPlantillaComponent implements OnInit, OnDestroy {
   onDelete(id: number) {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService.delete(`WorkPosition/${id}`).subscribe({
-      next: () => {
-        this.customToastService.onCloseToSuccess();
-        this.onLoadData();
-      },
-      error: (error) => {
-        this.customToastService.onCloseToError(error);
-      },
-    });
+    this.dataService
+      .delete(`WorkPosition/${id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe({
+        next: () => {
+          this.customToastService.onCloseToSuccess();
+          this.onLoadData();
+        },
+        error: (error) => {
+          this.customToastService.onCloseToError(error);
+        },
+      });
   }
   SendMailTest() {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-    this.subRef$ = this.dataService
+    this.dataService
       .get('SolicitudesReclutamiento/SendMailTest')
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (_) => {
           this.customToastService.onClose();
@@ -340,7 +346,7 @@ export default class ListWorkPlantillaComponent implements OnInit, OnDestroy {
     ]);
   }
   ngOnDestroy(): void {
-    if (this.subRef$) this.subRef$.unsubscribe();
+    this.dataService.ngOnDestroy();
   }
 
   // Metodo para validar si el cliente es luxury, nada mas puede ver la info reclutamiento,

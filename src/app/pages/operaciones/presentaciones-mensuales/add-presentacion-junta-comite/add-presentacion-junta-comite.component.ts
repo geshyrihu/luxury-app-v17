@@ -8,7 +8,7 @@ import {
 } from '@angular/forms';
 import { FlatpickrModule } from 'angularx-flatpickr';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import {
   AuthService,
   CustomToastService,
@@ -35,20 +35,21 @@ import ComponentsModule, {
 export default class AddPresentacionJuntaComiteComponent
   implements OnInit, OnDestroy
 {
-  public dateService = inject(DateService);
-  public authService = inject(AuthService);
+  private customToastService = inject(CustomToastService);
   private formBuilder = inject(FormBuilder);
-  public dataService = inject(DataService);
-  public ref = inject(DynamicDialogRef);
+  public authService = inject(AuthService);
   public config = inject(DynamicDialogConfig);
   public customerIdService = inject(CustomerIdService);
-  private customToastService = inject(CustomToastService);
+  public dataService = inject(DataService);
+  public dateService = inject(DateService);
+  public ref = inject(DynamicDialogRef);
 
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
   submitting: boolean = false;
   id: number = 0;
   filePath: string = '';
   errorMessage: string = '';
-  subRef$: Subscription;
+
   form: FormGroup = this.formBuilder.group({
     id: { value: this.id, disabled: true },
     customerId: [this.customerIdService.getcustomerId()],
@@ -63,8 +64,9 @@ export default class AddPresentacionJuntaComiteComponent
   onLoadData(id: number) {
     flatpickrFactory();
 
-    this.subRef$ = this.dataService
+    this.dataService
       .get('PresentacionJuntaComite/Get/' + id)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           resp.body.fechaCorrespondiente = this.dateService.getDateFormat(
@@ -100,7 +102,7 @@ export default class AddPresentacionJuntaComiteComponent
     this.customToastService.onLoading();
 
     if (this.id === 0) {
-      this.subRef$ = this.dataService
+      this.dataService
         .post(`PresentacionJuntaComite/AddFecha`, this.form.value)
         .subscribe({
           next: () => {
@@ -114,7 +116,7 @@ export default class AddPresentacionJuntaComiteComponent
           },
         });
     } else {
-      this.subRef$ = this.dataService
+      this.dataService
         .put(`PresentacionJuntaComite/AddFecha/${this.id}`, this.form.value)
         .subscribe({
           next: () => {
@@ -131,6 +133,6 @@ export default class AddPresentacionJuntaComiteComponent
   }
 
   ngOnDestroy(): void {
-    if (this.subRef$) this.subRef$.unsubscribe();
+    this.dataService.ngOnDestroy();
   }
 }

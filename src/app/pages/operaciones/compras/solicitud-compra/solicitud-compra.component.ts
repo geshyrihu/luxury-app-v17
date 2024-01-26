@@ -12,7 +12,7 @@ import { NgbProgressbar } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ToastModule } from 'primeng/toast';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { EStatusOrdenCompra } from 'src/app/core/enums/estatus-orden-compra.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
@@ -63,6 +63,8 @@ export default class SolicitudCompraComponent implements OnInit, OnDestroy {
   public messageService = inject(MessageService);
   public customerIdService = inject(CustomerIdService);
 
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   submitting: boolean = false;
 
   statusCompra: ISelectItemDto[] = onGetSelectItemFromEnum(EStatusOrdenCompra);
@@ -78,7 +80,7 @@ export default class SolicitudCompraComponent implements OnInit, OnDestroy {
   type: string = '';
 
   ref: DynamicDialogRef;
-  subRef$: Subscription;
+
   SolicitudCompraDetalle: any[] = [];
   form: FormGroup;
   imprimir = false;
@@ -119,8 +121,9 @@ export default class SolicitudCompraComponent implements OnInit, OnDestroy {
     }));
   }
   onCotizacionesRelacionadas() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`OrdenCompra/CotizacionesRelacionadas/${this.id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.cotizacionesRelacionadas = resp.body;
@@ -143,8 +146,9 @@ export default class SolicitudCompraComponent implements OnInit, OnDestroy {
     }
   }
   onLoadData() {
-    this.subRef$ = this.dataService
+    this.dataService
       .get(`SolicitudCompra/GetSolicitudCompraIndividual/${this.id}`)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
           this.solicitudCompra = resp.body;
@@ -180,8 +184,9 @@ export default class SolicitudCompraComponent implements OnInit, OnDestroy {
     this.customToastService.onLoading();
 
     if (Number(this.id) === 0) {
-      this.subRef$ = this.dataService
+      this.dataService
         .post(`SolicitudCompra/`, this.form.value)
+        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
         .subscribe({
           next: (resp: any) => {
             this.id = Number(resp.body.id);
@@ -196,7 +201,7 @@ export default class SolicitudCompraComponent implements OnInit, OnDestroy {
           },
         });
     } else {
-      this.subRef$ = this.dataService
+      this.dataService
         .put(`SolicitudCompra/${this.id}`, this.form.value)
         .subscribe({
           next: () => {
@@ -272,7 +277,7 @@ export default class SolicitudCompraComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl(`operaciones/compras/orden-compra/${id}`);
   }
 
-  ngOnDestroy() {
-    if (this.subRef$) this.subRef$.unsubscribe();
+  ngOnDestroy(): void {
+    this.dataService.ngOnDestroy();
   }
 }
