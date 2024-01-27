@@ -75,12 +75,7 @@ export default class RestaurarContraseñaComponent implements OnInit, OnDestroy 
     return this.form.controls;
   }
   onSubmit() {
-    if (this.form.invalid) {
-      Object.values(this.form.controls).forEach((x) => {
-        x.markAllAsTouched();
-      });
-      return;
-    }
+    if (!this.dataService.validateForm(this.form)) return;
     this.data = {
       userName: this.form.get('userName').value,
       password: this.form.get('password').value,

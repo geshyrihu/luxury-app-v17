@@ -26,73 +26,66 @@
             type="text"
             class="form-control"
             formControlName="productoId"
-            />
-            <input
-              readonly
-              [value]="nombreProducto"
-              type="text"
-              class="form-control"
-              />
-            </div>
+          />
+          <input
+            readonly
+            [value]="nombreProducto"
+            type="text"
+            class="form-control"
+          />
+        </div>
+      </div>
+      <div class="form-group row mb-2">
+        <label class="col-sm-3">Cantidad</label>
+        <div class="col-sm-9">
+          <input
+            [(ngModel)]="contidadSeleccionada"
+            min="0"
+            type="number"
+            class="form-control"
+            formControlName="cantidad"
+            [class.is-invalid]="
+              f.cantidad.errors && (f.cantidad.dirty || f.cantidad.touched)
+            "
+            (change)="onSelectcantidad()"
+            (input)="onSelectcantidad()"
+          />
+          <div>
+            @if (this.cantidadDisponible < 0) {
+            <span class="text-danger small">No hay suficiente stock</span>
+            }
           </div>
-          <div class="form-group row mb-2">
-            <label class="col-sm-3">Cantidad</label>
-            <div class="col-sm-9">
-              <input
-                [(ngModel)]="contidadSeleccionada"
-                min="0"
-                type="number"
-                class="form-control"
-                formControlName="cantidad"
-                [class.is-invalid]="
-                f.cantidad.errors && (f.cantidad.dirty || f.cantidad.touched)
-                "
-                (change)="onSelectcantidad()"
-                (input)="onSelectcantidad()"
-                />
-                <div>
-                  @if (this.cantidadDisponible < 0) {
-                    <span class="text-danger small"
-                      >No hay suficiente stock</span
-                      >
-                    }
-                  </div>
-                  @if (
-                    f.cantidad.errors && (f.cantidad.dirty || f.cantidad.touched)
-                    ) {
-                    <div
-                      >
-                      @if (f.cantidad.errors.required) {
-                        <span class="text-danger small"
-                          >El campo es reqerido.</span
-                          >
-                        }
-                      </div>
-                    }
-                  </div>
-                </div>
-                <custom-input-select
-                  [control]="form.get('unidadMedidaId')"
-                  formControlName="unidadMedidaId"
-                  label="Unidad"
-                  [data]="cb_measurement_unit"
-                ></custom-input-select>
-                <custom-input-text
-                  [control]="form.get('quienUso')"
-                  formControlName="quienUso"
-                  label="Entregado a"
-                  placeholder="entregado a"
-                ></custom-input-text>
-                <custom-input-text-area
-                  [control]="form.get('usoPrducto')"
-                  formControlName="usoPrducto"
-                  label="Uso"
-                  placeholder="uso"
-                ></custom-input-text-area>
-                <custom-button-submit
-                  [disabled]="form.invalid || submitting || this.cantidadDisponible < 0"
-                ></custom-button-submit>
-              </form>
-            </div>
+          @if ( f.cantidad.errors && (f.cantidad.dirty || f.cantidad.touched) )
+          {
+          <div>
+            @if (f.cantidad.errors.required) {
+            <span class="text-danger small">El campo es reqerido.</span>
+            }
           </div>
-          
+          }
+        </div>
+      </div>
+      <custom-input-select
+        [control]="form.get('unidadMedidaId')"
+        formControlName="unidadMedidaId"
+        label="Unidad"
+        [data]="cb_measurement_unit"
+      ></custom-input-select>
+      <custom-input-text
+        [control]="form.get('quienUso')"
+        formControlName="quienUso"
+        label="Entregado a"
+        placeholder="entregado a"
+      ></custom-input-text>
+      <custom-input-text-area
+        [control]="form.get('usoPrducto')"
+        formControlName="usoPrducto"
+        label="Uso"
+        placeholder="uso"
+      ></custom-input-text-area>
+      <custom-button-submit
+        [disabled]="form.invalid || submitting || this.cantidadDisponible < 0"
+      />
+    </form>
+  </div>
+</div>

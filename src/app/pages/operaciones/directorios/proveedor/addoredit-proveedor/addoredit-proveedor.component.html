@@ -29,15 +29,15 @@
                 placeholder="rfc"
               ></custom-input-text>
               @if (rfcCoincidente.length > 0) {
-                <div class="form-group mb-1">
-                  @for (item of rfcCoincidente; track item) {
-                    <div>
-                      <label class="font-weight-normal small text-danger">
-                        {{ item.rfc }} Ya hay un registro con este RFC
-                      </label>
-                    </div>
-                  }
+              <div class="form-group mb-1">
+                @for (item of rfcCoincidente; track item) {
+                <div>
+                  <label class="font-weight-normal small text-danger">
+                    {{ item.rfc }} Ya hay un registro con este RFC
+                  </label>
                 </div>
+                }
+              </div>
               }
             </div>
             <div class="col-md-4">
@@ -240,43 +240,37 @@
           type="file"
           accept="application/pdf"
           (change)="change($event.target['files'][0])"
-          />
-        </div>
+        />
       </div>
-      <div class="col-8">
-        <div class="mb-3">
-          <label for="choices-multiple-default">Seleccionar categoria</label>
-          <div class="multi_default">
-            <ng-select
-              formControlName="categorias"
-              [items]="cb_category"
-              [multiple]="true"
-              bindLabel="label"
-              [(ngModel)]="catecoriasSeleccinadas"
-              >
-              <ng-template ng-optgroup-tmp let-item="item">
-                {{ item.label || "Unnamed group" }}
-              </ng-template>
-            </ng-select>
-            @if (
-              f.categorias.invalid &&
-              (f.categorias.dirty || f.categorias.touched)
-              ) {
-              <div
-                >
-                @if (f.categorias.errors.required) {
-                  <small class="text-danger"
-                    >Selecciona los servicios que ofrece este proveedor.</small
-                    >
-                  }
-                </div>
-              }
-            </div>
+    </div>
+    <div class="col-8">
+      <div class="mb-3">
+        <label for="choices-multiple-default">Seleccionar categoria</label>
+        <div class="multi_default">
+          <ng-select
+            formControlName="categorias"
+            [items]="cb_category"
+            [multiple]="true"
+            bindLabel="label"
+            [(ngModel)]="catecoriasSeleccinadas"
+          >
+            <ng-template ng-optgroup-tmp let-item="item">
+              {{ item.label || "Unnamed group" }}
+            </ng-template>
+          </ng-select>
+          @if ( f.categorias.invalid && (f.categorias.dirty ||
+          f.categorias.touched) ) {
+          <div>
+            @if (f.categorias.errors.required) {
+            <small class="text-danger"
+              >Selecciona los servicios que ofrece este proveedor.</small
+            >
+            }
           </div>
+          }
         </div>
       </div>
-      <custom-button-submit
-        [disabled]="this.form.invalid || submitting"
-      ></custom-button-submit>
-    </form>
-    
+    </div>
+  </div>
+  <custom-button-submit [disabled]="this.form.invalid || submitting" />
+</form>

@@ -9,7 +9,5 @@ import PrimeNgModule from 'app/shared/prime-ng.module';
   providers: [],
 })
 export default class EstadoFinancieroListComponent implements OnInit {
-  constructor() {}
-
   ngOnInit() {}
 }

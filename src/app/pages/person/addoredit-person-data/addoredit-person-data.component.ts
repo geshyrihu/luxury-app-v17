@@ -105,12 +105,7 @@ export default class AddoreditPersonDataComponent implements OnInit, OnDestroy {
     this.form.patchValue({
       id: this.personId,
     });
-    if (this.form.invalid) {
-      Object.values(this.form.controls).forEach((x) => {
-        x.markAllAsTouched();
-      });
-      return;
-    }
+    if (!this.dataService.validateForm(this.form)) return;
     this.submitting = true;
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();

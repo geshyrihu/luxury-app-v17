@@ -13,7 +13,6 @@ export default class LeafletMapComponent implements OnInit {
   latitud: number = 0;
   @Input()
   longitud: number = 0;
-  constructor() {}
 
   ngOnInit(): void {
     this.onLoadOption();

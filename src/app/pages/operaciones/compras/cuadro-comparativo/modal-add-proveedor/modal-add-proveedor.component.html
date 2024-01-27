@@ -22,5 +22,5 @@
     placeholder="Número de cotización"
   ></custom-input-number>
 
-  <custom-button-submit [disabled]="form.invalid"></custom-button-submit>
+  <custom-button-submit [disabled]="this.form.invalid || submitting" />
 </form>

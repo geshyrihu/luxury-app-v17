@@ -8,7 +8,6 @@ import {
   CustomerIdService,
   DataService,
 } from 'src/app/core/services/common-services';
-// import { ViewPdfService } from 'src/app/core/services/view-pdf.service';
 import ComponentsModule from 'src/app/shared/components.module';
 import PrimeNgModule from 'src/app/shared/prime-ng.module';
 import { environment } from 'src/environments/environment';
@@ -69,6 +68,7 @@ export default class ListDocumentoComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (resp: any) => {
           this.data = this.customToastService.onCloseOnGetData(resp.body);
+          console.log('🚀 ~ resp.body:', resp.body);
         },
         error: (error) => {
           this.customToastService.onCloseToError(error);

@@ -20,6 +20,7 @@ import ComponentsModule from 'src/app/shared/components.module';
   templateUrl: './presupuesto-add.component.html',
   standalone: true,
   imports: [ComponentsModule],
+  providers: [MessageService, DialogService, CustomToastService],
 })
 export default class PresupuestoAddComponent implements OnInit {
   public config = inject(DynamicDialogConfig);

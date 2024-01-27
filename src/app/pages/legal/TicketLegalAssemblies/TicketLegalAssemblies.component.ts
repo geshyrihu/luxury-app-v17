@@ -3,13 +3,8 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-TicketLegalAssemblies',
   templateUrl: './TicketLegalAssemblies.component.html',
-  styleUrls: ['./TicketLegalAssemblies.component.css']
+  standalone: true,
 })
-export class TicketLegalAssembliesComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
+export default class TicketLegalAssembliesComponent implements OnInit {
+  ngOnInit() {}
 }

@@ -8,22 +8,36 @@
         >
           <p>1. ALTA DE PROVEEDOR</p>
         </li>
-        <li class="list-group-item pointer">
+        <li
+          class="list-group-item pointer"
+          (click)="onModalTicketLegalProviderContractsRenewals()"
+        >
           <p>2. RENOVACION DE CONTRATO PROVEEDORES</p>
         </li>
-        <li class="list-group-item pointer">
+        <li
+          class="list-group-item pointer"
+          (click)="onModalTicketLegalAssembliesComponent()"
+        >
           <p>3. ASAMBLEAS</p>
         </li>
-        <li class="list-group-item pointer">
+        <li
+          class="list-group-item pointer"
+          (click)="
+            onModalTicketTicketLegalCommitteeMeetingsLegalTopicsComponent()
+          "
+        >
           <p>4. JUNTAS DE COMITÉ, TEMAS LEGALES</p>
         </li>
-        <li class="list-group-item pointer">
+        <li
+          class="list-group-item pointer"
+          (click)="onModalTicketLegalLatePayerAgreementsComponent()"
+        >
           <p>5. CONVENIOS MOROSOS</p>
         </li>
-        <li class="list-group-item pointer">
+        <!-- <li class="list-group-item pointer">
           <p>6. BAJAS COLABORADORES</p>
-        </li>
-        <li class="list-group-item pointer">
+        </li> -->
+        <li class="list-group-item pointer" (click)="onModalTicketLegalOther()">
           <p>7. OTROS</p>
         </li>
       </ul>

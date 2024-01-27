@@ -122,7 +122,7 @@ export default class ListPresupuestoComponent implements OnInit {
     this.router.navigate(['/operaciones/compras/presupuesto-individual/', id]);
   }
 
-  // Función para eliminar un banco
+  // Función para eliminar
   onDelete(data: any) {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();

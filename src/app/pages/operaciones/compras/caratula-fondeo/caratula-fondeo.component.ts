@@ -14,7 +14,10 @@ import { ETipoGasto } from 'src/app/core/enums/tipo-gasto.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import { CaratulaFondeoService } from 'src/app/core/services/caratula-fondeo.service';
-import { CustomerIdService } from 'src/app/core/services/common-services';
+import {
+  CustomerIdService,
+  DataService,
+} from 'src/app/core/services/common-services';
 import { DateService } from 'src/app/core/services/date.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import ComponentsModule from 'src/app/shared/components.module';
@@ -34,6 +37,7 @@ const date = new Date();
 })
 export default class CaratulaFondeoComponent implements OnInit {
   public dateService = inject(DateService);
+  public dataService = inject(DataService);
   private formBuilder = inject(FormBuilder);
   public ref = inject(DynamicDialogRef);
   public customerIdService = inject(CustomerIdService);
@@ -61,12 +65,7 @@ export default class CaratulaFondeoComponent implements OnInit {
     this.customerId$ = this.customerIdService.getCustomerId$();
   }
   onSubmit() {
-    if (this.form.invalid) {
-      Object.values(this.form.controls).forEach((x) => {
-        x.markAllAsTouched();
-      });
-      return;
-    }
+    if (!this.dataService.validateForm(this.form)) return;
     // Deshabilitar el botón al iniciar el envío del formulario
     this.submitting = true;
 

@@ -35,8 +35,5 @@
     label="Forma de Pago"
     [data]="cb_formaPago"
   ></custom-input-select>
-
-  <custom-button-submit
-    [disabled]="form.invalid || submitting"
-  ></custom-button-submit>
+  <custom-button-submit [disabled]="this.form.invalid || submitting" />
 </form>

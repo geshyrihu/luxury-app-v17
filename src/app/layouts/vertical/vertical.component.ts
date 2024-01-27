@@ -1,7 +1,6 @@
 import { CommonModule, Location } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { BnNgIdleService } from 'bn-ng-idle';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import MenuSelectCustomerComponent from '../menu-select-customer/menu-select-customer.component';
 import SidebarComponent from '../sidebar/sidebar.component';
@@ -23,7 +22,6 @@ import { TopbarComponent } from '../topbar/topbar.component';
  * Vertical Component
  */
 export default class VerticalComponent implements OnInit, OnDestroy {
-  private bnIdle = inject(BnNgIdleService); // Inyección del servicio BnNgIdleService
   private location = inject(Location);
 
   onBack() {

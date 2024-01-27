@@ -52,16 +52,7 @@
       </div>
     </div>
     <div class="mt-1 mb-2">
-      <custom-button-submit [disabled]="form.invalid"></custom-button-submit>
-      <!-- <button
-        ngbTooltip="Guardar"
-        placement="top"
-        type="submit"
-        [disabled]="form.invalid"
-        class="btn btn-info float-end"
-        >
-        <i class="fa-regular fa-check-double"></i>
-      </button> -->
+      <custom-button-submit [disabled]="this.form.invalid" />
     </div>
   </div>
 </form>

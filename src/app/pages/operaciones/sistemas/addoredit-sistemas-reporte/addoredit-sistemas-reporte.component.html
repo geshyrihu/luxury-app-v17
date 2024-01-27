@@ -46,11 +46,9 @@
             <label>Responsable</label>
             <select formControlName="responsibleAreaId" class="form-select">
               @for (item of cb_area_responsable; track item) {
-                <option
-                  [value]="item.value"
-                  >
-                  {{ item.label }}
-                </option>
+              <option [value]="item.value">
+                {{ item.label }}
+              </option>
               }
             </select>
           </div>
@@ -95,7 +93,5 @@
       </div>
     </div>
   </div>
-  <custom-button-submit
-    [disabled]="this.form.invalid || submitting"
-  ></custom-button-submit>
+  <custom-button-submit [disabled]="this.form.invalid || submitting" />
 </form>

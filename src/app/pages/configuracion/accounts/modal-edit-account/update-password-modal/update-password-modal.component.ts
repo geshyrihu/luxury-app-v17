@@ -11,7 +11,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ToastModule } from 'primeng/toast';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, finalize, takeUntil } from 'rxjs';
 import { ResetPasswordDto } from 'src/app/core/interfaces/user-info.interface';
 import {
   CustomToastService,
@@ -41,6 +41,7 @@ export default class UpdatePasswordModalComponent implements OnInit, OnDestroy {
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
+  submitting: boolean = false;
   applicationUserId: string = this.config.data.applicationUserId;
   userInfoDto: ResetPasswordDto;
 
@@ -86,10 +87,16 @@ export default class UpdatePasswordModalComponent implements OnInit, OnDestroy {
   onSubmit() {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-
+    this.submitting = true;
     this.dataService
       .post('Auth/ResetPasswordAdmin', this.form.value)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .pipe(
+        takeUntil(this.destroy$), // Cancelar la suscripción cuando el componente se destruye
+        finalize(() => {
+          // Habilitar el botón al finalizar el envío del formulario
+          this.submitting = false;
+        })
+      )
       .subscribe({
         next: () => {
           this.customToastService.onCloseToSuccess();

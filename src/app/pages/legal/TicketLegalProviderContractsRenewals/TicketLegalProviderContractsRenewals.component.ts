@@ -3,13 +3,10 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-TicketLegalProviderContractsRenewals',
   templateUrl: './TicketLegalProviderContractsRenewals.component.html',
-  styleUrls: ['./TicketLegalProviderContractsRenewals.component.css']
+  standalone: true,
 })
-export class TicketLegalProviderContractsRenewalsComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
+export default class TicketLegalProviderContractsRenewalsComponent
+  implements OnInit
+{
+  ngOnInit() {}
 }

@@ -44,87 +44,74 @@
           type="button"
           class="btn btn-outline-info mb-2"
           (click)="addDiscountDescription()"
-          >
+        >
           Agregar descuento
         </button>
         @for (discount of discounts.controls; track discount; let i = $index) {
-          <div>
-            <div [formGroupName]="i">
-              <div class="row">
-                <div class="col-5">
-                  <div class="form-group row mb-2">
-                    <label class="col-sm-3">Descripción</label>
-                    <div class="col-sm-9">
-                      <input
-                        class="form-control"
-                        type="text"
-                        formControlName="description"
-                        [ngClass]="{
+        <div>
+          <div [formGroupName]="i">
+            <div class="row">
+              <div class="col-5">
+                <div class="form-group row mb-2">
+                  <label class="col-sm-3">Descripción</label>
+                  <div class="col-sm-9">
+                    <input
+                      class="form-control"
+                      type="text"
+                      formControlName="description"
+                      [ngClass]="{
                         'is-invalid': isControlInvalid(
-                        discount.get('description')
+                          discount.get('description')
                         )
-                        }"
-                        />
-                        @if (
-                          isControlInvalid(discount.get('description')) &&
-                          (discount.get('description').dirty ||
-                          discount.get('description').touched)
-                          ) {
-                          <div
-                            class="invalid-feedback"
-                            >
-                            La descripción es requerida.
-                          </div>
-                        }
-                      </div>
+                      }"
+                    />
+                    @if ( isControlInvalid(discount.get('description')) &&
+                    (discount.get('description').dirty ||
+                    discount.get('description').touched) ) {
+                    <div class="invalid-feedback">
+                      La descripción es requerida.
                     </div>
-                  </div>
-                  <div class="col-5">
-                    <div class="form-group row mb-2">
-                      <label class="col-sm-3">Costo</label>
-                      <div class="col-sm-9">
-                        <input
-                          class="form-control"
-                          type="number"
-                          formControlName="discount"
-                          [ngClass]="{
-                          'is-invalid': isControlInvalid(discount.get('discount'))
-                          }"
-                          />
-                          @if (
-                            isControlInvalid(discount.get('discount')) &&
-                            (discount.get('discount').dirty ||
-                            discount.get('discount').touched)
-                            ) {
-                            <div
-                              class="invalid-feedback"
-                              >
-                              El costo es requerido.
-                            </div>
-                          }
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-2">
-                      <button
-                        type="button"
-                        class="btn btn-outline-danger w-100"
-                        (click)="
-                        removeDiscountDescription(i, discount.get('id').value)
-                        "
-                        >
-                        Borrar
-                      </button>
-                    </div>
+                    }
                   </div>
                 </div>
               </div>
-            }
+              <div class="col-5">
+                <div class="form-group row mb-2">
+                  <label class="col-sm-3">Costo</label>
+                  <div class="col-sm-9">
+                    <input
+                      class="form-control"
+                      type="number"
+                      formControlName="discount"
+                      [ngClass]="{
+                        'is-invalid': isControlInvalid(discount.get('discount'))
+                      }"
+                    />
+                    @if ( isControlInvalid(discount.get('discount')) &&
+                    (discount.get('discount').dirty ||
+                    discount.get('discount').touched) ) {
+                    <div class="invalid-feedback">El costo es requerido.</div>
+                    }
+                  </div>
+                </div>
+              </div>
+              <div class="col-2">
+                <button
+                  type="button"
+                  class="btn btn-outline-danger w-100"
+                  (click)="
+                    removeDiscountDescription(i, discount.get('id').value)
+                  "
+                >
+                  Borrar
+                </button>
+              </div>
+            </div>
           </div>
-          <custom-button-submit
-            [disabled]="this.form.invalid || submitting"
-          ></custom-button-submit>
-        </form>
+        </div>
+        }
       </div>
-    </div>
-    
+      <custom-button-submit [disabled]="this.form.invalid || submitting" />
+    </form>
+  </div>
+</div>

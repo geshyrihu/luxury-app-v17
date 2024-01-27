@@ -23,7 +23,6 @@ export default class ListClasificacionEquipoComponent
 {
   private dataService = inject(DataService);
   public dialogService = inject(DialogService);
-
   public messageService = inject(MessageService);
   public customToastService = inject(CustomToastService);
 

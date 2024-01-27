@@ -83,12 +83,8 @@ export default class AddOrEditMeetingComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    if (this.form.invalid) {
-      Object.values(this.form.controls).forEach((x) => {
-        x.markAllAsTouched();
-      });
-      return;
-    } else {
+    if (!this.dataService.validateForm(this.form)) return;
+    else {
       const model: IMeetingDto = this.form.value;
 
       if (this.id !== 0) {

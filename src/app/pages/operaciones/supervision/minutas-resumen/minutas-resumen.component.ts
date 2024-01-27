@@ -16,7 +16,6 @@ import FiltroMinutasAreaComponent from '../filtro-minutas-area/filtro-minutas-ar
 @Component({
   selector: 'app-minutas-resumen',
   templateUrl: './minutas-resumen.component.html',
-  providers: [DialogService, MessageService, CustomToastService],
   standalone: true,
   imports: [
     ComponentsModule,
@@ -25,6 +24,7 @@ import FiltroMinutasAreaComponent from '../filtro-minutas-area/filtro-minutas-ar
     TableModule,
     MultiSelectModule,
   ],
+  providers: [DialogService, MessageService, CustomToastService],
 })
 export default class MinutasResumenComponent implements OnInit, OnDestroy {
   public customToastService = inject(CustomToastService);

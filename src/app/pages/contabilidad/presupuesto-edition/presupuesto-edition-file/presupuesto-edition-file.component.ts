@@ -21,6 +21,7 @@ import { environment } from 'src/environments/environment';
     FormsModule,
     PrimeNgModule,
   ],
+  providers: [CustomToastService],
 })
 export default class PresupuestoEditionFileComponent
   implements OnInit, OnDestroy

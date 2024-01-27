@@ -54,7 +54,7 @@ export default class CuentasPrimerNivelComponent implements OnInit, OnDestroy {
       });
   }
 
-  // Función para eliminar un banco
+  // Función para eliminar
   onDelete(data: any) {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();

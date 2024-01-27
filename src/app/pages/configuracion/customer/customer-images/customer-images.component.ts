@@ -7,7 +7,5 @@ import { Component, OnInit } from '@angular/core';
   imports: [],
 })
 export default class CustomerImagesComponent implements OnInit {
-  constructor() {}
-
   ngOnInit() {}
 }

@@ -6,7 +6,5 @@ import { Component, OnInit } from '@angular/core';
   standalone: true,
 })
 export default class AddoreditCuentasSegundoNivelComponent implements OnInit {
-  constructor() {}
-
   ngOnInit() {}
 }

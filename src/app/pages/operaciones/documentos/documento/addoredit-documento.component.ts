@@ -67,7 +67,7 @@ export default class AddoreditDocumentoComponent implements OnInit, OnDestroy {
   }
   onLoadData() {
     this.dataService
-      .get(`DocumentoCustomer/${this.id}`)
+      .get(`documentocustomer/${this.id}`)
       .subscribe((resp: any) => {
         this.id = resp.body.id;
         this.form.patchValue(resp.body);
@@ -76,12 +76,7 @@ export default class AddoreditDocumentoComponent implements OnInit, OnDestroy {
   submit() {
     let formData = this.createModel(this.form);
 
-    if (this.form.invalid) {
-      Object.values(this.form.controls).forEach((x) => {
-        x.markAllAsTouched();
-      });
-      return;
-    }
+    if (!this.dataService.validateForm(this.form)) return;
     this.id = this.config.data.id;
 
     // Deshabilitar el botón al iniciar el envío del formulario

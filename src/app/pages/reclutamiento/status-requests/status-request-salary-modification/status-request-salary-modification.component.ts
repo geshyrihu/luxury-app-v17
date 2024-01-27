@@ -116,6 +116,7 @@ export default class StatusRequestSalaryModificationComponent
       }
     });
   }
+
   //Eliminar solicitud de baja
   onDelete(id: number) {
     // Mostrar un mensaje de carga

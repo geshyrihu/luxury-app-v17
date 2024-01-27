@@ -31,6 +31,7 @@ export default class ResumenOrdenesServicioComponent
   public dateService = inject(DateService);
   public reporteOrdenesServicioService = inject(ReporteOrdenesServicioService);
   public customToastService = inject(CustomToastService);
+
   data: any[] = [];
   dataGraficos: any[] = [];
   concluidos = 0;

@@ -8,7 +8,7 @@ import {
 } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subject, takeUntil } from 'rxjs';
+import { finalize, Subject, takeUntil } from 'rxjs';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
@@ -72,22 +72,21 @@ export default class CreateAccountComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    if (this.form.invalid) {
-      Object.values(this.form.controls).forEach((x) => {
-        x.markAllAsTouched();
-      });
-      return;
-    }
+    if (!this.dataService.validateForm(this.form)) return;
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
     // Deshabilitar el botón al iniciar el envío del formulario
     this.submitting = true;
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
 
     this.dataService
       .post('Auth/CreateAccount', this.form.value)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .pipe(
+        takeUntil(this.destroy$), // Cancelar la suscripción cuando el componente se destruye
+        finalize(() => {
+          // Habilitar el botón al finalizar el envío del formulario
+          this.submitting = false;
+        })
+      )
       .subscribe({
         next: () => {
           this.ref.close(true);
@@ -95,7 +94,6 @@ export default class CreateAccountComponent implements OnInit, OnDestroy {
         },
         error: (error) => {
           // Habilitar el botón nuevamente al finalizar el envío del formulario
-          this.submitting = false;
           this.customToastService.onCloseToError(error);
         },
       });

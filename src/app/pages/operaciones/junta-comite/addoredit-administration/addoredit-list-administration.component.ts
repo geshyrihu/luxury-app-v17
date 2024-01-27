@@ -36,8 +36,6 @@ export default class AddOrEditListAdministrationComponent
   administrationparticipante = '';
   listaParticipantesAdministration: any[] = [];
 
-  constructor() {}
-
   ngOnInit(): void {
     this.onLoadCB();
     this.onLoadData();

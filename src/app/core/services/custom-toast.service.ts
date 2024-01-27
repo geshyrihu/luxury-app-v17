@@ -1,5 +1,4 @@
 import { Injectable, inject } from '@angular/core';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
 import Swal from 'sweetalert2';
 
@@ -8,7 +7,6 @@ import Swal from 'sweetalert2';
 })
 export class CustomToastService {
   public messageService = inject(MessageService);
-  public spinner = inject(NgxSpinnerService);
 
   /**
    * Muestra un mensaje de éxito.

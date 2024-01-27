@@ -109,12 +109,7 @@ export default class EditProductoComponent implements OnInit, OnDestroy {
     return this.form.controls;
   }
   onSubmit() {
-    if (this.form.invalid) {
-      Object.values(this.form.controls).forEach((x) => {
-        x.markAllAsTouched();
-      });
-      return;
-    }
+    if (!this.dataService.validateForm(this.form)) return;
 
     this.data.cantidad = this.form.get('cantidad').value;
     this.data.unidadMedidaId = this.form.get('unidadMedidaId').value;

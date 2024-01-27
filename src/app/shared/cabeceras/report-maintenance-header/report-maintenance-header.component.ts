@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import {
   CustomToastService,
   CustomerIdService,
@@ -12,6 +12,7 @@ import { environment } from 'src/environments/environment';
   selector: 'app-report-maintenance-header',
   templateUrl: './report-maintenance-header.component.html',
   standalone: true,
+  providers: [CustomToastService],
 })
 export default class ReportMaintenanceHeaderComponent
   implements OnInit, OnDestroy
@@ -20,6 +21,8 @@ export default class ReportMaintenanceHeaderComponent
   public customerIdService = inject(CustomerIdService);
   public filterReportOperationService = inject(TicketFilterService);
   public customToastService = inject(CustomToastService);
+
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   nameCustomer: string = '';
   logoCustomer: string = '';

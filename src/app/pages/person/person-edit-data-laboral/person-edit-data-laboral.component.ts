@@ -114,7 +114,7 @@ export default class PersonEditDataLaboralComponent implements OnInit {
 
   onSubmit() {
     // Metodo para validar el formulario
-    this.apiRequestService.onValidateForm(this.form);
+    this.dataService.validateForm(this.form);
     // Deshabilitar el botón al iniciar el envío del formulario
     this.submitting = true;
     // Mostrar un mensaje de carga

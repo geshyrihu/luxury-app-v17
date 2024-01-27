@@ -3,9 +3,13 @@ import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject } from 'rxjs';
 import { CustomToastService } from 'src/app/core/services/common-services';
-import { OnDestroyService } from 'src/app/core/services/on-destroy.service';
+import {
+  DialogHandlerService,
+  DialogSize,
+} from 'src/app/core/services/dialog-handler.service';
 import ComponentsModule from 'src/app/shared/components.module';
 import PrimeNgModule from 'src/app/shared/prime-ng.module';
+import { DataService } from '../../../core/services/data.service';
 import { LegalTicketRequestComponent } from '../legal-ticket-request/legal-ticket-request.component';
 
 @Component({
@@ -13,15 +17,22 @@ import { LegalTicketRequestComponent } from '../legal-ticket-request/legal-ticke
   templateUrl: './legal-list-ticket.component.html',
   standalone: true,
   imports: [ComponentsModule, PrimeNgModule],
-  providers: [DialogService, MessageService, CustomToastService],
+  providers: [
+    DialogService,
+    MessageService,
+    CustomToastService,
+    DialogHandlerService,
+  ],
 })
 export default class LegalListTicketComponent implements OnInit {
   public customToastService = inject(CustomToastService);
+  public dataService = inject(DataService);
+  public dialogHandlerService = inject(DialogHandlerService);
   public dialogService = inject(DialogService);
-  public OnDestroy = inject(OnDestroyService);
 
   data: any[] = [];
   ref: DynamicDialogRef; // Referencia a un cuadro de diálogo modal
+
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   ngOnInit() {
@@ -30,35 +41,17 @@ export default class LegalListTicketComponent implements OnInit {
 
   onLoadData() {}
 
-  // Función para abrir un cuadro de diálogo modal para con el listado de opciones de ticket para area legal
   onModalRequest(data: any) {
-    this.ref = this.dialogService.open(LegalTicketRequestComponent, {
-      data: {
-        id: data.id,
-      },
-      header: data.title,
-      styleClass: 'modal-lg',
-      closeOnEscape: true,
-      baseZIndex: 10000,
-    });
-
-    // Escuchar el evento 'onClose' cuando se cierra el cuadro de diálogo
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        // Cuando se recibe 'true', mostrar un mensaje de éxito y volver a cargar los datos
-        this.customToastService.onShowSuccess();
-        this.onLoadData();
-      }
-    });
+    this.dialogHandlerService
+      .openDialog(LegalTicketRequestComponent, data, data.title, DialogSize.md)
+      .then((result: boolean) => {
+        if (result) {
+          this.onLoadData();
+        }
+      });
   }
 
-  // el ngOnDestroy de mi componente
-
   ngOnDestroy(): void {
-    // Cuando se destruye el componente, desvincular y liberar recursos
-    // this.destroy$.next();
-    // this.destroy$.complete();
-
-    this.OnDestroy.ngOnDestroy();
+    this.dataService.ngOnDestroy();
   }
 }

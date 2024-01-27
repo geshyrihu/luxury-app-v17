@@ -40,6 +40,8 @@ export default class UpdatePasswordAccountComponent
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
+  submitting: boolean = false;
+
   @Input()
   applicationUserId: string = '';
   userInfoDto: ResetPasswordDto;
@@ -63,15 +65,20 @@ export default class UpdatePasswordAccountComponent
   onSubmit() {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
+    // Deshabilitar el botón al iniciar el envío del formulario
+    this.submitting = true;
 
     this.dataService
       .post('Auth/ResetPasswordAdmin', this.form.value)
       .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {
+          this.submitting = false;
           this.customToastService.onCloseToSuccess();
         },
         error: (error) => {
+          // Habilitar el botón nuevamente al finalizar el envío del formulario
+          this.submitting = false;
           this.customToastService.onCloseToError(error);
         },
       });

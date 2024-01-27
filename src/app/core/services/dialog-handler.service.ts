@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { DialogService } from 'primeng/dynamicdialog';
 import { CustomToastService } from './custom-toast.service';
 
@@ -6,10 +6,8 @@ import { CustomToastService } from './custom-toast.service';
   providedIn: 'root',
 })
 export class DialogHandlerService {
-  constructor(
-    private dialogService: DialogService,
-    private customToastService: CustomToastService
-  ) {}
+  private dialogService = inject(DialogService);
+  private customToastService = inject(CustomToastService);
 
   openDialog(
     component: any,

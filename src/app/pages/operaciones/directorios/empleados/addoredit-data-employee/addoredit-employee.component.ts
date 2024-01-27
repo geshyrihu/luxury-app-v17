@@ -127,12 +127,7 @@ export default class AddOrEditEmplopyeeComponent implements OnInit, OnDestroy {
     this.form.patchValue({
       id: this.id,
     });
-    if (this.form.invalid) {
-      Object.values(this.form.controls).forEach((x) => {
-        x.markAllAsTouched();
-      });
-      return;
-    }
+    if (!this.dataService.validateForm(this.form)) return;
     this.submitting = true;
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();

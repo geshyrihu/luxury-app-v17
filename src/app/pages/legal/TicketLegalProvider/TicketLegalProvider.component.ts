@@ -6,7 +6,5 @@ import { Component, OnInit } from '@angular/core';
   standalone: true,
 })
 export default class TicketLegalProviderComponent implements OnInit {
-  constructor() {}
-
   ngOnInit() {}
 }

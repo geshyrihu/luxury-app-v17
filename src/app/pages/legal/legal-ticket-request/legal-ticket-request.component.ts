@@ -1,42 +1,75 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { Component, inject } from '@angular/core';
+import { DialogService } from 'primeng/dynamicdialog';
 import { CustomToastService } from 'src/app/core/services/common-services';
+import {
+  DialogHandlerService,
+  DialogSize,
+} from 'src/app/core/services/dialog-handler.service';
+import TicketLegalAssembliesComponent from '../TicketLegalAssemblies/TicketLegalAssemblies.component';
+import TicketLegalCommitteeMeetingsLegalTopicsComponent from '../TicketLegalCommitteeMeetingsLegalTopics/TicketLegalCommitteeMeetingsLegalTopics.component';
+import TicketLegalLatePayerAgreementsComponent from '../TicketLegalLatePayerAgreements/TicketLegalLatePayerAgreements.component';
 import TicketLegalProviderComponent from '../TicketLegalProvider/TicketLegalProvider.component';
+import TicketLegalProviderContractsRenewalsComponent from '../TicketLegalProviderContractsRenewals/TicketLegalProviderContractsRenewals.component';
+import TicketLegalOtherComponent from '../ticket-legal-other/ticket-legal-other.component';
 
 @Component({
   selector: 'app-legal-ticket-request',
   templateUrl: './legal-ticket-request.component.html',
   standalone: true,
   imports: [],
+  providers: [CustomToastService, DialogHandlerService],
 })
-export class LegalTicketRequestComponent implements OnInit {
+export class LegalTicketRequestComponent {
   public customToastService = inject(CustomToastService);
   public dialogService = inject(DialogService);
+  public dialogHandlerService = inject(DialogHandlerService);
 
-  ref: DynamicDialogRef; // Referencia a un cuadro de diálogo modal
   onModalTicketLegalProvider() {
-    this.ref = this.dialogService.open(TicketLegalProviderComponent, {
-      data: {
-        //  id: data.id,
-      },
-      header: 'Solicitud de alta de proveedor',
-      styleClass: 'modal-lg ',
-      closeOnEscape: true,
-      baseZIndex: 10000,
-    });
-
-    this.onCLoseModal();
+    this.dialogHandlerService.openDialog(
+      TicketLegalProviderComponent,
+      null,
+      'ALTA DE PROVEEDOR',
+      DialogSize.lg // Tamaño del cuadro de diálogo
+    );
   }
-
-  onCLoseModal() {
-    // Escuchar el evento 'onClose' cuando se cierra el cuadro de diálogo
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        // Cuando se recibe 'true', mostrar un mensaje de éxito y volver a cargar los datos
-        this.customToastService.onShowSuccess();
-      }
-    });
+  onModalTicketLegalProviderContractsRenewals() {
+    this.dialogHandlerService.openDialog(
+      TicketLegalProviderContractsRenewalsComponent,
+      null,
+      'RENOVACIÓN DE CONTRATO PROVEEDORES',
+      DialogSize.lg // Tamaño del cuadro de diálogo
+    );
   }
-
-  ngOnInit() {}
+  onModalTicketLegalAssembliesComponent() {
+    this.dialogHandlerService.openDialog(
+      TicketLegalAssembliesComponent,
+      null,
+      'ASAMBLEAS',
+      DialogSize.lg // Tamaño del cuadro de diálogo
+    );
+  }
+  onModalTicketTicketLegalCommitteeMeetingsLegalTopicsComponent() {
+    this.dialogHandlerService.openDialog(
+      TicketLegalCommitteeMeetingsLegalTopicsComponent,
+      null,
+      'JUNTAS DE COMITE',
+      DialogSize.lg // Tamaño del cuadro de diálogo
+    );
+  }
+  onModalTicketLegalLatePayerAgreementsComponent() {
+    this.dialogHandlerService.openDialog(
+      TicketLegalLatePayerAgreementsComponent,
+      null,
+      'CONVENIO MOROSOS',
+      DialogSize.lg // Tamaño del cuadro de diálogo
+    );
+  }
+  onModalTicketLegalOther() {
+    this.dialogHandlerService.openDialog(
+      TicketLegalOtherComponent,
+      null,
+      'OTROS',
+      DialogSize.lg // Tamaño del cuadro de diálogo
+    );
+  }
 }

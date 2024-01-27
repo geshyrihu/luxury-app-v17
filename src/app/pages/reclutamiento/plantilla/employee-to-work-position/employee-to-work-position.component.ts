@@ -14,6 +14,7 @@ import Swal from 'sweetalert2';
   templateUrl: './employee-to-work-position.component.html',
   standalone: true,
   imports: [CommonModule],
+  providers: [CustomToastService],
 })
 export default class EmployeeToWorkPositionComponent
   implements OnInit, OnDestroy

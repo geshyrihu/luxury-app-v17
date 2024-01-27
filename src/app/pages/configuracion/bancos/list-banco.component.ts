@@ -13,9 +13,9 @@ import {
   DialogHandlerService,
   DialogSize,
 } from 'src/app/core/services/dialog-handler.service';
-import { OnDestroyService } from 'src/app/core/services/on-destroy.service';
 import ComponentsModule from 'src/app/shared/components.module';
 import PrimeNgModule from 'src/app/shared/prime-ng.module';
+import { ApiRequestService } from '../../../core/services/api-request.service';
 import AddOrEditBancoComponent from './addoredit-banco.component';
 
 @Component({
@@ -28,16 +28,18 @@ import AddOrEditBancoComponent from './addoredit-banco.component';
     MessageService,
     DialogHandlerService,
     CustomToastService,
+    DataService,
+    ApiRequestService,
   ],
 })
 export default class ListBancoComponent implements OnInit, OnDestroy {
   private dataService = inject(DataService);
   public authService = inject(AuthService);
   public customToastService = inject(CustomToastService);
+  public dialogHandlerService = inject(DialogHandlerService);
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
-  public OnDestroy = inject(OnDestroyService);
-  public dialogHandlerService = inject(DialogHandlerService);
+  public apiRequestService = inject(ApiRequestService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
@@ -67,24 +69,11 @@ export default class ListBancoComponent implements OnInit, OnDestroy {
       });
   }
 
-  // Función para eliminar un banco
-  onDelete(data: any) {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    // Realizar una solicitud HTTP para eliminar un banco específico
-    this.dataService
-      .delete(`Banks/${data.id}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          // Cuando se completa la eliminación con éxito, mostrar un mensaje de éxito y volver a cargar los datos
-          this.customToastService.onCloseToSuccess();
-          this.onLoadData();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
+  onDelete(id: number) {
+    const urlApi: string = `Banks/${id}`;
+    this.apiRequestService.onDelete(urlApi).then((result: boolean) => {
+      if (result) this.onLoadData();
+    });
   }
 
   // Función para abrir un cuadro de diálogo modal para agregar o editar o crear

@@ -129,7 +129,7 @@ export default class PresupuestoIndividualComponent implements OnInit {
         },
       });
   }
-  // Función para eliminar un banco
+  // Función para eliminar
   onGetHistorial(id: number) {
     this.ref = this.dialogService.open(
       PresupuestoDetalleEdicionHistorialComponent,
