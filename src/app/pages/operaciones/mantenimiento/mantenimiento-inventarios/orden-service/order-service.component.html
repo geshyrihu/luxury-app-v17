@@ -34,11 +34,6 @@
     @for (item of maintenanceCalendars; track item) {
     <tr>
       <td>
-        <!-- <ckeditor
-          [config]="{ toolbar: ['heading', '|', 'bold', 'italic'] }"
-          [editor]="Editor"
-          [(ngModel)]="item.activity"
-        ></ckeditor> -->
         <p-editor
           [(ngModel)]="item.activity"
           [style]="{ height: '320px' }"

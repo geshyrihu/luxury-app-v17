@@ -9,6 +9,7 @@ import { Observable, Subject, takeUntil } from 'rxjs';
 import { IMeetingIndexDto } from 'src/app/core/interfaces/IMeetingIndexDto.interface';
 import { SanitizeHtmlPipe } from 'src/app/core/pipes/sanitize-html.pipe';
 import {
+  ApiRequestService,
   AuthService,
   CustomToastService,
   CustomerIdService,
@@ -51,6 +52,7 @@ export default class ListMinutasComponent implements OnInit, OnDestroy {
   public reportService = inject(ReportService);
   public route = inject(Router);
   public customToastService = inject(CustomToastService);
+  public apiRequestService = inject(ApiRequestService);
 
   data: IMeetingIndexDto[] = [];
   tipoJunta: string = 'Comité';
@@ -106,20 +108,11 @@ export default class ListMinutasComponent implements OnInit, OnDestroy {
         },
       });
   }
-  onDelete(data: any) {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .delete('Meetings/' + data.id)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          this.onLoadData(this.tipoJunta);
-          this.customToastService.onCloseToSuccess();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+  onDelete(id: number) {
+    this.apiRequestService
+      .onDelete(`Meetings/${id}`)
+      .then((result: boolean) => {
+        if (result) this.onLoadData(this.tipoJunta);
       });
   }
 

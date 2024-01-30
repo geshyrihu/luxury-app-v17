@@ -11,6 +11,7 @@ import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface
 import { CurrencyMexicoPipe } from 'src/app/core/pipes/currencyMexico.pipe';
 import { SanitizeHtmlPipe } from 'src/app/core/pipes/sanitize-html.pipe';
 import {
+  ApiRequestService,
   AuthService,
   CustomToastService,
   CustomerIdService,
@@ -43,6 +44,7 @@ export default class ListadoAnualMantenimientoComponent
   public customerIdService = inject(CustomerIdService);
   public messageService = inject(MessageService);
   public dialogService = inject(DialogService);
+  public apiRequestService = inject(ApiRequestService);
 
   data: any[] = [];
   ref: DynamicDialogRef;
@@ -91,20 +93,11 @@ export default class ListadoAnualMantenimientoComponent
 
     return total;
   }
-  onDelete(data: any) {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .delete(`MaintenanceCalendars/${data.id}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          this.onLoadData();
-          this.customToastService.onCloseToSuccess();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+  onDelete(id: number) {
+    this.apiRequestService
+      .onDelete(`maintenancecalendars/${id}`)
+      .then((result: boolean) => {
+        if (result) this.data = this.data.filter((item) => item.id !== id);
       });
   }
 

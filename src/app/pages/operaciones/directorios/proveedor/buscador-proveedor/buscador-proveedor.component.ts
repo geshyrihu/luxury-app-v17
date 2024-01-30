@@ -11,6 +11,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ToastModule } from 'primeng/toast';
 import { Subject, takeUntil } from 'rxjs';
 import {
+  ApiRequestService,
   AuthService,
   CustomToastService,
   DataService,
@@ -47,6 +48,7 @@ export default class BuscadorProvedorComponent implements OnInit, OnDestroy {
   public messageService = inject(MessageService);
   public dialogService = inject(DialogService);
   public authService = inject(AuthService);
+  public apiRequestService = inject(ApiRequestService);
 
   incluirInactivos: boolean = false;
   url_img = `${environment.base_urlImg}providers/`;
@@ -66,20 +68,11 @@ export default class BuscadorProvedorComponent implements OnInit, OnDestroy {
     this.incluirInactivos = !this.incluirInactivos;
     this.buscar();
   }
-  onDelete(data: any) {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .delete(`Providers/${data.id}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          this.customToastService.onCloseToSuccess();
-          this.buscar();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+  onDelete(id: number) {
+    this.apiRequestService
+      .onDelete(`providers/${id}`)
+      .then((result: boolean) => {
+        if (result) this.buscar();
       });
   }
 

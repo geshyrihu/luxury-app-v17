@@ -7,7 +7,6 @@ import { environment } from 'src/environments/environment';
   selector: 'app-input-img-report',
   templateUrl: './input-img-report.component.html',
   standalone: true,
-  imports: [],
 })
 export default class InputImgReportComponent {
   imgBase64: string = '';

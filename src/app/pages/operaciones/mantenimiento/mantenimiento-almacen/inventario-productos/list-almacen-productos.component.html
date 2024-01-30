@@ -158,7 +158,7 @@
             ></custom-button-edit>
             } @if (authService.onValidateRoles(['Mantenimiento'])) {
             <custom-button-delete
-              (OnConfirm)="onDelete(item)"
+              (OnConfirm)="onDelete(item.id)"
             ></custom-button-delete>
             }
           </div>

@@ -5,6 +5,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import {
+  ApiRequestService,
   CustomToastService,
   DataService,
 } from 'src/app/core/services/common-services';
@@ -24,16 +25,18 @@ import PersonUpdatePhotoComponent from '../person-update-photo/update-image-pers
   standalone: true,
   imports: [CommonModule, ComponentsModule, PrimeNgModule, NgbTooltip],
   providers: [
-    DialogService,
-    MessageService,
+    ApiRequestService,
     ConfirmationService,
     CustomToastService,
+    DataService,
+    DialogService,
+    MessageService,
   ],
 })
 export default class ListPersonComponent implements OnInit, OnDestroy {
-  // Injección de dependencias
-  public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public customToastService = inject(CustomToastService);
+  public dataService = inject(DataService);
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
 
@@ -62,23 +65,10 @@ export default class ListPersonComponent implements OnInit, OnDestroy {
       });
   }
 
-  onDelete(data: any) {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .delete(`Person/${data.id}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          this.customToastService.onCloseToSuccess();
-          // this.onLoadData();
-          // Elimina el elemento del arreglo de datos local
-          this.data = this.data.filter((item) => item.id !== data.id);
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
+  onDelete(id: number) {
+    this.apiRequestService.onDelete(`Person/${id}`).then((result: boolean) => {
+      if (result) this.data = this.data.filter((item) => item.id !== id);
+    });
   }
 
   // Modal datos laborales

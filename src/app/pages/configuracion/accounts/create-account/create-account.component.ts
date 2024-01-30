@@ -6,7 +6,6 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { finalize, Subject, takeUntil } from 'rxjs';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
@@ -28,7 +27,6 @@ import PrimeNgModule from 'src/app/shared/prime-ng.module';
     CustomInputModule,
     PrimeNgModule,
   ],
-  providers: [MessageService, CustomToastService],
 })
 export default class CreateAccountComponent implements OnInit, OnDestroy {
   private dataService = inject(DataService);

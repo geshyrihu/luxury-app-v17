@@ -2,10 +2,10 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
-  selector: 'custom-button-dropdown-item',
-  templateUrl: './custom-buttom-dropdown-item.component.html',
-  standalone: true,
   imports: [CommonModule],
+  selector: 'custom-button-dropdown-item',
+  standalone: true,
+  templateUrl: './custom-buttom-dropdown-item.component.html',
 })
 export default class CustomButtomDropdownItemComponent {
   @Input() disabled: boolean = false;

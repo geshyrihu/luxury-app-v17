@@ -11,7 +11,6 @@ const urlBase = environment.base_url;
 })
 export class DataService implements OnDestroy {
   private http = inject(HttpClient);
-
   /**
    * Realiza una solicitud GET al servidor.
    * @param url La URL del recurso.

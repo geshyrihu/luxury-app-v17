@@ -17,6 +17,7 @@ export class AuthService {
   private storageService = inject(StorageService);
   private dataService = inject(DataService);
   private router = inject(Router);
+
   userTokenDto: UserTokenDto;
   infoUserAuthDto: InfoAccountAuthDto;
   infoEmployeeDto: InfoEmployeeAuthDto;

@@ -33,4 +33,29 @@ export class ApiRequestService {
       return false;
     }
   }
+
+  // Función para cargar datos de forma genérica
+  async onLoadData<T>(urlApi: string): Promise<T | null> {
+    // Mostrar un mensaje de carga
+    this.customToastService.onLoading();
+
+    try {
+      const responseData = await lastValueFrom(
+        this.dataService.get<T>(urlApi).pipe(takeUntil(this.destroy$))
+      );
+
+      // Cuando se completa la carga con éxito, mostrar un mensaje de éxito y resolver la promesa con los datos
+      this.customToastService.onCloseToSuccess();
+      return responseData.body;
+    } catch (error) {
+      // En caso de error, mostrar un mensaje de error y rechazar la promesa con null
+      this.customToastService.onCloseToError(error);
+      return null;
+    }
+  }
+  // Cuando se destruye el componente, desvincular y liberar recursos
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 }

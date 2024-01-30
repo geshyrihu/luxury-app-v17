@@ -20,13 +20,13 @@ export class SidebarService {
       name: 'Configuración',
     },
 
-    {
-      visible: this.authService.onValidateRoles(['Residente']),
-      label: 'Accesos',
-      icon: 'fa-thin fa-key',
-      routerLink: '/accounts/cliente',
-      name: 'Accesos',
-    },
+    // {
+    //   visible: this.authService.onValidateRoles(['Residente', 'SuperUsuario']),
+    //   label: 'Accesos',
+    //   icon: 'fa-thin fa-key',
+    //   routerLink: '/accounts/cliente',
+    //   name: 'Accesos',
+    // },
     {
       visible: this.authService.onValidateRoles([
         'Asistente',
@@ -90,7 +90,10 @@ export class SidebarService {
           name: 'Contabilidad-Pendientes-Minutas',
         },
         {
-          visible: this.authService.onValidateRoles(['SuperUsuario']),
+          visible: this.authService.onValidateRoles([
+            'Contador',
+            'SuperUsuario',
+          ]),
           label: 'Estados Financieros',
           routerLink: '/contabilidad/estados-financieros',
           name: 'Estados financieros',

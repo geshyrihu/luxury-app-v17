@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { NgbAlertModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
@@ -8,6 +8,7 @@ import { ButtonModule } from 'primeng/button';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import {
+  ApiRequestService,
   AuthService,
   CustomToastService,
   DataService,
@@ -46,7 +47,7 @@ export default class PresupuestoIndividualComponent implements OnInit {
   public messageService = inject(MessageService);
   public customToastService = inject(CustomToastService);
   private activatedRoute = inject(ActivatedRoute);
-  private cdr = inject(ChangeDetectorRef);
+  public apiRequestService = inject(ApiRequestService);
 
   // Declaración e inicialización de variables
   id: number = 0;
@@ -102,31 +103,22 @@ export default class PresupuestoIndividualComponent implements OnInit {
 
   // Función para eliminar un partida presupuestal
   onDelete(id: number) {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
+    this.apiRequestService
+      .onDelete(`cedulapresupuestal/cedulapresupuestaldetalle/${id}`)
+      .then((result: boolean) => {
+        if (result) {
+          this.data = this.data.filter((item) => item.id !== id);
 
-    // Realizar una solicitud HTTP para eliminar un banco específico
-    this.dataService
-      .delete(`CedulaPresupuestal/CedulaPresupuestalDetalle/${id}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          // Cuando se completa la eliminación con éxito, mostrar un mensaje de éxito y volver a cargar los datos
-          this.customToastService.onCloseToSuccess();
-          // Elimina el elemento de la matriz
-          const index = this.data.budgetDetailDto.findIndex(
-            (item) => item.id === id
-          );
-          if (index !== -1) {
-            this.data.budgetDetailDto.splice(index, 1);
-          }
-
-          // Forza una actualización de la vista
-          this.cdr.detectChanges();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+          // // Elimina el elemento de la matriz
+          // const index = this.data.budgetDetailDto.findIndex(
+          //   (item) => item.id === id
+          // );
+          // if (index !== -1) {
+          //   this.data.budgetDetailDto.splice(index, 1);
+          // }
+          // // Forza una actualización de la vista
+          // this.cdr.detectChanges();
+        }
       });
   }
   // Función para eliminar

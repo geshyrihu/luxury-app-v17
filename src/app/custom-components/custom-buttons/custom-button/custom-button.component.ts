@@ -3,10 +3,10 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: 'custom-button',
-  templateUrl: './custom-button.component.html',
-  standalone: true,
   imports: [CommonModule, NgbTooltip],
+  selector: 'custom-button',
+  standalone: true,
+  templateUrl: './custom-button.component.html',
 })
 export default class CustomButtonComponent {
   @Input() disabled: boolean = false;

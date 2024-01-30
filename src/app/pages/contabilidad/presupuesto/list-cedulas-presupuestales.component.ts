@@ -6,6 +6,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import {
+  ApiRequestService,
   AuthService,
   CustomToastService,
   DataService,
@@ -32,6 +33,7 @@ export default class ListCedulasPresupuestalesComponent
   private selectItemService = inject(SelectItemService);
   public messageService = inject(MessageService);
   public dialogService = inject(DialogService);
+  public apiRequestService = inject(ApiRequestService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
@@ -81,18 +83,11 @@ export default class ListCedulasPresupuestalesComponent
       });
   }
 
-  onDelete(data: any) {
-    this.dataService
-      .delete(`CedulaPresupuestal/${data.id}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          this.customToastService.onShowSuccess();
-          this.onLoadData();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+  onDelete(id: number) {
+    this.apiRequestService
+      .onDelete(`cedulapresupuestal/${id}`)
+      .then((result: boolean) => {
+        if (result) this.data = this.data.filter((item) => item.id !== id);
       });
   }
   ngOnDestroy(): void {

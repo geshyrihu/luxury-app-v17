@@ -2,10 +2,10 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: 'custom-button-export-excel',
-  templateUrl: './custom-button-export-excel.component.html',
-  standalone: true,
   imports: [NgbTooltip],
+  selector: 'custom-button-export-excel',
+  standalone: true,
+  templateUrl: './custom-button-export-excel.component.html',
 })
 export default class CustomButtonExportExcelComponent {
   @Output() clicked = new EventEmitter<void>();

@@ -7,6 +7,7 @@ import { ImageModule } from 'primeng/image';
 import { TableModule } from 'primeng/table';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import {
+  ApiRequestService,
   AuthService,
   CustomToastService,
   CustomerIdService,
@@ -37,6 +38,7 @@ export default class InventarioIluminacionComponent
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
   public customerIdService = inject(CustomerIdService);
+  public apiRequestService = inject(ApiRequestService);
 
   urlImg = environment.base_urlImg + 'Administration/products/';
   data: any[] = [];
@@ -74,22 +76,12 @@ export default class InventarioIluminacionComponent
         },
       });
   }
-  onDelete(data: any) {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .delete(`InventarioIluminacion/${data.id}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          this.onLoadData();
-          this.customToastService.onCloseToSuccess();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+  onDelete(id: number) {
+    this.apiRequestService
+      .onDelete(`InventarioIluminacion/${id}`)
+      .then((result: boolean) => {
+        if (result) this.data = this.data.filter((item) => item.id !== id);
       });
-    this.customToastService.onClose();
   }
 
   onModalAddOrEdit(data: any) {

@@ -5,7 +5,6 @@ import { Component } from '@angular/core';
   selector: 'app-fondeos',
   templateUrl: './fondeos.component.html',
   standalone: true,
-  imports: [],
 })
 export default class FondeosComponent {
   descargarPDF() {

@@ -3,10 +3,10 @@ import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import Swal, { SweetAlertIcon } from 'sweetalert2';
 
 @Component({
-  selector: 'custom-button-confirmation',
-  templateUrl: './custom-button-confirmation.component.html',
-  standalone: true,
   imports: [NgbTooltip],
+  selector: 'custom-button-confirmation',
+  standalone: true,
+  templateUrl: './custom-button-confirmation.component.html',
 })
 export default class CustomButtonConfirmationComponent {
   @Input()

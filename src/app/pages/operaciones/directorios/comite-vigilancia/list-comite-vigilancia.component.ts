@@ -4,6 +4,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { IComiteVigilanciaDto } from 'src/app/core/interfaces/IComiteVigilanciaDto.interface';
 import {
+  ApiRequestService,
   AuthService,
   CustomToastService,
   CustomerIdService,
@@ -29,6 +30,8 @@ export default class ListComiteVigilanciaComponent
   public messageService = inject(MessageService);
   public customToastService = inject(CustomToastService);
   public dialogService = inject(DialogService);
+  public apiRequestService = inject(ApiRequestService);
+
   data: IComiteVigilanciaDto[] = [];
 
   ref: DynamicDialogRef;
@@ -62,20 +65,11 @@ export default class ListComiteVigilanciaComponent
         },
       });
   }
-  onDelete(data: any) {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .delete(`ComiteVigilancia/${data.id}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          this.onLoadData();
-          this.customToastService.onCloseToSuccess();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+  onDelete(id: number) {
+    this.apiRequestService
+      .onDelete(`comitevigilancia/${id}`)
+      .then((result: boolean) => {
+        if (result) this.data = this.data.filter((item) => item.id !== id);
       });
   }
 

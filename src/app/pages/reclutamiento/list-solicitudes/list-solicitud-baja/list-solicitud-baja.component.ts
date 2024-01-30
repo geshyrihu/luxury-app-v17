@@ -9,6 +9,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import PhoneFormatPipe from 'src/app/core/pipes/phone-format.pipe';
 import {
+  ApiRequestService,
   AuthService,
   CustomToastService,
   DataService,
@@ -41,6 +42,7 @@ export default class ListSolicitudBajaComponent implements OnInit {
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
   private filterRequestsService = inject(FilterRequestsService);
+  public apiRequestService = inject(ApiRequestService);
 
   data: any[] = [];
   ref: DynamicDialogRef;
@@ -84,19 +86,10 @@ export default class ListSolicitudBajaComponent implements OnInit {
     });
   }
   onDelete(id: number) {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .delete(`RequestDismissal/${id}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          this.customToastService.onCloseToSuccess();
-          this.onLoadData();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+    this.apiRequestService
+      .onDelete(`RequestDismissal/${id}`)
+      .then((result: boolean) => {
+        if (result) this.data = this.data.filter((item) => item.id !== id);
       });
   }
 

@@ -6,6 +6,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { CatalogoGastosFijosService } from 'src/app/core/services/catalogo-gastos-fijos.service';
 import {
+  ApiRequestService,
   AuthService,
   CustomToastService,
   CustomerIdService,
@@ -34,6 +35,7 @@ export default class CatalogoGastosFijosComponent implements OnInit, OnDestroy {
   public messageService = inject(MessageService);
   public customerIdService = inject(CustomerIdService);
   public catalogoGastosFijosService = inject(CatalogoGastosFijosService);
+  public apiRequestService = inject(ApiRequestService);
 
   data: any = [];
   ref: DynamicDialogRef;
@@ -69,20 +71,11 @@ export default class CatalogoGastosFijosComponent implements OnInit, OnDestroy {
         },
       });
   }
-  onDelete(data: any) {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .delete(`CatalogoGastosFijos/${data.id}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          this.onLoadData();
-          this.customToastService.onCloseToSuccess();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+  onDelete(id: number) {
+    this.apiRequestService
+      .onDelete(`catalogogastosfijos/${id}`)
+      .then((result: boolean) => {
+        if (result) this.data = this.data.filter((item) => item.id !== id);
       });
   }
 

@@ -486,12 +486,12 @@ export default class OrdenCompraComponent implements OnInit, OnDestroy {
         },
       });
   }
-
-  onDeleteProduct(data: any) {
+  // TODO: PARECE QUE ESTE METODO NO SE UTILIZA
+  onDeleteProduct(id: number): void {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
     this.dataService
-      .delete(`OrdenCompraDetalle/${data.id}`)
+      .delete(`OrdenCompraDetalle/${id}`)
       .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {

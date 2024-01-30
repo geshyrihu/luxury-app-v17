@@ -1,0 +1,183 @@
+<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+<div class="card">
+  <div class="card-body">
+    <div class="row">
+      <button
+        class="col-auto btn btn-outline-primary me-1"
+        (click)="onSelectAll()"
+      >
+        Seleccionar Todos
+      </button>
+      <button
+        class="col-auto btn btn-outline-primary me-1"
+        (click)="onDeselecteAll()"
+      >
+        Desmarcar Todos
+      </button>
+      <button
+        class="col-auto btn btn-outline-primary me-1"
+        (click)="onMostrarInput(false, false, true, 'CCO')"
+        [ngClass]="{ active: mostrarCco }"
+      >
+        Agregar CCO
+      </button>
+      <div class="col-auto">
+        <custom-button-confirmation
+          title="Confirmar"
+          icon=""
+          text="Enviar Informe Financiero"
+          label="Enviar Informe Financiero"
+          tooltipText="Enviar Informe Financiero"
+          classButton="col-auto btn btn-outline-success me-1"
+          confirmButtonText="Sí, enviar"
+          (OnConfirm)="onEnviarEmail()"
+        ></custom-button-confirmation>
+      </div>
+    </div>
+    @if (mostrarPara || mostrarCo || mostrarCco) {
+    <form [formGroup]="form" (ngSubmit)="onAddCorreo()" class="ms-0 mt-1">
+      <div class="row">
+        <div class="col-md-3">
+          <input
+            type="email"
+            required
+            class="form-control"
+            [placeholder]="placeholder"
+            formControlName="email"
+            [ngClass]="{
+              'is-invalid': f.email.errors && (f.email.dirty || f.email.touched)
+            }"
+          />
+        </div>
+        <div class="col-md-1 d-grid">
+          <button
+            ngbTooltip="Agregar Correo"
+            placement="top"
+            class="btn"
+            [disabled]="this.form.invalid"
+            [ngClass]="{
+              'btn-danger': this.form.invalid,
+              'btn-success': !this.form.invalid
+            }"
+          >
+            <i
+              class="fas"
+              [ngClass]="{
+                'fa-times': this.form.invalid,
+                'fa-check': !this.form.invalid
+              }"
+            ></i>
+          </button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          @if (f.email.errors && (f.email.dirty || f.email.touched)) {
+          <div class="invalid-feedback">
+            @if ( f.email.errors.required && (f.email.dirty || f.email.touched)
+            ) {
+            <small> Correo electronico es requerido </small>
+            } @if (f.email.errors.email && (f.email.dirty || f.email.touched)) {
+            <small>
+              El correo electrónico debe ser una dirección de correo electrónico
+              válida
+            </small>
+            }
+          </div>
+          }
+        </div>
+      </div>
+    </form>
+    }
+    <div class="row">
+      <div class="col">
+        @for (item of destinatariosAdicionales; track item; let i = $index) {
+        <span class="badge bg-info ms-1 p-2 position-relative">
+          {{ item.nivelPrivacidad }}/{{ item.emailResidente }}
+          <span
+            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success"
+            ><i
+              ngbTooltip="Descartar correo"
+              placement="top"
+              (click)="onDeleteDestinatariosAdicionales(i)"
+              class="fa-regular fa-xmark pointer"
+            ></i
+          ></span>
+        </span>
+        }
+      </div>
+    </div>
+    <!-- end card-body -->
+  </div>
+</div>
+<hr />
+<div class="row">
+  <div class="col"></div>
+  <p-table
+    #dt
+    [value]="destinatarios"
+    [scrollable]="true"
+    scrollHeight="400px"
+    [globalFilterFields]="['departamento', 'label', 'email']"
+    [tableStyle]="{ 'min-width': '50rem' }"
+    styleClass="custom-table"
+    [tableStyle]="{ 'min-width': '50rem' }"
+  >
+    <ng-template pTemplate="caption">
+      <app-table-header
+        [title]="'Condomino'"
+        [showAdd]="false"
+        [dt]="dt"
+      ></app-table-header>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width: 15%" scope="col" pSortableColumn="select">
+          <p class="font-size-16">
+            Seleccionar
+            <p-sortIcon field="select"></p-sortIcon>
+          </p>
+        </th>
+        <th style="width: 15%" scope="col" pSortableColumn="departamento">
+          <p class="font-size-16">
+            Departamento
+            <p-sortIcon field="departamento"></p-sortIcon>
+          </p>
+        </th>
+        <th style="width: 30%" scope="col" pSortableColumn="label">
+          <p class="font-size-16">
+            Nombre
+            <p-sortIcon field="label"></p-sortIcon>
+          </p>
+        </th>
+        <th style="width: 30%" scope="col" pSortableColumn="email">
+          <p class="font-size-16">
+            Correo
+            <p-sortIcon field="email"></p-sortIcon>
+          </p>
+        </th>
+        <th style="width: 10%" scope="col" pSortableColumn="figuraLegal">
+          <p class="font-size-16">
+            Nombre
+            <p-sortIcon field="figuraLegal"></p-sortIcon>
+          </p>
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item>
+      <tr>
+        <td class="text-center">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            [(ngModel)]="item.select"
+          />
+        </td>
+        <td>{{ item.departamento }}</td>
+        <td>{{ item.label }}</td>
+        <td>{{ item.email }}</td>
+        <td>{{ item.figuraLegal }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

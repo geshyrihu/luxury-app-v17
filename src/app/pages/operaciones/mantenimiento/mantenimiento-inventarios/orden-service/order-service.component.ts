@@ -114,9 +114,10 @@ export default class OrderServiceComponent implements OnInit, OnDestroy {
       }
     });
   }
-  deleteMaintenanceOrder(data: any) {
+  // TODO: PARECE QUE ESTE METODO NO SE UTILIZA
+  deleteMaintenanceOrder(id: number) {
     this.dataService
-      .delete(`MaintenanceCalendars/${data.id}`)
+      .delete(`MaintenanceCalendars/${id}`)
       .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {

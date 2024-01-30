@@ -3,10 +3,10 @@ import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { ToastModule } from 'primeng/toast';
 import Swal from 'sweetalert2';
 @Component({
-  selector: 'custom-button-delete-span',
-  templateUrl: './custom-button-delete-span.component.html',
-  standalone: true,
   imports: [ToastModule, NgbTooltip],
+  selector: 'custom-button-delete-span',
+  standalone: true,
+  templateUrl: './custom-button-delete-span.component.html',
 })
 export default class CustomButtonDeleteSpanComponent {
   @Input()

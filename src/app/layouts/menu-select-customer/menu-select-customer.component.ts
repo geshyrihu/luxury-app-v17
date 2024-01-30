@@ -11,6 +11,7 @@ import { SelectItemService } from 'src/app/core/services/select-item.service';
   templateUrl: './menu-select-customer.component.html',
   standalone: true,
   imports: [FormsModule],
+  providers: [DataService],
 })
 export default class MenuSelectCustomerComponent implements OnInit, OnDestroy {
   private dataService = inject(DataService);

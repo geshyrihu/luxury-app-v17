@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
@@ -28,6 +29,7 @@ export default class ListPresupuestoComponent implements OnInit {
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
   public router = inject(Router);
+  public apiRequestService = inject(ApiRequestService);
 
   data: any[] = [];
   ref: DynamicDialogRef;
@@ -123,22 +125,11 @@ export default class ListPresupuestoComponent implements OnInit {
   }
 
   // Función para eliminar
-  onDelete(data: any) {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-
-    // Realizar una solicitud HTTP para eliminar un banco específico
-    this.dataService
-      .delete(`Presupuesto/${data.id}`) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          // Cuando se completa la eliminación con éxito, mostrar un mensaje de éxito y volver a cargar los datos
-          this.customToastService.onCloseToSuccess();
-          this.onLoadData();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+  onDelete(id: number) {
+    this.apiRequestService
+      .onDelete(`presupuesto/${id}`)
+      .then((result: boolean) => {
+        if (result) this.data = this.data.filter((item) => item.id !== id);
       });
   }
 }

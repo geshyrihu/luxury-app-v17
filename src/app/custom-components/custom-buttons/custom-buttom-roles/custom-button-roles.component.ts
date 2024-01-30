@@ -2,10 +2,10 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: 'custom-button-roles',
-  templateUrl: './custom-button-roles.component.html',
-  standalone: true,
   imports: [NgbTooltip],
+  selector: 'custom-button-roles',
+  standalone: true,
+  templateUrl: './custom-button-roles.component.html',
 })
 export default class CustomButtonRolesComponent {
   @Output()

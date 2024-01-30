@@ -5,6 +5,7 @@ import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import {
+  ApiRequestService,
   AuthService,
   CustomToastService,
   DataService,
@@ -17,7 +18,12 @@ import AddoreditPiscinaBitacoraComponent from '../addoredit-piscina-bitacora/add
   templateUrl: './list-piscina-bitacora.component.html',
   standalone: true,
   imports: [ComponentsModule, PrimeNgModule, CommonModule],
-  providers: [DialogService, MessageService, CustomToastService],
+  providers: [
+    DialogService,
+    MessageService,
+    CustomToastService,
+    ApiRequestService,
+  ],
 })
 export default class ListPiscinaBitacoraComponent implements OnInit, OnDestroy {
   public customToastService = inject(CustomToastService);
@@ -26,6 +32,7 @@ export default class ListPiscinaBitacoraComponent implements OnInit, OnDestroy {
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
   private rutaActiva = inject(ActivatedRoute);
+  public apiRequestService = inject(ApiRequestService);
 
   data: any[] = [];
   ref: DynamicDialogRef;
@@ -55,21 +62,11 @@ export default class ListPiscinaBitacoraComponent implements OnInit, OnDestroy {
       });
   }
 
-  onDelete(data: any) {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .delete(`piscinabitacora/${data.id}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          this.onLoadData();
-          // Mostrar un mensaje de éxito y cerrar Loading....
-          this.customToastService.onCloseToSuccess();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+  onDelete(id: number) {
+    this.apiRequestService
+      .onDelete(`piscinabitacora/${id}`)
+      .then((result: boolean) => {
+        if (result) this.data = this.data.filter((item) => item.id !== id);
       });
   }
 

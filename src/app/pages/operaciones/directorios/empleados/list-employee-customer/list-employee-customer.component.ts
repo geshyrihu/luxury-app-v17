@@ -29,6 +29,7 @@ const base_urlImg = environment.base_urlImg + 'Administration/accounts/';
     MessageService,
     ConfirmationService,
     CustomToastService,
+    DataService,
   ],
 })
 export default class ListEmployeeComponent implements OnInit, OnDestroy {

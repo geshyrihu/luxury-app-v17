@@ -10,6 +10,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ToastModule } from 'primeng/toast';
 import { Subject, takeUntil } from 'rxjs';
 import {
+  ApiRequestService,
   AuthService,
   CustomToastService,
   DataService,
@@ -38,6 +39,8 @@ export default class CalendarioMaestroComponent implements OnInit, OnDestroy {
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
   public authService = inject(AuthService);
+  public apiRequestService = inject(ApiRequestService);
+
   data: any[] = [];
   ref: DynamicDialogRef;
 
@@ -77,18 +80,11 @@ export default class CalendarioMaestroComponent implements OnInit, OnDestroy {
       closeOnEscape: true,
     });
   }
-  onDelete(data: any): any {
-    this.dataService
-      .delete(`CalendarioMaestro/${data.id}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          this.onLoadData();
-          this.customToastService.onCloseToSuccess();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+  onDelete(id: number): any {
+    this.apiRequestService
+      .onDelete(`calendariomaestro/${id}`)
+      .then((result: boolean) => {
+        if (result) this.data = this.data.filter((item) => item.id !== id);
       });
   }
 

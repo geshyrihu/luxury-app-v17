@@ -8,6 +8,7 @@ import { ToastModule } from 'primeng/toast';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { IMedidorDto } from 'src/app/core/interfaces/IMedidorDto.interface';
 import {
+  ApiRequestService,
   AuthService,
   CustomToastService,
   CustomerIdService,
@@ -26,6 +27,8 @@ import FormMedidorComponent from '../form-medidor/form-medidor.component';
     MessageService,
     ConfirmationService,
     CustomToastService,
+    DataService,
+    ApiRequestService,
   ],
 })
 export default class ListMedidorComponent implements OnInit, OnDestroy {
@@ -35,6 +38,7 @@ export default class ListMedidorComponent implements OnInit, OnDestroy {
   private dataService = inject(DataService);
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
+  public apiRequestService = inject(ApiRequestService);
 
   data: IMedidorDto[] = [];
   ref: DynamicDialogRef;
@@ -64,21 +68,10 @@ export default class ListMedidorComponent implements OnInit, OnDestroy {
         },
       });
   }
-  onDelete(data: any) {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .delete(`Medidor/${data.id}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          this.onLoadData();
-          this.customToastService.onCloseToSuccess();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
+  onDelete(id: number) {
+    this.apiRequestService.onDelete(`Medidor/${id}`).then((result: boolean) => {
+      if (result) this.data = this.data.filter((item) => item.id !== id);
+    });
   }
 
   modalAddEdit(data: any) {

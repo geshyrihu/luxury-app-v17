@@ -6,6 +6,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { BusquedaProveedor } from 'src/app/core/interfaces/IBusquedaProveedor.interface';
 import {
+  ApiRequestService,
   AuthService,
   CustomToastService,
   DataService,
@@ -33,6 +34,7 @@ export default class ListProviderComponent implements OnInit, OnDestroy {
   public messageService = inject(MessageService);
   public dialogService = inject(DialogService);
   public authService = inject(AuthService);
+  public apiRequestService = inject(ApiRequestService);
 
   data: BusquedaProveedor[] = [];
   ref: DynamicDialogRef;
@@ -64,19 +66,11 @@ export default class ListProviderComponent implements OnInit, OnDestroy {
   }
 
   onDelete(id: number) {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .delete(`Providers/${id}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          this.onLoadData();
-          this.customToastService.onCloseToSuccess();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+    this.apiRequestService
+      .onDelete(`providers/${id}`)
+      .then((result: boolean) => {
+        if (result)
+          this.data = this.data.filter((item) => item.providerId !== id);
       });
   }
 

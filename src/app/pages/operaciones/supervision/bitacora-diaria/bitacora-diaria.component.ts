@@ -6,6 +6,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { IFechasFiltro } from 'src/app/core/interfaces/IFechasFiltro.interface';
 import {
+  ApiRequestService,
   AuthService,
   CustomToastService,
   DataService,
@@ -23,7 +24,13 @@ const base_url = environment.base_urlImg + 'Administration/accounts/';
   templateUrl: './bitacora-diaria.component.html',
   standalone: true,
   imports: [CommonModule, ComponentsModule, FormsModule, PrimeNgModule],
-  providers: [DialogService, MessageService, CustomToastService],
+  providers: [
+    DialogService,
+    MessageService,
+    CustomToastService,
+    ApiRequestService,
+    DataService,
+  ],
 })
 export default class BitacoraDiariaComponent implements OnInit, OnDestroy {
   private dateService = inject(DateService);
@@ -33,6 +40,7 @@ export default class BitacoraDiariaComponent implements OnInit, OnDestroy {
   private selectItemService = inject(SelectItemService);
   private rangoCalendarioService = inject(FiltroCalendarService);
   private customToastService = inject(CustomToastService);
+  public apiRequestService = inject(ApiRequestService);
 
   loading: boolean = true;
   base_url = base_url;
@@ -125,19 +133,11 @@ export default class BitacoraDiariaComponent implements OnInit, OnDestroy {
     });
   }
 
-  onDelete(data: any) {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .delete('AgendaSupervision/' + data.id)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          this.customToastService.onCloseToSuccess();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+  onDelete(id: number) {
+    this.apiRequestService
+      .onDelete(`AgendaSupervision/${id}`)
+      .then((result: boolean) => {
+        if (result) this.data = this.data.filter((item) => item.id !== id);
       });
   }
 

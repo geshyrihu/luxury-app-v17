@@ -7,6 +7,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import {
+  ApiRequestService,
   AuthService,
   CustomToastService,
   CustomerIdService,
@@ -37,6 +38,7 @@ import RecorridoAddOrEditComponent from './addoreedit-recorrido.component';
     DialogService,
     MessageService,
     CustomToastService,
+    ApiRequestService,
   ],
 })
 export default class ListRecorridoComponent implements OnInit, OnDestroy {
@@ -47,6 +49,7 @@ export default class ListRecorridoComponent implements OnInit, OnDestroy {
   public dataService = inject(DataService);
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
+  public apiRequestService = inject(ApiRequestService);
 
   pathImg = environment.base_urlImg;
   data: any[] = [];
@@ -103,20 +106,12 @@ export default class ListRecorridoComponent implements OnInit, OnDestroy {
   }
 
   onDelete(id: number) {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .delete(`Routes/${id}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          this.customToastService.onCloseToSuccess();
-          this.onLoadData(this.value);
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
+    this.apiRequestService.onDelete(`Routes/${id}`).then((result: boolean) => {
+      if (result) {
+        this.data = this.data.filter((item) => item.id !== id);
+        this.onLoadData(this.value);
+      }
+    });
   }
 
   onDeleteTask(taskId: number) {

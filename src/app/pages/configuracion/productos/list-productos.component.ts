@@ -4,6 +4,7 @@ import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import {
+  ApiRequestService,
   AuthService,
   CustomToastService,
   DataService,
@@ -26,6 +27,8 @@ export default class ListProductosComponent implements OnInit, OnDestroy {
   private dataService = inject(DataService);
   public messageService = inject(MessageService);
   public dialogService = inject(DialogService);
+  public apiRequestService = inject(ApiRequestService);
+
   urlBaseImg = `${environment.base_urlImg}Administration/products/`;
   urlBaseImgUser = `${environment.base_urlImg}Administration/accounts/`;
   data: any[] = [];
@@ -41,7 +44,6 @@ export default class ListProductosComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    //
     this.onLoadData();
   }
 
@@ -62,20 +64,11 @@ export default class ListProductosComponent implements OnInit, OnDestroy {
   }
 
   // ... Eliminar registro
-  onDelete(data: any) {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .delete(`Productos/${data.id}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          this.onLoadData();
-          this.customToastService.onCloseToSuccess();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+  onDelete(id: number) {
+    this.apiRequestService
+      .onDelete(`productos/${id}`)
+      .then((result: boolean) => {
+        if (result) this.data = this.data.filter((item) => item.id !== id);
       });
   }
 

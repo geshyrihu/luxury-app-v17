@@ -4,6 +4,5 @@ import { Component } from '@angular/core';
   selector: 'app-fiestas-cristianas',
   templateUrl: './fiestas-cristianas.component.html',
   standalone: true,
-  imports: [],
 })
 export default class FiestasCristianasComponent {}

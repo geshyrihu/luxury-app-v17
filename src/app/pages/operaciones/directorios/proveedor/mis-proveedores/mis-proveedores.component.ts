@@ -6,6 +6,7 @@ import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import {
+  ApiRequestService,
   AuthService,
   CustomerIdService,
   CustomToastService,
@@ -27,6 +28,7 @@ export default class MisProveedoresComponent implements OnInit, OnDestroy {
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
   public customerIdService = inject(CustomerIdService);
+  public apiRequestService = inject(ApiRequestService);
 
   data: any[] = [];
   ref: DynamicDialogRef; // Referencia a un cuadro de diálogo modal
@@ -87,23 +89,11 @@ export default class MisProveedoresComponent implements OnInit, OnDestroy {
   }
 
   // Función para eliminar un CustomerProvider
-  onDelete(data: any) {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-
-    // Realizar una solicitud HTTP para eliminar un CustomerProvider específico
-    this.dataService
-      .delete(`CustomerProvider/${data.id}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          // Cuando se completa la eliminación con éxito, mostrar un mensaje de éxito y volver a cargar los datos
-          this.customToastService.onCloseToSuccess();
-          this.onLoadData();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+  onDelete(id: number) {
+    this.apiRequestService
+      .onDelete(`customerprovider/${id}`)
+      .then((result: boolean) => {
+        if (result) this.data = this.data.filter((item) => item.id !== id);
       });
   }
   ngOnDestroy(): void {

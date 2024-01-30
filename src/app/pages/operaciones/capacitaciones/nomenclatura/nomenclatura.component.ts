@@ -4,6 +4,5 @@ import { Component } from '@angular/core';
   selector: 'app-nomenclatura',
   templateUrl: './nomenclatura.component.html',
   standalone: true,
-  imports: [],
 })
 export default class NomenclaturaComponent {}

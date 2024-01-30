@@ -14,7 +14,7 @@ import PrimeNgModule from 'src/app/shared/prime-ng.module';
   templateUrl: './account-to-employee.component.html',
   standalone: true,
   imports: [CommonModule, PrimeNgModule],
-  providers: [CustomToastService],
+  providers: [CustomToastService, DataService],
 })
 export default class AccountToEmployeeComponent implements OnInit {
   public ref = inject(DynamicDialogRef);

@@ -54,11 +54,11 @@ export default class SolicitudCompraDetalleComponent {
     this.updateData.emit();
   }
 
-  onDeleteProduct(data: any) {
+  onDeleteProduct(id: number) {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
     this.dataService
-      .delete(`SolicitudCompraDetalle/${data.id}`)
+      .delete(`SolicitudCompraDetalle/${id}`)
       .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {

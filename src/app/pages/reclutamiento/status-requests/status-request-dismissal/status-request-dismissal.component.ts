@@ -7,6 +7,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import PhoneFormatPipe from 'src/app/core/pipes/phone-format.pipe';
 import {
+  ApiRequestService,
   AuthService,
   CustomToastService,
   CustomerIdService,
@@ -45,6 +46,7 @@ export default class StatusRequestDismissalComponent
   public dialogService = inject(DialogService);
   public router = inject(Router);
   public customToastService = inject(CustomToastService);
+  public apiRequestService = inject(ApiRequestService);
 
   workPositionId = this.statusSolicitudVacanteService.getworkPositionId();
   ref: DynamicDialogRef;
@@ -116,20 +118,10 @@ export default class StatusRequestDismissalComponent
   }
   //Eliminar solicitud de baja
   onDelete(id: number) {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .delete(`RequestDismissal/${id}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          // Cuando se completa la eliminación con éxito, mostrar un mensaje de éxito y volver a cargar los datos
-          this.customToastService.onCloseToSuccess();
-          this.onLoadData();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+    this.apiRequestService
+      .onDelete(`RequestDismissal/${id}`)
+      .then((result: boolean) => {
+        if (result) this.data = this.data.filter((item) => item.id !== id);
       });
   }
   //Editar solicitud de Discounts

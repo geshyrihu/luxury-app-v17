@@ -32,6 +32,7 @@ import ComponentsModule from 'src/app/shared/components.module';
     CustomInputModule,
     ValidationErrorsCustomInputComponent,
   ],
+  providers: [DataService],
 })
 export default class SolicitudAltaComponent implements OnInit, OnDestroy {
   private customToastService = inject(CustomToastService);

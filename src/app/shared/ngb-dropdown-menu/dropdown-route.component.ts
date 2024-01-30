@@ -4,7 +4,6 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   selector: 'app-dropdown-route',
   templateUrl: './dropdown-route.component.html',
   standalone: true,
-  imports: [],
 })
 export default class DropdownRouteComponent {
   @Input()

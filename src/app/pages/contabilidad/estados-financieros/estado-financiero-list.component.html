@@ -1,36 +1,214 @@
-<div class="card-body">
-  <div class="position-relative m-4">
-    <div class="progress" style="height: 1px">
-      <div
-        class="progress-bar"
-        role="progressbar"
-        style="width: 50%"
-        aria-valuenow="25"
-        aria-valuemin="0"
-        aria-valuemax="100"
-      ></div>
+<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+
+<!-- breadcrumb item -->
+<div class="row">
+  <div class="col-12">
+    <div
+      class="page-title-box d-sm-flex align-items-center justify-content-between"
+    >
+      <h4 class="mb-sm-0 font-size-18">ESTADOS FINANCIEROS</h4>
     </div>
-    <button
-      type="button"
-      class="position-absolute top-0 start-0 translate-middle btn btn-sm btn-primary rounded-pill"
-      style="width: 2rem; height: 2rem"
-    >
-      1
-    </button>
-    <button
-      type="button"
-      class="position-absolute top-0 start-50 translate-middle btn btn-sm btn-primary rounded-pill"
-      style="width: 2rem; height: 2rem"
-    >
-      2
-    </button>
-    <button
-      type="button"
-      class="position-absolute top-0 start-100 translate-middle btn btn-sm btn-secondary rounded-pill"
-      style="width: 2rem; height: 2rem"
-    >
-      3
-    </button>
   </div>
 </div>
-<!-- end card-body -->
+
+<!-- Start Titulos -->
+<div class="row">
+  <div class="col-sm-3 p-2">
+    <div class="card border border-primary">
+      <div
+        class="card-body p-2 bg-transparent border-primary d-flex align-items-center"
+      >
+        <i class="fa-duotone fa-square-1 fa-2xl me-2 my-1"></i>
+        <span class="flex-grow-1 my-1 font-size-18">PERIODO</span>
+        <i class="fa-solid fa-right fa-2xl my-1"></i>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-3 p-2">
+    <div class="card border border-primary">
+      <div
+        class="card-body p-2 bg-transparent border-primary d-flex align-items-center"
+      >
+        <i class="fa-duotone fa-square-2 fa-2xl me-2 my-1"></i>
+        <span class="flex-grow-1 font-size-18 my-1">ARCHIVO</span>
+        <i class="fa-solid fa-right fa-2xl my-1"></i>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-3 p-2">
+    <div class="card border border-primary">
+      <div
+        class="card-body p-2 bg-transparent border-primary d-flex align-items-center"
+      >
+        <i class="fa-duotone fa-square-3 fa-2xl me-2 my-1"></i>
+        <span class="flex-grow-1 font-size-18 my-1"> AUTORIZACIÓN </span>
+        <i class="fa-solid fa-right fa-2xl my-1"></i>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-3 p-2">
+    <div class="card border border-primary">
+      <div
+        class="card-body p-2 bg-transparent border-primary d-flex align-items-center"
+      >
+        <i class="fa-duotone fa-square-4 fa-2xl me-2 my-1"></i>
+        <span class="flex-grow-1 font-size-18 my-1">ENVIO</span>
+        <i class="fa-sharp fa-solid fa-check fa-2xl my-1"></i>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- End Titutos -->
+
+@for (item of data; track $index) {
+<div class="row">
+  <!-- Start Periodos -->
+  <div class="col-sm-3 p-2">
+    <div class="card-title font-size-16">{{ item.periodoExistente }}</div>
+  </div>
+  <!-- End Periodos -->
+  <!-- Start Archivo -->
+  <div class="col-sm-3 p-2">
+    @if (item.nameFileEstadoFinanciero ===null) {
+
+    <button
+      ngbTooltip="Cargar archivo"
+      placement="top"
+      type="button"
+      (click)="
+        onUploadFile({
+          id: item.id,
+          title: 'CARGAR ARCHIVO DE ESTADOS FINANCIEROS'
+        })
+      "
+      class="btn btn-soft-danger w-100 waves-effect btn-label waves-light me-1 hide-print-mode"
+    >
+      <i class="fa-regular fa-file-plus fa-2x pointer label-icon"></i>
+      CARGAR INFORME FINANCIERO
+    </button>
+    }@else{
+    <div class="d-flex align-items-center">
+      <i
+        class="fa-regular fa-check fa-2x text-success pointer label-icon me-2"
+      ></i>
+      <a
+        ngbTooltip="Visualizar PDF"
+        placement="top"
+        type="button"
+        target="_blank"
+        href="{{ baseUrlApi }}/{{ item.nameFileEstadoFinanciero }}"
+        class="btn btn-soft-danger w-xs waves-effect btn-label waves-light me-1 hide-print-mode"
+      >
+        <i class="fa-regular fa-download fa-2x pointer label-icon"></i>
+        PDF
+      </a>
+      <div class="flex-grow-1">
+        <p class="mb-0 card-title font-size-12">
+          {{ item.personWhoCharge }}
+        </p>
+        <p class="mt-0 card-title font-size-12">
+          {{ item.uploadDate }}
+        </p>
+      </div>
+      @if (item.personWhoAuthorized === ''&& item.personWhoSend === '' ) {
+
+      <button
+        ngbTooltip="Actualizar Informe"
+        placement="top"
+        type="button"
+        (click)="
+          onUploadFile({
+            id: item.id,
+            title: 'CARGAR ARCHIVO DE ESTADOS FINANCIEROS'
+          })
+        "
+        class="btn btn-soft-danger waves-effect text-end waves-light pointer p-2"
+      >
+        <i class="fa-regular fa-arrow-rotate-left fa-2x"></i>
+      </button>
+      }
+    </div>
+    }
+  </div>
+  <!-- Start Archivo -->
+
+  <!-- Start Autorizar -->
+  <div class="col-sm-3 p-2">
+    @if (item.nameFileEstadoFinanciero !== null ) { @if
+    (item.personWhoAuthorized === '' ) {
+
+    <button
+      ngbTooltip="Autorizar"
+      placement="top"
+      type="button"
+      (click)="onAuthorize(item.id)"
+      class="btn btn-soft-danger w-100 waves-effect btn-label waves-light me-1 hide-print-mode"
+    >
+      <i class="fa-regular fa-clipboard-check fa-2x pointer label-icon"></i>
+      AUTORIZAR INFORME FINANCIERO
+    </button>
+    } @else{
+    <div class="d-flex align-items-center">
+      <i class="fa-regular fa-check fa-2x text-success me-2"></i>
+      <div class="flex-grow-1">
+        <p class="mb-0 card-title font-size-12">
+          {{ item.personWhoAuthorized }}
+        </p>
+        <p class="mt-0 card-title font-size-12">
+          {{ item.authorizationDate }}
+        </p>
+      </div>
+      @if (item.personWhoSend==='') {
+
+      <button
+        ngbTooltip="Eliminar"
+        placement="top"
+        type="button"
+        (click)="onDesauthorize(item.id)"
+        class="btn btn-soft-danger waves-effect text-end waves-light pointer p-2"
+      >
+        <i class="fa-regular fa-arrow-rotate-left fa-2x"></i>
+      </button>
+      }
+    </div>
+
+    } }
+  </div>
+  <!-- End Autorizar -->
+  <!-- Start Enviar -->
+  <div class="col-sm-3 d-flex align-items-center p-2">
+    @if (item.nameFileEstadoFinanciero !== null && item.personWhoAuthorized !==
+    '' ) { @if(item.personWhoSend===''){
+    <button
+      ngbTooltip="Enviar a condominos"
+      placement="top"
+      type="button"
+      (click)="
+        onSendEstadosFinancieros({ id: item.id, title: 'ENVIAR A CONDOMINOS' })
+      "
+      class="btn btn-soft-danger w-100 waves-effect btn-label waves-light me-1 hide-print-mode"
+    >
+      <i class="fa-regular fa-paper-plane fa-2x pointer label-icon"></i>
+      ENVIAR A CONDOMINOS
+    </button>
+
+    }@else{
+    <div class="d-flex align-items-center">
+      <i class="fa-regular fa-check fa-2x text-success me-2"></i>
+      <div class="flex-grow-1">
+        <p class="mb-0 card-title font-size-12">
+          {{ item.personWhoSend }}
+        </p>
+        <p class="mt-0 card-title font-size-12">
+          {{ item.sendDate }}
+        </p>
+      </div>
+    </div>
+    } }
+  </div>
+  <!-- End Enviar -->
+
+  <hr />
+</div>
+}

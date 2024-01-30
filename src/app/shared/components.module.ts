@@ -7,12 +7,17 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { FlatpickrModule } from 'angularx-flatpickr';
 import flatpickr from 'flatpickr';
 import { Spanish } from 'flatpickr/dist/l10n/es';
+import { MessageService } from 'primeng/api';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
+import { DialogService } from 'primeng/dynamicdialog';
 import { FileUploadModule } from 'primeng/fileupload';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
 import { ToolbarModule } from 'primeng/toolbar';
 import { TooltipModule } from 'primeng/tooltip';
+import { ApiRequestService } from '../core/services/api-request.service';
+import { CustomToastService } from '../core/services/custom-toast.service';
+import { DialogHandlerService } from '../core/services/dialog-handler.service';
 import CustomButtonModule from '../custom-components/custom-buttons/custom-button.module';
 import AgregarCorreoElectronicoComponent from './agregar-correo-electronico/agregar-correo-electronico.component';
 import CabeceraSolicitudPagoPdfComponent from './cabeceras/cabecera-solicitud-pago-pdf/cabecera-solicitud-pago-pdf.component';
@@ -88,6 +93,13 @@ export function flatpickrFactory() {
     SubirPdfComponent,
     TableFooterComponent,
     TableHeaderComponent,
+  ],
+  providers: [
+    DialogService,
+    MessageService,
+    DialogHandlerService,
+    CustomToastService,
+    ApiRequestService,
   ],
 })
 export default class ComponentsModule {}

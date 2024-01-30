@@ -5,6 +5,7 @@ import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import {
+  ApiRequestService,
   AuthService,
   CustomToastService,
   CustomerIdService,
@@ -31,6 +32,8 @@ export default class ListerramientasComponent implements OnInit, OnDestroy {
   public dialogService = inject(DialogService);
   public customerIdService = inject(CustomerIdService);
   public reporteHerramientasPdfService = inject(ReporteHerramientasPdfService);
+  public apiRequestService = inject(ApiRequestService);
+
   base_urlImg = '';
   data: any[] = [];
 
@@ -69,21 +72,10 @@ export default class ListerramientasComponent implements OnInit, OnDestroy {
       });
   }
 
-  onDelete(data: any) {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .delete('Tools/' + data.id)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          this.onLoadData();
-          this.customToastService.onCloseToSuccess();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
+  onDelete(id: number) {
+    this.apiRequestService.onDelete(`Tools/${id}`).then((result: boolean) => {
+      if (result) this.data = this.data.filter((item) => item.id !== id);
+    });
   }
 
   showModalAddOrEdit(data: any) {

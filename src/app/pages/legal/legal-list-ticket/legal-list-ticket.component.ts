@@ -3,10 +3,7 @@ import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject } from 'rxjs';
 import { CustomToastService } from 'src/app/core/services/common-services';
-import {
-  DialogHandlerService,
-  DialogSize,
-} from 'src/app/core/services/dialog-handler.service';
+import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import ComponentsModule from 'src/app/shared/components.module';
 import PrimeNgModule from 'src/app/shared/prime-ng.module';
 import { DataService } from '../../../core/services/data.service';
@@ -43,7 +40,12 @@ export default class LegalListTicketComponent implements OnInit {
 
   onModalRequest(data: any) {
     this.dialogHandlerService
-      .openDialog(LegalTicketRequestComponent, data, data.title, DialogSize.md)
+      .openDialog(
+        LegalTicketRequestComponent,
+        data,
+        data.title,
+        this.dialogHandlerService.dialogSizeMd
+      )
       .then((result: boolean) => {
         if (result) {
           this.onLoadData();

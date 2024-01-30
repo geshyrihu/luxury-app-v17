@@ -8,6 +8,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import PhoneFormatPipe from 'src/app/core/pipes/phone-format.pipe';
 import {
+  ApiRequestService,
   AuthService,
   CustomToastService,
   CustomerIdService,
@@ -45,6 +46,7 @@ export default class StatusRequestSalaryModificationComponent
   public customToastService = inject(CustomToastService);
   public router = inject(Router);
   public authService = inject(AuthService);
+  public apiRequestService = inject(ApiRequestService);
 
   workPositionId = this.statusSolicitudVacanteService.getworkPositionId();
   employeeId = this.statusSolicitudVacanteService.getemployeeId();
@@ -119,20 +121,10 @@ export default class StatusRequestSalaryModificationComponent
 
   //Eliminar solicitud de baja
   onDelete(id: number) {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .delete(`RequestSalaryModification/${id}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          this.onLoadData();
-          // Mostrar un mensaje de éxito y cerrar Loading....
-          this.customToastService.onCloseToSuccess();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+    this.apiRequestService
+      .onDelete(`RequestSalaryModification/${id}`)
+      .then((result: boolean) => {
+        if (result) this.data = this.data.filter((item) => item.id !== id);
       });
   }
 

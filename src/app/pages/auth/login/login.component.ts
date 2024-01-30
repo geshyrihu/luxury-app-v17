@@ -8,7 +8,6 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import ComponentsModule from 'app/shared/components.module';
-import { MessageService } from 'primeng/api';
 import { Subject, takeUntil } from 'rxjs';
 import {
   CustomToastService,
@@ -26,7 +25,6 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
     CustomInputModule,
     ComponentsModule,
   ],
-  providers: [MessageService, CustomToastService],
 })
 export default class LoginComponent implements OnInit, OnDestroy {
   private dataService = inject(DataService);
@@ -70,10 +68,10 @@ export default class LoginComponent implements OnInit, OnDestroy {
         next: (resp: any) => {
           // Guarda los datos de autenticación y redirige al 'returnUrl'
           this.onRemember(this.form.get('remember').value);
-          // this.router.navigateByUrl(localStorage.getItem('currentUrl'));
+          this.router.navigateByUrl(localStorage.getItem('currentUrl'));
 
-          //TODO: Cambiar la redirección al dashboard
-          this.router.navigateByUrl(localStorage.getItem('dashboard'));
+          // //TODO: Cambiar la redirección al dashboard
+          // this.router.navigateByUrl(localStorage.getItem('dashboard'));
           this.securityService.setAuthData(resp.body.token);
           this.customToastService.onClose();
         },

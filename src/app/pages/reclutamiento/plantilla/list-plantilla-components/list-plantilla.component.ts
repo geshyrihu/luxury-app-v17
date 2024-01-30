@@ -10,6 +10,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { IWorkPositionDto } from 'src/app/core/interfaces/IEmpresaOrganigramaDto.interface';
 import {
+  ApiRequestService,
   AuthService,
   CustomToastService,
   CustomerIdService,
@@ -55,6 +56,7 @@ export default class ListWorkPlantillaComponent implements OnInit, OnDestroy {
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
   public statusSolicitudVacanteService = inject(StatusSolicitudVacanteService);
+  public apiRequestService = inject(ApiRequestService);
 
   customerId$: Observable<number> = this.customerIdService.getCustomerId$();
   data: any[] = [];
@@ -171,48 +173,6 @@ export default class ListWorkPlantillaComponent implements OnInit, OnDestroy {
       }
     });
   }
-  // Editar empleado
-
-  // TODO: Eliminar al impelnentar directo al empleado
-  // onModalSolicitudBaja(id: number) {
-  //   this.ref = this.dialogService.open(SolicitudBajaComponent, {
-  //     data: {
-  //       workPositionId: id,
-  //     },
-  //     header: 'Solicitud de baja',
-  //     width: '100%',
-  //     height: '100%',
-  //     closeOnEscape: true,
-  //     baseZIndex: 10000,
-  //   });
-  //   this.ref.onClose.subscribe((resp: boolean) => {
-  //     if (resp) {
-  //       this.customToastService.onShowSuccess();
-  //       this.onLoadData();
-  //     }
-  //   });
-  // }
-
-  //Solicitar Modificacion de salario
-
-  // onModalSolicitudModificacionSalarion(id: number) {
-  //   this.ref = this.dialogService.open(SolicitudModificacionSalarioComponent, {
-  //     data: {
-  //       workPositionId: id,
-  //     },
-  //     header: 'Solicitud de Modificación de salario',
-  //     width: '100%',
-  //     height: '100%',
-  //     closeOnEscape: true,
-  //     baseZIndex: 10000,
-  //   });
-  //   this.ref.onClose.subscribe((resp: boolean) => {
-  //     if (resp) {
-  //       this.customToastService.onShowSuccess();
-  //       this.onLoadData();
-  //     }
-  //   });
-  // }
 
   //Ver tarjeta de Colaborador
   onCardEmployee(employeeId: any) {
@@ -226,11 +186,6 @@ export default class ListWorkPlantillaComponent implements OnInit, OnDestroy {
       baseZIndex: 10000,
     });
   }
-  //Navegar a la solicitud pendiente con sus candidatos
-  // onRouteEstatusSolicitud(positionRequestId: number) {
-  //   this.statusSolicitudVacanteService.setPositionRequestId(positionRequestId);
-  //   this.router.navigate(['/reclutamiento/status-solicitud-vacante']);
-  // }
 
   //Solicitud vigente de modificacion de salario
   onRouteEstatusSalaryModification(employeeId: number, workPositionId: number) {
@@ -278,19 +233,10 @@ export default class ListWorkPlantillaComponent implements OnInit, OnDestroy {
   }
   //Eliminar vacante workPosition
   onDelete(id: number) {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .delete(`WorkPosition/${id}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          this.customToastService.onCloseToSuccess();
-          this.onLoadData();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+    this.apiRequestService
+      .onDelete(`WorkPosition/${id}`)
+      .then((result: boolean) => {
+        if (result) this.data = this.data.filter((item) => item.id !== id);
       });
   }
   SendMailTest() {

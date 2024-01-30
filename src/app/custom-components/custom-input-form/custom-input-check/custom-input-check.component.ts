@@ -1,17 +1,16 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, forwardRef } from '@angular/core';
 import {
-  AbstractControl,
   ControlValueAccessor,
   FormControl,
   NG_VALUE_ACCESSOR,
 } from '@angular/forms';
 import ValidationErrorsCustomInputComponent from '../validation-errors-custom-input/validation-errors-custom-input.component';
 @Component({
-  selector: 'custom-input-check',
-  templateUrl: './custom-input-check.component.html',
-  standalone: true,
   imports: [CommonModule, ValidationErrorsCustomInputComponent],
+  selector: 'custom-input-check',
+  standalone: true,
+  templateUrl: './custom-input-check.component.html',
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,

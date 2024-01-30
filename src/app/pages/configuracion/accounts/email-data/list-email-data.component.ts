@@ -4,6 +4,7 @@ import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import {
+  ApiRequestService,
   AuthService,
   CustomToastService,
   DataService,
@@ -17,7 +18,13 @@ import AddOrEditEmailDataComponent from './addoredit-email-data.component';
   templateUrl: './list-email-data.component.html',
   standalone: true,
   imports: [ComponentsModule, NgbTooltipModule, PrimeNgModule],
-  providers: [DialogService, MessageService, CustomToastService],
+  providers: [
+    DialogService,
+    MessageService,
+    CustomToastService,
+    ApiRequestService,
+    DataService,
+  ],
 })
 export default class ListEmailDataComponent {
   public customToastService = inject(CustomToastService);
@@ -25,6 +32,7 @@ export default class ListEmailDataComponent {
   private dataService = inject(DataService);
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
+  public apiRequestService = inject(ApiRequestService);
 
   data: any[] = [];
   ref: DynamicDialogRef;
@@ -51,19 +59,10 @@ export default class ListEmailDataComponent {
       });
   }
   onDelete(id: number) {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .delete(`EmailData/${id}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          this.onLoadData();
-          this.customToastService.onCloseToSuccess();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+    this.apiRequestService
+      .onDelete(`emaildata/${id}`)
+      .then((result: boolean) => {
+        if (result) this.data = this.data.filter((item) => item.id !== id);
       });
   }
 

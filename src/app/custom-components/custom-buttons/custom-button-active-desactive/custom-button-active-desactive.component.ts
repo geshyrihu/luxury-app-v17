@@ -2,8 +2,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'custom-button-active-desactive',
-  templateUrl: './custom-button-active-desactive.component.html',
   standalone: true,
+  templateUrl: './custom-button-active-desactive.component.html',
 })
 export default class CustomButtonActiveDesactiveComponent {
   state: boolean = true;

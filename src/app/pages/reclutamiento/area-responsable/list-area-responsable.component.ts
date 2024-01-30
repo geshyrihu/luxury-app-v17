@@ -4,6 +4,7 @@ import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import {
+  ApiRequestService,
   CustomToastService,
   DataService,
 } from 'src/app/core/services/common-services';
@@ -21,7 +22,7 @@ import AddOrEditAreaResponsableComponent from './addoredit-area-responsable.comp
 export default class ListAreaResponsableComponent implements OnInit, OnDestroy {
   private dataService = inject(DataService);
   private dialogService = inject(DialogService);
-
+  public apiRequestService = inject(ApiRequestService);
   private customToastService = inject(CustomToastService);
 
   data: any[] = [];
@@ -49,20 +50,11 @@ export default class ListAreaResponsableComponent implements OnInit, OnDestroy {
       });
   }
 
-  onDelete(data: any) {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .delete('Departament/' + data.id)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          this.customToastService.onCloseToSuccess();
-          this.onLoadData();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+  onDelete(id: number) {
+    this.apiRequestService
+      .onDelete(`Departament/${id}`)
+      .then((result: boolean) => {
+        if (result) this.data = this.data.filter((item) => item.id !== id);
       });
   }
 

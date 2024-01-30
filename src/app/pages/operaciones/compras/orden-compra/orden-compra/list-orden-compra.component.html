@@ -199,7 +199,7 @@
           @if ( statusCompra === 2 && authService.onValidateRoles(['Residente'])
           ) {
           <custom-button-delete
-            (OnConfirm)="onDelete(item)"
+            (OnConfirm)="onDelete(item.id)"
           ></custom-button-delete>
           }
         </div>

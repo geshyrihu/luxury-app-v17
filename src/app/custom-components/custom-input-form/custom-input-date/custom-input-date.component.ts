@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, forwardRef } from '@angular/core';
 import {
-  AbstractControl,
   ControlValueAccessor,
   FormControl,
   FormsModule,
@@ -18,8 +17,8 @@ export function flatpickrFactory() {
 }
 @Component({
   selector: 'custom-input-date',
-  templateUrl: './custom-input-date.component.html',
   standalone: true,
+  templateUrl: './custom-input-date.component.html',
   imports: [
     FormsModule,
     CommonModule,

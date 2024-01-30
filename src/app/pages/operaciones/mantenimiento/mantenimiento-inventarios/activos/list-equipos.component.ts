@@ -9,6 +9,7 @@ import { filter, takeUntil } from 'rxjs/operators';
 import { CurrencyMexicoPipe } from 'src/app/core/pipes/currencyMexico.pipe';
 import { SanitizeHtmlPipe } from 'src/app/core/pipes/sanitize-html.pipe';
 import {
+  ApiRequestService,
   AuthService,
   CustomToastService,
   CustomerIdService,
@@ -53,6 +54,7 @@ export default class ListEquiposComponent implements OnInit, OnDestroy {
   public messageService = inject(MessageService);
   public rutaActiva = inject(ActivatedRoute);
   public router = inject(Router);
+  public apiRequestService = inject(ApiRequestService);
 
   public subscriber: Subscription;
 
@@ -121,20 +123,11 @@ export default class ListEquiposComponent implements OnInit, OnDestroy {
     this.state = value;
     this.onLoadData();
   }
-  onDelete(data: any) {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .delete('Machineries/' + data.id)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          this.onLoadData();
-          this.customToastService.onCloseToSuccess();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+  onDelete(id: number) {
+    this.apiRequestService
+      .onDelete(`Machineries/${id}`)
+      .then((result: boolean) => {
+        if (result) this.data = this.data.filter((item) => item.id !== id);
       });
   }
 
@@ -288,11 +281,11 @@ export default class ListEquiposComponent implements OnInit, OnDestroy {
     }
   }
 
-  onDeleteOrder(data: any) {
+  onDeleteOrder(id: number) {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
     this.subscriber = this.dataService
-      .delete(`MaintenanceCalendars/${data.id}`)
+      .delete(`MaintenanceCalendars/${id}`)
       .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {

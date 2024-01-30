@@ -25,7 +25,6 @@ export default class PresentacionesJuntasComiteComponent
   private dataService = inject(DataService);
   private rangoCalendarioService = inject(FiltroCalendarService);
   private route = inject(Router);
-  // private viewPdfService = inject(ViewPdfService);
   public dateService = inject(DateService);
   public messageService = inject(MessageService);
   public customToastService = inject(CustomToastService);

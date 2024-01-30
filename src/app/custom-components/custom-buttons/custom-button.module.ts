@@ -16,6 +16,7 @@ import CustomButtonComponent from './custom-button/custom-button.component';
 
 @NgModule({
   imports: [
+    CustomButtomDropdownItemComponent,
     CustomButtonActiveDesactiveComponent,
     CustomButtonAddComponent,
     CustomButtonComponent,
@@ -23,15 +24,15 @@ import CustomButtonComponent from './custom-button/custom-button.component';
     CustomButtonDeleteComponent,
     CustomButtonDeleteSpanComponent,
     CustomButtonDownloadFileComponent,
+    CustomButtonDownloadPdfComponent,
     CustomButtonEditComponent,
     CustomButtonExportExcelComponent,
     CustomButtonLinkComponent,
     CustomButtonSendEmailComponent,
     CustomButtonSubmitComponent,
-    CustomButtomDropdownItemComponent,
-    CustomButtonDownloadPdfComponent,
   ],
   exports: [
+    CustomButtomDropdownItemComponent,
     CustomButtonActiveDesactiveComponent,
     CustomButtonAddComponent,
     CustomButtonComponent,
@@ -39,13 +40,12 @@ import CustomButtonComponent from './custom-button/custom-button.component';
     CustomButtonDeleteComponent,
     CustomButtonDeleteSpanComponent,
     CustomButtonDownloadFileComponent,
+    CustomButtonDownloadPdfComponent,
     CustomButtonEditComponent,
     CustomButtonExportExcelComponent,
     CustomButtonLinkComponent,
     CustomButtonSendEmailComponent,
     CustomButtonSubmitComponent,
-    CustomButtomDropdownItemComponent,
-    CustomButtonDownloadPdfComponent,
   ],
 })
 export default class CustomButtonModule {}

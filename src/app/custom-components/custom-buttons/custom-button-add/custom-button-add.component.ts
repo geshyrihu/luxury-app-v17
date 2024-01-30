@@ -2,9 +2,8 @@ import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'custom-button-add',
-  templateUrl: './custom-button-add.component.html',
   standalone: true,
-  imports: [],
+  templateUrl: './custom-button-add.component.html',
 })
 export default class CustomButtonAddComponent {
   @Output() clicked = new EventEmitter<void>();

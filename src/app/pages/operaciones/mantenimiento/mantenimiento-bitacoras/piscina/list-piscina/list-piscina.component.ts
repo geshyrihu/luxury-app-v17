@@ -7,6 +7,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ImageModule } from 'primeng/image';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import {
+  ApiRequestService,
   AuthService,
   CustomToastService,
   CustomerIdService,
@@ -29,7 +30,12 @@ import AddOrEditPiscinaComponent from '../addoredit-piscina/addoredit-piscina.co
     RouterModule,
     TooltipModule,
   ],
-  providers: [DialogService, MessageService, CustomToastService],
+  providers: [
+    DialogService,
+    MessageService,
+    CustomToastService,
+    ApiRequestService,
+  ],
 })
 export default class ListPiscinaComponent implements OnInit, OnDestroy {
   private dataService = inject(DataService);
@@ -38,6 +44,7 @@ export default class ListPiscinaComponent implements OnInit, OnDestroy {
   public messageService = inject(MessageService);
   public customToastService = inject(CustomToastService);
   public customerIdService = inject(CustomerIdService);
+  public apiRequestService = inject(ApiRequestService);
 
   data: any[] = [];
   ref: DynamicDialogRef;
@@ -89,21 +96,10 @@ export default class ListPiscinaComponent implements OnInit, OnDestroy {
     });
   }
 
-  onDelete(data: any) {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .delete(`piscina/${data.id}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          this.customToastService.onClose();
-          this.onLoadData();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
+  onDelete(id: number) {
+    this.apiRequestService.onDelete(`piscina/${id}`).then((result: boolean) => {
+      if (result) this.data = this.data.filter((item) => item.id !== id);
+    });
   }
 
   ngOnDestroy(): void {

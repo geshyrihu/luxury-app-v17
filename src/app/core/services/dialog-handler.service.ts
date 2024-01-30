@@ -1,13 +1,11 @@
 import { Injectable, inject } from '@angular/core';
 import { DialogService } from 'primeng/dynamicdialog';
-import { CustomToastService } from './custom-toast.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DialogHandlerService {
   private dialogService = inject(DialogService);
-  private customToastService = inject(CustomToastService);
 
   openDialog(
     component: any,
@@ -25,6 +23,7 @@ export class DialogHandlerService {
 
     return this.subscribeToDialogClose(ref);
   }
+
   justOpenDialog(
     component: any,
     data: any,
@@ -45,14 +44,15 @@ export class DialogHandlerService {
   private subscribeToDialogClose(ref: any): Promise<boolean> {
     return new Promise<boolean>((resolve) => {
       ref.onClose.subscribe((resp: boolean) => {
-        if (resp) {
-          this.customToastService.onShowSuccess();
-          // Puedes agregar más lógica aquí si es necesario
-        }
-        resolve(resp);
+        if (resp) resolve(resp);
       });
     });
   }
+
+  dialogSizeSm: DialogSize = DialogSize.sm;
+  dialogSizeMd: DialogSize = DialogSize.md;
+  dialogSizeLg: DialogSize = DialogSize.lg;
+  dialogSizeFull: DialogSize = DialogSize.full;
 }
 
 export enum DialogSize {

@@ -7,6 +7,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { IMedidorLecturaDto } from 'src/app/core/interfaces/IMedidorLecturaDto.interface';
 import {
+  ApiRequestService,
   AuthService,
   CustomToastService,
   DataService,
@@ -25,6 +26,7 @@ import FormMedidorLecturaComponent from '../form-medidor-lectura/form-medidor-le
     MessageService,
     ConfirmationService,
     CustomToastService,
+    ApiRequestService,
   ],
 })
 export default class ListMedidorLecturaComponent implements OnInit, OnDestroy {
@@ -34,6 +36,7 @@ export default class ListMedidorLecturaComponent implements OnInit, OnDestroy {
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
   public route = inject(ActivatedRoute);
+  public apiRequestService = inject(ApiRequestService);
 
   data: any[] = [];
   ref: DynamicDialogRef;
@@ -85,20 +88,11 @@ export default class ListMedidorLecturaComponent implements OnInit, OnDestroy {
     });
     FileSaver.saveAs(data, fileName + EXCEL_EXTENSION);
   }
-  onDelete(data: any) {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .delete(`MedidorLectura/${data.id}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          this.onLoadData();
-          this.customToastService.onCloseToSuccess();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+  onDelete(id: number) {
+    this.apiRequestService
+      .onDelete(`MedidorLectura/${id}`)
+      .then((result: boolean) => {
+        if (result) this.data = this.data.filter((item) => item.id !== id);
       });
   }
 

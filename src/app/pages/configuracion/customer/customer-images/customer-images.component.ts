@@ -4,7 +4,6 @@ import { Component, OnInit } from '@angular/core';
   selector: 'app-customer-images',
   templateUrl: './customer-images.component.html',
   standalone: true,
-  imports: [],
 })
 export default class CustomerImagesComponent implements OnInit {
   ngOnInit() {}

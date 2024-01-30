@@ -10,7 +10,6 @@ import { environment } from 'src/environments/environment';
   selector: 'app-report-header',
   templateUrl: './report-header.component.html',
   standalone: true,
-  imports: [],
 })
 export default class ReportHeaderComponent implements OnInit, OnDestroy {
   public dataService = inject(DataService);

@@ -25,12 +25,12 @@ export default [
       ),
     title: 'Datos de correo',
   },
-  {
-    path: 'cliente',
-    loadComponent: () =>
-      import(
-        'src/app/pages/configuracion/accounts/account-customer/account-customer.component'
-      ),
-    title: 'Cliente',
-  },
+  // {
+  //   path: 'cliente',
+  //   loadComponent: () =>
+  //     import(
+  //       'src/app/pages/configuracion/accounts/account-customer/account-customer.component'
+  //     ),
+  //   title: 'Cliente',
+  // },
 ] as Routes;

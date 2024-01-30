@@ -5,6 +5,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { ICategoryDto } from 'src/app/core/interfaces/ICategory.interface';
 import {
+  ApiRequestService,
   AuthService,
   CustomToastService,
   DataService,
@@ -16,20 +17,22 @@ import AddOrEditCategoryComponent from './addoredit-category.component';
 @Component({
   selector: 'app-list-category',
   templateUrl: './list-category.component.html',
+  standalone: true,
   imports: [CommonModule, ComponentsModule, PrimeNgModule],
   providers: [
     DialogService,
     MessageService,
     ConfirmationService,
     CustomToastService,
+    DataService,
   ],
-  standalone: true,
 })
 export default class ListCategoryComponent implements OnInit, OnDestroy {
   public authService = inject(AuthService);
   private dataService = inject(DataService);
   private customToastService = inject(CustomToastService);
   public dialogService = inject(DialogService);
+  public apiRequestService = inject(ApiRequestService);
 
   data: ICategoryDto[] = [];
   ref: DynamicDialogRef;
@@ -56,20 +59,11 @@ export default class ListCategoryComponent implements OnInit, OnDestroy {
       });
   }
 
-  onDelete(data: ICategoryDto) {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .delete(`Categories/${data.id}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          this.onLoadData();
-          this.customToastService.onCloseToSuccess();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+  onDelete(id: number) {
+    this.apiRequestService
+      .onDelete(`categories/${id}`)
+      .then((result: boolean) => {
+        if (result) this.data = this.data.filter((item) => item.id !== id);
       });
   }
 
