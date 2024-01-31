@@ -1,12 +1,9 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import PhoneFormatPipe from 'src/app/core/pipes/phone-format.pipe';
 import {
   ApiRequestService,
   AuthService,
@@ -15,24 +12,15 @@ import {
   DataService,
   StatusSolicitudVacanteService,
 } from 'src/app/core/services/common-services';
-import CustomButtonModule from 'src/app/custom-components/custom-buttons/custom-button.module';
 import CardEmployeeComponent from 'src/app/pages/operaciones/directorios/empleados/card-employee/card-employee.component';
-import PrimeNgModule from 'src/app/shared/prime-ng.module';
+
 import { environment } from 'src/environments/environment';
 import AddOrEditStatusRequestSalaryModificationComponent from './addoredit-status-request-salary-modification/addoredit-status-request-salary-modification.component';
 @Component({
   selector: 'app-status-request-salary-modification',
   templateUrl: './status-request-salary-modification.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    PrimeNgModule,
-    FormsModule,
-    CommonModule,
-    CustomButtonModule,
-    PhoneFormatPipe,
-    PrimeNgModule,
-  ],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class StatusRequestSalaryModificationComponent
   implements OnInit, OnDestroy

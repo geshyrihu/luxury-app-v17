@@ -1,8 +1,6 @@
-import { CommonModule } from '@angular/common';
 import { HttpParams } from '@angular/common/http';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
+import { Router } from '@angular/router';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
@@ -16,7 +14,7 @@ import {
   FilterRequestsService,
   StatusSolicitudVacanteService,
 } from 'src/app/core/services/common-services';
-import PrimeNgModule from 'src/app/shared/prime-ng.module';
+
 import HoursWorkPositionComponent from '../../plantilla/hours-work-position.component';
 import DescripcionPuestoComponent from '../../professions/descripcion-puesto.component';
 import FilterRequestsComponent from '../filter-requests.component';
@@ -28,13 +26,8 @@ import AddOrEditVacanteComponent from './addoredit-vacante.component';
   standalone: true,
   imports: [
     LuxuryAppComponentsModule,
-    CommonModule,
-    LuxuryAppComponentsModule,
     FilterRequestsComponent,
-    FormsModule,
     NgbDropdownModule,
-    RouterModule,
-    PrimeNgModule,
   ],
 })
 export default class ListVacantesComponent implements OnInit, OnDestroy {

@@ -1,10 +1,5 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import {
@@ -25,7 +20,7 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   selector: 'app-edit-partida-cedula',
   templateUrl: './edit-partida-cedula.component.html',
   standalone: true,
-  imports: [LuxuryAppComponentsModule, ReactiveFormsModule, CustomInputModule],
+  imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class EditPartidaCedulaComponent implements OnInit, OnDestroy {
   private formBuilder = inject(FormBuilder);

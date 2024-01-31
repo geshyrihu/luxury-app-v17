@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
@@ -7,7 +6,6 @@ import { TableModule } from 'primeng/table';
 import { Subject, takeUntil } from 'rxjs';
 import { EAreaMinutasDetalles } from 'src/app/core/enums/area-minutas-detalles.enum';
 import { EStatusTask } from 'src/app/core/enums/estatus-task.enum';
-import { SanitizeHtmlPipe } from 'src/app/core/pipes/sanitize-html.pipe';
 import { EStatusPipe } from 'src/app/core/pipes/status.pipe';
 import {
   CustomToastService,
@@ -20,11 +18,9 @@ import {
   standalone: true,
   imports: [
     LuxuryAppComponentsModule,
-    CommonModule,
-    LuxuryAppComponentsModule,
     TableModule,
     MultiSelectModule,
-    SanitizeHtmlPipe,
+
     EStatusPipe,
   ],
 })

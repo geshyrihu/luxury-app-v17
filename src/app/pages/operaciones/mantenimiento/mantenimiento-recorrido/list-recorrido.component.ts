@@ -1,8 +1,4 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
-import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -14,7 +10,7 @@ import {
   CustomerIdService,
   DataService,
 } from 'src/app/core/services/common-services';
-import PrimeNgModule from 'src/app/shared/prime-ng.module';
+
 import { environment } from 'src/environments/environment';
 import AddBitacoraComponent from '../mantenimiento-bitacoras/recorridos/add-bitacora.component';
 import BitacoraIndividualComponent from '../mantenimiento-bitacoras/recorridos/bitacora-individual.component';
@@ -25,22 +21,7 @@ import RecorridoAddOrEditComponent from './addoreedit-recorrido.component';
   selector: 'app-list-recorrido',
   templateUrl: './list-recorrido.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    FormsModule,
-    LuxuryAppComponentsModule,
-    CommonModule,
-    PrimeNgModule,
-    RouterModule,
-    NgbDropdownModule,
-  ],
-  providers: [
-    ConfirmationService,
-    DialogService,
-    MessageService,
-    CustomToastService,
-    ApiRequestService,
-  ],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class ListRecorridoComponent implements OnInit, OnDestroy {
   public customToastService = inject(CustomToastService);

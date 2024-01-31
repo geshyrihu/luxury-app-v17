@@ -1,12 +1,5 @@
-import { CommonModule } from '@angular/common';
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FlatpickrModule } from 'angularx-flatpickr';
 import LuxuryAppComponentsModule, {
   flatpickrFactory,
@@ -18,6 +11,7 @@ import { EPriority } from 'src/app/core/enums/priority.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { IFilterTicket } from 'src/app/core/interfaces/IFilterTicket.interface';
 import {
+  ApiRequestService,
   AuthService,
   CustomerIdService,
   CustomToastService,
@@ -32,18 +26,12 @@ const diaActual = new Date(Date.now());
   selector: 'app-addoredit-ticket',
   templateUrl: './addoredit-ticket.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    CommonModule,
-    FormsModule,
-    FlatpickrModule,
-    ReactiveFormsModule,
-    CustomInputModule,
-  ],
+  imports: [LuxuryAppComponentsModule, FlatpickrModule, CustomInputModule],
 })
 export default class AddoreditTicketComponent implements OnInit, OnDestroy {
   private customerSelectListService = inject(CustomerIdService);
   private customToastService = inject(CustomToastService);
+  public apiRequestService = inject(ApiRequestService);
   private dataService = inject(DataService);
   private dateService = inject(DateService);
   private formBuilder = inject(FormBuilder);

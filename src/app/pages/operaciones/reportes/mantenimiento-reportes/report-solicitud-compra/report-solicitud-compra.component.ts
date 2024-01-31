@@ -1,9 +1,6 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { MessageService } from 'primeng/api';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
-import { TableModule } from 'primeng/table';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { CustomerIdService } from 'src/app/core/services/common-services';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
@@ -16,14 +13,7 @@ import PagetitleReportComponent from 'src/app/shared/cabeceras/pagetitlereport/p
   selector: 'app-report-solicitud-compra',
   templateUrl: './report-solicitud-compra.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    PagetitleReportComponent,
-    TableModule,
-    CommonModule,
-    LuxuryAppComponentsModule,
-  ],
-  providers: [CustomToastService, MessageService],
+  imports: [LuxuryAppComponentsModule, PagetitleReportComponent],
 })
 export default class ReportSolicitudCompraComponent
   implements OnInit, OnDestroy

@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
-import { TableModule } from 'primeng/table';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import StripTagsPipe from 'src/app/core/pipes/StripTags.pipe';
 import {
@@ -15,7 +14,7 @@ import { environment } from 'src/environments/environment';
   selector: 'app-equipos',
   templateUrl: './equipos.component.html',
   standalone: true,
-  imports: [LuxuryAppComponentsModule, TableModule, StripTagsPipe],
+  imports: [LuxuryAppComponentsModule, StripTagsPipe],
 })
 export default class EquiposComponent implements OnInit, OnDestroy {
   public customerIdService = inject(CustomerIdService);

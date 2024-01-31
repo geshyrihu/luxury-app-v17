@@ -1,5 +1,4 @@
 import { Component, inject } from '@angular/core';
-import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -10,14 +9,14 @@ import {
   CustomToastService,
   DataService,
 } from 'src/app/core/services/common-services';
-import PrimeNgModule from 'src/app/shared/prime-ng.module';
+
 import AddOrEditEmailDataComponent from './addoredit-email-data.component';
 
 @Component({
   selector: 'app-list-email-data',
   templateUrl: './list-email-data.component.html',
   standalone: true,
-  imports: [LuxuryAppComponentsModule, NgbTooltipModule, PrimeNgModule],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class ListEmailDataComponent {
   public customToastService = inject(CustomToastService);

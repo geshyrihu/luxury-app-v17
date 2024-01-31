@@ -1,8 +1,6 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { MessageService } from 'primeng/api';
 import { Subject, takeUntil } from 'rxjs';
 import { CustomerIdService } from 'src/app/core/services/common-services';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
@@ -12,8 +10,7 @@ import { environment } from 'src/environments/environment';
   selector: 'app-report-client',
   templateUrl: './report-client.component.html',
   standalone: true,
-  imports: [LuxuryAppComponentsModule, CommonModule],
-  providers: [CustomToastService, MessageService],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class ReportClientComponent implements OnInit, OnDestroy {
   public dataService = inject(DataService);

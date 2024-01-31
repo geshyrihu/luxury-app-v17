@@ -1,8 +1,4 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnChanges, OnDestroy, OnInit, inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
-import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -16,7 +12,7 @@ import {
   DateService,
   ReporteOrdenesServicioService,
 } from 'src/app/core/services/common-services';
-import PrimeNgModule from 'src/app/shared/prime-ng.module';
+
 import SubirPdfComponent from 'src/app/shared/subir-pdf/subir-pdf.component';
 import { environment } from 'src/environments/environment';
 import ServiceOrderAddOrEditComponent from './addoredit-service-order.component';
@@ -29,15 +25,7 @@ const date = new Date();
   selector: 'app-OrdenesServicioComponent',
   templateUrl: './ordenes-servicio.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    CommonModule,
-    RouterModule,
-    FormsModule,
-    LuxuryAppComponentsModule,
-    NgbTooltipModule,
-    PrimeNgModule,
-  ],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class OrdenesServicioComponentComponent
   implements OnInit, OnDestroy, OnChanges

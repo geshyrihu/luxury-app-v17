@@ -1,10 +1,8 @@
-import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
   FormGroup,
-  ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
 import { FileUploadModule, FileUploadValidators } from '@iplab/ngx-file-upload';
@@ -14,6 +12,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { cb_ESiNo } from 'src/app/core/enums/si-no.enum';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import {
+  ApiRequestService,
   AuthService,
   CustomToastService,
   CustomerIdService,
@@ -27,19 +26,14 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   selector: 'app-solicitud-modificacion-salario',
   templateUrl: './solicitud-modificacion-salario.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    CustomInputModule,
-    ReactiveFormsModule,
-    CommonModule,
-    FileUploadModule,
-  ],
+  imports: [LuxuryAppComponentsModule, CustomInputModule, FileUploadModule],
 })
 export default class SolicitudModificacionSalarioComponent {
   private dataService = inject(DataService);
   private formBuilder = inject(FormBuilder);
   private selectItemService = inject(SelectItemService);
   private customToastService = inject(CustomToastService);
+  public apiRequestService = inject(ApiRequestService);
   public config = inject(DynamicDialogConfig);
   public customerIdService = inject(CustomerIdService);
   public dateService = inject(DateService);

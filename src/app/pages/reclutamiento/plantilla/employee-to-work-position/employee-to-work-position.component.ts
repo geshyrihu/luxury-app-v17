@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -13,7 +12,7 @@ import Swal from 'sweetalert2';
   selector: 'app-employee-to-work-position',
   templateUrl: './employee-to-work-position.component.html',
   standalone: true,
-  imports: [LuxuryAppComponentsModule, CommonModule],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class EmployeeToWorkPositionComponent
   implements OnInit, OnDestroy

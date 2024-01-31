@@ -1,16 +1,11 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import {
+  ApiRequestService,
   CustomToastService,
   DataService,
   SelectItemService,
@@ -21,16 +16,12 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   selector: 'app-add-or-edit-provider-support',
   templateUrl: './add-or-edit-provider-support.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    ReactiveFormsModule,
-    CommonModule,
-    CustomInputModule,
-  ],
+  imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class AddOrEditProviderSupportComponent implements OnInit {
   private config = inject(DynamicDialogConfig);
   private customToastService = inject(CustomToastService);
+  public apiRequestService = inject(ApiRequestService);
   private dataService = inject(DataService);
   private formBuilder = inject(FormBuilder);
   private ref = inject(DynamicDialogRef);

@@ -1,9 +1,7 @@
-import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { ToastModule } from 'primeng/toast';
 import { Subject, takeUntil } from 'rxjs';
 import {
   ApiRequestService,
@@ -18,7 +16,7 @@ import AddOrEditTelefonosEmergenciaComponent from './addoredit-telefonos-emergen
   selector: 'app-telefonos-emergencia',
   templateUrl: './telefonos-emergencia.component.html',
   standalone: true,
-  imports: [LuxuryAppComponentsModule, CommonModule, ToastModule],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class TelefonosEmergenciaComponent {
   public authService = inject(AuthService);

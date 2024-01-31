@@ -1,16 +1,11 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { IMedidorLecturaDto } from 'src/app/core/interfaces/IMedidorLecturaDto.interface';
 import {
+  ApiRequestService,
   AuthService,
   CustomToastService,
   CustomerIdService,
@@ -22,13 +17,7 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   selector: 'app-form-medidor',
   templateUrl: './form-medidor.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    ReactiveFormsModule,
-    CommonModule,
-    LuxuryAppComponentsModule,
-    CustomInputModule,
-  ],
+  imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class FormMedidorComponent implements OnInit, OnDestroy {
   private formBuilder = inject(FormBuilder);
@@ -39,6 +28,7 @@ export default class FormMedidorComponent implements OnInit, OnDestroy {
   private selectItemService = inject(SelectItemService);
   private customerIdService = inject(CustomerIdService);
   private customToastService = inject(CustomToastService);
+  public apiRequestService = inject(ApiRequestService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 

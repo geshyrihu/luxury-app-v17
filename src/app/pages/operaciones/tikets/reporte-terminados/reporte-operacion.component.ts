@@ -1,8 +1,5 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { RouterModule } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { MessageService } from 'primeng/api';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { IFilterTicket } from 'src/app/core/interfaces/IFilterTicket.interface';
 import {
@@ -19,13 +16,7 @@ import { environment } from 'src/environments/environment';
   selector: 'app-operation-report',
   templateUrl: './reporte-operacion.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    RouterModule,
-    LuxuryAppComponentsModule,
-    CommonModule,
-  ],
-  providers: [CustomToastService, MessageService],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class ReporteOperacionComponent implements OnInit, OnDestroy {
   public customToastService = inject(CustomToastService);

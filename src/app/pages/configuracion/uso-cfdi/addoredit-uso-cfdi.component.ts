@@ -1,16 +1,11 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { IUseCFDIAddOrEditDto } from 'src/app/core/interfaces/IUseCFDIAddOrEditDto.interface';
 import {
+  ApiRequestService,
   AuthService,
   CustomToastService,
   DataService,
@@ -21,12 +16,7 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   selector: 'app-addoredit-uso-cfdi',
   templateUrl: './addoredit-uso-cfdi.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    CommonModule,
-    ReactiveFormsModule,
-    CustomInputModule,
-  ],
+  imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class AddoreditUsoCFDIComponent implements OnInit, OnDestroy {
   private formBuilder = inject(FormBuilder);
@@ -35,6 +25,7 @@ export default class AddoreditUsoCFDIComponent implements OnInit, OnDestroy {
   public ref = inject(DynamicDialogRef);
   public authService = inject(AuthService);
   private customToastService = inject(CustomToastService);
+  public apiRequestService = inject(ApiRequestService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 

@@ -9,14 +9,14 @@ import {
   CustomerIdService,
   DataService,
 } from 'src/app/core/services/common-services';
-import PrimeNgModule from 'src/app/shared/prime-ng.module';
+
 import { environment } from 'src/environments/environment';
 import AddoreditContratoPolizaComponent from './addoredit-contrato-poliza.component';
 @Component({
   selector: 'app-contrato-poliza',
   templateUrl: './list-contrato-poliza.component.html',
   standalone: true,
-  imports: [LuxuryAppComponentsModule, PrimeNgModule],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class ListContratoPolizaComponent implements OnInit, OnDestroy {
   public customToastService = inject(CustomToastService);

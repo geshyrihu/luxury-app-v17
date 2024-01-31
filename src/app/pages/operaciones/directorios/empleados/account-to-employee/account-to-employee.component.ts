@@ -1,26 +1,26 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import {
+  ApiRequestService,
   CustomToastService,
   CustomerIdService,
   DataService,
 } from 'src/app/core/services/common-services';
-import PrimeNgModule from 'src/app/shared/prime-ng.module';
+
 @Component({
   selector: 'app-account-to-employee',
   templateUrl: './account-to-employee.component.html',
   standalone: true,
-  imports: [LuxuryAppComponentsModule, CommonModule, PrimeNgModule],
-  providers: [CustomToastService, DataService],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class AccountToEmployeeComponent implements OnInit {
   public ref = inject(DynamicDialogRef);
   public config = inject(DynamicDialogConfig);
   private dataService = inject(DataService);
   private customToastService = inject(CustomToastService);
+  public apiRequestService = inject(ApiRequestService);
   private customerIdService = inject(CustomerIdService);
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 

@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import {
   AbstractControl,
@@ -6,7 +5,6 @@ import {
   FormBuilder,
   FormControl,
   FormGroup,
-  ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
@@ -18,6 +16,7 @@ import { ETypeOfDeparture } from 'src/app/core/enums/type-of-departure.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import {
+  ApiRequestService,
   CustomToastService,
   DataService,
 } from 'src/app/core/services/common-services';
@@ -27,12 +26,7 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   selector: 'app-addoredit-solicitud-baja',
   templateUrl: './addoredit-solicitud-baja.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    ReactiveFormsModule,
-    CommonModule,
-    CustomInputModule,
-  ],
+  imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class AddoreditSolicitudBajaComponent implements OnInit {
   private formBuilder = inject(FormBuilder);
@@ -40,6 +34,7 @@ export default class AddoreditSolicitudBajaComponent implements OnInit {
   public ref = inject(DynamicDialogRef);
   public config = inject(DynamicDialogConfig);
   private customToastService = inject(CustomToastService);
+  public apiRequestService = inject(ApiRequestService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 

@@ -1,11 +1,7 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { NgbAlertModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
-import { ButtonModule } from 'primeng/button';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import {
@@ -16,7 +12,7 @@ import {
 } from 'src/app/core/services/common-services';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import EditPartidaCedulaComponent from 'src/app/pages/contabilidad/presupuesto/edit-partida-cedula.component';
-import PrimeNgModule from 'src/app/shared/prime-ng.module';
+
 import OrdenesCompraCedulaComponent from '../../operaciones/compras/cedula-presupuestal/ordenes-compra-cedula/ordenes-compra-cedula.component';
 import AddPartidaCedulaComponent from '../presupuesto/add-partida-cedula.component';
 import InfoCuentaComponent from './info-cuenta/info-cuenta.component';
@@ -28,16 +24,7 @@ import PresupuestoEditionFileComponent from './presupuesto-edition-file/presupue
   selector: 'app-presupuesto-individual',
   templateUrl: './presupuesto-individual.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    PrimeNgModule,
-    CommonModule,
-    ButtonModule,
-    LuxuryAppComponentsModule,
-    FormsModule,
-    NgbAlertModule,
-    NgbTooltipModule,
-  ],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class PresupuestoIndividualComponent implements OnInit {
   public authService = inject(AuthService);

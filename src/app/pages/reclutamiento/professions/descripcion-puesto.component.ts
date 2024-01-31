@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
@@ -10,7 +9,7 @@ import { DataService } from 'src/app/core/services/data.service';
   selector: 'app-descripcion-puesto',
   templateUrl: './descripcion-puesto.component.html',
   standalone: true,
-  imports: [LuxuryAppComponentsModule, CommonModule, AutosizeDirective],
+  imports: [LuxuryAppComponentsModule, AutosizeDirective],
 })
 export default class DescripcionPuestoComponent implements OnInit, OnDestroy {
   public dataService = inject(DataService);

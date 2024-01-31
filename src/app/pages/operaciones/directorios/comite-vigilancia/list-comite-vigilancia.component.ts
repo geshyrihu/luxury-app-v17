@@ -11,14 +11,14 @@ import {
   CustomerIdService,
   DataService,
 } from 'src/app/core/services/common-services';
-import PrimeNgModule from 'src/app/shared/prime-ng.module';
+
 import AddOrEditComiteVigilanciaComponent from './addoredit-comite-vigilancia.component';
 
 @Component({
   selector: 'app-list-comite-vigilancia',
   templateUrl: './list-comite-vigilancia.component.html',
   standalone: true,
-  imports: [LuxuryAppComponentsModule, PrimeNgModule],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class ListComiteVigilanciaComponent
   implements OnInit, OnDestroy

@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { FiltroCalendarService } from 'src/app/core/services/filtro-calendar.service';
@@ -7,7 +6,7 @@ import { ResultadoGeneralService } from 'src/app/core/services/resultado-general
   selector: 'app-grafico-resultado-general',
   templateUrl: './resultado-general-grafico.component.html',
   standalone: true,
-  imports: [LuxuryAppComponentsModule, CommonModule],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class ResultadoGeneralGraficoComponent implements OnInit {
   private resultadoGeneralService = inject(ResultadoGeneralService);

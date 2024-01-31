@@ -1,18 +1,14 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { NgbDropdownModule, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import { IAccountDto } from 'src/app/core/interfaces/account-dto.interface';
-import PhoneFormatPipe from 'src/app/core/pipes/phone-format.pipe';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
 import CardEmployeeComponent from 'src/app/pages/operaciones/directorios/empleados/card-employee/card-employee.component';
-import DropdownRouteComponent from 'src/app/shared/ngb-dropdown-menu/dropdown-route.component';
-import PrimeNgModule from 'src/app/shared/prime-ng.module';
+
 import { environment } from 'src/environments/environment';
 import CreateAccountComponent from '../create-account/create-account.component';
 import AddOrEditEmailDataComponent from '../email-data/addoredit-email-data.component';
@@ -21,15 +17,7 @@ import MdEditAccountComponent from '../modal-edit-account/md-edit-account.compon
   selector: 'app-list-account',
   templateUrl: './list-account.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    CommonModule,
-    PrimeNgModule,
-    NgbDropdownModule,
-    DropdownRouteComponent,
-    PhoneFormatPipe,
-    NgbTooltip,
-  ],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class ListAccountComponent implements OnInit, OnDestroy {
   private dataService = inject(DataService);

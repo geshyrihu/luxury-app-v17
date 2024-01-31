@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
@@ -18,12 +17,10 @@ import MantenimientosPreventivosComponent from './mttos-preventivos/mttos-preven
   standalone: true,
   imports: [
     LuxuryAppComponentsModule,
-    CommonModule,
     BitacoraMantenimientoComponent,
     MantenimientosPreventivosComponent,
     DashboardMinutasComponent,
     DashboardTicketsComponent,
-    LuxuryAppComponentsModule,
   ],
 })
 export default class DashboardComponent {

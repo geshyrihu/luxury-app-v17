@@ -14,7 +14,7 @@ import TicketLegalOtherComponent from '../ticket-legal-other/ticket-legal-other.
   templateUrl: './legal-ticket-request.component.html',
   standalone: true,
 
-  providers: [CustomToastService, DialogHandlerService],
+  providers: [CustomToastService],
 })
 export class LegalTicketRequestComponent {
   public customToastService = inject(CustomToastService);

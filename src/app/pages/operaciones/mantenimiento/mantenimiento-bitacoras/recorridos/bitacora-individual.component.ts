@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import {
@@ -6,7 +5,6 @@ import {
   DynamicDialogConfig,
   DynamicDialogRef,
 } from 'primeng/dynamicdialog';
-import { TableModule } from 'primeng/table';
 import { Subject, takeUntil } from 'rxjs';
 import { IFechasFiltro } from 'src/app/core/interfaces/IFechasFiltro.interface';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
@@ -22,8 +20,7 @@ const mesAnterior = new Date(date.getFullYear(), mesActual - 1, 1);
   selector: 'app-bitacora-individual',
   templateUrl: './bitacora-individual.component.html',
   standalone: true,
-  imports: [LuxuryAppComponentsModule, CommonModule, TableModule],
-  providers: [DialogService, CustomToastService],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class BitacoraIndividualComponent implements OnInit, OnDestroy {
   public dateService = inject(DateService);

@@ -1,9 +1,8 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import * as FileSaver from 'file-saver';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { IMedidorLecturaDto } from 'src/app/core/interfaces/IMedidorLecturaDto.interface';
@@ -13,21 +12,14 @@ import {
   CustomToastService,
   DataService,
 } from 'src/app/core/services/common-services';
-import PrimeNgModule from 'src/app/shared/prime-ng.module';
+
 import AdminFormMedidorLecturaComponent from '../admin-form-medidor-lectura/admin-form-medidor-lectura.component';
 import FormMedidorLecturaComponent from '../form-medidor-lectura/form-medidor-lectura.component';
 @Component({
   selector: 'app-list-medidor-lectura',
   templateUrl: './list-medidor-lectura.component.html',
   standalone: true,
-  imports: [LuxuryAppComponentsModule, CommonModule, PrimeNgModule],
-  providers: [
-    DialogService,
-    MessageService,
-    ConfirmationService,
-    CustomToastService,
-    ApiRequestService,
-  ],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class ListMedidorLecturaComponent implements OnInit, OnDestroy {
   public authService = inject(AuthService);

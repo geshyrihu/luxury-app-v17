@@ -1,11 +1,5 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
@@ -20,13 +14,7 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   selector: 'app-add-bitacora',
   templateUrl: './add-bitacora.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    CommonModule,
-    ReactiveFormsModule,
-    LuxuryAppComponentsModule,
-    CustomInputModule,
-  ],
+  imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class AddBitacoraComponent implements OnInit, OnDestroy {
   public authService = inject(AuthService);

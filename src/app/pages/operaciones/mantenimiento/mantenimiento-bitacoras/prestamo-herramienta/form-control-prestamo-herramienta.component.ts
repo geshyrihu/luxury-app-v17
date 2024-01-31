@@ -1,14 +1,9 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import {
+  ApiRequestService,
   AuthService,
   CustomToastService,
   CustomerIdService,
@@ -21,13 +16,7 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   selector: 'app-form-control-prestamo-herramienta',
   templateUrl: './form-control-prestamo-herramienta.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    ReactiveFormsModule,
-    CommonModule,
-    LuxuryAppComponentsModule,
-    CustomInputModule,
-  ],
+  imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class FormControlPrestamoHerramientaComponent
   implements OnInit, OnDestroy
@@ -40,6 +29,7 @@ export default class FormControlPrestamoHerramientaComponent
   public authService = inject(AuthService);
   public customerIdService = inject(CustomerIdService);
   private customToastService = inject(CustomToastService);
+  public apiRequestService = inject(ApiRequestService);
 
   submitting: boolean = false;
 

@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { EBoolTextPipe } from 'src/app/core/pipes/bool-text.pipe';
@@ -6,7 +5,7 @@ import { EBoolTextPipe } from 'src/app/core/pipes/bool-text.pipe';
   selector: 'app-orden-compra-status-parcial',
   templateUrl: './orden-compra-status-parcial.component.html',
   standalone: true,
-  imports: [LuxuryAppComponentsModule, CommonModule, EBoolTextPipe],
+  imports: [LuxuryAppComponentsModule, EBoolTextPipe],
 })
 export default class OrdenCompraStatusParcialComponent {
   @Input()

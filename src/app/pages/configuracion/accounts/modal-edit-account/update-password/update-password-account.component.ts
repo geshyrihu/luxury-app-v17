@@ -1,41 +1,25 @@
-import { CommonModule } from '@angular/common';
 import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
-import {
-  FormControl,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { ToastModule } from 'primeng/toast';
 import { Subject, takeUntil } from 'rxjs';
 import { ResetPasswordDto } from 'src/app/core/interfaces/user-info.interface';
 import {
+  ApiRequestService,
   CustomToastService,
   DataService,
 } from 'src/app/core/services/common-services';
-import CustomButtonModule from 'src/app/custom-components/custom-buttons/custom-button.module';
 @Component({
   selector: 'app-update-password-account',
   templateUrl: './update-password-account.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    NgbModule,
-    FormsModule,
-    ToastModule,
-    CustomButtonModule,
-    CommonModule,
-    ReactiveFormsModule,
-  ],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class UpdatePasswordAccountComponent
   implements OnInit, OnDestroy
 {
   private dataService = inject(DataService);
   private customToastService = inject(CustomToastService);
+  public apiRequestService = inject(ApiRequestService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 

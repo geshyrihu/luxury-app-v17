@@ -1,14 +1,7 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import {
-  NgbAlertModule,
-  NgbDropdownModule,
-  NgbTooltipModule,
-} from '@ng-bootstrap/ng-bootstrap';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { ToastModule } from 'primeng/toast';
 import { Subject, takeUntil } from 'rxjs';
 import {
   ApiRequestService,
@@ -23,15 +16,7 @@ import ModalDatosServicioComponent from './modal-datos-servicio/modal-datos-serv
   selector: 'app-calendario-maestro',
   templateUrl: './calendario-maestro.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    NgbAlertModule,
-    CommonModule,
-    LuxuryAppComponentsModule,
-    ToastModule,
-    NgbTooltipModule,
-    NgbDropdownModule,
-  ],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class CalendarioMaestroComponent implements OnInit, OnDestroy {
   public customToastService = inject(CustomToastService);

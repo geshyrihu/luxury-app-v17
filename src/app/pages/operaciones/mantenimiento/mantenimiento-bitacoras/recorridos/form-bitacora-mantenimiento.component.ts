@@ -1,9 +1,7 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
-  ReactiveFormsModule,
   UntypedFormGroup,
   Validators,
 } from '@angular/forms';
@@ -22,13 +20,7 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   selector: 'app-form-bitacora-mantenimiento',
   templateUrl: './form-bitacora-mantenimiento.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    CommonModule,
-    ReactiveFormsModule,
-    LuxuryAppComponentsModule,
-    CustomInputModule,
-  ],
+  imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class FormBitacoraMantenimientoComponent
   implements OnInit, OnDestroy

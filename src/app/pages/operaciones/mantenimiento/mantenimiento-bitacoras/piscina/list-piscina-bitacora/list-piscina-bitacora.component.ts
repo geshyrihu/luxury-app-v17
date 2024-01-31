@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
@@ -11,19 +10,13 @@ import {
   CustomToastService,
   DataService,
 } from 'src/app/core/services/common-services';
-import PrimeNgModule from 'src/app/shared/prime-ng.module';
+
 import AddoreditPiscinaBitacoraComponent from '../addoredit-piscina-bitacora/addoredit-piscina-bitacora.component';
 @Component({
   selector: 's-list-piscina-bitacora',
   templateUrl: './list-piscina-bitacora.component.html',
   standalone: true,
-  imports: [LuxuryAppComponentsModule, PrimeNgModule, CommonModule],
-  providers: [
-    DialogService,
-    MessageService,
-    CustomToastService,
-    ApiRequestService,
-  ],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class ListPiscinaBitacoraComponent implements OnInit, OnDestroy {
   public customToastService = inject(CustomToastService);

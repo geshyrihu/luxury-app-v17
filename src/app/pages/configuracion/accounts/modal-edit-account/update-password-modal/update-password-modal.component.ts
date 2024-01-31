@@ -1,40 +1,24 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import {
-  FormControl,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { ToastModule } from 'primeng/toast';
 import { Subject, finalize, takeUntil } from 'rxjs';
 import { ResetPasswordDto } from 'src/app/core/interfaces/user-info.interface';
 import {
+  ApiRequestService,
   CustomToastService,
   DataService,
 } from 'src/app/core/services/common-services';
-import CustomButtonModule from 'src/app/custom-components/custom-buttons/custom-button.module';
 @Component({
   selector: 'app-update-password-modal',
   templateUrl: './update-password-modal.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    NgbModule,
-    FormsModule,
-    ToastModule,
-    CustomButtonModule,
-    CommonModule,
-    ReactiveFormsModule,
-  ],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class UpdatePasswordModalComponent implements OnInit, OnDestroy {
   private dataService = inject(DataService);
   private customToastService = inject(CustomToastService);
+  public apiRequestService = inject(ApiRequestService);
   public config = inject(DynamicDialogConfig);
   public ref = inject(DynamicDialogRef);
 

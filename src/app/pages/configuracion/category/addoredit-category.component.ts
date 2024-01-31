@@ -1,13 +1,6 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { ConfirmationService, MessageService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { ICategoryAddOrEditDto } from 'src/app/core/interfaces/ICategoryAddOrEditDto.interface';
@@ -21,14 +14,7 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   selector: 'app-addoredit-category',
   templateUrl: './addoredit-category.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    CommonModule,
-    ReactiveFormsModule,
-    LuxuryAppComponentsModule,
-    CustomInputModule,
-  ],
-  providers: [MessageService, ConfirmationService, CustomToastService],
+  imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class AddOrEditCategoryComponent implements OnInit, OnDestroy {
   private formBuilder = inject(FormBuilder);

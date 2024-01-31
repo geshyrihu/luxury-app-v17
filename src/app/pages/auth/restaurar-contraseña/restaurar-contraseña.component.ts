@@ -1,9 +1,7 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
-  ReactiveFormsModule,
   UntypedFormGroup,
   Validators,
 } from '@angular/forms';
@@ -15,20 +13,13 @@ import {
   CustomToastService,
   DataService,
 } from 'src/app/core/services/common-services';
-import CustomButtonModule from 'src/app/custom-components/custom-buttons/custom-button.module';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
   selector: 'app-restaurar-contraseña',
   templateUrl: './restaurar-contraseña.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    CommonModule,
-    ReactiveFormsModule,
-    CustomInputModule,
-    CustomButtonModule,
-  ],
+  imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class RestaurarContraseñaComponent implements OnInit, OnDestroy {
   private activatedRoute = inject(ActivatedRoute);

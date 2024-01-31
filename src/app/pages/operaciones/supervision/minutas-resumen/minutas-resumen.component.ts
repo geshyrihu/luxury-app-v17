@@ -1,10 +1,7 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { MultiSelectModule } from 'primeng/multiselect';
-import { TableModule } from 'primeng/table';
 import { Subject, takeUntil } from 'rxjs';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
@@ -16,13 +13,7 @@ import FiltroMinutasAreaComponent from '../filtro-minutas-area/filtro-minutas-ar
   selector: 'app-minutas-resumen',
   templateUrl: './minutas-resumen.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    CommonModule,
-    FormsModule,
-    TableModule,
-    MultiSelectModule,
-  ],
+  imports: [LuxuryAppComponentsModule, MultiSelectModule],
 })
 export default class MinutasResumenComponent implements OnInit, OnDestroy {
   public customToastService = inject(CustomToastService);

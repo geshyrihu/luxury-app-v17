@@ -8,14 +8,14 @@ import {
   CustomToastService,
   DataService,
 } from 'src/app/core/services/common-services';
-import PrimeNgModule from 'src/app/shared/prime-ng.module';
+
 import AddOrEditCalendarioMaestroEquipoComponent from './addoredit-calendario-maestro-equipo.component';
 
 @Component({
   selector: 'app-calendario-maestro-equipo',
   templateUrl: './calendario-maestro-equipo.component.html',
   standalone: true,
-  imports: [LuxuryAppComponentsModule, PrimeNgModule],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class CalendarioMaestroEquipoComponent
   implements OnInit, OnDestroy

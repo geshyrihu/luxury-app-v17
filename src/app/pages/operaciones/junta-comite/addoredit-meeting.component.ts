@@ -1,11 +1,5 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule, {
   flatpickrFactory,
 } from 'app/shared/luxuryapp-components.module';
@@ -21,7 +15,7 @@ import {
   DataService,
   DateService,
 } from 'src/app/core/services/common-services';
-import PrimeNgModule from 'src/app/shared/prime-ng.module';
+
 import { IMeetingDto } from '../../../core/interfaces/IMeetingDto.interface';
 import AddOrEditListAdministrationComponent from './addoredit-administration/addoredit-list-administration.component';
 import AddOrEditComiteComponent from './addoredit-comite/addoredit-comite.component';
@@ -34,13 +28,9 @@ const date = new Date();
   standalone: true,
   imports: [
     LuxuryAppComponentsModule,
-    ReactiveFormsModule,
-    CommonModule,
     AddOrEditComiteComponent,
     AddOrEditListAdministrationComponent,
     AddOrEditInvitedComponent,
-    PrimeNgModule,
-    LuxuryAppComponentsModule,
   ],
 })
 export default class AddOrEditMeetingComponent implements OnInit, OnDestroy {

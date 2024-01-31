@@ -7,18 +7,17 @@ import {
   DynamicDialogRef,
 } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
-import { SanitizeHtmlPipe } from 'src/app/core/pipes/sanitize-html.pipe';
 import { CustomerIdService } from 'src/app/core/services/common-services';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
 import { PeriodoMonthService } from 'src/app/core/services/periodo-month.service';
-import PrimeNgModule from 'src/app/shared/prime-ng.module';
+
 @Component({
   selector: 'app-mttos-preventivos-resumen',
   templateUrl: './mttos-preventivos-resumen.component.html',
   standalone: true,
-  imports: [LuxuryAppComponentsModule, PrimeNgModule, SanitizeHtmlPipe],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class MantenimientosPreventivosResumenComponent
   implements OnInit, OnDestroy

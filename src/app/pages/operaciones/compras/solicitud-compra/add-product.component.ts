@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
   Component,
   EventEmitter,
@@ -8,17 +7,10 @@ import {
   Output,
   inject,
 } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { ToastModule } from 'primeng/toast';
 import { Subject, takeUntil } from 'rxjs';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import {
@@ -35,13 +27,7 @@ import { environment } from 'src/environments/environment';
   selector: 'app-add-product',
   templateUrl: './add-product.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    FormsModule,
-    CommonModule,
-    ReactiveFormsModule,
-    ToastModule,
-  ],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class AddProductComponent implements OnInit, OnDestroy {
   public customToastService = inject(CustomToastService);

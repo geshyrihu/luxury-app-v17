@@ -1,11 +1,5 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
@@ -25,13 +19,7 @@ import { environment } from 'src/environments/environment';
   selector: 'app-add-account-customer',
   templateUrl: './add-account-customer.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    ReactiveFormsModule,
-    LuxuryAppComponentsModule,
-    CommonModule,
-    CustomInputModule,
-  ],
+  imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class AddAccountCustomerComponent implements OnInit, OnDestroy {
   public config = inject(DynamicDialogConfig);

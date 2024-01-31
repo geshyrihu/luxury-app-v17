@@ -1,14 +1,9 @@
-import { CommonModule } from '@angular/common';
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit, inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
-import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
-import PhoneFormatPipe from 'src/app/core/pipes/phone-format.pipe';
 import {
   ApiRequestService,
   AuthService,
@@ -16,24 +11,14 @@ import {
   DataService,
   FilterRequestsService,
 } from 'src/app/core/services/common-services';
-import PrimeNgModule from 'src/app/shared/prime-ng.module';
+
 import FilterRequestsComponent from '../filter-requests.component';
 import AddoreditSolicitudBajaComponent from './addoredit-solicitud-baja/addoredit-solicitud-baja.component';
 @Component({
   selector: 'app-list-solicitud-baja',
   templateUrl: './list-solicitud-baja.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    CommonModule,
-    LuxuryAppComponentsModule,
-    FilterRequestsComponent,
-    FormsModule,
-    NgbDropdownModule,
-    PhoneFormatPipe,
-    RouterModule,
-    PrimeNgModule,
-  ],
+  imports: [LuxuryAppComponentsModule, FilterRequestsComponent],
 })
 export default class ListSolicitudBajaComponent implements OnInit {
   public customToastService = inject(CustomToastService);

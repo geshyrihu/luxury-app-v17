@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
@@ -8,13 +7,12 @@ import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
 import { PeriodoMonthService } from 'src/app/core/services/periodo-month.service';
-import PrimeNgModule from 'src/app/shared/prime-ng.module';
 
 @Component({
   selector: 'app-reporte-envio-financieros',
   templateUrl: './reporte-envio-financieros.component.html',
   standalone: true,
-  imports: [LuxuryAppComponentsModule, PrimeNgModule, CommonModule],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class ReporteEnvioFinancierosComponent implements OnInit {
   private dataService = inject(DataService);

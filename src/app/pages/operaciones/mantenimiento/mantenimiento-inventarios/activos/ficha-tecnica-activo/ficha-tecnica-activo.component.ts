@@ -1,6 +1,4 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { NgbAlert } from '@ng-bootstrap/ng-bootstrap';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
@@ -14,7 +12,7 @@ import { environment } from 'src/environments/environment';
   selector: 'app-ficha-tecnica-activo',
   templateUrl: './ficha-tecnica-activo.component.html',
   standalone: true,
-  imports: [LuxuryAppComponentsModule, NgbAlert, CommonModule],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class FichaTecnicaActivoComponent implements OnInit, OnDestroy {
   public dataService = inject(DataService);

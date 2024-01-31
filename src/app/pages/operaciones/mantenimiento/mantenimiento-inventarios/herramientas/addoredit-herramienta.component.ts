@@ -1,11 +1,5 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule, {
   flatpickrFactory,
 } from 'app/shared/luxuryapp-components.module';
@@ -15,6 +9,7 @@ import { EState } from 'src/app/core/enums/state.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import {
+  ApiRequestService,
   AuthService,
   CustomToastService,
   CustomerIdService,
@@ -29,13 +24,7 @@ import { environment } from 'src/environments/environment';
   selector: 'app-addoredit-herramienta',
   templateUrl: './addoredit-herramienta.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    CommonModule,
-    LuxuryAppComponentsModule,
-    ReactiveFormsModule,
-    CustomInputModule,
-  ],
+  imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class AddoreditToolsComponent implements OnInit, OnDestroy {
   public authService = inject(AuthService);
@@ -47,6 +36,7 @@ export default class AddoreditToolsComponent implements OnInit, OnDestroy {
   public ref = inject(DynamicDialogRef);
   public customerIdService = inject(CustomerIdService);
   private customToastService = inject(CustomToastService);
+  public apiRequestService = inject(ApiRequestService);
 
   submitting: boolean = false;
 

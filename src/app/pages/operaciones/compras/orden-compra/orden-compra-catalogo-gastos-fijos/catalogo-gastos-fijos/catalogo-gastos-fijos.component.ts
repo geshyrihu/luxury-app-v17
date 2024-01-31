@@ -1,6 +1,4 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import LuxuryAppComponentsModule, {
   flatpickrFactory,
 } from 'app/shared/luxuryapp-components.module';
@@ -15,7 +13,7 @@ import {
   CustomerIdService,
   DataService,
 } from 'src/app/core/services/common-services';
-import PrimeNgModule from 'src/app/shared/prime-ng.module';
+
 import ModalOrdenCompraGrastosFijosComponent from '../modal-orden-compra-gastos-fijos/modal-orden-compra-grastos-fijos.component';
 
 const date = new Date();
@@ -24,12 +22,7 @@ const date = new Date();
   selector: 'app-catalogo-gastos-fijos',
   templateUrl: './catalogo-gastos-fijos.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    CommonModule,
-    FormsModule,
-    PrimeNgModule,
-  ],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class CatalogoGastosFijosComponent implements OnInit, OnDestroy {
   public customToastService = inject(CustomToastService);

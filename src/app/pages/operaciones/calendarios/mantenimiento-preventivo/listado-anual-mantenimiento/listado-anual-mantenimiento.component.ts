@@ -1,16 +1,12 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { TableModule } from 'primeng/table';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { EMonth } from 'src/app/core/enums/month.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import { CurrencyMexicoPipe } from 'src/app/core/pipes/currencyMexico.pipe';
-import { SanitizeHtmlPipe } from 'src/app/core/pipes/sanitize-html.pipe';
 import {
   ApiRequestService,
   AuthService,
@@ -25,15 +21,7 @@ const date = new Date();
   selector: 'app-listado-anual-mantenimiento',
   templateUrl: './listado-anual-mantenimiento.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    CommonModule,
-    FormsModule,
-    LuxuryAppComponentsModule,
-    TableModule,
-    CurrencyMexicoPipe,
-    SanitizeHtmlPipe,
-  ],
+  imports: [LuxuryAppComponentsModule, CurrencyMexicoPipe],
 })
 export default class ListadoAnualMantenimientoComponent
   implements OnInit, OnDestroy

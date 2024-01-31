@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
@@ -16,12 +15,7 @@ import { environment } from 'src/environments/environment';
   selector: 'app-ordenes-servicio-fotos',
   templateUrl: './ordenes-servicio-fotos.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    CommonModule,
-    LuxuryAppComponentsModule,
-    ImageModule,
-  ],
+  imports: [LuxuryAppComponentsModule, ImageModule],
 })
 export default class OrdenesServicioFotosComponent
   implements OnInit, OnDestroy

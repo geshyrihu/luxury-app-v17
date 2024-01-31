@@ -1,11 +1,8 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import * as FileSaver from 'file-saver';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { TableModule } from 'primeng/table';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import {
   CustomToastService,
@@ -19,13 +16,7 @@ import AddoreditMaintenancePreventiveComponent from './addoredit-maintenance-pre
   selector: 'app-cronograma-anual-mantenimiento',
   templateUrl: './cronograma-anual-mantenimiento.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    CommonModule,
-    NgbTooltipModule,
-    TableModule,
-    LuxuryAppComponentsModule,
-  ],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class CronogramaAnualMantenimientoComponent
   implements OnInit, OnDestroy

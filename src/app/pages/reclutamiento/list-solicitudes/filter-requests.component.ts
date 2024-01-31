@@ -1,7 +1,5 @@
-import { CommonModule } from '@angular/common';
 import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
+import { Router } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import saveAs from 'file-saver';
 import { Subject, takeUntil } from 'rxjs';
@@ -14,13 +12,7 @@ import CustomButtonModule from 'src/app/custom-components/custom-buttons/custom-
   selector: 'app-filter-requests',
   templateUrl: './filter-requests.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    RouterModule,
-    CommonModule,
-    FormsModule,
-    CustomButtonModule,
-  ],
+  imports: [LuxuryAppComponentsModule, CustomButtonModule],
 })
 export default class FilterRequestsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {}

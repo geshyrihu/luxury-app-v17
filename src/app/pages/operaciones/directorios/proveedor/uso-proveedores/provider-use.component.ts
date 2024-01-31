@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -8,7 +7,7 @@ import { DataService } from 'src/app/core/services/data.service';
   selector: 'app-provider-use',
   templateUrl: './provider-use.component.html',
   standalone: true,
-  imports: [LuxuryAppComponentsModule, CommonModule],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class ProviderUseComponent implements OnInit, OnDestroy {
   public ref = inject(DynamicDialogRef);

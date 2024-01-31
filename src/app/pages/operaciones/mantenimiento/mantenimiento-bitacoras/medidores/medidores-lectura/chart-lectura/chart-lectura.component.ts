@@ -1,7 +1,5 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { NgChartsModule } from 'ng2-charts';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -17,13 +15,7 @@ import { FiltroCalendarService } from 'src/app/core/services/filtro-calendar.ser
   selector: 'app-chart-lectura',
   templateUrl: './chart-lectura.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    NgbModule,
-    LuxuryAppComponentsModule,
-    NgChartsModule,
-    CommonModule,
-  ],
+  imports: [LuxuryAppComponentsModule, NgChartsModule],
 })
 export default class ChartLecturaComponent implements OnInit, OnDestroy {
   private dataService = inject(DataService);

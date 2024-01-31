@@ -1,11 +1,5 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FlatpickrModule } from 'angularx-flatpickr';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -15,6 +9,7 @@ import { EStatus } from 'src/app/core/enums/status.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import {
+  ApiRequestService,
   CustomToastService,
   DataService,
 } from 'src/app/core/services/common-services';
@@ -24,13 +19,7 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   selector: 'app-addoredit-modificacion-salario',
   templateUrl: './addoredit-modificacion-salario.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    ReactiveFormsModule,
-    FlatpickrModule,
-    CommonModule,
-    CustomInputModule,
-  ],
+  imports: [LuxuryAppComponentsModule, FlatpickrModule, CustomInputModule],
 })
 export default class AddoreditModificacionSalarioComponent
   implements OnInit, OnDestroy
@@ -38,6 +27,7 @@ export default class AddoreditModificacionSalarioComponent
   private dataService = inject(DataService);
   private formBuilder = inject(FormBuilder);
   private customToastService = inject(CustomToastService);
+  public apiRequestService = inject(ApiRequestService);
   public config = inject(DynamicDialogConfig);
   public ref = inject(DynamicDialogRef);
 

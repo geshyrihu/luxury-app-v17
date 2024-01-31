@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
@@ -10,19 +9,14 @@ import {
   CustomToastService,
   DataService,
 } from 'src/app/core/services/common-services';
-import PrimeNgModule from 'src/app/shared/prime-ng.module';
+
 import AddoreditLedgerAccountsComponent from './addoredit-cuentas-tercer-nivel.component';
 
 @Component({
   selector: 'app-list-cuentas-tercer-nivel',
   templateUrl: './list-cuentas-tercer-nivel.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    CommonModule,
-    LuxuryAppComponentsModule,
-    PrimeNgModule,
-  ],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class ListCuentasTercerNivelComponent
   implements OnInit, OnDestroy

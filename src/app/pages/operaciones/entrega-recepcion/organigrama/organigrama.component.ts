@@ -1,8 +1,6 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService, TreeNode } from 'primeng/api';
-import { DialogService } from 'primeng/dynamicdialog';
-import { TableModule } from 'primeng/table';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import {
   CustomToastService,
@@ -15,13 +13,7 @@ import { environment } from 'src/environments/environment';
   selector: 'app-organigrama',
   templateUrl: './organigrama.component.html',
   standalone: true,
-  imports: [LuxuryAppComponentsModule, TableModule],
-  providers: [
-    MessageService,
-    CustomToastService,
-    DialogService,
-    CustomToastService,
-  ],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class OrganigramaComponent implements OnInit, OnDestroy {
   public customToastService = inject(CustomToastService);

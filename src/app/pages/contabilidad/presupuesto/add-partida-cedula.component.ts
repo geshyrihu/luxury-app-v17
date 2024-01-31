@@ -1,12 +1,10 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { TableModule } from 'primeng/table';
 import { Subject, takeUntil } from 'rxjs';
 import { CedulaPresupuestalDetalleAddOrEdit } from 'src/app/core/interfaces/ICedulaPresupuestalDetalleAddOrEdit.interface';
 import {
+  ApiRequestService,
   AuthService,
   CustomToastService,
   DataService,
@@ -16,7 +14,7 @@ import {
   selector: 'app-add-partida-cedula',
   templateUrl: './add-partida-cedula.component.html',
   standalone: true,
-  imports: [LuxuryAppComponentsModule, FormsModule, CommonModule, TableModule],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class AddPartidaCedulaComponent implements OnInit, OnDestroy {
   private dataService = inject(DataService);
@@ -24,6 +22,7 @@ export default class AddPartidaCedulaComponent implements OnInit, OnDestroy {
   public authService = inject(AuthService);
   public ref = inject(DynamicDialogRef);
   private customToastService = inject(CustomToastService);
+  public apiRequestService = inject(ApiRequestService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 

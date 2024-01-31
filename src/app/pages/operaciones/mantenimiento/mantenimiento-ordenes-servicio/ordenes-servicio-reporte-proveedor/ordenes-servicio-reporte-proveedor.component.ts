@@ -1,9 +1,7 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { TableModule } from 'primeng/table';
 import { Subject, takeUntil } from 'rxjs';
 import {
   CustomToastService,
@@ -16,12 +14,7 @@ import { environment } from 'src/environments/environment';
   selector: 'app-ordenes-servicio-reporte-proveedor',
   templateUrl: './ordenes-servicio-reporte-proveedor.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    NgbTooltipModule,
-    LuxuryAppComponentsModule,
-    TableModule,
-  ],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class OrdenesServicioReporteProveedorComponent
   implements OnInit, OnDestroy

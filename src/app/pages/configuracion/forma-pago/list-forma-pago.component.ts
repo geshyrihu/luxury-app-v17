@@ -8,14 +8,14 @@ import {
   CustomToastService,
   DataService,
 } from 'src/app/core/services/common-services';
-import PrimeNgModule from 'src/app/shared/prime-ng.module';
+
 import AddoreditFormaPagoComponent from './addoredit-forma-pago.component';
 
 @Component({
   selector: 'app-list-forma-pago',
   templateUrl: './list-forma-pago.component.html',
   standalone: true,
-  imports: [LuxuryAppComponentsModule, PrimeNgModule],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class ListFormaPagoComponent implements OnInit, OnDestroy {
   public customToastService = inject(CustomToastService);

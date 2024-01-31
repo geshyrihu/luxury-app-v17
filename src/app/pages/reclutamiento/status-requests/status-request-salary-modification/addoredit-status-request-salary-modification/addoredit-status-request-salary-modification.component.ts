@@ -1,11 +1,5 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
@@ -14,23 +8,17 @@ import { ETurnoTrabajo } from 'src/app/core/enums/turno-trabajo.enum';
 import { ETypeOfDeparture } from 'src/app/core/enums/type-of-departure.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { SelectItemService } from 'src/app/core/services/select-item.service';
-import CustomButtonModule from 'src/app/custom-components/custom-buttons/custom-button.module';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
   selector: 'app-addoredit-status-request-salary-modification',
   templateUrl: './addoredit-status-request-salary-modification.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    ReactiveFormsModule,
-    CommonModule,
-    CustomButtonModule,
-    CustomInputModule,
-  ],
+  imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class AddOrEditStatusRequestSalaryModificationComponent
   implements OnInit, OnDestroy
@@ -41,6 +29,7 @@ export default class AddOrEditStatusRequestSalaryModificationComponent
   public config = inject(DynamicDialogConfig);
   public selectItemService = inject(SelectItemService);
   private customToastService = inject(CustomToastService);
+  public apiRequestService = inject(ApiRequestService);
 
   submitting: boolean = false;
 

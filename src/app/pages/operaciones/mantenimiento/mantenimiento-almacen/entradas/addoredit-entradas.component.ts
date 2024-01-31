@@ -1,11 +1,5 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule, {
   flatpickrFactory,
 } from 'app/shared/luxuryapp-components.module';
@@ -25,13 +19,7 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   selector: 'app-addoredit-entradas',
   templateUrl: './addoredit-entradas.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    ReactiveFormsModule,
-    CommonModule,
-    LuxuryAppComponentsModule,
-    CustomInputModule,
-  ],
+  imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class AddOrEditEntradasComponent implements OnInit, OnDestroy {
   private formBuilder = inject(FormBuilder);

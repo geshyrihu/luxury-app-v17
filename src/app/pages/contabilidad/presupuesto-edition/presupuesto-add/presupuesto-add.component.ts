@@ -19,7 +19,7 @@ import { FiltroCalendarService } from 'src/app/core/services/filtro-calendar.ser
   selector: 'app-presupuesto-add',
   templateUrl: './presupuesto-add.component.html',
   standalone: true,
-  imports: [LuxuryAppComponentsModule, LuxuryAppComponentsModule],
+  imports: [LuxuryAppComponentsModule],
   providers: [MessageService, DialogService, CustomToastService],
 })
 export default class PresupuestoAddComponent implements OnInit {

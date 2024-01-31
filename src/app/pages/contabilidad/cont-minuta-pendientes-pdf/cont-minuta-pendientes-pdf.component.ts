@@ -1,24 +1,17 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { Subject, takeUntil } from 'rxjs';
-import { SanitizeHtmlPipe } from 'src/app/core/pipes/sanitize-html.pipe';
 import {
   CustomToastService,
   DataService,
 } from 'src/app/core/services/common-services';
-import PrimeNgModule from 'src/app/shared/prime-ng.module';
+
 @Component({
   selector: 'app-cont-minuta-pendientes-pdf',
   templateUrl: './cont-minuta-pendientes-pdf.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    CommonModule,
-    PrimeNgModule,
-    SanitizeHtmlPipe,
-  ],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class ConMinutaPendientesPdfComponent
   implements OnInit, OnDestroy

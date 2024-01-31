@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { TableModule } from 'primeng/table';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { CustomerIdService } from 'src/app/core/services/common-services';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
@@ -10,7 +9,7 @@ import { DataService } from 'src/app/core/services/data.service';
   selector: 'app-llaves',
   templateUrl: './llaves.component.html',
   standalone: true,
-  imports: [LuxuryAppComponentsModule, TableModule],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class LlavesComponent implements OnInit, OnDestroy {
   public customerIdService = inject(CustomerIdService);

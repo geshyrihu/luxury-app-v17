@@ -1,11 +1,5 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule, {
   flatpickrFactory,
 } from 'app/shared/luxuryapp-components.module';
@@ -14,6 +8,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { IRadioComunicacionAddOrEditDto } from 'src/app/core/interfaces/IRadioComunicacionAddOrEditDto.interface';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import {
+  ApiRequestService,
   AuthService,
   CustomToastService,
   CustomerIdService,
@@ -28,13 +23,7 @@ import { environment } from 'src/environments/environment';
   selector: 'app-addoredit-radio-comunicacion',
   templateUrl: './addoredit-radio-comunicacion.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    CommonModule,
-    LuxuryAppComponentsModule,
-    ReactiveFormsModule,
-    CustomInputModule,
-  ],
+  imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class AddOrEditRadioComunicacionComponent implements OnInit {
   ngOnInit(): void {
@@ -52,6 +41,7 @@ export default class AddOrEditRadioComunicacionComponent implements OnInit {
   public selectItemService = inject(SelectItemService);
   public customerIdService = inject(CustomerIdService);
   private customToastService = inject(CustomToastService);
+  public apiRequestService = inject(ApiRequestService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 

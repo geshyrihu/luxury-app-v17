@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
@@ -9,7 +8,7 @@ import { environment } from 'src/environments/environment';
   selector: 'app-tarjeta-producto',
   templateUrl: './tarjeta-producto.component.html',
   standalone: true,
-  imports: [LuxuryAppComponentsModule, CommonModule],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class TarjetaProductoComponent implements OnInit, OnDestroy {
   public dataService = inject(DataService);

@@ -1,11 +1,5 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
@@ -24,9 +18,6 @@ import ValidationErrorsCustomInputComponent from 'src/app/custom-components/cust
   standalone: true,
   imports: [
     LuxuryAppComponentsModule,
-    ReactiveFormsModule,
-    LuxuryAppComponentsModule,
-    CommonModule,
     CustomInputModule,
     ValidationErrorsCustomInputComponent,
   ],

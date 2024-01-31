@@ -1,12 +1,7 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { MessageService } from 'primeng/api';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
-import { SanitizeHtmlPipe } from 'src/app/core/pipes/sanitize-html.pipe';
 import {
   CustomToastService,
   CustomerIdService,
@@ -17,14 +12,7 @@ import { environment } from 'src/environments/environment';
   selector: 'app-general-anual-mantenimiento',
   templateUrl: './general-anual-mantenimiento.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    FormsModule,
-    CommonModule,
-    NgbAlertModule,
-    SanitizeHtmlPipe,
-  ],
-  providers: [CustomToastService, MessageService],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class GeneralAnualMantenimientoComponent
   implements OnInit, OnDestroy

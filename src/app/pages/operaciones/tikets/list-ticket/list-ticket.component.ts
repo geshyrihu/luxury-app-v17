@@ -1,9 +1,7 @@
-import { CommonModule } from '@angular/common';
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
+import { Router } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { IFilterTicket } from 'src/app/core/interfaces/IFilterTicket.interface';
@@ -17,7 +15,7 @@ import {
   TicketFilterService,
 } from 'src/app/core/services/common-services';
 import CardEmployeeComponent from 'src/app/pages/operaciones/directorios/empleados/card-employee/card-employee.component';
-import PrimeNgModule from 'src/app/shared/prime-ng.module';
+
 import { environment } from 'src/environments/environment';
 import EnviarMailReporteSemanalComponent from '../../enviar-email/enviar-mail-reporte-semanal/enviar-mail-reporte-semanal.component';
 import AddoreditTicketComponent from '../addoredit-ticket/addoredit-ticket.component';
@@ -30,15 +28,7 @@ import FilterTicketComponent from '../ticket-filter/ticket-filter.component';
   selector: 'app-list-ticket',
   templateUrl: './list-ticket.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    RouterModule,
-    CommonModule,
-    LuxuryAppComponentsModule,
-    FormsModule,
-    PrimeNgModule,
-  ],
-  providers: [ConfirmationService],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class ListTicketComponent implements OnInit, OnDestroy {
   public authService = inject(AuthService);

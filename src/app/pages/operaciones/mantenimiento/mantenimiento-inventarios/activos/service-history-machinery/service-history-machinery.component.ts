@@ -7,21 +7,18 @@ import {
 } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import {
+  ApiRequestService,
   CustomToastService,
   DataService,
 } from 'src/app/core/services/common-services';
-import PrimeNgModule from 'src/app/shared/prime-ng.module';
+
 import ServiceOrderAddOrEditComponent from '../../../mantenimiento-ordenes-servicio/addoredit-service-order.component';
 
 @Component({
   selector: 'app-service-history-machinery',
   templateUrl: './service-history-machinery.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    PrimeNgModule,
-    LuxuryAppComponentsModule,
-  ],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class ServiceHistoryMachineryComponent
   implements OnInit, OnDestroy
@@ -30,6 +27,7 @@ export default class ServiceHistoryMachineryComponent
   public config = inject(DynamicDialogConfig);
 
   private customToastService = inject(CustomToastService);
+  public apiRequestService = inject(ApiRequestService);
   public dialogService = inject(DialogService);
 
   id: number = this.config.data.id;

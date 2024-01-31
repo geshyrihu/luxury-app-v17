@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { TableModule } from 'primeng/table';
 import { Subject, takeUntil } from 'rxjs';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
@@ -12,7 +11,7 @@ import EditProductoComponent from '../edit-producto.component';
   selector: 'app-solicitud-compra-detalle',
   templateUrl: './solicitud-compra-detalle.component.html',
   standalone: true,
-  imports: [LuxuryAppComponentsModule, TableModule],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class SolicitudCompraDetalleComponent {
   private dialogService = inject(DialogService);

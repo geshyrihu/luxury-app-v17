@@ -1,8 +1,6 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { BusquedaProveedor } from 'src/app/core/interfaces/IBusquedaProveedor.interface';
@@ -12,7 +10,7 @@ import {
   CustomToastService,
   DataService,
 } from 'src/app/core/services/common-services';
-import PrimeNgModule from 'src/app/shared/prime-ng.module';
+
 import { environment } from 'src/environments/environment';
 import AddoreditProveedorComponent from '../addoredit-proveedor/addoredit-proveedor.component';
 import TarjetaProveedorComponent from '../tarjeta-proveedor/tarjeta-proveedor.component';
@@ -20,19 +18,7 @@ import TarjetaProveedorComponent from '../tarjeta-proveedor/tarjeta-proveedor.co
   selector: 'app-list-provider',
   templateUrl: './list-provider.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    CommonModule,
-    FormsModule,
-    LuxuryAppComponentsModule,
-    PrimeNgModule,
-  ],
-  providers: [
-    DialogService,
-    MessageService,
-    ConfirmationService,
-    CustomToastService,
-  ],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class ListProviderComponent implements OnInit, OnDestroy {
   public customToastService = inject(CustomToastService);

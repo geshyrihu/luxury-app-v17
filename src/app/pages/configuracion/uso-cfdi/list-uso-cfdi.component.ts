@@ -8,7 +8,7 @@ import {
   CustomToastService,
   DataService,
 } from 'src/app/core/services/common-services';
-import PrimeNgModule from 'src/app/shared/prime-ng.module';
+
 import { IUseCFDIDto } from '../../../core/interfaces/IUseCfdi.interface';
 import AddoreditUsoCFDIComponent from './addoredit-uso-cfdi.component';
 
@@ -16,7 +16,7 @@ import AddoreditUsoCFDIComponent from './addoredit-uso-cfdi.component';
   selector: 'app-uso-cfdi',
   templateUrl: './list-uso-cfdi.component.html',
   standalone: true,
-  imports: [LuxuryAppComponentsModule, PrimeNgModule],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class ListUsoCfdiComponent implements OnInit, OnDestroy {
   public customToastService = inject(CustomToastService);

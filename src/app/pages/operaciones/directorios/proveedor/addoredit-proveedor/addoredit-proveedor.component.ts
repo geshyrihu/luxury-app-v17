@@ -1,17 +1,12 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import {
+  ApiRequestService,
   AuthService,
   CustomToastService,
   DataService,
@@ -24,14 +19,7 @@ import { environment } from 'src/environments/environment';
   selector: 'app-addoredit-proveedor',
   templateUrl: './addoredit-proveedor.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    CommonModule,
-    ReactiveFormsModule,
-    LuxuryAppComponentsModule,
-    NgSelectModule,
-    CustomInputModule,
-  ],
+  imports: [LuxuryAppComponentsModule, NgSelectModule, CustomInputModule],
 })
 export default class AddoreditProveedorComponent implements OnInit, OnDestroy {
   public authService = inject(AuthService);
@@ -41,6 +29,7 @@ export default class AddoreditProveedorComponent implements OnInit, OnDestroy {
   public ref = inject(DynamicDialogRef);
   public selectItemService = inject(SelectItemService);
   private customToastService = inject(CustomToastService);
+  public apiRequestService = inject(ApiRequestService);
 
   submitting: boolean = false;
 

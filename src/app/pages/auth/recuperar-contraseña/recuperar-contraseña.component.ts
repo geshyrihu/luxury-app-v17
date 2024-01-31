@@ -1,11 +1,5 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { Subject, takeUntil } from 'rxjs';
@@ -13,20 +7,13 @@ import {
   CustomToastService,
   DataService,
 } from 'src/app/core/services/common-services';
-import CustomButtonModule from 'src/app/custom-components/custom-buttons/custom-button.module';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
   selector: 'app-recuperar-contraseña',
   templateUrl: './recuperar-contraseña.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    CommonModule,
-    ReactiveFormsModule,
-    CustomInputModule,
-    CustomButtonModule,
-  ],
+  imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class RecuperarContraseñaComponent implements OnInit, OnDestroy {
   private dataService = inject(DataService);

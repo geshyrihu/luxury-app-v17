@@ -1,11 +1,8 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { RouterModule } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import * as FileSaver from 'file-saver';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { ToastModule } from 'primeng/toast';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { IMedidorDto } from 'src/app/core/interfaces/IMedidorDto.interface';
 import {
@@ -21,21 +18,7 @@ import FormMedidorComponent from '../form-medidor/form-medidor.component';
   selector: 'app-lista-medidores',
   templateUrl: './lista-medidores.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    CommonModule,
-    LuxuryAppComponentsModule,
-    RouterModule,
-    ToastModule,
-  ],
-  providers: [
-    DialogService,
-    MessageService,
-    ConfirmationService,
-    CustomToastService,
-    DataService,
-    ApiRequestService,
-  ],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class ListMedidorComponent implements OnInit, OnDestroy {
   public authService = inject(AuthService);

@@ -1,12 +1,9 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogConfig } from 'primeng/dynamicdialog';
-import { TableModule } from 'primeng/table';
 import { Subject, takeUntil } from 'rxjs';
 import { EAreaMinutasDetallesPipe } from 'src/app/core/pipes/area-minuta-detalles.pipe';
-import { SanitizeHtmlPipe } from 'src/app/core/pipes/sanitize-html.pipe';
 import { EStatusPipe } from 'src/app/core/pipes/status.pipe';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
@@ -15,14 +12,7 @@ import { DateService } from 'src/app/core/services/date.service';
   selector: 'app-addoredit-meeting-detail',
   templateUrl: './addoredit-meeting-detail.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    CommonModule,
-    TableModule,
-    EAreaMinutasDetallesPipe,
-    SanitizeHtmlPipe,
-    EStatusPipe,
-  ],
+  imports: [LuxuryAppComponentsModule, EAreaMinutasDetallesPipe, EStatusPipe],
 })
 export default class AddOrEditMeetingDetailComponent
   implements OnInit, OnDestroy

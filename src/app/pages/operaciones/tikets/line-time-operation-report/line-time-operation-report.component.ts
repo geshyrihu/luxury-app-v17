@@ -1,11 +1,8 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { ToastModule } from 'primeng/toast';
 import { Observable } from 'rxjs';
 import {
   AuthService,
@@ -19,19 +16,7 @@ import { environment } from 'src/environments/environment';
   selector: 'app-line-time-operation-report',
   templateUrl: './line-time-operation-report.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    NgbAlertModule,
-    CommonModule,
-    LuxuryAppComponentsModule,
-    ToastModule,
-  ],
-  providers: [
-    DialogService,
-    MessageService,
-    ConfirmationService,
-    CustomToastService,
-  ],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class LineTimeOperationReportComponent
   implements OnInit, OnDestroy

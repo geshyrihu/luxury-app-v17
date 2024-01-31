@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
@@ -13,7 +12,7 @@ import {
   DateService,
   FiltroCalendarService,
 } from 'src/app/core/services/common-services';
-import PrimeNgModule from 'src/app/shared/prime-ng.module';
+
 import Swal from 'sweetalert2';
 import AddPresentacionJuntaComiteComponent from './add-presentacion-junta-comite/add-presentacion-junta-comite.component';
 import AddoreditPresentacionJuntaComiteComponent from './addoredit-presentacion-junta-comite/addoredit-presentacion-junta-comite.component';
@@ -23,18 +22,7 @@ import EnviarMailEstadosFinancierosComponent from './enviar-mail-estados-financi
   selector: 'app-presentacion-junta-comite',
   templateUrl: './presentacion-junta-comite.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    CommonModule,
-    LuxuryAppComponentsModule,
-    PrimeNgModule,
-  ],
-  providers: [
-    DialogService,
-    MessageService,
-    ConfirmationService,
-    CustomToastService,
-  ],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class PresentacionJuntaComiteComponent
   implements OnInit, OnDestroy

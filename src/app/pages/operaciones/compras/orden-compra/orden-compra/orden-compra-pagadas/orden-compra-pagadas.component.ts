@@ -1,6 +1,5 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
+import { Router } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -10,21 +9,14 @@ import { CustomerIdService } from 'src/app/core/services/common-services';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { OrdenCompraService } from 'src/app/core/services/orden-compra.service';
-import PrimeNgModule from 'src/app/shared/prime-ng.module';
+
 import OrdenCompraComponent from '../orden-compra.component';
 
 @Component({
   selector: 'app-orden-compra-pagadas',
   templateUrl: './orden-compra-pagadas.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    CommonModule,
-    LuxuryAppComponentsModule,
-    RouterModule,
-    PrimeNgModule,
-    CurrencyMexicoPipe,
-  ],
+  imports: [LuxuryAppComponentsModule, CurrencyMexicoPipe],
 })
 export default class OrdenCompraPagadasComponent implements OnInit, OnDestroy {
   public customToastService = inject(CustomToastService);

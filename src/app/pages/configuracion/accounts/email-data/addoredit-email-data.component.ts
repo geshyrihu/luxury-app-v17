@@ -1,17 +1,11 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
-import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { EmailDataAddOrEditDto } from 'src/app/core/interfaces/email-data-add-or-edit.interface';
 import {
+  ApiRequestService,
   AuthService,
   CustomToastService,
   DataService,
@@ -22,13 +16,7 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   selector: 'app-addoredit-email-data',
   templateUrl: './addoredit-email-data.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    ReactiveFormsModule,
-    CommonModule,
-    CustomInputModule,
-    NgbAlertModule,
-  ],
+  imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class AddOrEditEmailDataComponent implements OnInit, OnDestroy {
   private formBuilder = inject(FormBuilder);
@@ -37,6 +25,8 @@ export default class AddOrEditEmailDataComponent implements OnInit, OnDestroy {
   public ref = inject(DynamicDialogRef);
   public authService = inject(AuthService);
   private customToastService = inject(CustomToastService);
+  public apiRequestService = inject(ApiRequestService);
+
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   id: number = 0;

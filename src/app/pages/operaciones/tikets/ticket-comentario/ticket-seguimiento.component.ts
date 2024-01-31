@@ -1,17 +1,11 @@
-import { CommonModule } from '@angular/common';
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { ITicketseguimiento } from 'src/app/core/interfaces/ITicketseguimiento.interface';
 import {
+  ApiRequestService,
   AuthService,
   CustomToastService,
   DataService,
@@ -20,12 +14,7 @@ import {
   selector: 'app-ticket-seguimiento',
   templateUrl: './ticket-seguimiento.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    ReactiveFormsModule,
-    FormsModule,
-    CommonModule,
-  ],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class TicketSeguimientoComponent implements OnInit, OnDestroy {
   private formBuilder = inject(FormBuilder);
@@ -34,6 +23,7 @@ export default class TicketSeguimientoComponent implements OnInit, OnDestroy {
   public config = inject(DynamicDialogConfig);
   public authService = inject(AuthService);
   private customToastService = inject(CustomToastService);
+  public apiRequestService = inject(ApiRequestService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 

@@ -1,7 +1,5 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { MessageService } from 'primeng/api';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { IChartData } from 'src/app/core/interfaces/chart-data.interface';
@@ -19,12 +17,10 @@ import MultiAxisChartComponent from 'src/app/shared/graficos/primeng-chart/multi
   standalone: true,
   imports: [
     LuxuryAppComponentsModule,
-    CommonModule,
     CustomBarChartComponent,
     PagetitleReportComponent,
     MultiAxisChartComponent,
   ],
-  providers: [CustomToastService, MessageService],
 })
 export default class ReportConsumosComponent implements OnInit, OnDestroy {
   private dataService = inject(DataService);

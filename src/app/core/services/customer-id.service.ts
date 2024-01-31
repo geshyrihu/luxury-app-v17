@@ -55,7 +55,7 @@ export class CustomerIdService implements OnDestroy {
     this.customerId = customerId;
     this.storageService.store('customerId', customerId);
     this.customerId$.next(customerId); // Notificar a los observadores sobre el cambio en el ID del cliente.
-    this.onLoadData(customerId);
+    this.onLoadDataCustomer(customerId);
   }
 
   /**
@@ -74,7 +74,7 @@ export class CustomerIdService implements OnDestroy {
     return this.customerId;
   }
 
-  onLoadData(customerId: number) {
+  onLoadDataCustomer(customerId: number) {
     this.dataService
       .get(`Customers/${customerId}`)
       .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye

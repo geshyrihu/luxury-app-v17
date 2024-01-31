@@ -1,9 +1,5 @@
-import { CommonModule } from '@angular/common';
 import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { ToastModule } from 'primeng/toast';
 import { Subject, takeUntil } from 'rxjs';
 import { IAddCustomerPermisoToUserDto } from 'src/app/core/interfaces/IAddCustomerPermisoToUserDto.interface';
 import {
@@ -14,14 +10,7 @@ import {
   selector: 'app-access-customer',
   templateUrl: './access-customer.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    NgbModule,
-    ToastModule,
-  ],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class AccessCustomerComponent implements OnInit, OnDestroy {
   private dataService = inject(DataService);

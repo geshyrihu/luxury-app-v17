@@ -1,7 +1,5 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { SanitizeHtmlPipe } from 'src/app/core/pipes/sanitize-html.pipe';
 import { CustomerIdService } from 'src/app/core/services/common-services';
 import { ReporteHerramientasPdfService } from 'src/app/core/services/reporte-herramientas-pdf.service';
 import { environment } from 'src/environments/environment';
@@ -9,7 +7,7 @@ import { environment } from 'src/environments/environment';
   selector: 'app-informe-herramienta-pdf',
   templateUrl: './informe-herramienta-pdf.component.html',
   standalone: true,
-  imports: [LuxuryAppComponentsModule, CommonModule, SanitizeHtmlPipe],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class InformeHerramientaPdfComponent implements OnInit {
   public reporteHerramientasPdfService = inject(ReporteHerramientasPdfService);

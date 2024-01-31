@@ -1,6 +1,4 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { RouterModule } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -13,7 +11,7 @@ import {
   DataService,
   ReporteHerramientasPdfService,
 } from 'src/app/core/services/common-services';
-import PrimeNgModule from 'src/app/shared/prime-ng.module';
+
 import { environment } from 'src/environments/environment';
 import AddoreditToolsComponent from './addoredit-herramienta.component';
 
@@ -21,12 +19,7 @@ import AddoreditToolsComponent from './addoredit-herramienta.component';
   selector: 'app-list-herramientas',
   templateUrl: './list-herramientas.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    CommonModule,
-    RouterModule,
-    PrimeNgModule,
-  ],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class ListerramientasComponent implements OnInit, OnDestroy {
   public customToastService = inject(CustomToastService);

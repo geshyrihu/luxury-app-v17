@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { TableModule } from 'primeng/table';
 import { Subject, takeUntil } from 'rxjs';
 import {
   CustomToastService,
@@ -13,7 +12,7 @@ import {
   selector: 'app-dashboard-tickets-resumen',
   templateUrl: './dashboard-tickets-resumen.component.html',
   standalone: true,
-  imports: [LuxuryAppComponentsModule, TableModule],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class DashboardTicketsResumenComponent
   implements OnInit, OnDestroy

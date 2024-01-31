@@ -1,7 +1,6 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { IDirectoryCondominiumDto } from 'src/app/core/interfaces/IDirectoryCondominiumDto.interface';
@@ -12,25 +11,14 @@ import {
   CustomerIdService,
   DataService,
 } from 'src/app/core/services/common-services';
-import PrimeNgModule from 'src/app/shared/prime-ng.module';
+
 import AddOrEditPropiedadesComponent from './addoredit-propiedades.component';
 
 @Component({
   selector: 'app-list-propiedades',
   templateUrl: './list-propiedades.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    CommonModule,
-    LuxuryAppComponentsModule,
-    PrimeNgModule,
-  ],
-  providers: [
-    DialogService,
-    MessageService,
-    ConfirmationService,
-    CustomToastService,
-  ],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class ListPropiedadesComponent implements OnInit, OnDestroy {
   public customToastService = inject(CustomToastService);

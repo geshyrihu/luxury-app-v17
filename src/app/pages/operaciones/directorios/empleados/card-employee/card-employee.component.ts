@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -12,7 +11,7 @@ import { environment } from 'src/environments/environment';
   selector: 'app-card-employee',
   templateUrl: './card-employee.component.html',
   standalone: true,
-  imports: [LuxuryAppComponentsModule, CommonModule, PhoneFormatPipe],
+  imports: [LuxuryAppComponentsModule, PhoneFormatPipe],
 })
 export default class CardEmployeeComponent implements OnInit, OnDestroy {
   private dataService = inject(DataService);

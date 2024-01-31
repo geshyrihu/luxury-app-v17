@@ -1,14 +1,11 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
-import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
+import { Router } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import saveAs from 'file-saver';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { IMeetingIndexDto } from 'src/app/core/interfaces/IMeetingIndexDto.interface';
-import { SanitizeHtmlPipe } from 'src/app/core/pipes/sanitize-html.pipe';
 import {
   ApiRequestService,
   AuthService,
@@ -17,7 +14,7 @@ import {
   DataService,
   ReportService,
 } from 'src/app/core/services/common-services';
-import PrimeNgModule from 'src/app/shared/prime-ng.module';
+
 import AddOrEditMeetingDetailComponent from './addoredit-meeting-detail.component';
 import AddOrEditMeetingComponent from './addoredit-meeting.component';
 import AddoreditMinutaDetalleComponent from './addoredit-minuta-detalle/addoredit-minuta-detalle.component';
@@ -27,20 +24,7 @@ import AddorEditMeetingSeguimientoComponent from './addoredit-seguimiento/addor-
   selector: 'app-list-minutas',
   templateUrl: './list-minutas.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    RouterModule,
-    CommonModule,
-    PrimeNgModule,
-    SanitizeHtmlPipe,
-    NgbTooltip,
-  ],
-  providers: [
-    DialogService,
-    MessageService,
-    ConfirmationService,
-    CustomToastService,
-  ],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class ListMinutasComponent implements OnInit, OnDestroy {
   public authService = inject(AuthService);
@@ -65,6 +49,7 @@ export default class ListMinutasComponent implements OnInit, OnDestroy {
   emailAccount: boolean = false;
 
   ngOnInit(): void {
+    console.log('🚀 ~ this.tipoJunta):', this.tipoJunta);
     this.onLoadData(this.tipoJunta);
     this.customerId$.subscribe(() => {
       this.onLoadData(this.tipoJunta);

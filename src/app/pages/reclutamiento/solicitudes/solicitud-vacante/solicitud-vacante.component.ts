@@ -1,20 +1,14 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { TableModule } from 'primeng/table';
 import { Subject, takeUntil } from 'rxjs';
 import { AutosizeDirective } from 'src/app/core/directives/autosize-text-area.diective';
 import { ETurnoTrabajo } from 'src/app/core/enums/turno-trabajo.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import {
+  ApiRequestService,
   AuthService,
   CustomToastService,
   DataService,
@@ -25,19 +19,13 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   selector: 'app-solicitud-vacante',
   templateUrl: './solicitud-vacante.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    ReactiveFormsModule,
-    CommonModule,
-    AutosizeDirective,
-    CustomInputModule,
-    TableModule,
-  ],
+  imports: [LuxuryAppComponentsModule, AutosizeDirective, CustomInputModule],
 })
 export default class SolicitudVacanteComponent implements OnInit, OnDestroy {
   private dataService = inject(DataService);
   private formBuilder = inject(FormBuilder);
   private customToastService = inject(CustomToastService);
+  public apiRequestService = inject(ApiRequestService);
   public config = inject(DynamicDialogConfig);
   public ref = inject(DynamicDialogRef);
   public authService = inject(AuthService);

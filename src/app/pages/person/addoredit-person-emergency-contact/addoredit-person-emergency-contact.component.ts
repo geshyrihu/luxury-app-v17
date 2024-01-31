@@ -1,17 +1,9 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { NgxMaskModule } from 'ngx-mask';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { ToastModule } from 'primeng/toast';
 import { Subject, takeUntil } from 'rxjs';
 import { ERelationEmployee } from 'src/app/core/enums/relation-employee.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
@@ -27,16 +19,7 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   selector: 'app-addoredit-person-emergency-contact',
   templateUrl: './addoredit-person-emergency-contact.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    CommonModule,
-    ReactiveFormsModule,
-    LuxuryAppComponentsModule,
-    CustomInputModule,
-    FormsModule,
-    ToastModule,
-    NgxMaskModule,
-  ],
+  imports: [LuxuryAppComponentsModule, CustomInputModule, NgxMaskModule],
   providers: [MessageService, ConfirmationService, CustomToastService],
 })
 export default class AddoreditPersonEmergencyContactComponent

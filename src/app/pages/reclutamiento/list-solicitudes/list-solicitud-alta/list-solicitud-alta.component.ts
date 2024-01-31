@@ -1,9 +1,5 @@
-import { CommonModule } from '@angular/common';
 import { HttpParams } from '@angular/common/http';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
-import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -16,23 +12,14 @@ import {
   FilterRequestsService,
   StatusSolicitudVacanteService,
 } from 'src/app/core/services/common-services';
-import PrimeNgModule from 'src/app/shared/prime-ng.module';
+
 import FilterRequestsComponent from '../filter-requests.component';
 import AddOrEditSolicitudAltaComponent from './addoredit-solicitud-alta/addoredit-solicitud-alta.component';
 @Component({
   selector: 'app-list-solicitud-alta',
   templateUrl: './list-solicitud-alta.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    CommonModule,
-    LuxuryAppComponentsModule,
-    FilterRequestsComponent,
-    FormsModule,
-    NgbDropdownModule,
-    PrimeNgModule,
-    RouterModule,
-  ],
+  imports: [LuxuryAppComponentsModule, FilterRequestsComponent],
 })
 export default class ListSolicitudAltaComponent implements OnInit, OnDestroy {
   private dataService = inject(DataService);

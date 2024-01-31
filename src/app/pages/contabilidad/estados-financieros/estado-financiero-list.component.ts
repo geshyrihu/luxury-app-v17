@@ -1,7 +1,5 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import PrimeNgModule from 'app/shared/prime-ng.module';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
@@ -17,13 +15,7 @@ import SendEstadosFinancierosComponent from './send-estados-financieros/send-est
   selector: 'app-estado-financiero-list',
   templateUrl: './estado-financiero-list.component.html',
   standalone: true,
-  imports: [LuxuryAppComponentsModule, PrimeNgModule, NgbTooltip],
-  providers: [
-    MessageService,
-    CustomToastService,
-    DialogHandlerService,
-    DialogService,
-  ],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class EstadoFinancieroListComponent
   implements OnInit, OnDestroy

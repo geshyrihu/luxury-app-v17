@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, inject, type OnInit } from '@angular/core';
 import {
   FormBuilder,
@@ -11,29 +10,24 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import {
+  ApiRequestService,
   CustomToastService,
   DataService,
 } from 'src/app/core/services/common-services';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { SelectItemService } from 'src/app/core/services/select-item.service';
-import CustomButtonModule from 'src/app/custom-components/custom-buttons/custom-button.module';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 @Component({
   selector: 'app-add-or-edit-customer-provider',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    CommonModule,
-    CustomButtonModule,
-    CustomInputModule,
-    ReactiveFormsModule,
-  ],
+  imports: [LuxuryAppComponentsModule, CustomInputModule, ReactiveFormsModule],
 
   templateUrl: './addoredit-customer-provider.component.html',
 })
 export default class AddOrEditCustomerProviderComponent implements OnInit {
   private customerIdService = inject(CustomerIdService);
   private customToastService = inject(CustomToastService);
+  public apiRequestService = inject(ApiRequestService);
   private formBuilder = inject(FormBuilder);
   public config = inject(DynamicDialogConfig);
   public dataService = inject(DataService);

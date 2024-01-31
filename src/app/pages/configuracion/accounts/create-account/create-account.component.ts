@@ -1,11 +1,5 @@
-import { CommonModule } from '@angular/common';
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { finalize, Subject, takeUntil } from 'rxjs';
@@ -14,19 +8,12 @@ import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { SelectItemService } from 'src/app/core/services/select-item.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
-import PrimeNgModule from 'src/app/shared/prime-ng.module';
 
 @Component({
   selector: 'app-create-account-customer',
   templateUrl: './create-account.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    CommonModule,
-    ReactiveFormsModule,
-    CustomInputModule,
-    PrimeNgModule,
-  ],
+  imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class CreateAccountComponent implements OnInit, OnDestroy {
   private dataService = inject(DataService);

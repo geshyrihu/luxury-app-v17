@@ -1,10 +1,8 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
   FormGroup,
-  ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
@@ -14,6 +12,7 @@ import { EProductClasificacion } from 'src/app/core/enums/product-clasificacion.
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import {
+  ApiRequestService,
   AuthService,
   CustomToastService,
   DataService,
@@ -26,13 +25,7 @@ import { environment } from 'src/environments/environment';
   selector: 'app-addoredit-productos',
   templateUrl: './addoredit-productos.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    ReactiveFormsModule,
-    LuxuryAppComponentsModule,
-    CommonModule,
-    CustomInputModule,
-  ],
+  imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class AddOrEditProductosComponent implements OnInit, OnDestroy {
   private formBuilder = inject(FormBuilder);
@@ -42,6 +35,7 @@ export default class AddOrEditProductosComponent implements OnInit, OnDestroy {
   public dataService = inject(DataService);
   public selectItemService = inject(SelectItemService);
   private customToastService = inject(CustomToastService);
+  public apiRequestService = inject(ApiRequestService);
 
   submitting: boolean = false;
 

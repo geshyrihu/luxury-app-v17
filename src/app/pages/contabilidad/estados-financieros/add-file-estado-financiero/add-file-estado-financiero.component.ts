@@ -1,8 +1,9 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
@@ -11,13 +12,14 @@ import { DataService } from 'src/app/core/services/data.service';
   selector: 'app-add-file-estado-financiero',
   templateUrl: './add-file-estado-financiero.component.html',
   standalone: true,
-  imports: [LuxuryAppComponentsModule, ReactiveFormsModule],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class AddFileEstadoFinancieroComponent
   implements OnInit, OnDestroy
 {
   private formBuilder = inject(FormBuilder);
   private customToastService = inject(CustomToastService);
+  public apiRequestService = inject(ApiRequestService);
   public authService = inject(AuthService);
   public config = inject(DynamicDialogConfig);
   public dataService = inject(DataService);

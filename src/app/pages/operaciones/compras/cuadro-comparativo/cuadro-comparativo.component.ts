@@ -1,16 +1,14 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import {
   CustomToastService,
   DataService,
 } from 'src/app/core/services/common-services';
-import PrimeNgModule from 'src/app/shared/prime-ng.module';
+
 import ModalAddProveedorComponent from './modal-add-proveedor/modal-add-proveedor.component';
 import ModalEditCotizacionComponent from './modal-edit-cotizacion/modal-edit-cotizacion.component';
 
@@ -18,19 +16,7 @@ import ModalEditCotizacionComponent from './modal-edit-cotizacion/modal-edit-cot
   selector: 'app-cuadro-comparativo',
   templateUrl: './cuadro-comparativo.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    FormsModule,
-    LuxuryAppComponentsModule,
-    CommonModule,
-    PrimeNgModule,
-  ],
-  providers: [
-    ConfirmationService,
-    DialogService,
-    MessageService,
-    CustomToastService,
-  ],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class CuadroComparativoComponent implements OnInit, OnDestroy {
   public customToastService = inject(CustomToastService);
@@ -38,7 +24,6 @@ export default class CuadroComparativoComponent implements OnInit, OnDestroy {
   public routeActive = inject(ActivatedRoute);
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
-  public confirmationService = inject(ConfirmationService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 

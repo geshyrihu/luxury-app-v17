@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
-import { TableModule } from 'primeng/table';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import {
   CustomToastService,
@@ -13,7 +12,7 @@ import { environment } from 'src/environments/environment';
   selector: 'app-instalaciones',
   templateUrl: './instalaciones.component.html',
   standalone: true,
-  imports: [LuxuryAppComponentsModule, TableModule],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class InstalacionesComponent implements OnInit, OnDestroy {
   public customerIdService = inject(CustomerIdService);

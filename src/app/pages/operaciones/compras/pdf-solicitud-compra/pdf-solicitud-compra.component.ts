@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
   Component,
   ElementRef,
@@ -14,7 +13,7 @@ import { DataService } from 'src/app/core/services/data.service';
   selector: 'app-pdf-solicitud-compra',
   templateUrl: './pdf-solicitud-compra.component.html',
   standalone: true,
-  imports: [LuxuryAppComponentsModule, CommonModule, LuxuryAppComponentsModule],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class PdfSolicitudCompraComponent implements OnInit, OnDestroy {
   public dataService = inject(DataService);

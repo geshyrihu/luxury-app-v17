@@ -1,9 +1,7 @@
-import { CommonModule, DatePipe } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { Subject, takeUntil } from 'rxjs';
-import { SanitizeHtmlPipe } from 'src/app/core/pipes/sanitize-html.pipe';
 import { CustomerIdService } from 'src/app/core/services/common-services';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
@@ -14,12 +12,7 @@ import { environment } from 'src/environments/environment';
   selector: 'app-reporte-ordenes-servicio',
   templateUrl: './reporte-ordenes-servicio.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    CommonModule,
-    SanitizeHtmlPipe,
-    DatePipe,
-  ],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class ReporteOrdenesServicioComponent
   implements OnInit, OnDestroy

@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
@@ -11,20 +10,14 @@ import {
   CustomerIdService,
   DataService,
 } from 'src/app/core/services/common-services';
-import PrimeNgModule from 'src/app/shared/prime-ng.module';
+
 import FormControlPrestamoHerramientaComponent from './form-control-prestamo-herramienta.component';
 
 @Component({
   selector: 'app-control-prestamo-herramientas',
   templateUrl: './control-prestamo-herramientas.component.html',
   standalone: true,
-  imports: [LuxuryAppComponentsModule, CommonModule, PrimeNgModule],
-  providers: [
-    DialogService,
-    MessageService,
-    CustomToastService,
-    ApiRequestService,
-  ],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class ControlPrestamoHerramientasComponent
   implements OnInit, OnDestroy

@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
@@ -12,14 +11,14 @@ import {
   CustomerIdService,
   DataService,
 } from 'src/app/core/services/common-services';
-import PrimeNgModule from 'src/app/shared/prime-ng.module';
+
 import { environment } from 'src/environments/environment';
 import AddOrEditRadioComunicacionComponent from './addoredit-radio-comunicacion.component';
 @Component({
   selector: 'app-radio-comunicacion',
   templateUrl: './radio-comunicacion.component.html',
   standalone: true,
-  imports: [LuxuryAppComponentsModule, CommonModule, PrimeNgModule],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class RadioComunicacionComponent implements OnDestroy {
   public customToastService = inject(CustomToastService);

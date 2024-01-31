@@ -1,5 +1,4 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -9,19 +8,14 @@ import {
   CustomToastService,
   DataService,
 } from 'src/app/core/services/common-services';
-import PrimeNgModule from 'src/app/shared/prime-ng.module';
+
 import AddOrEditCatalogoDescripcionComponent from '../addoredit-catalogo-descripcion/addoredit-catalogo-descripcion.component';
 
 @Component({
   selector: 'app-list-catalogo-descripcion',
   templateUrl: './list-catalogo-descripcion.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    ReactiveFormsModule,
-    LuxuryAppComponentsModule,
-    PrimeNgModule,
-  ],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class ListCatalogoDescripcionComponent
   implements OnInit, OnDestroy

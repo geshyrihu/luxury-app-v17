@@ -1,11 +1,5 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { Subject, takeUntil } from 'rxjs';
@@ -19,20 +13,15 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   selector: 'app-login',
   templateUrl: './login.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    CommonModule,
-    ReactiveFormsModule,
-    CustomInputModule,
-    LuxuryAppComponentsModule,
-  ],
+  imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class LoginComponent implements OnInit, OnDestroy {
-  private dataService = inject(DataService);
   private formBuilder = inject(FormBuilder);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private securityService = inject(SecurityService);
+
+  private dataService = inject(DataService);
   public customToastService = inject(CustomToastService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente

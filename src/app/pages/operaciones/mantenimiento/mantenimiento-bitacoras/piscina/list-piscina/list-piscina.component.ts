@@ -1,7 +1,4 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { TooltipModule } from '@swimlane/ngx-charts';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -14,7 +11,7 @@ import {
   CustomerIdService,
   DataService,
 } from 'src/app/core/services/common-services';
-import PrimeNgModule from 'src/app/shared/prime-ng.module';
+
 import { environment } from 'src/environments/environment';
 import AddOrEditPiscinaComponent from '../addoredit-piscina/addoredit-piscina.component';
 
@@ -22,21 +19,7 @@ import AddOrEditPiscinaComponent from '../addoredit-piscina/addoredit-piscina.co
   selector: 'app-list-piscina',
   templateUrl: './list-piscina.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    PrimeNgModule,
-    LuxuryAppComponentsModule,
-    ImageModule,
-    CommonModule,
-    RouterModule,
-    TooltipModule,
-  ],
-  providers: [
-    DialogService,
-    MessageService,
-    CustomToastService,
-    ApiRequestService,
-  ],
+  imports: [LuxuryAppComponentsModule, ImageModule],
 })
 export default class ListPiscinaComponent implements OnInit, OnDestroy {
   private dataService = inject(DataService);

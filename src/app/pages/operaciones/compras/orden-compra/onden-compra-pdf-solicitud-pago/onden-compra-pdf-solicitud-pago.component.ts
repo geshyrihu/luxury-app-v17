@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
@@ -11,7 +10,7 @@ import { SelectItemService } from 'src/app/core/services/select-item.service';
   selector: 'app-onden-compra-pdf-solicitud-pago',
   templateUrl: './onden-compra-pdf-solicitud-pago.component.html',
   standalone: true,
-  imports: [LuxuryAppComponentsModule, CommonModule, LuxuryAppComponentsModule],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class OndenCompraPdfSolicitudPagoComponent
   implements OnInit, OnDestroy

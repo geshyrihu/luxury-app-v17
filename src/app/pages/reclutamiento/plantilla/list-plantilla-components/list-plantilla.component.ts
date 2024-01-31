@@ -1,10 +1,5 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
-import {
-  NgbDropdownModule,
-  NgbTooltipModule,
-} from '@ng-bootstrap/ng-bootstrap';
+import { Router } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -19,7 +14,7 @@ import {
   StatusSolicitudVacanteService,
 } from 'src/app/core/services/common-services';
 import CardEmployeeComponent from 'src/app/pages/operaciones/directorios/empleados/card-employee/card-employee.component';
-import PrimeNgModule from 'src/app/shared/prime-ng.module';
+
 import { environment } from 'src/environments/environment';
 import DescripcionPuestoComponent from '../../professions/descripcion-puesto.component';
 import SolicitudVacanteComponent from '../../solicitudes/solicitud-vacante/solicitud-vacante.component';
@@ -31,21 +26,7 @@ import HoursWorkPositionComponent from '../hours-work-position.component';
   selector: 'app-list-plantilla',
   templateUrl: './list-plantilla.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    CommonModule,
-    LuxuryAppComponentsModule,
-    NgbDropdownModule,
-    NgbTooltipModule,
-    RouterModule,
-    PrimeNgModule,
-  ],
-  providers: [
-    ConfirmationService,
-    DialogService,
-    MessageService,
-    CustomToastService,
-  ],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class ListWorkPlantillaComponent implements OnInit, OnDestroy {
   private router = inject(Router);

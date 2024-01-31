@@ -1,11 +1,5 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule, {
   flatpickrFactory,
 } from 'app/shared/luxuryapp-components.module';
@@ -14,6 +8,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { ICustomerAddOrEditDto } from 'src/app/core/interfaces/ICustomerAddOrEditDto.interface';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import {
+  ApiRequestService,
   CustomToastService,
   DataService,
   DateService,
@@ -25,13 +20,7 @@ import { environment } from 'src/environments/environment';
   selector: 'app-addoredit-clientes',
   templateUrl: './addoredit-clientes.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    CommonModule,
-    LuxuryAppComponentsModule,
-    ReactiveFormsModule,
-    CustomInputModule,
-  ],
+  imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class AddOrEditClienteComponent implements OnInit, OnDestroy {
   private dataService = inject(DataService);
@@ -40,6 +29,7 @@ export default class AddOrEditClienteComponent implements OnInit, OnDestroy {
   public dateService = inject(DateService);
   public ref = inject(DynamicDialogRef);
   private customToastService = inject(CustomToastService);
+  public apiRequestService = inject(ApiRequestService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 

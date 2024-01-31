@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
@@ -11,19 +10,14 @@ import {
   CustomerIdService,
   DataService,
 } from 'src/app/core/services/common-services';
-import PrimeNgModule from 'src/app/shared/prime-ng.module';
+
 import CrudEntregaRecepcionClienteComponent from '../addoredit-entrega-recepcion-cliente/addoredit-entrega-recepcion-cliente.component';
 
 @Component({
   selector: 'app-entrega-recepcion-cliente',
   templateUrl: './entrega-recepcion-cliente.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    CommonModule,
-    LuxuryAppComponentsModule,
-    PrimeNgModule,
-  ],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class EntregaRecepcionClienteComponent
   implements OnInit, OnDestroy

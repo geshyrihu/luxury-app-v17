@@ -1,11 +1,5 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import {
@@ -19,6 +13,7 @@ import { EState } from 'src/app/core/enums/state.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import {
+  ApiRequestService,
   AuthService,
   CustomToastService,
   CustomerIdService,
@@ -26,22 +21,14 @@ import {
   DateService,
 } from 'src/app/core/services/common-services';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
-import PrimeNgModule from 'src/app/shared/prime-ng.module';
+
 import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-addoredit-activos',
   templateUrl: './addoredit-activos.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    CommonModule,
-    ReactiveFormsModule,
-    LuxuryAppComponentsModule,
-    PrimeNgModule,
-    CustomInputModule,
-  ],
-  providers: [DialogService, CustomToastService],
+  imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class AddOrEditActivosComponent implements OnInit, OnDestroy {
   public dateService = inject(DateService);
@@ -54,6 +41,7 @@ export default class AddOrEditActivosComponent implements OnInit, OnDestroy {
   public customerIdService = inject(CustomerIdService);
   public dialogService = inject(DialogService);
   private customToastService = inject(CustomToastService);
+  public apiRequestService = inject(ApiRequestService);
 
   public Editor = ClassicEditor;
 

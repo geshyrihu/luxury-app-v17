@@ -1,11 +1,6 @@
-import { CommonModule, DatePipe } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule, {
   flatpickrFactory,
 } from 'app/shared/luxuryapp-components.module';
@@ -22,6 +17,7 @@ import { IEmployeeAddOrEditDto } from 'src/app/core/interfaces/IEmployeeAddOrEdi
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import { phonePrefixes } from 'src/app/core/interfaces/phone-number-prefix';
 import {
+  ApiRequestService,
   AuthService,
   CustomToastService,
   CustomerIdService,
@@ -34,17 +30,12 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   selector: 'app-addoredit',
   templateUrl: './addoredit-employee.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    ReactiveFormsModule,
-    LuxuryAppComponentsModule,
-    CommonModule,
-    CustomInputModule,
-  ],
-  providers: [DatePipe, CustomToastService],
+  imports: [LuxuryAppComponentsModule, CustomInputModule],
+  providers: [DatePipe],
 })
 export default class AddOrEditEmplopyeeComponent implements OnInit, OnDestroy {
   private customToastService = inject(CustomToastService);
+  public apiRequestService = inject(ApiRequestService);
   private formBuilder = inject(FormBuilder);
   public authService = inject(AuthService);
   public config = inject(DynamicDialogConfig);

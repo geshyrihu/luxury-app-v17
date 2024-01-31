@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
@@ -10,7 +9,7 @@ import {
   CustomToastService,
   DataService,
 } from 'src/app/core/services/common-services';
-import PrimeNgModule from 'src/app/shared/prime-ng.module';
+
 import { environment } from 'src/environments/environment';
 import AddOrEditProductosComponent from './addoredit-productos.component';
 
@@ -18,7 +17,7 @@ import AddOrEditProductosComponent from './addoredit-productos.component';
   selector: 'app-list-productos',
   templateUrl: './list-productos.component.html',
   standalone: true,
-  imports: [LuxuryAppComponentsModule, CommonModule, PrimeNgModule],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class ListProductosComponent implements OnInit, OnDestroy {
   public customToastService = inject(CustomToastService);

@@ -1,9 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { MessageService } from 'primeng/api';
-import { TableModule } from 'primeng/table';
 import { Observable } from 'rxjs';
 import { CustomerIdService } from 'src/app/core/services/common-services';
 import { DataService } from 'src/app/core/services/data.service';
@@ -19,13 +15,9 @@ import ResumenMantenimientosComponent from './resumen-mantenimientos/resumen-man
   imports: [
     LuxuryAppComponentsModule,
     MesanioComponent,
-    TableModule,
-    NgbTooltip,
-    RouterModule,
     ResumenMantenimientosComponent,
     PagetitleReportComponent,
   ],
-  providers: [MessageService],
 })
 export default class MaintenanceReportsComponent implements OnInit {
   public dataService = inject(DataService);

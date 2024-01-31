@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, OnDestroy, inject } from '@angular/core';
 import { Subject, lastValueFrom, takeUntil } from 'rxjs';
 import { CustomToastService } from './custom-toast.service';
 import { DataService } from './data.service';
@@ -6,7 +6,7 @@ import { DataService } from './data.service';
 @Injectable({
   providedIn: 'root',
 })
-export class ApiRequestService {
+export class ApiRequestService implements OnDestroy {
   public customToastService = inject(CustomToastService);
   public dataService = inject(DataService);
 
@@ -53,6 +53,7 @@ export class ApiRequestService {
       return null;
     }
   }
+
   // Cuando se destruye el componente, desvincular y liberar recursos
   ngOnDestroy(): void {
     this.destroy$.next();

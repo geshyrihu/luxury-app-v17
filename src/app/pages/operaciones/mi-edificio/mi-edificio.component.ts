@@ -1,10 +1,7 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { RouterModule } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { TableModule } from 'primeng/table';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import {
   CustomToastService,
@@ -18,13 +15,7 @@ import FichaTecnicaActivoComponent from '../../operaciones/mantenimiento/manteni
   selector: 'app-mi-edificio',
   templateUrl: './mi-edificio.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    CommonModule,
-    LuxuryAppComponentsModule,
-    TableModule,
-    RouterModule,
-  ],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class MiEdificioComponent implements OnInit, OnDestroy {
   public customerIdService = inject(CustomerIdService);

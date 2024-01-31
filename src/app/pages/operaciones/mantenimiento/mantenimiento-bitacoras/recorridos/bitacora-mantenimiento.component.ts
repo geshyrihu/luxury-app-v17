@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
@@ -15,14 +14,14 @@ import {
   FiltroCalendarService,
 } from 'src/app/core/services/common-services';
 import CardEmployeeComponent from 'src/app/pages/operaciones/directorios/empleados/card-employee/card-employee.component';
-import PrimeNgModule from 'src/app/shared/prime-ng.module';
+
 import FormBitacoraMantenimientoComponent from './form-bitacora-mantenimiento.component';
 
 @Component({
   selector: 'app-bitacora-mantenimiento',
   templateUrl: './bitacora-mantenimiento.component.html',
   standalone: true,
-  imports: [LuxuryAppComponentsModule, CommonModule, PrimeNgModule],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class BitacoraMantenimientoComponent
   implements OnInit, OnDestroy

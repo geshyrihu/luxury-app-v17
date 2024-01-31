@@ -1,21 +1,12 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, inject } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import PrimeNgModule from 'app/shared/prime-ng.module';
 import { MessageService } from 'primeng/api';
 import {
   DialogService,
   DynamicDialogConfig,
   DynamicDialogRef,
 } from 'primeng/dynamicdialog';
-import { ToastModule } from 'primeng/toast';
 import { Subject, takeUntil } from 'rxjs';
 import { IDestinatariosMailReporte } from 'src/app/core/interfaces/IDestinatariosMailReporte.interface';
 import {
@@ -30,14 +21,7 @@ import { SelectItemService } from 'src/app/core/services/select-item.service';
   selector: 'app-send-estados-financieros',
   templateUrl: './send-estados-financieros.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    CommonModule,
-    ReactiveFormsModule,
-    ToastModule,
-    FormsModule,
-    PrimeNgModule,
-  ],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class SendEstadosFinancierosComponent implements OnDestroy {
   public customerIdService = inject(CustomerIdService);

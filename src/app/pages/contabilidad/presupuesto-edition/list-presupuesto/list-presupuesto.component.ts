@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
@@ -10,7 +9,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DataService } from 'src/app/core/services/data.service';
-import PrimeNgModule from 'src/app/shared/prime-ng.module';
+
 import AddoreditPeriodoCedulaPresupuestalComponent from '../../../operaciones/compras/cedula-presupuestal/addoredit-periodo-cedula.component';
 import PresupuestoAddComponent from '../presupuesto-add/presupuesto-add.component';
 
@@ -18,12 +17,7 @@ import PresupuestoAddComponent from '../presupuesto-add/presupuesto-add.componen
   selector: 'app-list-presupuesto',
   templateUrl: './list-presupuesto.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    CommonModule,
-    LuxuryAppComponentsModule,
-    PrimeNgModule,
-  ],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class ListPresupuestoComponent implements OnInit {
   public authService = inject(AuthService);

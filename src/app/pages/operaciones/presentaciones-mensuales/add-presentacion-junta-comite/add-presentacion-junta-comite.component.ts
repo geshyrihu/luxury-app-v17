@@ -1,11 +1,5 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FlatpickrModule } from 'angularx-flatpickr';
 import LuxuryAppComponentsModule, {
   flatpickrFactory,
@@ -13,6 +7,7 @@ import LuxuryAppComponentsModule, {
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import {
+  ApiRequestService,
   AuthService,
   CustomToastService,
   CustomerIdService,
@@ -24,18 +19,13 @@ import {
   selector: 'app-add-presentacion-junta-comite',
   templateUrl: './add-presentacion-junta-comite.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    ReactiveFormsModule,
-    LuxuryAppComponentsModule,
-    FlatpickrModule,
-    CommonModule,
-  ],
+  imports: [LuxuryAppComponentsModule, FlatpickrModule],
 })
 export default class AddPresentacionJuntaComiteComponent
   implements OnInit, OnDestroy
 {
   private customToastService = inject(CustomToastService);
+  public apiRequestService = inject(ApiRequestService);
   private formBuilder = inject(FormBuilder);
   public authService = inject(AuthService);
   public config = inject(DynamicDialogConfig);

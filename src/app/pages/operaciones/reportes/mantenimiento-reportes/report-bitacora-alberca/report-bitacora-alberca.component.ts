@@ -1,7 +1,5 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { MessageService } from 'primeng/api';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { IChartData } from 'src/app/core/interfaces/chart-data.interface';
@@ -18,11 +16,9 @@ import CustomBarChartComponent from 'src/app/shared/graficos/ng2-chart/custom-ba
   standalone: true,
   imports: [
     LuxuryAppComponentsModule,
-    CommonModule,
     CustomBarChartComponent,
     PagetitleReportComponent,
   ],
-  providers: [CustomToastService, MessageService],
 })
 export default class ReportBitacoraAlbercaComponent implements OnInit {
   private dataService = inject(DataService);

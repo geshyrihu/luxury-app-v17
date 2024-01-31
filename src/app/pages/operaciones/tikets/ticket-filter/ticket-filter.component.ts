@@ -1,6 +1,5 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import LuxuryAppComponentsModule, {
   flatpickrFactory,
 } from 'app/shared/luxuryapp-components.module';
@@ -17,12 +16,7 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   selector: 'app-ticket-filter',
   templateUrl: './ticket-filter.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    CommonModule,
-    ReactiveFormsModule,
-    CustomInputModule,
-  ],
+  imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class FilterTicketComponent implements OnInit {
   private filterReportOperation = inject(TicketFilterService);

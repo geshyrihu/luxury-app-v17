@@ -1,12 +1,5 @@
-import { CommonModule } from '@angular/common';
 import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService, SelectItem } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -20,22 +13,12 @@ import {
   SelectItemService,
 } from 'src/app/core/services/common-services';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
-import PrimeNgModule from 'src/app/shared/prime-ng.module';
+
 @Component({
   selector: 'app-form-catalogo-gastos-fijos',
   templateUrl: './form-catalogo-gastos-fijos.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    CommonModule,
-    ReactiveFormsModule,
-    LuxuryAppComponentsModule,
-    FormsModule,
-    LuxuryAppComponentsModule,
-    CommonModule,
-    PrimeNgModule,
-    CustomInputModule,
-  ],
+  imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class FormCatalogoGastosFijosComponent
   implements OnInit, OnDestroy

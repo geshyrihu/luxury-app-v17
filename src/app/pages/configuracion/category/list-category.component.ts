@@ -1,7 +1,5 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { ICategoryDto } from 'src/app/core/interfaces/ICategory.interface';
@@ -11,33 +9,21 @@ import {
   CustomToastService,
   DataService,
 } from 'src/app/core/services/common-services';
-import PrimeNgModule from 'src/app/shared/prime-ng.module';
+
 import AddOrEditCategoryComponent from './addoredit-category.component';
 
 @Component({
   selector: 'app-list-category',
   templateUrl: './list-category.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    CommonModule,
-    LuxuryAppComponentsModule,
-    PrimeNgModule,
-  ],
-  providers: [
-    DialogService,
-    MessageService,
-    ConfirmationService,
-    CustomToastService,
-    DataService,
-  ],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class ListCategoryComponent implements OnInit, OnDestroy {
   public authService = inject(AuthService);
   private dataService = inject(DataService);
   private customToastService = inject(CustomToastService);
-  public dialogService = inject(DialogService);
   public apiRequestService = inject(ApiRequestService);
+  public dialogService = inject(DialogService);
 
   data: ICategoryDto[] = [];
   ref: DynamicDialogRef;

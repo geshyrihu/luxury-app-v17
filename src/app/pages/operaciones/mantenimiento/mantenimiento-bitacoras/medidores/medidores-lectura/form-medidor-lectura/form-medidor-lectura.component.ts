@@ -1,16 +1,11 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { IMedidorLecturaDto } from 'src/app/core/interfaces/IMedidorLecturaDto.interface';
 import {
+  ApiRequestService,
   AuthService,
   CustomToastService,
   DataService,
@@ -21,12 +16,7 @@ const date = new Date();
   selector: 'app-form-medidor-lectura',
   templateUrl: './form-medidor-lectura.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    ReactiveFormsModule,
-    CommonModule,
-    LuxuryAppComponentsModule,
-  ],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class FormMedidorLecturaComponent implements OnInit, OnDestroy {
   private formBuilder = inject(FormBuilder);
@@ -36,6 +26,7 @@ export default class FormMedidorLecturaComponent implements OnInit, OnDestroy {
   public config = inject(DynamicDialogConfig);
   public ref = inject(DynamicDialogRef);
   private customToastService = inject(CustomToastService);
+  public apiRequestService = inject(ApiRequestService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
   submitting: boolean = false;

@@ -1,30 +1,20 @@
 import { Component, OnInit, inject } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import {
+  ApiRequestService,
   CustomToastService,
   DataService,
 } from 'src/app/core/services/common-services';
-import CustomButtonModule from 'src/app/custom-components/custom-buttons/custom-button.module';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
   selector: 'app-person-addoredit-address',
   templateUrl: './person-addoredit-address.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    CustomButtonModule,
-    CustomInputModule,
-    ReactiveFormsModule,
-  ],
+  imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class PersonAddoreditAddressComponent implements OnInit {
   private formBuilder = inject(FormBuilder);
@@ -32,6 +22,7 @@ export default class PersonAddoreditAddressComponent implements OnInit {
   public ref = inject(DynamicDialogRef);
   public config = inject(DynamicDialogConfig);
   private customToastService = inject(CustomToastService);
+  public apiRequestService = inject(ApiRequestService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 

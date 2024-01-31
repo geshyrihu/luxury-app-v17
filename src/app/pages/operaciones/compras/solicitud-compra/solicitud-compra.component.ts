@@ -1,18 +1,10 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgbProgressbar } from '@ng-bootstrap/ng-bootstrap';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { ToastModule } from 'primeng/toast';
 import { Subject, takeUntil } from 'rxjs';
 import { EStatusOrdenCompra } from 'src/app/core/enums/estatus-orden-compra.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
@@ -34,21 +26,10 @@ import SolicitudCompraDetalleComponent from './solicitud-compra-detalle/solicitu
   templateUrl: './solicitud-compra.component.html',
   standalone: true,
   imports: [
+    AddProductComponent,
     LuxuryAppComponentsModule,
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
     NgbProgressbar,
     SolicitudCompraDetalleComponent,
-    AddProductComponent,
-    ToastModule,
-    RouterModule,
-  ],
-  providers: [
-    DialogService,
-    MessageService,
-    ConfirmationService,
-    CustomToastService,
   ],
 })
 export default class SolicitudCompraComponent implements OnInit, OnDestroy {

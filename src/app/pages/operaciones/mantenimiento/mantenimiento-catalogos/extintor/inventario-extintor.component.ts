@@ -12,7 +12,7 @@ import {
   CustomerIdService,
   DataService,
 } from 'src/app/core/services/common-services';
-import PrimeNgModule from 'src/app/shared/prime-ng.module';
+
 import { environment } from 'src/environments/environment';
 import AddoreditInventarioExtintorComponent from './addoredit-inventario-extintor.component';
 
@@ -20,7 +20,7 @@ import AddoreditInventarioExtintorComponent from './addoredit-inventario-extinto
   selector: 'app-inventario-extintor',
   templateUrl: './inventario-extintor.component.html',
   standalone: true,
-  imports: [LuxuryAppComponentsModule, PrimeNgModule, ImageModule],
+  imports: [LuxuryAppComponentsModule, ImageModule],
 })
 export default class InventarioExtintorComponent implements OnInit, OnDestroy {
   public customToastService = inject(CustomToastService);

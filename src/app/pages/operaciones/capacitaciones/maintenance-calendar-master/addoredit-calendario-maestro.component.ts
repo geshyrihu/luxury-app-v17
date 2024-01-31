@@ -14,6 +14,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { EMonth } from 'src/app/core/enums/month.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { SelectItemService } from 'src/app/core/services/select-item.service';
@@ -43,6 +44,7 @@ export default class AddOrEditCalendarioMaestroComponent
   public config = inject(DynamicDialogConfig);
   public ref = inject(DynamicDialogRef);
   private customToastService = inject(CustomToastService);
+  public apiRequestService = inject(ApiRequestService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 

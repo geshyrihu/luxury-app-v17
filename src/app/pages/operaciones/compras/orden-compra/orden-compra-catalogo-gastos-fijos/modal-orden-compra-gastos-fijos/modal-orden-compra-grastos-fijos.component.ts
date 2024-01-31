@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
@@ -12,7 +11,6 @@ import FormGastosFijosServiciosComponent from '../form-gastos-fijos-servicios/fo
   standalone: true,
   imports: [
     LuxuryAppComponentsModule,
-    CommonModule,
     NgbNavModule,
     FormCatalogoGastosFijosComponent,
     FormGastosFijosServiciosComponent,

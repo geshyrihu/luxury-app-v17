@@ -1,6 +1,4 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -12,7 +10,6 @@ import {
   DataService,
   OrdenCompraService,
 } from 'src/app/core/services/common-services';
-import PrimeNgModule from 'src/app/shared/prime-ng.module';
 
 const fechaActual = new Date();
 
@@ -20,12 +17,7 @@ const fechaActual = new Date();
   selector: 'app-orden-compra-presupuesto',
   templateUrl: './orden-compra-presupuesto.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    FormsModule,
-    CommonModule,
-    PrimeNgModule,
-  ],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class OrdenCompraPresupuestoComponent
   implements OnInit, OnDestroy

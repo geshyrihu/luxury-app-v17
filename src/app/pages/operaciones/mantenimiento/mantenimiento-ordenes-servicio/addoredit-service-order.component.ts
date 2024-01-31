@@ -1,29 +1,25 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import LuxuryAppComponentsModule, {
   flatpickrFactory,
 } from 'app/shared/luxuryapp-components.module';
-import { MessageService, SelectItem } from 'primeng/api';
+import { SelectItem } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { EStatusTask } from 'src/app/core/enums/estatus-task.enum';
 import { ETypeMaintance } from 'src/app/core/enums/type-maintance.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
-import { CustomerIdService } from 'src/app/core/services/common-services';
+import {
+  ApiRequestService,
+  CustomerIdService,
+} from 'src/app/core/services/common-services';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
 import { SelectItemService } from 'src/app/core/services/select-item.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import ValidationErrorsCustomInputComponent from 'src/app/custom-components/custom-input-form/validation-errors-custom-input/validation-errors-custom-input.component';
-import PrimeNgModule from 'src/app/shared/prime-ng.module';
 
 @Component({
   selector: 'app-addoredit-service-order',
@@ -31,19 +27,15 @@ import PrimeNgModule from 'src/app/shared/prime-ng.module';
   standalone: true,
   imports: [
     LuxuryAppComponentsModule,
-    CommonModule,
-    ReactiveFormsModule,
-    LuxuryAppComponentsModule,
     CustomInputModule,
-    PrimeNgModule,
     ValidationErrorsCustomInputComponent,
   ],
-  providers: [CustomToastService, MessageService],
 })
 export default class ServiceOrderAddOrEditComponent
   implements OnInit, OnDestroy
 {
   private customToastService = inject(CustomToastService);
+  public apiRequestService = inject(ApiRequestService);
   private formBuilder = inject(FormBuilder);
   public config = inject(DynamicDialogConfig);
   public customerIdService = inject(CustomerIdService);

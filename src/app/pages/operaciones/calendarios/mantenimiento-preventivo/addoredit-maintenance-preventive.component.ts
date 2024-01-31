@@ -1,11 +1,5 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { SelectItem } from 'primeng/api';
@@ -16,6 +10,7 @@ import { ETypeMaintance } from 'src/app/core/enums/type-maintance.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import {
+  ApiRequestService,
   AuthService,
   CustomToastService,
   CustomerIdService,
@@ -23,25 +18,18 @@ import {
   SelectItemService,
 } from 'src/app/core/services/common-services';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
-import PrimeNgModule from 'src/app/shared/prime-ng.module';
 
 @Component({
   selector: 'app-addoredit-maintenance-preventive',
   templateUrl: './addoredit-maintenance-preventive.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    CommonModule,
-    ReactiveFormsModule,
-    LuxuryAppComponentsModule,
-    CustomInputModule,
-    PrimeNgModule,
-  ],
+  imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class AddoreditMaintenancePreventiveComponent
   implements OnInit, OnDestroy
 {
   private customToastService = inject(CustomToastService);
+  public apiRequestService = inject(ApiRequestService);
   private formBuilder = inject(FormBuilder);
   public authService = inject(AuthService);
   public config = inject(DynamicDialogConfig);

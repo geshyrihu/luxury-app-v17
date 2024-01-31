@@ -1,14 +1,6 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import {
-  FormBuilder,
-  ReactiveFormsModule,
-  UntypedFormGroup,
-  Validators,
-} from '@angular/forms';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { ToastModule } from 'primeng/toast';
 import { Subject, takeUntil } from 'rxjs';
 import { passwordValidation } from 'src/app/core/directives/password-validation.directive';
 import { ChangePassword } from 'src/app/core/interfaces/change-password.interface';
@@ -22,14 +14,7 @@ import {
   selector: 'app-update-password',
   templateUrl: './update-password.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    CommonModule,
-    LuxuryAppComponentsModule,
-    ReactiveFormsModule,
-    NgbModule,
-    ToastModule,
-  ],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class UpdatePasswordComponent implements OnInit, OnDestroy {
   public authService = inject(AuthService);

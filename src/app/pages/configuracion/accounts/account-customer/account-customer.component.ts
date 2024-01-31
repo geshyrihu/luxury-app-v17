@@ -14,7 +14,7 @@
 // import CardEmployeeComponent from 'src/app/pages/operaciones/directorios/empleados/card-employee/card-employee.component';
 // import ComponentsModule from 'src/app/shared/components.module';
 // import DropdownRouteComponent from 'src/app/shared/ngb-dropdown-menu/dropdown-route.component';
-// import PrimeNgModule from 'src/app/shared/prime-ng.module';
+// 
 // import TableHeaderComponent from 'src/app/shared/table-header/table-header.component';
 // import { environment } from 'src/environments/environment';
 // import MdEditAccountComponent from '../modal-edit-account/md-edit-account.component';
@@ -29,7 +29,7 @@
 //     DropdownRouteComponent,
 //     NgbDropdownModule,
 //     PhoneFormatPipe,
-//     PrimeNgModule,
+//     
 //     TableHeaderComponent,
 //   ],
 //

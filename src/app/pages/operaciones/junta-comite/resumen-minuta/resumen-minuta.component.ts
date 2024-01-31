@@ -1,12 +1,8 @@
 import { Clipboard } from '@angular/cdk/clipboard';
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { MessageService } from 'primeng/api';
-import { TableModule } from 'primeng/table';
 import { Subject, takeUntil } from 'rxjs';
-import { SanitizeHtmlPipe } from 'src/app/core/pipes/sanitize-html.pipe';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { ReportService } from 'src/app/core/services/report.service';
@@ -16,15 +12,7 @@ import ResumenMinutaGraficoComponent from '../resumen-minuta-grafico/resumen-min
   selector: 'app-resumen-minuta',
   templateUrl: './resumen-minuta.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    ResumenMinutaGraficoComponent,
-    LuxuryAppComponentsModule,
-    CommonModule,
-    TableModule,
-    SanitizeHtmlPipe,
-  ],
-  providers: [CustomToastService, MessageService],
+  imports: [LuxuryAppComponentsModule, ResumenMinutaGraficoComponent],
 })
 export default class ResumenMinutaComponent implements OnInit, OnDestroy {
   public customToastService = inject(CustomToastService);

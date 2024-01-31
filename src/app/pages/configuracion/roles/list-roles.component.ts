@@ -1,8 +1,8 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { Subject, takeUntil } from 'rxjs';
 import {
+  ApiRequestService,
   CustomToastService,
   DataService,
 } from 'src/app/core/services/common-services';
@@ -10,10 +10,11 @@ import {
   selector: 'app-list-roles',
   templateUrl: './list-roles.component.html',
   standalone: true,
-  imports: [LuxuryAppComponentsModule, CommonModule],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class ListRolesComponent implements OnInit, OnDestroy {
   private customToastService = inject(CustomToastService);
+  public apiRequestService = inject(ApiRequestService);
   private dataService = inject(DataService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente

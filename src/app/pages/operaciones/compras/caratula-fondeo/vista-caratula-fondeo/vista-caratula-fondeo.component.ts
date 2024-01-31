@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
@@ -11,7 +10,7 @@ import {
   Txt,
 } from 'pdfmake-wrapper';
 import { ITable } from 'pdfmake-wrapper/lib/interfaces';
-import { MenuItem, MessageService } from 'primeng/api';
+import { MenuItem } from 'primeng/api';
 import { ContextMenuModule } from 'primeng/contextmenu';
 import { Subject, takeUntil } from 'rxjs';
 import { IFondeoCaratulaDto } from 'src/app/core/interfaces/IFondeoCaratulaDto.interface';
@@ -24,7 +23,7 @@ import { CaratulaFondeoService } from 'src/app/core/services/caratula-fondeo.ser
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
-import PrimeNgModule from 'src/app/shared/prime-ng.module';
+
 import { environment } from 'src/environments/environment';
 const date = new Date();
 
@@ -33,14 +32,7 @@ PdfMakeWrapper.useFont('roboto');
   selector: 'app-vista-caratula-fondeo',
   templateUrl: './vista-caratula-fondeo.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    CommonModule,
-    PrimeNgModule,
-    ContextMenuModule,
-    CurrencyMexicoPipe,
-  ],
-  providers: [CustomToastService, MessageService],
+  imports: [LuxuryAppComponentsModule, ContextMenuModule, CurrencyMexicoPipe],
 })
 export default class VistaCaratulaFondeoComponent implements OnInit, OnDestroy {
   public dateService = inject(DateService);

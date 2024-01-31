@@ -1,18 +1,11 @@
-import { CommonModule } from '@angular/common';
 import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { ToastModule } from 'primeng/toast';
 import { Subject, takeUntil } from 'rxjs';
 import { IEditarCuentaDto } from 'src/app/core/interfaces/IEditarCuentaDto.interface';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import {
+  ApiRequestService,
   AuthService,
   CustomToastService,
   CustomerIdService,
@@ -25,18 +18,11 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   selector: 'app-update-account',
   templateUrl: './update-account.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    CommonModule,
-    LuxuryAppComponentsModule,
-    CustomInputModule,
-    NgbModule,
-    ReactiveFormsModule,
-    ToastModule,
-  ],
+  imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class UpdateAccountComponent implements OnInit, OnDestroy {
   private customToastService = inject(CustomToastService);
+  public apiRequestService = inject(ApiRequestService);
   private dataService = inject(DataService);
   private formBuilder = inject(FormBuilder);
   private selectItemService = inject(SelectItemService);

@@ -1,6 +1,4 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { NgbAlert } from '@ng-bootstrap/ng-bootstrap';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -16,12 +14,7 @@ import MantenimientosPreventivosResumenComponent from '../mttos-preventivos-resu
   selector: 'app-mttos-preventivos',
   templateUrl: './mttos-preventivos.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    NgbAlert,
-    LuxuryAppComponentsModule,
-    CommonModule,
-  ],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class MantenimientosPreventivosComponent
   implements OnInit, OnDestroy

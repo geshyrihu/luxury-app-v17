@@ -1,6 +1,5 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
+import { Router } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
@@ -11,7 +10,7 @@ import {
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DataService } from 'src/app/core/services/data.service';
-import PrimeNgModule from 'src/app/shared/prime-ng.module';
+
 import AddOrEditSolicitudAltaComponent from '../list-solicitudes/list-solicitud-alta/addoredit-solicitud-alta/addoredit-solicitud-alta.component';
 import AddoreditSolicitudBajaComponent from '../list-solicitudes/list-solicitud-baja/addoredit-solicitud-baja/addoredit-solicitud-baja.component';
 import AddoreditModificacionSalarioComponent from '../list-solicitudes/list-solicitud-modificación-sueldo/addoredit-modificacion-salario/addoredit-modificacion-salario.component';
@@ -21,12 +20,7 @@ import AddOrEditVacanteComponent from '../list-solicitudes/list-solicitud-vacant
   selector: 'app-list-solicitudes-por-cliente',
   templateUrl: './list-solicitudes-por-cliente.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    PrimeNgModule,
-    CommonModule,
-    RouterModule,
-  ],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class ListSolicitudesPorClienteComponent implements OnInit {
   private dataService = inject(DataService);

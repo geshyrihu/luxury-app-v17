@@ -1,13 +1,12 @@
-import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
+import { Router } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { menuPanel } from './menu-panel';
 @Component({
   selector: 'app-panel',
   templateUrl: './panel.component.html',
   standalone: true,
-  imports: [LuxuryAppComponentsModule, CommonModule, RouterModule],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class PanelComponent {
   private route = inject(Router);

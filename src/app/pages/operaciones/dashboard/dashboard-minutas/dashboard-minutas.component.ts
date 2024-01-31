@@ -1,11 +1,7 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { ToastModule } from 'primeng/toast';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { IFechasFiltro } from 'src/app/core/interfaces/IFechasFiltro.interface';
 import {
@@ -21,14 +17,7 @@ import DashboardMinutasResumenComponent from '../dashboard-minutas-resumen/dashb
   selector: 'app-dashboard-minutas',
   templateUrl: './dashboard-minutas.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    RouterModule,
-    CommonModule,
-    LuxuryAppComponentsModule,
-    NgbAlertModule,
-    ToastModule,
-  ],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class DashboardMinutasComponent implements OnInit, OnDestroy {
   public customToastService = inject(CustomToastService);

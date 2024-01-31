@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -13,7 +12,7 @@ const baseUrlImg = environment.base_urlImg;
   selector: 'app-person-update-photo',
   templateUrl: './person-update-photo.component.html',
   standalone: true,
-  imports: [LuxuryAppComponentsModule, CommonModule, LuxuryAppComponentsModule],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class PersonUpdatePhotoComponent implements OnInit, OnDestroy {
   public config = inject(DynamicDialogConfig);

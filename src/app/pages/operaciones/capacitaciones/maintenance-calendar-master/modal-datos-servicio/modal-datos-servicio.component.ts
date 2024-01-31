@@ -1,6 +1,4 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import {
   DialogService,
@@ -12,7 +10,7 @@ import TarjetaProveedorComponent from 'src/app/pages/operaciones/directorios/pro
   selector: 'app-modal-datos-servicio',
   templateUrl: './modal-datos-servicio.component.html',
   standalone: true,
-  imports: [LuxuryAppComponentsModule, FormsModule, CommonModule],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class ModalDatosServicioComponent implements OnInit {
   public config = inject(DynamicDialogConfig);

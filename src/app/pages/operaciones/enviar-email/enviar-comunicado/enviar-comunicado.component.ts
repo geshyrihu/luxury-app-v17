@@ -1,11 +1,5 @@
-import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import {
-  FormControl,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import {
   FileUploadControl,
@@ -23,19 +17,12 @@ import {
 } from 'src/app/core/services/common-services';
 import AgregarCorreoElectronicoComponent from 'src/app/shared/agregar-correo-electronico/agregar-correo-electronico.component';
 import ListadoCondominosComponent from 'src/app/shared/listado-condominos/listado-condominos.component';
-import PrimeNgModule from 'src/app/shared/prime-ng.module';
+
 @Component({
   selector: 'app-enviar-comunicado',
   templateUrl: './enviar-comunicado.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    CommonModule,
-    ReactiveFormsModule,
-    FileUploadModule,
-    FormsModule,
-    PrimeNgModule,
-  ],
+  imports: [LuxuryAppComponentsModule, ReactiveFormsModule, FileUploadModule],
 })
 export default class EnviarComunicadoComponent {
   public customToastService = inject(CustomToastService);

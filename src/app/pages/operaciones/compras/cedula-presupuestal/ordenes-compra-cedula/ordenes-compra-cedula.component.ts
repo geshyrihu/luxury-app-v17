@@ -11,17 +11,19 @@ import { Subject, takeUntil } from 'rxjs';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { OrdenCompraService } from 'src/app/core/services/orden-compra.service';
-import PrimeNgModule from 'src/app/shared/prime-ng.module';
+
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import OrdenCompraComponent from '../../orden-compra/orden-compra/orden-compra.component';
 
 @Component({
   selector: 'app-ordenes-compra-cedula',
   templateUrl: './ordenes-compra-cedula.component.html',
   standalone: true,
-  imports: [LuxuryAppComponentsModule, CommonModule, PrimeNgModule, NgbTooltip],
+  imports: [LuxuryAppComponentsModule, CommonModule, NgbTooltip],
 })
 export default class OrdenesCompraCedulaComponent implements OnInit, OnDestroy {
   private customToastService = inject(CustomToastService);
+  public apiRequestService = inject(ApiRequestService);
   private dataService = inject(DataService);
   public config = inject(DynamicDialogConfig);
   public dialogService = inject(DialogService);

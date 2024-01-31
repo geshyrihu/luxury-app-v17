@@ -1,7 +1,5 @@
-import { CommonModule } from '@angular/common';
 import { Component, inject, OnDestroy, type OnInit } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import PrimeNgModule from 'app/shared/prime-ng.module';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
@@ -17,12 +15,7 @@ import AddOrEditCustomerProviderComponent from '../addoredit-customer-provider.c
 @Component({
   selector: 'app-mis-proveedores',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    CommonModule,
-    PrimeNgModule,
-    LuxuryAppComponentsModule,
-  ],
+  imports: [LuxuryAppComponentsModule],
   templateUrl: './mis-proveedores.component.html',
 })
 export default class MisProveedoresComponent implements OnInit, OnDestroy {

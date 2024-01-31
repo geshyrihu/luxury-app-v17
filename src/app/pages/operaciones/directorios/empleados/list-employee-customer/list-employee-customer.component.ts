@@ -1,8 +1,6 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { IEmployeeDto } from 'src/app/core/interfaces/IEmployeeDto.interface';
@@ -12,7 +10,7 @@ import {
   CustomerIdService,
   DataService,
 } from 'src/app/core/services/common-services';
-import PrimeNgModule from 'src/app/shared/prime-ng.module';
+
 import { environment } from 'src/environments/environment';
 import AddAccountCustomerComponent from '../add-account-to-customer/add-account-customer.component';
 import CardEmployeeComponent from '../card-employee/card-employee.component';
@@ -23,19 +21,7 @@ const base_urlImg = environment.base_urlImg + 'Administration/accounts/';
   selector: 'app-list-employee-customer',
   templateUrl: './list-employee-customer.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    CommonModule,
-    LuxuryAppComponentsModule,
-    PrimeNgModule,
-  ],
-  providers: [
-    DialogService,
-    MessageService,
-    ConfirmationService,
-    CustomToastService,
-    DataService,
-  ],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class ListEmployeeComponent implements OnInit, OnDestroy {
   private customerIdService = inject(CustomerIdService);

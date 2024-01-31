@@ -1,11 +1,5 @@
-import { CommonModule } from '@angular/common';
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -14,25 +8,18 @@ import { EAreaMinutasDetalles } from 'src/app/core/enums/area-minutas-detalles.e
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import {
+  ApiRequestService,
   AuthService,
   CustomToastService,
   DataService,
 } from 'src/app/core/services/common-services';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
-import PrimeNgModule from 'src/app/shared/prime-ng.module';
 
 @Component({
   selector: 'app-addoredit-minuta-detalle',
   templateUrl: './addoredit-minuta-detalle.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    ReactiveFormsModule,
-    LuxuryAppComponentsModule,
-    CommonModule,
-    CustomInputModule,
-    PrimeNgModule,
-  ],
+  imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class AddoreditMinutaDetalleComponent
   implements OnInit, OnDestroy
@@ -43,6 +30,7 @@ export default class AddoreditMinutaDetalleComponent
   public config = inject(DynamicDialogConfig);
   public authService = inject(AuthService);
   private customToastService = inject(CustomToastService);
+  public apiRequestService = inject(ApiRequestService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 

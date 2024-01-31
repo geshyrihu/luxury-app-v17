@@ -1,9 +1,6 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { MessageService } from 'primeng/api';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
-import { TableModule } from 'primeng/table';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { CustomerIdService } from 'src/app/core/services/common-services';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
@@ -15,13 +12,7 @@ import PagetitleReportComponent from 'src/app/shared/cabeceras/pagetitlereport/p
   selector: 'app-report-salida-almacen',
   templateUrl: './report-salida-almacen.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    TableModule,
-    CommonModule,
-    PagetitleReportComponent,
-  ],
-  providers: [CustomToastService, MessageService],
+  imports: [LuxuryAppComponentsModule, PagetitleReportComponent],
 })
 export default class ReportSalidaAlmacenComponent implements OnInit {
   private dataService = inject(DataService);

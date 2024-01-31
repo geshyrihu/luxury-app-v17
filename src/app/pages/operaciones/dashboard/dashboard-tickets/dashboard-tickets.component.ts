@@ -1,7 +1,4 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
@@ -13,15 +10,9 @@ import {
 import DashboardTicketsResumenComponent from '../dashboard-tickets-resumen/dashboard-tickets-resumen.component';
 @Component({
   selector: 'app-dashboard-tickets',
-  standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    RouterModule,
-    NgbAlertModule,
-    CommonModule,
-  ],
   templateUrl: './dashboard-tickets.component.html',
-  providers: [DialogService, CustomToastService],
+  standalone: true,
+  imports: [LuxuryAppComponentsModule],
 })
 export default class DashboardTicketsComponent implements OnInit, OnDestroy {
   public dataService = inject(DataService);

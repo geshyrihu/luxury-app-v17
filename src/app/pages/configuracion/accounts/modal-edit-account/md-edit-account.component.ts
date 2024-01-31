@@ -1,6 +1,4 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { RouterModule } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -22,8 +20,6 @@ import UpdateRoleComponent from './update-roles/update-role.component';
   standalone: true,
   imports: [
     LuxuryAppComponentsModule,
-    CommonModule,
-    RouterModule,
     AccessCustomerComponent,
     UpdateRoleComponent,
     UpdatePasswordAccountComponent,
@@ -33,7 +29,6 @@ import UpdateRoleComponent from './update-roles/update-role.component';
 export default class MdEditAccountComponent implements OnInit, OnDestroy {
   private dataService = inject(DataService);
   private selectItemService = inject(SelectItemService);
-
   public config = inject(DynamicDialogConfig);
   public messageService = inject(MessageService);
   public ref = inject(DynamicDialogRef);

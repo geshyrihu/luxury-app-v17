@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import {
@@ -6,7 +5,6 @@ import {
   DynamicDialogConfig,
   DynamicDialogRef,
 } from 'primeng/dynamicdialog';
-import { TableModule } from 'primeng/table';
 import { Subject, takeUntil } from 'rxjs';
 import {
   CustomToastService,
@@ -18,7 +16,7 @@ import AddorEditMeetingSeguimientoComponent from 'src/app/pages/operaciones/junt
   selector: 'app-cont-minuta-seguimientos',
   templateUrl: './cont-minuta-seguimientos.component.html',
   standalone: true,
-  imports: [LuxuryAppComponentsModule, CommonModule, TableModule],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class ContMinutaSeguimientosComponent
   implements OnInit, OnDestroy

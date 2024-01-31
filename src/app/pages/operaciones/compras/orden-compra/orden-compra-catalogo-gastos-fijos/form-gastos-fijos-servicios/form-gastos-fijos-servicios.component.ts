@@ -1,6 +1,4 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { Subject, takeUntil } from 'rxjs';
@@ -11,19 +9,14 @@ import {
   DataService,
   SelectItemService,
 } from 'src/app/core/services/common-services';
-import PrimeNgModule from 'src/app/shared/prime-ng.module';
+
 import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-form-gastos-fijos-servicios',
   templateUrl: './form-gastos-fijos-servicios.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    FormsModule,
-    CommonModule,
-    PrimeNgModule,
-  ],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class FormGastosFijosServiciosComponent
   implements OnInit, OnDestroy

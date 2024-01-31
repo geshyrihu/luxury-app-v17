@@ -1,18 +1,12 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { TableModule } from 'primeng/table';
 import { Subject, takeUntil } from 'rxjs';
 import { EAreaMinutasDetalles } from 'src/app/core/enums/area-minutas-detalles.enum';
 import {
   onGetNameEnumeration,
   onGetSelectItemFromEnum,
 } from 'src/app/core/helpers/enumeration';
-import { EAreaMinutasDetallesPipe } from 'src/app/core/pipes/area-minuta-detalles.pipe';
-import { SanitizeHtmlPipe } from 'src/app/core/pipes/sanitize-html.pipe';
-import { EStatusPipe } from 'src/app/core/pipes/status.pipe';
 import {
   CustomToastService,
   DataService,
@@ -22,15 +16,7 @@ import {
   selector: 'app-filtro-minutas-area',
   templateUrl: './filtro-minutas-area.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    CommonModule,
-    TableModule,
-    EAreaMinutasDetallesPipe,
-    SanitizeHtmlPipe,
-    EStatusPipe,
-  ],
-  providers: [CustomToastService, MessageService],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class FiltroMinutasAreaComponent implements OnInit, OnDestroy {
   private dataService = inject(DataService);

@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
@@ -11,11 +11,12 @@ import { DataService } from 'src/app/core/services/data.service';
   selector: 'app-send-work-plan',
   templateUrl: './send-work-plan.component.html',
   standalone: true,
-  imports: [LuxuryAppComponentsModule, FormsModule],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class SendWorkPlanComponent {
   private dataService = inject(DataService);
   private customToastService = inject(CustomToastService);
+  public apiRequestService = inject(ApiRequestService);
   private customerIdService = inject(CustomerIdService);
   private authService = inject(AuthService);
 

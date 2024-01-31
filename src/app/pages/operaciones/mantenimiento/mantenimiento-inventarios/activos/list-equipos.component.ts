@@ -1,14 +1,10 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subject, Subscription } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
-import { CurrencyMexicoPipe } from 'src/app/core/pipes/currencyMexico.pipe';
-import { SanitizeHtmlPipe } from 'src/app/core/pipes/sanitize-html.pipe';
 import {
   ApiRequestService,
   AuthService,
@@ -17,7 +13,7 @@ import {
   DataService,
 } from 'src/app/core/services/common-services';
 import AddoreditMaintenancePreventiveComponent from 'src/app/pages/operaciones/calendarios/mantenimiento-preventivo/addoredit-maintenance-preventive.component';
-import PrimeNgModule from 'src/app/shared/prime-ng.module';
+
 import { environment } from 'src/environments/environment';
 import BitacoraIndividualComponent from '../../mantenimiento-bitacoras/recorridos/bitacora-individual.component';
 import OrderServiceComponent from '../orden-service/order-service.component';
@@ -30,20 +26,7 @@ import ServiceHistoryMachineryComponent from './service-history-machinery/servic
   selector: 'app-list-equipos',
   templateUrl: './list-equipos.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    CommonModule,
-    PrimeNgModule,
-    CurrencyMexicoPipe,
-    SanitizeHtmlPipe,
-    NgbTooltipModule,
-  ],
-  providers: [
-    DialogService,
-    MessageService,
-    ConfirmationService,
-    CustomToastService,
-  ],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class ListEquiposComponent implements OnInit, OnDestroy {
   public customToastService = inject(CustomToastService);

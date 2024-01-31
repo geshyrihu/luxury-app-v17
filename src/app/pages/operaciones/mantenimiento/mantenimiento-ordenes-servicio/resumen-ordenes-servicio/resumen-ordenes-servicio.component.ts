@@ -1,9 +1,6 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { TableModule } from 'primeng/table';
 import { Subject, takeUntil } from 'rxjs';
-import { EStatusPipe } from 'src/app/core/pipes/status.pipe';
 import { CustomerIdService } from 'src/app/core/services/common-services';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
@@ -14,14 +11,7 @@ import ResumenOrdenesServicioGraficoComponent from '../resumen-ordenes-servicio-
   selector: 'app-resumen-ordenes-servicio',
   templateUrl: './resumen-ordenes-servicio.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    ResumenOrdenesServicioGraficoComponent,
-    CommonModule,
-    LuxuryAppComponentsModule,
-    TableModule,
-    EStatusPipe,
-  ],
+  imports: [LuxuryAppComponentsModule, ResumenOrdenesServicioGraficoComponent],
 })
 export default class ResumenOrdenesServicioComponent
   implements OnInit, OnDestroy

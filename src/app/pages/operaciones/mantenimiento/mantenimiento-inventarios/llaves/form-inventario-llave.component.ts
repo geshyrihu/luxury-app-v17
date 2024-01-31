@@ -1,17 +1,12 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { IInventarioLlaveAddOrEditDto } from 'src/app/core/interfaces/IInventarioLlaveAddOrEditDto.interface';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import {
+  ApiRequestService,
   AuthService,
   CustomToastService,
   CustomerIdService,
@@ -23,13 +18,7 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   selector: 'app-form-inventario-llave',
   templateUrl: './form-inventario-llave.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    CommonModule,
-    LuxuryAppComponentsModule,
-    ReactiveFormsModule,
-    CustomInputModule,
-  ],
+  imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class FormInventarioLlaveComponent implements OnInit, OnDestroy {
   private formBuilder = inject(FormBuilder);
@@ -39,6 +28,7 @@ export default class FormInventarioLlaveComponent implements OnInit, OnDestroy {
   public customerIdService = inject(CustomerIdService);
   public authService = inject(AuthService);
   private customToastService = inject(CustomToastService);
+  public apiRequestService = inject(ApiRequestService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
   submitting: boolean = false;

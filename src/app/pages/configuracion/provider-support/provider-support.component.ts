@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import PrimeNgModule from 'app/shared/prime-ng.module';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
@@ -17,7 +16,7 @@ import AddOrEditprovidersupportComponent from './add-or-edit-provider-support/ad
   selector: 'app-provider-support',
   templateUrl: './provider-support.component.html',
   standalone: true,
-  imports: [LuxuryAppComponentsModule, PrimeNgModule],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class providersupportComponent implements OnInit, OnDestroy {
   private dataService = inject(DataService);

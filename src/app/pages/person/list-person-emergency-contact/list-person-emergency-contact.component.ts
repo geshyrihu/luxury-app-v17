@@ -1,8 +1,5 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import PrimeNgModule from 'app/shared/prime-ng.module';
 import { NgxMaskModule } from 'ngx-mask';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import {
@@ -10,7 +7,6 @@ import {
   DynamicDialogConfig,
   DynamicDialogRef,
 } from 'primeng/dynamicdialog';
-import { ToastModule } from 'primeng/toast';
 import { Subject, takeUntil } from 'rxjs';
 import {
   CustomToastService,
@@ -23,16 +19,7 @@ import AddoreditPersonEmergencyContactComponent from '../addoredit-person-emerge
   selector: 'app-list-person-emergency-contact',
   templateUrl: './list-person-emergency-contact.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    CommonModule,
-    ReactiveFormsModule,
-    LuxuryAppComponentsModule,
-    FormsModule,
-    ToastModule,
-    NgxMaskModule,
-    PrimeNgModule,
-  ],
+  imports: [LuxuryAppComponentsModule, NgxMaskModule],
   providers: [MessageService, ConfirmationService, CustomToastService],
 })
 export default class ListPersonEmergencyContactComponent

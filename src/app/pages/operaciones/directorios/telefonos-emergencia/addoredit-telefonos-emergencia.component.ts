@@ -1,15 +1,10 @@
-import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import {
+  ApiRequestService,
   CustomToastService,
   DataService,
 } from 'src/app/core/services/common-services';
@@ -20,13 +15,7 @@ import { environment } from 'src/environments/environment';
   selector: 'app-addoredit-telefonos-emergencia',
   templateUrl: './addoredit-telefonos-emergencia.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    ReactiveFormsModule,
-    LuxuryAppComponentsModule,
-    CommonModule,
-    CustomInputModule,
-  ],
+  imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class AddOrEditTelefonosEmergenciaComponent {
   private formBuilder = inject(FormBuilder);
@@ -34,6 +23,7 @@ export default class AddOrEditTelefonosEmergenciaComponent {
   public ref = inject(DynamicDialogRef);
   public dataService = inject(DataService);
   private customToastService = inject(CustomToastService);
+  public apiRequestService = inject(ApiRequestService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 

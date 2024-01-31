@@ -1,11 +1,6 @@
-import { CommonModule, DatePipe } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule, {
   flatpickrFactory,
 } from 'app/shared/luxuryapp-components.module';
@@ -20,6 +15,7 @@ import { ETypeContract } from 'src/app/core/enums/type-contract.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import { phonePrefixes } from 'src/app/core/interfaces/phone-number-prefix';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
@@ -31,17 +27,12 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   selector: 'app-addoredit-person-data',
   templateUrl: './addoredit-person-data.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    ReactiveFormsModule,
-    LuxuryAppComponentsModule,
-    CommonModule,
-    CustomInputModule,
-  ],
-  providers: [DatePipe, CustomToastService],
+  imports: [LuxuryAppComponentsModule, CustomInputModule],
+  providers: [DatePipe],
 })
 export default class AddoreditPersonDataComponent implements OnInit, OnDestroy {
   private customToastService = inject(CustomToastService);
+  public apiRequestService = inject(ApiRequestService);
   private formBuilder = inject(FormBuilder);
   public authService = inject(AuthService);
   public config = inject(DynamicDialogConfig);

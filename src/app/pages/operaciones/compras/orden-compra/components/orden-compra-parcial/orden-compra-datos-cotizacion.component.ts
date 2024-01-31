@@ -1,12 +1,10 @@
-import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { RouterModule } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 @Component({
   selector: 'app-orden-compra-datos-cotizacion',
   templateUrl: './orden-compra-datos-cotizacion.component.html',
   standalone: true,
-  imports: [LuxuryAppComponentsModule, RouterModule, CommonModule],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class OrdenCompraDatosCotizacionComponent {
   @Input()

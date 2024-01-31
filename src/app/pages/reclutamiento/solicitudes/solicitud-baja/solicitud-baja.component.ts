@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import {
   AbstractControl,
@@ -6,11 +5,9 @@ import {
   FormBuilder,
   FormControl,
   FormGroup,
-  ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
 import { FileUploadModule, FileUploadValidators } from '@iplab/ngx-file-upload';
-import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
@@ -19,6 +16,7 @@ import { ETipoBaja } from 'src/app/core/enums/tipo-baja.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import {
+  ApiRequestService,
   AuthService,
   CustomToastService,
   CustomerIdService,
@@ -31,17 +29,11 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   selector: 'app-solicitud-baja',
   templateUrl: './solicitud-baja.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    CustomInputModule,
-    ReactiveFormsModule,
-    CommonModule,
-    FileUploadModule,
-    NgbAlertModule,
-  ],
+  imports: [LuxuryAppComponentsModule, CustomInputModule, FileUploadModule],
 })
 export default class SolicitudBajaComponent implements OnInit, OnDestroy {
   private customToastService = inject(CustomToastService);
+  public apiRequestService = inject(ApiRequestService);
   private dataService = inject(DataService);
   private formBuilder = inject(FormBuilder);
   public authService = inject(AuthService);

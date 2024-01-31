@@ -1,10 +1,7 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { TableModule } from 'primeng/table';
 import { Subject, takeUntil } from 'rxjs';
 import { EAreaMinutasDetalles } from 'src/app/core/enums/area-minutas-detalles.enum';
 import { EStatusTask } from 'src/app/core/enums/estatus-task.enum';
@@ -19,7 +16,7 @@ import ResultadoGeneralEvaluacionAreasDetalleComponent from './resultado-general
   selector: 'app-evaluacion-areas',
   templateUrl: './resultado-general-evaluacion-areas.component.html',
   standalone: true,
-  imports: [LuxuryAppComponentsModule, FormsModule, CommonModule, TableModule],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class EvaluacionAreasComponent implements OnInit, OnDestroy {
   public dataService = inject(DataService);

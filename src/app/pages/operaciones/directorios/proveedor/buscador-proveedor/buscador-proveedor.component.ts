@@ -1,15 +1,8 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import {
-  NgbAlert,
-  NgbRatingModule,
-  NgbTooltipModule,
-} from '@ng-bootstrap/ng-bootstrap';
+import { NgbRatingModule } from '@ng-bootstrap/ng-bootstrap';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { ToastModule } from 'primeng/toast';
 import { Subject, takeUntil } from 'rxjs';
 import {
   ApiRequestService,
@@ -26,22 +19,7 @@ import TarjetaProveedorComponent from '../tarjeta-proveedor/tarjeta-proveedor.co
   selector: 'app-buscador-proveedor',
   templateUrl: './buscador-proveedor.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    CommonModule,
-    FormsModule,
-    LuxuryAppComponentsModule,
-    NgbRatingModule,
-    NgbTooltipModule,
-    NgbAlert,
-    ToastModule,
-  ],
-  providers: [
-    DialogService,
-    MessageService,
-    ConfirmationService,
-    CustomToastService,
-  ],
+  imports: [LuxuryAppComponentsModule, NgbRatingModule],
 })
 export default class BuscadorProvedorComponent implements OnInit, OnDestroy {
   public customToastService = inject(CustomToastService);

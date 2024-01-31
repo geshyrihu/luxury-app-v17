@@ -1,6 +1,4 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
@@ -9,19 +7,12 @@ import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
 import { FiltroCalendarService } from 'src/app/core/services/filtro-calendar.service';
-// import { ViewPdfService } from 'src/app/core/services/view-pdf.service';import ComponentsModule from 'src/app/shared/components.module';
-import PrimeNgModule from 'src/app/shared/prime-ng.module';
 
 @Component({
   selector: 'app-presentaciones-juntas-comite',
   templateUrl: './presentaciones-juntas-comite.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    CommonModule,
-    FormsModule,
-    PrimeNgModule,
-  ],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class PresentacionesJuntasComiteComponent
   implements OnInit, OnDestroy

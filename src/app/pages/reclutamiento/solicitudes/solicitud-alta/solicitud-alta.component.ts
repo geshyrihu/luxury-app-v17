@@ -1,11 +1,5 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
@@ -14,6 +8,7 @@ import { ETypeContract } from 'src/app/core/enums/type-contract.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import {
+  ApiRequestService,
   AuthService,
   CustomToastService,
   DataService,
@@ -27,8 +22,6 @@ import ValidationErrorsCustomInputComponent from 'src/app/custom-components/cust
   standalone: true,
   imports: [
     LuxuryAppComponentsModule,
-    ReactiveFormsModule,
-    CommonModule,
     CustomInputModule,
     ValidationErrorsCustomInputComponent,
   ],
@@ -36,6 +29,7 @@ import ValidationErrorsCustomInputComponent from 'src/app/custom-components/cust
 })
 export default class SolicitudAltaComponent implements OnInit, OnDestroy {
   private customToastService = inject(CustomToastService);
+  public apiRequestService = inject(ApiRequestService);
   private dataService = inject(DataService);
   private formBuilder = inject(FormBuilder);
   public authService = inject(AuthService);

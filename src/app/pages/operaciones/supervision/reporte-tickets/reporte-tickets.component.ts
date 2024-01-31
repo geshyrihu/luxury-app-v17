@@ -1,9 +1,7 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
-import { TableModule } from 'primeng/table';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { CustomerIdService } from 'src/app/core/services/common-services';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
@@ -17,12 +15,7 @@ const base_urlImg = environment.base_urlImg + 'Administration/accounts/';
   selector: 'app-reporte-tickets',
   templateUrl: './reporte-tickets.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    CommonModule,
-    TableModule,
-    ReporteTicketsComponent,
-  ],
+  imports: [LuxuryAppComponentsModule, ReporteTicketsComponent],
 })
 export default class ReporteTicketsComponent implements OnInit, OnDestroy {
   private customerIdService = inject(CustomerIdService);

@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -7,6 +6,7 @@ import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ContextMenuModule } from 'primeng/contextmenu';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { Subject, takeUntil } from 'rxjs';
 import {
   AuthService,
   CustomToastService,
@@ -14,7 +14,6 @@ import {
   OrdenCompraService,
   SelectItemService,
 } from 'src/app/core/services/common-services';
-import PrimeNgModule from 'src/app/shared/prime-ng.module';
 import OrdenCompraDatosPagoParcialComponent from '../components/orden-compra-datos-pago-parcial/orden-compra-datos-pago-parcial.component';
 import OrdenCompraDatosCotizacionComponent from '../components/orden-compra-parcial/orden-compra-datos-cotizacion.component';
 import OrdenCompraStatusParcialComponent from '../components/orden-compra-status-parcial/orden-compra-status-parcial.component';
@@ -23,8 +22,6 @@ import OrdenCompraDetalleAddProductoComponent from '../orden-compra-detalle-add-
 import OrdenCompraPresupuestoComponent from '../orden-compra-presupuesto/orden-compra-presupuesto.component';
 import OrdenCompraStatusComponent from '../orden-compra-status/orden-compra-status.component';
 import OrdenCompraDenegadaComponent from './../orden-compra-denegada/orden-compra-denegada.component';
-// import ModalOrdenCompraComponent from './modal-orden-compra.component';
-import { Subject, takeUntil } from 'rxjs';
 import ModalOrdenCompraComponent from './modal-orden-compra.component';
 import OrdenCompraEditDetalleComponent from './orden-compra-edit-detalle.component';
 import OrdenCompraEditPresupustoUtilizadoComponent from './orden-compra-edit-presupusto-utilizado.component';
@@ -34,22 +31,13 @@ import OrdenCompraEditPresupustoUtilizadoComponent from './orden-compra-edit-pre
   standalone: true,
   imports: [
     LuxuryAppComponentsModule,
-    CommonModule,
-    LuxuryAppComponentsModule,
     FormsModule,
     OrdenCompraDatosCotizacionComponent,
     OrdenCompraDatosPagoParcialComponent,
     OrdenCompraStatusParcialComponent,
     OrdenCompraEditPresupustoUtilizadoComponent,
-    PrimeNgModule,
     ContextMenuModule,
     ConfirmDialogModule,
-  ],
-  providers: [
-    DialogService,
-    MessageService,
-    ConfirmationService,
-    CustomToastService,
   ],
 })
 export default class OrdenCompraComponent implements OnInit, OnDestroy {
