@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import {
@@ -8,12 +9,11 @@ import {
   DataService,
 } from 'src/app/core/services/common-services';
 import PrimeNgModule from 'src/app/shared/prime-ng.module';
-
 @Component({
   selector: 'app-account-to-employee',
   templateUrl: './account-to-employee.component.html',
   standalone: true,
-  imports: [CommonModule, PrimeNgModule],
+  imports: [LuxuryAppComponentsModule, CommonModule, PrimeNgModule],
   providers: [CustomToastService, DataService],
 })
 export default class AccountToEmployeeComponent implements OnInit {

@@ -7,6 +7,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { NgxMaskModule } from 'ngx-mask';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -21,16 +22,16 @@ import {
   SelectItemService,
 } from 'src/app/core/services/common-services';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
-import ComponentsModule from 'src/app/shared/components.module';
 
 @Component({
   selector: 'app-addoredit-person-emergency-contact',
   templateUrl: './addoredit-person-emergency-contact.component.html',
   standalone: true,
   imports: [
+    LuxuryAppComponentsModule,
     CommonModule,
     ReactiveFormsModule,
-    ComponentsModule,
+    LuxuryAppComponentsModule,
     CustomInputModule,
     FormsModule,
     ToastModule,

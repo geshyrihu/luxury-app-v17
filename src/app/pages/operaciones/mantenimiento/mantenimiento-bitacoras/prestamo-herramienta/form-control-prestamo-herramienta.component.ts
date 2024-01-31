@@ -6,6 +6,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import {
   AuthService,
@@ -15,19 +16,18 @@ import {
   SelectItemService,
 } from 'src/app/core/services/common-services';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
-import ComponentsModule from 'src/app/shared/components.module';
 
 @Component({
   selector: 'app-form-control-prestamo-herramienta',
   templateUrl: './form-control-prestamo-herramienta.component.html',
   standalone: true,
   imports: [
+    LuxuryAppComponentsModule,
     ReactiveFormsModule,
     CommonModule,
-    ComponentsModule,
+    LuxuryAppComponentsModule,
     CustomInputModule,
   ],
-  providers: [CustomToastService],
 })
 export default class FormControlPrestamoHerramientaComponent
   implements OnInit, OnDestroy

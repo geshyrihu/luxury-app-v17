@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
@@ -10,14 +11,13 @@ import {
   CustomToastService,
   DataService,
 } from 'src/app/core/services/common-services';
-import ComponentsModule from 'src/app/shared/components.module';
 import PrimeNgModule from 'src/app/shared/prime-ng.module';
 import AddoreditPiscinaBitacoraComponent from '../addoredit-piscina-bitacora/addoredit-piscina-bitacora.component';
 @Component({
   selector: 's-list-piscina-bitacora',
   templateUrl: './list-piscina-bitacora.component.html',
   standalone: true,
-  imports: [ComponentsModule, PrimeNgModule, CommonModule],
+  imports: [LuxuryAppComponentsModule, PrimeNgModule, CommonModule],
   providers: [
     DialogService,
     MessageService,

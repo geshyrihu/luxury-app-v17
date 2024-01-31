@@ -25,7 +25,6 @@ export type ChartOptions = {
   stroke: ApexStroke;
   grid: ApexGrid;
 };
-
 @Component({
   selector: 'app-pie-grid',
   templateUrl: './pie-grid.component.html',

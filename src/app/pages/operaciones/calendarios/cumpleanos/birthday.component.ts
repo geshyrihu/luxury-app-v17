@@ -3,7 +3,7 @@ import { FullCalendarModule } from '@fullcalendar/angular';
 import { CalendarOptions, EventClickArg } from '@fullcalendar/core'; // useful for typechecking
 import esLocale from '@fullcalendar/core/locales/es';
 import dayGridPlugin from '@fullcalendar/daygrid';
-import { MessageService } from 'primeng/api';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import {
@@ -13,13 +13,11 @@ import {
   DataService,
 } from 'src/app/core/services/common-services';
 import CardEmployeeComponent from 'src/app/pages/operaciones/directorios/empleados/card-employee/card-employee.component';
-
 @Component({
   selector: 'app-birthday',
   templateUrl: './birthday.component.html',
   standalone: true,
-  imports: [FullCalendarModule],
-  providers: [DialogService, MessageService, CustomToastService],
+  imports: [LuxuryAppComponentsModule, FullCalendarModule],
 })
 export default class BirthdayComponent implements OnInit, OnDestroy {
   public authService = inject(AuthService);

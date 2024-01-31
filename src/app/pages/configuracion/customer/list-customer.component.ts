@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
@@ -12,7 +13,6 @@ import {
   CustomToastService,
   DataService,
 } from 'src/app/core/services/common-services';
-import ComponentsModule from 'src/app/shared/components.module';
 import PrimeNgModule from 'src/app/shared/prime-ng.module';
 import { environment } from 'src/environments/environment';
 import AddOrEditClienteComponent from './addoredit-clientes.component';
@@ -24,13 +24,13 @@ import CustomerImagesComponent from './customer-images/customer-images.component
   templateUrl: './list-customer.component.html',
   standalone: true,
   imports: [
+    LuxuryAppComponentsModule,
     CommonModule,
-    ComponentsModule,
+    LuxuryAppComponentsModule,
     PrimeNgModule,
     CelularNumberPipe,
     NgbTooltip,
   ],
-  providers: [DialogService, MessageService, CustomToastService],
 })
 export default class ListCustomerComponent implements OnInit, OnDestroy {
   private dataService = inject(DataService);

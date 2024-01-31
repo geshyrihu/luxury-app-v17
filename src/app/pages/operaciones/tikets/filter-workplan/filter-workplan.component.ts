@@ -2,16 +2,21 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { FlatpickrModule } from 'angularx-flatpickr';
-import { DynamicDialogRef } from 'primeng/dynamicdialog';
-import ComponentsModule, {
+import LuxuryAppComponentsModule, {
   flatpickrFactory,
-} from 'src/app/shared/components.module';
+} from 'app/shared/luxuryapp-components.module';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'app-filter-workplan',
   templateUrl: './filter-workplan.component.html',
   standalone: true,
-  imports: [ComponentsModule, CommonModule, FormsModule, FlatpickrModule],
+  imports: [
+    LuxuryAppComponentsModule,
+    CommonModule,
+    FormsModule,
+    FlatpickrModule,
+  ],
 })
 export default class FilterWorkplanComponent {
   public ref = inject(DynamicDialogRef);

@@ -13,7 +13,6 @@ import CustomButtonModule from 'src/app/custom-components/custom-buttons/custom-
   templateUrl: './depuracion.component.html',
   imports: [CustomButtonModule],
   standalone: true,
-  providers: [MessageService, CustomToastService],
 })
 export default class DepuracionComponent implements OnDestroy {
   private dataService = inject(DataService);

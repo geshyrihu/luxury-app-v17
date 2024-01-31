@@ -2,7 +2,6 @@ import { NgClass } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
-
 @Component({
   selector: 'app-agregar-correo-electronico',
   templateUrl: './agregar-correo-electronico.component.html',

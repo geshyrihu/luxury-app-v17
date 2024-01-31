@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
-import { MessageService } from 'primeng/api';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { CustomerIdService } from 'src/app/core/services/common-services';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
@@ -12,8 +12,12 @@ import { environment } from 'src/environments/environment';
   selector: 'app-organigrama-interno',
   templateUrl: './organigrama-interno.component.html',
   standalone: true,
-  imports: [CommonModule, PrimeNgModule, NgbAlertModule],
-  providers: [MessageService, CustomToastService],
+  imports: [
+    LuxuryAppComponentsModule,
+    CommonModule,
+    PrimeNgModule,
+    NgbAlertModule,
+  ],
 })
 export default class OrganigramaInternoComponent implements OnInit, OnDestroy {
   public dataService = inject(DataService);

@@ -7,12 +7,14 @@ import {
   NG_VALUE_ACCESSOR,
   ReactiveFormsModule,
 } from '@angular/forms';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import ValidationErrorsCustomInputComponent from '../validation-errors-custom-input/validation-errors-custom-input.component';
 @Component({
   selector: 'custom-input-text',
   templateUrl: './custom-input-text.component.html',
   standalone: true,
   imports: [
+    LuxuryAppComponentsModule,
     CommonModule,
     ReactiveFormsModule,
     FormsModule,

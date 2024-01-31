@@ -6,6 +6,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { IMedidorLecturaDto } from 'src/app/core/interfaces/IMedidorLecturaDto.interface';
@@ -15,7 +16,6 @@ import {
   DataService,
 } from 'src/app/core/services/common-services';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
-import ComponentsModule from 'src/app/shared/components.module';
 
 const date = new Date();
 @Component({
@@ -23,12 +23,12 @@ const date = new Date();
   templateUrl: './admin-form-medidor-lectura.component.html',
   standalone: true,
   imports: [
+    LuxuryAppComponentsModule,
     ReactiveFormsModule,
     CommonModule,
-    ComponentsModule,
+    LuxuryAppComponentsModule,
     CustomInputModule,
   ],
-  providers: [CustomToastService],
 })
 export default class AdminFormMedidorLecturaComponent
   implements OnInit, OnDestroy

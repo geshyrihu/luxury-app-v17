@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
@@ -13,14 +14,17 @@ import {
 import ContMinutaSeguimientosComponent from 'src/app/pages/contabilidad/contabilidad-pendientes-minuta/cont-minuta-seguimientos.component';
 import AddoreditMinutaDetalleComponent from 'src/app/pages/operaciones/junta-comite/addoredit-minuta-detalle/addoredit-minuta-detalle.component';
 import AddorEditMeetingSeguimientoComponent from 'src/app/pages/operaciones/junta-comite/addoredit-seguimiento/addor-edit-meeting-seguimiento.component';
-import ComponentsModule from 'src/app/shared/components.module';
 import PrimeNgModule from 'src/app/shared/prime-ng.module';
 @Component({
   selector: 'app-seguimiento-minutas',
   templateUrl: './seguimiento-minutas.component.html',
   standalone: true,
-  imports: [ComponentsModule, CommonModule, PrimeNgModule, SanitizeHtmlPipe],
-  providers: [DialogService, MessageService, CustomToastService],
+  imports: [
+    LuxuryAppComponentsModule,
+    CommonModule,
+    PrimeNgModule,
+    SanitizeHtmlPipe,
+  ],
 })
 export default class SeguimientoMinutaComponent implements OnInit, OnDestroy {
   private dataService = inject(DataService);

@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { MessageService } from 'primeng/api';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { IProductoListAddDto } from 'src/app/core/interfaces/IProductoListAddDto.interface.interface';
@@ -12,7 +12,6 @@ import {
   DataService,
   SelectItemService,
 } from 'src/app/core/services/common-services';
-import ComponentsModule from 'src/app/shared/components.module';
 import PrimeNgModule from 'src/app/shared/prime-ng.module';
 import TarjetaProductoComponent from '../../mantenimiento-catalogos/tarjeta-producto/tarjeta-producto.component';
 
@@ -20,8 +19,12 @@ import TarjetaProductoComponent from '../../mantenimiento-catalogos/tarjeta-prod
   selector: 'app-add-productos-almacen',
   templateUrl: './add-productos-almacen.component.html',
   standalone: true,
-  imports: [ComponentsModule, FormsModule, CommonModule, PrimeNgModule],
-  providers: [DialogService, MessageService, CustomToastService],
+  imports: [
+    LuxuryAppComponentsModule,
+    FormsModule,
+    CommonModule,
+    PrimeNgModule,
+  ],
 })
 export default class AddProductosAlmacenComponent implements OnInit, OnDestroy {
   private dataService = inject(DataService);

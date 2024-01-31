@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
@@ -11,15 +12,18 @@ import {
   CustomerIdService,
   DataService,
 } from 'src/app/core/services/common-services';
-import ComponentsModule from 'src/app/shared/components.module';
 import PrimeNgModule from 'src/app/shared/prime-ng.module';
 
 @Component({
   selector: 'app-form-gastos-fijos-presupuesto',
   templateUrl: './form-gastos-fijos-presupuesto.component.html',
   standalone: true,
-  imports: [ComponentsModule, CommonModule, FormsModule, PrimeNgModule],
-  providers: [MessageService, CustomToastService],
+  imports: [
+    LuxuryAppComponentsModule,
+    CommonModule,
+    FormsModule,
+    PrimeNgModule,
+  ],
 })
 export default class FormGastosFijosPresupuestoComponent
   implements OnInit, OnDestroy

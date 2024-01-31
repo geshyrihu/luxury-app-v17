@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import saveAs from 'file-saver';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -16,7 +17,6 @@ import {
   DataService,
   ReportService,
 } from 'src/app/core/services/common-services';
-import ComponentsModule from 'src/app/shared/components.module';
 import PrimeNgModule from 'src/app/shared/prime-ng.module';
 import AddOrEditMeetingDetailComponent from './addoredit-meeting-detail.component';
 import AddOrEditMeetingComponent from './addoredit-meeting.component';
@@ -28,7 +28,7 @@ import AddorEditMeetingSeguimientoComponent from './addoredit-seguimiento/addor-
   templateUrl: './list-minutas.component.html',
   standalone: true,
   imports: [
-    ComponentsModule,
+    LuxuryAppComponentsModule,
     RouterModule,
     CommonModule,
     PrimeNgModule,

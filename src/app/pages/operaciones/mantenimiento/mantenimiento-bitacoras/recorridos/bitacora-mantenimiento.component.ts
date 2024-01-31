@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { LocaleSettings } from 'primeng/calendar';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -14,7 +15,6 @@ import {
   FiltroCalendarService,
 } from 'src/app/core/services/common-services';
 import CardEmployeeComponent from 'src/app/pages/operaciones/directorios/empleados/card-employee/card-employee.component';
-import ComponentsModule from 'src/app/shared/components.module';
 import PrimeNgModule from 'src/app/shared/prime-ng.module';
 import FormBitacoraMantenimientoComponent from './form-bitacora-mantenimiento.component';
 
@@ -22,8 +22,7 @@ import FormBitacoraMantenimientoComponent from './form-bitacora-mantenimiento.co
   selector: 'app-bitacora-mantenimiento',
   templateUrl: './bitacora-mantenimiento.component.html',
   standalone: true,
-  imports: [ComponentsModule, CommonModule, PrimeNgModule],
-  providers: [DialogService, MessageService, CustomToastService],
+  imports: [LuxuryAppComponentsModule, CommonModule, PrimeNgModule],
 })
 export default class BitacoraMantenimientoComponent
   implements OnInit, OnDestroy

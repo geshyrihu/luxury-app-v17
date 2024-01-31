@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 @Component({
   selector: 'app-leyohm',
   templateUrl: './leyohm.component.html',
   standalone: true,
-  imports: [FormsModule],
+  imports: [LuxuryAppComponentsModule, FormsModule],
 })
 export default class LeyohmComponent {
   volts: number = 0;

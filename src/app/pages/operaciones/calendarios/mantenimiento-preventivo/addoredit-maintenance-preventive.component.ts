@@ -7,6 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { SelectItem } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
@@ -22,7 +23,6 @@ import {
   SelectItemService,
 } from 'src/app/core/services/common-services';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
-import ComponentsModule from 'src/app/shared/components.module';
 import PrimeNgModule from 'src/app/shared/prime-ng.module';
 
 @Component({
@@ -30,13 +30,13 @@ import PrimeNgModule from 'src/app/shared/prime-ng.module';
   templateUrl: './addoredit-maintenance-preventive.component.html',
   standalone: true,
   imports: [
+    LuxuryAppComponentsModule,
     CommonModule,
     ReactiveFormsModule,
-    ComponentsModule,
+    LuxuryAppComponentsModule,
     CustomInputModule,
     PrimeNgModule,
   ],
-  providers: [CustomToastService],
 })
 export default class AddoreditMaintenancePreventiveComponent
   implements OnInit, OnDestroy

@@ -6,8 +6,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import ComponentsModule from 'app/shared/components.module';
-import { MessageService } from 'primeng/api';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { imageToBase64 } from 'src/app/core/helpers/enumeration';
@@ -27,13 +26,12 @@ import { environment } from 'src/environments/environment';
   templateUrl: './addoredit-person.component.html',
   standalone: true,
   imports: [
+    LuxuryAppComponentsModule,
     ReactiveFormsModule,
-    ComponentsModule,
+    LuxuryAppComponentsModule,
     CommonModule,
     CustomInputModule,
   ],
-
-  providers: [MessageService, CustomToastService],
 })
 export default class AddoreditPersonComponent implements OnInit, OnDestroy {
   public config = inject(DynamicDialogConfig);

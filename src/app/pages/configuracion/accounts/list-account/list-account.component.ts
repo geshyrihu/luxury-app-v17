@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { NgbDropdownModule, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
@@ -10,7 +11,6 @@ import PhoneFormatPipe from 'src/app/core/pipes/phone-format.pipe';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
 import CardEmployeeComponent from 'src/app/pages/operaciones/directorios/empleados/card-employee/card-employee.component';
-import ComponentsModule from 'src/app/shared/components.module';
 import DropdownRouteComponent from 'src/app/shared/ngb-dropdown-menu/dropdown-route.component';
 import PrimeNgModule from 'src/app/shared/prime-ng.module';
 import { environment } from 'src/environments/environment';
@@ -22,15 +22,14 @@ import MdEditAccountComponent from '../modal-edit-account/md-edit-account.compon
   templateUrl: './list-account.component.html',
   standalone: true,
   imports: [
+    LuxuryAppComponentsModule,
     CommonModule,
-    ComponentsModule,
     PrimeNgModule,
     NgbDropdownModule,
     DropdownRouteComponent,
     PhoneFormatPipe,
     NgbTooltip,
   ],
-  providers: [DialogService, MessageService, CustomToastService],
 })
 export default class ListAccountComponent implements OnInit, OnDestroy {
   private dataService = inject(DataService);

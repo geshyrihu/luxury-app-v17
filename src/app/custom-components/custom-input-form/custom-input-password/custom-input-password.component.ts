@@ -1,18 +1,21 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, forwardRef } from '@angular/core';
 import {
-  AbstractControl,
   ControlValueAccessor,
   FormControl,
   NG_VALUE_ACCESSOR,
 } from '@angular/forms';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import ValidationErrorsCustomInputComponent from '../validation-errors-custom-input/validation-errors-custom-input.component';
-
 @Component({
   selector: 'custom-input-password',
   templateUrl: './custom-input-password.component.html',
   standalone: true,
-  imports: [CommonModule, ValidationErrorsCustomInputComponent],
+  imports: [
+    LuxuryAppComponentsModule,
+    CommonModule,
+    ValidationErrorsCustomInputComponent,
+  ],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,

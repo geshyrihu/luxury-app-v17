@@ -5,7 +5,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import ComponentsModule from 'app/shared/components.module';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import {
@@ -20,12 +20,11 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   templateUrl: './person-addoredit-address.component.html',
   standalone: true,
   imports: [
-    ComponentsModule,
+    LuxuryAppComponentsModule,
     CustomButtonModule,
     CustomInputModule,
     ReactiveFormsModule,
   ],
-  providers: [CustomToastService],
 })
 export default class PersonAddoreditAddressComponent implements OnInit {
   private formBuilder = inject(FormBuilder);

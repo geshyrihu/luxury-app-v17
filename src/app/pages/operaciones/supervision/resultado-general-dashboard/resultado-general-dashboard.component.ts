@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { MultiSelectModule } from 'primeng/multiselect';
@@ -12,21 +13,19 @@ import { DataService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
 import { PeriodoMonthService } from 'src/app/core/services/periodo-month.service';
 import { SelectItemService } from 'src/app/core/services/select-item.service';
-import ComponentsModule from 'src/app/shared/components.module';
 
 @Component({
   selector: 'app-resultado-general-dashboard',
   templateUrl: './resultado-general-dashboard.component.html',
   standalone: true,
   imports: [
-    ComponentsModule,
+    LuxuryAppComponentsModule,
     CommonModule,
     FormsModule,
     NgbModule,
     TableModule,
     MultiSelectModule,
   ],
-  providers: [DialogService, MessageService, CustomToastService],
 })
 export default class ResultadoGeneralDashboardComponent
   implements OnInit, OnDestroy

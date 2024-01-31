@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
@@ -8,13 +9,11 @@ import {
   CustomToastService,
   DataService,
 } from 'src/app/core/services/common-services';
-
 @Component({
   selector: 'app-addoredit-list-administration',
   templateUrl: './addoredit-list-administration.component.html',
   standalone: true,
-  imports: [FormsModule, CommonModule],
-  providers: [MessageService, CustomToastService],
+  imports: [LuxuryAppComponentsModule, FormsModule, CommonModule],
 })
 export default class AddOrEditListAdministrationComponent
   implements OnInit, OnDestroy

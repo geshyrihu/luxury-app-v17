@@ -6,6 +6,9 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import LuxuryAppComponentsModule, {
+  flatpickrFactory,
+} from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
@@ -18,9 +21,6 @@ import {
   DataService,
   DateService,
 } from 'src/app/core/services/common-services';
-import ComponentsModule, {
-  flatpickrFactory,
-} from 'src/app/shared/components.module';
 import PrimeNgModule from 'src/app/shared/prime-ng.module';
 import { IMeetingDto } from '../../../core/interfaces/IMeetingDto.interface';
 import AddOrEditListAdministrationComponent from './addoredit-administration/addoredit-list-administration.component';
@@ -33,15 +33,15 @@ const date = new Date();
   templateUrl: './addoredit-meeting.component.html',
   standalone: true,
   imports: [
+    LuxuryAppComponentsModule,
     ReactiveFormsModule,
     CommonModule,
     AddOrEditComiteComponent,
     AddOrEditListAdministrationComponent,
     AddOrEditInvitedComponent,
     PrimeNgModule,
-    ComponentsModule,
+    LuxuryAppComponentsModule,
   ],
-  providers: [MessageService, CustomToastService],
 })
 export default class AddOrEditMeetingComponent implements OnInit, OnDestroy {
   public dateService = inject(DateService);

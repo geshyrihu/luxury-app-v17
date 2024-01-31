@@ -6,6 +6,9 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import LuxuryAppComponentsModule, {
+  flatpickrFactory,
+} from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import {
   AuthService,
@@ -15,21 +18,18 @@ import {
   DateService,
 } from 'src/app/core/services/common-services';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
-import ComponentsModule, {
-  flatpickrFactory,
-} from 'src/app/shared/components.module';
 
 @Component({
   selector: 'app-create-orden-compra',
   templateUrl: './create-orden-compra.component.html',
   standalone: true,
   imports: [
+    LuxuryAppComponentsModule,
     ReactiveFormsModule,
-    ComponentsModule,
+    LuxuryAppComponentsModule,
     CommonModule,
     CustomInputModule,
   ],
-  providers: [CustomToastService],
 })
 export default class CreateOrdenCompraComponent implements OnInit, OnDestroy {
   public authService = inject(AuthService);

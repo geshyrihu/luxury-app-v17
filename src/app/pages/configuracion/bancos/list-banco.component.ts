@@ -1,10 +1,8 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { MessageService } from 'primeng/api';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { IBankDto } from 'src/app/core/interfaces/IBankDto.interface';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
-import ComponentsModule from 'src/app/shared/components.module';
-import PrimeNgModule from 'src/app/shared/prime-ng.module';
 import { ApiRequestService } from '../../../core/services/api-request.service';
 import AddOrEditBancoComponent from './addoredit-banco.component';
 
@@ -12,12 +10,10 @@ import AddOrEditBancoComponent from './addoredit-banco.component';
   selector: 'app-banco',
   templateUrl: './list-banco.component.html',
   standalone: true,
-  imports: [ComponentsModule, PrimeNgModule],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class ListBancoComponent implements OnInit {
   public dialogHandlerService = inject(DialogHandlerService);
-  public dialogService = inject(DialogService);
-  public messageService = inject(MessageService);
   public apiRequestService = inject(ApiRequestService);
 
   // Declaración e inicialización de variables

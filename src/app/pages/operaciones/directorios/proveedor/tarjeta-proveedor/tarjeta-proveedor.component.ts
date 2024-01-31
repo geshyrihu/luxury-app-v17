@@ -1,16 +1,16 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { NgbAlert } from '@ng-bootstrap/ng-bootstrap';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { DataService } from 'src/app/core/services/data.service';
 import { environment } from 'src/environments/environment';
-
 @Component({
   selector: 'app-tarjeta-proveedor',
   templateUrl: './tarjeta-proveedor.component.html',
   standalone: true,
-  imports: [CommonModule, NgbAlert],
+  imports: [LuxuryAppComponentsModule, CommonModule, NgbAlert],
 })
 export default class TarjetaProveedorComponent implements OnInit, OnDestroy {
   public config = inject(DynamicDialogConfig);

@@ -6,6 +6,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { ETypeContractRegister } from 'src/app/core/enums/type-contract-register.enum';
@@ -19,14 +20,13 @@ import {
 } from 'src/app/core/services/common-services';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import ValidationErrorsCustomInputComponent from 'src/app/custom-components/custom-input-form/validation-errors-custom-input/validation-errors-custom-input.component';
-import ComponentsModule from 'src/app/shared/components.module';
 
 @Component({
   selector: 'app-solicitud-alta',
   templateUrl: './solicitud-alta.component.html',
   standalone: true,
   imports: [
-    ComponentsModule,
+    LuxuryAppComponentsModule,
     ReactiveFormsModule,
     CommonModule,
     CustomInputModule,

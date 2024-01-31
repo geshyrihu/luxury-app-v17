@@ -2,6 +2,7 @@ import { Clipboard } from '@angular/cdk/clipboard';
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { TableModule } from 'primeng/table';
 import { Subject, takeUntil } from 'rxjs';
@@ -9,7 +10,6 @@ import { SanitizeHtmlPipe } from 'src/app/core/pipes/sanitize-html.pipe';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { ReportService } from 'src/app/core/services/report.service';
-import ComponentsModule from 'src/app/shared/components.module';
 import ResumenMinutaGraficoComponent from '../resumen-minuta-grafico/resumen-minuta-grafico.component';
 
 @Component({
@@ -17,8 +17,9 @@ import ResumenMinutaGraficoComponent from '../resumen-minuta-grafico/resumen-min
   templateUrl: './resumen-minuta.component.html',
   standalone: true,
   imports: [
+    LuxuryAppComponentsModule,
     ResumenMinutaGraficoComponent,
-    ComponentsModule,
+    LuxuryAppComponentsModule,
     CommonModule,
     TableModule,
     SanitizeHtmlPipe,

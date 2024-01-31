@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
@@ -16,7 +17,6 @@ import {
   TicketFilterService,
 } from 'src/app/core/services/common-services';
 import CardEmployeeComponent from 'src/app/pages/operaciones/directorios/empleados/card-employee/card-employee.component';
-import ComponentsModule from 'src/app/shared/components.module';
 import PrimeNgModule from 'src/app/shared/prime-ng.module';
 import { environment } from 'src/environments/environment';
 import EnviarMailReporteSemanalComponent from '../../enviar-email/enviar-mail-reporte-semanal/enviar-mail-reporte-semanal.component';
@@ -31,18 +31,14 @@ import FilterTicketComponent from '../ticket-filter/ticket-filter.component';
   templateUrl: './list-ticket.component.html',
   standalone: true,
   imports: [
+    LuxuryAppComponentsModule,
     RouterModule,
     CommonModule,
-    ComponentsModule,
+    LuxuryAppComponentsModule,
     FormsModule,
     PrimeNgModule,
   ],
-  providers: [
-    DialogService,
-    MessageService,
-    ConfirmationService,
-    CustomToastService,
-  ],
+  providers: [ConfirmationService],
 })
 export default class ListTicketComponent implements OnInit, OnDestroy {
   public authService = inject(AuthService);

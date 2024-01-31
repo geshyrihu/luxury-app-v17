@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { IFilterTicket } from 'src/app/core/interfaces/IFilterTicket.interface';
@@ -12,13 +13,12 @@ import {
   ReportService,
   TicketFilterService,
 } from 'src/app/core/services/common-services';
-import ComponentsModule from 'src/app/shared/components.module';
 import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-pending-report',
   templateUrl: './pending-report.component.html',
   standalone: true,
-  imports: [CommonModule, ComponentsModule],
+  imports: [LuxuryAppComponentsModule, CommonModule, LuxuryAppComponentsModule],
   providers: [CustomToastService, MessageService],
 })
 export default class PendingReportComponent implements OnInit, OnDestroy {

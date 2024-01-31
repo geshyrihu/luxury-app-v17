@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
@@ -12,12 +13,17 @@ import {
   DataService,
 } from 'src/app/core/services/common-services';
 import { environment } from 'src/environments/environment';
-
 @Component({
   selector: 'app-general-anual-mantenimiento',
   templateUrl: './general-anual-mantenimiento.component.html',
   standalone: true,
-  imports: [FormsModule, CommonModule, NgbAlertModule, SanitizeHtmlPipe],
+  imports: [
+    LuxuryAppComponentsModule,
+    FormsModule,
+    CommonModule,
+    NgbAlertModule,
+    SanitizeHtmlPipe,
+  ],
   providers: [CustomToastService, MessageService],
 })
 export default class GeneralAnualMantenimientoComponent

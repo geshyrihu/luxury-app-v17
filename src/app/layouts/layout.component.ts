@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import {
   LAYOUT_HORIZONTAL,
   LAYOUT_MODE,
@@ -13,12 +14,12 @@ import {
 } from './layouts.model';
 import MenuCelularComponent from './menu-celular/menu-celular.component';
 import VerticalComponent from './vertical/vertical.component';
-
 @Component({
   selector: 'app-layout',
   templateUrl: './layout.component.html',
   standalone: true,
   imports: [
+    LuxuryAppComponentsModule,
     CommonModule,
     RouterModule,
     VerticalComponent,

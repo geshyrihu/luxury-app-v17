@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { TableModule } from 'primeng/table';
@@ -12,15 +13,13 @@ import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
 import { FiltroCalendarService } from 'src/app/core/services/filtro-calendar.service';
-import ComponentsModule from 'src/app/shared/components.module';
 import ResultadoGeneralEvaluacionAreasDetalleComponent from './resultado-general-evaluacion-areas-detalle/resultado-general-evaluacion-areas-detalle.component';
 
 @Component({
   selector: 'app-evaluacion-areas',
   templateUrl: './resultado-general-evaluacion-areas.component.html',
   standalone: true,
-  imports: [ComponentsModule, FormsModule, CommonModule, TableModule],
-  providers: [DialogService, MessageService, CustomToastService],
+  imports: [LuxuryAppComponentsModule, FormsModule, CommonModule, TableModule],
 })
 export default class EvaluacionAreasComponent implements OnInit, OnDestroy {
   public dataService = inject(DataService);

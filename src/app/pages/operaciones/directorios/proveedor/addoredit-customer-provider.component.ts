@@ -6,6 +6,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
@@ -17,17 +18,17 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { SelectItemService } from 'src/app/core/services/select-item.service';
 import CustomButtonModule from 'src/app/custom-components/custom-buttons/custom-button.module';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
-
 @Component({
   selector: 'app-add-or-edit-customer-provider',
   standalone: true,
   imports: [
+    LuxuryAppComponentsModule,
     CommonModule,
     CustomButtonModule,
     CustomInputModule,
     ReactiveFormsModule,
   ],
-  providers: [CustomToastService],
+
   templateUrl: './addoredit-customer-provider.component.html',
 })
 export default class AddOrEditCustomerProviderComponent implements OnInit {

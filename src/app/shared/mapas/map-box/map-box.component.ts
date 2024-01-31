@@ -1,7 +1,8 @@
 // import { Component, Input, OnChanges, OnInit } from '@angular/core';
 // import * as mapboxgl from 'mapbox-gl';
 
-// @Component({
+// import ComponentsModule from 'src/app/shared/components.module';
+@Component({
 //   selector: 'app-map-box',
 //   templateUrl: './map-box.component.html',
 //   standalone: true,

@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { TableModule } from 'primeng/table';
@@ -10,12 +11,16 @@ import { DataService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
 import { PeriodoMonthService } from 'src/app/core/services/periodo-month.service';
 import PagetitleReportComponent from 'src/app/shared/cabeceras/pagetitlereport/pagetitlereport.component';
-
 @Component({
   selector: 'app-report-salida-almacen',
   templateUrl: './report-salida-almacen.component.html',
   standalone: true,
-  imports: [TableModule, CommonModule, PagetitleReportComponent],
+  imports: [
+    LuxuryAppComponentsModule,
+    TableModule,
+    CommonModule,
+    PagetitleReportComponent,
+  ],
   providers: [CustomToastService, MessageService],
 })
 export default class ReportSalidaAlmacenComponent implements OnInit {

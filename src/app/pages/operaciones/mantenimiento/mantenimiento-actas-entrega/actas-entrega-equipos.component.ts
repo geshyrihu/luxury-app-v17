@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
@@ -11,13 +12,11 @@ import {
 } from 'src/app/core/services/common-services';
 import { environment } from 'src/environments/environment';
 import FormActasEntregaEquiposComponent from '../mantenimiento-inventarios/activos/form-actas-entrega-equipos/form-actas-entrega-equipos.component';
-
 @Component({
   selector: 'app-actas-entrega-equipos',
   templateUrl: './actas-entrega-equipos.component.html',
   standalone: true,
-  imports: [CommonModule, SanitizeHtmlPipe],
-  providers: [DialogService, MessageService, CustomToastService],
+  imports: [LuxuryAppComponentsModule, CommonModule, SanitizeHtmlPipe],
 })
 export default class ActasEntregaEquiposComponent implements OnInit, OnDestroy {
   public customToastService = inject(CustomToastService);

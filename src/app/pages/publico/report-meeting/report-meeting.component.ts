@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { TableModule } from 'primeng/table';
 import { Subject, takeUntil } from 'rxjs';
@@ -10,14 +11,18 @@ import {
   CustomerIdService,
   DataService,
 } from 'src/app/core/services/common-services';
-import ComponentsModule from 'src/app/shared/components.module';
 import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-report-meeting',
   templateUrl: './report-meeting.component.html',
   standalone: true,
-  imports: [ComponentsModule, CommonModule, TableModule, SanitizeHtmlPipe],
+  imports: [
+    LuxuryAppComponentsModule,
+    CommonModule,
+    TableModule,
+    SanitizeHtmlPipe,
+  ],
   providers: [CustomToastService, MessageService],
 })
 export default class ReportMeetingComponent implements OnInit, OnDestroy {

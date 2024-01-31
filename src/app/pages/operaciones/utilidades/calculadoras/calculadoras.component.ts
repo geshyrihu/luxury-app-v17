@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgbAlert } from '@ng-bootstrap/ng-bootstrap';
-
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 @Component({
   selector: 'app-calculadoras',
   templateUrl: './calculadoras.component.html',
   standalone: true,
-  imports: [NgbAlert, FormsModule],
+  imports: [LuxuryAppComponentsModule, NgbAlert, FormsModule],
 })
 export default class CalculadorasComponent {
   precio: number = 0;

@@ -7,6 +7,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { ITicketseguimiento } from 'src/app/core/interfaces/ITicketseguimiento.interface';
@@ -15,13 +16,16 @@ import {
   CustomToastService,
   DataService,
 } from 'src/app/core/services/common-services';
-
 @Component({
   selector: 'app-ticket-seguimiento',
   templateUrl: './ticket-seguimiento.component.html',
   standalone: true,
-  imports: [ReactiveFormsModule, FormsModule, CommonModule],
-  providers: [CustomToastService],
+  imports: [
+    LuxuryAppComponentsModule,
+    ReactiveFormsModule,
+    FormsModule,
+    CommonModule,
+  ],
 })
 export default class TicketSeguimientoComponent implements OnInit, OnDestroy {
   private formBuilder = inject(FormBuilder);

@@ -2,8 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { NgChartsModule } from 'ng2-charts';
-import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { IChartType } from 'src/app/core/interfaces/IChartType.interface';
@@ -13,13 +13,17 @@ import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
 import { FiltroCalendarService } from 'src/app/core/services/filtro-calendar.service';
-import ComponentsModule from 'src/app/shared/components.module';
 @Component({
   selector: 'app-chart-lectura',
   templateUrl: './chart-lectura.component.html',
   standalone: true,
-  imports: [NgbModule, ComponentsModule, NgChartsModule, CommonModule],
-  providers: [DialogService, MessageService, CustomToastService],
+  imports: [
+    LuxuryAppComponentsModule,
+    NgbModule,
+    LuxuryAppComponentsModule,
+    NgChartsModule,
+    CommonModule,
+  ],
 })
 export default class ChartLecturaComponent implements OnInit, OnDestroy {
   private dataService = inject(DataService);

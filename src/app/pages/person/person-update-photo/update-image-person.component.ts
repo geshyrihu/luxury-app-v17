@@ -1,21 +1,19 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { MessageService } from 'primeng/api';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import {
   CustomToastService,
   DataService,
 } from 'src/app/core/services/common-services';
-import ComponentsModule from 'src/app/shared/components.module';
 import { environment } from 'src/environments/environment';
 const baseUrlImg = environment.base_urlImg;
 @Component({
   selector: 'app-person-update-photo',
   templateUrl: './person-update-photo.component.html',
   standalone: true,
-  imports: [CommonModule, ComponentsModule],
-  providers: [MessageService, CustomToastService],
+  imports: [LuxuryAppComponentsModule, CommonModule, LuxuryAppComponentsModule],
 })
 export default class PersonUpdatePhotoComponent implements OnInit, OnDestroy {
   public config = inject(DynamicDialogConfig);

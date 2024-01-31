@@ -6,6 +6,9 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import LuxuryAppComponentsModule, {
+  flatpickrFactory,
+} from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import {
   DialogService,
@@ -18,21 +21,18 @@ import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
-import ComponentsModule, {
-  flatpickrFactory,
-} from 'src/app/shared/components.module';
 
 @Component({
   selector: 'app-modal-orden-compra',
   templateUrl: './modal-orden-compra.component.html',
   standalone: true,
   imports: [
+    LuxuryAppComponentsModule,
     ReactiveFormsModule,
-    ComponentsModule,
+    LuxuryAppComponentsModule,
     CommonModule,
     CustomInputModule,
   ],
-  providers: [DialogService, MessageService, CustomToastService],
 })
 export default class ModalOrdenCompraComponent implements OnInit, OnDestroy {
   private formBuilder = inject(FormBuilder);

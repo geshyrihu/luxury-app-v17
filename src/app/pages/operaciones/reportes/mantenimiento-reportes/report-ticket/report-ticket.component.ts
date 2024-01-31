@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { TableModule } from 'primeng/table';
@@ -11,7 +12,6 @@ import { DateService } from 'src/app/core/services/date.service';
 import { PeriodoMonthService } from 'src/app/core/services/periodo-month.service';
 import ReporteTicketsComponent from 'src/app/pages/operaciones/supervision/reporte-tickets/reporte-tickets.component';
 import PagetitleReportComponent from 'src/app/shared/cabeceras/pagetitlereport/pagetitlereport.component';
-import ComponentsModule from 'src/app/shared/components.module';
 import { environment } from 'src/environments/environment';
 const base_urlImg = environment.base_urlImg;
 
@@ -20,10 +20,11 @@ const base_urlImg = environment.base_urlImg;
   templateUrl: './report-ticket.component.html',
   standalone: true,
   imports: [
+    LuxuryAppComponentsModule,
     PagetitleReportComponent,
     TableModule,
     CommonModule,
-    ComponentsModule,
+    LuxuryAppComponentsModule,
     ReporteTicketsComponent,
   ],
   providers: [CustomToastService, MessageService],

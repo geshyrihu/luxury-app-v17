@@ -1,15 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { SidebarService } from 'src/app/core/services/sidebar.service';
 import { MenuItem } from '../../core/interfaces/menu.model';
-
 @Component({
   selector: 'app-modal-search',
   templateUrl: './modal-search.component.html',
   standalone: true,
-  imports: [CommonModule],
+  imports: [LuxuryAppComponentsModule, CommonModule],
 })
 export default class ModalSearchComponent implements OnInit {
   private router = inject(Router);

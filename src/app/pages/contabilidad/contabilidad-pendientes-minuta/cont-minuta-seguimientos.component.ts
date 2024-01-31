@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
-import { MessageService } from 'primeng/api';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import {
   DialogService,
   DynamicDialogConfig,
@@ -13,14 +13,12 @@ import {
   DataService,
 } from 'src/app/core/services/common-services';
 import AddorEditMeetingSeguimientoComponent from 'src/app/pages/operaciones/junta-comite/addoredit-seguimiento/addor-edit-meeting-seguimiento.component';
-import ComponentsModule from 'src/app/shared/components.module';
 
 @Component({
   selector: 'app-cont-minuta-seguimientos',
   templateUrl: './cont-minuta-seguimientos.component.html',
   standalone: true,
-  imports: [ComponentsModule, CommonModule, TableModule],
-  providers: [DialogService, MessageService, CustomToastService],
+  imports: [LuxuryAppComponentsModule, CommonModule, TableModule],
 })
 export default class ContMinutaSeguimientosComponent
   implements OnInit, OnDestroy

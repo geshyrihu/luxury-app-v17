@@ -6,7 +6,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import ComponentsModule from 'app/shared/components.module';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
@@ -22,12 +22,11 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   templateUrl: './add-or-edit-provider-support.component.html',
   standalone: true,
   imports: [
-    ComponentsModule,
+    LuxuryAppComponentsModule,
     ReactiveFormsModule,
     CommonModule,
     CustomInputModule,
   ],
-  providers: [CustomToastService],
 })
 export default class AddOrEditProviderSupportComponent implements OnInit {
   private config = inject(DynamicDialogConfig);

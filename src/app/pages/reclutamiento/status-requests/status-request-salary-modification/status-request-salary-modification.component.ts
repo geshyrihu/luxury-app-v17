@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MessageService } from 'primeng/api';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -17,7 +17,6 @@ import {
 } from 'src/app/core/services/common-services';
 import CustomButtonModule from 'src/app/custom-components/custom-buttons/custom-button.module';
 import CardEmployeeComponent from 'src/app/pages/operaciones/directorios/empleados/card-employee/card-employee.component';
-import ComponentsModule from 'src/app/shared/components.module';
 import PrimeNgModule from 'src/app/shared/prime-ng.module';
 import { environment } from 'src/environments/environment';
 import AddOrEditStatusRequestSalaryModificationComponent from './addoredit-status-request-salary-modification/addoredit-status-request-salary-modification.component';
@@ -26,7 +25,7 @@ import AddOrEditStatusRequestSalaryModificationComponent from './addoredit-statu
   templateUrl: './status-request-salary-modification.component.html',
   standalone: true,
   imports: [
-    ComponentsModule,
+    LuxuryAppComponentsModule,
     PrimeNgModule,
     FormsModule,
     CommonModule,
@@ -34,7 +33,6 @@ import AddOrEditStatusRequestSalaryModificationComponent from './addoredit-statu
     PhoneFormatPipe,
     PrimeNgModule,
   ],
-  providers: [DialogService, MessageService, CustomToastService],
 })
 export default class StatusRequestSalaryModificationComponent
   implements OnInit, OnDestroy

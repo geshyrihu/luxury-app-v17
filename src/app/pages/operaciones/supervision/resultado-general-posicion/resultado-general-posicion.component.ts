@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
 import { TableModule } from 'primeng/table';
@@ -9,14 +10,12 @@ import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
 import { FiltroCalendarService } from 'src/app/core/services/filtro-calendar.service';
-import ComponentsModule from 'src/app/shared/components.module';
 
 @Component({
   selector: 'app-resultado-general-posicion',
   templateUrl: './resultado-general-posicion.component.html',
   standalone: true,
-  imports: [ComponentsModule, CommonModule, TableModule],
-  providers: [MessageService, CustomToastService],
+  imports: [LuxuryAppComponentsModule, CommonModule, TableModule],
 })
 export default class ResultadoGeneralPosicionComponent
   implements OnInit, OnDestroy

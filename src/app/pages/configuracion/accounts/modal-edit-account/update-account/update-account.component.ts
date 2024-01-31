@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { MessageService } from 'primeng/api';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { ToastModule } from 'primeng/toast';
 import { Subject, takeUntil } from 'rxjs';
 import { IEditarCuentaDto } from 'src/app/core/interfaces/IEditarCuentaDto.interface';
@@ -20,21 +20,20 @@ import {
   SelectItemService,
 } from 'src/app/core/services/common-services';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
-import ComponentsModule from 'src/app/shared/components.module';
 
 @Component({
   selector: 'app-update-account',
   templateUrl: './update-account.component.html',
   standalone: true,
   imports: [
+    LuxuryAppComponentsModule,
     CommonModule,
-    ComponentsModule,
+    LuxuryAppComponentsModule,
     CustomInputModule,
     NgbModule,
     ReactiveFormsModule,
     ToastModule,
   ],
-  providers: [MessageService, CustomToastService],
 })
 export default class UpdateAccountComponent implements OnInit, OnDestroy {
   private customToastService = inject(CustomToastService);

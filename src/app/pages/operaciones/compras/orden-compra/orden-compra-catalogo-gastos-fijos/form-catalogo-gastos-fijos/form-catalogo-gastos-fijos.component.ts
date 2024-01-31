@@ -7,6 +7,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService, SelectItem } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
@@ -19,23 +20,22 @@ import {
   SelectItemService,
 } from 'src/app/core/services/common-services';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
-import ComponentsModule from 'src/app/shared/components.module';
 import PrimeNgModule from 'src/app/shared/prime-ng.module';
 @Component({
   selector: 'app-form-catalogo-gastos-fijos',
   templateUrl: './form-catalogo-gastos-fijos.component.html',
   standalone: true,
   imports: [
+    LuxuryAppComponentsModule,
     CommonModule,
     ReactiveFormsModule,
-    ComponentsModule,
+    LuxuryAppComponentsModule,
     FormsModule,
-    ComponentsModule,
+    LuxuryAppComponentsModule,
     CommonModule,
     PrimeNgModule,
     CustomInputModule,
   ],
-  providers: [MessageService, CustomToastService],
 })
 export default class FormCatalogoGastosFijosComponent
   implements OnInit, OnDestroy

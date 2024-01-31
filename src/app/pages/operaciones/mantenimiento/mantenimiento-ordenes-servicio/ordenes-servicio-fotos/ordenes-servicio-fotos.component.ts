@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ImageModule } from 'primeng/image';
@@ -9,15 +10,18 @@ import {
   CustomerIdService,
   DataService,
 } from 'src/app/core/services/common-services';
-import ComponentsModule from 'src/app/shared/components.module';
 import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-ordenes-servicio-fotos',
   templateUrl: './ordenes-servicio-fotos.component.html',
   standalone: true,
-  imports: [CommonModule, ComponentsModule, ImageModule],
-  providers: [MessageService, CustomToastService],
+  imports: [
+    LuxuryAppComponentsModule,
+    CommonModule,
+    LuxuryAppComponentsModule,
+    ImageModule,
+  ],
 })
 export default class OrdenesServicioFotosComponent
   implements OnInit, OnDestroy

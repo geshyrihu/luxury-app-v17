@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { PieChartModule } from '@swimlane/ngx-charts';
-
 @Component({
   selector: 'app-pie-chart',
   templateUrl: './pie-chart.component.html',

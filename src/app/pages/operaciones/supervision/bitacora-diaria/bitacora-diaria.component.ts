@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { MessageService } from 'primeng/api';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { IFechasFiltro } from 'src/app/core/interfaces/IFechasFiltro.interface';
@@ -14,7 +14,6 @@ import {
   FiltroCalendarService,
   SelectItemService,
 } from 'src/app/core/services/common-services';
-import ComponentsModule from 'src/app/shared/components.module';
 import PrimeNgModule from 'src/app/shared/prime-ng.module';
 import { environment } from 'src/environments/environment';
 import AddOrEditBitacoraDiariaComponent from './addoredit-bitacora-diaria.component';
@@ -23,13 +22,12 @@ const base_url = environment.base_urlImg + 'Administration/accounts/';
   selector: 'app-bitacora-diaria',
   templateUrl: './bitacora-diaria.component.html',
   standalone: true,
-  imports: [CommonModule, ComponentsModule, FormsModule, PrimeNgModule],
-  providers: [
-    DialogService,
-    MessageService,
-    CustomToastService,
-    ApiRequestService,
-    DataService,
+  imports: [
+    LuxuryAppComponentsModule,
+    CommonModule,
+    LuxuryAppComponentsModule,
+    FormsModule,
+    PrimeNgModule,
   ],
 })
 export default class BitacoraDiariaComponent implements OnInit, OnDestroy {

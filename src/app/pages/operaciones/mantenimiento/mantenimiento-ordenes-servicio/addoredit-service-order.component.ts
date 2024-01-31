@@ -7,6 +7,9 @@ import {
   Validators,
 } from '@angular/forms';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import LuxuryAppComponentsModule, {
+  flatpickrFactory,
+} from 'app/shared/luxuryapp-components.module';
 import { MessageService, SelectItem } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
@@ -20,9 +23,6 @@ import { DateService } from 'src/app/core/services/date.service';
 import { SelectItemService } from 'src/app/core/services/select-item.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import ValidationErrorsCustomInputComponent from 'src/app/custom-components/custom-input-form/validation-errors-custom-input/validation-errors-custom-input.component';
-import ComponentsModule, {
-  flatpickrFactory,
-} from 'src/app/shared/components.module';
 import PrimeNgModule from 'src/app/shared/prime-ng.module';
 
 @Component({
@@ -30,9 +30,10 @@ import PrimeNgModule from 'src/app/shared/prime-ng.module';
   templateUrl: './addoredit-service-order.component.html',
   standalone: true,
   imports: [
+    LuxuryAppComponentsModule,
     CommonModule,
     ReactiveFormsModule,
-    ComponentsModule,
+    LuxuryAppComponentsModule,
     CustomInputModule,
     PrimeNgModule,
     ValidationErrorsCustomInputComponent,

@@ -1,11 +1,10 @@
 import { Component, Input, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { FlatpickrModule } from 'angularx-flatpickr';
-import { Subscription } from 'rxjs';
 import { IFechasFiltro } from 'src/app/core/interfaces/IFechasFiltro.interface';
 import { DateService } from 'src/app/core/services/date.service';
 import { FiltroCalendarService } from 'src/app/core/services/filtro-calendar.service';
-import { flatpickrFactory } from '../components.module';
+import { flatpickrFactory } from '../luxuryapp-components.module';
 const date = new Date();
 
 @Component({

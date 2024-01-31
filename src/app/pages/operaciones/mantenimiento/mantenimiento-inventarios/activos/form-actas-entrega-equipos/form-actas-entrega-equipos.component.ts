@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
-
 @Component({
   selector: 'app-form-actas-entrega-equipos',
   templateUrl: './form-actas-entrega-equipos.component.html',
   standalone: true,
-  imports: [FormsModule],
+  imports: [LuxuryAppComponentsModule, FormsModule],
 })
 export default class FormActasEntregaEquiposComponent {
   date: Date = new Date();

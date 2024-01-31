@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { TableModule } from 'primeng/table';
@@ -10,16 +11,16 @@ import { DataService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
 import { PeriodoMonthService } from 'src/app/core/services/periodo-month.service';
 import PagetitleReportComponent from 'src/app/shared/cabeceras/pagetitlereport/pagetitlereport.component';
-import ComponentsModule from 'src/app/shared/components.module';
 @Component({
   selector: 'app-resumen-mantenimientos',
   templateUrl: './resumen-mantenimientos.component.html',
   standalone: true,
   imports: [
+    LuxuryAppComponentsModule,
     PagetitleReportComponent,
     TableModule,
     CommonModule,
-    ComponentsModule,
+    LuxuryAppComponentsModule,
   ],
   providers: [CustomToastService, MessageService],
 })

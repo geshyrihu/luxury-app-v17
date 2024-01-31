@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ToastModule } from 'primeng/toast';
@@ -10,7 +11,6 @@ import {
   CustomToastService,
   DataService,
 } from 'src/app/core/services/common-services';
-import ComponentsModule from 'src/app/shared/components.module';
 import { environment } from 'src/environments/environment';
 import AddOrEditTelefonosEmergenciaComponent from './addoredit-telefonos-emergencia.component';
 
@@ -18,8 +18,7 @@ import AddOrEditTelefonosEmergenciaComponent from './addoredit-telefonos-emergen
   selector: 'app-telefonos-emergencia',
   templateUrl: './telefonos-emergencia.component.html',
   standalone: true,
-  imports: [ComponentsModule, CommonModule, ToastModule],
-  providers: [DialogService, MessageService, CustomToastService],
+  imports: [LuxuryAppComponentsModule, CommonModule, ToastModule],
 })
 export default class TelefonosEmergenciaComponent {
   public authService = inject(AuthService);

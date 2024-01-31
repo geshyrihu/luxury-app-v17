@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { MessageService } from 'primeng/api';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { ToastModule } from 'primeng/toast';
 import { Subject, takeUntil } from 'rxjs';
 import { IRolesDto } from 'src/app/core/interfaces/IRolesDto.interface';
@@ -10,13 +10,17 @@ import {
   CustomToastService,
   DataService,
 } from 'src/app/core/services/common-services';
-
 @Component({
   selector: 'app-update-role',
   templateUrl: './update-role.component.html',
   standalone: true,
-  imports: [CommonModule, FormsModule, NgbModule, ToastModule],
-  providers: [MessageService, CustomToastService],
+  imports: [
+    LuxuryAppComponentsModule,
+    CommonModule,
+    FormsModule,
+    NgbModule,
+    ToastModule,
+  ],
 })
 export default class UpdateRoleComponent implements OnInit, OnDestroy {
   private dataService = inject(DataService);

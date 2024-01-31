@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { Observable, Subject, takeUntil } from 'rxjs';
@@ -11,15 +12,19 @@ import {
   DateService,
 } from 'src/app/core/services/common-services';
 import { FiltroCalendarService } from 'src/app/core/services/filtro-calendar.service';
-import ComponentsModule from 'src/app/shared/components.module';
 import PrimeNgModule from 'src/app/shared/prime-ng.module';
 import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-access-log',
   templateUrl: './access-log.component.html',
   standalone: true,
-  imports: [CommonModule, ComponentsModule, ButtonModule, PrimeNgModule],
-  providers: [MessageService, CustomToastService],
+  imports: [
+    LuxuryAppComponentsModule,
+    CommonModule,
+    LuxuryAppComponentsModule,
+    ButtonModule,
+    PrimeNgModule,
+  ],
 })
 export default class AccessLogComponent implements OnInit, OnDestroy {
   public customToastService = inject(CustomToastService);

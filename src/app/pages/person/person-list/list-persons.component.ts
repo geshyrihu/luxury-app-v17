@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
@@ -9,7 +10,6 @@ import {
   CustomToastService,
   DataService,
 } from 'src/app/core/services/common-services';
-import ComponentsModule from 'src/app/shared/components.module';
 import PrimeNgModule from 'src/app/shared/prime-ng.module';
 import { environment } from 'src/environments/environment';
 import CardEmployeeComponent from '../../operaciones/directorios/empleados/card-employee/card-employee.component';
@@ -23,7 +23,13 @@ import PersonUpdatePhotoComponent from '../person-update-photo/update-image-pers
   selector: 'app-list-persons',
   templateUrl: './list-persons.component.html',
   standalone: true,
-  imports: [CommonModule, ComponentsModule, PrimeNgModule, NgbTooltip],
+  imports: [
+    LuxuryAppComponentsModule,
+    CommonModule,
+    LuxuryAppComponentsModule,
+    PrimeNgModule,
+    NgbTooltip,
+  ],
   providers: [
     ApiRequestService,
     ConfirmationService,

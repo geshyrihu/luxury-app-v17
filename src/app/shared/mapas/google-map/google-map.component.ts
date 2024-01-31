@@ -1,7 +1,8 @@
 // import { AgmCoreModule } from '@agm/core';
 // import { Component, Input } from '@angular/core';
 
-// @Component({
+// import ComponentsModule from 'src/app/shared/components.module';
+@Component({
 //   selector: 'app-google-map',
 //   templateUrl: './google-map.component.html',
 //   standalone: true,

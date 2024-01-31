@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { TableModule } from 'primeng/table';
@@ -12,21 +13,20 @@ import {
   CustomToastService,
   DataService,
 } from 'src/app/core/services/common-services';
-import ComponentsModule from 'src/app/shared/components.module';
 
 @Component({
   selector: 'app-resultado-general-evaluacion-areas-detalle',
   templateUrl: './resultado-general-evaluacion-areas-detalle.component.html',
   standalone: true,
   imports: [
+    LuxuryAppComponentsModule,
     CommonModule,
-    ComponentsModule,
+    LuxuryAppComponentsModule,
     TableModule,
     MultiSelectModule,
     SanitizeHtmlPipe,
     EStatusPipe,
   ],
-  providers: [CustomToastService],
 })
 export default class ResultadoGeneralEvaluacionAreasDetalleComponent
   implements OnInit, OnDestroy

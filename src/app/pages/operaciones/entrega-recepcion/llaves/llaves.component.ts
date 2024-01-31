@@ -1,18 +1,16 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { MessageService } from 'primeng/api';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { TableModule } from 'primeng/table';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { CustomerIdService } from 'src/app/core/services/common-services';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
-import ComponentsModule from 'src/app/shared/components.module';
 
 @Component({
   selector: 'app-llaves',
   templateUrl: './llaves.component.html',
   standalone: true,
-  imports: [ComponentsModule, TableModule],
-  providers: [MessageService, CustomToastService],
+  imports: [LuxuryAppComponentsModule, TableModule],
 })
 export default class LlavesComponent implements OnInit, OnDestroy {
   public customerIdService = inject(CustomerIdService);

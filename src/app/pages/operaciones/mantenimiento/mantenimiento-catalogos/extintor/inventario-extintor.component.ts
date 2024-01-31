@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ImageModule } from 'primeng/image';
@@ -11,7 +12,6 @@ import {
   CustomerIdService,
   DataService,
 } from 'src/app/core/services/common-services';
-import ComponentsModule from 'src/app/shared/components.module';
 import PrimeNgModule from 'src/app/shared/prime-ng.module';
 import { environment } from 'src/environments/environment';
 import AddoreditInventarioExtintorComponent from './addoredit-inventario-extintor.component';
@@ -20,8 +20,7 @@ import AddoreditInventarioExtintorComponent from './addoredit-inventario-extinto
   selector: 'app-inventario-extintor',
   templateUrl: './inventario-extintor.component.html',
   standalone: true,
-  imports: [ComponentsModule, PrimeNgModule, ImageModule],
-  providers: [DialogService, MessageService, CustomToastService],
+  imports: [LuxuryAppComponentsModule, PrimeNgModule, ImageModule],
 })
 export default class InventarioExtintorComponent implements OnInit, OnDestroy {
   public customToastService = inject(CustomToastService);

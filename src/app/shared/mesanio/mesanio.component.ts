@@ -3,7 +3,6 @@ import { FormsModule } from '@angular/forms';
 import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, Subject } from 'rxjs';
 import { FiltroCalendarService } from 'src/app/core/services/filtro-calendar.service';
-
 @Component({
   selector: 'app-mesanio',
   templateUrl: './mesanio.component.html',

@@ -1,6 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { TableModule } from 'primeng/table';
 import { Observable } from 'rxjs';
@@ -16,13 +17,14 @@ import ResumenMantenimientosComponent from './resumen-mantenimientos/resumen-man
   templateUrl: './maintenance-reports.component.html',
   standalone: true,
   imports: [
+    LuxuryAppComponentsModule,
     MesanioComponent,
     TableModule,
     NgbTooltip,
     RouterModule,
     ResumenMantenimientosComponent,
-    PagetitleReportComponent
-],
+    PagetitleReportComponent,
+  ],
   providers: [MessageService],
 })
 export default class MaintenanceReportsComponent implements OnInit {

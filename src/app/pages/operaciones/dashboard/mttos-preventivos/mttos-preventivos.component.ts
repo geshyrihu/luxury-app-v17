@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { NgbAlert } from '@ng-bootstrap/ng-bootstrap';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
@@ -9,15 +10,18 @@ import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
 import { PeriodoMonthService } from 'src/app/core/services/periodo-month.service';
-import ComponentsModule from 'src/app/shared/components.module';
 import MantenimientosPreventivosResumenComponent from '../mttos-preventivos-resumen/mttos-preventivos-resumen.component';
 
 @Component({
   selector: 'app-mttos-preventivos',
   templateUrl: './mttos-preventivos.component.html',
   standalone: true,
-  imports: [NgbAlert, ComponentsModule, CommonModule],
-  providers: [DialogService, MessageService, CustomToastService],
+  imports: [
+    LuxuryAppComponentsModule,
+    NgbAlert,
+    LuxuryAppComponentsModule,
+    CommonModule,
+  ],
 })
 export default class MantenimientosPreventivosComponent
   implements OnInit, OnDestroy

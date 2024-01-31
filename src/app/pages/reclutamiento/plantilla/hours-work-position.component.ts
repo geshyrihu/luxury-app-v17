@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { TableModule } from 'primeng/table';
 import { Subject, takeUntil } from 'rxjs';
@@ -7,13 +8,11 @@ import {
   CustomToastService,
   DataService,
 } from 'src/app/core/services/common-services';
-
 @Component({
   selector: 'app-hours-work-position',
   templateUrl: './hours-work-position.component.html',
   standalone: true,
-  imports: [CommonModule, TableModule],
-  providers: [CustomToastService],
+  imports: [LuxuryAppComponentsModule, CommonModule, TableModule],
 })
 export default class HoursWorkPositionComponent implements OnInit, OnDestroy {
   public config = inject(DynamicDialogConfig);

@@ -6,7 +6,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { MessageService } from 'primeng/api';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { imageToBase64 } from 'src/app/core/helpers/enumeration';
@@ -19,7 +19,6 @@ import { DataService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
 import { SelectItemService } from 'src/app/core/services/select-item.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
-import ComponentsModule from 'src/app/shared/components.module';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -27,13 +26,12 @@ import { environment } from 'src/environments/environment';
   templateUrl: './add-account-customer.component.html',
   standalone: true,
   imports: [
+    LuxuryAppComponentsModule,
     ReactiveFormsModule,
-    ComponentsModule,
+    LuxuryAppComponentsModule,
     CommonModule,
     CustomInputModule,
   ],
-
-  providers: [MessageService, CustomToastService],
 })
 export default class AddAccountCustomerComponent implements OnInit, OnDestroy {
   public config = inject(DynamicDialogConfig);

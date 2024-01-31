@@ -12,8 +12,6 @@ import { environment } from 'src/environments/environment';
   selector: 'app-cabecera-solicitud-pago-pdf',
   templateUrl: './cabecera-solicitud-pago-pdf.component.html',
   standalone: true,
-
-  providers: [CustomToastService],
 })
 export default class CabeceraSolicitudPagoPdfComponent
   implements OnInit, OnDestroy

@@ -6,6 +6,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import {
   DialogService,
@@ -19,14 +20,17 @@ import { CustomerIdService } from 'src/app/core/services/common-services';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { SelectItemService } from 'src/app/core/services/select-item.service';
-import ComponentsModule from 'src/app/shared/components.module';
 
 @Component({
   selector: 'app-enviar-mail-estados-financieros',
   templateUrl: './enviar-mail-estados-financieros.component.html',
   standalone: true,
-  imports: [ComponentsModule, CommonModule, ReactiveFormsModule, ToastModule],
-  providers: [MessageService, CustomToastService],
+  imports: [
+    LuxuryAppComponentsModule,
+    CommonModule,
+    ReactiveFormsModule,
+    ToastModule,
+  ],
 })
 export default class EnviarMailEstadosFinancierosComponent {
   public customerIdService = inject(CustomerIdService);

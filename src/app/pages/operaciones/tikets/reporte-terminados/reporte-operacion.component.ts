@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { IFilterTicket } from 'src/app/core/interfaces/IFilterTicket.interface';
@@ -12,14 +13,18 @@ import {
   ReportService,
   TicketFilterService,
 } from 'src/app/core/services/common-services';
-import ComponentsModule from 'src/app/shared/components.module';
 import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-operation-report',
   templateUrl: './reporte-operacion.component.html',
   standalone: true,
-  imports: [RouterModule, ComponentsModule, CommonModule],
+  imports: [
+    LuxuryAppComponentsModule,
+    RouterModule,
+    LuxuryAppComponentsModule,
+    CommonModule,
+  ],
   providers: [CustomToastService, MessageService],
 })
 export default class ReporteOperacionComponent implements OnInit, OnDestroy {

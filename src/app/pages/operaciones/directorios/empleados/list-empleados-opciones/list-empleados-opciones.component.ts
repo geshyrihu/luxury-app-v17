@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import {
   DialogService,
@@ -23,7 +24,6 @@ import PersonEditDataPrincipalComponent from 'src/app/pages/person/person-edit-d
 import SolicitudAltaComponent from 'src/app/pages/reclutamiento/solicitudes/solicitud-alta/solicitud-alta.component';
 import SolicitudBajaComponent from 'src/app/pages/reclutamiento/solicitudes/solicitud-baja/solicitud-baja.component';
 import SolicitudModificacionSalarioComponent from 'src/app/pages/reclutamiento/solicitudes/solicitud-modificacion-salario/solicitud-modificacion-salario.component';
-import ComponentsModule from 'src/app/shared/components.module';
 import PrimeNgModule from 'src/app/shared/prime-ng.module';
 import Swal from 'sweetalert2';
 import PersonUpdatePhotoComponent from '../../../../person/person-update-photo/update-image-person.component';
@@ -34,7 +34,7 @@ import AddOrEditEmplopyeeComponent from '../addoredit-data-employee/addoredit-em
   selector: 'app-list-empleados-opciones',
   templateUrl: './list-empleados-opciones.component.html',
   standalone: true,
-  imports: [ComponentsModule, NgbTooltip, PrimeNgModule, CommonModule],
+  imports: [LuxuryAppComponentsModule, NgbTooltip, PrimeNgModule, CommonModule],
   providers: [CustomToastService, MessageService],
 })
 export default class ListEmpleadosOpcionesComponent

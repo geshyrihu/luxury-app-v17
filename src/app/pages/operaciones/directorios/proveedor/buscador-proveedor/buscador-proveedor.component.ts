@@ -6,6 +6,7 @@ import {
   NgbRatingModule,
   NgbTooltipModule,
 } from '@ng-bootstrap/ng-bootstrap';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ToastModule } from 'primeng/toast';
@@ -16,7 +17,6 @@ import {
   CustomToastService,
   DataService,
 } from 'src/app/core/services/common-services';
-import ComponentsModule from 'src/app/shared/components.module';
 import { environment } from 'src/environments/environment';
 import AddoreditProveedorComponent from '../addoredit-proveedor/addoredit-proveedor.component';
 import CalificacionProveedorComponent from '../calificacion-proveedor/calificacion-proveedor.component';
@@ -27,9 +27,10 @@ import TarjetaProveedorComponent from '../tarjeta-proveedor/tarjeta-proveedor.co
   templateUrl: './buscador-proveedor.component.html',
   standalone: true,
   imports: [
+    LuxuryAppComponentsModule,
     CommonModule,
     FormsModule,
-    ComponentsModule,
+    LuxuryAppComponentsModule,
     NgbRatingModule,
     NgbTooltipModule,
     NgbAlert,

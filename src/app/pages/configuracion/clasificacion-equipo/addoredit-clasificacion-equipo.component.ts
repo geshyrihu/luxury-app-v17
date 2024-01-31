@@ -6,6 +6,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import {
@@ -13,19 +14,18 @@ import {
   DataService,
 } from 'src/app/core/services/common-services';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
-import ComponentsModule from 'src/app/shared/components.module';
 
 @Component({
   selector: 'app-addoredit-clasificacion-equipo',
   templateUrl: './addoredit-clasificacion-equipo.component.html',
   standalone: true,
   imports: [
+    LuxuryAppComponentsModule,
     CommonModule,
-    ComponentsModule,
+    LuxuryAppComponentsModule,
     ReactiveFormsModule,
     CustomInputModule,
   ],
-  providers: [CustomToastService],
 })
 export default class AddoreditClasificacionEquipoComponent
   implements OnInit, OnDestroy

@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import {
   DialogService,
@@ -14,13 +15,16 @@ import {
   CustomerIdService,
   DataService,
 } from 'src/app/core/services/common-services';
-import ComponentsModule from 'src/app/shared/components.module';
 @Component({
   selector: 'app-dashboard-minutas-resumen',
   templateUrl: './dashboard-minutas-resumen.component.html',
   standalone: true,
-  imports: [ComponentsModule, CommonModule, TableModule, SanitizeHtmlPipe],
-  providers: [DialogService, MessageService, CustomToastService],
+  imports: [
+    LuxuryAppComponentsModule,
+    CommonModule,
+    TableModule,
+    SanitizeHtmlPipe,
+  ],
 })
 export default class DashboardMinutasResumenComponent
   implements OnInit, OnDestroy

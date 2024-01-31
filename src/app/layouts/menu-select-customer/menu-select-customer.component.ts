@@ -1,16 +1,16 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { Subject, takeUntil } from 'rxjs';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { SelectItemService } from 'src/app/core/services/select-item.service';
-
 @Component({
   selector: 'app-menu-select-customer',
   templateUrl: './menu-select-customer.component.html',
   standalone: true,
-  imports: [FormsModule],
+  imports: [LuxuryAppComponentsModule, FormsModule],
   providers: [DataService],
 })
 export default class MenuSelectCustomerComponent implements OnInit, OnDestroy {

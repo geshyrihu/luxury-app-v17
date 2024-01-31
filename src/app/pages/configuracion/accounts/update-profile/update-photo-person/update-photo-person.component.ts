@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { MessageService } from 'primeng/api';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { ToastModule } from 'primeng/toast';
 import { Subject, takeUntil } from 'rxjs';
 import { InfoEmployeeAuthDto } from 'src/app/core/interfaces/user-token.interface';
@@ -12,13 +12,11 @@ import {
 } from 'src/app/core/services/common-services';
 import { ProfielServiceService } from 'src/app/core/services/profiel-service.service';
 import { environment } from 'src/environments/environment';
-
 @Component({
   selector: 'app-update-photo-person',
   templateUrl: './update-photo-person.component.html',
   standalone: true,
-  imports: [CommonModule, NgbModule, ToastModule],
-  providers: [MessageService, CustomToastService],
+  imports: [LuxuryAppComponentsModule, CommonModule, NgbModule, ToastModule],
 })
 export default class UpdatePhotoEmployeeComponent implements OnInit, OnDestroy {
   public authService = inject(AuthService);

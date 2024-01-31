@@ -5,6 +5,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { RatingModule } from 'primeng/rating';
 import { Subject, takeUntil } from 'rxjs';
@@ -13,13 +14,16 @@ import {
   CustomToastService,
   DataService,
 } from 'src/app/core/services/common-services';
-import ComponentsModule from 'src/app/shared/components.module';
 @Component({
   selector: 'app-calificacion-proveedor',
   templateUrl: './calificacion-proveedor.component.html',
   standalone: true,
-  imports: [ReactiveFormsModule, ComponentsModule, RatingModule],
-  providers: [CustomToastService],
+  imports: [
+    LuxuryAppComponentsModule,
+    ReactiveFormsModule,
+    LuxuryAppComponentsModule,
+    RatingModule,
+  ],
 })
 export default class CalificacionProveedorComponent
   implements OnInit, OnDestroy

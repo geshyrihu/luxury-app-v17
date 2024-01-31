@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
@@ -12,7 +13,6 @@ import {
   FiltroCalendarService,
 } from 'src/app/core/services/common-services';
 import { SistemasReporteService } from 'src/app/core/services/sistemas-reporte.service';
-import ComponentsModule from 'src/app/shared/components.module';
 import PrimeNgModule from 'src/app/shared/prime-ng.module';
 import { environment } from 'src/environments/environment';
 import CardEmployeeComponent from '../../directorios/empleados/card-employee/card-employee.component';
@@ -22,7 +22,12 @@ import AddoreditSistemasReporteComponent from '../addoredit-sistemas-reporte/add
   selector: 'app-sistemas-reporte',
   templateUrl: './sistemas-reporte.component.html',
   standalone: true,
-  imports: [ComponentsModule, CommonModule, RouterModule, PrimeNgModule],
+  imports: [
+    LuxuryAppComponentsModule,
+    CommonModule,
+    RouterModule,
+    PrimeNgModule,
+  ],
   providers: [
     DialogService,
     MessageService,

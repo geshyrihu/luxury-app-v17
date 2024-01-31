@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ImageModule } from 'primeng/image';
@@ -13,7 +14,6 @@ import {
   CustomerIdService,
   DataService,
 } from 'src/app/core/services/common-services';
-import ComponentsModule from 'src/app/shared/components.module';
 import { environment } from 'src/environments/environment';
 import AddoreditInventarioIluminacionComponent from './addoredit-inventario-iluminacion.component';
 @Component({
@@ -21,13 +21,12 @@ import AddoreditInventarioIluminacionComponent from './addoredit-inventario-ilum
   templateUrl: './inventario-iluminacion.component.html',
   standalone: true,
   imports: [
-    ComponentsModule,
+    LuxuryAppComponentsModule,
     NgbAlertModule,
     CommonModule,
     TableModule,
     ImageModule,
   ],
-  providers: [DialogService, MessageService, CustomToastService],
 })
 export default class InventarioIluminacionComponent
   implements OnInit, OnDestroy

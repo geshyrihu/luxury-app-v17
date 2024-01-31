@@ -10,7 +10,6 @@ import {
   selector: 'app-info-cuenta',
   templateUrl: './info-cuenta.component.html',
   standalone: true,
-  providers: [CustomToastService],
 })
 export default class InfoCuentaComponent implements OnInit, OnDestroy {
   public config = inject(DynamicDialogConfig);

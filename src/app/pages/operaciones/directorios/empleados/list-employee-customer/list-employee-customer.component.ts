@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
@@ -11,7 +12,6 @@ import {
   CustomerIdService,
   DataService,
 } from 'src/app/core/services/common-services';
-import ComponentsModule from 'src/app/shared/components.module';
 import PrimeNgModule from 'src/app/shared/prime-ng.module';
 import { environment } from 'src/environments/environment';
 import AddAccountCustomerComponent from '../add-account-to-customer/add-account-customer.component';
@@ -23,7 +23,12 @@ const base_urlImg = environment.base_urlImg + 'Administration/accounts/';
   selector: 'app-list-employee-customer',
   templateUrl: './list-employee-customer.component.html',
   standalone: true,
-  imports: [CommonModule, ComponentsModule, PrimeNgModule],
+  imports: [
+    LuxuryAppComponentsModule,
+    CommonModule,
+    LuxuryAppComponentsModule,
+    PrimeNgModule,
+  ],
   providers: [
     DialogService,
     MessageService,

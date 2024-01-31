@@ -4,13 +4,19 @@ import { RouterModule } from '@angular/router';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
-import { FlatpickrModule } from 'angularx-flatpickr';
 import flatpickr from 'flatpickr';
 import { Spanish } from 'flatpickr/dist/l10n/es';
 import { MessageService } from 'primeng/api';
+import { CheckboxModule } from 'primeng/checkbox';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
+import { DialogModule } from 'primeng/dialog';
 import { DialogService } from 'primeng/dynamicdialog';
+import { EditorModule } from 'primeng/editor';
 import { FileUploadModule } from 'primeng/fileupload';
+import { ImageModule } from 'primeng/image';
+import { InputTextModule } from 'primeng/inputtext';
+import { MenuModule } from 'primeng/menu';
+import { MultiSelectModule } from 'primeng/multiselect';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
 import { ToolbarModule } from 'primeng/toolbar';
@@ -48,51 +54,85 @@ export function flatpickrFactory() {
     AgregarCorreoElectronicoComponent,
     CabeceraSolicitudPagoPdfComponent,
     CalendarRangeComponent,
-    ConfirmPopupModule,
-    CustomButtonModule,
-    FileUploadModule,
-    FlatpickrModule.forRoot(),
     HaederCustomerComponent,
     InputImgComponent,
     InputImgReportComponent,
     LeafletMapComponent,
-    LeafletModule,
     ListadoCondominosComponent,
     MesanioComponent,
-    NgbTooltipModule,
-    NgxChartsModule,
     PagetitleComponent,
     PieChartComponent,
     RangoCalendarioyyyymmddComponent,
-    ReactiveFormsModule,
     ReportHeaderComponent,
-    RouterModule,
     SubirPdfComponent,
     TableFooterComponent,
     TableHeaderComponent,
+
+    ConfirmPopupModule,
+    CustomButtonModule,
+    FileUploadModule,
+    // FlatpickrModule.forRoot(),
+    LeafletModule,
+    NgbTooltipModule,
+    NgxChartsModule,
+    ReactiveFormsModule,
+    RouterModule,
+    ToolbarModule,
+    TooltipModule,
+
+    // PrimeNgModule
+    TableModule,
+    ToastModule,
+    CheckboxModule,
+    DialogModule,
+    ImageModule,
+    MenuModule,
+    MultiSelectModule,
+    InputTextModule,
+    EditorModule,
+  ],
+  exports: [
+    AdvancedPieChartComponent,
+    AgregarCorreoElectronicoComponent,
+    CabeceraSolicitudPagoPdfComponent,
+    CalendarRangeComponent,
+    HaederCustomerComponent,
+    InputImgComponent,
+    InputImgReportComponent,
+    LeafletMapComponent,
+    ListadoCondominosComponent,
+    MesanioComponent,
+    PagetitleComponent,
+    PieChartComponent,
+    RangoCalendarioyyyymmddComponent,
+    ReportHeaderComponent,
+    SubirPdfComponent,
+    TableFooterComponent,
+    TableHeaderComponent,
+
+    ConfirmPopupModule,
+    CustomButtonModule,
+    FileUploadModule,
+    LeafletModule,
+    NgbTooltipModule,
+    NgxChartsModule,
+    ReactiveFormsModule,
+    RouterModule,
     TableModule,
     ToastModule,
     ToolbarModule,
     TooltipModule,
-  ],
-  exports: [
-    AdvancedPieChartComponent,
-    CabeceraSolicitudPagoPdfComponent,
-    CalendarRangeComponent,
-    CustomButtonModule,
-    HaederCustomerComponent,
-    InputImgComponent,
-    InputImgReportComponent,
-    LeafletMapComponent,
-    ListadoCondominosComponent,
-    MesanioComponent,
-    PagetitleComponent,
-    PieChartComponent,
-    RangoCalendarioyyyymmddComponent,
-    ReportHeaderComponent,
-    SubirPdfComponent,
-    TableFooterComponent,
-    TableHeaderComponent,
+
+    // PrimeNgModule
+    TableModule,
+    ToastModule,
+    CheckboxModule,
+    DialogModule,
+    ImageModule,
+    MenuModule,
+    MultiSelectModule,
+    InputTextModule,
+    EditorModule,
   ],
   providers: [
     DialogService,
@@ -102,4 +142,4 @@ export function flatpickrFactory() {
     ApiRequestService,
   ],
 })
-export default class ComponentsModule {}
+export default class LuxuryAppComponentsModule {}

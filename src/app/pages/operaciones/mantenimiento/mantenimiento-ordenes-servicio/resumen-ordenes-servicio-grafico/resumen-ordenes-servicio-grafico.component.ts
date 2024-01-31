@@ -1,12 +1,12 @@
 import { Component, inject } from '@angular/core';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { ReporteOrdenesServicioService } from 'src/app/core/services/reporte-ordenes-servicio.service';
-
 @Component({
   selector: 'app-resumen-ordenes-servicio-grafico',
   templateUrl: './resumen-ordenes-servicio-grafico.component.html',
   standalone: true,
-  imports: [NgxChartsModule],
+  imports: [LuxuryAppComponentsModule, NgxChartsModule],
 })
 export default class ResumenOrdenesServicioGraficoComponent {
   public reporteOrdenesServicioService = inject(ReporteOrdenesServicioService);

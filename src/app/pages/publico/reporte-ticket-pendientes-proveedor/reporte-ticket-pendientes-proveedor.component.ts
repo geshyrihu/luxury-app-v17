@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import ComponentsModule from 'app/shared/components.module';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { Subject, takeUntil } from 'rxjs';
 import {
@@ -16,7 +16,7 @@ import { environment } from 'src/environments/environment';
   selector: 'app-reporte-ticket-pendientes-proveedor',
   templateUrl: './reporte-ticket-pendientes-proveedor.component.html',
   standalone: true,
-  imports: [CommonModule, ComponentsModule],
+  imports: [LuxuryAppComponentsModule, CommonModule, LuxuryAppComponentsModule],
   providers: [CustomToastService, MessageService],
 })
 export default class ReporteTicketPendientesProveedorComponent

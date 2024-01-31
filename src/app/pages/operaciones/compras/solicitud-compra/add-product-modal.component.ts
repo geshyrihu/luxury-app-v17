@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import {
   DialogService,
@@ -16,7 +17,6 @@ import {
   SelectItemService,
 } from 'src/app/core/services/common-services';
 import TarjetaProductoComponent from 'src/app/pages/operaciones/mantenimiento/mantenimiento-catalogos/tarjeta-producto/tarjeta-producto.component';
-import ComponentsModule from 'src/app/shared/components.module';
 import PrimeNgModule from 'src/app/shared/prime-ng.module';
 import { environment } from 'src/environments/environment';
 
@@ -24,7 +24,13 @@ import { environment } from 'src/environments/environment';
   selector: 'app-add-product-modal',
   templateUrl: './add-product-modal.component.html',
   standalone: true,
-  imports: [PrimeNgModule, CommonModule, ComponentsModule, FormsModule],
+  imports: [
+    LuxuryAppComponentsModule,
+    PrimeNgModule,
+    CommonModule,
+    LuxuryAppComponentsModule,
+    FormsModule,
+  ],
   providers: [
     DialogService,
     MessageService,

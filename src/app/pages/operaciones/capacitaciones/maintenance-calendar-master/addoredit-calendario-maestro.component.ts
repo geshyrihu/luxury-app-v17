@@ -8,6 +8,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { EMonth } from 'src/app/core/enums/month.enum';
@@ -17,22 +18,21 @@ import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { SelectItemService } from 'src/app/core/services/select-item.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
-import ComponentsModule from 'src/app/shared/components.module';
 
 @Component({
   selector: 'app-addoredit-calendario-maestro',
   templateUrl: './addoredit-calendario-maestro.component.html',
   standalone: true,
   imports: [
+    LuxuryAppComponentsModule,
     NgSelectModule,
     FormsModule,
     CommonModule,
     ReactiveFormsModule,
-    ComponentsModule,
+    LuxuryAppComponentsModule,
     CommonModule,
     CustomInputModule,
   ],
-  providers: [CustomToastService],
 })
 export default class AddOrEditCalendarioMaestroComponent
   implements OnInit, OnDestroy

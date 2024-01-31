@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import ComponentsModule from 'app/shared/components.module';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { Subject, takeUntil } from 'rxjs';
 import {
   CustomToastService,
@@ -20,10 +20,11 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   templateUrl: './login.component.html',
   standalone: true,
   imports: [
+    LuxuryAppComponentsModule,
     CommonModule,
     ReactiveFormsModule,
     CustomInputModule,
-    ComponentsModule,
+    LuxuryAppComponentsModule,
   ],
 })
 export default class LoginComponent implements OnInit, OnDestroy {

@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import PrimeNgModule from 'app/shared/prime-ng.module';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -12,12 +13,11 @@ import { DialogHandlerService } from 'src/app/core/services/dialog-handler.servi
 import { environment } from 'src/environments/environment';
 import AddFileEstadoFinancieroComponent from './add-file-estado-financiero/add-file-estado-financiero.component';
 import SendEstadosFinancierosComponent from './send-estados-financieros/send-estados-financieros.component';
-
 @Component({
   selector: 'app-estado-financiero-list',
   templateUrl: './estado-financiero-list.component.html',
   standalone: true,
-  imports: [PrimeNgModule, NgbTooltip],
+  imports: [LuxuryAppComponentsModule, PrimeNgModule, NgbTooltip],
   providers: [
     MessageService,
     CustomToastService,

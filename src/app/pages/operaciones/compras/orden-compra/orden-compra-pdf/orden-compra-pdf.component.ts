@@ -1,19 +1,18 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { Subject, takeUntil } from 'rxjs';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { SelectItemService } from 'src/app/core/services/select-item.service';
 import { environment } from 'src/environments/environment';
-
 @Component({
   selector: 'app-orden-compra-pdf',
   templateUrl: './orden-compra-pdf.component.html',
   standalone: true,
-  imports: [CommonModule],
-  providers: [MessageService, CustomToastService],
+  imports: [LuxuryAppComponentsModule, CommonModule],
 })
 export default class OrdenCompraPdfComponent implements OnInit, OnDestroy {
   public customToastService = inject(CustomToastService);

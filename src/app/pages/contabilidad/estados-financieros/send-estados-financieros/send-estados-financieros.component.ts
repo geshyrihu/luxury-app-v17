@@ -7,6 +7,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import PrimeNgModule from 'app/shared/prime-ng.module';
 import { MessageService } from 'primeng/api';
 import {
@@ -24,21 +25,19 @@ import {
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { SelectItemService } from 'src/app/core/services/select-item.service';
-import ComponentsModule from 'src/app/shared/components.module';
 
 @Component({
   selector: 'app-send-estados-financieros',
   templateUrl: './send-estados-financieros.component.html',
   standalone: true,
   imports: [
-    ComponentsModule,
+    LuxuryAppComponentsModule,
     CommonModule,
     ReactiveFormsModule,
     ToastModule,
     FormsModule,
     PrimeNgModule,
   ],
-  providers: [MessageService, CustomToastService],
 })
 export default class SendEstadosFinancierosComponent implements OnDestroy {
   public customerIdService = inject(CustomerIdService);

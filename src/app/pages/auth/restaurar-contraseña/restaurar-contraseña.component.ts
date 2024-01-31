@@ -8,7 +8,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MessageService } from 'primeng/api';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { Subject, takeUntil } from 'rxjs';
 import { ResetPasswordDto } from 'src/app/core/interfaces/reset-password.interface';
 import {
@@ -23,12 +23,12 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   templateUrl: './restaurar-contraseña.component.html',
   standalone: true,
   imports: [
+    LuxuryAppComponentsModule,
     CommonModule,
     ReactiveFormsModule,
     CustomInputModule,
     CustomButtonModule,
   ],
-  providers: [MessageService, CustomToastService],
 })
 export default class RestaurarContraseñaComponent implements OnInit, OnDestroy {
   private activatedRoute = inject(ActivatedRoute);

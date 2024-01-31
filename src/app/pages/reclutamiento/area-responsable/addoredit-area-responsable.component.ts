@@ -6,6 +6,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { ECompanyArea } from 'src/app/core/enums/company-area.enum';
@@ -16,18 +17,17 @@ import {
   DataService,
 } from 'src/app/core/services/common-services';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
-import ComponentsModule from 'src/app/shared/components.module';
 @Component({
   selector: 'app-addoredit-area-responsable',
   templateUrl: './addoredit-area-responsable.component.html',
   standalone: true,
   imports: [
+    LuxuryAppComponentsModule,
     CommonModule,
     ReactiveFormsModule,
-    ComponentsModule,
+    LuxuryAppComponentsModule,
     CustomInputModule,
   ],
-  providers: [CustomToastService],
 })
 export default class AddOrEditAreaResponsableComponent
   implements OnInit, OnDestroy

@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
@@ -12,7 +13,6 @@ import {
 } from 'src/app/core/services/common-services';
 import AddoreditMinutaDetalleComponent from 'src/app/pages/operaciones/junta-comite/addoredit-minuta-detalle/addoredit-minuta-detalle.component';
 import AddorEditMeetingSeguimientoComponent from 'src/app/pages/operaciones/junta-comite/addoredit-seguimiento/addor-edit-meeting-seguimiento.component';
-import ComponentsModule from 'src/app/shared/components.module';
 import PrimeNgModule from 'src/app/shared/prime-ng.module';
 import ContMinutaSeguimientosComponent from './cont-minuta-seguimientos.component';
 
@@ -21,13 +21,13 @@ import ContMinutaSeguimientosComponent from './cont-minuta-seguimientos.componen
   templateUrl: './cont-list-minuta-pendientes.component.html',
   standalone: true,
   imports: [
+    LuxuryAppComponentsModule,
     CommonModule,
-    ComponentsModule,
+    LuxuryAppComponentsModule,
     PrimeNgModule,
     SanitizeHtmlPipe,
     NgbTooltip,
   ],
-  providers: [DialogService, MessageService, CustomToastService],
 })
 export default class ContListMinutaPendientesComponent
   implements OnInit, OnDestroy

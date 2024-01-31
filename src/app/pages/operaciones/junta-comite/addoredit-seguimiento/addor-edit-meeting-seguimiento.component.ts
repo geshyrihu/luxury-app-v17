@@ -6,6 +6,9 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import LuxuryAppComponentsModule, {
+  flatpickrFactory,
+} from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { IMeetingDertailsSeguimientoAddOrEditDto } from 'src/app/core/interfaces/IMeetingDertailsSeguimientoAddOrEditDto.interface';
@@ -16,21 +19,17 @@ import {
   DateService,
 } from 'src/app/core/services/common-services';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
-import ComponentsModule, {
-  flatpickrFactory,
-} from 'src/app/shared/components.module';
 
 @Component({
   selector: 'app-addor-edit-meeting-seguimiento',
   templateUrl: './addor-edit-meeting-seguimiento.component.html',
   standalone: true,
   imports: [
-    ComponentsModule,
+    LuxuryAppComponentsModule,
     ReactiveFormsModule,
     CommonModule,
     CustomInputModule,
   ],
-  providers: [CustomToastService],
 })
 export default class AddorEditMeetingSeguimientoComponent
   implements OnInit, OnDestroy

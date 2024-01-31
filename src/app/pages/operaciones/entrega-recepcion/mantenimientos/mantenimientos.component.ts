@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { TableModule } from 'primeng/table';
 import { Observable, Subject, takeUntil } from 'rxjs';
@@ -9,15 +10,18 @@ import {
   CustomerIdService,
   DataService,
 } from 'src/app/core/services/common-services';
-import ComponentsModule from 'src/app/shared/components.module';
 import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-mantenimientos',
   templateUrl: './mantenimientos.component.html',
   standalone: true,
-  imports: [ComponentsModule, TableModule, SanitizeHtmlPipe, CommonModule],
-  providers: [MessageService, CustomToastService],
+  imports: [
+    LuxuryAppComponentsModule,
+    TableModule,
+    SanitizeHtmlPipe,
+    CommonModule,
+  ],
 })
 export default class MantenimientosComponent implements OnInit, OnDestroy {
   public customerIdService = inject(CustomerIdService);

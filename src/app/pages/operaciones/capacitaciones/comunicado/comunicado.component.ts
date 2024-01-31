@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
@@ -9,7 +10,6 @@ import {
   CustomToastService,
   DataService,
 } from 'src/app/core/services/common-services';
-import ComponentsModule from 'src/app/shared/components.module';
 import PrimeNgModule from 'src/app/shared/prime-ng.module';
 import { environment } from 'src/environments/environment';
 import AddOrEditComunicadoComponent from './addoredit-comunicado.component';
@@ -17,8 +17,7 @@ import AddOrEditComunicadoComponent from './addoredit-comunicado.component';
   selector: 'app-comunicado',
   templateUrl: './comunicado.component.html',
   standalone: true,
-  imports: [ComponentsModule, CommonModule, PrimeNgModule],
-  providers: [DialogService, MessageService, CustomToastService],
+  imports: [LuxuryAppComponentsModule, CommonModule, PrimeNgModule],
 })
 export default class ComunicadoComponent implements OnInit, OnDestroy {
   public customToastService = inject(CustomToastService);

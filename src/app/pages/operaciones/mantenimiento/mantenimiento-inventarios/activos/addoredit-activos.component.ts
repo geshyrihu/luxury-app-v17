@@ -7,6 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import {
   DialogService,
   DynamicDialogConfig,
@@ -25,7 +26,6 @@ import {
   DateService,
 } from 'src/app/core/services/common-services';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
-import ComponentsModule from 'src/app/shared/components.module';
 import PrimeNgModule from 'src/app/shared/prime-ng.module';
 import { environment } from 'src/environments/environment';
 
@@ -34,9 +34,10 @@ import { environment } from 'src/environments/environment';
   templateUrl: './addoredit-activos.component.html',
   standalone: true,
   imports: [
+    LuxuryAppComponentsModule,
     CommonModule,
     ReactiveFormsModule,
-    ComponentsModule,
+    LuxuryAppComponentsModule,
     PrimeNgModule,
     CustomInputModule,
   ],

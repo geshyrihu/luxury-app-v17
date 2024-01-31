@@ -7,6 +7,9 @@ import {
   Validators,
 } from '@angular/forms';
 import { FlatpickrModule } from 'angularx-flatpickr';
+import LuxuryAppComponentsModule, {
+  flatpickrFactory,
+} from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import {
@@ -16,21 +19,18 @@ import {
   DataService,
   DateService,
 } from 'src/app/core/services/common-services';
-import ComponentsModule, {
-  flatpickrFactory,
-} from 'src/app/shared/components.module';
 
 @Component({
   selector: 'app-add-presentacion-junta-comite',
   templateUrl: './add-presentacion-junta-comite.component.html',
   standalone: true,
   imports: [
+    LuxuryAppComponentsModule,
     ReactiveFormsModule,
-    ComponentsModule,
+    LuxuryAppComponentsModule,
     FlatpickrModule,
     CommonModule,
   ],
-  providers: [CustomToastService],
 })
 export default class AddPresentacionJuntaComiteComponent
   implements OnInit, OnDestroy

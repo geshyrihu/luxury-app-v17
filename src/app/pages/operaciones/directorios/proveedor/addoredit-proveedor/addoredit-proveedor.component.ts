@@ -7,6 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
@@ -17,7 +18,6 @@ import {
   SelectItemService,
 } from 'src/app/core/services/common-services';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
-import ComponentsModule from 'src/app/shared/components.module';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -25,13 +25,13 @@ import { environment } from 'src/environments/environment';
   templateUrl: './addoredit-proveedor.component.html',
   standalone: true,
   imports: [
+    LuxuryAppComponentsModule,
     CommonModule,
     ReactiveFormsModule,
-    ComponentsModule,
+    LuxuryAppComponentsModule,
     NgSelectModule,
     CustomInputModule,
   ],
-  providers: [CustomToastService],
 })
 export default class AddoreditProveedorComponent implements OnInit, OnDestroy {
   public authService = inject(AuthService);

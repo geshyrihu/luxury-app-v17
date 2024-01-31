@@ -12,7 +12,6 @@ import { environment } from 'src/environments/environment';
   selector: 'app-report-maintenance-header',
   templateUrl: './report-maintenance-header.component.html',
   standalone: true,
-  providers: [CustomToastService],
 })
 export default class ReportMaintenanceHeaderComponent
   implements OnInit, OnDestroy

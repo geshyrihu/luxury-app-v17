@@ -18,7 +18,8 @@
 // import TableHeaderComponent from 'src/app/shared/table-header/table-header.component';
 // import { environment } from 'src/environments/environment';
 // import MdEditAccountComponent from '../modal-edit-account/md-edit-account.component';
-// @Component({
+// import ComponentsModule from 'src/app/shared/components.module';
+@Component({
 //   selector: 'app-account-customer',
 //   templateUrl: './account-customer.component.html',
 //   standalone: true,
@@ -31,7 +32,7 @@
 //     PrimeNgModule,
 //     TableHeaderComponent,
 //   ],
-//   providers: [DialogService, MessageService, CustomToastService],
+//
 // })
 // export default class AccountCustomerComponent implements OnInit, OnDestroy {
 //   private dataService = inject(DataService);

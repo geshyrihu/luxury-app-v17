@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import {
   DialogService,
@@ -13,7 +14,6 @@ import {
   CustomerIdService,
   DataService,
 } from 'src/app/core/services/common-services';
-import ComponentsModule from 'src/app/shared/components.module';
 import SubirPdfComponent from 'src/app/shared/subir-pdf/subir-pdf.component';
 import { environment } from 'src/environments/environment';
 
@@ -21,8 +21,7 @@ import { environment } from 'src/environments/environment';
   selector: 'app-activos-documentos',
   templateUrl: './activos-documentos.component.html',
   standalone: true,
-  imports: [ComponentsModule, CommonModule],
-  providers: [DialogService, MessageService, CustomToastService],
+  imports: [LuxuryAppComponentsModule, CommonModule],
 })
 export default class ActivosDocumentosComponent {
   public customToastService = inject(CustomToastService);

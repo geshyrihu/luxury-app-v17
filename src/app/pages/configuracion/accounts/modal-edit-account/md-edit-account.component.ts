@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
@@ -15,12 +16,12 @@ import AccessCustomerComponent from './customer-account/access-customer.componen
 import UpdateAccountComponent from './update-account/update-account.component';
 import UpdatePasswordAccountComponent from './update-password/update-password-account.component';
 import UpdateRoleComponent from './update-roles/update-role.component';
-
 @Component({
   selector: 'app-md-edit-account',
   templateUrl: './md-edit-account.component.html',
   standalone: true,
   imports: [
+    LuxuryAppComponentsModule,
     CommonModule,
     RouterModule,
     AccessCustomerComponent,
@@ -28,7 +29,6 @@ import UpdateRoleComponent from './update-roles/update-role.component';
     UpdatePasswordAccountComponent,
     UpdateAccountComponent,
   ],
-  providers: [MessageService, CustomToastService],
 })
 export default class MdEditAccountComponent implements OnInit, OnDestroy {
   private dataService = inject(DataService);

@@ -4,6 +4,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
@@ -15,7 +16,6 @@ import {
   DataService,
   FilterRequestsService,
 } from 'src/app/core/services/common-services';
-import ComponentsModule from 'src/app/shared/components.module';
 import PrimeNgModule from 'src/app/shared/prime-ng.module';
 import FilterRequestsComponent from '../filter-requests.component';
 import AddoreditSolicitudBajaComponent from './addoredit-solicitud-baja/addoredit-solicitud-baja.component';
@@ -24,8 +24,9 @@ import AddoreditSolicitudBajaComponent from './addoredit-solicitud-baja/addoredi
   templateUrl: './list-solicitud-baja.component.html',
   standalone: true,
   imports: [
+    LuxuryAppComponentsModule,
     CommonModule,
-    ComponentsModule,
+    LuxuryAppComponentsModule,
     FilterRequestsComponent,
     FormsModule,
     NgbDropdownModule,
@@ -33,7 +34,6 @@ import AddoreditSolicitudBajaComponent from './addoredit-solicitud-baja/addoredi
     RouterModule,
     PrimeNgModule,
   ],
-  providers: [DialogService, MessageService, CustomToastService],
 })
 export default class ListSolicitudBajaComponent implements OnInit {
   public customToastService = inject(CustomToastService);

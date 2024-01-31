@@ -6,6 +6,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import {
   DialogService,
@@ -20,19 +21,18 @@ import {
   SelectItemService,
 } from 'src/app/core/services/common-services';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
-import ComponentsModule from 'src/app/shared/components.module';
 
 @Component({
   selector: 'app-addoredit-periodo-cedula',
   templateUrl: './addoredit-periodo-cedula.component.html',
   standalone: true,
   imports: [
+    LuxuryAppComponentsModule,
     ReactiveFormsModule,
     CommonModule,
-    ComponentsModule,
+    LuxuryAppComponentsModule,
     CustomInputModule,
   ],
-  providers: [DialogService, MessageService, CustomToastService],
 })
 export default class AddoreditPeriodoCedulaPresupuestalComponent
   implements OnInit, OnDestroy

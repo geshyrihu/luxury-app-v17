@@ -13,8 +13,6 @@ import { environment } from 'src/environments/environment';
   selector: 'app-haeder-customer',
   templateUrl: './haeder-customer.component.html',
   standalone: true,
-
-  providers: [CustomToastService],
 })
 export default class HaederCustomerComponent implements OnInit, OnDestroy {
   public dataService = inject(DataService);

@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { TableModule } from 'primeng/table';
@@ -17,7 +18,6 @@ import {
   CustomerIdService,
   DataService,
 } from 'src/app/core/services/common-services';
-import ComponentsModule from 'src/app/shared/components.module';
 import AddoreditMaintenancePreventiveComponent from '../addoredit-maintenance-preventive.component';
 const date = new Date();
 
@@ -26,14 +26,14 @@ const date = new Date();
   templateUrl: './listado-anual-mantenimiento.component.html',
   standalone: true,
   imports: [
+    LuxuryAppComponentsModule,
     CommonModule,
     FormsModule,
-    ComponentsModule,
+    LuxuryAppComponentsModule,
     TableModule,
     CurrencyMexicoPipe,
     SanitizeHtmlPipe,
   ],
-  providers: [DialogService, MessageService, CustomToastService],
 })
 export default class ListadoAnualMantenimientoComponent
   implements OnInit, OnDestroy

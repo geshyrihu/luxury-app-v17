@@ -12,7 +12,6 @@ import { environment } from 'src/environments/environment';
   templateUrl: './pagetitlereport.component.html',
   standalone: true,
   imports: [CommonModule],
-  providers: [CustomToastService],
 })
 
 /**

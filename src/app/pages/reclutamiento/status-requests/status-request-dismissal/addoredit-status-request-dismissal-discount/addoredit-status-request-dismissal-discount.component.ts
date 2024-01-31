@@ -6,6 +6,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -14,18 +15,16 @@ import {
   DataService,
 } from 'src/app/core/services/common-services';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
-import ComponentsModule from 'src/app/shared/components.module';
 @Component({
   selector: 'app-addoredit-status-request-dismissal-discount',
   templateUrl: './addoredit-status-request-dismissal-discount.component.html',
   standalone: true,
   imports: [
-    ComponentsModule,
+    LuxuryAppComponentsModule,
     ReactiveFormsModule,
     CommonModule,
     CustomInputModule,
   ],
-  providers: [CustomToastService],
 })
 export default class AddOrEditStatusRequestDismissalDiscountComponent
   implements OnInit, OnDestroy

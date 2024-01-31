@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import {
   DialogService,
   DynamicDialogConfig,
@@ -9,7 +10,6 @@ import {
   CustomToastService,
   DataService,
 } from 'src/app/core/services/common-services';
-import ComponentsModule from 'src/app/shared/components.module';
 import PrimeNgModule from 'src/app/shared/prime-ng.module';
 import ServiceOrderAddOrEditComponent from '../../../mantenimiento-ordenes-servicio/addoredit-service-order.component';
 
@@ -17,8 +17,11 @@ import ServiceOrderAddOrEditComponent from '../../../mantenimiento-ordenes-servi
   selector: 'app-service-history-machinery',
   templateUrl: './service-history-machinery.component.html',
   standalone: true,
-  imports: [PrimeNgModule, ComponentsModule],
-  providers: [CustomToastService],
+  imports: [
+    LuxuryAppComponentsModule,
+    PrimeNgModule,
+    LuxuryAppComponentsModule,
+  ],
 })
 export default class ServiceHistoryMachineryComponent
   implements OnInit, OnDestroy

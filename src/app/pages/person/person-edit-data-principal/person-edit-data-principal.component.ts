@@ -6,8 +6,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import ComponentsModule from 'app/shared/components.module';
-import { MessageService } from 'primeng/api';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import {
@@ -24,13 +23,12 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   templateUrl: './person-edit-data-principal.component.html',
   standalone: true,
   imports: [
+    LuxuryAppComponentsModule,
     ReactiveFormsModule,
-    ComponentsModule,
+    LuxuryAppComponentsModule,
     CommonModule,
     CustomInputModule,
   ],
-
-  providers: [MessageService, CustomToastService],
 })
 export default class PersonEditDataPrincipalComponent implements OnInit {
   public config = inject(DynamicDialogConfig);

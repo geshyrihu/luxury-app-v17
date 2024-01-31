@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
@@ -10,7 +11,6 @@ import {
   CustomerIdService,
   DataService,
 } from 'src/app/core/services/common-services';
-import ComponentsModule from 'src/app/shared/components.module';
 import PrimeNgModule from 'src/app/shared/prime-ng.module';
 import FormInventarioLlaveComponent from './form-inventario-llave.component';
 
@@ -18,7 +18,7 @@ import FormInventarioLlaveComponent from './form-inventario-llave.component';
   selector: 'app-llaves',
   templateUrl: './list-llaves.component.html',
   standalone: true,
-  imports: [ComponentsModule, PrimeNgModule],
+  imports: [LuxuryAppComponentsModule, PrimeNgModule],
   providers: [
     DialogService,
     MessageService,

@@ -1,18 +1,18 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import {
   DialogService,
   DynamicDialogConfig,
   DynamicDialogRef,
 } from 'primeng/dynamicdialog';
 import TarjetaProveedorComponent from 'src/app/pages/operaciones/directorios/proveedor/tarjeta-proveedor/tarjeta-proveedor.component';
-
 @Component({
   selector: 'app-modal-datos-servicio',
   templateUrl: './modal-datos-servicio.component.html',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [LuxuryAppComponentsModule, FormsModule, CommonModule],
 })
 export default class ModalDatosServicioComponent implements OnInit {
   public config = inject(DynamicDialogConfig);

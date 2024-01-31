@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MessageService } from 'primeng/api';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import PhoneFormatPipe from 'src/app/core/pipes/phone-format.pipe';
@@ -16,7 +16,6 @@ import {
 import { StatusSolicitudVacanteService } from 'src/app/core/services/status-solicitud-vacante.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import CardEmployeeComponent from 'src/app/pages/operaciones/directorios/empleados/card-employee/card-employee.component';
-import ComponentsModule from 'src/app/shared/components.module';
 import PrimeNgModule from 'src/app/shared/prime-ng.module';
 import { environment } from 'src/environments/environment';
 import AddoreditSolicitudBajaComponent from '../../list-solicitudes/list-solicitud-baja/addoredit-solicitud-baja/addoredit-solicitud-baja.component';
@@ -27,14 +26,13 @@ import AddOrEditStatusRequestDismissalDiscountComponent from './addoredit-status
   templateUrl: './status-request-dismissal.component.html',
   standalone: true,
   imports: [
-    ComponentsModule,
+    LuxuryAppComponentsModule,
     PrimeNgModule,
     FormsModule,
     CommonModule,
     CustomInputModule,
     PhoneFormatPipe,
   ],
-  providers: [DialogService, MessageService, CustomToastService],
 })
 export default class StatusRequestDismissalComponent
   implements OnInit, OnDestroy

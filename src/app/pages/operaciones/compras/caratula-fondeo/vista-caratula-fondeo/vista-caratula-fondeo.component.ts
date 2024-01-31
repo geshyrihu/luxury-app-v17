@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import {
   Columns,
   Img,
@@ -28,12 +29,17 @@ import { environment } from 'src/environments/environment';
 const date = new Date();
 
 PdfMakeWrapper.useFont('roboto');
-
 @Component({
   selector: 'app-vista-caratula-fondeo',
   templateUrl: './vista-caratula-fondeo.component.html',
   standalone: true,
-  imports: [CommonModule, PrimeNgModule, ContextMenuModule, CurrencyMexicoPipe],
+  imports: [
+    LuxuryAppComponentsModule,
+    CommonModule,
+    PrimeNgModule,
+    ContextMenuModule,
+    CurrencyMexicoPipe,
+  ],
   providers: [CustomToastService, MessageService],
 })
 export default class VistaCaratulaFondeoComponent implements OnInit, OnDestroy {

@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import {
   DialogService,
@@ -15,7 +16,6 @@ import {
   SelectItemService,
 } from 'src/app/core/services/common-services';
 import AddProductosAlmacenComponent from 'src/app/pages/operaciones/mantenimiento/mantenimiento-almacen/inventario-productos/add-productos-almacen.component';
-import ComponentsModule from 'src/app/shared/components.module';
 import PrimeNgModule from 'src/app/shared/prime-ng.module';
 import { environment } from 'src/environments/environment';
 
@@ -23,8 +23,12 @@ import { environment } from 'src/environments/environment';
   selector: 'app-orden-compra-detalle-add-producto',
   templateUrl: './orden-compra-detalle-add-producto.component.html',
   standalone: true,
-  imports: [ComponentsModule, FormsModule, CommonModule, PrimeNgModule],
-  providers: [CustomToastService],
+  imports: [
+    LuxuryAppComponentsModule,
+    FormsModule,
+    CommonModule,
+    PrimeNgModule,
+  ],
 })
 export default class OrdenCompraDetalleAddProductoComponent
   implements OnInit, OnDestroy

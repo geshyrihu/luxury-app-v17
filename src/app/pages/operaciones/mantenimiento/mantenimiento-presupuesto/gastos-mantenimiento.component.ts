@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ToastModule } from 'primeng/toast';
@@ -11,12 +12,16 @@ import {
 } from 'src/app/core/services/common-services';
 import AddoreditMaintenancePreventiveComponent from 'src/app/pages/operaciones/calendarios/mantenimiento-preventivo/addoredit-maintenance-preventive.component';
 import PrimeNgModule from 'src/app/shared/prime-ng.module';
-
 @Component({
   selector: 'app-gastos-mantenimiento',
   templateUrl: './gastos-mantenimiento.component.html',
   standalone: true,
-  imports: [CommonModule, ToastModule, PrimeNgModule],
+  imports: [
+    LuxuryAppComponentsModule,
+    CommonModule,
+    ToastModule,
+    PrimeNgModule,
+  ],
   providers: [MessageService, DialogService, CustomToastService],
 })
 export default class GastosMantenimientoComponent implements OnInit, OnDestroy {

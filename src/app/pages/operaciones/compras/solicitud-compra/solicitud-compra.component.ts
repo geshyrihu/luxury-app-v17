@@ -9,6 +9,7 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { NgbProgressbar } from '@ng-bootstrap/ng-bootstrap';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ToastModule } from 'primeng/toast';
@@ -23,7 +24,6 @@ import {
   DataService,
   DateService,
 } from 'src/app/core/services/common-services';
-import ComponentsModule from 'src/app/shared/components.module';
 import CreateOrdenCompraComponent from '../orden-compra/orden-compra/create-orden-compra/create-orden-compra.component';
 import AddProductModalComponent from './add-product-modal.component';
 import AddProductComponent from './add-product.component';
@@ -34,7 +34,7 @@ import SolicitudCompraDetalleComponent from './solicitud-compra-detalle/solicitu
   templateUrl: './solicitud-compra.component.html',
   standalone: true,
   imports: [
-    ComponentsModule,
+    LuxuryAppComponentsModule,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,

@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import {
   DialogService,
@@ -13,15 +14,19 @@ import { Subject, takeUntil } from 'rxjs';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { SelectItemService } from 'src/app/core/services/select-item.service';
-import ComponentsModule from 'src/app/shared/components.module';
 import CreateOrdenCompraComponent from '../../orden-compra/orden-compra/create-orden-compra/create-orden-compra.component';
 
 @Component({
   selector: 'app-modal-edit-cotizacion',
   templateUrl: './modal-edit-cotizacion.component.html',
   standalone: true,
-  imports: [FormsModule, ComponentsModule, CommonModule, ToastModule],
-  providers: [DialogService, MessageService, CustomToastService],
+  imports: [
+    LuxuryAppComponentsModule,
+    FormsModule,
+    LuxuryAppComponentsModule,
+    CommonModule,
+    ToastModule,
+  ],
 })
 export default class ModalEditCotizacionComponent implements OnInit, OnDestroy {
   public customToastService = inject(CustomToastService);

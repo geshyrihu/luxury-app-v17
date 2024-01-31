@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import {
@@ -10,11 +11,15 @@ import {
   DataService,
 } from 'src/app/core/services/common-services';
 import DashboardTicketsResumenComponent from '../dashboard-tickets-resumen/dashboard-tickets-resumen.component';
-
 @Component({
   selector: 'app-dashboard-tickets',
   standalone: true,
-  imports: [RouterModule, NgbAlertModule, CommonModule],
+  imports: [
+    LuxuryAppComponentsModule,
+    RouterModule,
+    NgbAlertModule,
+    CommonModule,
+  ],
   templateUrl: './dashboard-tickets.component.html',
   providers: [DialogService, CustomToastService],
 })

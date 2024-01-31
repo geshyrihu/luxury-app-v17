@@ -7,6 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { FlatpickrModule } from 'angularx-flatpickr';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { EStatus } from 'src/app/core/enums/status.enum';
@@ -18,20 +19,18 @@ import {
   DataService,
 } from 'src/app/core/services/common-services';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
-import ComponentsModule from 'src/app/shared/components.module';
 
 @Component({
   selector: 'app-addoredit-solicitud-alta',
   templateUrl: './addoredit-solicitud-alta.component.html',
   standalone: true,
   imports: [
-    ComponentsModule,
+    LuxuryAppComponentsModule,
     ReactiveFormsModule,
     FlatpickrModule,
     CommonModule,
     CustomInputModule,
   ],
-  providers: [CustomToastService],
 })
 export default class AddOrEditSolicitudAltaComponent
   implements OnInit, OnDestroy

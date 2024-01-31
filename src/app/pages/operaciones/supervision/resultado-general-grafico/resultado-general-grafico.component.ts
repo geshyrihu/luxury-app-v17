@@ -1,13 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { FiltroCalendarService } from 'src/app/core/services/filtro-calendar.service';
 import { ResultadoGeneralService } from 'src/app/core/services/resultado-general.service';
-
 @Component({
   selector: 'app-grafico-resultado-general',
   templateUrl: './resultado-general-grafico.component.html',
   standalone: true,
-  imports: [CommonModule],
+  imports: [LuxuryAppComponentsModule, CommonModule],
 })
 export default class ResultadoGeneralGraficoComponent implements OnInit {
   private resultadoGeneralService = inject(ResultadoGeneralService);
@@ -122,8 +122,8 @@ export default class ResultadoGeneralGraficoComponent implements OnInit {
     }
     if (dataEvaluacion >= 95 && dataEvaluacion <= 99) {
       return 'REGULAR';
-    }else{
-      return'';
+    } else {
+      return '';
     }
   }
 }

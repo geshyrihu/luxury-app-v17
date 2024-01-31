@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
@@ -12,7 +13,6 @@ import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
 import AddPartidaCedulaComponent from 'src/app/pages/contabilidad/presupuesto/add-partida-cedula.component';
 import EditPartidaCedulaComponent from 'src/app/pages/contabilidad/presupuesto/edit-partida-cedula.component';
-import ComponentsModule from 'src/app/shared/components.module';
 import PrimeNgModule from 'src/app/shared/prime-ng.module';
 import AddoreditPeriodoCedulaPresupuestalComponent from './addoredit-periodo-cedula.component';
 import OrdenesCompraCedulaComponent from './ordenes-compra-cedula/ordenes-compra-cedula.component';
@@ -20,8 +20,14 @@ import OrdenesCompraCedulaComponent from './ordenes-compra-cedula/ordenes-compra
   selector: 'app-cedula-cliente',
   templateUrl: './cedula-cliente.component.html',
   standalone: true,
-  imports: [CommonModule, ComponentsModule, FormsModule, PrimeNgModule],
-  providers: [DialogService, MessageService, CustomToastService],
+  imports: [
+    LuxuryAppComponentsModule,
+    CommonModule,
+    LuxuryAppComponentsModule,
+    FormsModule,
+    PrimeNgModule,
+  ],
+
   styles: [
     `
       .glass-dialog {

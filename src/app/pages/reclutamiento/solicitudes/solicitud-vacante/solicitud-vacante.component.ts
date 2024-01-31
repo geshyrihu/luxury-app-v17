@@ -6,6 +6,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { TableModule } from 'primeng/table';
 import { Subject, takeUntil } from 'rxjs';
@@ -19,21 +20,19 @@ import {
   DataService,
 } from 'src/app/core/services/common-services';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
-import ComponentsModule from 'src/app/shared/components.module';
 
 @Component({
   selector: 'app-solicitud-vacante',
   templateUrl: './solicitud-vacante.component.html',
   standalone: true,
   imports: [
-    ComponentsModule,
+    LuxuryAppComponentsModule,
     ReactiveFormsModule,
     CommonModule,
     AutosizeDirective,
     CustomInputModule,
     TableModule,
   ],
-  providers: [CustomToastService],
 })
 export default class SolicitudVacanteComponent implements OnInit, OnDestroy {
   private dataService = inject(DataService);

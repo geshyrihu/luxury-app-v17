@@ -1,17 +1,16 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DataService } from 'src/app/core/services/data.service';
 import PrimeNgModule from 'src/app/shared/prime-ng.module';
-
 @Component({
   selector: 'app-mantenimientos-programados',
   templateUrl: './mantenimientos-programados.component.html',
   standalone: true,
-  imports: [PrimeNgModule],
-  providers: [CustomToastService],
+  imports: [LuxuryAppComponentsModule, PrimeNgModule],
 })
 export default class MantenimientosProgramadosComponent
   implements OnInit, OnDestroy

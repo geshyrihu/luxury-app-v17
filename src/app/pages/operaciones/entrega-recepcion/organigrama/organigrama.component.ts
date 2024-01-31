@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService, TreeNode } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
 import { TableModule } from 'primeng/table';
@@ -8,14 +9,13 @@ import {
   CustomerIdService,
   DataService,
 } from 'src/app/core/services/common-services';
-import ComponentsModule from 'src/app/shared/components.module';
 import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-organigrama',
   templateUrl: './organigrama.component.html',
   standalone: true,
-  imports: [ComponentsModule, TableModule],
+  imports: [LuxuryAppComponentsModule, TableModule],
   providers: [
     MessageService,
     CustomToastService,

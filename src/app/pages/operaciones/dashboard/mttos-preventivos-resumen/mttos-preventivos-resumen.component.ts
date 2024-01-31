@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import {
   DialogService,
@@ -17,8 +18,7 @@ import PrimeNgModule from 'src/app/shared/prime-ng.module';
   selector: 'app-mttos-preventivos-resumen',
   templateUrl: './mttos-preventivos-resumen.component.html',
   standalone: true,
-  imports: [PrimeNgModule, SanitizeHtmlPipe],
-  providers: [DialogService, MessageService, CustomToastService],
+  imports: [LuxuryAppComponentsModule, PrimeNgModule, SanitizeHtmlPipe],
 })
 export default class MantenimientosPreventivosResumenComponent
   implements OnInit, OnDestroy

@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
@@ -12,7 +13,6 @@ import {
   DataService,
   SelectItemService,
 } from 'src/app/core/services/common-services';
-import ComponentsModule from 'src/app/shared/components.module';
 import PrimeNgModule from 'src/app/shared/prime-ng.module';
 
 const date = new Date();
@@ -21,8 +21,12 @@ const date = new Date();
   selector: 'app-list-cedulas-presupuestales',
   templateUrl: './list-cedulas-presupuestales.component.html',
   standalone: true,
-  imports: [ComponentsModule, RouterModule, CommonModule, PrimeNgModule],
-  providers: [DialogService, MessageService, CustomToastService],
+  imports: [
+    LuxuryAppComponentsModule,
+    RouterModule,
+    CommonModule,
+    PrimeNgModule,
+  ],
 })
 export default class ListCedulasPresupuestalesComponent
   implements OnInit, OnDestroy

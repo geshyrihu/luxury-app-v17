@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import {
   DialogService,
   DynamicDialogConfig,
@@ -13,7 +14,6 @@ import { DataService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
 import { FiltroCalendarService } from 'src/app/core/services/filtro-calendar.service';
 import CardEmployeeComponent from 'src/app/pages/operaciones/directorios/empleados/card-employee/card-employee.component';
-import ComponentsModule from 'src/app/shared/components.module';
 
 const date = new Date();
 const mesActual = date.getMonth();
@@ -22,7 +22,7 @@ const mesAnterior = new Date(date.getFullYear(), mesActual - 1, 1);
   selector: 'app-bitacora-individual',
   templateUrl: './bitacora-individual.component.html',
   standalone: true,
-  imports: [ComponentsModule, CommonModule, TableModule],
+  imports: [LuxuryAppComponentsModule, CommonModule, TableModule],
   providers: [DialogService, CustomToastService],
 })
 export default class BitacoraIndividualComponent implements OnInit, OnDestroy {

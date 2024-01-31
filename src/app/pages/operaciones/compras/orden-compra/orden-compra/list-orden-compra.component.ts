@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
@@ -12,7 +13,6 @@ import {
   DataService,
   OrdenCompraService,
 } from 'src/app/core/services/common-services';
-import ComponentsModule from 'src/app/shared/components.module';
 import PrimeNgModule from 'src/app/shared/prime-ng.module';
 import CaratulaFondeoComponent from '../../caratula-fondeo/caratula-fondeo.component';
 import CreateOrdenCompraComponent from './create-orden-compra/create-orden-compra.component';
@@ -22,7 +22,12 @@ import OrdenCompraComponent from './orden-compra.component';
   selector: 'app-list-orden-compra',
   templateUrl: './list-orden-compra.component.html',
   standalone: true,
-  imports: [ComponentsModule, CommonModule, PrimeNgModule, RouterModule],
+  imports: [
+    LuxuryAppComponentsModule,
+    CommonModule,
+    PrimeNgModule,
+    RouterModule,
+  ],
   providers: [
     DialogService,
     MessageService,

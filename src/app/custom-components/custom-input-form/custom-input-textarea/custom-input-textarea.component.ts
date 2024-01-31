@@ -5,12 +5,17 @@ import {
   FormControl,
   NG_VALUE_ACCESSOR,
 } from '@angular/forms';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import ValidationErrorsCustomInputComponent from '../validation-errors-custom-input/validation-errors-custom-input.component';
 @Component({
   selector: 'custom-input-text-area',
   templateUrl: './custom-input-textarea.component.html',
   standalone: true,
-  imports: [CommonModule, ValidationErrorsCustomInputComponent],
+  imports: [
+    LuxuryAppComponentsModule,
+    CommonModule,
+    ValidationErrorsCustomInputComponent,
+  ],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,

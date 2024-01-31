@@ -15,6 +15,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ToastModule } from 'primeng/toast';
@@ -28,7 +29,6 @@ import {
 } from 'src/app/core/services/common-services';
 import { SolicitudCompraService } from 'src/app/core/services/solicitud-compra.service';
 import TarjetaProductoComponent from 'src/app/pages/operaciones/mantenimiento/mantenimiento-catalogos/tarjeta-producto/tarjeta-producto.component';
-import ComponentsModule from 'src/app/shared/components.module';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -36,13 +36,12 @@ import { environment } from 'src/environments/environment';
   templateUrl: './add-product.component.html',
   standalone: true,
   imports: [
-    ComponentsModule,
+    LuxuryAppComponentsModule,
     FormsModule,
     CommonModule,
     ReactiveFormsModule,
     ToastModule,
   ],
-  providers: [DialogService, MessageService, CustomToastService],
 })
 export default class AddProductComponent implements OnInit, OnDestroy {
   public customToastService = inject(CustomToastService);

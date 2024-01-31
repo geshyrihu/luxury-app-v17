@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { TableModule } from 'primeng/table';
@@ -14,7 +15,12 @@ import PagetitleReportComponent from 'src/app/shared/cabeceras/pagetitlereport/p
   selector: 'app-report-prestamo-herramienta',
   templateUrl: './report-prestamo-herramienta.component.html',
   standalone: true,
-  imports: [TableModule, CommonModule, PagetitleReportComponent],
+  imports: [
+    LuxuryAppComponentsModule,
+    TableModule,
+    CommonModule,
+    PagetitleReportComponent,
+  ],
   providers: [CustomToastService, MessageService],
 })
 export default class ReportPrestamoHerramientaComponent implements OnInit {

@@ -1,4 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import {
   DialogService,
@@ -13,13 +14,12 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
 import { FiltroCalendarService } from 'src/app/core/services/filtro-calendar.service';
-import ComponentsModule from 'src/app/shared/components.module';
 
 @Component({
   selector: 'app-presupuesto-add',
   templateUrl: './presupuesto-add.component.html',
   standalone: true,
-  imports: [ComponentsModule],
+  imports: [LuxuryAppComponentsModule, LuxuryAppComponentsModule],
   providers: [MessageService, DialogService, CustomToastService],
 })
 export default class PresupuestoAddComponent implements OnInit {

@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { EState } from 'src/app/core/enums/state.enum';
@@ -12,14 +13,17 @@ import {
   DataService,
 } from 'src/app/core/services/common-services';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
-import ComponentsModule from 'src/app/shared/components.module';
 
 @Component({
   selector: 'app-addoredit-entrega-recepcion-cliente',
   templateUrl: './addoredit-entrega-recepcion-cliente.component.html',
   standalone: true,
-  imports: [ReactiveFormsModule, ComponentsModule, CustomInputModule],
-  providers: [CustomToastService],
+  imports: [
+    LuxuryAppComponentsModule,
+    ReactiveFormsModule,
+    LuxuryAppComponentsModule,
+    CustomInputModule,
+  ],
 })
 export default class CrudEntregaRecepcionClienteComponent
   implements OnInit, OnDestroy

@@ -8,6 +8,9 @@ import {
   Validators,
 } from '@angular/forms';
 import { FlatpickrModule } from 'angularx-flatpickr';
+import LuxuryAppComponentsModule, {
+  flatpickrFactory,
+} from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { EStatusTask } from 'src/app/core/enums/estatus-task.enum';
@@ -23,9 +26,6 @@ import {
   SelectItemService,
 } from 'src/app/core/services/common-services';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
-import ComponentsModule, {
-  flatpickrFactory,
-} from 'src/app/shared/components.module';
 import { environment } from 'src/environments/environment';
 const diaActual = new Date(Date.now());
 @Component({
@@ -33,14 +33,13 @@ const diaActual = new Date(Date.now());
   templateUrl: './addoredit-ticket.component.html',
   standalone: true,
   imports: [
-    ComponentsModule,
+    LuxuryAppComponentsModule,
     CommonModule,
     FormsModule,
     FlatpickrModule,
     ReactiveFormsModule,
     CustomInputModule,
   ],
-  providers: [CustomToastService],
 })
 export default class AddoreditTicketComponent implements OnInit, OnDestroy {
   private customerSelectListService = inject(CustomerIdService);

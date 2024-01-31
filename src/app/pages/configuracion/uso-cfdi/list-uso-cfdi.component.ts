@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
@@ -7,7 +8,6 @@ import {
   CustomToastService,
   DataService,
 } from 'src/app/core/services/common-services';
-import ComponentsModule from 'src/app/shared/components.module';
 import PrimeNgModule from 'src/app/shared/prime-ng.module';
 import { IUseCFDIDto } from '../../../core/interfaces/IUseCfdi.interface';
 import AddoreditUsoCFDIComponent from './addoredit-uso-cfdi.component';
@@ -16,8 +16,7 @@ import AddoreditUsoCFDIComponent from './addoredit-uso-cfdi.component';
   selector: 'app-uso-cfdi',
   templateUrl: './list-uso-cfdi.component.html',
   standalone: true,
-  imports: [ComponentsModule, PrimeNgModule],
-  providers: [DialogService, MessageService, CustomToastService],
+  imports: [LuxuryAppComponentsModule, PrimeNgModule],
 })
 export default class ListUsoCfdiComponent implements OnInit, OnDestroy {
   public customToastService = inject(CustomToastService);

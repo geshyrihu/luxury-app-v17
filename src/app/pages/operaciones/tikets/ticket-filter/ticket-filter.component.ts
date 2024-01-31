@@ -1,6 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import LuxuryAppComponentsModule, {
+  flatpickrFactory,
+} from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { EStatusTask } from 'src/app/core/enums/estatus-task.enum';
 import { EPriority } from 'src/app/core/enums/priority.enum';
@@ -10,13 +13,16 @@ import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface
 import { SelectItemService } from 'src/app/core/services/select-item.service';
 import { TicketFilterService } from 'src/app/core/services/ticket-filter.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
-import { flatpickrFactory } from 'src/app/shared/components.module';
-
 @Component({
   selector: 'app-ticket-filter',
   templateUrl: './ticket-filter.component.html',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, CustomInputModule],
+  imports: [
+    LuxuryAppComponentsModule,
+    CommonModule,
+    ReactiveFormsModule,
+    CustomInputModule,
+  ],
 })
 export default class FilterTicketComponent implements OnInit {
   private filterReportOperation = inject(TicketFilterService);

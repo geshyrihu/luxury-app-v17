@@ -7,6 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { EAreaMinutasDetalles } from 'src/app/core/enums/area-minutas-detalles.enum';
@@ -18,7 +19,6 @@ import {
   DataService,
 } from 'src/app/core/services/common-services';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
-import ComponentsModule from 'src/app/shared/components.module';
 import PrimeNgModule from 'src/app/shared/prime-ng.module';
 
 @Component({
@@ -26,13 +26,13 @@ import PrimeNgModule from 'src/app/shared/prime-ng.module';
   templateUrl: './addoredit-minuta-detalle.component.html',
   standalone: true,
   imports: [
+    LuxuryAppComponentsModule,
     ReactiveFormsModule,
-    ComponentsModule,
+    LuxuryAppComponentsModule,
     CommonModule,
     CustomInputModule,
     PrimeNgModule,
   ],
-  providers: [CustomToastService],
 })
 export default class AddoreditMinutaDetalleComponent
   implements OnInit, OnDestroy

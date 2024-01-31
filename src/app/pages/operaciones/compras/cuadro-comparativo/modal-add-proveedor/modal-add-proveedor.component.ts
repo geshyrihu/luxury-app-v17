@@ -6,7 +6,9 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { MessageService } from 'primeng/api';
+import LuxuryAppComponentsModule, {
+  flatpickrFactory,
+} from 'app/shared/luxuryapp-components.module';
 import {
   DialogService,
   DynamicDialogConfig,
@@ -19,21 +21,18 @@ import {
   DataService,
 } from 'src/app/core/services/common-services';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
-import ComponentsModule, {
-  flatpickrFactory,
-} from 'src/app/shared/components.module';
 
 @Component({
   selector: 'app-modal-add-proveedor',
   templateUrl: './modal-add-proveedor.component.html',
   standalone: true,
   imports: [
+    LuxuryAppComponentsModule,
     ReactiveFormsModule,
     CommonModule,
-    ComponentsModule,
+    LuxuryAppComponentsModule,
     CustomInputModule,
   ],
-  providers: [DialogService, MessageService, CustomToastService],
 })
 export default class ModalAddProveedorComponent implements OnInit, OnDestroy {
   private formBuilder = inject(FormBuilder);

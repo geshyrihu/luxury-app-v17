@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import saveAs from 'file-saver';
 import { Subject, takeUntil } from 'rxjs';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
@@ -9,13 +10,17 @@ import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { FilterRequestsService } from 'src/app/core/services/filter-requests.service';
 import CustomButtonModule from 'src/app/custom-components/custom-buttons/custom-button.module';
-
 @Component({
   selector: 'app-filter-requests',
   templateUrl: './filter-requests.component.html',
   standalone: true,
-  imports: [RouterModule, CommonModule, FormsModule, CustomButtonModule],
-  providers: [CustomToastService],
+  imports: [
+    LuxuryAppComponentsModule,
+    RouterModule,
+    CommonModule,
+    FormsModule,
+    CustomButtonModule,
+  ],
 })
 export default class FilterRequestsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {}

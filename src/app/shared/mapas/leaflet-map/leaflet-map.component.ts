@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { circle, latLng, marker, tileLayer } from 'leaflet';
-
 @Component({
   selector: 'app-leaflet-map',
   templateUrl: './leaflet-map.component.html',

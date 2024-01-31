@@ -6,6 +6,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { IInventarioLlaveAddOrEditDto } from 'src/app/core/interfaces/IInventarioLlaveAddOrEditDto.interface';
@@ -17,19 +18,18 @@ import {
   DataService,
 } from 'src/app/core/services/common-services';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
-import ComponentsModule from 'src/app/shared/components.module';
 
 @Component({
   selector: 'app-form-inventario-llave',
   templateUrl: './form-inventario-llave.component.html',
   standalone: true,
   imports: [
+    LuxuryAppComponentsModule,
     CommonModule,
-    ComponentsModule,
+    LuxuryAppComponentsModule,
     ReactiveFormsModule,
     CustomInputModule,
   ],
-  providers: [CustomToastService],
 })
 export default class FormInventarioLlaveComponent implements OnInit, OnDestroy {
   private formBuilder = inject(FormBuilder);

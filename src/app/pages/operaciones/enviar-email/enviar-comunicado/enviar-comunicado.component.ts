@@ -12,7 +12,7 @@ import {
   FileUploadModule,
   FileUploadValidators,
 } from '@iplab/ngx-file-upload';
-import { MessageService } from 'primeng/api';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { IDestinatariosMailReporte } from 'src/app/core/interfaces/IDestinatariosMailReporte.interface';
@@ -29,13 +29,13 @@ import PrimeNgModule from 'src/app/shared/prime-ng.module';
   templateUrl: './enviar-comunicado.component.html',
   standalone: true,
   imports: [
+    LuxuryAppComponentsModule,
     CommonModule,
     ReactiveFormsModule,
     FileUploadModule,
     FormsModule,
     PrimeNgModule,
   ],
-  providers: [DialogService, MessageService, CustomToastService],
 })
 export default class EnviarComunicadoComponent {
   public customToastService = inject(CustomToastService);

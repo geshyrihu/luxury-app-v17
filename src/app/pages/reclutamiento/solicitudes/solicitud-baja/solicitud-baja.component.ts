@@ -11,6 +11,7 @@ import {
 } from '@angular/forms';
 import { FileUploadModule, FileUploadValidators } from '@iplab/ngx-file-upload';
 import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { cb_ESiNo } from 'src/app/core/enums/si-no.enum';
@@ -25,21 +26,19 @@ import {
   DateService,
 } from 'src/app/core/services/common-services';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
-import ComponentsModule from 'src/app/shared/components.module';
 
 @Component({
   selector: 'app-solicitud-baja',
   templateUrl: './solicitud-baja.component.html',
   standalone: true,
   imports: [
-    ComponentsModule,
+    LuxuryAppComponentsModule,
     CustomInputModule,
     ReactiveFormsModule,
     CommonModule,
     FileUploadModule,
     NgbAlertModule,
   ],
-  providers: [CustomToastService],
 })
 export default class SolicitudBajaComponent implements OnInit, OnDestroy {
   private customToastService = inject(CustomToastService);

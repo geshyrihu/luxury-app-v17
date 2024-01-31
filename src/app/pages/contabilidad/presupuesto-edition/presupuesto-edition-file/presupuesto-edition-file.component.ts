@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { FileUploadModule } from 'primeng/fileupload';
 import { Subject, takeUntil } from 'rxjs';
 import { DataService } from 'src/app/core/services/common-services';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
-import ComponentsModule from 'src/app/shared/components.module';
 import PrimeNgModule from 'src/app/shared/prime-ng.module';
 import { environment } from 'src/environments/environment';
 
@@ -15,13 +15,13 @@ import { environment } from 'src/environments/environment';
   templateUrl: './presupuesto-edition-file.component.html',
   standalone: true,
   imports: [
+    LuxuryAppComponentsModule,
     CommonModule,
     FileUploadModule,
-    ComponentsModule,
+    LuxuryAppComponentsModule,
     FormsModule,
     PrimeNgModule,
   ],
-  providers: [CustomToastService],
 })
 export default class PresupuestoEditionFileComponent
   implements OnInit, OnDestroy

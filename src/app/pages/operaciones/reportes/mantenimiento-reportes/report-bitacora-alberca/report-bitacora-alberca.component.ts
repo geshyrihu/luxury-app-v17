@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
@@ -11,12 +12,16 @@ import { DateService } from 'src/app/core/services/date.service';
 import { PeriodoMonthService } from 'src/app/core/services/periodo-month.service';
 import PagetitleReportComponent from 'src/app/shared/cabeceras/pagetitlereport/pagetitlereport.component';
 import CustomBarChartComponent from 'src/app/shared/graficos/ng2-chart/custom-bar-chart/custom-bar-chart.component';
-
 @Component({
   selector: 'app-report-bitacora-alberca',
   templateUrl: './report-bitacora-alberca.component.html',
   standalone: true,
-  imports: [CommonModule, CustomBarChartComponent, PagetitleReportComponent],
+  imports: [
+    LuxuryAppComponentsModule,
+    CommonModule,
+    CustomBarChartComponent,
+    PagetitleReportComponent,
+  ],
   providers: [CustomToastService, MessageService],
 })
 export default class ReportBitacoraAlbercaComponent implements OnInit {

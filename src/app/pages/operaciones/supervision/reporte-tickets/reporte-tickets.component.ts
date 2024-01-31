@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
 import { TableModule } from 'primeng/table';
@@ -9,7 +10,6 @@ import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
 import { PeriodoMonthService } from 'src/app/core/services/periodo-month.service';
-import ComponentsModule from 'src/app/shared/components.module';
 import { environment } from 'src/environments/environment';
 const base_urlImg = environment.base_urlImg + 'Administration/accounts/';
 
@@ -18,12 +18,11 @@ const base_urlImg = environment.base_urlImg + 'Administration/accounts/';
   templateUrl: './reporte-tickets.component.html',
   standalone: true,
   imports: [
-    ComponentsModule,
+    LuxuryAppComponentsModule,
     CommonModule,
     TableModule,
     ReporteTicketsComponent,
   ],
-  providers: [DialogService, MessageService, CustomToastService],
 })
 export default class ReporteTicketsComponent implements OnInit, OnDestroy {
   private customerIdService = inject(CustomerIdService);

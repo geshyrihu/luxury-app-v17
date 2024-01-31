@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { SanitizeHtmlPipe } from 'src/app/core/pipes/sanitize-html.pipe';
@@ -9,13 +10,11 @@ import {
   DataService,
 } from 'src/app/core/services/common-services';
 import { environment } from 'src/environments/environment';
-
 @Component({
   selector: 'app-reporte-completo-activos',
   templateUrl: './reporte-completo-activos.component.html',
   standalone: true,
-  imports: [CommonModule, SanitizeHtmlPipe],
-  providers: [MessageService, CustomToastService],
+  imports: [LuxuryAppComponentsModule, CommonModule, SanitizeHtmlPipe],
 })
 export default class ReporteCompletoActivosComponent
   implements OnInit, OnDestroy

@@ -4,6 +4,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
@@ -15,7 +16,6 @@ import {
   FilterRequestsService,
   StatusSolicitudVacanteService,
 } from 'src/app/core/services/common-services';
-import ComponentsModule from 'src/app/shared/components.module';
 import PrimeNgModule from 'src/app/shared/prime-ng.module';
 import FilterRequestsComponent from '../filter-requests.component';
 import AddoreditModificacionSalarioComponent from './addoredit-modificacion-salario/addoredit-modificacion-salario.component';
@@ -25,15 +25,15 @@ import AddoreditModificacionSalarioComponent from './addoredit-modificacion-sala
   templateUrl: './list-solicitud-modificacion-salario.component.html',
   standalone: true,
   imports: [
+    LuxuryAppComponentsModule,
     CommonModule,
-    ComponentsModule,
+    LuxuryAppComponentsModule,
     FilterRequestsComponent,
     FormsModule,
     NgbDropdownModule,
     RouterModule,
     PrimeNgModule,
   ],
-  providers: [DialogService, MessageService, CustomToastService],
 })
 export default class ListSolicitudModificacionSalarioComponent
   implements OnInit

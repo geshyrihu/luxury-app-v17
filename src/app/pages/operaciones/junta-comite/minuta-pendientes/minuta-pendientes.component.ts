@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { SanitizeHtmlPipe } from 'src/app/core/pipes/sanitize-html.pipe';
@@ -9,13 +10,16 @@ import {
   CustomerIdService,
   DataService,
 } from 'src/app/core/services/common-services';
-import ComponentsModule from 'src/app/shared/components.module';
 @Component({
   selector: 'app-minuta-pendientes',
   templateUrl: './minuta-pendientes.component.html',
   standalone: true,
-  imports: [ComponentsModule, CommonModule, EStatusPipe, SanitizeHtmlPipe],
-  providers: [MessageService, CustomToastService],
+  imports: [
+    LuxuryAppComponentsModule,
+    CommonModule,
+    EStatusPipe,
+    SanitizeHtmlPipe,
+  ],
 })
 export default class MinutaPendientesComponent implements OnInit, OnDestroy {
   public customToastService = inject(CustomToastService);

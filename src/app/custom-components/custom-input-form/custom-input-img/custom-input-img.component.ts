@@ -1,13 +1,13 @@
 import { NgStyle } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { imageToBase64 } from 'src/app/core/helpers/enumeration';
 import { environment } from 'src/environments/environment';
-
 @Component({
   selector: 'custom-input-img',
   templateUrl: './custom-input-img.component.html',
   standalone: true,
-  imports: [NgStyle],
+  imports: [LuxuryAppComponentsModule, NgStyle],
 })
 export default class CustomInputImgComponent {
   imgBase64: string = '';

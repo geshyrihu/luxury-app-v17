@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import {
@@ -7,14 +8,12 @@ import {
   CustomToastService,
   DataService,
 } from 'src/app/core/services/common-services';
-import ComponentsModule from 'src/app/shared/components.module';
 
 @Component({
   selector: 'app-addoredit-presentacion-junta-comite',
   templateUrl: './addoredit-presentacion-junta-comite.component.html',
   standalone: true,
-  imports: [ComponentsModule, ReactiveFormsModule],
-  providers: [CustomToastService],
+  imports: [LuxuryAppComponentsModule, ReactiveFormsModule],
 })
 export default class AddoreditPresentacionJuntaComiteComponent
   implements OnInit, OnDestroy

@@ -8,7 +8,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { MessageService } from 'primeng/api';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { ToastModule } from 'primeng/toast';
 import { Subject, takeUntil } from 'rxjs';
 import { ResetPasswordDto } from 'src/app/core/interfaces/user-info.interface';
@@ -17,12 +17,12 @@ import {
   DataService,
 } from 'src/app/core/services/common-services';
 import CustomButtonModule from 'src/app/custom-components/custom-buttons/custom-button.module';
-
 @Component({
   selector: 'app-update-password-account',
   templateUrl: './update-password-account.component.html',
   standalone: true,
   imports: [
+    LuxuryAppComponentsModule,
     NgbModule,
     FormsModule,
     ToastModule,
@@ -30,7 +30,6 @@ import CustomButtonModule from 'src/app/custom-components/custom-buttons/custom-
     CommonModule,
     ReactiveFormsModule,
   ],
-  providers: [MessageService, CustomToastService],
 })
 export default class UpdatePasswordAccountComponent
   implements OnInit, OnDestroy

@@ -1,13 +1,13 @@
-import { Component, inject } from "@angular/core";
-import { NgxChartsModule } from "@swimlane/ngx-charts";
-import { DataService } from "src/app/core/services/data.service";
-import { ReportService } from "src/app/core/services/report.service";
-
+import { Component, inject } from '@angular/core';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
+import { DataService } from 'src/app/core/services/data.service';
+import { ReportService } from 'src/app/core/services/report.service';
 @Component({
-  selector: "app-resumen-minuta-grafico",
-  templateUrl: "./resumen-minuta-grafico.component.html",
+  selector: 'app-resumen-minuta-grafico',
+  templateUrl: './resumen-minuta-grafico.component.html',
   standalone: true,
-  imports: [NgxChartsModule],
+  imports: [LuxuryAppComponentsModule, NgxChartsModule],
 })
 export default class ResumenMinutaGraficoComponent {
   public reportService = inject(ReportService);
@@ -25,6 +25,6 @@ export default class ResumenMinutaGraficoComponent {
   isDoughnut: boolean = false;
 
   colorScheme: any = {
-    domain: ["#5AA454", "#A10A28", "#3b3838"],
+    domain: ['#5AA454', '#A10A28', '#3b3838'],
   };
 }

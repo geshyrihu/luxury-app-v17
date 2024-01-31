@@ -1,15 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { HttpHeaders } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { FileUploadModule } from 'primeng/fileupload';
 import { environment } from 'src/environments/environment';
-
 @Component({
   selector: 'app-form-upload-img',
   templateUrl: './form-upload-img.component.html',
   standalone: true,
-  imports: [CommonModule, FileUploadModule],
+  imports: [LuxuryAppComponentsModule, CommonModule, FileUploadModule],
 })
 export default class FormUploadImgComponent {
   public ref = inject(DynamicDialogRef);

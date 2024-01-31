@@ -1,6 +1,5 @@
 import { NgClass } from '@angular/common';
 import { Component, Input } from '@angular/core';
-
 @Component({
   selector: 'app-pagetitle',
   templateUrl: './pagetitle.component.html',

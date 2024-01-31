@@ -6,7 +6,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import ComponentsModule from 'app/shared/components.module';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { EEducationLevel } from 'src/app/core/enums/education-level.enum';
@@ -27,12 +27,11 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   templateUrl: './person-edit-data-laboral.component.html',
   standalone: true,
   imports: [
-    ComponentsModule,
+    LuxuryAppComponentsModule,
     ReactiveFormsModule,
     CommonModule,
     CustomInputModule,
   ],
-  providers: [CustomToastService],
 })
 export default class PersonEditDataLaboralComponent implements OnInit {
   private apiRequestService = inject(ApiRequestService);

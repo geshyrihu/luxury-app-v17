@@ -7,6 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { EmailDataAddOrEditDto } from 'src/app/core/interfaces/email-data-add-or-edit.interface';
@@ -16,20 +17,18 @@ import {
   DataService,
 } from 'src/app/core/services/common-services';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
-import ComponentsModule from 'src/app/shared/components.module';
 
 @Component({
   selector: 'app-addoredit-email-data',
   templateUrl: './addoredit-email-data.component.html',
   standalone: true,
   imports: [
-    ComponentsModule,
+    LuxuryAppComponentsModule,
     ReactiveFormsModule,
     CommonModule,
     CustomInputModule,
     NgbAlertModule,
   ],
-  providers: [CustomToastService],
 })
 export default class AddOrEditEmailDataComponent implements OnInit, OnDestroy {
   private formBuilder = inject(FormBuilder);

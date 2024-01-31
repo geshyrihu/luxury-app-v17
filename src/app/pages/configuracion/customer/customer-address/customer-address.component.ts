@@ -5,6 +5,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { CustomerAddressAddOrEditDto } from 'src/app/core/interfaces/CustomerAddressAddOrEditDto';
@@ -14,19 +15,17 @@ import {
 } from 'src/app/core/services/common-services';
 import CustomButtonModule from 'src/app/custom-components/custom-buttons/custom-button.module';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
-import ComponentsModule from 'src/app/shared/components.module';
 
 @Component({
   selector: 'app-customer-address',
   templateUrl: './customer-address.component.html',
   standalone: true,
   imports: [
-    ComponentsModule,
+    LuxuryAppComponentsModule,
     CustomButtonModule,
     CustomInputModule,
     ReactiveFormsModule,
   ],
-  providers: [CustomToastService],
 })
 export default class CustomerAddressComponent implements OnInit {
   private formBuilder = inject(FormBuilder);

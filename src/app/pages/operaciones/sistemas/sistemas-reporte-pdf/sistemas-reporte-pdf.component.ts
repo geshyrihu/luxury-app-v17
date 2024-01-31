@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { MessageService } from 'primeng/api';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { TableModule } from 'primeng/table';
 import { Subject, takeUntil } from 'rxjs';
@@ -12,13 +12,11 @@ import {
   SistemasReporteService,
 } from 'src/app/core/services/common-services';
 import CardEmployeeComponent from '../../directorios/empleados/card-employee/card-employee.component';
-
 @Component({
   selector: 'app-sistemas-reporte-pdf',
   templateUrl: './sistemas-reporte-pdf.component.html',
   standalone: true,
-  imports: [CommonModule, TableModule],
-  providers: [DialogService, MessageService, CustomToastService],
+  imports: [LuxuryAppComponentsModule, CommonModule, TableModule],
 })
 export default class SistemasReportePdfComponent implements OnInit, OnDestroy {
   public customToastService = inject(CustomToastService);

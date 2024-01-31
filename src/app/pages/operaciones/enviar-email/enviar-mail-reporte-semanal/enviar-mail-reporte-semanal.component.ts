@@ -7,6 +7,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import {
   DialogService,
@@ -20,21 +21,20 @@ import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { SelectItemService } from 'src/app/core/services/select-item.service';
 import CustomButtonModule from 'src/app/custom-components/custom-buttons/custom-button.module';
-import ComponentsModule from 'src/app/shared/components.module';
 import PrimeNgModule from 'src/app/shared/prime-ng.module';
 @Component({
   selector: 'app-enviar-mail-reporte-semanal',
   templateUrl: './enviar-mail-reporte-semanal.component.html',
   standalone: true,
   imports: [
+    LuxuryAppComponentsModule,
     CommonModule,
     ReactiveFormsModule,
-    ComponentsModule,
+    LuxuryAppComponentsModule,
     FormsModule,
     PrimeNgModule,
     CustomButtonModule,
   ],
-  providers: [MessageService, CustomToastService],
 })
 export default class EnviarMailReporteSemanalComponent
   implements OnInit, OnDestroy

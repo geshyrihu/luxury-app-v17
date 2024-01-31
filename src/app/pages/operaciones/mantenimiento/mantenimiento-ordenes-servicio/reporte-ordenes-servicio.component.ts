@@ -1,5 +1,6 @@
 import { CommonModule, DatePipe } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { Subject, takeUntil } from 'rxjs';
 import { SanitizeHtmlPipe } from 'src/app/core/pipes/sanitize-html.pipe';
@@ -9,13 +10,16 @@ import { DataService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
 import { PeriodoMonthService } from 'src/app/core/services/periodo-month.service';
 import { environment } from 'src/environments/environment';
-
 @Component({
   selector: 'app-reporte-ordenes-servicio',
   templateUrl: './reporte-ordenes-servicio.component.html',
   standalone: true,
-  imports: [CommonModule, SanitizeHtmlPipe, DatePipe],
-  providers: [MessageService, CustomToastService],
+  imports: [
+    LuxuryAppComponentsModule,
+    CommonModule,
+    SanitizeHtmlPipe,
+    DatePipe,
+  ],
 })
 export default class ReporteOrdenesServicioComponent
   implements OnInit, OnDestroy

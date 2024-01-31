@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { NgbAlert } from '@ng-bootstrap/ng-bootstrap';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ImageModule } from 'primeng/image';
@@ -12,7 +13,6 @@ import {
   CustomerIdService,
   DataService,
 } from 'src/app/core/services/common-services';
-import ComponentsModule from 'src/app/shared/components.module';
 import PrimeNgModule from 'src/app/shared/prime-ng.module';
 import AddoreditInventarioPinturaComponent from './addoredit-inventario-pintura.component';
 @Component({
@@ -20,13 +20,12 @@ import AddoreditInventarioPinturaComponent from './addoredit-inventario-pintura.
   templateUrl: './inventario-pintura.component.html',
   standalone: true,
   imports: [
-    ComponentsModule,
+    LuxuryAppComponentsModule,
     NgbAlert,
     CommonModule,
     PrimeNgModule,
     ImageModule,
   ],
-  providers: [DialogService, MessageService, CustomToastService],
 })
 export default class InventarioPinturaComponent implements OnInit, OnDestroy {
   public authService = inject(AuthService);

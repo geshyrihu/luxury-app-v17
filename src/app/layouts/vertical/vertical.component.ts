@@ -1,6 +1,7 @@
 import { CommonModule, Location } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import MenuSelectCustomerComponent from '../menu-select-customer/menu-select-customer.component';
 import SidebarComponent from '../sidebar/sidebar.component';
@@ -10,6 +11,7 @@ import { TopbarComponent } from '../topbar/topbar.component';
   templateUrl: './vertical.component.html',
   standalone: true,
   imports: [
+    LuxuryAppComponentsModule,
     CommonModule,
     MenuSelectCustomerComponent,
     NgxSpinnerModule,

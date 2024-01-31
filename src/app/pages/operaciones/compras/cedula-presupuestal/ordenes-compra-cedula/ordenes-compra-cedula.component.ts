@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import {
   DialogService,
   DynamicDialogConfig,
@@ -10,7 +11,6 @@ import { Subject, takeUntil } from 'rxjs';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { OrdenCompraService } from 'src/app/core/services/orden-compra.service';
-import ComponentsModule from 'src/app/shared/components.module';
 import PrimeNgModule from 'src/app/shared/prime-ng.module';
 import OrdenCompraComponent from '../../orden-compra/orden-compra/orden-compra.component';
 
@@ -18,8 +18,7 @@ import OrdenCompraComponent from '../../orden-compra/orden-compra/orden-compra.c
   selector: 'app-ordenes-compra-cedula',
   templateUrl: './ordenes-compra-cedula.component.html',
   standalone: true,
-  imports: [ComponentsModule, CommonModule, PrimeNgModule, NgbTooltip],
-  providers: [CustomToastService],
+  imports: [LuxuryAppComponentsModule, CommonModule, PrimeNgModule, NgbTooltip],
 })
 export default class OrdenesCompraCedulaComponent implements OnInit, OnDestroy {
   private customToastService = inject(CustomToastService);

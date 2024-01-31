@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import PrimeNgModule from 'app/shared/prime-ng.module';
 import { NgxMaskModule } from 'ngx-mask';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -16,7 +17,6 @@ import {
   DataService,
   SelectItemService,
 } from 'src/app/core/services/common-services';
-import ComponentsModule from 'src/app/shared/components.module';
 import AddoreditPersonEmergencyContactComponent from '../addoredit-person-emergency-contact/addoredit-person-emergency-contact.component';
 
 @Component({
@@ -24,9 +24,10 @@ import AddoreditPersonEmergencyContactComponent from '../addoredit-person-emerge
   templateUrl: './list-person-emergency-contact.component.html',
   standalone: true,
   imports: [
+    LuxuryAppComponentsModule,
     CommonModule,
     ReactiveFormsModule,
-    ComponentsModule,
+    LuxuryAppComponentsModule,
     FormsModule,
     ToastModule,
     NgxMaskModule,

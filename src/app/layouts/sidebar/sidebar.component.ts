@@ -8,16 +8,22 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import MetisMenu from 'metismenujs';
 import { SimplebarAngularModule } from 'simplebar-angular';
 import { SidebarService } from 'src/app/core/services/sidebar.service';
 import { MenuItem } from '../../core/interfaces/menu.model';
-
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
   standalone: true,
-  imports: [SimplebarAngularModule, FormsModule, RouterModule, CommonModule],
+  imports: [
+    LuxuryAppComponentsModule,
+    SimplebarAngularModule,
+    FormsModule,
+    RouterModule,
+    CommonModule,
+  ],
 })
 
 /**
