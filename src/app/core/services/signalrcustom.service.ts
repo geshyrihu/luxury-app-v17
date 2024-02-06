@@ -26,7 +26,7 @@ export class SignalrcustomService {
 
     // Configuramos un controlador para escuchar el evento 'Nueva solicitud' y mostrarlo en la consola
     this.hubConnection.on('Nueva solicitud', (respuesta) => {
-      console.log('hubConnection: ', respuesta);
+      console.log('estamos desde el Servicio.... hubConnection: ', respuesta);
     });
   }
 }

@@ -5,6 +5,7 @@ import { MessageService, SelectItem } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import {
+  ApiRequestService,
   AuthService,
   CatalogoGastosFijosService,
   CustomToastService,
@@ -33,6 +34,8 @@ export default class FormCatalogoGastosFijosComponent
   public messageService = inject(MessageService);
   public catalogoGastosFijosService = inject(CatalogoGastosFijosService);
   public customerIdService = inject(CustomerIdService);
+  public apiRequestService = inject(ApiRequestService);
+
   submitting: boolean = false;
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
@@ -127,7 +130,7 @@ export default class FormCatalogoGastosFijosComponent
   }
 
   onSubmit() {
-    if (!this.dataService.validateForm(this.form)) return;
+    if (!this.apiRequestService.validateForm(this.form)) return;
     // Deshabilitar el botón al iniciar el envío del formulario
     this.submitting = true;
     // Mostrar un mensaje de carga

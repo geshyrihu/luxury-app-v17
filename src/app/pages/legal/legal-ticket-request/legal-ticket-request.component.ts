@@ -5,9 +5,9 @@ import { DialogHandlerService } from 'src/app/core/services/dialog-handler.servi
 import TicketLegalAssembliesComponent from '../TicketLegalAssemblies/TicketLegalAssemblies.component';
 import TicketLegalCommitteeMeetingsLegalTopicsComponent from '../TicketLegalCommitteeMeetingsLegalTopics/TicketLegalCommitteeMeetingsLegalTopics.component';
 import TicketLegalLatePayerAgreementsComponent from '../TicketLegalLatePayerAgreements/TicketLegalLatePayerAgreements.component';
-import TicketLegalProviderComponent from '../TicketLegalProvider/TicketLegalProvider.component';
 import TicketLegalProviderContractsRenewalsComponent from '../TicketLegalProviderContractsRenewals/TicketLegalProviderContractsRenewals.component';
 import TicketLegalOtherComponent from '../ticket-legal-other/ticket-legal-other.component';
+import TicketLegalProviderComponent from '../ticket-legal-provider/ticket-legal-provider.component';
 
 @Component({
   selector: 'app-legal-ticket-request',

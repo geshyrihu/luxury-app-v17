@@ -1,0 +1,282 @@
+<div class="card">
+  <div class="card-body">
+    <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
+      <div class="form-check form-check-inline">
+        <input
+          class="form-check-input"
+          type="radio"
+          id="personaMoral"
+          [value]="ETypeProviderEnum.PersonaMoral"
+          formControlName="typeProvider"
+          name="typeProvider"
+        />
+        <label class="form-check-label card-text" for="personaMoral">
+          Persona Moral
+        </label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input
+          class="form-check-input"
+          type="radio"
+          id="personaFisica"
+          [value]="ETypeProviderEnum.PersonaFisica"
+          formControlName="typeProvider"
+          name="typeProvider"
+        />
+        <label class="form-check-label card-text" for="personaFisica">
+          Persona Física
+        </label>
+      </div>
+      <!-- Listado de Proveedores -->
+      @if(cb_providers.length == 0){
+      <div class="text-center">
+        <p>Cargando listado de proveedores</p>
+        <div class="spinner-border text-info m-1" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+      }@else {
+      <custom-input-datalist
+        (propagar)="saveProviderId($event)"
+        [control]="form.get('providerName')"
+        [data]="cb_providers"
+        formControlName="providerName"
+        label="Proveedor"
+        [horizontal]="false"
+        dataListId="providerNameDatalistOptions"
+      ></custom-input-datalist>
+      }
+      <!-- Listado de Proveedores -->
+
+      <ngb-alert class="mb-2" [dismissible]="false" type="danger">
+        Requisitos documentales:
+      </ngb-alert>
+
+      <div formArrayName="Documents"></div>
+      @if(form.get('typeProvider').value === ETypeProviderEnum.PersonaMoral){
+      <div class="form-group mb-2">
+        <p class="card-text">a) Acta Constitutiva</p>
+        <input
+          type="file"
+          class="form-control"
+          (change)="change($event, 'Acta Constitutiva')"
+        />
+      </div>
+      <div class="form-group mb-2">
+        <p class="card-text">
+          b) Poder Notarial del Representante Legal (Si ya se contiene en el
+          Acta Constitutiva, con ella es suficiente)
+        </p>
+        <input
+          type="file"
+          class="form-control"
+          (change)="change($event, 'Poder Notarial')"
+        />
+      </div>
+      <div class="form-group mb-2">
+        <p class="card-text">
+          c) Identificación Oficial del representante legal
+        </p>
+        <input
+          type="file"
+          class="form-control"
+          (change)="change($event, 'Identificación Oficial')"
+        />
+      </div>
+
+      <div class="form-group mb-2">
+        <p class="card-text">d) Registro Federal de Contribuyentes</p>
+        <input
+          type="file"
+          class="form-control"
+          (change)="change($event, 'Registro Federal de Contribuyentes')"
+        />
+      </div>
+
+      <div class="form-group mb-2">
+        <p class="card-text">e) Comprobante de Domicilio</p>
+        <input
+          type="file"
+          class="form-control"
+          (change)="change($event, 'documento ')"
+        />
+      </div>
+
+      } @else {
+
+      <div class="form-group mb-2">
+        <p class="card-text">a) Identificación Oficial</p>
+        <input
+          type="file"
+          class="form-control"
+          (change)="change($event, 'documento ')"
+        />
+      </div>
+
+      <div class="form-group mb-2">
+        <p class="card-text">b) Registro Federal de Contribuyentes</p>
+        <input
+          type="file"
+          class="form-control"
+          (change)="change($event, 'documento ')"
+        />
+      </div>
+
+      <div class="form-group mb-2">
+        <p class="card-text">c) Clave Única de Registro de Población</p>
+        <input
+          type="file"
+          class="form-control"
+          (change)="change($event, 'documento ')"
+        />
+      </div>
+
+      <div class="form-group mb-2">
+        <p class="card-text">d) Comprobante de domicilio</p>
+        <input
+          type="file"
+          class="form-control"
+          (change)="change($event, 'documento ')"
+        />
+      </div>
+      }
+      <ngb-alert class="mb-2" [dismissible]="false" type="danger">
+        En ambos casos:
+      </ngb-alert>
+
+      <div class="form-group mb-2">
+        <p class="card-text">
+          a) En caso de que el proveedor ya cuente con un formato de contrato a
+          través del cuál preste regularmente sus servicios, agregarlo.
+        </p>
+        <input
+          type="file"
+          class="form-control"
+          (change)="change($event, 'documento ')"
+        />
+      </div>
+
+      <p class="mb-2 card-text text-justify">
+        b) La documentación solicitada para su contratación (completa), en su
+        defecto, aún y cuando ya presten el servicio, este no será pagado en el
+        periodo que corresponda y las facturas respectivas deberán ser
+        canceladas, para ser cubiertas en el periodo de facturación inmediata
+        siguiente a la presentación de la documentación respectiva.
+      </p>
+      <p class="mb-2 card-text text-justify">
+        c) Los proveedores que ya cuenten con contrato firmado en el año
+        anterior y que pierda vigencia en el presente año, únicamente firmarán
+        Convenio Modificatorio, en el que, manteniéndose sus alcances de
+        servicio, únicamente sufran cambios en cuánto a precio y vigencia.
+      </p>
+      <div class="form-group mb-2">
+        <p class="card-text">Convenio Modificatorio.</p>
+        <input
+          type="file"
+          class="form-control"
+          (change)="change($event, 'Convenio Modificatorio ')"
+        />
+      </div>
+      <ngb-alert class="mb-2" [dismissible]="false" type="danger">
+        Condiciones comerciales:
+      </ngb-alert>
+
+      <div class="form-group mb-2">
+        <p class="card-text">
+          1. Descripción de la actividad a realizar para establecer el objeto
+          del Contrato. (En qué consiste).
+        </p>
+        <input type="text" class="form-control" />
+      </div>
+      <div class="form-group mb-2">
+        <p class="card-text">
+          2. Monto de la Contraprestación económica, (precio) señalando el monto
+          total a pagar mensual con IVA incluido.
+        </p>
+        <input type="text" class="form-control" />
+      </div>
+      <div class="form-group mb-2">
+        <p class="card-text">
+          3. Vigencia de la prestación de servicios o periodo de ejecución en el
+          caso de obras. (Deja en blanco si es Indefinido)
+        </p>
+        <input
+          formControlName="duration"
+          class="form-control flatpickr-input"
+          monthSelectorType="dropdown"
+          mwlFlatpickr
+          type="date"
+          flatpickr="{
+    dateFormat: 'd-m-Y',
+    locale: 'es',
+    onChange: handleFlatpickrChange.bind(this)
+  }"
+        />
+      </div>
+      <div class="form-group mb-2">
+        <p class="card-text">
+          4. Las especificaciones o alcances de servicio que vayan a formar
+          parte como anexos del Contrato.
+        </p>
+        <input
+          type="file"
+          class="form-control"
+          (change)="change($event, 'Anexo de alcances')"
+        />
+      </div>
+      <div class="form-group mb-2">
+        <p class="card-text">5. Copia de caratula bancaria.</p>
+        <input
+          type="file"
+          class="form-control"
+          (change)="change($event, 'Copia de caratula bancaria')"
+        />
+      </div>
+
+      <div class="form-group mb-2">
+        <p class="card-text">6. Constancia de Alta en el IMSS.</p>
+        <input
+          type="file"
+          class="form-control"
+          (change)="change($event, 'Constancia de Tramite de REPSE')"
+        />
+      </div>
+
+      <div class="form-group mb-2">
+        <p class="card-text">6. Constancia de Tramite de REPSE.</p>
+        <input
+          type="file"
+          class="form-control"
+          (change)="change($event, 'Constancia de Alta en el IMSS')"
+        />
+      </div>
+
+      <!-- [disabled]="this.form.invalid || submitting" -->
+      <custom-button-submit />
+    </form>
+    <!--
+  <custom-input-text
+    [control]="form.get('id')"
+    formControlName="id"
+    label="Id"
+  ></custom-input-text>
+  <custom-input-text
+    [control]="form.get('code')"
+    formControlName="code"
+    label="Código"
+    placeholder="código"
+  ></custom-input-text>
+  <custom-input-text
+    [control]="form.get('shortName')"
+    formControlName="shortName"
+    label="Nombre"
+    placeholder="Nombre"
+  ></custom-input-text>
+  <custom-input-text
+    [control]="form.get('largeName')"
+    formControlName="largeName"
+    label="Razón social"
+    placeholder="razón social"
+  ></custom-input-text> -->
+  </div>
+</div>

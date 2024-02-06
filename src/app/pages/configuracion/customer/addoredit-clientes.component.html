@@ -60,13 +60,6 @@
         </div>
       </div>
 
-      <custom-input-text-area
-        [control]="form.get('adreess')"
-        formControlName="adreess"
-        label="Dirección"
-        placeholder="dirección"
-      ></custom-input-text-area>
-
       <custom-input-date
         [control]="form.get('register')"
         formControlName="register"
@@ -80,25 +73,6 @@
         label="Numero de Cliente"
         placeholder="numero de Cliente"
       ></custom-input-number>
-      <div class="row">
-        <div class="col-sm-6">
-          <custom-input-text
-            [control]="form.get('longitud')"
-            formControlName="longitud"
-            label="Longitud"
-            placeholder="longitud"
-          ></custom-input-text>
-        </div>
-        <div class="col-sm-6">
-          <custom-input-text
-            [control]="form.get('latitud')"
-            formControlName="latitud"
-            label="Latitud"
-            placeholder="latitud"
-          ></custom-input-text>
-        </div>
-      </div>
-
       <custom-input-select
         [control]="form.get('active')"
         formControlName="active"

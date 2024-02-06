@@ -10,6 +10,7 @@ import {
 import { Subject, takeUntil } from 'rxjs';
 import { CedulaPresupuestalDetalleAddOrEdit } from 'src/app/core/interfaces/ICedulaPresupuestalDetalleAddOrEdit.interface';
 import {
+  ApiRequestService,
   AuthService,
   CustomToastService,
   DataService,
@@ -31,6 +32,7 @@ export default class EditPartidaCedulaComponent implements OnInit, OnDestroy {
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
   public ref = inject(DynamicDialogRef);
+  public apiRequestService = inject(ApiRequestService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
@@ -48,7 +50,7 @@ export default class EditPartidaCedulaComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     const budgetCardDTO: CedulaPresupuestalDetalleAddOrEdit = this.form.value;
-    if (!this.dataService.validateForm(this.form)) return;
+    if (!this.apiRequestService.validateForm(this.form)) return;
 
     // Deshabilitar el botón al iniciar el envío del formulario
     this.submitting = true;

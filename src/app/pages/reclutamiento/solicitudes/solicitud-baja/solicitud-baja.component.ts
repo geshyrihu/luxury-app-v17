@@ -120,7 +120,7 @@ export default class SolicitudBajaComponent implements OnInit, OnDestroy {
     this.filesControl.updateValueAndValidity();
   }
   onSubmit() {
-    if (!this.dataService.validateForm(this.form)) return;
+    if (!this.apiRequestService.validateForm(this.form)) return;
 
     var model = this.createFormData(this.form.value);
 

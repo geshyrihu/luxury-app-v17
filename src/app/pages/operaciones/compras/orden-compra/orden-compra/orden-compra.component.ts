@@ -197,6 +197,7 @@ export default class OrdenCompraComponent implements OnInit, OnDestroy {
         next: (resp: any) => {
           this.customToastService.onClose();
           this.ordenCompra = resp.body;
+          console.log('🚀 ~ resp.body:', resp.body);
           if (this.ordenCompra.ordenCompraDatosPago.tipoGasto === 0) {
             this.esGastoFijo = true;
           }
@@ -224,7 +225,7 @@ export default class OrdenCompraComponent implements OnInit, OnDestroy {
           //   Validando si ya fue revisada por el Residente
 
           if (
-            this.ordenCompra.ordenCompraAuth.revisadoPorResidente.length > 0
+            this.ordenCompra.ordenCompraAuth.revisadoPorResidente?.length > 0
           ) {
             this.revisadaPorResidente = true;
             this.mensajeRevision = 'Revocar Revisión';
@@ -476,11 +477,11 @@ export default class OrdenCompraComponent implements OnInit, OnDestroy {
       });
   }
   // TODO: PARECE QUE ESTE METODO NO SE UTILIZA
-  onDeleteProduct(id: number): void {
-    // Mostrar un mensaje de carga
+  onDeleteProduct(data: any): void {
+    console.log('🚀 ~ id:', data.id);
     this.customToastService.onLoading();
     this.dataService
-      .delete(`OrdenCompraDetalle/${id}`)
+      .delete(`OrdenCompraDetalle/${data.id}`)
       .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {

@@ -9,6 +9,7 @@ import {
 } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import {
+  ApiRequestService,
   AuthService,
   CustomToastService,
   DataService,
@@ -34,6 +35,7 @@ export default class AddoreditPeriodoCedulaPresupuestalComponent
   public customToastService = inject(CustomToastService);
   public ref = inject(DynamicDialogRef);
   public selectItemService = inject(SelectItemService);
+  public apiRequestService = inject(ApiRequestService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
@@ -62,7 +64,7 @@ export default class AddoreditPeriodoCedulaPresupuestalComponent
   }
   onSubmit() {
     const cedulaDto: any = this.form.value;
-    if (!this.dataService.validateForm(this.form)) return;
+    if (!this.apiRequestService.validateForm(this.form)) return;
 
     // Deshabilitar el botón al iniciar el envío del formulario
     this.submitting = true;

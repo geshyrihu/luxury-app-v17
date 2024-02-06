@@ -27,7 +27,7 @@ export default class ListBancoComponent implements OnInit {
   // Función para cargar los datos de los bancos
   onLoadData() {
     this.apiRequestService
-      .onLoadData<IBankDto[]>('banks')
+      .onGetList<IBankDto[]>('banks')
       .then((result: IBankDto[]) => {
         this.data = result;
       });
@@ -50,9 +50,7 @@ export default class ListBancoComponent implements OnInit {
         this.dialogHandlerService.dialogSizeMd
       )
       .then((result: boolean) => {
-        if (result) {
-          this.onLoadData();
-        }
+        if (result) this.onLoadData();
       });
   }
 }

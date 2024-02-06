@@ -1,21 +1,13 @@
-import { Component, OnDestroy, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { MessageService } from 'primeng/api';
-import {
-  DialogService,
-  DynamicDialogConfig,
-  DynamicDialogRef,
-} from 'primeng/dynamicdialog';
-import { Subject, takeUntil } from 'rxjs';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { IDestinatariosMailReporte } from 'src/app/core/interfaces/IDestinatariosMailReporte.interface';
 import {
+  ApiRequestService,
   AuthService,
   CustomerIdService,
 } from 'src/app/core/services/common-services';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
-import { DataService } from 'src/app/core/services/data.service';
-import { SelectItemService } from 'src/app/core/services/select-item.service';
 
 @Component({
   selector: 'app-send-estados-financieros',
@@ -23,19 +15,15 @@ import { SelectItemService } from 'src/app/core/services/select-item.service';
   standalone: true,
   imports: [LuxuryAppComponentsModule],
 })
-export default class SendEstadosFinancierosComponent implements OnDestroy {
+export default class SendEstadosFinancierosComponent {
   public customerIdService = inject(CustomerIdService);
-  public customToastService = inject(CustomToastService);
   private formBuilder = inject(FormBuilder);
-  public dataService = inject(DataService);
   public ref = inject(DynamicDialogRef);
   public config = inject(DynamicDialogConfig);
-  public selectItemService = inject(SelectItemService);
-  public dialogService = inject(DialogService);
-  public messageService = inject(MessageService);
   public authService = inject(AuthService);
+  public apiRequestService = inject(ApiRequestService);
 
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+  submitting: boolean = false;
 
   id: number = 0;
 
@@ -62,38 +50,28 @@ export default class SendEstadosFinancierosComponent implements OnDestroy {
 
   ngOnInit(): void {
     this.id = this.config.data.id;
-    console.log('🚀 ~ this.config.data:', this.config.data);
     this.onLoadSelectItem();
   }
 
   onLoadSelectItem() {
-    this.selectItemService
-      .onGetSelectItem(
-        `ResidentesEdificio/${this.customerIdService.getcustomerId()}`
+    this.apiRequestService
+      .onGetList(
+        `EstadoFinanciero/propietarios/${this.customerIdService.getcustomerId()}`
       )
-      .subscribe((resp: any) => {
-        this.destinatarios = resp;
-        console.log('🚀 ~ this.destinatarios:', this.destinatarios);
+      .then((result: any) => {
+        this.destinatarios = result;
       });
   }
 
   onEnviarEmail() {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .post(
+    this.submitting = true;
+    this.apiRequestService
+      .onPostForModal(
         `EstadoFinanciero/Send/${this.id}/${this.authService.infoEmployeeDto.personId}`,
         this.onFilterDestinatarios()
       )
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          this.ref.close(true);
-          this.customToastService.onCloseToSuccess();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+      .then((result: boolean) => {
+        result ? this.ref.close(true) : (this.submitting = false);
       });
   }
   onSelectAll() {
@@ -162,9 +140,5 @@ export default class SendEstadosFinancierosComponent implements OnDestroy {
 
   onDeleteDestinatariosAdicionales(indexArr: any) {
     this.destinatariosAdicionales.splice(indexArr, 1);
-  }
-
-  ngOnDestroy(): void {
-    this.ref.close(true);
   }
 }

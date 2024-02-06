@@ -10,6 +10,7 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { Subject, takeUntil } from 'rxjs';
 import { ResetPasswordDto } from 'src/app/core/interfaces/reset-password.interface';
 import {
+  ApiRequestService,
   CustomToastService,
   DataService,
 } from 'src/app/core/services/common-services';
@@ -27,6 +28,7 @@ export default class RestaurarContraseñaComponent implements OnInit, OnDestroy 
   private router = inject(Router);
   public customToastService = inject(CustomToastService);
   private dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
@@ -66,7 +68,7 @@ export default class RestaurarContraseñaComponent implements OnInit, OnDestroy 
     return this.form.controls;
   }
   onSubmit() {
-    if (!this.dataService.validateForm(this.form)) return;
+    if (!this.apiRequestService.validateForm(this.form)) return;
     this.data = {
       userName: this.form.get('userName').value,
       password: this.form.get('password').value,

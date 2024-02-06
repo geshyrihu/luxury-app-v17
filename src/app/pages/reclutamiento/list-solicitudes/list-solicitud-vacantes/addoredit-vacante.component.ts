@@ -9,6 +9,7 @@ import { EStatus } from 'src/app/core/enums/status.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import {
+  ApiRequestService,
   CustomToastService,
   DataService,
 } from 'src/app/core/services/common-services';
@@ -26,6 +27,7 @@ export default class AddOrEditVacanteComponent implements OnInit, OnDestroy {
   public ref = inject(DynamicDialogRef);
   public config = inject(DynamicDialogConfig);
   public customToastService = inject(CustomToastService);
+  public apiRequestService = inject(ApiRequestService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
   submitting: boolean = false;
@@ -64,7 +66,7 @@ export default class AddOrEditVacanteComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    if (!this.dataService.validateForm(this.form)) return;
+    if (!this.apiRequestService.validateForm(this.form)) return;
 
     this.id = this.config.data.id;
     // Deshabilitar el botón al iniciar el envío del formulario

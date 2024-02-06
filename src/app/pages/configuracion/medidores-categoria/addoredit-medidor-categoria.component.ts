@@ -52,7 +52,7 @@ export default class FormMedidorCategoriaComponent
       });
   }
   onSubmit() {
-    if (!this.dataService.validateForm(this.form)) return;
+    if (!this.apiRequestService.validateForm(this.form)) return;
     this.id = this.config.data.id;
 
     // Deshabilitar el botón al iniciar el envío del formulario

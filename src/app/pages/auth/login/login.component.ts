@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { Subject, takeUntil } from 'rxjs';
 import {
+  ApiRequestService,
   CustomToastService,
   DataService,
   SecurityService,
@@ -20,9 +21,9 @@ export default class LoginComponent implements OnInit, OnDestroy {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private securityService = inject(SecurityService);
-
   private dataService = inject(DataService);
   public customToastService = inject(CustomToastService);
+  public apiRequestService = inject(ApiRequestService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
@@ -42,12 +43,8 @@ export default class LoginComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     // Verifica si el formulario es inválido y marca todos los campos como tocados si es así
-    if (this.form.invalid) {
-      Object.values(this.form.controls).forEach((x) => {
-        x.markAllAsTouched();
-        return;
-      });
-    }
+    if (!this.apiRequestService.validateForm(this.form)) return;
+
     // Muestra un mensaje de carga
     this.customToastService.onLoading();
     // Realiza la solicitud de inicio de sesión

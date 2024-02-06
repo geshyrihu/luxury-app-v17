@@ -10,6 +10,7 @@ import { EStatusOrdenCompra } from 'src/app/core/enums/estatus-orden-compra.enum
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import {
+  ApiRequestService,
   AuthService,
   CustomToastService,
   CustomerIdService,
@@ -43,6 +44,7 @@ export default class SolicitudCompraComponent implements OnInit, OnDestroy {
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
   public customerIdService = inject(CustomerIdService);
+  public apiRequestService = inject(ApiRequestService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
@@ -68,11 +70,6 @@ export default class SolicitudCompraComponent implements OnInit, OnDestroy {
   cotizacionesRelacionadas: any[] = [];
 
   ngOnInit(): void {
-    // this.enumService
-    //   .onGetSelectItemEmun('EStatusOrdenCompra')
-    //   .subscribe((resp) => {
-    //     this.statusCompra = resp;
-    //   });
     this.routeActive.params.subscribe((resp) => {
       this.id = resp['id'];
     });
@@ -153,7 +150,7 @@ export default class SolicitudCompraComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    if (!this.dataService.validateForm(this.form)) return;
+    if (!this.apiRequestService.validateForm(this.form)) return;
     // Deshabilitar el botón al iniciar el envío del formulario
     this.submitting = true;
     // Mostrar un mensaje de carga

@@ -78,7 +78,7 @@ export default class AddOrEditPiscinaComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    if (!this.dataService.validateForm(this.form)) return;
+    if (!this.apiRequestService.validateForm(this.form)) return;
     const formDataDto = this.onCreateFormData(this.form.value);
     // Deshabilitar el botón al iniciar el envío del formulario
     this.submitting = true;

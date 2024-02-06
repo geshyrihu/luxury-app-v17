@@ -81,7 +81,7 @@ export default class AddOrEditComiteVigilanciaComponent
       });
   }
   onSubmit() {
-    if (!this.dataService.validateForm(this.form)) return;
+    if (!this.apiRequestService.validateForm(this.form)) return;
 
     this.id = this.config.data.id;
 

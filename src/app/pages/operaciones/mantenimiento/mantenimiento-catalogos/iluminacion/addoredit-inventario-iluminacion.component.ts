@@ -78,7 +78,7 @@ export default class AddoreditInventarioIluminacionComponent
       });
   }
   onSubmit() {
-    if (!this.dataService.validateForm(this.form)) return;
+    if (!this.apiRequestService.validateForm(this.form)) return;
     let model = this.form.value;
     // Deshabilitar el botón al iniciar el envío del formulario
     this.submitting = true;

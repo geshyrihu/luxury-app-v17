@@ -98,7 +98,7 @@ export default class AddoreditPersonDataComponent implements OnInit, OnDestroy {
     this.form.patchValue({
       id: this.personId,
     });
-    if (!this.dataService.validateForm(this.form)) return;
+    if (!this.apiRequestService.validateForm(this.form)) return;
     this.submitting = true;
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();

@@ -4,6 +4,7 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import {
+  ApiRequestService,
   DataService,
   DateService,
   SelectItemService,
@@ -26,6 +27,8 @@ export default class PersonEditDataPrincipalComponent implements OnInit {
   public dateService = inject(DateService);
   private formBuilder = inject(FormBuilder);
   public selectItemService = inject(SelectItemService);
+  public apiRequestService = inject(ApiRequestService);
+
   public ref = inject(DynamicDialogRef);
 
   submitting: boolean = false;
@@ -52,7 +55,7 @@ export default class PersonEditDataPrincipalComponent implements OnInit {
   });
 
   onSubmit() {
-    if (!this.dataService.validateForm(this.form)) return;
+    if (!this.apiRequestService.validateForm(this.form)) return;
 
     // Deshabilitar el botón al iniciar el envío del formulario
     this.submitting = true;

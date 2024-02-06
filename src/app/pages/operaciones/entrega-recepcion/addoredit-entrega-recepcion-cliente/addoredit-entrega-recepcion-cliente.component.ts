@@ -55,7 +55,7 @@ export default class CrudEntregaRecepcionClienteComponent
 
   onSubmit() {
     this.id = this.config.data.id;
-    if (!this.dataService.validateForm(this.form)) return;
+    if (!this.apiRequestService.validateForm(this.form)) return;
 
     const model = this.onCreateFormData(this.form.value);
     // Deshabilitar el botón al iniciar el envío del formulario

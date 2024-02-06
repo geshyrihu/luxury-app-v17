@@ -10,6 +10,7 @@ import { ETypeMeeting } from 'src/app/core/enums/type-meeting.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import {
+  ApiRequestService,
   AuthService,
   CustomToastService,
   DataService,
@@ -42,6 +43,7 @@ export default class AddOrEditMeetingComponent implements OnInit, OnDestroy {
   private formBuilder = inject(FormBuilder);
   public messageService = inject(MessageService);
   public customToastService = inject(CustomToastService);
+  public apiRequestService = inject(ApiRequestService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
@@ -73,7 +75,7 @@ export default class AddOrEditMeetingComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    if (!this.dataService.validateForm(this.form)) return;
+    if (!this.apiRequestService.validateForm(this.form)) return;
     else {
       const model: IMeetingDto = this.form.value;
 

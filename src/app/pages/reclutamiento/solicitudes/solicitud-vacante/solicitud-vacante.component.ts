@@ -81,7 +81,7 @@ export default class SolicitudVacanteComponent implements OnInit, OnDestroy {
       });
   }
   onSubmit() {
-    if (!this.dataService.validateForm(this.form)) return;
+    if (!this.apiRequestService.validateForm(this.form)) return;
     // Deshabilitar el botón al iniciar el envío del formulario
     this.submitting = true;
     // Mostrar un mensaje de carga

@@ -10,6 +10,7 @@ import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import { CaratulaFondeoService } from 'src/app/core/services/caratula-fondeo.service';
 import {
+  ApiRequestService,
   CustomerIdService,
   DataService,
 } from 'src/app/core/services/common-services';
@@ -32,6 +33,7 @@ export default class CaratulaFondeoComponent implements OnInit {
   public customerIdService = inject(CustomerIdService);
   public router = inject(Router);
   public caratulaFondeoService = inject(CaratulaFondeoService);
+  public apiRequestService = inject(ApiRequestService);
 
   submitting: boolean = false;
 
@@ -54,7 +56,7 @@ export default class CaratulaFondeoComponent implements OnInit {
     this.customerId$ = this.customerIdService.getCustomerId$();
   }
   onSubmit() {
-    if (!this.dataService.validateForm(this.form)) return;
+    if (!this.apiRequestService.validateForm(this.form)) return;
     // Deshabilitar el botón al iniciar el envío del formulario
     this.submitting = true;
 

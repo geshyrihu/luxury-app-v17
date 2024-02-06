@@ -88,7 +88,7 @@ export default class CreateOrdenCompraComponent implements OnInit, OnDestroy {
   }
   onSubmit() {
     this.ref.close();
-    if (!this.dataService.validateForm(this.form)) return;
+    if (!this.apiRequestService.validateForm(this.form)) return;
 
     // Deshabilitar el botón al iniciar el envío del formulario
     this.submitting = true;

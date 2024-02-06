@@ -74,7 +74,7 @@ export default class AddoreditInventarioExtintorComponent
     this.form.patchValue({
       employeeId: this.authService.userTokenDto.infoEmployeeDto.employeeId,
     });
-    if (!this.dataService.validateForm(this.form)) return;
+    if (!this.apiRequestService.validateForm(this.form)) return;
     this.id = this.config.data.id;
     const formData = this.createFormData(this.form.value);
     // Deshabilitar el botón al iniciar el envío del formulario

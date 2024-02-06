@@ -5,6 +5,7 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { ICategoryAddOrEditDto } from 'src/app/core/interfaces/ICategoryAddOrEditDto.interface';
 import {
+  ApiRequestService,
   CustomToastService,
   DataService,
 } from 'src/app/core/services/common-services';
@@ -22,6 +23,7 @@ export default class AddOrEditCategoryComponent implements OnInit, OnDestroy {
   public config = inject(DynamicDialogConfig);
   public ref = inject(DynamicDialogRef);
   public customToastService = inject(CustomToastService);
+  public apiRequestService = inject(ApiRequestService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
@@ -65,7 +67,7 @@ export default class AddOrEditCategoryComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    if (!this.dataService.validateForm(this.form)) return;
+    if (!this.apiRequestService.validateForm(this.form)) return;
 
     // Deshabilitar el botón al iniciar el envío del formulario
     this.submitting = true;

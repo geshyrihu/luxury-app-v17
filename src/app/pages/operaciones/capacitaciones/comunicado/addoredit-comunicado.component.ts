@@ -82,7 +82,7 @@ export default class AddOrEditComunicadoComponent implements OnInit, OnDestroy {
     });
   }
   onSubmit() {
-    if (!this.dataService.validateForm(this.form)) return;
+    if (!this.apiRequestService.validateForm(this.form)) return;
 
     const model = this.onCreateFormData(this.form.value);
     this.id = this.config.data.id;

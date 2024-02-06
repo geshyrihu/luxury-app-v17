@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { SelectItemService } from 'src/app/core/services/select-item.service';
@@ -23,6 +24,8 @@ export default class OrdenCompraEditDetalleComponent
   public config = inject(DynamicDialogConfig);
   public selectItemService = inject(SelectItemService);
   public customToastService = inject(CustomToastService);
+  public apiRequestService = inject(ApiRequestService);
+
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   submitting: boolean = false;
@@ -63,7 +66,7 @@ export default class OrdenCompraEditDetalleComponent
       });
   }
   onSubmit() {
-    if (!this.dataService.validateForm(this.form)) return;
+    if (!this.apiRequestService.validateForm(this.form)) return;
 
     this.id = this.config.data.id;
 

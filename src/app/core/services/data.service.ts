@@ -1,6 +1,5 @@
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable, OnDestroy, inject } from '@angular/core';
-import { FormGroup } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
@@ -101,18 +100,6 @@ export class DataService implements OnDestroy {
 
   // Utilizado para la gestión de recursos al destruir el componente
   private destroy$ = new Subject<void>();
-
-  // validacion de formulario...
-
-  validateForm(form: FormGroup): boolean {
-    if (form.invalid) {
-      Object.values(form.controls).forEach((control) => {
-        control.markAsTouched();
-      });
-      return false;
-    }
-    return true;
-  }
 
   ngOnDestroy(): void {
     // Cuando se destruye el componente, desvincular y liberar recursos

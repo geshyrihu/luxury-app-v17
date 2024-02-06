@@ -150,7 +150,7 @@ export default class AddoreditMaintenancePreventiveComponent
   onLoadForm() {
     this.form = this.formBuilder.group({
       id: { value: this.id, disabled: true },
-      activity: ['', [Validators.required, Validators.maxLength(700)]],
+      activity: ['', Validators.required],
       machineryId: ['', Validators.required],
       fechaServicio: [this.fecha, Validators.required],
       observation: [''],
@@ -208,7 +208,7 @@ export default class AddoreditMaintenancePreventiveComponent
   // convenience getter for easy access to form fields
 
   submit() {
-    if (!this.dataService.validateForm(this.form)) return;
+    if (!this.apiRequestService.validateForm(this.form)) return;
 
     // Deshabilitar el botón al iniciar el envío del formulario
     this.submitting = true;

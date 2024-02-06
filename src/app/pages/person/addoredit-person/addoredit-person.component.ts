@@ -6,6 +6,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { imageToBase64 } from 'src/app/core/helpers/enumeration';
 import { UserInfoDto } from 'src/app/core/interfaces/user-info.interface';
 import {
+  ApiRequestService,
   CustomToastService,
   CustomerIdService,
   DataService,
@@ -30,6 +31,7 @@ export default class AddoreditPersonComponent implements OnInit, OnDestroy {
   private formBuilder = inject(FormBuilder);
   public selectItemService = inject(SelectItemService);
   public ref = inject(DynamicDialogRef);
+  public apiRequestService = inject(ApiRequestService);
 
   submitting: boolean = false;
 
@@ -43,7 +45,6 @@ export default class AddoreditPersonComponent implements OnInit, OnDestroy {
   imgBase64: string = '';
 
   imagen: File;
-  // dataError = '';
   data: UserInfoDto;
   form: FormGroup = this.formBuilder.group({
     firstName: ['', Validators.required],
@@ -61,7 +62,7 @@ export default class AddoreditPersonComponent implements OnInit, OnDestroy {
   });
 
   onSubmit() {
-    if (!this.dataService.validateForm(this.form)) return;
+    if (!this.apiRequestService.validateForm(this.form)) return;
     const formData = this.createFormData(this.form.value);
     // Deshabilitar el botón al iniciar el envío del formulario
     this.submitting = true;

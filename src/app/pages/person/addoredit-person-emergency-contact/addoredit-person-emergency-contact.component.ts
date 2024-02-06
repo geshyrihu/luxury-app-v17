@@ -9,6 +9,7 @@ import { ERelationEmployee } from 'src/app/core/enums/relation-employee.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import {
+  ApiRequestService,
   CustomToastService,
   DataService,
   SelectItemService,
@@ -32,6 +33,7 @@ export default class AddoreditPersonEmergencyContactComponent
   public messageService = inject(MessageService);
   public ref = inject(DynamicDialogRef);
   public selectItemService = inject(SelectItemService);
+  public apiRequestService = inject(ApiRequestService);
 
   id: string = '';
 
@@ -81,7 +83,7 @@ export default class AddoreditPersonEmergencyContactComponent
   }
 
   onSubmit() {
-    if (!this.dataService.validateForm(this.form)) return;
+    if (!this.apiRequestService.validateForm(this.form)) return;
     // Deshabilitar el botón al iniciar el envío del formulario
     this.submitting = true;
     // Mostrar un mensaje de carga

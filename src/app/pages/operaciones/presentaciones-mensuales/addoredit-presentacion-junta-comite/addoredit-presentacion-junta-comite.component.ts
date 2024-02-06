@@ -50,7 +50,7 @@ export default class AddoreditPresentacionJuntaComiteComponent
     this.form.patchValue({ archivo: file });
   }
   onSubmit() {
-    if (!this.dataService.validateForm(this.form)) return;
+    if (!this.apiRequestService.validateForm(this.form)) return;
 
     this.id = this.config.data.id;
     const model = this.onCreateFormData(this.form.value);

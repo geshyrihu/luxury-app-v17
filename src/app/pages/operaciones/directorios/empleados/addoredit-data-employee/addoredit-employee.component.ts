@@ -119,7 +119,7 @@ export default class AddOrEditEmplopyeeComponent implements OnInit, OnDestroy {
     this.form.patchValue({
       id: this.id,
     });
-    if (!this.dataService.validateForm(this.form)) return;
+    if (!this.apiRequestService.validateForm(this.form)) return;
     this.submitting = true;
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();

@@ -4,6 +4,7 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { finalize, Subject, takeUntil } from 'rxjs';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { SelectItemService } from 'src/app/core/services/select-item.service';
@@ -22,6 +23,7 @@ export default class CreateAccountComponent implements OnInit, OnDestroy {
   public config = inject(DynamicDialogConfig);
   public customToastService = inject(CustomToastService);
   public ref = inject(DynamicDialogRef);
+  public apiRequestService = inject(ApiRequestService);
 
   submitting: boolean = false;
 
@@ -57,7 +59,7 @@ export default class CreateAccountComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    if (!this.dataService.validateForm(this.form)) return;
+    if (!this.apiRequestService.validateForm(this.form)) return;
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
     // Deshabilitar el botón al iniciar el envío del formulario

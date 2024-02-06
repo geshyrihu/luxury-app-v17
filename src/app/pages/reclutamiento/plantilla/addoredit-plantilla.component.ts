@@ -103,7 +103,7 @@ export default class AddoreditPlantillaComponent implements OnInit, OnDestroy {
     return this.form.controls;
   }
   onSubmit() {
-    if (!this.dataService.validateForm(this.form)) return;
+    if (!this.apiRequestService.validateForm(this.form)) return;
     this.id = this.config.data.id;
 
     this.form.patchValue({

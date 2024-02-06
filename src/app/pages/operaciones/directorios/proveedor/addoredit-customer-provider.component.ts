@@ -92,7 +92,7 @@ export default class AddOrEditCustomerProviderComponent implements OnInit {
   }
 
   submit() {
-    if (!this.dataService.validateForm(this.form)) return;
+    if (!this.apiRequestService.validateForm(this.form)) return;
 
     // Deshabilitar el botón al iniciar el envío del formulario
     this.submitting = true;

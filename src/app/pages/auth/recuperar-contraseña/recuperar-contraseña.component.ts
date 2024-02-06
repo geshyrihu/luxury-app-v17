@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { Subject, takeUntil } from 'rxjs';
 import {
+  ApiRequestService,
   CustomToastService,
   DataService,
 } from 'src/app/core/services/common-services';
@@ -20,6 +21,7 @@ export default class RecuperarContraseñaComponent implements OnInit, OnDestroy 
   private formBuilder = inject(FormBuilder);
   private router = inject(Router);
   public customToastService = inject(CustomToastService);
+  public apiRequestService = inject(ApiRequestService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
@@ -43,7 +45,7 @@ export default class RecuperarContraseñaComponent implements OnInit, OnDestroy 
   }
 
   onSubmit() {
-    if (!this.dataService.validateForm(this.form)) return;
+    if (!this.apiRequestService.validateForm(this.form)) return;
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
     this.dataService

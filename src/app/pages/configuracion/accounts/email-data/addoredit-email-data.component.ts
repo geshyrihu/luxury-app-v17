@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -18,7 +18,7 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   standalone: true,
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
-export default class AddOrEditEmailDataComponent implements OnInit, OnDestroy {
+export default class AddOrEditEmailDataComponent implements OnInit {
   private formBuilder = inject(FormBuilder);
   private dataService = inject(DataService);
   public config = inject(DynamicDialogConfig);
@@ -46,7 +46,7 @@ export default class AddOrEditEmailDataComponent implements OnInit, OnDestroy {
   });
 
   onSubmit() {
-    if (!this.dataService.validateForm(this.form)) return;
+    if (!this.apiRequestService.validateForm(this.form)) return;
 
     // Deshabilitar el botón al iniciar el envío del formulario
     this.submitting = true;
@@ -116,24 +116,15 @@ export default class AddOrEditEmailDataComponent implements OnInit, OnDestroy {
   }
 
   onLoadData() {
-    this.dataService
-      .get<EmailDataAddOrEditDto>(
+    this.apiRequestService
+      .onGetList<EmailDataAddOrEditDto>(
         `EmailData/GetByAccountId/${this.applicationUserId}`
       )
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          if (resp.body !== null) {
-            this.form.patchValue(resp.body);
-            this.id = resp.body.id;
-          }
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+      .then((result: any) => {
+        if (result !== null) {
+          this.form.patchValue(result);
+          this.id = result.id;
+        }
       });
-  }
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
   }
 }

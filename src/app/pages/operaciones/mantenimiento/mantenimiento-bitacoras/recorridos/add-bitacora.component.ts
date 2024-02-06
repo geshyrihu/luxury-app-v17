@@ -4,6 +4,7 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import {
+  ApiRequestService,
   AuthService,
   CustomToastService,
   DataService,
@@ -23,6 +24,7 @@ export default class AddBitacoraComponent implements OnInit, OnDestroy {
   public config = inject(DynamicDialogConfig);
   public ref = inject(DynamicDialogRef);
   public customToastService = inject(CustomToastService);
+  public apiRequestService = inject(ApiRequestService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
@@ -55,7 +57,7 @@ export default class AddBitacoraComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    if (!this.dataService.validateForm(this.form)) return;
+    if (!this.apiRequestService.validateForm(this.form)) return;
     // Deshabilitar el botón al iniciar el envío del formulario
     this.submitting = true;
     // Mostrar un mensaje de carga

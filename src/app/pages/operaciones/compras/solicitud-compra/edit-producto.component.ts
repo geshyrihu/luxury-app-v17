@@ -5,6 +5,7 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import {
+  ApiRequestService,
   AuthService,
   CustomToastService,
   DataService,
@@ -30,6 +31,7 @@ export default class EditProductoComponent implements OnInit, OnDestroy {
   public selectItemService = inject(SelectItemService);
   public authService = inject(AuthService);
   public customToastService = inject(CustomToastService);
+  public apiRequestService = inject(ApiRequestService);
 
   submitting: boolean = false;
 
@@ -100,7 +102,7 @@ export default class EditProductoComponent implements OnInit, OnDestroy {
     return this.form.controls;
   }
   onSubmit() {
-    if (!this.dataService.validateForm(this.form)) return;
+    if (!this.apiRequestService.validateForm(this.form)) return;
 
     this.data.cantidad = this.form.get('cantidad').value;
     this.data.unidadMedidaId = this.form.get('unidadMedidaId').value;

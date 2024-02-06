@@ -48,9 +48,6 @@ export default class AddOrEditClienteComponent implements OnInit, OnDestroy {
   form: FormGroup = this.formBuilder.group({
     id: { value: this.id, disabled: true },
     active: [''],
-    adreess: ['', [Validators.required, Validators.minLength(10)]],
-    latitud: ['', Validators.required],
-    longitud: ['', Validators.required],
     nameCustomer: ['', [Validators.required, Validators.minLength(5)]],
     nombreCorto: ['', Validators.required],
     numeroCliente: ['', Validators.required],
@@ -90,7 +87,7 @@ export default class AddOrEditClienteComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    if (!this.dataService.validateForm(this.form)) return;
+    if (!this.apiRequestService.validateForm(this.form)) return;
 
     const formData = this.createFormData(this.form.value);
 

@@ -1,4 +1,5 @@
 import { Injectable, OnDestroy, inject } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { Subject, lastValueFrom, takeUntil } from 'rxjs';
 import { CustomToastService } from './custom-toast.service';
 import { DataService } from './data.service';
@@ -16,14 +17,12 @@ export class ApiRequestService implements OnDestroy {
   async onDelete(urlApi: string): Promise<boolean> {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-
     try {
       await lastValueFrom(
         this.dataService.delete(urlApi).pipe(
           takeUntil(this.destroy$) // Cancelar la suscripción cuando el componente se destruye
         )
       );
-
       // Cuando se completa la eliminación con éxito, mostrar un mensaje de éxito y resolver la promesa con true
       this.customToastService.onCloseToSuccess();
       return true;
@@ -35,7 +34,7 @@ export class ApiRequestService implements OnDestroy {
   }
 
   // Función para cargar datos de forma genérica
-  async onLoadData<T>(urlApi: string): Promise<T | null> {
+  async onGetList<T>(urlApi: string): Promise<T | null> {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
 
@@ -43,15 +42,79 @@ export class ApiRequestService implements OnDestroy {
       const responseData = await lastValueFrom(
         this.dataService.get<T>(urlApi).pipe(takeUntil(this.destroy$))
       );
-
       // Cuando se completa la carga con éxito, mostrar un mensaje de éxito y resolver la promesa con los datos
-      this.customToastService.onCloseToSuccess();
+      this.customToastService.onClose();
+      console.log('🚀 ~ responseData.body:', responseData.body);
       return responseData.body;
     } catch (error) {
       // En caso de error, mostrar un mensaje de error y rechazar la promesa con null
       this.customToastService.onCloseToError(error);
       return null;
     }
+  }
+
+  // Obtener un item x Id
+  async onGetItem<T>(urlApi: string): Promise<T | null> {
+    // Mostrar un mensaje de carga
+    try {
+      const responseData = await lastValueFrom(
+        this.dataService.get<T>(urlApi).pipe(takeUntil(this.destroy$))
+      );
+      // Cuando se completa la carga con éxito, mostrar un mensaje de éxito y resolver la promesa con los datos
+      return responseData.body;
+    } catch (error) {
+      // En caso de error, mostrar un mensaje de error y rechazar la promesa con null
+      this.customToastService.onCloseToError(error);
+      return null;
+    }
+  }
+
+  // Metodo Post
+  async onPostForModal<T>(urlApi: string, data: any): Promise<boolean> {
+    // Mostrar un mensaje de carga
+    this.customToastService.onLoading();
+    try {
+      const responseData = await lastValueFrom(
+        this.dataService.post<T>(urlApi, data).pipe(takeUntil(this.destroy$))
+      );
+      // Cuando se completa la carga con éxito, mostrar un mensaje de éxito y resolver la promesa con los datos
+      this.customToastService.onCloseToSuccess();
+      console.log('🚀 ~ responseData.body post:', responseData.body);
+      return true;
+    } catch (error) {
+      // En caso de error, mostrar un mensaje de error y rechazar la promesa con null
+      this.customToastService.onCloseToError(error);
+      return false;
+    }
+  }
+
+  // Metodo Put
+  async onPutForModal<T>(urlApi: string, data: any): Promise<boolean> {
+    // Mostrar un mensaje de carga
+    this.customToastService.onLoading();
+    try {
+      const responseData = await lastValueFrom(
+        this.dataService.put<T>(urlApi, data).pipe(takeUntil(this.destroy$))
+      );
+      // Cuando se completa la carga con éxito, mostrar un mensaje de éxito y resolver la promesa con los datos
+      this.customToastService.onCloseToSuccess();
+      console.log('🚀 ~ responseData.body put:', responseData.body);
+      return true;
+    } catch (error) {
+      // En caso de error, mostrar un mensaje de error y rechazar la promesa con null
+      this.customToastService.onCloseToError(error);
+      return false;
+    }
+  }
+  // validacion de formulario...
+  validateForm(form: FormGroup): boolean {
+    if (form.invalid) {
+      Object.values(form.controls).forEach((control) => {
+        control.markAsTouched();
+      });
+      return false;
+    }
+    return true;
   }
 
   // Cuando se destruye el componente, desvincular y liberar recursos

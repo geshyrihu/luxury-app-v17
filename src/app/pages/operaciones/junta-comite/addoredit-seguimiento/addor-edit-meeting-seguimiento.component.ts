@@ -71,7 +71,7 @@ export default class AddorEditMeetingSeguimientoComponent
       });
   }
   onSubmit() {
-    if (!this.dataService.validateForm(this.form)) return;
+    if (!this.apiRequestService.validateForm(this.form)) return;
     this.id = this.config.data.idMeetingSeguimiento;
 
     // Deshabilitar el botón al iniciar el envío del formulario

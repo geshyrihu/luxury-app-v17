@@ -85,7 +85,7 @@ export default class AddOrEditRadioComunicacionComponent implements OnInit {
   }
 
   onSubmit() {
-    if (!this.dataService.validateForm(this.form)) return;
+    if (!this.apiRequestService.validateForm(this.form)) return;
     const formData = this.createFormData(this.form.value);
     // Deshabilitar el botón al iniciar el envío del formulario
     this.submitting = true;
