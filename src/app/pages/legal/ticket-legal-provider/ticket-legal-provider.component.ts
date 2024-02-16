@@ -47,11 +47,12 @@ export default class TicketLegalProviderComponent implements OnInit {
       [Validators.required],
     ],
     customerId: [this.customerIdService.customerId],
-    personId: [this.auhtService.infoEmployeeDto.personId],
     providerId: ['', [Validators.required]],
     providerName: ['', [Validators.required]],
     typeProvider: [ETypeProvider.PersonaMoral, [Validators.required]],
-    duration: [],
+    duration: [null],
+    description: [, Validators.required],
+    price: [, Validators.required],
     Documents: this.formBuilder.array([]),
   });
 
@@ -83,7 +84,19 @@ export default class TicketLegalProviderComponent implements OnInit {
     formData.append('customerId', this.form.get('customerId')?.value);
     formData.append('providerId', this.form.get('providerId')?.value);
     formData.append('typeProvider', this.form.get('typeProvider')?.value);
-    formData.append('duration', this.form.get('duration')?.value);
+    formData.append('description', this.form.get('description')?.value);
+    formData.append('price', this.form.get('price')?.value);
+
+    // Obtener el valor de duration del formulario
+    let durationValue = this.form.get('duration')?.value;
+
+    // Verificar si durationValue es null o undefined
+    if (durationValue === null || durationValue === undefined) {
+      // Asignar un valor por defecto si durationValue es null o undefined
+      durationValue = ''; // Aquí puedes asignar un valor por defecto que acepte el servidor
+    } else {
+      formData.append('duration', this.form.get('duration')?.value);
+    }
 
     // Obtén la lista de documentos
     const documents = this.form.get('Documents') as FormArray;
@@ -101,6 +114,11 @@ export default class TicketLegalProviderComponent implements OnInit {
       );
     }
 
+    // Mostrar el contenido de FormData en la consola
+    console.log('FormData:');
+    formData.forEach((value, key) => {
+      console.log(key, value);
+    });
     // Ahora, puedes enviar formData al servidor
     this.apiRequestService
       .onPostForModal('TicketLegal/ProviderContract', formData)

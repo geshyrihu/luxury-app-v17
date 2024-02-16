@@ -34,12 +34,11 @@
         <th scope="col" style="width: 20%" class="text-uppercase">Portada</th>
         <th scope="col" style="width: 20%" class="text-uppercase">Contable</th>
         <th scope="col" style="width: 20%" class="text-uppercase">
-          Estados Financieros
-        </th>
-        <th scope="col" style="width: 20%" class="text-uppercase">
           Operaciones
         </th>
-        <th scope="col" style="width: 20%" class="text-uppercase">Final</th>
+        <th scope="col" style="width: 20%" class="text-uppercase">
+          Presentación Final
+        </th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-item>
@@ -50,35 +49,9 @@
               PERIODO: {{ item.fechaCorrespondiente | uppercase }}, FECHA DE
               JUNTA: {{ item.fechaJunta | uppercase }}
             </div>
-            <div class="col-7">
+            <!-- <div class="col-7">
               <div class="row">
-                <div class="col-4">
-                  <p class="me-1 mb-sm-1 float-end">
-                    E. F. enviados a Tesorero:
-                    {{ !item.enviadoTesorero ? "No" : "Sí" }}
-                    <i
-                      class="bx"
-                      [ngClass]="{
-                        'bx-check text-success ': item.enviadoTesorero,
-                        'bx-x text-danger': !item.enviadoTesorero
-                      }"
-                    ></i>
-                  </p>
-                </div>
-                <div class="col-4">
-                  <p class="me-1 mb-sm-1 float-end">
-                    E. F. enviados a condominos:
-                    {{ !item.enviadoCondominos ? "No" : "Sí" }}
-                    <i
-                      class="bx"
-                      [ngClass]="{
-                        'bx-check text-success ': item.enviadoCondominos,
-                        'bx-x text-danger': !item.enviadoCondominos
-                      }"
-                    ></i>
-                  </p>
-                </div>
-                <div class="col-4">
+                <div class="col-6">
                   <p class="me-1 mb-sm-1 float-end">
                     Presentación enviada a comité:
                     {{ !item.enviadoComite ? "No" : "Sí" }}
@@ -92,7 +65,7 @@
                   </p>
                 </div>
               </div>
-            </div>
+            </div> -->
             <div class="col-1">
               @if ( authService.onValidateRoles(['Residente']) &&
               !item.archivoFinal ) {
@@ -250,108 +223,7 @@
           }
           <!-- CONTABLE -->
         </td>
-        <!-- ESTADOS FINANCIEROS -->
-        <td>
-          @if ( !item.archivoFinancieros &&
-          authService.onValidateRoles(['Contador']) ) {
-          <div class="row">
-            <div class="col text-center">
-              <p
-                class="badge bg-info pointer p-2"
-                (click)="
-                  showModalAddOrEdit({
-                    id: item.id,
-                    titulo: 'Financieros'
-                  })
-                "
-              >
-                <i class="fa-regular fa-upload"></i> Cargar archivo
-              </p>
-            </div>
-          </div>
-          } @if (item.archivoFinancieros) {
-          <div class="row">
-            <div class="col-12">
-              <p class="m-0">{{ item.employeeFinancieros }}</p>
-            </div>
-            <div class="col-12">
-              <p class="m-0">
-                {{ item.fechaCargaFinancieros }}
-              </p>
-            </div>
-            <div class="col-12 mt-1 d-flex align-content-start">
-              @if (item.archivoFinancieros) {
-              <custom-button-download-pdf
-                [urlFile]="url + item.id + '/' + item.archivoFinancieros"
-              ></custom-button-download-pdf>
-              } @if ( authService.onValidateRoles(['Contador']) &&
-              !item.employeeAuthFinancieros ) {
-              <custom-button-edit
-                (edit)="
-                  showModalAddOrEdit({
-                    id: item.id,
-                    titulo: 'Financieros'
-                  })
-                "
-              ></custom-button-edit>
-              } @if ( authService.onValidateRoles(['Contador']) &&
-              !item.employeeAuthFinancieros ) {
-              <custom-button-delete
-                (OnConfirm)="onDelete(item, 'Financieros')"
-              ></custom-button-delete>
-              }
-              <!-- Envío de estados financieros -->
-              @if ( authService.onValidateRoles(['Residente']) &&
-              item.employeeAuthFinancieros ) {
-              <div class="d-flex justify-content-center">
-                <custom-button-confirmation
-                  text="Se enviara correo electronico al tesorero"
-                  tooltipText="Enviar E.F. a comité"
-                  classButton=" btn-outline-danger btn-sm me-1  "
-                  (OnConfirm)="enviarMailTesorero(item.id)"
-                ></custom-button-confirmation>
-                <custom-button-confirmation
-                  text="Se enviaran estados financieros a condominos"
-                  tooltipText="Enviar estados financieros a condominos"
-                  (OnConfirm)="enviarEstadosFinancierosCondominos(item.id)"
-                  classButton="btn-outline-warning btn-sm me-1  "
-                  icon="fa-regular fa-paper-plane"
-                ></custom-button-confirmation>
-              </div>
-              }
-              <!-- Envío de estados financieros -->
-            </div>
-            <div class="col-12">
-              <p class="m-0">{{ item.employeeAuthFinancieros }}</p>
-            </div>
-            <div class="col-12">
-              <p class="m-0">
-                {{ item.fechaAuthFinancieros }}
-              </p>
-            </div>
-          </div>
-          } @if ( authService.onValidateRoles(['Contador']) &&
-          item.archivoFinancieros != null ) {
-          <button
-            (click)="
-              onValidateEstadosFinancieros(
-                item.id,
-                item.employeeAuthFinancierosId
-              )
-            "
-            class="btn btn-sm mt-1"
-            [ngClass]="{
-              'btn-success': item.employeeAuthFinancierosId == null,
-              'btn-danger': item.employeeAuthFinancierosId != null
-            }"
-          >
-            {{
-              item.employeeAuthFinancierosId == null ? "Autorizar" : "Revocar"
-            }}
-          </button>
-          }
-        </td>
-        <!-- ESTADOS FINANCIEROS -->
+
         <td>
           <!-- OPERACIONES -->
           @if ( !item.archivoJunta && authService.onValidateRoles(['Residente'])
@@ -460,6 +332,17 @@
               ></custom-button-confirmation>
               }
             </div>
+            <p class="me-1 mb-sm-1 float-end">
+              Presentación enviada a comité:
+              {{ !item.enviadoComite ? "No" : "Sí" }}
+              <i
+                class="bx"
+                [ngClass]="{
+                  'bx-check text-success ': item.enviadoComite,
+                  'bx-x text-danger': !item.enviadoComite
+                }"
+              ></i>
+            </p>
           </div>
           }
           <!-- FINAL -->

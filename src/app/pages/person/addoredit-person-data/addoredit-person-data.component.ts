@@ -108,7 +108,7 @@ export default class AddoreditPersonDataComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (_) => {
           this.submitting = false;
-          this.ref.close();
+          this.ref.close(true);
           this.customToastService.onClose();
         },
         error: (error) => {

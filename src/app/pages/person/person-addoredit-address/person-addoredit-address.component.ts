@@ -58,7 +58,6 @@ export default class PersonAddoreditAddressComponent implements OnInit {
       .subscribe({
         next: (resp: any) => {
           this.form.patchValue(resp.body);
-
           this.addressId = resp.body.id;
         },
         error: (error) => {

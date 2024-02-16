@@ -1,8 +1,7 @@
 import { CommonModule, Location } from '@angular/common';
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { NgxSpinnerModule } from 'ngx-spinner';
 import MenuSelectCustomerComponent from '../menu-select-customer/menu-select-customer.component';
 import SidebarComponent from '../sidebar/sidebar.component';
 import { TopbarComponent } from '../topbar/topbar.component';
@@ -14,7 +13,6 @@ import { TopbarComponent } from '../topbar/topbar.component';
     LuxuryAppComponentsModule,
     CommonModule,
     MenuSelectCustomerComponent,
-    NgxSpinnerModule,
     RouterModule,
     SidebarComponent,
     TopbarComponent,
@@ -23,7 +21,7 @@ import { TopbarComponent } from '../topbar/topbar.component';
 /**
  * Vertical Component
  */
-export default class VerticalComponent implements OnInit, OnDestroy {
+export default class VerticalComponent implements OnInit {
   private location = inject(Location);
 
   onBack() {
@@ -49,10 +47,6 @@ export default class VerticalComponent implements OnInit, OnDestroy {
       this.checkScreenSize();
     });
     document.body.setAttribute('data-layout', 'vertical'); // Establecer un atributo en el body del documento
-  }
-  ngOnDestroy(): void {
-    // Detener el temporizador de inactividad al destruir el componente
-    // this.bnIdle.stopTimer();
   }
 
   /**

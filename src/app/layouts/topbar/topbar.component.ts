@@ -12,6 +12,7 @@ import {
   CustomToastService,
   DataService,
 } from 'src/app/core/services/common-services';
+import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import { ProfielServiceService } from 'src/app/core/services/profiel-service.service';
 import AddoreditPersonDataComponent from 'src/app/pages/person/addoredit-person-data/addoredit-person-data.component';
 import PersonAddoreditAddressComponent from 'src/app/pages/person/person-addoredit-address/person-addoredit-address.component';
@@ -41,6 +42,7 @@ export class TopbarComponent implements OnInit {
   public customToastService = inject(CustomToastService);
   public dialogService = inject(DialogService);
   public profielServiceService = inject(ProfielServiceService);
+  public dialogHandlerService = inject(DialogHandlerService);
 
   personId: number = this.authService.userTokenDto.infoEmployeeDto.personId;
 
@@ -56,10 +58,7 @@ export class TopbarComponent implements OnInit {
       position: 'top',
       showHeader: false,
       width: '40%',
-      modal: true,
-      dismissableMask: true,
       baseZIndex: 10000,
-      maximizable: true,
     });
   }
 
@@ -101,41 +100,34 @@ export class TopbarComponent implements OnInit {
 
   // Datos Personales
   onShowModalDatosPersonales() {
-    this.ref = this.dialogService.open(AddoreditPersonDataComponent, {
-      data: {
-        personId: this.personId,
-      },
-      header: 'Datos Principales',
-      styleClass: 'modal-w-100',
-      baseZIndex: 10000,
-      closeOnEscape: true,
-    });
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        this.customToastService.onShowSuccess();
-      }
-    });
+    this.dialogHandlerService
+      .openDialog(
+        AddoreditPersonDataComponent,
+        {
+          personId: this.personId,
+        },
+        'Datos Principales',
+        this.dialogHandlerService.dialogSizeMd
+      )
+      .then((result: boolean) => {
+        if (result) this.customToastService.onShowSuccess();
+      });
   }
 
   // Modal datos direccion
   onModalDataAddress() {
-    this.ref = this.dialogService.open(PersonAddoreditAddressComponent, {
-      data: {
-        personId: this.personId,
-      },
-      header: 'Dirección',
-      styleClass: 'modal-lg',
-      baseZIndex: 10000,
-      closeOnEscape: true,
-    });
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        this.customToastService.onShowSuccess();
-        if (resp) {
-          this.customToastService.onShowSuccess();
-        }
-      }
-    });
+    this.dialogHandlerService
+      .openDialog(
+        PersonAddoreditAddressComponent,
+        {
+          personId: this.personId,
+        },
+        'Datos Principales',
+        this.dialogHandlerService.dialogSizeMd
+      )
+      .then((result: boolean) => {
+        if (result) this.customToastService.onShowSuccess();
+      });
   }
 
   onBack() {
@@ -145,6 +137,4 @@ export class TopbarComponent implements OnInit {
   onNext() {
     this.location.forward();
   }
-
-  ngOnDestroy() {}
 }

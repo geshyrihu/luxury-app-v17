@@ -186,14 +186,14 @@
           1. Descripción de la actividad a realizar para establecer el objeto
           del Contrato. (En qué consiste).
         </p>
-        <input type="text" class="form-control" />
+        <input type="text" formControlName="description" class="form-control" />
       </div>
       <div class="form-group mb-2">
         <p class="card-text">
           2. Monto de la Contraprestación económica, (precio) señalando el monto
           total a pagar mensual con IVA incluido.
         </p>
-        <input type="text" class="form-control" />
+        <input type="number" formControlName="price" class="form-control" />
       </div>
       <div class="form-group mb-2">
         <p class="card-text">
@@ -251,32 +251,82 @@
         />
       </div>
 
-      <!-- [disabled]="this.form.invalid || submitting" -->
-      <custom-button-submit />
+      <ngb-alert class="mb-2" [dismissible]="false" type="success">
+        Tratándose de Servicios de Seguridad Privada, las empresas que brindan
+        este tipo de servicio deberán presentar los requisitos anteriores y
+        adicionalmente:
+      </ngb-alert>
+      <div class="form-group mb-2">
+        <p class="card-text">
+          a) Registro Vigente ante la Secretaría de Seguridad Pública.
+        </p>
+        <input
+          type="file"
+          class="form-control"
+          (change)="change($event, 'Seguridad a')"
+        />
+      </div>
+      <div class="form-group mb-2">
+        <p class="card-text">
+          b) Registro Vigente ante la Secretaría de Seguridad Privada.
+        </p>
+        <input
+          type="file"
+          class="form-control"
+          (change)="change($event, 'Seguridad b')"
+        />
+      </div>
+      <div class="form-group mb-2">
+        <p class="card-text">c) Consignas Generales de Seguridad.</p>
+        <input
+          type="file"
+          class="form-control"
+          (change)="change($event, 'Seguridad c')"
+        />
+      </div>
+      <div class="form-group mb-2">
+        <p class="card-text">
+          d) Constancias de No Antecedentes Penales de sus elementos.
+        </p>
+        <input
+          type="file"
+          class="form-control"
+          (change)="change($event, 'Seguridad d')"
+        />
+      </div>
+      <div class="form-group mb-2">
+        <p class="card-text">
+          e) Establecer en Contrato, procedimiento y tiempos para sustitución de
+          sus elementos.
+        </p>
+        <input
+          type="file"
+          class="form-control"
+          (change)="change($event, 'Seguridad e')"
+        />
+      </div>
+      <div class="form-group mb-2">
+        <p class="card-text">
+          f) Mención expresa que señale la prohibición de no doblar turnos.
+        </p>
+        <input
+          type="file"
+          class="form-control"
+          (change)="change($event, 'Seguridad f')"
+        />
+      </div>
+      <div class="form-group mb-2">
+        <p class="card-text">
+          g) Controles de Confianza: Estudio toxicológico, Certificado médico
+          (semestral por lo menos)
+        </p>
+        <input
+          type="file"
+          class="form-control"
+          (change)="change($event, 'Seguridad g')"
+        />
+      </div>
+      <custom-button-submit [disabled]="this.form.invalid" />
     </form>
-    <!--
-  <custom-input-text
-    [control]="form.get('id')"
-    formControlName="id"
-    label="Id"
-  ></custom-input-text>
-  <custom-input-text
-    [control]="form.get('code')"
-    formControlName="code"
-    label="Código"
-    placeholder="código"
-  ></custom-input-text>
-  <custom-input-text
-    [control]="form.get('shortName')"
-    formControlName="shortName"
-    label="Nombre"
-    placeholder="Nombre"
-  ></custom-input-text>
-  <custom-input-text
-    [control]="form.get('largeName')"
-    formControlName="largeName"
-    label="Razón social"
-    placeholder="razón social"
-  ></custom-input-text> -->
   </div>
 </div>

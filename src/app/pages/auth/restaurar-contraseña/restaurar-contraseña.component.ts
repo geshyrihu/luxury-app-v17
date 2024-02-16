@@ -24,11 +24,11 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 })
 export default class RestaurarContraseñaComponent implements OnInit, OnDestroy {
   private activatedRoute = inject(ActivatedRoute);
+  private dataService = inject(DataService);
   private formBuilder = inject(FormBuilder);
   private router = inject(Router);
-  public customToastService = inject(CustomToastService);
-  private dataService = inject(DataService);
   public apiRequestService = inject(ApiRequestService);
+  public customToastService = inject(CustomToastService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
