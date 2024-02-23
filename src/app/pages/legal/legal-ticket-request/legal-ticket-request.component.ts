@@ -2,12 +2,7 @@ import { Component, inject } from '@angular/core';
 import { DialogService } from 'primeng/dynamicdialog';
 import { CustomToastService } from 'src/app/core/services/common-services';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
-import TicketLegalAssembliesComponent from '../TicketLegalAssemblies/TicketLegalAssemblies.component';
-import TicketLegalCommitteeMeetingsLegalTopicsComponent from '../TicketLegalCommitteeMeetingsLegalTopics/TicketLegalCommitteeMeetingsLegalTopics.component';
-import TicketLegalLatePayerAgreementsComponent from '../TicketLegalLatePayerAgreements/TicketLegalLatePayerAgreements.component';
-import TicketLegalProviderContractsRenewalsComponent from '../TicketLegalProviderContractsRenewals/TicketLegalProviderContractsRenewals.component';
-import TicketLegalOtherComponent from '../ticket-legal-other/ticket-legal-other.component';
-import TicketLegalProviderComponent from '../ticket-legal-provider/ticket-legal-provider.component';
+import LegalTicketAddOrEditComponent from '../../proyect-ticket/legal-ticket-add-or-edit/legal-ticket-add-or-edit.component';
 
 @Component({
   selector: 'app-legal-ticket-request',
@@ -21,51 +16,11 @@ export class LegalTicketRequestComponent {
   public dialogService = inject(DialogService);
   public dialogHandlerService = inject(DialogHandlerService);
 
-  onModalTicketLegalProvider() {
+  onModalTicketLegal() {
     this.dialogHandlerService.openDialog(
-      TicketLegalProviderComponent,
+      LegalTicketAddOrEditComponent,
       null,
-      'ALTA DE PROVEEDOR',
-      this.dialogHandlerService.dialogSizeLg // Tamaño del cuadro de diálogo
-    );
-  }
-  onModalTicketLegalProviderContractsRenewals() {
-    this.dialogHandlerService.openDialog(
-      TicketLegalProviderContractsRenewalsComponent,
-      null,
-      'RENOVACIÓN DE CONTRATO PROVEEDORES',
-      this.dialogHandlerService.dialogSizeLg // Tamaño del cuadro de diálogo
-    );
-  }
-  onModalTicketLegalAssembliesComponent() {
-    this.dialogHandlerService.openDialog(
-      TicketLegalAssembliesComponent,
-      null,
-      'ASAMBLEAS',
-      this.dialogHandlerService.dialogSizeLg // Tamaño del cuadro de diálogo
-    );
-  }
-  onModalTicketTicketLegalCommitteeMeetingsLegalTopicsComponent() {
-    this.dialogHandlerService.openDialog(
-      TicketLegalCommitteeMeetingsLegalTopicsComponent,
-      null,
-      'JUNTAS DE COMITE',
-      this.dialogHandlerService.dialogSizeLg // Tamaño del cuadro de diálogo
-    );
-  }
-  onModalTicketLegalLatePayerAgreementsComponent() {
-    this.dialogHandlerService.openDialog(
-      TicketLegalLatePayerAgreementsComponent,
-      null,
-      'CONVENIO MOROSOS',
-      this.dialogHandlerService.dialogSizeLg // Tamaño del cuadro de diálogo
-    );
-  }
-  onModalTicketLegalOther() {
-    this.dialogHandlerService.openDialog(
-      TicketLegalOtherComponent,
-      null,
-      'OTROS',
+      'TICKET LEGAL',
       this.dialogHandlerService.dialogSizeLg // Tamaño del cuadro de diálogo
     );
   }

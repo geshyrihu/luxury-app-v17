@@ -337,7 +337,11 @@ export class SidebarService {
     },
 
     {
-      visible: this.authService.onValidateRoles(['SuperUsuario']),
+      visible: this.authService.onValidateRoles([
+        'SuperUsuario',
+        'Residente',
+        'Legal',
+      ]),
       label: 'Tickets',
       icon: 'fa-thin fa-ticket',
       routerLink: '/tickets/panel',

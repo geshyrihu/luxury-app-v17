@@ -1,0 +1,142 @@
+<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+<div class="card">
+  <p-table
+    #dt
+    [value]="data"
+    [globalFilterFields]="['']"
+    [paginator]="true"
+    [rowHover]="true"
+    [rows]="50"
+    [rowsPerPageOptions]="[50, 75, 100, 200]"
+    [showCurrentPageReport]="true"
+    currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+    styleClass="custom-table"
+  >
+    <ng-template pTemplate="caption">
+      <app-table-header
+        title="TICKETS LEGAL"
+        (add)="onModalAddOrEdit({ id: '', title: 'AGREGAR TICKET LEGAL' })"
+        [dt]="dt"
+      ></app-table-header>
+      <div class="row">
+        <div class="col">
+          <!-- TODO: COLOCAR FILTROS POR MES, Y POR CLIENTE -->
+        </div>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th scope="col" class="th-cliente">FOLIO</th>
+        <th scope="col" class="th-cliente">FECHA SOLICITUD</th>
+        <th scope="col" class="th-cliente">CLIENTE</th>
+        <th scope="col" class="th-cliente">SOLICITA</th>
+        <th scope="col" class="th-cliente">ASUNTO</th>
+        <th scope="col" class="th-cliente">DESCRIPCIÓN</th>
+        <th scope="col">CARGA DE DOCTOS EN LUX CLOUD</th>
+        <th scope="col">ESTATUS</th>
+        <th scope="col">FECHA</th>
+        <th scope="col">DÍAS</th>
+        <th scope="col">RESPONSABLE</th>
+        <th scope="col">SEGUIMIENTO</th>
+        <th scope="col" style="width: 15px" class="hide-print-mode"></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item>
+      <tr>
+        <td class="p-column-title">{{ item.folio }}</td>
+        <td class="p-column-title">{{ item.requestDate }}</td>
+        <td class="p-column-title">{{ item.customer }}</td>
+        <td class="p-column-title">{{ item.requestPerson }}</td>
+        <td class="p-column-title">{{ item.title }}</td>
+        <td class="p-column-title">
+          <div style="white-space: pre-line">
+            {{ item.request }}
+          </div>
+        </td>
+        <td class="p-column-title">
+          <div class="text-center">
+            @if(item.documentCloud== "Sí"){
+            <i class="text-success fa-duotone fa-check-double fa-xl"></i>
+            } @else{
+            <i class="text-danger fa-duotone fa-x fa-xl"></i>
+            }
+          </div>
+        </td>
+        <td class="p-column-title">
+          <p
+            class="badge border-0 p-2"
+            [ngClass]="{
+              'bg-danger': item.status === 0,
+              'bg-success': item.status === 1,
+              'bg-warning': item.status === 3,
+              'bg-secondary': item.status === 4,
+            }"
+          >
+            @if (item.status === 0) {
+            <span> PENDIENTE </span>
+            } @if (item.status === 1) {
+            <span> TERMINADO </span>
+            } @if (item.status === 3) {
+            <span> PROCESO </span>
+            } @if (item.status === 4) {
+            <span> CANCELADO </span>
+            }
+          </p>
+        </td>
+        <td class="p-column-title">{{ item.completionDate }}</td>
+        <td class="p-column-title">{{ item.diferenciaDias }}</td>
+        <td class="p-column-title">{{ item.personResponsible }}</td>
+        <td class="p-column-title">
+          <div class="d-flex justify-content-center">
+            <button
+              type="button"
+              class="btn btn-sm btn-outline-warning position-relative me-1 pointer"
+              ngbTooltip="Seguimiento"
+              placement="top"
+              (click)="
+                onModalComentarios({ ticketId: item.id, title: 'Seguimiento' })
+              "
+            >
+              <i class="fa-regular fa-list text-warning"></i>
+              <span
+                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success"
+                >{{ item.tracking }}
+                <span class="visually-hidden">unread messages</span></span
+              >
+            </button>
+          </div>
+        </td>
+
+        <td class="p-column-title" class="hide-print-mode">
+          <div class="d-flex justify-content-center">
+            <custom-button-edit
+              (edit)="
+                onModalAddOrEdit({ id: item.id, title: 'EDITAR TICKET LEGAL' })
+              "
+            ></custom-button-edit>
+            @if (item.status !== 4) {
+            <custom-button-delete
+              (OnConfirm)="onDelete(item.id)"
+            ></custom-button-delete>
+            }
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="paginatorleft">
+      <div class="p-d-flex p-ai-center p-jc-between hide-print-mode">
+        En total hay
+        {{ data ? data.length : 0 }} registros.
+      </div>
+    </ng-template>
+  </p-table>
+</div>
+
+<style>
+  /* Estilo para los encabezados de la tabla */
+  .th-cliente {
+    background-color: #548235 !important; /* Color de fondo blanco */
+    color: white !important ; /* Color de texto negro */
+  }
+</style>

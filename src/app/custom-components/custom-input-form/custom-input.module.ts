@@ -3,6 +3,7 @@ import CustomInputCheckComponent from './custom-input-check/custom-input-check.c
 import CustomInputDatalistComponent from './custom-input-datalist/custom-input-datalist.component';
 import CustomInputDateTimeComponent from './custom-input-date-time/custom-input-date-time.component';
 import CustomInputDateComponent from './custom-input-date/custom-input-date.component';
+import CustomInputHourComponent from './custom-input-hour/custom-input-hour.component';
 import CustomInputImgComponent from './custom-input-img/custom-input-img.component';
 import CustomInputMaskComponent from './custom-input-mask/custom-input-mask.component';
 import CustomInputMonthComponent from './custom-input-month/custom-input-month.component';
@@ -30,6 +31,7 @@ import CustomInputTimeComponent from './custom-input-time/custom-input-time.comp
     CustomInputMonthComponent,
     CustomInputDateTimeComponent,
     CustomInputSelectPrefixComponent,
+    CustomInputHourComponent,
   ],
   exports: [
     CustomInputCheckComponent,
@@ -46,6 +48,7 @@ import CustomInputTimeComponent from './custom-input-time/custom-input-time.comp
     CustomInputMonthComponent,
     CustomInputDateTimeComponent,
     CustomInputSelectPrefixComponent,
+    CustomInputHourComponent,
   ],
 })
 export default class CustomInputModule {}

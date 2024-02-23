@@ -19,7 +19,6 @@ import { provideRouter } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { FlatpickrModule } from 'angularx-flatpickr';
 import { NgxMaskModule } from 'ngx-mask';
-import { NgxSpinnerModule } from 'ngx-spinner';
 import { routes } from './app.routes';
 import { AutosizeDirective } from './core/directives/autosize-text-area.diective';
 import { JwtInterceptor } from './core/services/jwt-interceptor.service';
@@ -48,10 +47,7 @@ export const appConfig: ApplicationConfig = {
       HttpClientModule,
 
       // Módulo para aplicar máscaras a los campos de entrada
-      NgxMaskModule.forRoot(),
-
-      // Módulo para mostrar un indicador de carga o spinner durante las peticiones HTTP
-      NgxSpinnerModule
+      NgxMaskModule.forRoot()
     ),
 
     {

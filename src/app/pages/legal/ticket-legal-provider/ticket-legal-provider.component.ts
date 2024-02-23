@@ -13,7 +13,7 @@ import { Spanish } from 'flatpickr/dist/l10n/es';
 import { Subject, takeUntil } from 'rxjs';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import { SelectItemService } from 'src/app/core/services/select-item.service';
-import { SignalrcustomService } from 'src/app/core/services/signalrcustom.service';
+import { SignalrCustomService } from 'src/app/core/services/signalrcustom.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 export function flatpickrFactory() {
   flatpickr.localize(Spanish);
@@ -30,7 +30,7 @@ export default class TicketLegalProviderComponent implements OnInit {
   private customerIdService = inject(CustomerIdService);
   private formBuilder = inject(FormBuilder);
   private selectItemService = inject(SelectItemService);
-  private signalrcustomService = inject(SignalrcustomService);
+  private signalrcustomService = inject(SignalrCustomService);
   public apiRequestService = inject(ApiRequestService);
   public ref = inject(DynamicDialogRef);
 

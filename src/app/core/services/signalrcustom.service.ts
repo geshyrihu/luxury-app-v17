@@ -8,7 +8,7 @@ const url = environment.base_signalr;
 @Injectable({
   providedIn: 'root',
 })
-export class SignalrcustomService {
+export class SignalrCustomService {
   public hubConnection: HubConnection;
 
   constructor() {

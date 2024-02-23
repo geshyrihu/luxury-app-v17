@@ -1,0 +1,62 @@
+@if(hidden){
+<div class="mb-2" [ngClass]="{ 'form-group row ': horizontal }">
+  @if (horizontal) {
+  <label class="col-sm-3">{{ label }}</label>
+  <div class="col-sm-9">
+    <input
+      (ngModelChange)="onChange($event)"
+      [altInput]="true"
+      [convertModelValue]="true"
+      [disabled]="disabled"
+      [ngModel]="value"
+      [value]="value"
+      class="form-control flatpickr-input"
+      mwlFlatpickr
+      type="text"
+      [noCalendar]="true"
+      [enableTime]="true"
+      [dateFormat]="'H:i'"
+      [ngClass]="{
+        'is-invalid': control.invalid && (control.dirty || control.touched)
+      }"
+    />
+    <app-validation-errors-custom-input
+      [control]="control"
+      [placeholder]="placeholder"
+    ></app-validation-errors-custom-input>
+  </div>
+  } @if (!horizontal) {
+  <label>{{ label }}</label>
+  <input
+    (ngModelChange)="onChange($event)"
+    [altInput]="true"
+    [convertModelValue]="true"
+    [disabled]="disabled"
+    [ngModel]="value"
+    [value]="value"
+    class="form-control flatpickr-input"
+    mwlFlatpickr
+    type="text"
+    [noCalendar]="true"
+    [enableTime]="true"
+    [dateFormat]="'H:i'"
+    [ngClass]="{
+      'is-invalid': control.invalid && (control.dirty || control.touched)
+    }"
+  />
+  <app-validation-errors-custom-input
+    [control]="control"
+    [placeholder]="placeholder"
+  ></app-validation-errors-custom-input>
+  }
+</div>
+
+}
+<!-- <input
+  class="form-control flatpickr-input"
+  type="text"
+  mwlFlatpickr
+  [noCalendar]="true"
+  [enableTime]="true"
+  [dateFormat]="'H:i'"
+/> -->

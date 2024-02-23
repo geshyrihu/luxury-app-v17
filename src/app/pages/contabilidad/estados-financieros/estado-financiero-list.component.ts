@@ -3,6 +3,7 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
@@ -10,7 +11,6 @@ import { DataService } from 'src/app/core/services/data.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import { environment } from 'src/environments/environment';
 import AddFileEstadoFinancieroComponent from './add-file-estado-financiero/add-file-estado-financiero.component';
-import SendEstadosFinancierosComponent from './send-estados-financieros/send-estados-financieros.component';
 @Component({
   selector: 'app-estado-financiero-list',
   templateUrl: './estado-financiero-list.component.html',
@@ -27,6 +27,7 @@ export default class EstadoFinancieroListComponent
   public customToastService = inject(CustomToastService);
   public dialogHandlerService = inject(DialogHandlerService);
   public dialogService = inject(DialogService);
+  public apiRequestService = inject(ApiRequestService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
@@ -112,19 +113,25 @@ export default class EstadoFinancieroListComponent
       });
   }
 
+  // onSendEstadosFinancieros(data: any) {
   onSendEstadosFinancieros(data: any) {
-    this.dialogHandlerService
-      .openDialog(
-        SendEstadosFinancierosComponent,
-        data,
-        data.title,
-        this.dialogHandlerService.dialogSizeFull
-      )
-      .then((result: boolean) => {
-        if (result) {
-          this.onLoadData();
-        }
-      });
+    this.apiRequestService.onPostForModal(
+      `EstadoFinanciero/Send/${data.id}/${this.authService.infoEmployeeDto.personId}`,
+      null
+    );
+
+    // this.dialogHandlerService
+    //   .openDialog(
+    //     SendEstadosFinancierosComponent,
+    //     data,
+    //     data.title,
+    //     this.dialogHandlerService.dialogSizeFull
+    //   )
+    //   .then((result: boolean) => {
+    //     if (result) {
+    //       this.onLoadData();
+    //     }
+    //   });
   }
 
   // Destruir componente

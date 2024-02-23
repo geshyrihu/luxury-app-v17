@@ -44,7 +44,7 @@ export class ApiRequestService implements OnDestroy {
       );
       // Cuando se completa la carga con éxito, mostrar un mensaje de éxito y resolver la promesa con los datos
       this.customToastService.onClose();
-      console.log('🚀 ~ responseData.body:', responseData.body);
+      console.log('🚀 ~ urlApi:', urlApi, responseData.body);
       return responseData.body;
     } catch (error) {
       // En caso de error, mostrar un mensaje de error y rechazar la promesa con null
@@ -60,6 +60,7 @@ export class ApiRequestService implements OnDestroy {
       const responseData = await lastValueFrom(
         this.dataService.get<T>(urlApi).pipe(takeUntil(this.destroy$))
       );
+      console.log('🚀 ~ responseData.body:', responseData.body);
       // Cuando se completa la carga con éxito, mostrar un mensaje de éxito y resolver la promesa con los datos
       return responseData.body;
     } catch (error) {

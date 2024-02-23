@@ -4,7 +4,9 @@ export default [
   {
     path: 'panel',
     loadComponent: () =>
-      import('src/app/pages/ticket-panel/ticket-panel.component'),
+      import(
+        'src/app/pages/proyect-ticket/ticket-panel/ticket-panel.component'
+      ),
   },
   {
     path: 'line-time/:year/:week',

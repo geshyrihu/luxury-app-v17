@@ -46,6 +46,8 @@ export class TopbarComponent implements OnInit {
 
   personId: number = this.authService.userTokenDto.infoEmployeeDto.personId;
 
+  @Output() settingsButtonClicked = new EventEmitter();
+
   valueset: any;
   dataInfo: InfoEmployeeAuthDto;
   imagenPerfilUrl = '';
@@ -60,6 +62,10 @@ export class TopbarComponent implements OnInit {
       width: '40%',
       baseZIndex: 10000,
     });
+  }
+
+  toggleRightSidebar() {
+    this.settingsButtonClicked.emit();
   }
 
   ngOnInit(): void {

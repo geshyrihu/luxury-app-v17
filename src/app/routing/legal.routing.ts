@@ -9,10 +9,17 @@ export default [
       ),
   },
   {
-    path: 'list-ticket',
+    path: 'list-ticket-legal',
     loadComponent: () =>
       import(
-        'src/app/pages/legal/legal-list-ticket/legal-list-ticket.component'
+        'src/app/pages/proyect-ticket/legal-list-ticket/legal-list-ticket.component'
+      ),
+  },
+  {
+    path: 'list-ticket-customer',
+    loadComponent: () =>
+      import(
+        'src/app/pages/proyect-ticket/legal-list-ticket-customer/legal-list-ticket-customer.component'
       ),
   },
 ] as Routes;
