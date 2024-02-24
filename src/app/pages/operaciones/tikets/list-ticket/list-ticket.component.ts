@@ -287,7 +287,8 @@ export default class ListTicketComponent implements OnInit, OnDestroy {
       this.ticketFilterService.filterTicket.finishedEnd
     ) {
       const liga =
-        'http://luxurybuildingapp.com:1008/#/publico/reporte-operacion/' +
+        // 'http://luxurybuildingapp.com:1008/#/publico/reporte-operacion/' +
+        'http://luxurybuildingapp.com/publico/reporte-operacion/' +
         this.customerIdService.getcustomerId() +
         '/' +
         this.dateService.getDateFormat(

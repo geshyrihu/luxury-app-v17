@@ -1,4 +1,4 @@
-import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { LocationStrategy, PathLocationStrategy } from '@angular/common';
 import {
   HTTP_INTERCEPTORS,
   HttpClientModule,
@@ -60,7 +60,9 @@ export const appConfig: ApplicationConfig = {
     {
       // Proveedor para la estrategia de ubicación basada en hash
       provide: LocationStrategy,
-      useClass: HashLocationStrategy,
+      // useClass: HashLocationStrategy,
+      // Dentro de tu lista de providers
+      useClass: PathLocationStrategy,
     },
 
     {
