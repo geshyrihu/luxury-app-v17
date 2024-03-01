@@ -75,7 +75,6 @@ export default class LegalTicketAddOrEditComponent implements OnInit {
       });
   }
   onSubmit() {
-    console.log(this.form.value);
     if (!this.apiRequestService.validateForm(this.form)) return;
 
     this.id = this.config.data.id;
@@ -83,7 +82,7 @@ export default class LegalTicketAddOrEditComponent implements OnInit {
 
     if (this.id === '') {
       this.apiRequestService
-        .onPostForModal(`TicketLegal`, this.form.value)
+        .onPost(`TicketLegal`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
           this.signalrCustomService.hubConnection.on(
@@ -98,7 +97,7 @@ export default class LegalTicketAddOrEditComponent implements OnInit {
         });
     } else {
       this.apiRequestService
-        .onPutForModal(`TicketLegal/${this.id}`, this.form.value)
+        .onPut(`TicketLegal/${this.id}`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
         });
@@ -109,7 +108,6 @@ export default class LegalTicketAddOrEditComponent implements OnInit {
     const numeroEnum = ESolicitudLegal[data]; // Accede al valor numérico asociado al enum
     this.tipoSolicitud = Number(numeroEnum);
     this.form.patchValue({ tipoSolicitud: numeroEnum });
-    console.log(numeroEnum);
   }
 }
 

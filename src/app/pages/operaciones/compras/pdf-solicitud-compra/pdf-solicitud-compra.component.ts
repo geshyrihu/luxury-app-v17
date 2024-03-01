@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { DataService } from 'src/app/core/services/data.service';
 @Component({
   selector: 'app-pdf-solicitud-compra',
@@ -17,6 +18,7 @@ import { DataService } from 'src/app/core/services/data.service';
 })
 export default class PdfSolicitudCompraComponent implements OnInit, OnDestroy {
   public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public route = inject(ActivatedRoute);
   @ViewChild('htmlData') htmlData: ElementRef;
   idSolicituCompra: any;

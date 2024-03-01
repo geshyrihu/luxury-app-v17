@@ -111,7 +111,7 @@ export default class TicketTrakingComponent implements OnInit {
     //     },
     //   });
     this.apiRequestService
-      .onPostForModal(`TicketLegal/Addtraking`, this.form.value)
+      .onPost(`TicketLegal/Addtraking`, this.form.value)
       .then(() => {
         this.onCargaListaseguimientos();
         this.form.patchValue({

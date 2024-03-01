@@ -8,7 +8,6 @@ import {
   CustomToastService,
   CustomerIdService,
   DataService,
-  SelectItemService,
 } from 'src/app/core/services/common-services';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
@@ -23,13 +22,12 @@ export default class FormControlPrestamoHerramientaComponent
 {
   private formBuilder = inject(FormBuilder);
   public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public ref = inject(DynamicDialogRef);
   public config = inject(DynamicDialogConfig);
-  public selectItemService = inject(SelectItemService);
   public authService = inject(AuthService);
   public customerIdService = inject(CustomerIdService);
   private customToastService = inject(CustomToastService);
-  public apiRequestService = inject(ApiRequestService);
 
   submitting: boolean = false;
 
@@ -40,16 +38,18 @@ export default class FormControlPrestamoHerramientaComponent
   form: FormGroup;
 
   ngOnInit(): void {
-    this.selectItemService
+    this.apiRequestService
       .onGetSelectItem(`Employee/${this.customerIdService.getcustomerId()}`)
-      .subscribe((resp) => {
-        this.cb_employee = resp;
+      .then((response: any) => {
+        this.cb_employee = response;
       });
-    this.selectItemService
+
+    this.apiRequestService
       .onGetSelectItem(`tool/${this.customerIdService.getcustomerId()}`)
-      .subscribe((resp) => {
-        this.cb_tool = resp;
+      .then((response: any) => {
+        this.cb_tool = response;
       });
+
     this.today = new Date().toISOString().slice(0, 16);
     this.form = this.formBuilder.group({
       id: { value: this.id, disabled: true },

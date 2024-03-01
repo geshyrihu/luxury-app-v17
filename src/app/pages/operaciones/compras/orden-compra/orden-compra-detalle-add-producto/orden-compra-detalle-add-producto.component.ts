@@ -8,10 +8,10 @@ import {
 } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import {
+  ApiRequestService,
   AuthService,
   CustomToastService,
   DataService,
-  SelectItemService,
 } from 'src/app/core/services/common-services';
 import AddProductosAlmacenComponent from 'src/app/pages/operaciones/mantenimiento/mantenimiento-almacen/inventario-productos/add-productos-almacen.component';
 
@@ -28,9 +28,9 @@ export default class OrdenCompraDetalleAddProductoComponent
 {
   public customToastService = inject(CustomToastService);
   public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public config = inject(DynamicDialogConfig);
   public ref = inject(DynamicDialogRef);
-  public selectItemService = inject(SelectItemService);
   public authService = inject(AuthService);
   public messageService = inject(MessageService);
   public dialogService = inject(DialogService);
@@ -46,11 +46,12 @@ export default class OrdenCompraDetalleAddProductoComponent
   cb_unidadMedida: any[] = [];
 
   ngOnInit(): void {
-    this.selectItemService
+    this.apiRequestService
       .onGetSelectItem('getMeasurementUnits')
-      .subscribe((resp) => {
-        this.cb_unidadMedida = resp;
+      .then((response: any) => {
+        this.cb_unidadMedida = response;
       });
+
     this.ordenCompraId = this.config.data.ordenCompraId;
     this.onLoadProduct();
   }

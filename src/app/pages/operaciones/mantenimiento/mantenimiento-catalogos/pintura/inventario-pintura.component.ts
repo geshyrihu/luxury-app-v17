@@ -23,10 +23,10 @@ export default class InventarioPinturaComponent implements OnInit, OnDestroy {
   public authService = inject(AuthService);
   public customerIdService = inject(CustomerIdService);
   public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
   public customToastService = inject(CustomToastService);
-  public apiRequestService = inject(ApiRequestService);
 
   urlImg: string = '';
   data: any[] = [];

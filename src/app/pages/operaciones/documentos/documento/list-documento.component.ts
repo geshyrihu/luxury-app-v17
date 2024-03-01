@@ -22,8 +22,8 @@ import AddoreditDocumentoComponent from './addoredit-documento.component';
 export default class ListDocumentoComponent implements OnInit, OnDestroy {
   public customToastService = inject(CustomToastService);
   public dataService = inject(DataService);
-  public customerIdService = inject(CustomerIdService);
   public apiRequestService = inject(ApiRequestService);
+  public customerIdService = inject(CustomerIdService);
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
 
@@ -68,7 +68,6 @@ export default class ListDocumentoComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (resp: any) => {
           this.data = this.customToastService.onCloseOnGetData(resp.body);
-          console.log('🚀 ~ resp.body:', resp.body);
         },
         error: (error) => {
           this.customToastService.onCloseToError(error);

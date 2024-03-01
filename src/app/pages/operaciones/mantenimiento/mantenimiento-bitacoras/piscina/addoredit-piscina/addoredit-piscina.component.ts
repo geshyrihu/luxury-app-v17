@@ -25,12 +25,12 @@ import { environment } from 'src/environments/environment';
 export default class AddOrEditPiscinaComponent implements OnInit, OnDestroy {
   public authService = inject(AuthService);
   public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   private formBuilder = inject(FormBuilder);
   public config = inject(DynamicDialogConfig);
   public ref = inject(DynamicDialogRef);
   public customerIdService = inject(CustomerIdService);
   private customToastService = inject(CustomToastService);
-  public apiRequestService = inject(ApiRequestService);
 
   submitting: boolean = false;
 

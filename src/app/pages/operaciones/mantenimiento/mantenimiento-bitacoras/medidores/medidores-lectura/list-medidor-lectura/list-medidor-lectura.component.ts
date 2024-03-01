@@ -25,10 +25,10 @@ export default class ListMedidorLecturaComponent implements OnInit, OnDestroy {
   public authService = inject(AuthService);
   public customToastService = inject(CustomToastService);
   public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
   public route = inject(ActivatedRoute);
-  public apiRequestService = inject(ApiRequestService);
 
   data: any[] = [];
   ref: DynamicDialogRef;

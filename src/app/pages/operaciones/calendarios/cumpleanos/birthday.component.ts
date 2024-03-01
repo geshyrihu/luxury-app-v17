@@ -7,6 +7,7 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import {
+  ApiRequestService,
   AuthService,
   CustomToastService,
   CustomerIdService,
@@ -23,6 +24,7 @@ export default class BirthdayComponent implements OnInit, OnDestroy {
   public authService = inject(AuthService);
   public customerIdService = inject(CustomerIdService);
   public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public customToastService = inject(CustomToastService);
   public dialogService = inject(DialogService);
 

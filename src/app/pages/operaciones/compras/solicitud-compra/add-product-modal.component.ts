@@ -9,10 +9,10 @@ import {
 import { Subject, takeUntil } from 'rxjs';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import {
+  ApiRequestService,
   AuthService,
   CustomToastService,
   DataService,
-  SelectItemService,
 } from 'src/app/core/services/common-services';
 import TarjetaProductoComponent from 'src/app/pages/operaciones/mantenimiento/mantenimiento-catalogos/tarjeta-producto/tarjeta-producto.component';
 
@@ -26,6 +26,7 @@ import { environment } from 'src/environments/environment';
 })
 export default class AddProductModalComponent implements OnInit {
   public customToastService = inject(CustomToastService);
+  public apiRequestService = inject(ApiRequestService);
 
   isInRole: boolean;
   id: any = 0;
@@ -42,15 +43,14 @@ export default class AddProductModalComponent implements OnInit {
     private dataService: DataService,
     public config: DynamicDialogConfig,
     public ref: DynamicDialogRef,
-    private selectListService: SelectItemService,
     private authService: AuthService,
     public messageService: MessageService,
     public dialogService: DialogService
   ) {
-    this.selectListService
+    this.apiRequestService
       .onGetSelectItem('GetMeasurementUnits')
-      .subscribe((resp) => {
-        this.cb_unidadMedida = resp;
+      .then((response: any) => {
+        this.cb_unidadMedida = response;
       });
   }
 

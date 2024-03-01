@@ -18,7 +18,6 @@ import {
   CustomerIdService,
   DataService,
   DateService,
-  SelectItemService,
 } from 'src/app/core/services/common-services';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
@@ -31,7 +30,7 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 export default class SolicitudModificacionSalarioComponent {
   private dataService = inject(DataService);
   private formBuilder = inject(FormBuilder);
-  private selectItemService = inject(SelectItemService);
+
   private customToastService = inject(CustomToastService);
   public apiRequestService = inject(ApiRequestService);
   public config = inject(DynamicDialogConfig);
@@ -66,12 +65,12 @@ export default class SolicitudModificacionSalarioComponent {
   });
 
   ngOnInit(): void {
-    this.selectItemService
+    this.apiRequestService
       .onGetSelectItem(`Professions`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe((resp) => {
-        this.cb_profession = resp;
+      .then((response: any) => {
+        this.cb_profession = response;
       });
+
     this.onLoadData();
   }
   onLoadData() {

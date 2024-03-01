@@ -6,6 +6,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { IFechasFiltro } from 'src/app/core/interfaces/IFechasFiltro.interface';
 import {
+  ApiRequestService,
   AuthService,
   CustomToastService,
   CustomerIdService,
@@ -30,6 +31,7 @@ export default class BitacoraMantenimientoComponent
   public customToastService = inject(CustomToastService);
   public dialogService = inject(DialogService);
   public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public authServide = inject(AuthService);
   public messageService = inject(MessageService);
   public customerIdService = inject(CustomerIdService);

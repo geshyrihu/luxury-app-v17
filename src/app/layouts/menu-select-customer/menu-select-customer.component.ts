@@ -1,11 +1,10 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { Subject, takeUntil } from 'rxjs';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DataService } from 'src/app/core/services/data.service';
-import { SelectItemService } from 'src/app/core/services/select-item.service';
 @Component({
   selector: 'app-menu-select-customer',
   templateUrl: './menu-select-customer.component.html',
@@ -13,33 +12,24 @@ import { SelectItemService } from 'src/app/core/services/select-item.service';
   imports: [LuxuryAppComponentsModule, FormsModule],
   providers: [DataService],
 })
-export default class MenuSelectCustomerComponent implements OnInit, OnDestroy {
-  private dataService = inject(DataService);
-  private selectItemService = inject(SelectItemService);
+export default class MenuSelectCustomerComponent implements OnInit {
   public authService = inject(AuthService);
   private customerIdService = inject(CustomerIdService);
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+  public apiRequestService = inject(ApiRequestService);
 
   cb_customer: any[] = [];
   customerId = this.customerIdService.customerId;
 
   ngOnInit() {
-    this.selectItemService
+    this.apiRequestService
       .onGetSelectItem(
         `CustomersAcceso/${this.authService.infoUserAuthDto.applicationUserId}`
       )
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp) => {
-          this.cb_customer = resp;
-        },
+      .then((resp: any) => {
+        this.cb_customer = resp;
       });
   }
   selectCustomer(customerId: number) {
     this.customerIdService.setCustomerId(customerId);
-  }
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
   }
 }

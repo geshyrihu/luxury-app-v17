@@ -9,10 +9,12 @@ import {
 } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { IDestinatariosMailReporte } from 'src/app/core/interfaces/IDestinatariosMailReporte.interface';
-import { CustomerIdService } from 'src/app/core/services/common-services';
+import {
+  ApiRequestService,
+  CustomerIdService,
+} from 'src/app/core/services/common-services';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
-import { SelectItemService } from 'src/app/core/services/select-item.service';
 
 @Component({
   selector: 'app-enviar-mail-reporte-semanal',
@@ -25,13 +27,14 @@ export default class EnviarMailReporteSemanalComponent
 {
   private dataService = inject(DataService);
   private formBuilder = inject(FormBuilder);
-  private selectItemService = inject(SelectItemService);
+
   public config = inject(DynamicDialogConfig);
   public customerIdService = inject(CustomerIdService);
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
   public ref = inject(DynamicDialogRef);
   public customToastService = inject(CustomToastService);
+  public apiRequestService = inject(ApiRequestService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
@@ -68,12 +71,10 @@ export default class EnviarMailReporteSemanalComponent
     return this.form.controls;
   }
   onLoadSelectItem() {
-    this.selectItemService
-      .onGetSelectItem(
-        `ResidentesEdificio/${this.customerIdService.getcustomerId()}`
-      )
-      .subscribe((resp: any) => {
-        this.destinatarios = resp;
+    this.apiRequestService
+      .onGetSelectItem(`Providers`)
+      .then((response: any) => {
+        this.destinatarios = response;
       });
   }
 

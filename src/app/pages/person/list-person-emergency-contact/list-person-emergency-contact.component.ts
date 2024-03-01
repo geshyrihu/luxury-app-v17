@@ -9,9 +9,9 @@ import {
 } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import {
+  ApiRequestService,
   CustomToastService,
   DataService,
-  SelectItemService,
 } from 'src/app/core/services/common-services';
 import AddoreditPersonEmergencyContactComponent from '../addoredit-person-emergency-contact/addoredit-person-emergency-contact.component';
 
@@ -28,9 +28,10 @@ export default class ListPersonEmergencyContactComponent
   public config = inject(DynamicDialogConfig);
   public customToastService = inject(CustomToastService);
   public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public messageService = inject(MessageService);
   public ref = inject(DynamicDialogRef);
-  public selectItemService = inject(SelectItemService);
+
   public dialogService = inject(DialogService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente

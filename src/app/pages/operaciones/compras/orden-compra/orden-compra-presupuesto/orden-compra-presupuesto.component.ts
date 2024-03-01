@@ -4,6 +4,7 @@ import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import {
+  ApiRequestService,
   AuthService,
   CustomToastService,
   CustomerIdService,
@@ -24,6 +25,7 @@ export default class OrdenCompraPresupuestoComponent
 {
   public customToastService = inject(CustomToastService);
   public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public authService = inject(AuthService);
   public ordenCompraService = inject(OrdenCompraService);
   public ref = inject(DynamicDialogRef);

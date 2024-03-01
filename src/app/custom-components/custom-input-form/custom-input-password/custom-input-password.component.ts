@@ -56,7 +56,6 @@ export default class CustomInputPasswordComponent
     this.disabled = isDisabled;
   }
 
-  // Otros métodos y lógica del componente
   /**
    * Password Hide/Show
    */

@@ -15,7 +15,6 @@ import {
   CustomToastService,
   CustomerIdService,
   DataService,
-  SelectItemService,
 } from 'src/app/core/services/common-services';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
@@ -36,7 +35,6 @@ export default class AddoreditMaintenancePreventiveComponent
   public customerIdService = inject(CustomerIdService);
   public dataService = inject(DataService);
   public ref = inject(DynamicDialogRef);
-  public selectItemService = inject(SelectItemService);
 
   public Editor = ClassicEditor;
 
@@ -79,23 +77,22 @@ export default class AddoreditMaintenancePreventiveComponent
   }
 
   onLoadSelectItem() {
-    this.selectItemService
+    this.apiRequestService
       .onGetSelectItem(
         `MachineriesGetAll/${this.customerIdService.getcustomerId()}`
       )
-      .subscribe((resp: any) => {
+      .then((resp: any) => {
         this.cb_machinery = resp;
       });
-    this.selectItemService
+    this.apiRequestService
       .onGetSelectItem('Providers')
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe((resp) => {
-        this.cb_providers = resp;
+      .then((response: any) => {
+        this.cb_providers = response;
       });
-    this.selectItemService
+    this.apiRequestService
       .onGetSelectItem('CuentasContables')
-      .subscribe((resp: any) => {
-        this.cb_subCuentaId = resp;
+      .then((response: ISelectItemDto[]) => {
+        this.cb_subCuentaId = response;
       });
   }
 

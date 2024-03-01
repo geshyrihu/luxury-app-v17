@@ -26,11 +26,9 @@ export default class ListBancoComponent implements OnInit {
 
   // Función para cargar los datos de los bancos
   onLoadData() {
-    this.apiRequestService
-      .onGetList<IBankDto[]>('banks')
-      .then((result: IBankDto[]) => {
-        this.data = result;
-      });
+    this.apiRequestService.onGetList('banks').then((result: any) => {
+      this.data = result;
+    });
   }
 
   // Funcion para eliminar un banco y refres

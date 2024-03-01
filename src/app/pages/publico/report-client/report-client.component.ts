@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { Subject, takeUntil } from 'rxjs';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomerIdService } from 'src/app/core/services/common-services';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
@@ -14,6 +15,7 @@ import { environment } from 'src/environments/environment';
 })
 export default class ReportClientComponent implements OnInit, OnDestroy {
   public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public rutaActiva = inject(ActivatedRoute);
   public customerIdService = inject(CustomerIdService);
   public customToastService = inject(CustomToastService);

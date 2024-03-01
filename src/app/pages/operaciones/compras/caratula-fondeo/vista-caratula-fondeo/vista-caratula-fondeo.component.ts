@@ -19,6 +19,7 @@ import {
   TableRowItemFondeoCaratulaDto,
 } from 'src/app/core/interfaces/IItemsFondeoCaratulaDto.interface';
 import { CurrencyMexicoPipe } from 'src/app/core/pipes/currencyMexico.pipe';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CaratulaFondeoService } from 'src/app/core/services/caratula-fondeo.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
@@ -38,6 +39,7 @@ export default class VistaCaratulaFondeoComponent implements OnInit, OnDestroy {
   public dateService = inject(DateService);
   public caratulaFondeoService = inject(CaratulaFondeoService);
   public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public router = inject(Router);
   public customToastService = inject(CustomToastService);
 

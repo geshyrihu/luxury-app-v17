@@ -9,7 +9,6 @@ import {
   AuthService,
   CustomToastService,
   DataService,
-  SelectItemService,
 } from 'src/app/core/services/common-services';
 
 const date = new Date();
@@ -26,7 +25,7 @@ export default class ListCedulasPresupuestalesComponent
   public customToastService = inject(CustomToastService);
   private dataService = inject(DataService);
   public authService = inject(AuthService);
-  private selectItemService = inject(SelectItemService);
+
   public messageService = inject(MessageService);
   public dialogService = inject(DialogService);
   public apiRequestService = inject(ApiRequestService);
@@ -42,18 +41,16 @@ export default class ListCedulasPresupuestalesComponent
   cb_Year: any[] = [];
 
   onLoadSelectItem() {
-    this.selectItemService
+    console.log('🚀 ~ onLoadSelectItem:');
+    this.apiRequestService
       .onGetSelectItem('customers')
-      .subscribe((items: ISelectItemDto[]) => {
-        this.cb_customer = items;
+      .then((response: ISelectItemDto[]) => {
+        this.cb_customer = response;
       });
-    this.selectItemService
+    this.apiRequestService
       .onGetSelectItem(`GetAllYears`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.cb_Year = resp.body;
-        },
+      .then((response: ISelectItemDto[]) => {
+        this.cb_Year = response;
       });
   }
   ngOnInit(): void {

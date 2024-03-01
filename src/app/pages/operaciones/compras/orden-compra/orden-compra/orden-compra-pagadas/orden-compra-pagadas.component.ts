@@ -5,6 +5,7 @@ import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { CurrencyMexicoPipe } from 'src/app/core/pipes/currencyMexico.pipe';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomerIdService } from 'src/app/core/services/common-services';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
@@ -21,6 +22,7 @@ import OrdenCompraComponent from '../orden-compra.component';
 export default class OrdenCompraPagadasComponent implements OnInit, OnDestroy {
   public customToastService = inject(CustomToastService);
   public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public customerIdService = inject(CustomerIdService);
   public router = inject(Router);
   public dialogService = inject(DialogService);

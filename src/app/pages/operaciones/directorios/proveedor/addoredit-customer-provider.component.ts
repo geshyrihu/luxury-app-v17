@@ -15,7 +15,6 @@ import {
   DataService,
 } from 'src/app/core/services/common-services';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { SelectItemService } from 'src/app/core/services/select-item.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 @Component({
   selector: 'app-add-or-edit-customer-provider',
@@ -32,7 +31,6 @@ export default class AddOrEditCustomerProviderComponent implements OnInit {
   public config = inject(DynamicDialogConfig);
   public dataService = inject(DataService);
   public ref = inject(DynamicDialogRef);
-  public selectItemService = inject(SelectItemService);
 
   cb_providers: ISelectItemDto[] = [];
   cb_categories: ISelectItemDto[] = [];
@@ -76,18 +74,19 @@ export default class AddOrEditCustomerProviderComponent implements OnInit {
 
   onLoadSelectItem() {
     // Carga de listado de proveedores
-    this.selectItemService
-      .onGetSelectItem('providers')
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe((resp) => {
-        this.cb_providers = resp;
+
+    this.apiRequestService
+      .onGetSelectItem(`providers`)
+      .then((response: any) => {
+        this.cb_providers = response;
       });
+
     // Carga de listado de categorias
-    this.selectItemService
-      .onGetSelectItem('categories')
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe((resp) => {
-        this.cb_categories = resp;
+
+    this.apiRequestService
+      .onGetSelectItem(`categories`)
+      .then((response: any) => {
+        this.cb_categories = response;
       });
   }
 

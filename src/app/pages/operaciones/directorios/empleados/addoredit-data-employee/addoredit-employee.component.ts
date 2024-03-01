@@ -22,7 +22,6 @@ import {
   CustomToastService,
   CustomerIdService,
   DataService,
-  SelectItemService,
 } from 'src/app/core/services/common-services';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
@@ -43,7 +42,6 @@ export default class AddOrEditEmplopyeeComponent implements OnInit, OnDestroy {
   public dataService = inject(DataService);
   public datepipe = inject(DatePipe);
   public ref = inject(DynamicDialogRef);
-  public selectItemService = inject(SelectItemService);
 
   id = 0;
   submitting: boolean = false;
@@ -67,19 +65,17 @@ export default class AddOrEditEmplopyeeComponent implements OnInit, OnDestroy {
   formDataPersonalId = 0;
   formDataLaboralId = 0;
   ngOnInit(): void {
-    this.selectItemService
-      .onGetSelectItem('Professions')
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe((resp) => {
-        this.cb_profession = resp;
-      });
-    this.selectItemService
-      .onGetSelectItem('Customers')
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe((resp) => {
-        this.cb_customer = resp;
+    this.apiRequestService
+      .onGetSelectItem(`Professions`)
+      .then((response: any) => {
+        this.cb_profession = response;
       });
 
+    this.apiRequestService
+      .onGetSelectItem(`Customers`)
+      .then((response: any) => {
+        this.cb_customer = response;
+      });
     flatpickrFactory();
     this.id = this.config.data.id;
 

@@ -9,7 +9,7 @@ import { EPriority } from 'src/app/core/enums/priority.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { IFilterTicket } from 'src/app/core/interfaces/IFilterTicket.interface';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
-import { SelectItemService } from 'src/app/core/services/select-item.service';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { TicketFilterService } from 'src/app/core/services/ticket-filter.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 @Component({
@@ -21,9 +21,10 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 export default class FilterTicketComponent implements OnInit {
   private filterReportOperation = inject(TicketFilterService);
   private formBuilder = inject(FormBuilder);
-  private selectItemService = inject(SelectItemService);
+
   public config = inject(DynamicDialogConfig);
   public ref = inject(DynamicDialogRef);
+  public apiRequestService = inject(ApiRequestService);
 
   filterTicket: IFilterTicket;
   cb_status: ISelectItemDto[] = onGetSelectItemFromEnum(EStatusTask);
@@ -57,20 +58,25 @@ export default class FilterTicketComponent implements OnInit {
   }
 
   onLoadSelectItem() {
-    this.selectItemService
-      .onGetSelectItem('ResponsibleArea')
-      .subscribe((resp) => {
-        this.cb_area_responsable = resp;
+    this.apiRequestService
+      .onGetSelectItem(`ResponsibleArea`)
+      .then((response: any) => {
+        this.cb_area_responsable = response;
       });
-    this.selectItemService
-      .onGetSelectItem('customers')
-      .subscribe((items: ISelectItemDto[]) => {
-        this.cb_customer = items;
+
+    this.apiRequestService
+      .onGetSelectItem(`customers`)
+      .then((response: any) => {
+        this.cb_customer = response;
       });
-    this.selectItemService
-      .getEmpleadosSolicitudTicket(this.filterReportOperation.getfilterTicket)
-      .subscribe((resp) => {
-        this.cb_solicitantes = resp;
+
+    this.apiRequestService
+      .onPost(`ResponsibleArea`, this.filterReportOperation.getfilterTicket)
+      .then((response: any) => {
+        this.cb_area_responsable = response.map((selectList: any) => ({
+          value: selectList.value,
+          label: selectList.label,
+        }));
       });
   }
   onResetForm() {

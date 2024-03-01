@@ -21,10 +21,10 @@ import AddoreditContratoPolizaComponent from './addoredit-contrato-poliza.compon
 export default class ListContratoPolizaComponent implements OnInit, OnDestroy {
   public customToastService = inject(CustomToastService);
   public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
   public customerIdService = inject(CustomerIdService);
-  public apiRequestService = inject(ApiRequestService);
 
   data: any[] = [];
 

@@ -4,6 +4,7 @@ import { MessageService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { IFechasFiltro } from 'src/app/core/interfaces/IFechasFiltro.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
@@ -19,6 +20,7 @@ export default class ResultadoGeneralPosicionComponent
   implements OnInit, OnDestroy
 {
   public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public dateService = inject(DateService);
   public customToastService = inject(CustomToastService);
   public dialogService = inject(DialogService);

@@ -35,10 +35,10 @@ export default class ListWorkPlantillaComponent implements OnInit, OnDestroy {
   public customerIdService = inject(CustomerIdService);
   public customToastService = inject(CustomToastService);
   public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
   public statusSolicitudVacanteService = inject(StatusSolicitudVacanteService);
-  public apiRequestService = inject(ApiRequestService);
 
   customerId$: Observable<number> = this.customerIdService.getCustomerId$();
   data: any[] = [];

@@ -20,11 +20,11 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 export default class AddBitacoraComponent implements OnInit, OnDestroy {
   public authService = inject(AuthService);
   public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   private formBuilder = inject(FormBuilder);
   public config = inject(DynamicDialogConfig);
   public ref = inject(DynamicDialogRef);
   public customToastService = inject(CustomToastService);
-  public apiRequestService = inject(ApiRequestService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 

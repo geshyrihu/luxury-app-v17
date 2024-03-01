@@ -3,6 +3,7 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import {
+  ApiRequestService,
   CustomToastService,
   CustomerIdService,
   DataService,
@@ -20,8 +21,10 @@ export default class MantenimientosPendientesComponent
 {
   public customerIdService = inject(CustomerIdService);
   public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public messageService = inject(MessageService);
   public customToastService = inject(CustomToastService);
+
   data: any[] = [];
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente

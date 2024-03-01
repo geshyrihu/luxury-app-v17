@@ -9,7 +9,6 @@ import {
   AuthService,
   CustomToastService,
   DataService,
-  SelectItemService,
 } from 'src/app/core/services/common-services';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import ValidationErrorsCustomInputComponent from 'src/app/custom-components/custom-input-form/validation-errors-custom-input/validation-errors-custom-input.component';
@@ -26,12 +25,11 @@ import ValidationErrorsCustomInputComponent from 'src/app/custom-components/cust
 export default class EditProductoComponent implements OnInit, OnDestroy {
   private formBuilder = inject(FormBuilder);
   public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public config = inject(DynamicDialogConfig);
   public ref = inject(DynamicDialogRef);
-  public selectItemService = inject(SelectItemService);
   public authService = inject(AuthService);
   public customToastService = inject(CustomToastService);
-  public apiRequestService = inject(ApiRequestService);
 
   submitting: boolean = false;
 
@@ -46,16 +44,16 @@ export default class EditProductoComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   onLoadSelectItem() {
-    this.selectItemService
+    this.apiRequestService
       .onGetSelectItem('getMeasurementUnits')
-      .subscribe((resp) => {
-        this.cb_unidadMedida = resp;
+      .then((response: any) => {
+        this.cb_unidadMedida = response;
       });
-    this.selectItemService
+
+    this.apiRequestService
       .onGetSelectItem('GetProducts')
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe((resp) => {
-        this.cb_Productos = resp;
+      .then((response: any) => {
+        this.cb_Productos = response;
       });
   }
 

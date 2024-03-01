@@ -17,7 +17,6 @@ import {
   CustomToastService,
   DataService,
   DateService,
-  SelectItemService,
 } from 'src/app/core/services/common-services';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import { environment } from 'src/environments/environment';
@@ -35,7 +34,7 @@ export default class AddoreditTicketComponent implements OnInit, OnDestroy {
   private dataService = inject(DataService);
   private dateService = inject(DateService);
   private formBuilder = inject(FormBuilder);
-  private selectItemService = inject(SelectItemService);
+
   public authService = inject(AuthService);
   public config = inject(DynamicDialogConfig);
   public ref = inject(DynamicDialogRef);
@@ -89,17 +88,18 @@ export default class AddoreditTicketComponent implements OnInit, OnDestroy {
     });
   }
   onLoadSelectItem() {
-    this.selectItemService
-      .onGetSelectItem('ResponsibleArea')
-      .subscribe((resp) => {
-        this.cb_area_responsable = resp;
+    this.apiRequestService
+      .onGetSelectItem(`ResponsibleArea`)
+      .then((response: any) => {
+        this.cb_area_responsable = response;
       });
-    this.selectItemService
+
+    this.apiRequestService
       .onGetSelectItem(
         `GetUserCustomer/${this.customerSelectListService.getcustomerId()}`
       )
-      .subscribe((resp) => {
-        this.cb_user_customers = resp;
+      .then((response: any) => {
+        this.cb_user_customers = response;
       });
   }
 

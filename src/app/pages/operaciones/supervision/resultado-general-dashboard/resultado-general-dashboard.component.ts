@@ -4,11 +4,11 @@ import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { Subject, takeUntil } from 'rxjs';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
 import { PeriodoMonthService } from 'src/app/core/services/periodo-month.service';
-import { SelectItemService } from 'src/app/core/services/select-item.service';
 
 @Component({
   selector: 'app-resultado-general-dashboard',
@@ -20,11 +20,11 @@ export default class ResultadoGeneralDashboardComponent
   implements OnInit, OnDestroy
 {
   public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public dateService = inject(DateService);
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
   public periodoMonthService = inject(PeriodoMonthService);
-  public selectItemService = inject(SelectItemService);
   public customToastService = inject(CustomToastService);
 
   reporteFiltro: string = 'MINUTAS GENERAL';
@@ -39,12 +39,14 @@ export default class ResultadoGeneralDashboardComponent
   mostrar: boolean = false;
 
   ngOnInit(): void {
-    this.selectItemService
-      .getCustomersNombreCorto()
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe((resp) => {
-        this.cb_customers = resp;
+    this.apiRequestService
+      .onGetSelectItem(`NombreCorto`)
+      .then((response: any) => {
+        this.cb_customers = response.map((selectList: any) => ({
+          label: selectList.label,
+        }));
       });
+
     this.periodo = this.dateService.getNameMontYear(
       this.periodoMonthService.fechaInicial
     );

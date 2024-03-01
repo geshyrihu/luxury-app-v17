@@ -4,6 +4,7 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import {
+  ApiRequestService,
   AuthService,
   CustomToastService,
   DataService,
@@ -20,6 +21,7 @@ export default class OrdenCompraDenegadaComponent implements OnInit, OnDestroy {
   public authService = inject(AuthService);
   public config = inject(DynamicDialogConfig);
   public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   private formBuilder = inject(FormBuilder);
   public ref = inject(DynamicDialogRef);
   public customToastService = inject(CustomToastService);

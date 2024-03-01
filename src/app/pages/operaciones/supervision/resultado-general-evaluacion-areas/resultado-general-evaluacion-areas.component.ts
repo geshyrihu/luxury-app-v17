@@ -6,6 +6,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { EAreaMinutasDetalles } from 'src/app/core/enums/area-minutas-detalles.enum';
 import { EStatusTask } from 'src/app/core/enums/estatus-task.enum';
 import { IFechasFiltro } from 'src/app/core/interfaces/IFechasFiltro.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
@@ -20,6 +21,7 @@ import ResultadoGeneralEvaluacionAreasDetalleComponent from './resultado-general
 })
 export default class EvaluacionAreasComponent implements OnInit, OnDestroy {
   public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public dateService = inject(DateService);
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);

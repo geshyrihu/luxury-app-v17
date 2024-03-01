@@ -5,6 +5,7 @@ import { DialogService, DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { EAreaMinutasDetallesPipe } from 'src/app/core/pipes/area-minuta-detalles.pipe';
 import { EStatusPipe } from 'src/app/core/pipes/status.pipe';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
@@ -20,6 +21,7 @@ export default class AddOrEditMeetingDetailComponent
   public customToastService = inject(CustomToastService);
   public config = inject(DynamicDialogConfig);
   public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public dateService = inject(DateService);
   public messageService = inject(MessageService);
   public dialogService = inject(DialogService);

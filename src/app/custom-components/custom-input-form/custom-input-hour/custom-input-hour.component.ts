@@ -60,14 +60,4 @@ export default class CustomInputHourComponent implements ControlValueAccessor {
   registerOnTouched(fn: any) {
     this.onTouched = fn;
   }
-
-  // handleFlatpickrChange(selectedDates: Date[]) {
-  //   const date =
-  //     selectedDates.length > 0
-  //       ? selectedDates[0].toISOString().split('T')[0]
-  //       : null;
-  //   this.value = date;
-  //   this.onChange(date);
-  //   this.onTouched();
-  // }
 }

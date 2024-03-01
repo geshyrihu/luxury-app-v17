@@ -4,6 +4,7 @@ import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import {
+  ApiRequestService,
   CustomToastService,
   DataService,
 } from 'src/app/core/services/common-services';
@@ -16,10 +17,11 @@ import {
 export default class AddOrEditListAdministrationComponent
   implements OnInit, OnDestroy
 {
+  public apiRequestService = inject(ApiRequestService);
   public config = inject(DynamicDialogConfig);
+  public customToastService = inject(CustomToastService);
   public dataService = inject(DataService);
   public messageService = inject(MessageService);
-  public customToastService = inject(CustomToastService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 

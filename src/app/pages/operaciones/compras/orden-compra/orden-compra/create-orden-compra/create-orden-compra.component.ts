@@ -25,11 +25,11 @@ export default class CreateOrdenCompraComponent implements OnInit, OnDestroy {
   public config = inject(DynamicDialogConfig);
   public customerIdService = inject(CustomerIdService);
   public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public dateService = inject(DateService);
   private formBuilder = inject(FormBuilder);
   public ref = inject(DynamicDialogRef);
   private customToastService = inject(CustomToastService);
-  public apiRequestService = inject(ApiRequestService);
 
   submitting: boolean = false;
 

@@ -3,6 +3,7 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import {
+  ApiRequestService,
   CustomToastService,
   CustomerIdService,
   DataService,
@@ -18,6 +19,7 @@ import { environment } from 'src/environments/environment';
 export default class InsumosComponent implements OnInit, OnDestroy {
   public customerIdService = inject(CustomerIdService);
   public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public messageService = inject(MessageService);
   public customToastService = inject(CustomToastService);
   data: any[] = [];

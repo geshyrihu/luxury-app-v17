@@ -6,6 +6,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { IFilterTicket } from 'src/app/core/interfaces/IFilterTicket.interface';
 import {
+  ApiRequestService,
   AuthService,
   CustomerIdService,
   CustomToastService,
@@ -34,6 +35,7 @@ export default class ListTicketComponent implements OnInit, OnDestroy {
   public authService = inject(AuthService);
   public customerIdService = inject(CustomerIdService);
   public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public dateService = inject(DateService);
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
@@ -79,7 +81,6 @@ export default class ListTicketComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
-          console.log('🚀 ~ resp.body:', resp.body);
           this.data = this.customToastService.onCloseOnGetData(resp.body);
           this.dataCompleta = this.data;
         },

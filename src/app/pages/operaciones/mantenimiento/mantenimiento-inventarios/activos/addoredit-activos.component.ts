@@ -34,6 +34,7 @@ export default class AddOrEditActivosComponent implements OnInit, OnDestroy {
   public dateService = inject(DateService);
   public authService = inject(AuthService);
   public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   private formBuilder = inject(FormBuilder);
   public getdateService = inject(DateService);
   public config = inject(DynamicDialogConfig);
@@ -41,7 +42,6 @@ export default class AddOrEditActivosComponent implements OnInit, OnDestroy {
   public customerIdService = inject(CustomerIdService);
   public dialogService = inject(DialogService);
   private customToastService = inject(CustomToastService);
-  public apiRequestService = inject(ApiRequestService);
 
   public Editor = ClassicEditor;
 

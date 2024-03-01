@@ -2,7 +2,6 @@ import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { IBankAddOrEditDto } from 'src/app/core/interfaces/IBankAddOrEditDto.interface';
 import { ApiRequestService } from 'src/app/core/services/common-services';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
@@ -37,11 +36,9 @@ export default class AddOrEditBancoComponent implements OnInit {
     if (this.id !== 0) this.onLoadData();
   }
   onLoadData() {
-    this.apiRequestService
-      .onGetItem<IBankAddOrEditDto>(`Banks/${this.id}`)
-      .then((result: IBankAddOrEditDto) => {
-        this.form.patchValue(result);
-      });
+    this.apiRequestService.onGetItem(`Banks/${this.id}`).then((result: any) => {
+      this.form.patchValue(result);
+    });
   }
   onSubmit() {
     if (!this.apiRequestService.validateForm(this.form)) return;
@@ -51,13 +48,13 @@ export default class AddOrEditBancoComponent implements OnInit {
 
     if (this.id === 0) {
       this.apiRequestService
-        .onPostForModal(`Banks`, this.form.value)
+        .onPost(`Banks`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
       this.apiRequestService
-        .onPutForModal(`Banks/${this.id}`, this.form.value)
+        .onPut(`Banks/${this.id}`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
         });

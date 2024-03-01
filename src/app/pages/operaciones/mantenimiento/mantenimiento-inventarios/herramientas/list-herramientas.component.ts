@@ -25,11 +25,11 @@ export default class ListerramientasComponent implements OnInit, OnDestroy {
   public customToastService = inject(CustomToastService);
   public authService = inject(AuthService);
   public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public messageService = inject(MessageService);
   public dialogService = inject(DialogService);
   public customerIdService = inject(CustomerIdService);
   public reporteHerramientasPdfService = inject(ReporteHerramientasPdfService);
-  public apiRequestService = inject(ApiRequestService);
 
   base_urlImg = '';
   data: any[] = [];

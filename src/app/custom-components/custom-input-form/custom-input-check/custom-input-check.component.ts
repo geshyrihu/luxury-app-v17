@@ -46,6 +46,4 @@ export default class CustomInputCheckComponent implements ControlValueAccessor {
   setDisabledState(isDisabled: boolean): void {
     this.disabled = isDisabled;
   }
-
-  // Otros métodos y lógica del componente
 }

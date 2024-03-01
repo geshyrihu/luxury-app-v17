@@ -1,6 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { Observable } from 'rxjs';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomerIdService } from 'src/app/core/services/common-services';
 import { DataService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
@@ -21,6 +22,7 @@ import ResumenMantenimientosComponent from './resumen-mantenimientos/resumen-man
 })
 export default class MaintenanceReportsComponent implements OnInit {
   public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public dateService = inject(DateService);
   public periodoMonthService = inject(PeriodoMonthService);
   public customerIdService = inject(CustomerIdService);

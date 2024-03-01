@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { Observable, Subject, takeUntil } from 'rxjs';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import {
   CustomToastService,
   CustomerIdService,
@@ -17,6 +18,7 @@ export default class ReportMaintenanceHeaderComponent
   implements OnInit, OnDestroy
 {
   public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public customerIdService = inject(CustomerIdService);
   public filterReportOperationService = inject(TicketFilterService);
   public customToastService = inject(CustomToastService);

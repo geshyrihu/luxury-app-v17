@@ -8,11 +8,11 @@ import { ContextMenuModule } from 'primeng/contextmenu';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import {
+  ApiRequestService,
   AuthService,
   CustomToastService,
   DataService,
   OrdenCompraService,
-  SelectItemService,
 } from 'src/app/core/services/common-services';
 import OrdenCompraDatosPagoParcialComponent from '../components/orden-compra-datos-pago-parcial/orden-compra-datos-pago-parcial.component';
 import OrdenCompraDatosCotizacionComponent from '../components/orden-compra-parcial/orden-compra-datos-cotizacion.component';
@@ -44,12 +44,13 @@ export default class OrdenCompraComponent implements OnInit, OnDestroy {
   public customToastService = inject(CustomToastService);
   public authService = inject(AuthService);
   public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public routeActive = inject(ActivatedRoute);
   public router = inject(Router);
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
   public ordenCompraService = inject(OrdenCompraService);
-  public selectItemService = inject(SelectItemService);
+
   public confirmationService = inject(ConfirmationService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
@@ -197,7 +198,6 @@ export default class OrdenCompraComponent implements OnInit, OnDestroy {
         next: (resp: any) => {
           this.customToastService.onClose();
           this.ordenCompra = resp.body;
-          console.log('🚀 ~ resp.body:', resp.body);
           if (this.ordenCompra.ordenCompraDatosPago.tipoGasto === 0) {
             this.esGastoFijo = true;
           }
@@ -478,7 +478,6 @@ export default class OrdenCompraComponent implements OnInit, OnDestroy {
   }
   // TODO: PARECE QUE ESTE METODO NO SE UTILIZA
   onDeleteProduct(data: any): void {
-    console.log('🚀 ~ id:', data.id);
     this.customToastService.onLoading();
     this.dataService
       .delete(`OrdenCompraDetalle/${data.id}`)

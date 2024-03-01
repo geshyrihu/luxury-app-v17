@@ -1,47 +1,87 @@
-<div class="text-center">
-  <h2 class="h2 mb-0">Bienvenido!</h2>
-  <!-- <h3 class="h3 text-muted mt-2">Iniciar sesión</h3> -->
-</div>
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
-  <custom-input-text
-    [control]="form.get('email')"
-    [horizontal]="false"
-    formControlName="email"
-    label="Usuario"
-    placeholder="Usuario"
-    customClass="form-control-lg"
-    class="form-control-lg"
-  ></custom-input-text>
+<div class="auth-bg pt-md-5 p-4 d-flex">
+  <div class="container-fluid p-0">
+    <div class="row g-0 justify-content-center align-items-center">
+      <div class="bg-overlay bg-primary"></div>
+      <ul class="bg-bubbles">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+      <!-- Añade las clases para centrar vertical y horizontalmente -->
+      <div class="col-12 col-md-6 mt-4">
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <!-- Usa col-12 para ocupar todo el ancho en dispositivos pequeños -->
+        <div class="bg-white p-5 rounded shadow">
+          <!-- Aplica el fondo blanco al contenedor del formulario -->
+          <!-- <div class="text-center mb-4">
+            <a
+              href="https://www.luxurybuildingsite.com/"
+              target="_blank"
+              class="d-block auth-logo"
+            >
+              <img src="assets/images/logo-luxury.jpg" alt="Img" height="100" />
+            </a>
+          </div> -->
+          <div class="auth-content">
+            <div class="text-center">
+              <h2 class="h2 mb-0">LuxuryApp - Bienvenido</h2>
+            </div>
+            <form [formGroup]="form" (ngSubmit)="onSubmit()">
+              <custom-input-text
+                [control]="form.get('email')"
+                [horizontal]="false"
+                formControlName="email"
+                label="Usuario"
+                placeholder="Usuario"
+              ></custom-input-text>
 
-  <custom-input-password
-    [control]="form.get('password')"
-    [horizontal]="false"
-    formControlName="password"
-    label="Contraseña"
-    placeholder="Contraseña"
-    customClass="form-control-lg"
-    class="form-control-lg"
-  ></custom-input-password>
+              <custom-input-password
+                [control]="form.get('password')"
+                [horizontal]="false"
+                formControlName="password"
+                label="Contraseña"
+                placeholder="Contraseña"
+              ></custom-input-password>
 
-  <custom-input-check
-    [control]="form.get('remember')"
-    [horizontal]="false"
-    formControlName="remember"
-    label="Recordarme"
-    class="form-control-lg"
-  ></custom-input-check>
+              <custom-input-check
+                [control]="form.get('remember')"
+                [horizontal]="false"
+                formControlName="remember"
+                label="Recordarme"
+              ></custom-input-check>
 
-  <div class="mt-3 d-grid">
-    <custom-button
-      customClass="btn-primary btn-lg w-100"
-      label="Ingresar"
-      type="submit"
-    ></custom-button>
+              <div class="mt-0 d-grid">
+                <custom-button
+                  customClass="btn-primary  w-100"
+                  label="Ingresar"
+                  type="submit"
+                ></custom-button>
+              </div>
+            </form>
+
+            <div class="mt-4 text-center">
+              <p class="mb-0 font-size-16">
+                ¿Tienes problemas para ingresar?, Solicita ayuda con tu
+                Administrador.
+              </p>
+            </div>
+            <!-- Este es tu contenido de inicio de sesión -->
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-</form>
-
-<div class="mt-3 text-center">
-  <p class="mb-0 font-size-16">
-    ¿Tienes problemas para ingresar?, Solicita ayuda con tu Administrador.
-  </p>
 </div>

@@ -13,7 +13,6 @@ import {
 } from 'src/app/core/services/common-services';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
-import { SelectItemService } from 'src/app/core/services/select-item.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 @Component({
   selector: 'app-addoredit-comite-vigilancia',
@@ -26,12 +25,11 @@ export default class AddOrEditComiteVigilanciaComponent
 {
   private formBuilder = inject(FormBuilder);
   public dataService = inject(DataService);
-  public selectItemService = inject(SelectItemService);
+  public apiRequestService = inject(ApiRequestService);
   public customerIdService = inject(CustomerIdService);
   public ref = inject(DynamicDialogRef);
   public config = inject(DynamicDialogConfig);
   private customToastService = inject(CustomToastService);
-  public apiRequestService = inject(ApiRequestService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
   submitting: boolean = false;
@@ -50,12 +48,12 @@ export default class AddOrEditComiteVigilanciaComponent
   //
 
   ngOnInit(): void {
-    this.selectItemService
+    this.apiRequestService
       .onGetSelectItem(
         `ListCondomino/${this.customerIdService.getcustomerId()}`
       )
-      .subscribe((resp) => {
-        this.cb_condomino = resp;
+      .then((response: any) => {
+        this.cb_condomino = response;
       });
 
     this.form.patchValue({

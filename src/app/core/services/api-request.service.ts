@@ -34,6 +34,27 @@ export class ApiRequestService implements OnDestroy {
   }
 
   // Función para cargar datos de forma genérica
+  async onGetSelectItem<T>(urlApi: string): Promise<T | null> {
+    // Mostrar un mensaje de carga
+    this.customToastService.onLoading();
+
+    try {
+      const responseData = await lastValueFrom(
+        this.dataService
+          .get<T>('selectitem/' + urlApi)
+          .pipe(takeUntil(this.destroy$))
+      );
+      // Cuando se completa la carga con éxito, mostrar un mensaje de éxito y resolver la promesa con los datos
+      this.customToastService.onClose();
+      console.log('🚀 ~ urlApi:', urlApi, responseData.body);
+      return responseData.body;
+    } catch (error) {
+      // En caso de error, mostrar un mensaje de error y rechazar la promesa con null
+      this.customToastService.onCloseToError(error);
+      return null;
+    }
+  }
+  // Función para cargar datos de forma genérica
   async onGetList<T>(urlApi: string): Promise<T | null> {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
@@ -71,7 +92,7 @@ export class ApiRequestService implements OnDestroy {
   }
 
   // Metodo Post
-  async onPostForModal<T>(urlApi: string, data: any): Promise<boolean> {
+  async onPost<T>(urlApi: string, data: any): Promise<boolean> {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
     try {
@@ -90,7 +111,7 @@ export class ApiRequestService implements OnDestroy {
   }
 
   // Metodo Put
-  async onPutForModal<T>(urlApi: string, data: any): Promise<boolean> {
+  async onPut<T>(urlApi: string, data: any): Promise<boolean> {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
     try {
@@ -107,6 +128,7 @@ export class ApiRequestService implements OnDestroy {
       return false;
     }
   }
+
   // validacion de formulario...
   validateForm(form: FormGroup): boolean {
     if (form.invalid) {

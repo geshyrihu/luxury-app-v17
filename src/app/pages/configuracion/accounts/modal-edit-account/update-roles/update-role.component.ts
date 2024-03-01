@@ -1,21 +1,14 @@
-import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { Subject, takeUntil } from 'rxjs';
 import { IRolesDto } from 'src/app/core/interfaces/IRolesDto.interface';
-import {
-  ApiRequestService,
-  CustomToastService,
-  DataService,
-} from 'src/app/core/services/common-services';
+import { ApiRequestService } from 'src/app/core/services/common-services';
 @Component({
   selector: 'app-update-role',
   templateUrl: './update-role.component.html',
   standalone: true,
   imports: [LuxuryAppComponentsModule],
 })
-export default class UpdateRoleComponent implements OnInit, OnDestroy {
-  private dataService = inject(DataService);
-  private customToastService = inject(CustomToastService);
+export default class UpdateRoleComponent implements OnInit {
   public apiRequestService = inject(ApiRequestService);
 
   roles: IRolesDto[] = [];
@@ -25,38 +18,22 @@ export default class UpdateRoleComponent implements OnInit, OnDestroy {
   @Input()
   applicationUserId: string = '';
 
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
-
   ngOnInit(): void {
     this.getRoles();
   }
   getRoles() {
-    this.dataService
-      .get('Accounts/GetRole/' + this.applicationUserId)
-      .subscribe((resp: any) => {
-        this.roles = resp.body;
+    this.apiRequestService
+      .onGetList('Accounts/GetRole/' + this.applicationUserId)
+      .then((result: any) => {
+        this.roles = result;
         this.rolesUpdate = this.roles;
       });
   }
 
-  updateRole(roles: any) {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-
-    const url = `Accounts/AddRoleToUser/${this.applicationUserId}`;
-    this.dataService
-      .post(url, roles)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          this.customToastService.onCloseToSuccess();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
-  }
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
+  updateRole(roles: any): void {
+    this.apiRequestService.onPost(
+      `Accounts/AddRoleToUser/${this.applicationUserId}`,
+      roles
+    );
   }
 }

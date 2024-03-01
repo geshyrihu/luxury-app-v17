@@ -28,12 +28,12 @@ const date = new Date();
 export default class CaratulaFondeoComponent implements OnInit {
   public dateService = inject(DateService);
   public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   private formBuilder = inject(FormBuilder);
   public ref = inject(DynamicDialogRef);
   public customerIdService = inject(CustomerIdService);
   public router = inject(Router);
   public caratulaFondeoService = inject(CaratulaFondeoService);
-  public apiRequestService = inject(ApiRequestService);
 
   submitting: boolean = false;
 

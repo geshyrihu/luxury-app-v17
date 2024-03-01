@@ -12,7 +12,6 @@ import {
 } from 'src/app/core/services/common-services';
 import { DataService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
-import { SelectItemService } from 'src/app/core/services/select-item.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import { environment } from 'src/environments/environment';
 
@@ -27,11 +26,10 @@ export default class AddAccountCustomerComponent implements OnInit, OnDestroy {
   public customerIdService = inject(CustomerIdService);
   public customToastService = inject(CustomToastService);
   public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public dateService = inject(DateService);
   private formBuilder = inject(FormBuilder);
-  public selectItemService = inject(SelectItemService);
   public ref = inject(DynamicDialogRef);
-  public apiRequestService = inject(ApiRequestService);
 
   submitting: boolean = false;
 
@@ -85,11 +83,10 @@ export default class AddAccountCustomerComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.selectItemService
-      .onGetSelectItem('Professions')
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe((resp) => {
-        this.cb_profession = resp;
+    this.apiRequestService
+      .onGetSelectItem(`Professions`)
+      .then((response: any) => {
+        this.cb_profession = response;
       });
   }
 

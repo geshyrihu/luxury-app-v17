@@ -29,9 +29,9 @@ export default class ListRecorridoComponent implements OnInit, OnDestroy {
   public confirmationService = inject(ConfirmationService);
   public customerIdService = inject(CustomerIdService);
   public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
-  public apiRequestService = inject(ApiRequestService);
 
   pathImg = environment.base_urlImg;
   data: any[] = [];

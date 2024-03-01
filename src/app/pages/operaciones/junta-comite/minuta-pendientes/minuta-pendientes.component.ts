@@ -4,6 +4,7 @@ import { MessageService } from 'primeng/api';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { EStatusPipe } from 'src/app/core/pipes/status.pipe';
 import {
+  ApiRequestService,
   CustomToastService,
   CustomerIdService,
   DataService,
@@ -17,6 +18,7 @@ import {
 export default class MinutaPendientesComponent implements OnInit, OnDestroy {
   public customToastService = inject(CustomToastService);
   public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public messageService = inject(MessageService);
   public customerIdService = inject(CustomerIdService);
   data: any[] = [];

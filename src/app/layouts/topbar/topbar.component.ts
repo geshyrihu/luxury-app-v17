@@ -8,9 +8,9 @@ import { DialogModule } from 'primeng/dialog';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { InfoEmployeeAuthDto } from 'src/app/core/interfaces/user-token.interface';
 import {
+  ApiRequestService,
   AuthService,
   CustomToastService,
-  DataService,
 } from 'src/app/core/services/common-services';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import { ProfielServiceService } from 'src/app/core/services/profiel-service.service';
@@ -35,7 +35,6 @@ import ModalSearchComponent from '../modal-search/modal-search.component';
   ],
 })
 export class TopbarComponent implements OnInit {
-  private dataService = inject(DataService);
   private location = inject(Location);
   private router = inject(Router);
   public authService = inject(AuthService);
@@ -43,6 +42,7 @@ export class TopbarComponent implements OnInit {
   public dialogService = inject(DialogService);
   public profielServiceService = inject(ProfielServiceService);
   public dialogHandlerService = inject(DialogHandlerService);
+  public apiRequestService = inject(ApiRequestService);
 
   personId: number = this.authService.userTokenDto.infoEmployeeDto.personId;
 
@@ -99,9 +99,11 @@ export class TopbarComponent implements OnInit {
     localStorage.setItem('currentUrl', currentUrl);
     this.router.navigate(['/auth/login']);
 
-    this.dataService
-      .get(`Auth/Logout/${this.authService.infoUserAuthDto.applicationUserId}`)
-      .subscribe();
+    this.apiRequestService
+      .onGetItem(
+        `Auth/Logout/${this.authService.infoUserAuthDto.applicationUserId}`
+      )
+      .then(() => {});
   }
 
   // Datos Personales

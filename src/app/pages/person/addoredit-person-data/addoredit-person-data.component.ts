@@ -20,7 +20,6 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DataService } from 'src/app/core/services/data.service';
-import { SelectItemService } from 'src/app/core/services/select-item.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
@@ -40,7 +39,6 @@ export default class AddoreditPersonDataComponent implements OnInit, OnDestroy {
   public dataService = inject(DataService);
   public datepipe = inject(DatePipe);
   public ref = inject(DynamicDialogRef);
-  public selectItemService = inject(SelectItemService);
 
   personId = 0;
   submitting: boolean = false;
@@ -61,17 +59,16 @@ export default class AddoreditPersonDataComponent implements OnInit, OnDestroy {
   form: FormGroup;
 
   ngOnInit(): void {
-    this.selectItemService
-      .onGetSelectItem('Professions')
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe((resp) => {
-        this.cb_profession = resp;
+    this.apiRequestService
+      .onGetSelectItem(`Professions`)
+      .then((response: any) => {
+        this.cb_profession = response;
       });
-    this.selectItemService
-      .onGetSelectItem('Customers')
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe((resp) => {
-        this.cb_customer = resp;
+
+    this.apiRequestService
+      .onGetSelectItem(`Customers`)
+      .then((response: any) => {
+        this.cb_customer = response;
       });
 
     flatpickrFactory();

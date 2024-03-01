@@ -13,7 +13,6 @@ import {
   AuthService,
   CustomToastService,
   DataService,
-  SelectItemService,
 } from 'src/app/core/services/common-services';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
@@ -29,13 +28,12 @@ export default class AddoreditPeriodoCedulaPresupuestalComponent
   public authService = inject(AuthService);
   public config = inject(DynamicDialogConfig);
   public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public dialogService = inject(DialogService);
   private formBuilder = inject(FormBuilder);
   public messageService = inject(MessageService);
   public customToastService = inject(CustomToastService);
   public ref = inject(DynamicDialogRef);
-  public selectItemService = inject(SelectItemService);
-  public apiRequestService = inject(ApiRequestService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 

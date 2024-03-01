@@ -12,7 +12,6 @@ import {
   CustomerIdService,
   DataService,
   DateService,
-  SelectItemService,
 } from 'src/app/core/services/common-services';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
@@ -29,7 +28,7 @@ export default class CrudSalidasComponent implements OnInit, OnDestroy {
   private dataService = inject(DataService);
   private dateService = inject(DateService);
   private formBuilder = inject(FormBuilder);
-  private selectItemService = inject(SelectItemService);
+
   public authService = inject(AuthService);
   public config = inject(DynamicDialogConfig);
   public ref = inject(DynamicDialogRef);
@@ -52,10 +51,11 @@ export default class CrudSalidasComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     flatpickrFactory();
-    this.selectItemService
-      .onGetSelectItem('getMeasurementUnits')
-      .subscribe((resp) => {
-        this.cb_measurement_unit = resp;
+
+    this.apiRequestService
+      .onGetSelectItem(`getMeasurementUnits`)
+      .then((response: any) => {
+        this.cb_measurement_unit = response;
       });
 
     this.dataService

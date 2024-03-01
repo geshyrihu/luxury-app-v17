@@ -1,16 +1,13 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { Router } from '@angular/router';
-import { AuthService } from '../../../core/services/auth.service';
+import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-ticket-panel',
   templateUrl: './ticket-panel.component.html',
+  imports: [RouterLink],
   standalone: true,
 })
-export default class TicketPanelComponent implements OnInit {
-  private route = inject(Router);
-  private authService = inject(AuthService);
-
+export default class TicketPanelComponent {
   ticketPanelMenuItems: TicketPanelMenu[] = [
     // {
     //   routerLink: '/ticket-panel/tickets',
@@ -18,9 +15,7 @@ export default class TicketPanelComponent implements OnInit {
     //   icon: 'fa-duotone fa-broom-wide',
     // },
     {
-      routerLink: this.onValidateProfession(),
-      // routerLink: '/legal/list-ticket-legal',
-      // routerLink: '/legal/list-ticket-customer',
+      routerLink: '/legal/list-ticket-customer',
       title: 'Legal',
       icon: 'fa-duotone fa-gavel',
     },
@@ -31,25 +26,6 @@ export default class TicketPanelComponent implements OnInit {
     //   icon: 'fa-brands fa-pagelines',
     // },
   ];
-  ngOnInit() {}
-
-  // VALIDAR SI ES DE PROFESSION LEGAL O NO
-
-  onValidateProfession(): string {
-    console.log(
-      '🚀 ~ this.authService.userTokenDto.infoEmployeeDto.profession:',
-      this.authService.onValidateRoles(['Legal'])
-    );
-    if (this.authService.onValidateRoles(['Legal'])) {
-      return '/legal/list-ticket-legal';
-    } else {
-      return '/legal/list-ticket-customer';
-    }
-  }
-
-  onNavigate(route: string): void {
-    this.route.navigateByUrl(route);
-  }
 }
 export interface TicketPanelMenu {
   routerLink: string;

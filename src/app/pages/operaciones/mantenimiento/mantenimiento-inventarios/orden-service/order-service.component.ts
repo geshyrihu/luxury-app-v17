@@ -9,6 +9,7 @@ import {
 } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import {
+  ApiRequestService,
   AuthService,
   CustomToastService,
   DataService,
@@ -25,6 +26,7 @@ import AddoreditMaintenancePreventiveComponent from 'src/app/pages/operaciones/c
 export default class OrderServiceComponent implements OnInit, OnDestroy {
   public customToastService = inject(CustomToastService);
   public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public messageService = inject(MessageService);
   public dialogService = inject(DialogService);
   public authService = inject(AuthService);

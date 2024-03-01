@@ -31,10 +31,10 @@ export default class StatusRequestDismissalComponent
   public authService = inject(AuthService);
   public customerIdService = inject(CustomerIdService);
   public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public dialogService = inject(DialogService);
   public router = inject(Router);
   public customToastService = inject(CustomToastService);
-  public apiRequestService = inject(ApiRequestService);
 
   workPositionId = this.statusSolicitudVacanteService.getworkPositionId();
   ref: DynamicDialogRef;

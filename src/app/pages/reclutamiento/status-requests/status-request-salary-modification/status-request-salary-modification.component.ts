@@ -28,11 +28,11 @@ export default class StatusRequestSalaryModificationComponent
   private statusSolicitudVacanteService = inject(StatusSolicitudVacanteService);
   public customerIdService = inject(CustomerIdService);
   public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public dialogService = inject(DialogService);
   public customToastService = inject(CustomToastService);
   public router = inject(Router);
   public authService = inject(AuthService);
-  public apiRequestService = inject(ApiRequestService);
 
   workPositionId = this.statusSolicitudVacanteService.getworkPositionId();
   employeeId = this.statusSolicitudVacanteService.getemployeeId();

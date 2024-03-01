@@ -4,11 +4,11 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { IProductoListAddDto } from 'src/app/core/interfaces/IProductoListAddDto.interface.interface';
 import {
+  ApiRequestService,
   AuthService,
   CustomToastService,
   CustomerIdService,
   DataService,
-  SelectItemService,
 } from 'src/app/core/services/common-services';
 
 import TarjetaProductoComponent from '../../mantenimiento-catalogos/tarjeta-producto/tarjeta-producto.component';
@@ -22,11 +22,11 @@ import TarjetaProductoComponent from '../../mantenimiento-catalogos/tarjeta-prod
 export default class AddProductosAlmacenComponent implements OnInit, OnDestroy {
   private dataService = inject(DataService);
   public customToastService = inject(CustomToastService);
-  private selectItemService = inject(SelectItemService);
   public authService = inject(AuthService);
   public customerIdService = inject(CustomerIdService);
   public dialogService = inject(DialogService);
   public ref = inject(DynamicDialogRef);
+  public apiRequestService = inject(ApiRequestService);
 
   data: any[] = [];
   cb_UnidadMedida: any[] = [];
@@ -35,10 +35,10 @@ export default class AddProductosAlmacenComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   onLoadSelectItem() {
-    this.selectItemService
-      .onGetSelectItem('getMeasurementUnits')
-      .subscribe((resp) => {
-        this.cb_UnidadMedida = resp;
+    this.apiRequestService
+      .onGetSelectItem(`getMeasurementUnits`)
+      .then((response: any) => {
+        this.cb_UnidadMedida = response;
       });
   }
 

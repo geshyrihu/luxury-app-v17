@@ -13,7 +13,6 @@ import {
   CustomToastService,
   DataService,
   DateService,
-  SelectItemService,
 } from 'src/app/core/services/common-services';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import { environment } from 'src/environments/environment';
@@ -28,7 +27,7 @@ export default class AddoreditSistemasReporteComponent
 {
   public authService = inject(AuthService);
   private dataService = inject(DataService);
-  private selectItemService = inject(SelectItemService);
+
   private formBuilder = inject(FormBuilder);
   public config = inject(DynamicDialogConfig);
   public ref = inject(DynamicDialogRef);
@@ -71,17 +70,18 @@ export default class AddoreditSistemasReporteComponent
     });
   }
   onLoadSelectItem() {
-    this.selectItemService
-      .onGetSelectItem('ResponsibleArea')
-      .subscribe((resp) => {
-        this.cb_area_responsable = resp;
+    this.apiRequestService
+      .onGetSelectItem(`ResponsibleArea`)
+      .then((response: any) => {
+        this.cb_area_responsable = response;
       });
+
     this.onLoadApplicationUser();
 
-    this.selectItemService
-      .onGetSelectItem('responsableSistemas')
-      .subscribe((resp) => {
-        this.cb_responsableSistemas = resp;
+    this.apiRequestService
+      .onGetSelectItem(`responsableSistemas`)
+      .then((response: any) => {
+        this.cb_responsableSistemas = response;
       });
   }
 

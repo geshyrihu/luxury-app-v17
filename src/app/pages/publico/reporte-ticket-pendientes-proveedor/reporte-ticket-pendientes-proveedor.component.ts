@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { Subject, takeUntil } from 'rxjs';
 import {
+  ApiRequestService,
   AuthService,
   CustomToastService,
   DataService,
@@ -21,6 +22,7 @@ export default class ReporteTicketPendientesProveedorComponent
 {
   public authService = inject(AuthService);
   public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public reportService = inject(ReportService);
   public router = inject(Router);
   public customToastService = inject(CustomToastService);

@@ -1,16 +1,11 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { MessageService } from 'primeng/api';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subject, takeUntil } from 'rxjs';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { Subject } from 'rxjs';
 import { ICustomerDto } from 'src/app/core/interfaces/ICustomerDto.interface';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomToastService,
-  DataService,
-} from 'src/app/core/services/common-services';
+import { ApiRequestService } from 'src/app/core/services/common-services';
 
+import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import { environment } from 'src/environments/environment';
 import AddOrEditClienteComponent from './addoredit-clientes.component';
 import CustomerAddressComponent from './customer-address/customer-address.component';
@@ -22,12 +17,8 @@ import CustomerImagesComponent from './customer-images/customer-images.component
   standalone: true,
   imports: [LuxuryAppComponentsModule],
 })
-export default class ListCustomerComponent implements OnInit, OnDestroy {
-  private dataService = inject(DataService);
-  public authService = inject(AuthService);
-  public customToastService = inject(CustomToastService);
-  public dialogService = inject(DialogService);
-  public messageService = inject(MessageService);
+export default class ListCustomerComponent implements OnInit {
+  public dialogHandlerService = inject(DialogHandlerService);
   public apiRequestService = inject(ApiRequestService);
 
   urlBaseImg = `${environment.base_urlImg}Administration/customer/`;
@@ -44,18 +35,10 @@ export default class ListCustomerComponent implements OnInit, OnDestroy {
   }
 
   onLoadData() {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .get(`Customers/GetAllAsync/${this.state}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.data = this.customToastService.onCloseOnGetData(resp.body);
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+    this.apiRequestService
+      .onGetList(`Customers/GetAllAsync/${this.state}`)
+      .then((result: any) => {
+        this.data = result;
       });
   }
 
@@ -68,66 +51,47 @@ export default class ListCustomerComponent implements OnInit, OnDestroy {
   }
 
   onModalAddOrEdit(data: any) {
-    this.ref = this.dialogService.open(AddOrEditClienteComponent, {
-      data: {
-        id: data.id,
-      },
-      header: data.title,
-      styleClass: 'modal-md',
-      closeOnEscape: true,
-      baseZIndex: 10000,
-    });
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        this.customToastService.onShowSuccess();
-        this.onLoadData();
-      }
-    });
+    this.dialogHandlerService
+      .openDialog(
+        AddOrEditClienteComponent,
+        data,
+        data.title,
+        this.dialogHandlerService.dialogSizeMd
+      )
+      .then((result: boolean) => {
+        if (result) this.onLoadData();
+      });
   }
 
   onUpdateImages(customerId: number) {
-    this.ref = this.dialogService.open(CustomerImagesComponent, {
-      data: {
-        customerId,
-      },
-      header: 'Actualizar Imagenes',
-      styleClass: 'modal-md',
-      closeOnEscape: true,
-      baseZIndex: 10000,
-    });
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        this.customToastService.onShowSuccess();
-        this.onLoadData();
-      }
-    });
+    this.dialogHandlerService
+      .openDialog(
+        CustomerImagesComponent,
+        { customerId },
+        'Actualizar Imagenes',
+        this.dialogHandlerService.dialogSizeMd
+      )
+      .then((result: boolean) => {
+        if (result) this.onLoadData();
+      });
   }
 
   onUpdateAddress(customerId: number) {
-    this.ref = this.dialogService.open(CustomerAddressComponent, {
-      data: {
-        customerId,
-      },
-      header: 'Actualizar Direccion',
-      styleClass: 'modal-md',
-      closeOnEscape: true,
-      baseZIndex: 10000,
-    });
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        this.customToastService.onShowSuccess();
-        this.onLoadData();
-      }
-    });
+    this.dialogHandlerService
+      .openDialog(
+        CustomerAddressComponent,
+        { customerId },
+        'Actualizar Direccion',
+        this.dialogHandlerService.dialogSizeMd
+      )
+      .then((result: boolean) => {
+        if (result) this.onLoadData();
+      });
   }
 
   onSortChange(valor: any) {
     this.state = valor;
     this.state === true ? (this.title = 'Activos') : (this.title = 'Inctivos');
     this.onLoadData();
-  }
-
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
   }
 }

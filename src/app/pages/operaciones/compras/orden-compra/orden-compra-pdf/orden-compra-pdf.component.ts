@@ -3,9 +3,9 @@ import { ActivatedRoute } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { Subject, takeUntil } from 'rxjs';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
-import { SelectItemService } from 'src/app/core/services/select-item.service';
 import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-orden-compra-pdf',
@@ -16,8 +16,9 @@ import { environment } from 'src/environments/environment';
 export default class OrdenCompraPdfComponent implements OnInit, OnDestroy {
   public customToastService = inject(CustomToastService);
   public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public routeActive = inject(ActivatedRoute);
-  public selectItemService = inject(SelectItemService);
+
   public messageService = inject(MessageService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente

@@ -32,12 +32,12 @@ export default class ListEquiposComponent implements OnInit, OnDestroy {
   public customToastService = inject(CustomToastService);
   public customerIdService = inject(CustomerIdService);
   public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public authService = inject(AuthService);
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
   public rutaActiva = inject(ActivatedRoute);
   public router = inject(Router);
-  public apiRequestService = inject(ApiRequestService);
 
   public subscriber: Subscription;
 

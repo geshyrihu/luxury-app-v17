@@ -1,16 +1,12 @@
-import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { Subject, takeUntil } from 'rxjs';
 import { IEditarCuentaDto } from 'src/app/core/interfaces/IEditarCuentaDto.interface';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import {
   ApiRequestService,
   AuthService,
-  CustomToastService,
   CustomerIdService,
-  DataService,
-  SelectItemService,
 } from 'src/app/core/services/common-services';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
@@ -20,12 +16,9 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   standalone: true,
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
-export default class UpdateAccountComponent implements OnInit, OnDestroy {
-  private customToastService = inject(CustomToastService);
-  public apiRequestService = inject(ApiRequestService);
-  private dataService = inject(DataService);
+export default class UpdateAccountComponent implements OnInit {
   private formBuilder = inject(FormBuilder);
-  private selectItemService = inject(SelectItemService);
+  public apiRequestService = inject(ApiRequestService);
   public authService = inject(AuthService);
   public customerIdService = inject(CustomerIdService);
 
@@ -36,8 +29,6 @@ export default class UpdateAccountComponent implements OnInit, OnDestroy {
 
   @Input()
   applicationUserId: string = '';
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   form: FormGroup = this.formBuilder.group({
     id: { value: this.applicationUserId, disabled: true },
@@ -57,52 +48,37 @@ export default class UpdateAccountComponent implements OnInit, OnDestroy {
   }
 
   onLoadEmployee() {
-    if (!this.authService.onValidateRoles(['SuperUsuario'])) {
-      this.selectItemService
-        .onGetSelectItem(
-          `getallemployeeactive/${this.customerIdService.getcustomerId()}`
-        )
-        .subscribe((resp) => {
-          this.cb_employee = resp;
-        });
-    } else {
-      this.selectItemService
-        .onGetSelectItem('getallemployeeactive')
-        .subscribe((resp) => {
-          this.cb_employee = resp;
-        });
-    }
+    const urlRle = !this.authService.onValidateRoles(['SuperUsuario'])
+      ? `getallemployeeactive/${this.customerIdService.getcustomerId()}`
+      : 'getallemployeeactive';
 
-    this.selectItemService
-      .onGetSelectItem('customers')
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe((resp) => {
-        this.cb_customer = resp;
+    this.apiRequestService
+      .onGetSelectItem(urlRle)
+      .then((response: ISelectItemDto[]) => {
+        this.cb_employee = response;
       });
-    this.selectItemService
+
+    this.apiRequestService
+      .onGetSelectItem('customers')
+      .then((response: ISelectItemDto[]) => {
+        this.cb_customer = response;
+      });
+
+    this.apiRequestService
       .onGetSelectItem('professions')
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe((resp) => {
-        this.cb_profession = resp;
+      .then((response: ISelectItemDto[]) => {
+        this.cb_profession = response;
       });
   }
 
   onLoadData() {
-    this.dataService
-      .get<IEditarCuentaDto>(
-        `accounts/getapplicationuser/${this.applicationUserId}`
-      )
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.form.patchValue(resp.body);
-          this.form.patchValue({
-            employeeActualId: resp.body.employeeId,
-          });
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+    this.apiRequestService
+      .onGetList(`accounts/getapplicationuser/${this.applicationUserId}`)
+      .then((result: any) => {
+        this.form.patchValue(result);
+        this.form.patchValue({
+          employeeActualId: result.employeeId,
+        });
       });
   }
   onSubmit() {
@@ -114,23 +90,14 @@ export default class UpdateAccountComponent implements OnInit, OnDestroy {
       personName: '',
     });
 
-    this.dataService
-      .put<IEditarCuentaDto>(
+    this.apiRequestService
+      .onPut<IEditarCuentaDto>(
         `accounts/updateapplicationuser/${this.applicationUserId}`,
         this.form.value
       )
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          this.onLoadData();
-          this.submitting = false;
-          this.customToastService.onCloseToSuccess();
-        },
-        error: (error) => {
-          // Habilitar el botón nuevamente al finalizar el envío del formulario
-          this.submitting = false;
-          this.customToastService.onCloseToError(error);
-        },
+      .then(() => {
+        this.onLoadData();
+        this.submitting = false;
       });
   }
 
@@ -141,9 +108,5 @@ export default class UpdateAccountComponent implements OnInit, OnDestroy {
     this.form.patchValue({
       personId: find?.value,
     });
-  }
-
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
   }
 }

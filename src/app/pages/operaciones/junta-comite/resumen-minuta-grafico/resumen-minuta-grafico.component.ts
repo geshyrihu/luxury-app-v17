@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { ReportService } from 'src/app/core/services/report.service';
 @Component({
@@ -12,6 +13,7 @@ import { ReportService } from 'src/app/core/services/report.service';
 export default class ResumenMinutaGraficoComponent {
   public reportService = inject(ReportService);
   public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   view: [number, number] = [700, 400];
 
   get single() {

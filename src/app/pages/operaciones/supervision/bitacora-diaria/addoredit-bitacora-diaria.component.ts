@@ -5,14 +5,12 @@ import LuxuryAppComponentsModule, {
 } from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
-import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import {
   ApiRequestService,
   AuthService,
   CustomToastService,
   DataService,
   DateService,
-  SelectItemService,
 } from 'src/app/core/services/common-services';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
@@ -27,7 +25,7 @@ export default class AddOrEditBitacoraDiariaComponent
 {
   public authService = inject(AuthService);
   private dataService = inject(DataService);
-  private selectItemService = inject(SelectItemService);
+
   private formBuilder = inject(FormBuilder);
   public config = inject(DynamicDialogConfig);
   public ref = inject(DynamicDialogRef);
@@ -59,10 +57,10 @@ export default class AddOrEditBitacoraDiariaComponent
   });
 
   onLoadSelectItem() {
-    this.selectItemService
-      .onGetSelectItem('customers')
-      .subscribe((items: ISelectItemDto[]) => {
-        this.cb_customer = items;
+    this.apiRequestService
+      .onGetSelectItem(`customers`)
+      .then((response: any) => {
+        this.cb_customer = response;
       });
   }
 

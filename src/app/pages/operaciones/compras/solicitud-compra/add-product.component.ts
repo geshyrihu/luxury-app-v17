@@ -14,10 +14,10 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import {
+  ApiRequestService,
   AuthService,
   CustomToastService,
   DataService,
-  SelectItemService,
 } from 'src/app/core/services/common-services';
 import { SolicitudCompraService } from 'src/app/core/services/solicitud-compra.service';
 import TarjetaProductoComponent from 'src/app/pages/operaciones/mantenimiento/mantenimiento-catalogos/tarjeta-producto/tarjeta-producto.component';
@@ -35,9 +35,10 @@ export default class AddProductComponent implements OnInit, OnDestroy {
   private dataService = inject(DataService);
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
-  public selectItemService = inject(SelectItemService);
+
   private formBuilder = inject(FormBuilder);
   private solicitudCompraService = inject(SolicitudCompraService);
+  public apiRequestService = inject(ApiRequestService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
@@ -62,10 +63,11 @@ export default class AddProductComponent implements OnInit, OnDestroy {
       this.onLoadProduct();
     });
     this.onLoadProduct();
-    this.selectItemService
+
+    this.apiRequestService
       .onGetSelectItem('getMeasurementUnits')
-      .subscribe((resp) => {
-        this.cb_measurement_units = resp;
+      .then((response: any) => {
+        this.cb_measurement_units = response;
       });
   }
 

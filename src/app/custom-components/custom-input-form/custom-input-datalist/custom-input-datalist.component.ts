@@ -69,5 +69,4 @@ export default class CustomInputDatalistComponent
   public onSelectItem(e: any): void {
     this.propagar.emit(e);
   }
-  // Otros métodos y lógica del componente
 }

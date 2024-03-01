@@ -7,6 +7,7 @@ import {
 } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import {
+  ApiRequestService,
   CustomToastService,
   DataService,
 } from 'src/app/core/services/common-services';
@@ -23,6 +24,7 @@ export default class ContMinutaSeguimientosComponent
 {
   public config = inject(DynamicDialogConfig);
   public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public dialogService = inject(DialogService);
   public customToastService = inject(CustomToastService);
 

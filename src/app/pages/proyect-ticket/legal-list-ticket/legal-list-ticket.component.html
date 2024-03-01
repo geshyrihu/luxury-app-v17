@@ -3,7 +3,15 @@
   <p-table
     #dt
     [value]="data"
-    [globalFilterFields]="['']"
+    [globalFilterFields]="[
+      'folio',
+      'requestDate',
+      'customer',
+      'requestPerson',
+      'title',
+      'statusFilter',
+      'requestDate'
+    ]"
     [paginator]="true"
     [rowHover]="true"
     [rows]="50"
@@ -15,15 +23,15 @@
     <ng-template pTemplate="caption">
       <app-table-header
         title="TICKETS LEGAL"
-        (add)="onModalAddOrEdit({ id: '', title: 'AGREGAR TICKET LEGAL' })"
+        [showAdd]="false"
         [dt]="dt"
       ></app-table-header>
-      <div class="row">
-        <div class="col">
-          <!-- TODO: COLOCAR FILTROS POR MES, Y POR CLIENTE -->
-        </div>
-      </div>
     </ng-template>
+    <div class="row">
+      <div class="col">
+        <!-- TODO: COLOCAR FILTROS POR MES, Y POR CLIENTE -->
+      </div>
+    </div>
 
     <ng-template pTemplate="header">
       <tr>
@@ -33,13 +41,15 @@
         <th scope="col" class="th-cliente">SOLICITA</th>
         <th scope="col" class="th-cliente">ASUNTO</th>
         <th scope="col" class="th-cliente">DESCRIPCIÓN</th>
-        <th scope="col">CARGA DE DOCTOS EN LUX CLOUD</th>
+        <th scope="col">DOCTOS EN LUX CLOUD</th>
         <th scope="col">ESTATUS</th>
         <th scope="col">FECHA</th>
         <th scope="col">DÍAS</th>
         <th scope="col">RESPONSABLE</th>
         <th scope="col">SEGUIMIENTO</th>
+        @if (isSuperUser) {
         <th scope="col" style="width: 15px" class="hide-print-mode"></th>
+        }
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-item>
@@ -76,7 +86,7 @@
             @if (item.status === 0) {
             <span> PENDIENTE </span>
             } @if (item.status === 1) {
-            <span> TERMINADO </span>
+            <span> CONCLUIDO </span>
             } @if (item.status === 3) {
             <span> PROCESO </span>
             } @if (item.status === 4) {
@@ -107,6 +117,7 @@
             </button>
           </div>
         </td>
+        @if (isSuperUser) {
 
         <td class="p-column-title" class="hide-print-mode">
           <div class="d-flex justify-content-center">
@@ -122,6 +133,7 @@
             }
           </div>
         </td>
+        }
       </tr>
     </ng-template>
     <ng-template pTemplate="paginatorleft">
@@ -135,8 +147,17 @@
 
 <style>
   /* Estilo para los encabezados de la tabla */
+  /* .th-cliente {
+    background-color: #548235 !important;
+    color: white !important ;
+  } */
+
   .th-cliente {
-    background-color: #548235 !important; /* Color de fondo blanco */
-    color: white !important ; /* Color de texto negro */
+    font-family: "Playfair Display", serif;
+    background: -webkit-linear-gradient(90deg, #414141 10%, #548235 90%);
+    background: -moz-linear-gradient(90deg, #414141 10%, #548235 90%);
+    background: -ms-linear-gradient(90deg, #414141 10%, #548235 90%);
+    background: -o-linear-gradient(90deg, #414141 10%, #548235 90%);
+    background: linear-gradient(90deg, #414141 10%, #548235 90%);
   }
 </style>

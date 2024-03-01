@@ -11,7 +11,6 @@ import {
   CustomToastService,
   CustomerIdService,
   DataService,
-  SelectItemService,
 } from 'src/app/core/services/common-services';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
@@ -28,13 +27,12 @@ export default class FormCatalogoGastosFijosComponent
   public authService = inject(AuthService);
   private formBuilder = inject(FormBuilder);
   public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public ref = inject(DynamicDialogRef);
   public config = inject(DynamicDialogConfig);
-  public selectItemService = inject(SelectItemService);
   public messageService = inject(MessageService);
   public catalogoGastosFijosService = inject(CatalogoGastosFijosService);
   public customerIdService = inject(CustomerIdService);
-  public apiRequestService = inject(ApiRequestService);
 
   submitting: boolean = false;
 
@@ -69,29 +67,25 @@ export default class FormCatalogoGastosFijosComponent
   });
 
   ngOnInit(): void {
-    this.selectItemService
+    this.apiRequestService
       .onGetSelectItem('Providers')
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe((resp) => {
-        this.cb_providers = resp;
+      .then((response: any) => {
+        this.cb_providers = response;
       });
-    this.selectItemService
-      .onGetSelectItem('UseCFDI')
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe((resp) => {
-        this.cb_use_cfdi = resp;
-      });
-    this.selectItemService
+
+    this.apiRequestService.onGetSelectItem('UseCFDI').then((response: any) => {
+      this.cb_use_cfdi = response;
+    });
+
+    this.apiRequestService
       .onGetSelectItem('PaymentMethod')
-      .subscribe((resp) => {
-        this.cb_metodoDePago = resp;
+      .then((response: any) => {
+        this.cb_metodoDePago = response;
       });
-    this.selectItemService
-      .onGetSelectItem('WayToPay')
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe((resp) => {
-        this.cb_formaDePago = resp;
-      });
+
+    this.apiRequestService.onGetSelectItem('WayToPay').then((response: any) => {
+      this.cb_formaDePago = response;
+    });
 
     this.id = this.catalogoGastosFijosService.getCatalogoGastosFijosId();
     if (this.id !== 0) this.onLoadData();

@@ -23,12 +23,12 @@ export default class ListSolicitudCompraComponent implements OnInit, OnDestroy {
   public authService = inject(AuthService);
   public customerIdService = inject(CustomerIdService);
   public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public messageService = inject(MessageService);
   public router = inject(Router);
   public solicitudCompraService = inject(SolicitudCompraService);
   public customToastService = inject(CustomToastService);
   public dialogService = inject(DialogService);
-  public apiRequestService = inject(ApiRequestService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 

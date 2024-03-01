@@ -23,12 +23,12 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 export default class FormInventarioLlaveComponent implements OnInit, OnDestroy {
   private formBuilder = inject(FormBuilder);
   public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public ref = inject(DynamicDialogRef);
   public config = inject(DynamicDialogConfig);
   public customerIdService = inject(CustomerIdService);
   public authService = inject(AuthService);
   private customToastService = inject(CustomToastService);
-  public apiRequestService = inject(ApiRequestService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
   submitting: boolean = false;

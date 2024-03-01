@@ -3,7 +3,10 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { FileUploadModule } from 'primeng/fileupload';
 import { Subject, takeUntil } from 'rxjs';
-import { DataService } from 'src/app/core/services/common-services';
+import {
+  ApiRequestService,
+  DataService,
+} from 'src/app/core/services/common-services';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 
 import { environment } from 'src/environments/environment';
@@ -20,6 +23,7 @@ export default class PresupuestoEditionFileComponent
   public customToastService = inject(CustomToastService);
   public config = inject(DynamicDialogConfig);
   public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
 
   id = this.config.data.id;
   url: string = `${environment.base_url}Cuentas/SetDocuments/${this.id}`;

@@ -23,10 +23,10 @@ import TarjetaProveedorComponent from '../tarjeta-proveedor/tarjeta-proveedor.co
 export default class ListProviderComponent implements OnInit, OnDestroy {
   public customToastService = inject(CustomToastService);
   public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public messageService = inject(MessageService);
   public dialogService = inject(DialogService);
   public authService = inject(AuthService);
-  public apiRequestService = inject(ApiRequestService);
 
   data: BusquedaProveedor[] = [];
   ref: DynamicDialogRef;

@@ -3,6 +3,7 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService, TreeNode } from 'primeng/api';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import {
+  ApiRequestService,
   CustomToastService,
   CustomerIdService,
   DataService,
@@ -16,10 +17,12 @@ import { environment } from 'src/environments/environment';
   imports: [LuxuryAppComponentsModule],
 })
 export default class OrganigramaComponent implements OnInit, OnDestroy {
+  public apiRequestService = inject(ApiRequestService);
+  public customerIdService = inject(CustomerIdService);
   public customToastService = inject(CustomToastService);
   public dataService = inject(DataService);
-  public customerIdService = inject(CustomerIdService);
   public messageService = inject(MessageService);
+
   data: TreeNode[];
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente

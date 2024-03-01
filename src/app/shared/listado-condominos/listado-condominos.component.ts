@@ -5,8 +5,10 @@ import { SharedModule } from 'primeng/api';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { TableModule } from 'primeng/table';
 import { IDestinatariosMailReporte } from 'src/app/core/interfaces/IDestinatariosMailReporte.interface';
-import { CustomerIdService } from 'src/app/core/services/common-services';
-import { SelectItemService } from 'src/app/core/services/select-item.service';
+import {
+  ApiRequestService,
+  CustomerIdService,
+} from 'src/app/core/services/common-services';
 import TableHeaderComponent from '../table-header/table-header.component';
 @Component({
   selector: 'app-listado-condominos',
@@ -21,8 +23,9 @@ import TableHeaderComponent from '../table-header/table-header.component';
   ],
 })
 export default class ListadoCondominosComponent implements OnInit {
-  private selectItemService = inject(SelectItemService);
   public customerIdService = inject(CustomerIdService);
+  public apiRequestService = inject(ApiRequestService);
+
   public ref = inject(DynamicDialogRef);
   data: any[] = [];
   destinatariosFinal: IDestinatariosMailReporte[] = [];
@@ -32,12 +35,12 @@ export default class ListadoCondominosComponent implements OnInit {
   }
 
   onLoadSelectItem() {
-    this.selectItemService
+    this.apiRequestService
       .onGetSelectItem(
         `ResidentesEdificio/${this.customerIdService.getcustomerId()}`
       )
-      .subscribe((resp: any) => {
-        this.data = resp;
+      .then((response: any) => {
+        this.data = response;
       });
   }
 

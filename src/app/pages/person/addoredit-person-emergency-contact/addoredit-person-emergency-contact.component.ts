@@ -12,7 +12,6 @@ import {
   ApiRequestService,
   CustomToastService,
   DataService,
-  SelectItemService,
 } from 'src/app/core/services/common-services';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
@@ -30,10 +29,9 @@ export default class AddoreditPersonEmergencyContactComponent
   public config = inject(DynamicDialogConfig);
   public customToastService = inject(CustomToastService);
   public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public messageService = inject(MessageService);
   public ref = inject(DynamicDialogRef);
-  public selectItemService = inject(SelectItemService);
-  public apiRequestService = inject(ApiRequestService);
 
   id: string = '';
 
@@ -59,13 +57,9 @@ export default class AddoreditPersonEmergencyContactComponent
     }
   }
   onLoadSelectItem() {
-    // Carga de listado de personas
-    this.selectItemService
-      .onGetSelectItem('persons')
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe((resp) => {
-        this.cb_persons = resp;
-      });
+    this.apiRequestService.onGetSelectItem(`persons`).then((response: any) => {
+      this.cb_persons = response;
+    });
   }
 
   onLoadData() {

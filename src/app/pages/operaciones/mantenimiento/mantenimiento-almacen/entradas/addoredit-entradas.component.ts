@@ -6,12 +6,12 @@ import LuxuryAppComponentsModule, {
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import {
+  ApiRequestService,
   AuthService,
   CustomToastService,
   CustomerIdService,
   DataService,
   DateService,
-  SelectItemService,
 } from 'src/app/core/services/common-services';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
@@ -27,9 +27,10 @@ export default class AddOrEditEntradasComponent implements OnInit, OnDestroy {
   private customerIdService = inject(CustomerIdService);
   private dataService = inject(DataService);
   private dateService = inject(DateService);
-  private selectItemService = inject(SelectItemService);
+
   public authService = inject(AuthService);
   public config = inject(DynamicDialogConfig);
+  public apiRequestService = inject(ApiRequestService);
 
   public ref = inject(DynamicDialogRef);
 
@@ -71,17 +72,19 @@ export default class AddOrEditEntradasComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     flatpickrFactory();
-    this.selectItemService
-      .onGetSelectItem('getMeasurementUnits')
-      .subscribe((resp) => {
-        this.cb_measurement_unit = resp;
+
+    this.apiRequestService
+      .onGetSelectItem(`getMeasurementUnits`)
+      .then((response: any) => {
+        this.cb_measurement_unit = response;
       });
-    this.selectItemService
-      .onGetSelectItem('Providers')
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe((resp) => {
-        this.cb_providers = resp;
+
+    this.apiRequestService
+      .onGetSelectItem(`Providers`)
+      .then((response: any) => {
+        this.cb_providers = response;
       });
+
     this.form.patchValue({ productoId: this.config.data.idProducto });
     this.id = this.config.data.id;
     if (this.config.data.idProducto == 0) {

@@ -1,15 +1,9 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subject, takeUntil } from 'rxjs';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
-import {
-  ApiRequestService,
-  CustomToastService,
-  DataService,
-  SelectItemService,
-} from 'src/app/core/services/common-services';
+import { ApiRequestService } from 'src/app/core/services/common-services';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
@@ -18,19 +12,14 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   standalone: true,
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
-export default class AddOrEditProviderSupportComponent implements OnInit {
+export default class AddOrEditProviderSupportComponent {
   private config = inject(DynamicDialogConfig);
-  private customToastService = inject(CustomToastService);
   public apiRequestService = inject(ApiRequestService);
-  private dataService = inject(DataService);
   private formBuilder = inject(FormBuilder);
   private ref = inject(DynamicDialogRef);
-  private selectItemService = inject(SelectItemService);
 
   submitting: boolean = false;
   id: string = '';
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   cb_persons: ISelectItemDto[] = [];
   cb_professions: ISelectItemDto[] = [];
@@ -56,16 +45,10 @@ export default class AddOrEditProviderSupportComponent implements OnInit {
   }
 
   onLoadData() {
-    this.dataService
-      .get(`providersupport/${this.id}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.form.patchValue(resp.body);
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+    this.apiRequestService
+      .onGetItem(`providersupport/${this.id}`)
+      .then((result: any) => {
+        this.form.patchValue(result);
       });
   }
 
@@ -74,70 +57,42 @@ export default class AddOrEditProviderSupportComponent implements OnInit {
     this.id = this.config.data.id;
     // Deshabilitar el botón al iniciar el envío del formulario
     this.submitting = true;
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
 
     if (this.id === '') {
-      this.dataService
-        .post(`providersupport`, this.form.value)
-        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-        .subscribe({
-          next: () => {
-            this.ref.close(true);
-            this.customToastService.onClose();
-          },
-          error: (error) => {
-            // Habilitar el botón nuevamente al finalizar el envío del formulario
-            this.submitting = false;
-            this.customToastService.onCloseToError(error);
-          },
+      this.apiRequestService
+        .onPost(`providersupport`, this.form.value)
+        .then((result: boolean) => {
+          result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.dataService
-        .put(`providersupport/${this.id}`, this.form.value)
-        .subscribe({
-          next: () => {
-            this.ref.close(true);
-            this.customToastService.onClose();
-          },
-          error: (error) => {
-            // Habilitar el botón nuevamente al finalizar el envío del formulario
-            this.submitting = false;
-            this.customToastService.onCloseToError(error);
-          },
+      this.apiRequestService
+        .onPut(`providersupport/${this.id}`, this.form.value)
+        .then((result: boolean) => {
+          result ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }
 
   onLoadSelectItem() {
     // Carga de listado de proveedores
-    this.selectItemService
-      .onGetSelectItem('providers')
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe((resp) => {
-        this.cb_providers = resp;
-      });
+    this.apiRequestService.onGetSelectItem('providers').then((resp: any) => {
+      this.cb_providers = resp;
+    });
+
     // Carga de listado de categorias
-    this.selectItemService
-      .onGetSelectItem('professions')
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe((resp) => {
-        this.cb_professions = resp;
-      });
+    this.apiRequestService.onGetSelectItem('professions').then((resp: any) => {
+      this.cb_professions = resp;
+    });
+
     // Carga de listado de personas
-    this.selectItemService
-      .onGetSelectItem('persons')
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe((resp) => {
-        this.cb_persons = resp;
-      });
+    this.apiRequestService.onGetSelectItem('persons').then((resp: any) => {
+      this.cb_persons = resp;
+    });
+
     // Carga de listado de clientes
-    this.selectItemService
-      .onGetSelectItem('customers')
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe((resp) => {
-        this.cb_customers = resp;
-      });
+    this.apiRequestService.onGetSelectItem('customers').then((resp: any) => {
+      this.cb_customers = resp;
+    });
   }
 
   saveProviderId(e: any) {
@@ -168,8 +123,5 @@ export default class AddOrEditProviderSupportComponent implements OnInit {
       customerId: find?.value,
       nameCustomer: find?.label,
     });
-  }
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
   }
 }

@@ -10,7 +10,6 @@ import {
   DataService,
   DateService,
   FiltroCalendarService,
-  SelectItemService,
 } from 'src/app/core/services/common-services';
 
 import { environment } from 'src/environments/environment';
@@ -27,7 +26,7 @@ export default class BitacoraDiariaComponent implements OnInit, OnDestroy {
   public authService = inject(AuthService);
   private dataService = inject(DataService);
   private dialogService = inject(DialogService);
-  private selectItemService = inject(SelectItemService);
+
   private rangoCalendarioService = inject(FiltroCalendarService);
   private customToastService = inject(CustomToastService);
   public apiRequestService = inject(ApiRequestService);
@@ -61,12 +60,15 @@ export default class BitacoraDiariaComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.onLoadUserSupervisor();
-    this.selectItemService
-      .getCustomersNombreCorto()
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe((resp) => {
-        this.cb_customers = resp;
+
+    this.apiRequestService
+      .onGetSelectItem(`NombreCorto`)
+      .then((response: any) => {
+        this.cb_customers = response.map((selectList: any) => ({
+          label: selectList.label,
+        }));
       });
+
     this.rangoCalendarioService.fechas$.subscribe((resp: IFechasFiltro) => {
       this.fechaInicial = resp.fechaInicio;
       this.fechaFinal = resp.fechaFinal;

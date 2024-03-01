@@ -17,7 +17,6 @@ import { ReportService } from './report.service';
 import { ReporteHerramientasPdfService } from './reporte-herramientas-pdf.service';
 import { ReporteOrdenesServicioService } from './reporte-ordenes-servicio.service';
 import { SecurityService } from './security.service';
-import { SelectItemService } from './select-item.service';
 import { SistemasReporteService } from './sistemas-reporte.service';
 import { SolicitudCompraService } from './solicitud-compra.service';
 import { StatusSolicitudVacanteService } from './status-solicitud-vacante.service';
@@ -41,7 +40,6 @@ export {
   ReporteHerramientasPdfService,
   ReporteOrdenesServicioService,
   SecurityService,
-  SelectItemService,
   SistemasReporteService,
   SolicitudCompraService,
   StatusSolicitudVacanteService,

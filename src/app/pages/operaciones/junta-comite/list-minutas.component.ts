@@ -31,12 +31,12 @@ export default class ListMinutasComponent implements OnInit, OnDestroy {
   public confirmationService = inject(ConfirmationService);
   public customerIdService = inject(CustomerIdService);
   public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
   public reportService = inject(ReportService);
   public route = inject(Router);
   public customToastService = inject(CustomToastService);
-  public apiRequestService = inject(ApiRequestService);
 
   data: IMeetingIndexDto[] = [];
   tipoJunta: string = 'Comité';
@@ -49,7 +49,6 @@ export default class ListMinutasComponent implements OnInit, OnDestroy {
   emailAccount: boolean = false;
 
   ngOnInit(): void {
-    console.log('🚀 ~ this.tipoJunta):', this.tipoJunta);
     this.onLoadData(this.tipoJunta);
     this.customerId$.subscribe(() => {
       this.onLoadData(this.tipoJunta);

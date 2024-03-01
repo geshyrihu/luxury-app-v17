@@ -36,9 +36,9 @@ export default class OrdenesServicioComponentComponent
   public reporteOrdenesServicioService = inject(ReporteOrdenesServicioService);
   public dialogService = inject(DialogService);
   public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public dateService = inject(DateService);
   public customToastService = inject(CustomToastService);
-  public apiRequestService = inject(ApiRequestService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 

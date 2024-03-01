@@ -25,7 +25,6 @@ export default class ServiceHistoryMachineryComponent
 {
   private dataService = inject(DataService);
   public config = inject(DynamicDialogConfig);
-
   private customToastService = inject(CustomToastService);
   public apiRequestService = inject(ApiRequestService);
   public dialogService = inject(DialogService);

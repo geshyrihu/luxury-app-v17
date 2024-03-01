@@ -57,6 +57,4 @@ export default class CustomInputTextAreaComponent
   setDisabledState(isDisabled: boolean): void {
     this.disabled = isDisabled;
   }
-
-  // Otros métodos y lógica del componente
 }

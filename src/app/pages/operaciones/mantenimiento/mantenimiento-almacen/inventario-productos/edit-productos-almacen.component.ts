@@ -9,7 +9,6 @@ import {
   CustomToastService,
   CustomerIdService,
   DataService,
-  SelectItemService,
 } from 'src/app/core/services/common-services';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
@@ -24,7 +23,6 @@ export default class EditProductosAlmacenComponent
 {
   private dataService = inject(DataService);
   private formBuilder = inject(FormBuilder);
-  private selectListSevice = inject(SelectItemService);
   public authService = inject(AuthService);
   public config = inject(DynamicDialogConfig);
   public customerIdService = inject(CustomerIdService);
@@ -52,10 +50,10 @@ export default class EditProductosAlmacenComponent
   });
 
   onLoadProducts() {
-    this.selectListSevice
+    this.apiRequestService
       .onGetSelectItem('getMeasurementUnits')
-      .subscribe((resp) => {
-        this.cb_measurementUnits = resp;
+      .then((response: any) => {
+        this.cb_measurementUnits = response;
       });
   }
 

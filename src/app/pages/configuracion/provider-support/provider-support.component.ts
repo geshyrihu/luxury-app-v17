@@ -1,14 +1,12 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject } from 'rxjs';
 import {
   ApiRequestService,
   AuthService,
-  CustomToastService,
-  DataService,
 } from 'src/app/core/services/common-services';
+import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import { environment } from 'src/environments/environment';
 import AddOrEditprovidersupportComponent from './add-or-edit-provider-support/add-or-edit-provider-support.component';
 
@@ -18,13 +16,11 @@ import AddOrEditprovidersupportComponent from './add-or-edit-provider-support/ad
   standalone: true,
   imports: [LuxuryAppComponentsModule],
 })
-export default class providersupportComponent implements OnInit, OnDestroy {
-  private dataService = inject(DataService);
+export default class providersupportComponent implements OnInit {
   public authService = inject(AuthService);
-  public customToastService = inject(CustomToastService);
   public dialogService = inject(DialogService);
-  public messageService = inject(MessageService);
   public apiRequestService = inject(ApiRequestService);
+  public dialogHandlerService = inject(DialogHandlerService);
 
   url_img = `${environment.base_urlImg}providers/`;
 
@@ -39,23 +35,25 @@ export default class providersupportComponent implements OnInit, OnDestroy {
   }
   // Función para cargar los datos
   onLoadData() {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-
-    // Realizar una solicitud HTTP para obtener datos
-    this.dataService
-      .get('providersupport')
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.data = this.customToastService.onCloseOnGetData(resp.body);
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
+    this.apiRequestService.onGetList('providersupport').then((result: any) => {
+      this.data = result;
+    });
   }
 
+  //Modal Agregar o editar
+  // Función para abrir un cuadro de diálogo modal para agregar o editar información sobre un banco
+  onModalAddOrEdit(data: any) {
+    this.dialogHandlerService
+      .openDialog(
+        AddOrEditprovidersupportComponent,
+        data,
+        data.title,
+        this.dialogHandlerService.dialogSizeMd
+      )
+      .then((result: boolean) => {
+        if (result) this.onLoadData();
+      });
+  }
   // Función para eliminar
   onDelete(id: string) {
     this.apiRequestService
@@ -63,35 +61,6 @@ export default class providersupportComponent implements OnInit, OnDestroy {
       .then((result: boolean) => {
         if (result) this.data = this.data.filter((item) => item.id !== id);
       });
-  }
-
-  //Modal Agregar o editar
-  // Función para abrir un cuadro de diálogo modal para agregar o editar información sobre un banco
-  onModalAddOrEdit(data: any) {
-    this.ref = this.dialogService.open(AddOrEditprovidersupportComponent, {
-      data: {
-        id: data.id,
-      },
-      header: data.title,
-      styleClass: 'modal-md ',
-      closeOnEscape: true,
-      baseZIndex: 10000,
-    });
-
-    // Escuchar el evento 'onClose' cuando se cierra el cuadro de diálogo
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        // Cuando se recibe 'true', mostrar un mensaje de éxito y volver a cargar los datos
-        this.customToastService.onShowSuccess();
-        this.onLoadData();
-      }
-    });
-  }
-
-  ngOnDestroy(): void {
-    // Cuando se destruye el componente, desvincular y liberar recursos
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 }
 export interface ProviderSupportListDto {

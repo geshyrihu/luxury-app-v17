@@ -67,7 +67,6 @@ export class OrdenCompraService implements OnDestroy {
               },
               error: (error) => {
                 console.log(error.error);
-                // this.customToastService.onCloseToError(error);
               },
             });
         },

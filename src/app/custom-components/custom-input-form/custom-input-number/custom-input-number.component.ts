@@ -56,6 +56,4 @@ export default class CustomInputNumberComponent
   setDisabledState(isDisabled: boolean): void {
     this.disabled = isDisabled;
   }
-
-  // Otros métodos y lógica del componente
 }

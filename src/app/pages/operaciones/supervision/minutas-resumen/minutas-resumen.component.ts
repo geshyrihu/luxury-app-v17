@@ -3,11 +3,11 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { Subject, takeUntil } from 'rxjs';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
 import { PeriodoMonthService } from 'src/app/core/services/periodo-month.service';
-import { SelectItemService } from 'src/app/core/services/select-item.service';
 import FiltroMinutasAreaComponent from '../filtro-minutas-area/filtro-minutas-area.component';
 @Component({
   selector: 'app-minutas-resumen',
@@ -18,10 +18,10 @@ import FiltroMinutasAreaComponent from '../filtro-minutas-area/filtro-minutas-ar
 export default class MinutasResumenComponent implements OnInit, OnDestroy {
   public customToastService = inject(CustomToastService);
   public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public dateService = inject(DateService);
   public dialogService = inject(DialogService);
   public periodoMonthService = inject(PeriodoMonthService);
-  public selectItemService = inject(SelectItemService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
@@ -37,12 +37,14 @@ export default class MinutasResumenComponent implements OnInit, OnDestroy {
     this.periodo = this.dateService.getNameMontYear(
       this.periodoMonthService.fechaInicial
     );
-    this.selectItemService
-      .getCustomersNombreCorto()
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe((resp) => {
-        this.cb_customers = resp;
+    this.apiRequestService
+      .onGetSelectItem(`NombreCorto`)
+      .then((response: any) => {
+        this.cb_customers = response.map((selectList: any) => ({
+          label: selectList.label,
+        }));
       });
+
     this.onLoadData(
       this.dateService.getDateFormat(this.periodoMonthService.getPeriodoInicio),
       this.dateService.getDateFormat(this.periodoMonthService.getPeriodoFin)

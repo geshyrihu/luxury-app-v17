@@ -71,5 +71,4 @@ export default class CustomInputSelectPrefixComponent
   public onSelectItem(e: any): void {
     this.propagar.emit(e);
   }
-  // Otros métodos y lógica del componente
 }

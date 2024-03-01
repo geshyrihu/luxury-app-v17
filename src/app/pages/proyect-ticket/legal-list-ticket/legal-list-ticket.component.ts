@@ -1,7 +1,9 @@
 import { Component, OnInit, inject } from '@angular/core';
+import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
+
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
-import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
+import { AuthService } from 'src/app/core/services/auth.service';
 import LegalTicketAddOrEditComponent from '../legal-ticket-add-or-edit/legal-ticket-add-or-edit.component';
 import TicketTrakingComponent from '../ticket-traking/ticket-traking.component';
 
@@ -12,8 +14,11 @@ import TicketTrakingComponent from '../ticket-traking/ticket-traking.component';
   imports: [LuxuryAppComponentsModule],
 })
 export default class LegalListTicketComponent implements OnInit {
-  public dialogHandlerService = inject(DialogHandlerService);
-  public apiRequestService = inject(ApiRequestService);
+  private dialogHandlerService = inject(DialogHandlerService);
+  private apiRequestService = inject(ApiRequestService);
+  private authService = inject(AuthService);
+
+  isSuperUser = this.authService.onValidateRoles(['SuperUsuario']);
 
   data: any[] = [];
 
@@ -23,11 +28,9 @@ export default class LegalListTicketComponent implements OnInit {
 
   // Función para cargar los datos de los bancos
   onLoadData() {
-    this.apiRequestService
-      .onGetList('TicketLegal/alllegal')
-      .then((result: any) => {
-        this.data = result;
-      });
+    this.apiRequestService.onGetList('TicketLegal/All').then((result: any) => {
+      this.data = result;
+    });
   }
 
   onModalAddOrEdit(data: any) {

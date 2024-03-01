@@ -12,7 +12,6 @@ import {
 } from 'src/app/core/services/common-services';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
-import { SelectItemService } from 'src/app/core/services/select-item.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
@@ -22,14 +21,13 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class RecorridoAddOrEditComponent implements OnInit, OnDestroy {
-  public selectItemService = inject(SelectItemService);
   public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   private formBuilder = inject(FormBuilder);
   public config = inject(DynamicDialogConfig);
   public ref = inject(DynamicDialogRef);
   public customerIdService = inject(CustomerIdService);
   private customToastService = inject(CustomToastService);
-  public apiRequestService = inject(ApiRequestService);
 
   submitting: boolean = false;
 
@@ -44,12 +42,12 @@ export default class RecorridoAddOrEditComponent implements OnInit, OnDestroy {
     onGetSelectItemFromEnum(ERouteRecurrence);
 
   onLoadSelectItem() {
-    this.selectItemService
+    this.apiRequestService
       .onGetSelectItem(
         `MachineriesGetAll/${this.customerIdService.getcustomerId()}`
       )
-      .subscribe((resp: any) => {
-        this.cb_machinery = resp;
+      .then((response: any) => {
+        this.cb_machinery = response;
       });
   }
 

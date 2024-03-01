@@ -24,10 +24,10 @@ import TarjetaProveedorComponent from '../tarjeta-proveedor/tarjeta-proveedor.co
 export default class BuscadorProvedorComponent implements OnInit, OnDestroy {
   public customToastService = inject(CustomToastService);
   public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public messageService = inject(MessageService);
   public dialogService = inject(DialogService);
   public authService = inject(AuthService);
-  public apiRequestService = inject(ApiRequestService);
 
   incluirInactivos: boolean = false;
   url_img = `${environment.base_urlImg}providers/`;

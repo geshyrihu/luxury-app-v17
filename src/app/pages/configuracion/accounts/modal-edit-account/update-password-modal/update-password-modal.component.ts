@@ -46,21 +46,15 @@ export default class UpdatePasswordModalComponent implements OnInit, OnDestroy {
   }
 
   onLoadDataEmployee() {
-    this.dataService
-      .get(
+    this.apiRequestService
+      .onGetItem(
         `Employees/DataEmployeeForRecoveryPassword/${this.applicationUserId}`
       )
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          if (resp.body !== null) {
-            this.correoPersonal = resp.body.correoPersonal;
-            this.celularPersonal = resp.body.celularPersonal;
-          }
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+      .then((result: any) => {
+        if (result !== null) {
+          this.correoPersonal = result.correoPersonal;
+          this.celularPersonal = result.celularPersonal;
+        }
       });
   }
   get password() {

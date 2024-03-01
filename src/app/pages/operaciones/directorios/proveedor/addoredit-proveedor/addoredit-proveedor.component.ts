@@ -10,7 +10,6 @@ import {
   AuthService,
   CustomToastService,
   DataService,
-  SelectItemService,
 } from 'src/app/core/services/common-services';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import { environment } from 'src/environments/environment';
@@ -25,11 +24,10 @@ export default class AddoreditProveedorComponent implements OnInit, OnDestroy {
   public authService = inject(AuthService);
   public config = inject(DynamicDialogConfig);
   public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   private formBuilder = inject(FormBuilder);
   public ref = inject(DynamicDialogRef);
-  public selectItemService = inject(SelectItemService);
   private customToastService = inject(CustomToastService);
-  public apiRequestService = inject(ApiRequestService);
 
   submitting: boolean = false;
 
@@ -61,19 +59,15 @@ export default class AddoreditProveedorComponent implements OnInit, OnDestroy {
     return this.form.controls;
   }
   onLoadSelectItem() {
-    this.selectItemService
-      .onGetSelectItem('Categories')
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe((resp) => {
-        this.cb_category = resp;
+    this.apiRequestService
+      .onGetSelectItem(`Categories`)
+      .then((response: any) => {
+        this.cb_category = response;
       });
 
-    this.selectItemService
-      .onGetSelectItem('Bank')
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe((resp) => {
-        this.cb_bancos = resp;
-      });
+    this.apiRequestService.onGetSelectItem(`Bank`).then((response: any) => {
+      this.cb_bancos = response;
+    });
   }
 
   public saveBancoId(e: any): void {

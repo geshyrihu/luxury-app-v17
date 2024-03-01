@@ -11,6 +11,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { IDestinatariosMailReporte } from 'src/app/core/interfaces/IDestinatariosMailReporte.interface';
 import {
+  ApiRequestService,
   CustomToastService,
   CustomerIdService,
   DataService,
@@ -25,10 +26,11 @@ import ListadoCondominosComponent from 'src/app/shared/listado-condominos/listad
   imports: [LuxuryAppComponentsModule, ReactiveFormsModule, FileUploadModule],
 })
 export default class EnviarComunicadoComponent {
-  public customToastService = inject(CustomToastService);
-  public dialogService = inject(DialogService);
-  public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public customerIdService = inject(CustomerIdService);
+  public customToastService = inject(CustomToastService);
+  public dataService = inject(DataService);
+  public dialogService = inject(DialogService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 

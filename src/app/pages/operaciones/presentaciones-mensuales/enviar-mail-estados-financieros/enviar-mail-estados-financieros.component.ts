@@ -9,10 +9,12 @@ import {
 } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { IDestinatariosMailReporte } from 'src/app/core/interfaces/IDestinatariosMailReporte.interface';
-import { CustomerIdService } from 'src/app/core/services/common-services';
+import {
+  ApiRequestService,
+  CustomerIdService,
+} from 'src/app/core/services/common-services';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
-import { SelectItemService } from 'src/app/core/services/select-item.service';
 
 @Component({
   selector: 'app-enviar-mail-estados-financieros',
@@ -25,9 +27,9 @@ export default class EnviarMailEstadosFinancierosComponent {
   public customToastService = inject(CustomToastService);
   private formBuilder = inject(FormBuilder);
   public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public ref = inject(DynamicDialogRef);
   public config = inject(DynamicDialogConfig);
-  public selectItemService = inject(SelectItemService);
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
 
@@ -62,12 +64,12 @@ export default class EnviarMailEstadosFinancierosComponent {
   }
 
   onLoadSelectItem() {
-    this.selectItemService
+    this.apiRequestService
       .onGetSelectItem(
         `ResidentesEdificio/${this.customerIdService.getcustomerId()}`
       )
-      .subscribe((resp: any) => {
-        this.destinatarios = resp;
+      .then((response: any) => {
+        this.destinatarios = response;
       });
   }
 

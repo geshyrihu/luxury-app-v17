@@ -55,6 +55,4 @@ export default class CustomInputMaskComponent implements ControlValueAccessor {
   setDisabledState(isDisabled: boolean): void {
     this.disabled = isDisabled;
   }
-
-  // Otros métodos y lógica del componente
 }

@@ -66,7 +66,7 @@ export default class SendEstadosFinancierosComponent {
   onEnviarEmail() {
     this.submitting = true;
     this.apiRequestService
-      .onPostForModal(
+      .onPost(
         `EstadoFinanciero/Send/${this.id}/${this.authService.infoEmployeeDto.personId}`,
         this.onFilterDestinatarios()
       )

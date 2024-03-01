@@ -24,10 +24,10 @@ export default class EstadoFinancieroListComponent
   private customerIdService = inject(CustomerIdService);
   public messageService = inject(MessageService);
   public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public customToastService = inject(CustomToastService);
   public dialogHandlerService = inject(DialogHandlerService);
   public dialogService = inject(DialogService);
-  public apiRequestService = inject(ApiRequestService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
@@ -53,7 +53,6 @@ export default class EstadoFinancieroListComponent
       .subscribe({
         next: (resp: any) => {
           this.data = this.customToastService.onCloseOnGetData(resp.body);
-          console.log('🚀 ~ resp.body:', resp.body);
         },
         error: (error) => {
           this.customToastService.onCloseToError(error);
@@ -115,23 +114,10 @@ export default class EstadoFinancieroListComponent
 
   // onSendEstadosFinancieros(data: any) {
   onSendEstadosFinancieros(data: any) {
-    this.apiRequestService.onPostForModal(
+    this.apiRequestService.onPost(
       `EstadoFinanciero/Send/${data.id}/${this.authService.infoEmployeeDto.personId}`,
       null
     );
-
-    // this.dialogHandlerService
-    //   .openDialog(
-    //     SendEstadosFinancierosComponent,
-    //     data,
-    //     data.title,
-    //     this.dialogHandlerService.dialogSizeFull
-    //   )
-    //   .then((result: boolean) => {
-    //     if (result) {
-    //       this.onLoadData();
-    //     }
-    //   });
   }
 
   // Destruir componente

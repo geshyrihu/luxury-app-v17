@@ -3,11 +3,11 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { Subject, takeUntil } from 'rxjs';
 import {
+  ApiRequestService,
   AuthService,
   CatalogoGastosFijosService,
   CustomToastService,
   DataService,
-  SelectItemService,
 } from 'src/app/core/services/common-services';
 
 import { environment } from 'src/environments/environment';
@@ -23,7 +23,7 @@ export default class FormGastosFijosServiciosComponent
 {
   public customToastService = inject(CustomToastService);
   public dataService = inject(DataService);
-  public selectItemService = inject(SelectItemService);
+  public apiRequestService = inject(ApiRequestService);
   public authService = inject(AuthService);
   public messageService = inject(MessageService);
   public catalogoGastosFijosService = inject(CatalogoGastosFijosService);
@@ -40,10 +40,10 @@ export default class FormGastosFijosServiciosComponent
   productosAgregados: any[] = [];
 
   ngOnInit(): void {
-    this.selectItemService
+    this.apiRequestService
       .onGetSelectItem('getMeasurementUnits')
-      .subscribe((resp) => {
-        this.cb_unidadMedida = resp;
+      .then((response: any) => {
+        this.cb_unidadMedida = response;
       });
 
     this.catalogoGastosFijosId =

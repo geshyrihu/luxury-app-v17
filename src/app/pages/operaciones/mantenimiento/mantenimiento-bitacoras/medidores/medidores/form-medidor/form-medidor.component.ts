@@ -10,7 +10,6 @@ import {
   CustomToastService,
   CustomerIdService,
   DataService,
-  SelectItemService,
 } from 'src/app/core/services/common-services';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 @Component({
@@ -25,7 +24,7 @@ export default class FormMedidorComponent implements OnInit, OnDestroy {
   public ref = inject(DynamicDialogRef);
   public config = inject(DynamicDialogConfig);
   public authService = inject(AuthService);
-  private selectItemService = inject(SelectItemService);
+
   private customerIdService = inject(CustomerIdService);
   private customToastService = inject(CustomToastService);
   public apiRequestService = inject(ApiRequestService);
@@ -55,10 +54,10 @@ export default class FormMedidorComponent implements OnInit, OnDestroy {
   }
 
   onSelectItem() {
-    this.selectItemService
-      .onGetSelectItem('MedidorCategoria')
-      .subscribe((resp) => {
-        this.cb_nombreMedidorCategoria = resp;
+    this.apiRequestService
+      .onGetSelectItem(`MedidorCategoria`)
+      .then((response: any) => {
+        this.cb_nombreMedidorCategoria = response;
       });
   }
   onLoadData() {

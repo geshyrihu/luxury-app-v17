@@ -17,7 +17,6 @@ import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
-import { SelectItemService } from 'src/app/core/services/select-item.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
@@ -40,7 +39,7 @@ export default class AddOrEditCalendarioMaestroComponent
 {
   private dataService = inject(DataService);
   private formBuilder = inject(FormBuilder);
-  private selectItemService = inject(SelectItemService);
+
   public config = inject(DynamicDialogConfig);
   public ref = inject(DynamicDialogRef);
   private customToastService = inject(CustomToastService);
@@ -125,16 +124,16 @@ export default class AddOrEditCalendarioMaestroComponent
   }
 
   onLoadSelectItem() {
-    this.selectItemService
+    this.apiRequestService
       .onGetSelectItem('EquipoCalendarioMaestro')
-      .subscribe((items: ISelectItemDto[]) => {
-        this.cb_equipoCalendarioMaestro = items;
+      .then((response: ISelectItemDto[]) => {
+        this.cb_equipoCalendarioMaestro = response;
       });
-    this.selectItemService
+
+    this.apiRequestService
       .onGetSelectItem('Providers')
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe((resp) => {
-        this.cb_providers = resp;
+      .then((response: ISelectItemDto[]) => {
+        this.cb_providers = response;
       });
   }
 

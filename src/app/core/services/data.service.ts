@@ -88,13 +88,7 @@ export class DataService implements OnDestroy {
    */
   getHeaders(): HttpHeaders {
     let httpHeaders: HttpHeaders = new HttpHeaders();
-
     // Aquí puedes agregar la lógica para incluir el token de autenticación si es necesario.
-    // const token = this.securityService.getToken();
-    // if (token) {
-    //   httpHeaders = httpHeaders.append('Authorization', 'Bearer ' + token);
-    // }
-
     return httpHeaders;
   }
 

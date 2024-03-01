@@ -12,7 +12,6 @@ import {
   CustomToastService,
   CustomerIdService,
   DataService,
-  SelectItemService,
 } from 'src/app/core/services/common-services';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
@@ -28,10 +27,9 @@ export default class AddOrEditCondominosComponent implements OnInit, OnDestroy {
   public config = inject(DynamicDialogConfig);
   public ref = inject(DynamicDialogRef);
   public dataService = inject(DataService);
-  public selectItemService = inject(SelectItemService);
+  public apiRequestService = inject(ApiRequestService);
   public customerIdService = inject(CustomerIdService);
   private customToastService = inject(CustomToastService);
-  public apiRequestService = inject(ApiRequestService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
@@ -68,12 +66,13 @@ export default class AddOrEditCondominosComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.customerId = this.customerIdService.customerId;
-    this.selectItemService
+
+    this.apiRequestService
       .onGetSelectItem(
         `DirectoryCondominium/${this.customerIdService.getcustomerId()}`
       )
-      .subscribe((resp) => {
-        this.cb_directory_condominium = resp;
+      .then((response: any) => {
+        this.cb_directory_condominium = response;
       });
 
     this.id = this.config.data.id;

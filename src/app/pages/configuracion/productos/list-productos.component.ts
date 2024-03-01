@@ -1,15 +1,12 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { MessageService } from 'primeng/api';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subject, takeUntil } from 'rxjs';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import {
   ApiRequestService,
   AuthService,
-  CustomToastService,
-  DataService,
 } from 'src/app/core/services/common-services';
 
+import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import { environment } from 'src/environments/environment';
 import AddOrEditProductosComponent from './addoredit-productos.component';
 
@@ -19,12 +16,9 @@ import AddOrEditProductosComponent from './addoredit-productos.component';
   standalone: true,
   imports: [LuxuryAppComponentsModule],
 })
-export default class ListProductosComponent implements OnInit, OnDestroy {
-  public customToastService = inject(CustomToastService);
+export default class ListProductosComponent implements OnInit {
   public authService = inject(AuthService);
-  private dataService = inject(DataService);
-  public messageService = inject(MessageService);
-  public dialogService = inject(DialogService);
+  public dialogHandlerService = inject(DialogHandlerService);
   public apiRequestService = inject(ApiRequestService);
 
   urlBaseImg = `${environment.base_urlImg}Administration/products/`;
@@ -33,32 +27,17 @@ export default class ListProductosComponent implements OnInit, OnDestroy {
 
   ref: DynamicDialogRef;
 
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
-
-  account_id: string = '';
-  constructor() {
-    this.account_id =
-      this.authService.userTokenDto.infoUserAuthDto.applicationUserId;
-  }
+  account_id: string =
+    this.authService.userTokenDto.infoUserAuthDto.applicationUserId;
 
   ngOnInit(): void {
     this.onLoadData();
   }
 
   onLoadData() {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .get(`Productos`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.data = this.customToastService.onCloseOnGetData(resp.body);
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
+    this.apiRequestService.onGetList('Productos').then((result: any) => {
+      this.data = result;
+    });
   }
 
   // ... Eliminar registro
@@ -72,23 +51,15 @@ export default class ListProductosComponent implements OnInit, OnDestroy {
 
   // ... Llamada al Modal agregar o editar
   showModalAddOrEdit(data: any) {
-    this.ref = this.dialogService.open(AddOrEditProductosComponent, {
-      data: {
-        id: data.id,
-      },
-      header: data.title,
-      styleClass: 'modal-md',
-      closeOnEscape: true,
-      baseZIndex: 10000,
-    });
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        this.customToastService.onShowSuccess();
-        this.onLoadData();
-      }
-    });
-  }
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
+    this.dialogHandlerService
+      .openDialog(
+        AddOrEditProductosComponent,
+        data,
+        data.title,
+        this.dialogHandlerService.dialogSizeMd
+      )
+      .then((result: boolean) => {
+        if (result) this.onLoadData();
+      });
   }
 }

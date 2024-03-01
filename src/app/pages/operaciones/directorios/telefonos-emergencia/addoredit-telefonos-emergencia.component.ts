@@ -22,8 +22,8 @@ export default class AddOrEditTelefonosEmergenciaComponent {
   public config = inject(DynamicDialogConfig);
   public ref = inject(DynamicDialogRef);
   public dataService = inject(DataService);
-  private customToastService = inject(CustomToastService);
   public apiRequestService = inject(ApiRequestService);
+  private customToastService = inject(CustomToastService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 

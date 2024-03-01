@@ -20,13 +20,6 @@ export class SidebarService {
       name: 'Configuración',
     },
 
-    // {
-    //   visible: this.authService.onValidateRoles(['Residente', 'SuperUsuario']),
-    //   label: 'Accesos',
-    //   icon: 'fa-thin fa-key',
-    //   routerLink: '/accounts/cliente',
-    //   name: 'Accesos',
-    // },
     {
       visible: this.authService.onValidateRoles([
         'Asistente',
@@ -56,7 +49,7 @@ export class SidebarService {
         {
           visible: this.authService.onValidateRoles(['SuperUsuario']),
           label: 'Legal Tickets',
-          routerLink: '/legal/list-ticket',
+          routerLink: '/legal/list-ticket-legal',
           name: 'Tickets',
         },
       ],
@@ -475,7 +468,6 @@ export class SidebarService {
             'Contador',
           ]),
 
-          // Se va a editar y se mostraran todos los presupuestos
           label: 'Ultimo Presupuesto',
           routerLink: '/operaciones/compras/cedula-cliente',
           name: 'Compras-Cedula presupuestal',
@@ -489,9 +481,7 @@ export class SidebarService {
             'Contador',
           ]),
 
-          // Se va a editar y se mostraran todos los presupuestos
           label: 'Presupuestos',
-          // url: 'operaciones/compras/cedula-cliente',
           routerLink: '/operaciones/compras/presupuestos',
           name: 'Compras-Cedula presupuestal',
         },
@@ -502,9 +492,7 @@ export class SidebarService {
             'Residente',
           ]),
 
-          // Se va a editar y se mostraran todos los presupuestos
           label: 'Cuentas Mtto',
-          // url: 'operaciones/compras/cedula-cliente',
           routerLink: '/operaciones/compras/mtto-presupuesto',
           name: 'Compras-Cuentas Mtto',
         },

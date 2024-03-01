@@ -13,7 +13,6 @@ import {
   CustomerIdService,
   DataService,
   DateService,
-  SelectItemService,
 } from 'src/app/core/services/common-services';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import { environment } from 'src/environments/environment';
@@ -31,12 +30,12 @@ export default class AddoreditContratoPolizaComponent
   public authService = inject(AuthService);
   public config = inject(DynamicDialogConfig);
   public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public dateService = inject(DateService);
   private formBuilder = inject(FormBuilder);
-  public selectItemService = inject(SelectItemService);
-  public ref = inject(DynamicDialogRef);
   private customToastService = inject(CustomToastService);
-  public apiRequestService = inject(ApiRequestService);
+
+  public ref = inject(DynamicDialogRef);
 
   submitting: boolean = false;
 
@@ -60,11 +59,11 @@ export default class AddoreditContratoPolizaComponent
 
   ngOnInit(): void {
     this.id = this.config.data.id;
-    this.selectItemService
-      .onGetSelectItem('Providers')
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe((resp) => {
-        this.cb_providers = resp;
+
+    this.apiRequestService
+      .onGetSelectItem(`Providers`)
+      .then((response: any) => {
+        this.cb_providers = response;
       });
 
     flatpickrFactory();

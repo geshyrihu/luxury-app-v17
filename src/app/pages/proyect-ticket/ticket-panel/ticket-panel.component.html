@@ -1,11 +1,8 @@
 <div class="row">
   @for (item of ticketPanelMenuItems; track $index) {
 
-  <div class="col-sm-12 p-1 col-md-4 col-lg-2 m-1">
-    <div
-      class="card border-primary pointer"
-      (click)="onNavigate(item.routerLink)"
-    >
+  <div class="col-sm-12 p-1 col-md-4 col-lg-1 m-1">
+    <div class="card border-primary pointer" [routerLink]="item.routerLink">
       <div class="card-body text-center">
         <i class="custom-icon" [class]="item.icon"></i>
         <p class="font-size-18 mt-2">{{ item.title }}</p>

@@ -5,6 +5,7 @@ import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import {
+  ApiRequestService,
   CustomToastService,
   DataService,
 } from 'src/app/core/services/common-services';
@@ -19,6 +20,7 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 export default class OrdenCompraStatusComponent implements OnInit, OnDestroy {
   public customToastService = inject(CustomToastService);
   public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   private formBuilder = inject(FormBuilder);
   public ref = inject(DynamicDialogRef);
   public config = inject(DynamicDialogConfig);

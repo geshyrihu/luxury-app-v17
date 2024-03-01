@@ -3,6 +3,7 @@ import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { Subject, takeUntil } from 'rxjs';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { ReportService } from 'src/app/core/services/report.service';
@@ -18,6 +19,7 @@ export default class ResumenMinutaComponent implements OnInit, OnDestroy {
   public customToastService = inject(CustomToastService);
   public reportService = inject(ReportService);
   public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public activatedRoute = inject(ActivatedRoute);
   public clipboard = inject(Clipboard);
 

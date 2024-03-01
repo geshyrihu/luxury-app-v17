@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { Subject, takeUntil } from 'rxjs';
 import {
+  ApiRequestService,
   CustomToastService,
   CustomerIdService,
   DataService,
@@ -17,6 +18,7 @@ import { environment } from 'src/environments/environment';
 })
 export default class ReportMeetingComponent implements OnInit, OnDestroy {
   public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public rutaActiva = inject(ActivatedRoute);
   public customerIdService = inject(CustomerIdService);
   public customToastService = inject(CustomToastService);

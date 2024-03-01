@@ -7,7 +7,6 @@ import {
   ApiRequestService,
   DataService,
   DateService,
-  SelectItemService,
 } from 'src/app/core/services/common-services';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
@@ -24,11 +23,9 @@ export default class PersonEditDataPrincipalComponent implements OnInit {
   public customerIdService = inject(CustomerIdService);
   public customToastService = inject(CustomToastService);
   public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public dateService = inject(DateService);
   private formBuilder = inject(FormBuilder);
-  public selectItemService = inject(SelectItemService);
-  public apiRequestService = inject(ApiRequestService);
-
   public ref = inject(DynamicDialogRef);
 
   submitting: boolean = false;

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -7,16 +7,13 @@ import {
 } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject } from 'rxjs';
 import { EProductClasificacion } from 'src/app/core/enums/product-clasificacion.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import {
   ApiRequestService,
   AuthService,
-  CustomToastService,
-  DataService,
-  SelectItemService,
 } from 'src/app/core/services/common-services';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import { environment } from 'src/environments/environment';
@@ -27,15 +24,12 @@ import { environment } from 'src/environments/environment';
   standalone: true,
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
-export default class AddOrEditProductosComponent implements OnInit, OnDestroy {
+export default class AddOrEditProductosComponent implements OnInit {
+  public authService = inject(AuthService);
+  public apiRequestService = inject(ApiRequestService);
   private formBuilder = inject(FormBuilder);
   public config = inject(DynamicDialogConfig);
   public ref = inject(DynamicDialogRef);
-  public authService = inject(AuthService);
-  public dataService = inject(DataService);
-  public selectItemService = inject(SelectItemService);
-  private customToastService = inject(CustomToastService);
-  public apiRequestService = inject(ApiRequestService);
 
   submitting: boolean = false;
 
@@ -52,13 +46,10 @@ export default class AddOrEditProductosComponent implements OnInit, OnDestroy {
     EProductClasificacion
   );
 
-  onLoadSelectItem() {
-    this.selectItemService
-      .onGetSelectItem('Categories')
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe((resp) => {
-        this.cb_category = resp;
-      });
+  onloadData() {
+    this.apiRequestService.onGetSelectItem('Categories').then((result: any) => {
+      this.cb_category = result;
+    });
   }
 
   public savecategoryId(e: any): void {
@@ -68,7 +59,7 @@ export default class AddOrEditProductosComponent implements OnInit, OnDestroy {
     });
   }
   ngOnInit(): void {
-    this.onLoadSelectItem();
+    this.onloadData();
     this.userId =
       this.authService.userTokenDto.infoUserAuthDto.applicationUserId;
     this.id = this.config.data.id;
@@ -101,13 +92,12 @@ export default class AddOrEditProductosComponent implements OnInit, OnDestroy {
   }
 
   onLoadData() {
-    this.dataService
-      .get(`Productos/${this.id}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe((resp: any) => {
-        this.urlBaseImg = `${environment.base_urlImg}Administration/products/${resp.body.urlImagen}`;
-        this.form.patchValue(resp.body);
-        this.form.patchValue({ category: resp.body.category.nameCotegory });
+    this.apiRequestService
+      .onGetItem(`Productos/${this.id}`)
+      .then((result: any) => {
+        this.urlBaseImg = `${environment.base_urlImg}Administration/products/${result.urlImagen}`;
+        this.form.patchValue(result);
+        this.form.patchValue({ category: result.category.nameCotegory });
       });
   }
 
@@ -117,37 +107,17 @@ export default class AddOrEditProductosComponent implements OnInit, OnDestroy {
 
     // Deshabilitar el botón al iniciar el envío del formulario
     this.submitting = true;
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
     if (this.id === 0) {
-      this.dataService
-        .post('Productos', formData)
-        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-        .subscribe({
-          next: () => {
-            this.ref.close(true);
-            this.customToastService.onClose();
-          },
-          error: (error) => {
-            // Habilitar el botón nuevamente al finalizar el envío del formulario
-            this.submitting = false;
-            this.customToastService.onCloseToError(error);
-          },
+      this.apiRequestService
+        .onPost(`Productos`, formData)
+        .then((result: boolean) => {
+          result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.dataService
-        .put(`Productos/${this.id}`, formData)
-        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-        .subscribe({
-          next: () => {
-            this.ref.close(true);
-            this.customToastService.onClose();
-          },
-          error: (error) => {
-            // Habilitar el botón nuevamente al finalizar el envío del formulario
-            this.submitting = false;
-            this.customToastService.onCloseToError(error);
-          },
+      this.apiRequestService
+        .onPut(`Productos/${this.id}`, formData)
+        .then((result: boolean) => {
+          result ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }
@@ -173,8 +143,5 @@ export default class AddOrEditProductosComponent implements OnInit, OnDestroy {
     }
 
     return formData;
-  }
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
   }
 }

@@ -14,7 +14,6 @@ import {
   CustomerIdService,
   DataService,
   DateService,
-  SelectItemService,
 } from 'src/app/core/services/common-services';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import { environment } from 'src/environments/environment';
@@ -38,10 +37,9 @@ export default class AddOrEditRadioComunicacionComponent implements OnInit {
   public ref = inject(DynamicDialogRef);
   public authService = inject(AuthService);
   public dataService = inject(DataService);
-  public selectItemService = inject(SelectItemService);
+  public apiRequestService = inject(ApiRequestService);
   public customerIdService = inject(CustomerIdService);
   private customToastService = inject(CustomToastService);
-  public apiRequestService = inject(ApiRequestService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
@@ -170,18 +168,18 @@ export default class AddOrEditRadioComunicacionComponent implements OnInit {
   }
 
   onLoadSelectItem() {
-    this.selectItemService
+    this.apiRequestService
       .onGetSelectItem(
         `EmployeeActivo/${this.customerIdService.getcustomerId()}`
       )
-      .subscribe((resp) => {
-        this.cb_employee = resp;
+      .then((response: any) => {
+        this.cb_employee = response;
       });
 
-    this.selectItemService
-      .onGetSelectItem('ResponsibleArea')
-      .subscribe((resp) => {
-        this.cb_area_responsable = resp;
+    this.apiRequestService
+      .onGetSelectItem(`ResponsibleArea`)
+      .then((response: any) => {
+        this.cb_area_responsable = response;
       });
   }
   ngOnDestroy(): void {

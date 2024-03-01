@@ -4,6 +4,7 @@ import { MessageService } from 'primeng/api';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import StripTagsPipe from 'src/app/core/pipes/StripTags.pipe';
 import {
+  ApiRequestService,
   CustomToastService,
   CustomerIdService,
   DataService,
@@ -19,6 +20,7 @@ import { environment } from 'src/environments/environment';
 export default class EquiposComponent implements OnInit, OnDestroy {
   public customerIdService = inject(CustomerIdService);
   public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public messageService = inject(MessageService);
   public customToastService = inject(CustomToastService);
 

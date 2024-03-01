@@ -3,6 +3,7 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import {
+  ApiRequestService,
   AuthService,
   CustomToastService,
   DataService,
@@ -20,6 +21,7 @@ export default class SistemasReportePdfComponent implements OnInit, OnDestroy {
   public customToastService = inject(CustomToastService);
   public sistemasReporteService = inject(SistemasReporteService);
   public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public authService = inject(AuthService);
   private rangoCalendarioService = inject(FiltroCalendarService);
   public dialogService = inject(DialogService);

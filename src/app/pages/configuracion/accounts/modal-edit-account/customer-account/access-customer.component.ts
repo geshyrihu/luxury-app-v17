@@ -1,10 +1,9 @@
-import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { Subject, takeUntil } from 'rxjs';
 import { IAddCustomerPermisoToUserDto } from 'src/app/core/interfaces/IAddCustomerPermisoToUserDto.interface';
 import {
+  ApiRequestService,
   CustomToastService,
-  DataService,
 } from 'src/app/core/services/common-services';
 @Component({
   selector: 'app-access-customer',
@@ -12,9 +11,9 @@ import {
   standalone: true,
   imports: [LuxuryAppComponentsModule],
 })
-export default class AccessCustomerComponent implements OnInit, OnDestroy {
-  private dataService = inject(DataService);
+export default class AccessCustomerComponent implements OnInit {
   public customToastService = inject(CustomToastService);
+  public apiRequestService = inject(ApiRequestService);
 
   clientes: IAddCustomerPermisoToUserDto[] = [];
   ActualizarClientes: IAddCustomerPermisoToUserDto[] = [];
@@ -22,40 +21,22 @@ export default class AccessCustomerComponent implements OnInit, OnDestroy {
   @Input()
   applicationUserId: string = '';
 
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
-
   ngOnInit(): void {
     this.onGetAccesCustomer();
   }
   onGetAccesCustomer() {
-    this.dataService
-      .get('AccessToClients/GetCustomers/' + this.applicationUserId)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.clientes = resp.body;
-          this.ActualizarClientes = this.clientes;
-        },
+    this.apiRequestService
+      .onGetList('AccessToClients/GetCustomers/' + this.applicationUserId)
+      .then((result: any[]) => {
+        this.clientes = result;
+        this.ActualizarClientes = this.clientes;
       });
   }
 
   onUpdateAcceso(roles: any) {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    const url = `AccessToClients/AddCustomerAccesoToUser/${this.applicationUserId}`;
-    this.dataService
-      .post(url, roles)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          this.customToastService.onCloseToSuccess();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
-  }
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
+    this.apiRequestService.onPost(
+      `AccessToClients/AddCustomerAccesoToUser/${this.applicationUserId}`,
+      roles
+    );
   }
 }

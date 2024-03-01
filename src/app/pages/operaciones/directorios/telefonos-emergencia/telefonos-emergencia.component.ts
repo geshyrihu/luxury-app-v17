@@ -21,10 +21,10 @@ import AddOrEditTelefonosEmergenciaComponent from './addoredit-telefonos-emergen
 export default class TelefonosEmergenciaComponent {
   public authService = inject(AuthService);
   public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public messageService = inject(MessageService);
   public customToastService = inject(CustomToastService);
   public dialogService = inject(DialogService);
-  public apiRequestService = inject(ApiRequestService);
 
   data: any[] = [];
   urlImg = `${environment.base_urlImg}Administration/tel-emergencia/`;

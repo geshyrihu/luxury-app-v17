@@ -5,6 +5,7 @@ import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import {
+  ApiRequestService,
   CustomToastService,
   DataService,
 } from 'src/app/core/services/common-services';
@@ -21,6 +22,7 @@ import ModalEditCotizacionComponent from './modal-edit-cotizacion/modal-edit-cot
 export default class CuadroComparativoComponent implements OnInit, OnDestroy {
   public customToastService = inject(CustomToastService);
   public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public routeActive = inject(ActivatedRoute);
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);

@@ -16,7 +16,6 @@ export class StorageService {
    * @param key Clave para la cual se desea obtener el valor.
    * @returns Valor asociado a la clave o undefined si no existe.
    */
-  // retrieve(key: string): any {
   retrieve(key: string): any {
     const item = this.storage.getItem(key);
 

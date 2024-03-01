@@ -10,7 +10,6 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
-import { SelectItemService } from 'src/app/core/services/select-item.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
@@ -23,11 +22,10 @@ export default class AddOrEditComunicadoComponent implements OnInit, OnDestroy {
   public dateService = inject(DateService);
   private formBuilder = inject(FormBuilder);
   public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public ref = inject(DynamicDialogRef);
   public config = inject(DynamicDialogConfig);
-  public selectItemService = inject(SelectItemService);
   private customToastService = inject(CustomToastService);
-  public apiRequestService = inject(ApiRequestService);
 
   submitting: boolean = false;
   id: number = 0;
@@ -145,10 +143,10 @@ export default class AddOrEditComunicadoComponent implements OnInit, OnDestroy {
   }
 
   onLoadSelectItem() {
-    this.selectItemService
+    this.apiRequestService
       .onGetSelectItem('ResponsibleArea')
-      .subscribe((resp) => {
-        this.cb_area_responsable = resp;
+      .then((response: ISelectItemDto[]) => {
+        this.cb_area_responsable = response;
       });
   }
 }

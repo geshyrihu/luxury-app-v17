@@ -22,19 +22,18 @@
 
     <ng-template pTemplate="header">
       <tr>
-        <th scope="col" class="th-cliente">FOLIO</th>
-        <th scope="col" class="th-cliente">FECHA SOLICITUD</th>
-        <th scope="col" class="th-cliente">CLIENTE</th>
-        <th scope="col" class="th-cliente">SOLICITA</th>
-        <th scope="col" class="th-cliente">ASUNTO</th>
-        <th scope="col" class="th-cliente">DESCRIPCIÓN</th>
-        <th scope="col">CARGA DE DOCTOS EN LUX CLOUD</th>
-        <th scope="col">ESTATUS</th>
-        <th scope="col">FECHA</th>
-        <th scope="col">DÍAS</th>
-        <th scope="col">RESPONSABLE</th>
-        <th scope="col">SEGUIMIENTO</th>
-        <th scope="col" style="width: 15px" class="hide-print-mode"></th>
+        <th scope="col" class="text-center color-1">FOLIO</th>
+        <th scope="col" class="text-center color-1">FECHA SOLICITUD</th>
+        <th scope="col" class="text-center color-1">CLIENTE</th>
+        <th scope="col" class="text-center color-1">SOLICITA</th>
+        <th scope="col" class="text-center color-1">ASUNTO</th>
+        <th scope="col" class="text-center color-1">DESCRIPCIÓN</th>
+        <th scope="col" class="text-center color-2">DOCTOS EN LUX CLOUD</th>
+        <th scope="col" class="text-center color-2">ESTATUS</th>
+        <th scope="col" class="text-center color-2">FECHA</th>
+        <th scope="col" class="text-center color-2">DÍAS</th>
+        <th scope="col" class="text-center color-2">RESPONSABLE</th>
+        <th scope="col" colspan="2" class="text-center color-2">SEGUIMIENTO</th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-item>
@@ -110,9 +109,20 @@
 </div>
 
 <style>
-  /* Estilo para los encabezados de la tabla */
-  .th-cliente {
-    background-color: #548235 !important; /* Color de fondo blanco */
-    color: white !important ; /* Color de texto negro */
+  .color-1 {
+    font-family: "Playfair Display", serif;
+    background: -webkit-linear-gradient(90deg, #414141 10%, #548235 70%);
+    background: -moz-linear-gradient(90deg, #414141 10%, #548235 70%);
+    background: -ms-linear-gradient(90deg, #414141 10%, #548235 70%);
+    background: -o-linear-gradient(90deg, #414141 10%, #548235 70%);
+    background: linear-gradient(90deg, #414141 10%, #548235 70%);
+  }
+  .color-2 {
+    font-family: "Playfair Display", serif;
+    background: -webkit-linear-gradient(90deg, #0f0c29 10%, #302b63 70%);
+    background: -moz-linear-gradient(90deg, #0f0c29 10%, #302b63 70%);
+    background: -ms-linear-gradient(90deg, #0f0c29 10%, #302b63 70%);
+    background: -o-linear-gradient(90deg, #0f0c29 10%, #302b63 70%);
+    background: linear-gradient(90deg, #0f0c29 10%, #302b63 70%);
   }
 </style>

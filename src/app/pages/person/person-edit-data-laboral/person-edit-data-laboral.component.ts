@@ -12,7 +12,6 @@ import {
   AuthService,
   CustomToastService,
   DataService,
-  SelectItemService,
 } from 'src/app/core/services/common-services';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
@@ -30,7 +29,6 @@ export default class PersonEditDataLaboralComponent implements OnInit {
   public authService = inject(AuthService);
   public config = inject(DynamicDialogConfig);
   public ref = inject(DynamicDialogRef);
-  public selectItemService = inject(SelectItemService);
 
   employeeId: number = 0;
   personId: number = 0;
@@ -70,17 +68,17 @@ export default class PersonEditDataLaboralComponent implements OnInit {
 
   ngOnInit() {
     this.personId = this.config.data.personId;
-    this.selectItemService
-      .onGetSelectItem('Professions')
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe((resp) => {
-        this.cb_profession = resp;
+
+    this.apiRequestService
+      .onGetSelectItem(`Professions`)
+      .then((response: any) => {
+        this.cb_profession = response;
       });
-    this.selectItemService
-      .onGetSelectItem('Customers')
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe((resp) => {
-        this.cb_customer = resp;
+
+    this.apiRequestService
+      .onGetSelectItem(`Customers`)
+      .then((response: any) => {
+        this.cb_customer = response;
       });
     this.employeeId = this.config.data.employeeId;
     if (this.employeeId !== 0) this.onLoadData();

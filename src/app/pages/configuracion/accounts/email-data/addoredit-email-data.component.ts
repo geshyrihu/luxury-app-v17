@@ -2,13 +2,10 @@ import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subject, takeUntil } from 'rxjs';
 import { EmailDataAddOrEditDto } from 'src/app/core/interfaces/email-data-add-or-edit.interface';
 import {
   ApiRequestService,
   AuthService,
-  CustomToastService,
-  DataService,
 } from 'src/app/core/services/common-services';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
@@ -20,14 +17,10 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 })
 export default class AddOrEditEmailDataComponent implements OnInit {
   private formBuilder = inject(FormBuilder);
-  private dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
+  public authService = inject(AuthService);
   public config = inject(DynamicDialogConfig);
   public ref = inject(DynamicDialogRef);
-  public authService = inject(AuthService);
-  private customToastService = inject(CustomToastService);
-  public apiRequestService = inject(ApiRequestService);
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   id: number = 0;
   applicationUserId: number = 0;
@@ -45,71 +38,6 @@ export default class AddOrEditEmailDataComponent implements OnInit {
     password: ['', Validators.required],
   });
 
-  onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
-
-    // Deshabilitar el botón al iniciar el envío del formulario
-    this.submitting = true;
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    if (this.id === 0) {
-      this.dataService
-        .post(`EmailData`, this.form.value)
-        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-        .subscribe({
-          next: () => {
-            this.ref.close(true);
-            this.customToastService.onClose();
-          },
-          error: (error) => {
-            // Habilitar el botón nuevamente al finalizar el envío del formulario
-            this.submitting = false;
-            this.customToastService.onCloseToError(error);
-          },
-        });
-    } else {
-      this.dataService
-        .put(`EmailData/${this.id}`, this.form.value)
-        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-        .subscribe({
-          next: () => {
-            this.ref.close(true);
-            this.customToastService.onClose();
-          },
-          error: (error) => {
-            // Habilitar el botón nuevamente al finalizar el envío del formulario
-            this.submitting = false;
-            this.customToastService.onCloseToError(error);
-          },
-        });
-    }
-  }
-  TestEmail(): void {
-    // Deshabilitar el botón al iniciar el envío del formulario
-    this.submitting = true;
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-
-    this.dataService
-      .get(
-        `SendEmail/TestEmail/${this.applicationUserId}/${this.authService.infoEmployeeDto.personId}`
-      )
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.testEmailMessage = resp.body.message;
-          this.customToastService.onClose();
-          // Habilitar el botón nuevamente al finalizar el envío del formulario
-          this.submitting = false;
-        },
-        error: (error) => {
-          // Habilitar el botón nuevamente al finalizar el envío del formulario
-          this.submitting = false;
-          this.customToastService.onCloseToError(error);
-        },
-      });
-  }
-
   ngOnInit(): void {
     this.applicationUserId = this.config.data.applicationUserId;
     if (this.applicationUserId !== null) this.onLoadData();
@@ -125,6 +53,38 @@ export default class AddOrEditEmailDataComponent implements OnInit {
           this.form.patchValue(result);
           this.id = result.id;
         }
+      });
+  }
+  onSubmit() {
+    if (!this.apiRequestService.validateForm(this.form)) return;
+
+    this.submitting = true;
+
+    if (this.id === 0) {
+      this.apiRequestService
+        .onPost(`EmailData`, this.form.value)
+        .then((result: boolean) => {
+          result ? this.ref.close(true) : (this.submitting = false);
+        });
+    } else {
+      this.apiRequestService
+        .onPut(`EmailData/${this.id}`, this.form.value)
+        .then((result: boolean) => {
+          result ? this.ref.close(true) : (this.submitting = false);
+        });
+    }
+  }
+  TestEmail(): void {
+    // Deshabilitar el botón al iniciar el envío del formulario
+    this.submitting = true;
+
+    this.apiRequestService
+      .onGetList(
+        `SendEmail/TestEmail/${this.applicationUserId}/${this.authService.infoEmployeeDto.personId}`
+      )
+      .then((result: any) => {
+        this.testEmailMessage = result.message;
+        this.submitting = false;
       });
   }
 }

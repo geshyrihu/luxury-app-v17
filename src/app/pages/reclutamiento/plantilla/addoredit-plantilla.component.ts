@@ -14,7 +14,6 @@ import {
   CustomToastService,
   CustomerIdService,
   DataService,
-  SelectItemService,
 } from 'src/app/core/services/common-services';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 @Component({
@@ -32,7 +31,6 @@ export default class AddoreditPlantillaComponent implements OnInit, OnDestroy {
   public customerIdService = inject(CustomerIdService);
   public dataService = inject(DataService);
   public ref = inject(DynamicDialogRef);
-  public selectItemService = inject(SelectItemService);
 
   submitting: boolean = false;
 
@@ -150,19 +148,18 @@ export default class AddoreditPlantillaComponent implements OnInit, OnDestroy {
   }
 
   onProfessionSelectItem() {
-    this.selectItemService
-      .onGetSelectItem('Professions')
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe((resp) => {
-        this.cb_profession = resp;
+    this.apiRequestService
+      .onGetSelectItem(`Professions`)
+      .then((response: any) => {
+        this.cb_profession = response;
       });
   }
 
   onLoadSelectItem() {
-    this.selectItemService
+    this.apiRequestService
       .onGetSelectItem(`Employee/${this.customerIdService.getcustomerId()}`)
-      .subscribe((resp) => {
-        this.cb_employee = resp;
+      .then((response: any) => {
+        this.cb_employee = response;
       });
   }
   public saveemployeeIdId(e: any): void {

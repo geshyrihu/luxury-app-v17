@@ -15,7 +15,6 @@ import {
   CustomerIdService,
   DataService,
   DateService,
-  SelectItemService,
 } from 'src/app/core/services/common-services';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import { environment } from 'src/environments/environment';
@@ -29,14 +28,13 @@ import { environment } from 'src/environments/environment';
 export default class AddoreditToolsComponent implements OnInit, OnDestroy {
   public authService = inject(AuthService);
   public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   private formBuilder = inject(FormBuilder);
   public dateService = inject(DateService);
-  public selectItemService = inject(SelectItemService);
   public config = inject(DynamicDialogConfig);
   public ref = inject(DynamicDialogRef);
   public customerIdService = inject(CustomerIdService);
   private customToastService = inject(CustomToastService);
-  public apiRequestService = inject(ApiRequestService);
 
   submitting: boolean = false;
 
@@ -79,11 +77,10 @@ export default class AddoreditToolsComponent implements OnInit, OnDestroy {
   }
 
   onLoadSelectItem() {
-    this.selectItemService
-      .onGetSelectItem('Categories')
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe((resp) => {
-        this.cb_category = resp;
+    this.apiRequestService
+      .onGetSelectItem(`Categories`)
+      .then((response: any) => {
+        this.cb_category = response;
       });
   }
   onLoadData() {

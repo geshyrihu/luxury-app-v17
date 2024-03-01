@@ -26,10 +26,10 @@ export default class ListComiteVigilanciaComponent
   public authService = inject(AuthService);
   public customerIdService = inject(CustomerIdService);
   public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public messageService = inject(MessageService);
   public customToastService = inject(CustomToastService);
   public dialogService = inject(DialogService);
-  public apiRequestService = inject(ApiRequestService);
 
   data: IComiteVigilanciaDto[] = [];
 

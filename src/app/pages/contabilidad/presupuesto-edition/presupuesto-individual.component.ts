@@ -30,11 +30,11 @@ export default class PresupuestoIndividualComponent implements OnInit {
   public authService = inject(AuthService);
   public customerIdService = inject(CustomerIdService);
   public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
   public customToastService = inject(CustomToastService);
   private activatedRoute = inject(ActivatedRoute);
-  public apiRequestService = inject(ApiRequestService);
 
   // Declaración e inicialización de variables
   id: number = 0;

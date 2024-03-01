@@ -11,9 +11,9 @@ import {
 } from 'primeng/dynamicdialog';
 import { ToastModule } from 'primeng/toast';
 import { Subject, takeUntil } from 'rxjs';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
-import { SelectItemService } from 'src/app/core/services/select-item.service';
 import CreateOrdenCompraComponent from '../../orden-compra/orden-compra/create-orden-compra/create-orden-compra.component';
 
 @Component({
@@ -33,7 +33,7 @@ export default class ModalEditCotizacionComponent implements OnInit, OnDestroy {
   public ref = inject(DynamicDialogRef);
   public config = inject(DynamicDialogConfig);
   public dataService = inject(DataService);
-  public selectItemService = inject(SelectItemService);
+  public apiRequestService = inject(ApiRequestService);
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
   public router = inject(Router);
@@ -59,11 +59,11 @@ export default class ModalEditCotizacionComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.solicitudCompraId = this.config.data.solicitudCompraId;
     this.posicionCotizacion = this.config.data.posicionCotizacion;
-    this.selectItemService
+
+    this.apiRequestService
       .onGetSelectItem('Providers')
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe((resp) => {
-        this.cb_providers = resp;
+      .then((response: any) => {
+        this.cb_providers = response;
       });
     this.onLoadSelectItemProvider();
     this.onGetCotizacioProveedor();

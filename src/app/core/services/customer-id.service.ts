@@ -41,10 +41,6 @@ export class CustomerIdService implements OnDestroy {
         this.customerId = this.storageService.retrieve('customerId');
       }
     }
-    // if (this.authService.userTokenDto) {
-    //   this.customerId =
-    //     this.authService.userTokenDto.infoUserAuthDto.customerId;
-    // }
   }
 
   /**

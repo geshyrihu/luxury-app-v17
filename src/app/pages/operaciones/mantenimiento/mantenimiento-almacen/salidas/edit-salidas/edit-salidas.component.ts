@@ -12,7 +12,6 @@ import {
   CustomerIdService,
   DataService,
   DateService,
-  SelectItemService,
 } from 'src/app/core/services/common-services';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
@@ -28,7 +27,7 @@ export default class EditSalidasComponent implements OnInit, OnDestroy {
   private dataService = inject(DataService);
   public ref = inject(DynamicDialogRef);
   public config = inject(DynamicDialogConfig);
-  private selectItemService = inject(SelectItemService);
+
   public authService = inject(AuthService);
   private customerIdService = inject(CustomerIdService);
   private customToastService = inject(CustomToastService);
@@ -81,10 +80,11 @@ export default class EditSalidasComponent implements OnInit, OnDestroy {
   }
   ngOnInit(): void {
     flatpickrFactory();
-    this.selectItemService
-      .onGetSelectItem('getMeasurementUnits')
-      .subscribe((resp) => {
-        this.cb_measurement_unit = resp;
+
+    this.apiRequestService
+      .onGetSelectItem(`getMeasurementUnits`)
+      .then((response: any) => {
+        this.cb_measurement_unit = response;
       });
     this.onLoadExistencia();
     this.id = this.config.data.id;

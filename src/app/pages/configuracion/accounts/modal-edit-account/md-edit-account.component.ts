@@ -1,14 +1,10 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subject, takeUntil } from 'rxjs';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import {
+  ApiRequestService,
   AuthService,
-  CustomToastService,
-  DataService,
-  SelectItemService,
 } from 'src/app/core/services/common-services';
 import AccessCustomerComponent from './customer-account/access-customer.component';
 import UpdateAccountComponent from './update-account/update-account.component';
@@ -27,12 +23,9 @@ import UpdateRoleComponent from './update-roles/update-role.component';
   ],
 })
 export default class MdEditAccountComponent implements OnInit, OnDestroy {
-  private dataService = inject(DataService);
-  private selectItemService = inject(SelectItemService);
+  public apiRequestService = inject(ApiRequestService);
   public config = inject(DynamicDialogConfig);
-  public messageService = inject(MessageService);
   public ref = inject(DynamicDialogRef);
-  public customToastService = inject(CustomToastService);
   public authService = inject(AuthService);
 
   cb_emplyee: ISelectItemDto[] = [];
@@ -40,38 +33,18 @@ export default class MdEditAccountComponent implements OnInit, OnDestroy {
   applicationUserId: string = '';
   email: string = '';
 
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
-
   ngOnInit(): void {
     this.applicationUserId = this.config.data.applicationUserId;
     this.email = this.config.data.email;
     this.onLoadData();
   }
 
-  onLoadSelectItem() {
-    this.selectItemService
-      .onGetSelectItem('GetAllEmployeeActive')
-      .subscribe((resp) => {
-        this.cb_emplyee = resp;
-      });
-  }
   onLoadData() {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .get('Accounts/GetApplicationUser/' + this.applicationUserId)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.data = this.customToastService.onCloseOnGetData(resp.body);
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
+    this.apiRequestService.onGetList(
+      'Accounts/GetApplicationUser/' + this.applicationUserId
+    );
   }
-
   ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
+    this.ref.close(true);
   }
 }

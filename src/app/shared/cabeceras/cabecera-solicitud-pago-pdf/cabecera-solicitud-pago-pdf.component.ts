@@ -2,6 +2,7 @@ import {} from '@angular/common';
 import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import {
+  ApiRequestService,
   CustomToastService,
   CustomerIdService,
   DataService,
@@ -17,6 +18,7 @@ export default class CabeceraSolicitudPagoPdfComponent
   implements OnInit, OnDestroy
 {
   public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public customerIdService = inject(CustomerIdService);
   public customToastService = inject(CustomToastService);
 

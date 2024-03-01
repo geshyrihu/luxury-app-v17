@@ -17,7 +17,6 @@ import {
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
-import { SelectItemService } from 'src/app/core/services/select-item.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import ValidationErrorsCustomInputComponent from 'src/app/custom-components/custom-input-form/validation-errors-custom-input/validation-errors-custom-input.component';
 
@@ -42,7 +41,6 @@ export default class ServiceOrderAddOrEditComponent
   public dataService = inject(DataService);
   public dateService = inject(DateService);
   public ref = inject(DynamicDialogRef);
-  public selectItemService = inject(SelectItemService);
 
   public Editor = ClassicEditor;
 
@@ -76,25 +74,24 @@ export default class ServiceOrderAddOrEditComponent
   }
 
   onLoadSelectItem() {
-    this.selectItemService
+    this.apiRequestService
       .onGetSelectItem(
         `MachineriesGetAll/${this.customerIdService.getcustomerId()}`
       )
-      .subscribe((resp: any) => {
-        this.cb_machinery = resp;
+      .then((response: any) => {
+        this.cb_machinery = response;
       });
 
-    this.selectItemService
-      .onGetSelectItem('Providers')
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe((resp) => {
-        this.cb_providers = resp;
+    this.apiRequestService
+      .onGetSelectItem(`Providers`)
+      .then((response: any) => {
+        this.cb_providers = response;
       });
 
-    this.selectItemService
+    this.apiRequestService
       .onGetSelectItem(`GetUserCustomer/${this.customerId}`)
-      .subscribe((resp) => {
-        this.cb_user_customers = resp;
+      .then((response: any) => {
+        this.cb_user_customers = response;
       });
   }
 

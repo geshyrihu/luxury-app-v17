@@ -2,6 +2,7 @@ import {} from '@angular/common';
 import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import {
+  ApiRequestService,
   CustomToastService,
   CustomerIdService,
 } from 'src/app/core/services/common-services';
@@ -16,6 +17,7 @@ import { environment } from 'src/environments/environment';
 })
 export default class HaederCustomerComponent implements OnInit, OnDestroy {
   public dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public customerIdService = inject(CustomerIdService);
   public filterReportOperationService = inject(TicketFilterService);
   public customToastService = inject(CustomToastService);
@@ -41,7 +43,6 @@ export default class HaederCustomerComponent implements OnInit, OnDestroy {
   onLoadData() {
     this.dataService
       .get(`Customers/${this.customerIdService.customerId}`)
-      .pipe(takeUntil(this.destroy$))
       .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {

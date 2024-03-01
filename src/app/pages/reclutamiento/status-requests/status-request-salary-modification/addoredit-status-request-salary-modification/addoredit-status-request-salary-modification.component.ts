@@ -11,7 +11,6 @@ import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
-import { SelectItemService } from 'src/app/core/services/select-item.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
@@ -27,7 +26,6 @@ export default class AddOrEditStatusRequestSalaryModificationComponent
   private dataService = inject(DataService);
   public ref = inject(DynamicDialogRef);
   public config = inject(DynamicDialogConfig);
-  public selectItemService = inject(SelectItemService);
   private customToastService = inject(CustomToastService);
   public apiRequestService = inject(ApiRequestService);
 
@@ -118,11 +116,10 @@ export default class AddOrEditStatusRequestSalaryModificationComponent
     }
   }
   onProfessionSelectItem() {
-    this.selectItemService
-      .onGetSelectItem('Professions')
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe((resp) => {
-        this.cb_profession = resp;
+    this.apiRequestService
+      .onGetSelectItem(`Professions`)
+      .then((response: any) => {
+        this.cb_profession = response;
       });
   }
   ngOnDestroy(): void {
