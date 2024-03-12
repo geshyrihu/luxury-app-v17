@@ -1,13 +1,11 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { Subject, takeUntil } from 'rxjs';
 import { passwordValidation } from 'src/app/core/directives/password-validation.directive';
 import { ChangePassword } from 'src/app/core/interfaces/change-password.interface';
 import {
+  ApiRequestService,
   AuthService,
-  CustomToastService,
-  DataService,
 } from 'src/app/core/services/common-services';
 
 @Component({
@@ -16,13 +14,10 @@ import {
   standalone: true,
   imports: [LuxuryAppComponentsModule],
 })
-export default class UpdatePasswordComponent implements OnInit, OnDestroy {
-  public authService = inject(AuthService);
-  private dataService = inject(DataService);
+export default class UpdatePasswordComponent implements OnInit {
   private formBuilder = inject(FormBuilder);
-  public customToastService = inject(CustomToastService);
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+  public apiRequestService = inject(ApiRequestService);
+  public authService = inject(AuthService);
 
   submitting: boolean = false;
 
@@ -54,12 +49,8 @@ export default class UpdatePasswordComponent implements OnInit, OnDestroy {
   }
 
   updatePassword() {
-    if (this.formUpdatePassword.invalid) {
-      Object.values(this.formUpdatePassword.controls).forEach((x) => {
-        x.markAllAsTouched();
-      });
-      return;
-    }
+    if (!this.apiRequestService.validateForm(this.formUpdatePassword)) return;
+
     const model: ChangePassword = {
       currentPassword: this.formUpdatePassword.get('currentPassword').value,
       newPassword: this.formUpdatePassword.get('newPassword').value,
@@ -68,21 +59,13 @@ export default class UpdatePasswordComponent implements OnInit, OnDestroy {
 
     // Deshabilitar el botón al iniciar el envío del formulario
     this.submitting = true;
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
 
-    this.dataService
-      .put(`Users/ChangePassword/${id}`, model)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          this.customToastService.onCloseToSuccess();
-        },
-        error: (error) => {
-          // Habilitar el botón nuevamente al finalizar el envío del formulario
+    this.apiRequestService
+      .onPut(`Users/ChangePassword/${id}`, model)
+      .then((result: boolean) => {
+        if (result) {
           this.submitting = false;
-          this.customToastService.onCloseToError(error);
-        },
+        }
       });
   }
 
@@ -103,9 +86,5 @@ export default class UpdatePasswordComponent implements OnInit, OnDestroy {
     const pass2 = this.formUpdatePassword.get('confirm').value;
 
     return pass1 !== pass2 && this.updatePassword ? true : false;
-  }
-
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
   }
 }

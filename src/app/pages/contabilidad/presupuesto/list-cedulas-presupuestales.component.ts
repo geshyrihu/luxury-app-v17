@@ -24,11 +24,10 @@ export default class ListCedulasPresupuestalesComponent
 {
   public customToastService = inject(CustomToastService);
   private dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public authService = inject(AuthService);
-
   public messageService = inject(MessageService);
   public dialogService = inject(DialogService);
-  public apiRequestService = inject(ApiRequestService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 

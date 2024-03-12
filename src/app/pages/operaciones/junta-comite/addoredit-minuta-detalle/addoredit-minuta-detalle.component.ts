@@ -26,11 +26,11 @@ export default class AddoreditMinutaDetalleComponent
 {
   private formBuilder = inject(FormBuilder);
   private dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public ref = inject(DynamicDialogRef);
   public config = inject(DynamicDialogConfig);
   public authService = inject(AuthService);
   private customToastService = inject(CustomToastService);
-  public apiRequestService = inject(ApiRequestService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 

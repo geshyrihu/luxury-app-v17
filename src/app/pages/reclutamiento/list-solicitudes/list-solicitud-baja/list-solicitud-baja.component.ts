@@ -24,10 +24,10 @@ export default class ListSolicitudBajaComponent implements OnInit {
   public customToastService = inject(CustomToastService);
   public authService = inject(AuthService);
   private dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
   private filterRequestsService = inject(FilterRequestsService);
-  public apiRequestService = inject(ApiRequestService);
 
   data: any[] = [];
   ref: DynamicDialogRef;

@@ -3,7 +3,10 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
-import { CustomerIdService } from 'src/app/core/services/common-services';
+import {
+  ApiRequestService,
+  CustomerIdService,
+} from 'src/app/core/services/common-services';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
@@ -20,6 +23,7 @@ const base_urlImg = environment.base_urlImg + 'Administration/accounts/';
 export default class ReporteTicketsComponent implements OnInit, OnDestroy {
   private customerIdService = inject(CustomerIdService);
   private dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public dateService = inject(DateService);
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);

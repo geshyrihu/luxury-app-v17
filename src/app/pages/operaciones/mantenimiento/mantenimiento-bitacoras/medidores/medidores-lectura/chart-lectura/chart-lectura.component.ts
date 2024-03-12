@@ -7,6 +7,7 @@ import { Observable, Subject, takeUntil } from 'rxjs';
 import { IChartType } from 'src/app/core/interfaces/IChartType.interface';
 import { IDataSet } from 'src/app/core/interfaces/IDataSet.interface';
 import { IFechasFiltro } from 'src/app/core/interfaces/IFechasFiltro.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
@@ -19,6 +20,7 @@ import { FiltroCalendarService } from 'src/app/core/services/filtro-calendar.ser
 })
 export default class ChartLecturaComponent implements OnInit, OnDestroy {
   private dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   private rutaActiva = inject(ActivatedRoute);
   public dateService = inject(DateService);
   public dialogService = inject(DialogService);

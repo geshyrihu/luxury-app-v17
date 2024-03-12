@@ -26,9 +26,9 @@ export default class AddOrEditPropiedadesComponent
   public config = inject(DynamicDialogConfig);
   public ref = inject(DynamicDialogRef);
   private dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   private customerIdService = inject(CustomerIdService);
   private customToastService = inject(CustomToastService);
-  public apiRequestService = inject(ApiRequestService);
 
   submitting: boolean = false;
 

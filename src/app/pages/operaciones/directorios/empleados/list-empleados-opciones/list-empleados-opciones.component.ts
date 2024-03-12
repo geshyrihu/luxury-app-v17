@@ -7,6 +7,7 @@ import {
 } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import {
+  ApiRequestService,
   AuthService,
   CustomToastService,
   CustomerIdService,
@@ -37,6 +38,7 @@ export default class ListEmpleadosOpcionesComponent
   implements OnInit, OnDestroy
 {
   private dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   private dialogService = inject(DialogService);
   public authService = inject(AuthService);
   public config = inject(DynamicDialogConfig);

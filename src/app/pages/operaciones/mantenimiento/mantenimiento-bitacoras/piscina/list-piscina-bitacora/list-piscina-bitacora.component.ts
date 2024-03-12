@@ -22,10 +22,10 @@ export default class ListPiscinaBitacoraComponent implements OnInit, OnDestroy {
   public customToastService = inject(CustomToastService);
   public authService = inject(AuthService);
   private dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
   private rutaActiva = inject(ActivatedRoute);
-  public apiRequestService = inject(ApiRequestService);
 
   data: any[] = [];
   ref: DynamicDialogRef;

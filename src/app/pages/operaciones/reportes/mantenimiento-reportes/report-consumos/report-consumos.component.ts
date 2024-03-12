@@ -3,7 +3,10 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { IChartData } from 'src/app/core/interfaces/chart-data.interface';
-import { CustomerIdService } from 'src/app/core/services/common-services';
+import {
+  ApiRequestService,
+  CustomerIdService,
+} from 'src/app/core/services/common-services';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
@@ -24,6 +27,7 @@ import MultiAxisChartComponent from 'src/app/shared/graficos/primeng-chart/multi
 })
 export default class ReportConsumosComponent implements OnInit, OnDestroy {
   private dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public customerIdService = inject(CustomerIdService);
   public customToastService = inject(CustomToastService);
   public dateService = inject(DateService);

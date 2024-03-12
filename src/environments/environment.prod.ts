@@ -11,13 +11,13 @@ export const environment = {
   // base_url: 'http://localhost:8042/api/',
   // base_urlImg: 'http://localhost:8042/img/',
 
-  base_public: 'http://luxurybuildingapp.com:9090/',
-  base_signalr: 'http://luxurybuildingapp.com:9090/',
-  base_url: 'http://luxurybuildingapp.com:9090/api/',
-  base_urlImg: 'http://luxurybuildingapp.com:9090/img/',
+  // base_public: 'http://luxurybuildingapp.com:9090/',
+  // base_signalr: 'http://luxurybuildingapp.com:9090/',
+  // base_url: 'http://luxurybuildingapp.com:9090/api/',
+  // base_urlImg: 'http://luxurybuildingapp.com:9090/img/',
 
-  // base_public: 'http://luxurybuildingapp.com/',
-  // base_signalr: 'http://luxurybuildingapp.com/',
-  // base_url: 'http://luxurybuildingapp.com/api/',
-  // base_urlImg: 'http://luxurybuildingapp.com/img/',
+  base_public: 'https://luxurybuildingapp.com/',
+  base_signalr: 'https://luxurybuildingapp.com/',
+  base_url: 'https://luxurybuildingapp.com/api/',
+  base_urlImg: 'https://luxurybuildingapp.com/img/',
 };

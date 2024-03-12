@@ -23,13 +23,13 @@ import AddOrEditSolicitudAltaComponent from './addoredit-solicitud-alta/addoredi
 })
 export default class ListSolicitudAltaComponent implements OnInit, OnDestroy {
   private dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   private filterRequestsService = inject(FilterRequestsService);
   public authService = inject(AuthService);
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
   public statusSolicitudVacanteService = inject(StatusSolicitudVacanteService);
   public customToastService = inject(CustomToastService);
-  public apiRequestService = inject(ApiRequestService);
 
   data: any[] = [];
   ref: DynamicDialogRef;

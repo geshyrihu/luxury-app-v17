@@ -27,12 +27,12 @@ export default class EditPartidaCedulaComponent implements OnInit, OnDestroy {
   private formBuilder = inject(FormBuilder);
   public customToastService = inject(CustomToastService);
   private dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public authService = inject(AuthService);
   public config = inject(DynamicDialogConfig);
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
   public ref = inject(DynamicDialogRef);
-  public apiRequestService = inject(ApiRequestService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 

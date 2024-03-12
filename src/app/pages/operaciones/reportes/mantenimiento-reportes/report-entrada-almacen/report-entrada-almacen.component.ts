@@ -2,7 +2,10 @@ import { Component, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
-import { CustomerIdService } from 'src/app/core/services/common-services';
+import {
+  ApiRequestService,
+  CustomerIdService,
+} from 'src/app/core/services/common-services';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
@@ -16,6 +19,7 @@ import PagetitleReportComponent from 'src/app/shared/cabeceras/pagetitlereport/p
 })
 export default class ReportEntradaAlmacenComponent implements OnInit {
   private dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public customerIdService = inject(CustomerIdService);
   public customToastService = inject(CustomToastService);
   public dateService = inject(DateService);

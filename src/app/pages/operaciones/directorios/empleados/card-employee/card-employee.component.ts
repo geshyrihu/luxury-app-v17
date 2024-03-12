@@ -4,6 +4,7 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { IUserCardDto } from 'src/app/core/interfaces/IUserCardDto.interface';
 import PhoneFormatPipe from 'src/app/core/pipes/phone-format.pipe';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { environment } from 'src/environments/environment';
@@ -15,6 +16,7 @@ import { environment } from 'src/environments/environment';
 })
 export default class CardEmployeeComponent implements OnInit, OnDestroy {
   private dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public ref = inject(DynamicDialogRef);
   public config = inject(DynamicDialogConfig);
   public customToastService = inject(CustomToastService);

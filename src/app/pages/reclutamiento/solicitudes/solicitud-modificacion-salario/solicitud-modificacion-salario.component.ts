@@ -29,10 +29,9 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 })
 export default class SolicitudModificacionSalarioComponent {
   private dataService = inject(DataService);
-  private formBuilder = inject(FormBuilder);
-
-  private customToastService = inject(CustomToastService);
   public apiRequestService = inject(ApiRequestService);
+  private formBuilder = inject(FormBuilder);
+  private customToastService = inject(CustomToastService);
   public config = inject(DynamicDialogConfig);
   public customerIdService = inject(CustomerIdService);
   public dateService = inject(DateService);

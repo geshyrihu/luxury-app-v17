@@ -43,7 +43,6 @@ export default class AddOrEditBancoComponent implements OnInit {
   onSubmit() {
     if (!this.apiRequestService.validateForm(this.form)) return;
 
-    this.id = this.config.data.id;
     this.submitting = true;
 
     if (this.id === 0) {

@@ -26,10 +26,10 @@ export default class AddoreditLedgerAccountsComponent
   private formBuilder = inject(FormBuilder);
   public authService = inject(AuthService);
   private dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public config = inject(DynamicDialogConfig);
   public ref = inject(DynamicDialogRef);
   private customToastService = inject(CustomToastService);
-  public apiRequestService = inject(ApiRequestService);
 
   submitting: boolean = false;
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente

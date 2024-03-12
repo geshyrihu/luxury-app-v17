@@ -20,12 +20,12 @@ import AddOrEditCustomerProviderComponent from '../addoredit-customer-provider.c
 })
 export default class MisProveedoresComponent implements OnInit, OnDestroy {
   private dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public authService = inject(AuthService);
   public customToastService = inject(CustomToastService);
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
   public customerIdService = inject(CustomerIdService);
-  public apiRequestService = inject(ApiRequestService);
 
   data: any[] = [];
   ref: DynamicDialogRef; // Referencia a un cuadro de diálogo modal

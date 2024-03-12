@@ -1,15 +1,9 @@
 import { Component, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { MessageService } from 'primeng/api';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subject, takeUntil } from 'rxjs';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomToastService,
-  DataService,
-} from 'src/app/core/services/common-services';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { ApiRequestService } from 'src/app/core/services/common-services';
 
+import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import AddOrEditEmailDataComponent from './addoredit-email-data.component';
 
 @Component({
@@ -19,35 +13,21 @@ import AddOrEditEmailDataComponent from './addoredit-email-data.component';
   imports: [LuxuryAppComponentsModule],
 })
 export default class ListEmailDataComponent {
-  public customToastService = inject(CustomToastService);
-  public authService = inject(AuthService);
-  private dataService = inject(DataService);
-  public dialogService = inject(DialogService);
-  public messageService = inject(MessageService);
   public apiRequestService = inject(ApiRequestService);
+  public dialogHandlerService = inject(DialogHandlerService);
 
   data: any[] = [];
   ref: DynamicDialogRef;
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   ngOnInit(): void {
     this.onLoadData();
   }
 
   onLoadData() {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .get('EmailData/GetAsyncAll')
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.data = this.customToastService.onCloseOnGetData(resp.body);
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+    this.apiRequestService
+      .onGetList('EmailData/GetAsyncAll')
+      .then((result: any) => {
+        this.data = result;
       });
   }
   onDelete(id: number) {
@@ -59,41 +39,21 @@ export default class ListEmailDataComponent {
   }
 
   onModalAddOrEdit(data: any) {
-    this.ref = this.dialogService.open(AddOrEditEmailDataComponent, {
-      data: {
-        applicationUserId: data.applicationUserId,
-      },
-      header: data.title,
-      styleClass: 'modal-md ',
-      closeOnEscape: true,
-      baseZIndex: 10000,
-    });
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        this.customToastService.onShowSuccess();
-        this.onLoadData();
-      }
-    });
-  }
-
-  onSendTestEmail(applicationUserId: string) {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-
-    this.dataService
-      .get('SendEmail/SendTestMail/' + applicationUserId)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.data = this.customToastService.onCloseOnGetData(resp.body);
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+    this.dialogHandlerService
+      .openDialog(
+        AddOrEditEmailDataComponent,
+        data,
+        data.title,
+        this.dialogHandlerService.dialogSizeMd
+      )
+      .then((result: boolean) => {
+        if (result) this.onLoadData();
       });
   }
 
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
+  onSendTestEmail(applicationUserId: string) {
+    this.apiRequestService.onGetList(
+      'SendEmail/SendTestMail/' + applicationUserId
+    );
   }
 }

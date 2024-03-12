@@ -21,10 +21,10 @@ import ModalDatosServicioComponent from './modal-datos-servicio/modal-datos-serv
 export default class CalendarioMaestroComponent implements OnInit, OnDestroy {
   public customToastService = inject(CustomToastService);
   private dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
   public authService = inject(AuthService);
-  public apiRequestService = inject(ApiRequestService);
 
   data: any[] = [];
   ref: DynamicDialogRef;

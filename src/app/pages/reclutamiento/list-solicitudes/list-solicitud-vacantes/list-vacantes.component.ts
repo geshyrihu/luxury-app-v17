@@ -32,6 +32,7 @@ import AddOrEditVacanteComponent from './addoredit-vacante.component';
 })
 export default class ListVacantesComponent implements OnInit, OnDestroy {
   private dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   private filterRequestsService = inject(FilterRequestsService);
   public authService = inject(AuthService);
   public dialogService = inject(DialogService);
@@ -39,7 +40,6 @@ export default class ListVacantesComponent implements OnInit, OnDestroy {
   public statusSolicitudVacanteService = inject(StatusSolicitudVacanteService);
   public customToastService = inject(CustomToastService);
   public router = inject(Router);
-  public apiRequestService = inject(ApiRequestService);
 
   data: any[] = [];
   ref: DynamicDialogRef;

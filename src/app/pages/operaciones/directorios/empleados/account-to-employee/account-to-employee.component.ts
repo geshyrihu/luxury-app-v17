@@ -19,8 +19,8 @@ export default class AccountToEmployeeComponent implements OnInit {
   public ref = inject(DynamicDialogRef);
   public config = inject(DynamicDialogConfig);
   private dataService = inject(DataService);
-  private customToastService = inject(CustomToastService);
   public apiRequestService = inject(ApiRequestService);
+  private customToastService = inject(CustomToastService);
   private customerIdService = inject(CustomerIdService);
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 

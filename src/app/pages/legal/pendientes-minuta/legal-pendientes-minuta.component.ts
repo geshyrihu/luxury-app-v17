@@ -4,6 +4,7 @@ import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import {
+  ApiRequestService,
   AuthService,
   CustomToastService,
   DataService,
@@ -22,6 +23,7 @@ export default class LegalPendientesMinutaComponent
   implements OnInit, OnDestroy
 {
   private dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public authService = inject(AuthService);
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);

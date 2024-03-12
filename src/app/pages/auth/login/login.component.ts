@@ -1,12 +1,9 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { Subject, takeUntil } from 'rxjs';
 import {
   ApiRequestService,
-  CustomToastService,
-  DataService,
   SecurityService,
 } from 'src/app/core/services/common-services';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
@@ -16,16 +13,12 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   standalone: true,
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
-export default class LoginComponent implements OnInit, OnDestroy {
+export default class LoginComponent implements OnInit {
   private formBuilder = inject(FormBuilder);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private securityService = inject(SecurityService);
-  private dataService = inject(DataService);
-  public customToastService = inject(CustomToastService);
   public apiRequestService = inject(ApiRequestService);
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   fieldTextType!: boolean;
   form: FormGroup;
@@ -45,24 +38,12 @@ export default class LoginComponent implements OnInit, OnDestroy {
     // Verifica si el formulario es inválido y marca todos los campos como tocados si es así
     if (!this.apiRequestService.validateForm(this.form)) return;
 
-    // Muestra un mensaje de carga
-    this.customToastService.onLoading();
-    // Realiza la solicitud de inicio de sesión
-    this.dataService
-      .post('Auth/login', this.form.value)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          // Guarda los datos de autenticación y redirige al 'returnUrl'
-          this.onRemember(this.form.get('remember').value);
-          this.router.navigateByUrl(localStorage.getItem('currentUrl'));
-          this.securityService.setAuthData(resp.body.token);
-          this.customToastService.onClose();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-          this.customToastService.onLoadingError(error.error['description']);
-        },
+    this.apiRequestService
+      .onPostLogin('Auth/login', this.form.value)
+      .then((result: any) => {
+        this.onRemember(this.form.get('remember').value);
+        this.router.navigateByUrl(localStorage.getItem('currentUrl'));
+        this.securityService.setAuthData(result.token);
       });
   }
 
@@ -92,14 +73,5 @@ export default class LoginComponent implements OnInit, OnDestroy {
   toggleFieldTextType() {
     // Cambia el estado de visualización de la contraseña
     this.fieldTextType = !this.fieldTextType;
-  }
-
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
-  }
-
-  onRecoveryPassword() {
-    // Navega a la página para recuperar contraseña
-    this.router.navigate(['/auth/recuperar-contrasena']);
   }
 }

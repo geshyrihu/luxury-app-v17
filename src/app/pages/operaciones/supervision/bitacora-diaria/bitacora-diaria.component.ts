@@ -25,11 +25,10 @@ export default class BitacoraDiariaComponent implements OnInit, OnDestroy {
   private dateService = inject(DateService);
   public authService = inject(AuthService);
   private dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   private dialogService = inject(DialogService);
-
   private rangoCalendarioService = inject(FiltroCalendarService);
   private customToastService = inject(CustomToastService);
-  public apiRequestService = inject(ApiRequestService);
 
   loading: boolean = true;
   base_url = base_url;

@@ -5,6 +5,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { IEmployeeDto } from 'src/app/core/interfaces/IEmployeeDto.interface';
 import {
+  ApiRequestService,
   AuthService,
   CustomToastService,
   CustomerIdService,
@@ -26,6 +27,7 @@ const base_urlImg = environment.base_urlImg + 'Administration/accounts/';
 export default class ListEmployeeComponent implements OnInit, OnDestroy {
   private customerIdService = inject(CustomerIdService);
   private dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   private dialogService = inject(DialogService);
   private rutaActiva = inject(ActivatedRoute);
   public authService = inject(AuthService);

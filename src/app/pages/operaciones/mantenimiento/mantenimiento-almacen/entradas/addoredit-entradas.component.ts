@@ -26,11 +26,10 @@ export default class AddOrEditEntradasComponent implements OnInit, OnDestroy {
   public customToastService = inject(CustomToastService);
   private customerIdService = inject(CustomerIdService);
   private dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   private dateService = inject(DateService);
-
   public authService = inject(AuthService);
   public config = inject(DynamicDialogConfig);
-  public apiRequestService = inject(ApiRequestService);
 
   public ref = inject(DynamicDialogRef);
 

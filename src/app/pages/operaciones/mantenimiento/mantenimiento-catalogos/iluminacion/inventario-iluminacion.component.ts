@@ -1,78 +1,50 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
+import { Component, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { ImageModule } from 'primeng/image';
-import { TableModule } from 'primeng/table';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { Observable } from 'rxjs';
 import {
   ApiRequestService,
   AuthService,
-  CustomToastService,
   CustomerIdService,
-  DataService,
 } from 'src/app/core/services/common-services';
+import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import { environment } from 'src/environments/environment';
 import AddoreditInventarioIluminacionComponent from './addoredit-inventario-iluminacion.component';
 @Component({
   selector: 'app-inventario-iluminacion',
   templateUrl: './inventario-iluminacion.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    NgbAlertModule,
-    CommonModule,
-    TableModule,
-    ImageModule,
-  ],
+  imports: [LuxuryAppComponentsModule],
 })
-export default class InventarioIluminacionComponent
-  implements OnInit, OnDestroy
-{
-  public customToastService = inject(CustomToastService);
-  public authService = inject(AuthService);
-  public dataService = inject(DataService);
+export default class InventarioIluminacionComponent implements OnInit {
   public apiRequestService = inject(ApiRequestService);
-  public dialogService = inject(DialogService);
-  public messageService = inject(MessageService);
+  public authService = inject(AuthService);
   public customerIdService = inject(CustomerIdService);
+  public dialogHandlerService = inject(DialogHandlerService);
+  public dialogService = inject(DialogService);
 
   urlImg = environment.base_urlImg + 'Administration/products/';
   data: any[] = [];
 
   ref: DynamicDialogRef;
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
-
   customerId$: Observable<number> = this.customerIdService.getCustomerId$();
-
   url = `${environment.base_urlImg}Administration/products/`;
 
   ngOnInit(): void {
     this.customerId$ = this.customerIdService.getCustomerId$();
     this.onLoadData();
-    this.customerId$.subscribe((resp) => {
+    this.customerId$.subscribe(() => {
       this.onLoadData();
     });
   }
 
   onLoadData() {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .get<any[]>(
+    this.apiRequestService
+      .onGetList(
         'InventarioIluminacion/GetAll/' + this.customerIdService.getcustomerId()
       )
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.data = this.customToastService.onCloseOnGetData(resp.body);
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+      .then((result: any) => {
+        this.data = result;
       });
   }
   onDelete(id: number) {
@@ -84,26 +56,15 @@ export default class InventarioIluminacionComponent
   }
 
   onModalAddOrEdit(data: any) {
-    this.ref = this.dialogService.open(
-      AddoreditInventarioIluminacionComponent,
-      {
-        data: {
-          id: data.id,
-        },
-        header: data.title,
-        styleClass: 'modal-md',
-        closeOnEscape: true,
-        baseZIndex: 10000,
-      }
-    );
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        this.customToastService.onShowSuccess();
-        this.onLoadData();
-      }
-    });
-  }
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
+    this.dialogHandlerService
+      .openDialog(
+        AddoreditInventarioIluminacionComponent,
+        data,
+        data.title,
+        this.dialogHandlerService.dialogSizeMd
+      )
+      .then((result: boolean) => {
+        if (result) this.onLoadData();
+      });
   }
 }

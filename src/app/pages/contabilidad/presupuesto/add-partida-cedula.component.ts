@@ -18,11 +18,11 @@ import {
 })
 export default class AddPartidaCedulaComponent implements OnInit, OnDestroy {
   private dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public config = inject(DynamicDialogConfig);
   public authService = inject(AuthService);
   public ref = inject(DynamicDialogRef);
   private customToastService = inject(CustomToastService);
-  public apiRequestService = inject(ApiRequestService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 

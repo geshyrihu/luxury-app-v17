@@ -4,6 +4,7 @@ import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import {
+  ApiRequestService,
   AuthService,
   CustomerIdService,
   CustomToastService,
@@ -21,6 +22,7 @@ import AddorEditMeetingSeguimientoComponent from 'src/app/pages/operaciones/junt
 })
 export default class SeguimientoMinutaComponent implements OnInit, OnDestroy {
   private dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
   public authService = inject(AuthService);

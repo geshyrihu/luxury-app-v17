@@ -12,6 +12,7 @@ import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { TicketFilterService } from 'src/app/core/services/ticket-filter.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
+import { DataService } from '../../../../core/services/data.service';
 @Component({
   selector: 'app-ticket-filter',
   templateUrl: './ticket-filter.component.html',
@@ -21,7 +22,7 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 export default class FilterTicketComponent implements OnInit {
   private filterReportOperation = inject(TicketFilterService);
   private formBuilder = inject(FormBuilder);
-
+  private dataService = inject(DataService);
   public config = inject(DynamicDialogConfig);
   public ref = inject(DynamicDialogRef);
   public apiRequestService = inject(ApiRequestService);
@@ -69,15 +70,27 @@ export default class FilterTicketComponent implements OnInit {
       .then((response: any) => {
         this.cb_customer = response;
       });
-
-    this.apiRequestService
-      .onPost(`ResponsibleArea`, this.filterReportOperation.getfilterTicket)
-      .then((response: any) => {
-        this.cb_area_responsable = response.map((selectList: any) => ({
-          value: selectList.value,
-          label: selectList.label,
-        }));
+    this.dataService
+      .post(
+        'SelectItem/EmpleadosSolicitudTicket',
+        this.filterReportOperation.getfilterTicket
+      )
+      .subscribe((response: any) => {
+        console.log('🚀 ~ response:', response);
+        this.cb_solicitantes = response.body;
       });
+    // this.apiRequestService
+    //   .onPost(
+    //     'SelectItem/EmpleadosSolicitudTicket',
+    //     this.filterReportOperation.getfilterTicket
+    //   )
+    //   .then((response: any) => {
+    //     console.log('🚀 ~ response:', response);
+    //     // this.cb_area_responsable = response.map((selectList: any) => ({
+    //     //   value: selectList.value,
+    //     //   label: selectList.label,
+    //     // }));
+    //   });
   }
   onResetForm() {
     this.form.reset();

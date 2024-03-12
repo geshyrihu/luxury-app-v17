@@ -1,13 +1,11 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subject, finalize, takeUntil } from 'rxjs';
 import { ResetPasswordDto } from 'src/app/core/interfaces/user-info.interface';
 import {
   ApiRequestService,
   CustomToastService,
-  DataService,
 } from 'src/app/core/services/common-services';
 @Component({
   selector: 'app-update-password-modal',
@@ -15,14 +13,11 @@ import {
   standalone: true,
   imports: [LuxuryAppComponentsModule],
 })
-export default class UpdatePasswordModalComponent implements OnInit, OnDestroy {
-  private dataService = inject(DataService);
+export default class UpdatePasswordModalComponent implements OnInit {
   private customToastService = inject(CustomToastService);
   public apiRequestService = inject(ApiRequestService);
   public config = inject(DynamicDialogConfig);
   public ref = inject(DynamicDialogRef);
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   submitting: boolean = false;
   applicationUserId: string = this.config.data.applicationUserId;
@@ -62,71 +57,41 @@ export default class UpdatePasswordModalComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
     this.submitting = true;
-    this.dataService
-      .post('Auth/ResetPasswordAdmin', this.form.value)
-      .pipe(
-        takeUntil(this.destroy$), // Cancelar la suscripción cuando el componente se destruye
-        finalize(() => {
-          // Habilitar el botón al finalizar el envío del formulario
-          this.submitting = false;
-        })
-      )
-      .subscribe({
-        next: () => {
-          this.customToastService.onCloseToSuccess();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+
+    this.apiRequestService
+      .onPost('Auth/ResetPasswordAdmin', this.form.value)
+      .then(() => {
+        this.submitting = false;
       });
   }
 
   SendPasswordNewEmail() {
-    // Mostrar un mensaje de carga
     this.customToastService.onLoading();
 
-    this.dataService
-      .get(
+    this.apiRequestService
+      .onGetItem(
         'Auth/SendPasswordNewEmail/' +
           this.correoPersonal +
           '/' +
           this.applicationUserId
       )
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          this.customToastService.onCloseToSuccess();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+      .then(() => {
+        this.customToastService.onCloseToSuccess();
       });
   }
   SendPasswordWhatsApp() {
-    // Mostrar un mensaje de carga
     this.customToastService.onLoading();
 
-    this.dataService
-      .get(
+    this.apiRequestService
+      .onGetItem(
         'Auth/SendPasswordWhatsApp/' +
           this.celularPersonal +
           '/' +
           this.applicationUserId
       )
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          this.customToastService.onCloseToSuccess();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+      .then(() => {
+        this.customToastService.onCloseToSuccess();
       });
-  }
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
   }
 }

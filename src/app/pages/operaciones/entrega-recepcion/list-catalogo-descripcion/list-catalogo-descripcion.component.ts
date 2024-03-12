@@ -21,10 +21,10 @@ export default class ListCatalogoDescripcionComponent
   implements OnInit, OnDestroy
 {
   private dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
   public customToastService = inject(CustomToastService);
-  public apiRequestService = inject(ApiRequestService);
 
   data: any[] = [];
   ref: DynamicDialogRef;

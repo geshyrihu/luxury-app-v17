@@ -15,8 +15,8 @@ import { DataService } from 'src/app/core/services/data.service';
 })
 export default class SendWorkPlanComponent {
   private dataService = inject(DataService);
-  private customToastService = inject(CustomToastService);
   public apiRequestService = inject(ApiRequestService);
+  private customToastService = inject(CustomToastService);
   private customerIdService = inject(CustomerIdService);
   private authService = inject(AuthService);
 

@@ -27,13 +27,12 @@ export default class AddoreditSistemasReporteComponent
 {
   public authService = inject(AuthService);
   private dataService = inject(DataService);
-
+  public apiRequestService = inject(ApiRequestService);
   private formBuilder = inject(FormBuilder);
   public config = inject(DynamicDialogConfig);
   public ref = inject(DynamicDialogRef);
   private dateService = inject(DateService);
   private customToastService = inject(CustomToastService);
-  public apiRequestService = inject(ApiRequestService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 

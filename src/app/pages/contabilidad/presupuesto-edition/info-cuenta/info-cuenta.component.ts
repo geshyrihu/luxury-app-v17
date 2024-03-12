@@ -15,8 +15,8 @@ import {
 export default class InfoCuentaComponent implements OnInit, OnDestroy {
   public config = inject(DynamicDialogConfig);
   private dataService = inject(DataService);
-  private customToastService = inject(CustomToastService);
   public apiRequestService = inject(ApiRequestService);
+  private customToastService = inject(CustomToastService);
 
   id: number = 0;
 

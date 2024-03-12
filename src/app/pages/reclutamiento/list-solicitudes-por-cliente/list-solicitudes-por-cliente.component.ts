@@ -4,6 +4,7 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import {
+  ApiRequestService,
   AuthService,
   StatusSolicitudVacanteService,
 } from 'src/app/core/services/common-services';
@@ -24,6 +25,7 @@ import AddOrEditVacanteComponent from '../list-solicitudes/list-solicitud-vacant
 })
 export default class ListSolicitudesPorClienteComponent implements OnInit {
   private dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public customToastService = inject(CustomToastService);
   public customerIdService = inject(CustomerIdService);
   public dialogService = inject(DialogService);

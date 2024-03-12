@@ -92,6 +92,25 @@ export class ApiRequestService implements OnDestroy {
   }
 
   // Metodo Post
+  async onPostLogin<T>(urlApi: string, data: any): Promise<T | null> {
+    // Mostrar un mensaje de carga
+    this.customToastService.onLoading();
+    try {
+      const responseData = await lastValueFrom(
+        this.dataService.post<T>(urlApi, data).pipe(takeUntil(this.destroy$))
+      );
+      // Cuando se completa la carga con éxito, mostrar un mensaje de éxito y resolver la promesa con los datos
+      this.customToastService.onCloseToSuccess();
+      console.log('🚀 ~ responseData.body post:', responseData.body);
+      return responseData.body;
+    } catch (error) {
+      // En caso de error, mostrar un mensaje de error y rechazar la promesa con null
+      this.customToastService.onCloseToError(error);
+      return null;
+    }
+  }
+
+  // Metodo Post
   async onPost<T>(urlApi: string, data: any): Promise<boolean> {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();

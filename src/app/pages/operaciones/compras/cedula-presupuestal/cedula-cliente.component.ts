@@ -29,12 +29,12 @@ import OrdenesCompraCedulaComponent from './ordenes-compra-cedula/ordenes-compra
   ],
 })
 export default class CedulaClienteComponent implements OnInit, OnDestroy {
-  public customerIdService = inject(CustomerIdService);
-  public dataService = inject(DataService);
   public apiRequestService = inject(ApiRequestService);
+  public customerIdService = inject(CustomerIdService);
+  public customToastService = inject(CustomToastService);
+  public dataService = inject(DataService);
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
-  public customToastService = inject(CustomToastService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 

@@ -23,10 +23,10 @@ export default class AddoreditCuentasPrimerNivelComponent
   private formBuilder = inject(FormBuilder);
   public authService = inject(AuthService);
   private dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public config = inject(DynamicDialogConfig);
   public ref = inject(DynamicDialogRef);
   private customToastService = inject(CustomToastService);
-  public apiRequestService = inject(ApiRequestService);
 
   submitting: boolean = false;
 
@@ -46,6 +46,27 @@ export default class AddoreditCuentasPrimerNivelComponent
     });
   }
 
+  onLoadData() {
+    // // Mostrar un mensaje de carga
+    // this.customToastService.onLoading();
+    // this.dataService
+    //   .get(`Cuentas/${this.id}`)
+    //   .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+    //   .subscribe({
+    //     next: (resp) => {
+    //       this.form.patchValue(resp.body);
+    //       this.customToastService.onClose();
+    //     },
+    //     error: (error) => {
+    //       this.customToastService.onCloseToError(error);
+    //     },
+    //   });
+    this.apiRequestService
+      .onGetList(`Cuentas/${this.id}`)
+      .then((result: any) => {
+        this.form.patchValue(result);
+      });
+  }
   onSubmit() {
     if (!this.apiRequestService.validateForm(this.form)) return;
     // Deshabilitar el botón al iniciar el envío del formulario
@@ -84,22 +105,22 @@ export default class AddoreditCuentasPrimerNivelComponent
           },
         });
     }
-  }
-  onLoadData() {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .get(`Cuentas/${this.id}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp) => {
-          this.form.patchValue(resp.body);
-          this.customToastService.onClose();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
+
+    this.submitting = true;
+
+    if (this.id === 0) {
+      this.apiRequestService
+        .onPost(`Banks`, this.form.value)
+        .then((result: boolean) => {
+          result ? this.ref.close(true) : (this.submitting = false);
+        });
+    } else {
+      this.apiRequestService
+        .onPut(`Banks/${this.id}`, this.form.value)
+        .then((result: boolean) => {
+          result ? this.ref.close(true) : (this.submitting = false);
+        });
+    }
   }
 
   ngOnDestroy(): void {

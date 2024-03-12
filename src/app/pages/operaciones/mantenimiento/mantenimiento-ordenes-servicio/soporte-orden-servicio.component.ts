@@ -1,7 +1,10 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { CustomerIdService } from 'src/app/core/services/common-services';
+import {
+  ApiRequestService,
+  CustomerIdService,
+} from 'src/app/core/services/common-services';
 import { DataService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
 import { environment } from 'src/environments/environment';
@@ -17,6 +20,7 @@ export default class SoporteOrdenServicioComponent
   public dateService = inject(DateService);
   private route = inject(ActivatedRoute);
   private dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   private customerIdService = inject(CustomerIdService);
 
   id: string = '';

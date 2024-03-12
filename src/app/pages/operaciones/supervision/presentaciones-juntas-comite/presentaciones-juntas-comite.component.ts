@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { Subject, takeUntil } from 'rxjs';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
@@ -18,6 +19,7 @@ export default class PresentacionesJuntasComiteComponent
   implements OnInit, OnDestroy
 {
   private dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   private rangoCalendarioService = inject(FiltroCalendarService);
   private route = inject(Router);
   public dateService = inject(DateService);

@@ -18,10 +18,10 @@ export default class MantenimientosProgramadosComponent
 {
   private customerIdService = inject(CustomerIdService);
   private dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public ref = inject(DynamicDialogRef);
   public config = inject(DynamicDialogConfig);
   private customToastService = inject(CustomToastService);
-  public apiRequestService = inject(ApiRequestService);
 
   data: any[] = [];
 

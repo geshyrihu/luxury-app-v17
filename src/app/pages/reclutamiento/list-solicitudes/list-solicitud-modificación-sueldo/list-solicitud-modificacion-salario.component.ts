@@ -28,11 +28,11 @@ export default class ListSolicitudModificacionSalarioComponent
   public customToastService = inject(CustomToastService);
   public authService = inject(AuthService);
   private dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
   private filterRequestsService = inject(FilterRequestsService);
   public statusSolicitudVacanteService = inject(StatusSolicitudVacanteService);
-  public apiRequestService = inject(ApiRequestService);
 
   data: any[] = [];
   ref: DynamicDialogRef;

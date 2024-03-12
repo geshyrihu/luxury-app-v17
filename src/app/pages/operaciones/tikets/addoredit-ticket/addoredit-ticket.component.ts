@@ -20,7 +20,6 @@ import {
 } from 'src/app/core/services/common-services';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import { environment } from 'src/environments/environment';
-const diaActual = new Date(Date.now());
 @Component({
   selector: 'app-addoredit-ticket',
   templateUrl: './addoredit-ticket.component.html',
@@ -34,7 +33,6 @@ export default class AddoreditTicketComponent implements OnInit, OnDestroy {
   private dataService = inject(DataService);
   private dateService = inject(DateService);
   private formBuilder = inject(FormBuilder);
-
   public authService = inject(AuthService);
   public config = inject(DynamicDialogConfig);
   public ref = inject(DynamicDialogRef);
@@ -102,12 +100,6 @@ export default class AddoreditTicketComponent implements OnInit, OnDestroy {
         this.cb_user_customers = response;
       });
   }
-
-  public fechaProgramacion = this.dateService.formatDateTime(diaActual);
-  public fechaLimite = this.dateService.formatDateTime(
-    new Date(diaActual.setDate(diaActual.getDate() + 1))
-  );
-
   loadForm() {
     this.form = this.formBuilder.group({
       id: { value: this.id, disabled: true },
@@ -121,8 +113,8 @@ export default class AddoreditTicketComponent implements OnInit, OnDestroy {
       responsibleAreaId: [12, Validators.required],
       status: [this.status, Validators.required],
       customerId: [this.customerSelectListService.getcustomerId()],
-      fechaProgamacion: [this.fechaProgramacion, Validators.required],
-      fechaLimite: [this.fechaLimite, Validators.required],
+      fechaProgamacion: [this.getFormattedDate(10), Validators.required],
+      fechaLimite: [this.getFormattedDate(10), Validators.required],
       employeeResponsableId: ['', Validators.required],
       employeeResponsable: ['', Validators.required],
       employeeCargoReporte: [''],
@@ -130,6 +122,23 @@ export default class AddoreditTicketComponent implements OnInit, OnDestroy {
     });
   }
 
+  getFormattedDate(daysToAdd: number): string {
+    const date = new Date(Date.now() + daysToAdd * 24 * 60 * 60 * 1000);
+    const year = date.getFullYear();
+    const month = this.pad(date.getMonth() + 1);
+    const day = this.pad(date.getDate());
+    const hour = this.pad(date.getHours());
+    const minute = this.pad(date.getMinutes());
+    const second = this.pad(date.getSeconds());
+    return `${year}-${month}-${day}T${hour}:${minute}:${second}`;
+  }
+
+  pad(number: number): string {
+    if (number < 10) {
+      return '0' + number;
+    }
+    return number.toString();
+  }
   onLoadData(id: number) {
     this.dataService
       .get(`Ticket/${id}`)

@@ -24,10 +24,10 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 export default class AddOrEditVacanteComponent implements OnInit, OnDestroy {
   private formBuilder = inject(FormBuilder);
   private dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public ref = inject(DynamicDialogRef);
   public config = inject(DynamicDialogConfig);
   public customToastService = inject(CustomToastService);
-  public apiRequestService = inject(ApiRequestService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
   submitting: boolean = false;

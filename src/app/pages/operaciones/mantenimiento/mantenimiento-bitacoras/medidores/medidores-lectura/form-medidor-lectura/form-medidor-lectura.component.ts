@@ -22,11 +22,11 @@ export default class FormMedidorLecturaComponent implements OnInit, OnDestroy {
   private formBuilder = inject(FormBuilder);
   public dateService = inject(DateService);
   private dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public authService = inject(AuthService);
   public config = inject(DynamicDialogConfig);
   public ref = inject(DynamicDialogRef);
   private customToastService = inject(CustomToastService);
-  public apiRequestService = inject(ApiRequestService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
   submitting: boolean = false;

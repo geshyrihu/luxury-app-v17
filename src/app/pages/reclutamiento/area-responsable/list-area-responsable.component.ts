@@ -18,8 +18,8 @@ import AddOrEditAreaResponsableComponent from './addoredit-area-responsable.comp
 })
 export default class ListAreaResponsableComponent implements OnInit, OnDestroy {
   private dataService = inject(DataService);
-  private dialogService = inject(DialogService);
   public apiRequestService = inject(ApiRequestService);
+  private dialogService = inject(DialogService);
   private customToastService = inject(CustomToastService);
 
   data: any[] = [];

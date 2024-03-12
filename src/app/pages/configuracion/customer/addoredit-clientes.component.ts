@@ -1,16 +1,13 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule, {
   flatpickrFactory,
 } from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subject, takeUntil } from 'rxjs';
 import { ICustomerAddOrEditDto } from 'src/app/core/interfaces/ICustomerAddOrEditDto.interface';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import {
   ApiRequestService,
-  CustomToastService,
-  DataService,
   DateService,
 } from 'src/app/core/services/common-services';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
@@ -22,16 +19,12 @@ import { environment } from 'src/environments/environment';
   standalone: true,
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
-export default class AddOrEditClienteComponent implements OnInit, OnDestroy {
-  private dataService = inject(DataService);
+export default class AddOrEditClienteComponent implements OnInit {
   private formBuilder = inject(FormBuilder);
+  public apiRequestService = inject(ApiRequestService);
   public config = inject(DynamicDialogConfig);
   public dateService = inject(DateService);
   public ref = inject(DynamicDialogRef);
-  private customToastService = inject(CustomToastService);
-  public apiRequestService = inject(ApiRequestService);
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   submitting: boolean = false;
 
@@ -70,19 +63,13 @@ export default class AddOrEditClienteComponent implements OnInit, OnDestroy {
   }
 
   onLoadData() {
-    this.dataService
-      .get<ICustomerAddOrEditDto>(`Customers/${this.id}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.model = resp.body;
-          const register = this.dateService.getDateFormat(resp.body.register);
-          this.model.register = register;
-          this.form.patchValue(this.model);
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+    this.apiRequestService
+      .onGetItem<ICustomerAddOrEditDto>(`Customers/${this.id}`)
+      .then((result: any) => {
+        this.model = result;
+        const register = this.dateService.getDateFormat(result.register);
+        this.model.register = register;
+        this.form.patchValue(result);
       });
   }
 
@@ -91,37 +78,19 @@ export default class AddOrEditClienteComponent implements OnInit, OnDestroy {
 
     const formData = this.createFormData(this.form.value);
 
-    // Deshabilitar el botón al iniciar el envío del formulario
     this.submitting = true;
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
+
     if (this.id === 0) {
-      this.dataService
-        .post<ICustomerAddOrEditDto>('Customers', formData)
-        .subscribe({
-          next: () => {
-            this.ref.close(true);
-            this.customToastService.onClose();
-          },
-          error: (error) => {
-            // Habilitar el botón nuevamente al finalizar el envío del formulario
-            this.submitting = false;
-            this.customToastService.onCloseToError(error);
-          },
+      this.apiRequestService
+        .onPost('Customers', formData)
+        .then((result: boolean) => {
+          result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.dataService
-        .put<ICustomerAddOrEditDto>(`Customers/${this.id}`, formData)
-        .subscribe({
-          next: () => {
-            this.ref.close(true);
-            this.customToastService.onClose();
-          },
-          error: (error) => {
-            // Habilitar el botón nuevamente al finalizar el envío del formulario
-            this.submitting = false;
-            this.customToastService.onCloseToError(error);
-          },
+      this.apiRequestService
+        .onPut(`Customers/${this.id}`, formData)
+        .then((result: boolean) => {
+          result ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }
@@ -148,9 +117,5 @@ export default class AddOrEditClienteComponent implements OnInit, OnDestroy {
     formData.append('rfc', customerAdCustomerAddOrEdit.rfc);
     formData.append('numeroCliente', customerAdCustomerAddOrEdit.numeroCliente);
     return formData;
-  }
-
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
   }
 }

@@ -22,13 +22,13 @@ export default class EditProductosAlmacenComponent
   implements OnInit, OnDestroy
 {
   private dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   private formBuilder = inject(FormBuilder);
   public authService = inject(AuthService);
   public config = inject(DynamicDialogConfig);
   public customerIdService = inject(CustomerIdService);
   public ref = inject(DynamicDialogRef);
   private customToastService = inject(CustomToastService);
-  public apiRequestService = inject(ApiRequestService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 

@@ -8,6 +8,7 @@ import {
   onGetSelectItemFromEnum,
 } from 'src/app/core/helpers/enumeration';
 import {
+  ApiRequestService,
   CustomToastService,
   DataService,
 } from 'src/app/core/services/common-services';
@@ -20,6 +21,7 @@ import {
 })
 export default class FiltroMinutasAreaComponent implements OnInit, OnDestroy {
   private dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public ref = inject(DynamicDialogRef);
   public config = inject(DynamicDialogConfig);
   public customToastService = inject(CustomToastService);

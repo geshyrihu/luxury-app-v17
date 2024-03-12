@@ -20,10 +20,10 @@ import AddoreditCuentasPrimerNivelComponent from './addoredit-cuentas-primer-niv
 export default class CuentasPrimerNivelComponent implements OnInit, OnDestroy {
   public customToastService = inject(CustomToastService);
   private dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public messageService = inject(MessageService);
   public dialogService = inject(DialogService);
   public authService = inject(AuthService);
-  public apiRequestService = inject(ApiRequestService);
 
   // Declaración e inicialización de variables
   data: any[] = [];

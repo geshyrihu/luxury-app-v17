@@ -21,12 +21,12 @@ import TarjetaProductoComponent from '../../mantenimiento-catalogos/tarjeta-prod
 })
 export default class AddProductosAlmacenComponent implements OnInit, OnDestroy {
   private dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public customToastService = inject(CustomToastService);
   public authService = inject(AuthService);
   public customerIdService = inject(CustomerIdService);
   public dialogService = inject(DialogService);
   public ref = inject(DynamicDialogRef);
-  public apiRequestService = inject(ApiRequestService);
 
   data: any[] = [];
   cb_UnidadMedida: any[] = [];

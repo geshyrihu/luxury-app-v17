@@ -24,9 +24,9 @@ export default class ServiceHistoryMachineryComponent
   implements OnInit, OnDestroy
 {
   private dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public config = inject(DynamicDialogConfig);
   private customToastService = inject(CustomToastService);
-  public apiRequestService = inject(ApiRequestService);
   public dialogService = inject(DialogService);
 
   id: number = this.config.data.id;

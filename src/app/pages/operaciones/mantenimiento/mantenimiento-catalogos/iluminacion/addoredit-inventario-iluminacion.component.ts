@@ -1,15 +1,12 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subject, takeUntil } from 'rxjs';
 import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
 import {
   ApiRequestService,
   AuthService,
-  CustomToastService,
   CustomerIdService,
-  DataService,
 } from 'src/app/core/services/common-services';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 @Component({
@@ -18,19 +15,13 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   standalone: true,
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
-export default class AddoreditInventarioIluminacionComponent
-  implements OnInit, OnDestroy
-{
+export default class AddoreditInventarioIluminacionComponent implements OnInit {
   private formBuilder = inject(FormBuilder);
-  public dataService = inject(DataService);
   public apiRequestService = inject(ApiRequestService);
   public ref = inject(DynamicDialogRef);
   public config = inject(DynamicDialogConfig);
   public authService = inject(AuthService);
   public customerIdService = inject(CustomerIdService);
-  private customToastService = inject(CustomToastService);
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   submitting: boolean = false;
 
@@ -71,83 +62,47 @@ export default class AddoreditInventarioIluminacionComponent
     });
   }
   onLoadData() {
-    this.dataService
-      .get<any>(`InventarioIluminacion/${this.id}`)
-      .subscribe((resp: any) => {
-        this.form.patchValue(resp.body);
+    this.apiRequestService
+      .onGetItem(`InventarioIluminacion/${this.id}`)
+      .then((result: any) => {
+        this.form.patchValue(result);
       });
   }
   onSubmit() {
     if (!this.apiRequestService.validateForm(this.form)) return;
-    let model = this.form.value;
     // Deshabilitar el botón al iniciar el envío del formulario
     this.submitting = true;
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
 
-    this.id = this.config.data.id;
     if (this.id === 0) {
-      this.dataService
-        .post(`InventarioIluminacion`, model)
-        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-        .subscribe({
-          next: () => {
-            this.ref.close(true);
-            this.customToastService.onClose();
-          },
-          error: (error) => {
-            // Habilitar el botón nuevamente al finalizar el envío del formulario
-            this.submitting = false;
-            this.customToastService.onCloseToError(error);
-          },
+      this.apiRequestService
+        .onPost(`InventarioIluminacion`, this.form.value)
+        .then((result: boolean) => {
+          result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.dataService
-        .put(`InventarioIluminacion/${this.id}`, model)
-        .subscribe({
-          next: () => {
-            this.ref.close(true);
-            this.customToastService.onClose();
-          },
-          error: (error) => {
-            // Habilitar el botón nuevamente al finalizar el envío del formulario
-            this.submitting = false;
-            this.customToastService.onCloseToError(error);
-          },
+      this.apiRequestService
+        .onPut(`InventarioIluminacion/${this.id}`, this.form.value)
+        .then((result: boolean) => {
+          result ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }
 
   onLoadMachinery() {
-    this.dataService
-      .get(
+    this.apiRequestService
+      .onGetList(
         'Machineries/GetAutocompeteInv/' +
           this.customerIdService.getcustomerId()
       )
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.cb_machinery = resp.body;
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+      .then((result: any) => {
+        this.cb_machinery = result;
       });
   }
   onLoadProducto() {
-    this.dataService
-      .get('Productos/GetAutoCompleteSelectItem/')
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.cb_producto = resp.body;
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+    this.apiRequestService
+      .onGetList('Productos/GetAutoCompleteSelectItem/')
+      .then((result: any) => {
+        this.cb_producto = result;
       });
-  }
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
   }
 }

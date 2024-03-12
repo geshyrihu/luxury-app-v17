@@ -24,10 +24,10 @@ export default class AddOrEditStatusRequestSalaryModificationComponent
 {
   private formBuilder = inject(FormBuilder);
   private dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public ref = inject(DynamicDialogRef);
   public config = inject(DynamicDialogConfig);
   private customToastService = inject(CustomToastService);
-  public apiRequestService = inject(ApiRequestService);
 
   submitting: boolean = false;
 

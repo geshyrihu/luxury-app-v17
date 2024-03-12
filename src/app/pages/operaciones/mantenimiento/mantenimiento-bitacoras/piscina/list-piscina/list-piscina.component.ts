@@ -23,12 +23,12 @@ import AddOrEditPiscinaComponent from '../addoredit-piscina/addoredit-piscina.co
 })
 export default class ListPiscinaComponent implements OnInit, OnDestroy {
   private dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public authService = inject(AuthService);
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
   public customToastService = inject(CustomToastService);
   public customerIdService = inject(CustomerIdService);
-  public apiRequestService = inject(ApiRequestService);
 
   data: any[] = [];
   ref: DynamicDialogRef;

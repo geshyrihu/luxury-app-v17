@@ -26,15 +26,14 @@ export default class EnviarMailReporteSemanalComponent
   implements OnInit, OnDestroy
 {
   private dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   private formBuilder = inject(FormBuilder);
-
   public config = inject(DynamicDialogConfig);
   public customerIdService = inject(CustomerIdService);
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
   public ref = inject(DynamicDialogRef);
   public customToastService = inject(CustomToastService);
-  public apiRequestService = inject(ApiRequestService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
@@ -72,7 +71,9 @@ export default class EnviarMailReporteSemanalComponent
   }
   onLoadSelectItem() {
     this.apiRequestService
-      .onGetSelectItem(`Providers`)
+      .onGetSelectItem(
+        `ResidentesEdificio/${this.customerIdService.getcustomerId()}`
+      )
       .then((response: any) => {
         this.destinatarios = response;
       });

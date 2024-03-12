@@ -25,9 +25,9 @@ export default class ListMedidorComponent implements OnInit, OnDestroy {
   public customToastService = inject(CustomToastService);
   private customerIdService = inject(CustomerIdService);
   private dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
-  public apiRequestService = inject(ApiRequestService);
 
   data: IMedidorDto[] = [];
   ref: DynamicDialogRef;

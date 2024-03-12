@@ -23,9 +23,9 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 })
 export default class SolicitudVacanteComponent implements OnInit, OnDestroy {
   private dataService = inject(DataService);
+  public apiRequestService = inject(ApiRequestService);
   private formBuilder = inject(FormBuilder);
   private customToastService = inject(CustomToastService);
-  public apiRequestService = inject(ApiRequestService);
   public config = inject(DynamicDialogConfig);
   public ref = inject(DynamicDialogRef);
   public authService = inject(AuthService);
