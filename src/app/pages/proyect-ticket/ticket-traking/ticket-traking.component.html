@@ -11,74 +11,82 @@
         }
       </div>
       <div class="col-12">
-        <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
-          <div class="form-floating">
-            <textarea
-              class="form-control"
-              placeholder="Ingresa seguimiento"
-              id="floatingTextarea2"
-              formControlName="description"
-              maxlength="200"
-              minlength="10"
-              style="resize: none"
-              [(ngModel)]="seguimientoConst"
-              [class.is-invalid]="
-                f.description.invalid &&
-                (f.description.dirty || f.description.touched)
-              "
-              (input)="validarCaracteres($event.target)"
-            ></textarea>
-            <label for="floatingTextarea2">Agregar Seguimiento</label>
+        <div class="card">
+          <div class="card-body">
+            <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
+              <div class="form-floating">
+                <textarea
+                  class="form-control"
+                  placeholder="Ingresa seguimiento"
+                  id="floatingTextarea2"
+                  formControlName="description"
+                  maxlength="200"
+                  minlength="10"
+                  style="resize: none"
+                  [(ngModel)]="seguimientoConst"
+                  [class.is-invalid]="
+                    f.description.invalid &&
+                    (f.description.dirty || f.description.touched)
+                  "
+                  (input)="validarCaracteres($event.target)"
+                ></textarea>
+                <label for="floatingTextarea2">Agregar Seguimiento</label>
+              </div>
+              <small class="text-danger"
+                >Minimo 10 caracteres, maximo 200, restantes
+                {{ seguimientoLenght }}</small
+              >
+              @if ( f.description.invalid && (f.description.dirty ||
+              f.description.touched) ) {
+              <div class="invalid-feedback">
+                @if (f.description.errors.required) {
+                <div>seguimiento requerido</div>
+                }
+              </div>
+              }
+              <div class="float-end mt-2">
+                <button class="btn btn-sm btn-primary">Guardar</button>
+              </div>
+            </form>
           </div>
-          <small class="text-danger"
-            >Minimo 10 caracteres, maximo 200, restantes
-            {{ seguimientoLenght }}</small
-          >
-          @if ( f.description.invalid && (f.description.dirty ||
-          f.description.touched) ) {
-          <div class="invalid-feedback">
-            @if (f.description.errors.required) {
-            <div>seguimiento requerido</div>
-            }
-          </div>
-          }
-          <div class="float-end mt-2">
-            <button class="btn btn-sm btn-primary">Guardar</button>
-          </div>
-        </form>
+        </div>
       </div>
       <div class="col-12 mt-2">
-        @if (seguimientos.length > 0) {
-        <!-- 1 -->
-        <ul class="list-unstyled activity-wid mb-0">
-          @for (data of seguimientos; track data) {
-          <li class="activity-list activity-border">
-            <div class="activity-icon avatar-md">
-              <span
-                class="avatar-title bg-soft-primary text-primary rounded-circle bg-soft-info text-info"
-              >
-                <i class="fa-regular fa-thumbtack"></i>
-              </span>
-            </div>
-            <div class="timeline-list-item">
-              <div class="d-flex">
-                <div class="flex-grow-1 overflow-hidden me-4">
-                  <h5 class="font-size-14 mb-1">{{ data.employee }}</h5>
-                  <p class="text-justify text-muted font-size-13">
-                    {{ data.seguimiento }}
-                  </p>
+        <div class="card">
+          <div class="card-body">
+            @if (seguimientos.length > 0) {
+            <!-- 1 -->
+            <ul class="list-unstyled activity-wid mb-0">
+              @for (data of seguimientos; track data) {
+              <li class="activity-list activity-border">
+                <div class="activity-icon avatar-md">
+                  <span
+                    class="avatar-title bg-soft-primary text-primary rounded-circle bg-soft-info text-info"
+                  >
+                    <i class="fa-regular fa-thumbtack"></i>
+                  </span>
                 </div>
-                <div class="flex-shrink-0 text-end me-3">
-                  <h6 class="mb-1">{{ data.fechaRegistro }}</h6>
+                <div class="timeline-list-item">
+                  <div class="d-flex">
+                    <div class="flex-grow-1 overflow-hidden me-4">
+                      <h5 class="font-size-14 mb-1">{{ data.employee }}</h5>
+                      <p class="text-justify text-muted font-size-13">
+                        {{ data.seguimiento }}
+                      </p>
+                    </div>
+                    <div class="flex-shrink-0 text-end me-3">
+                      <h6 class="mb-1">{{ data.fechaRegistro }}</h6>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-          </li>
-          }
-        </ul>
-        } @if (seguimientos.length == 0) {
-        <em>SIN SEGUIMIENTO</em>
-        }
+              </li>
+              }
+            </ul>
+            } @if (seguimientos.length == 0) {
+            <em>SIN SEGUIMIENTO</em>
+            }
+          </div>
+        </div>
       </div>
     </div>
   </div>

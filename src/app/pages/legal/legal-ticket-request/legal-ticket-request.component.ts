@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { DialogService } from 'primeng/dynamicdialog';
 import { CustomToastService } from 'src/app/core/services/common-services';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
-import LegalTicketAddOrEditComponent from '../../proyect-ticket/legal-ticket-add-or-edit/legal-ticket-add-or-edit.component';
+import LegalTicketAddComponent from '../../proyect-ticket/legal-ticket-add/legal-ticket-add.component';
 
 @Component({
   selector: 'app-legal-ticket-request',
@@ -18,7 +18,7 @@ export class LegalTicketRequestComponent {
 
   onModalTicketLegal() {
     this.dialogHandlerService.openDialog(
-      LegalTicketAddOrEditComponent,
+      LegalTicketAddComponent,
       null,
       'TICKET LEGAL',
       this.dialogHandlerService.dialogSizeLg // Tamaño del cuadro de diálogo

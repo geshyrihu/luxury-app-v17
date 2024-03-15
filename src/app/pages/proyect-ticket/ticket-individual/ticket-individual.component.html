@@ -1,0 +1,64 @@
+@if(data){
+<div class="card p-3">
+  <div class="row">
+    <div class="col-md-4">
+      <h5>Titulo:</h5>
+    </div>
+    <div class="col-md-8">
+      <h5>
+        {{ data.title }}
+      </h5>
+    </div>
+    <div class="col-md-4">
+      <h5>Cliente:</h5>
+    </div>
+    <div class="col-md-8">
+      <h5>
+        {{ data.customer }}
+      </h5>
+    </div>
+    <div class="col-md-4">
+      <h5>Fecha de Solicitud:</h5>
+    </div>
+    <div class="col-md-8">
+      <h5>
+        {{ data.requestDate }}
+      </h5>
+    </div>
+    <div class="col-md-4">
+      <h5>Solicita:</h5>
+    </div>
+    <div class="col-md-8">
+      <h5>
+        {{ data.requestPerson }}
+      </h5>
+    </div>
+
+    <div class="col-md-4">
+      <h5>Asunto:</h5>
+    </div>
+    <div class="col-md-8">
+      <h5>
+        {{ data.request }}
+      </h5>
+    </div>
+    <div class="col-md-4">
+      <h5>Documentos en Cloud:</h5>
+    </div>
+    <div class="col-md-8">
+      <h5>
+        {{ data.documentCloud }}
+      </h5>
+    </div>
+    <div class="col-md-4">
+      <h5>Documentos enviados por mail:</h5>
+    </div>
+    <div class="col-md-8">
+      <h5>
+        {{ data.documentEmail }}
+      </h5>
+    </div>
+  </div>
+</div>
+
+}

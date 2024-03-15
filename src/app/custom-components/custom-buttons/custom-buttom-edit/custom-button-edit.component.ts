@@ -2,10 +2,10 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  imports: [NgbTooltip],
   selector: 'custom-button-edit',
-  standalone: true,
   templateUrl: './custom-button-edit.component.html',
+  standalone: true,
+  imports: [NgbTooltip],
 })
 export default class CustomButtonEditComponent {
   @Input() placement: string = 'top';

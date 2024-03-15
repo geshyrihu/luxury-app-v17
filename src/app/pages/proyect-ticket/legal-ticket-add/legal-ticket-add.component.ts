@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FlatpickrModule } from 'angularx-flatpickr';
 
 import LuxuryAppComponentsModule, {
@@ -16,11 +16,11 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 
 @Component({
   selector: 'app-legal-ticket-add-or-edit',
-  templateUrl: './legal-ticket-add-or-edit.component.html',
+  templateUrl: './legal-ticket-add.component.html',
   standalone: true,
   imports: [LuxuryAppComponentsModule, CustomInputModule, FlatpickrModule],
 })
-export default class LegalTicketAddOrEditComponent implements OnInit {
+export default class LegalTicketAddComponent implements OnInit {
   private customerIdService = inject(CustomerIdService);
   private formBuilder = inject(FormBuilder);
   private signalrCustomService = inject(SignalrCustomService);
@@ -46,14 +46,12 @@ export default class LegalTicketAddOrEditComponent implements OnInit {
     title: ['1. ALTA DE PROVEEDOR'],
     fechaAsamblea: [],
     fechaJunta: [],
-    completionDate: [],
     horaJunta: [],
-    provider: [],
+    provider: ['', Validators.required],
     request: [],
     condomino: [],
-    personResponsibleId: [],
-    status: [0],
-    documentCloud: [''],
+    documentCloud: [false],
+    documentEmail: [false],
     tipoSolicitud: [this.tipoSolicitud],
   });
   ngOnInit() {
@@ -76,32 +74,20 @@ export default class LegalTicketAddOrEditComponent implements OnInit {
   }
   onSubmit() {
     if (!this.apiRequestService.validateForm(this.form)) return;
-
     this.id = this.config.data.id;
     this.submitting = true;
 
-    if (this.id === '') {
-      this.apiRequestService
-        .onPost(`TicketLegal`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
-          this.signalrCustomService.hubConnection.on(
-            'Nueva solicitud',
-            (respuesta) => {
-              console.log(
-                'estamos desde el Componente.... hubConnection: ',
-                respuesta
-              );
-            }
-          );
-        });
-    } else {
-      this.apiRequestService
-        .onPut(`TicketLegal/${this.id}`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
-        });
-    }
+    this.apiRequestService
+      .onPost(`TicketLegal`, this.form.value)
+      .then((result: boolean) => {
+        result ? this.ref.close(true) : (this.submitting = false);
+        this.signalrCustomService.hubConnection.on(
+          'Nueva solicitud TicketLegal',
+          (respuesta) => {
+            console.log('Respuesta hubConnection: ', respuesta);
+          }
+        );
+      });
   }
 
   onChangeTitle(data: ESolicitudLegal) {
@@ -118,5 +104,6 @@ export enum ESolicitudLegal {
   '4. JUNTAS DE COMITÉ, TEMAS LEGALES' = 4,
   '5. CONVENIOS MOROSOS' = 5,
   '6. LITIGIOS' = 6,
-  '7. OTROS' = 7,
+  // '7. OTROS' = 7,
+  '8. OTROS' = 8,
 }

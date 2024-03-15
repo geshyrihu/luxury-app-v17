@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -12,7 +12,7 @@ import {
   standalone: true,
   imports: [LuxuryAppComponentsModule],
 })
-export default class TicketTrakingComponent implements OnInit {
+export default class TicketTrakingComponent implements OnInit, OnDestroy {
   private formBuilder = inject(FormBuilder);
   public ref = inject(DynamicDialogRef);
   public config = inject(DynamicDialogConfig);
@@ -61,19 +61,6 @@ export default class TicketTrakingComponent implements OnInit {
   }
 
   onCargaListaseguimientos() {
-    // this.loading = true;
-    // this.dataService
-    //   .get<ITicketseguimiento[]>(`TicketLegal/Traking/${this.ticketId}`)
-    //   .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-    //   .subscribe({
-    //     next: (resp: any) => {
-    //       this.seguimientos = resp.body;
-    //       this.loading = false;
-    //     },
-    //     error: (error) => {
-    //       this.customToastService.onCloseToError(error);
-    //     },
-    //   });
     this.apiRequestService
       .onGetItem(`TicketLegal/Traking/${this.ticketId}`)
       .then((result: any) => {
@@ -84,32 +71,12 @@ export default class TicketTrakingComponent implements OnInit {
     return this.form.controls;
   }
 
+  onCreateItem = false;
   onSubmit() {
     if (!this.apiRequestService.validateForm(this.form)) return;
 
-    // Deshabilitar el botón al iniciar el envío del formulario
     this.submitting = true;
-    // Mostrar un mensaje de carga
-    // this.customToastService.onLoading();
 
-    // this.dataService
-    //   .post(`TicketLegal/Addtraking`, this.form.value)
-    //   .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-    //   .subscribe({
-    //     next: (_) => {
-    //       this.onCargaListaseguimientos();
-    //       this.form.patchValue({
-    //         description: '',
-    //       });
-    //       this.seguimientoLenght = 200;
-    //       this.customToastService.onCloseToSuccess();
-    //     },
-    //     error: (error) => {
-    //       // Habilitar el botón nuevamente al finalizar el envío del formulario
-    //       this.submitting = false;
-    //       this.customToastService.onCloseToError(error);
-    //     },
-    //   });
     this.apiRequestService
       .onPost(`TicketLegal/Addtraking`, this.form.value)
       .then(() => {
@@ -117,13 +84,15 @@ export default class TicketTrakingComponent implements OnInit {
         this.form.patchValue({
           description: '',
         });
+        this.onCreateItem = true;
         this.seguimientoLenght = 200;
         this.submitting = false;
       });
   }
-  // ngOnDestroy(): void {
-  //   this.ref.close(true);
 
-  //   this.dataService.ngOnDestroy();
-  // }
+  ngOnDestroy(): void {
+    if (this.onCreateItem) {
+      this.ref.close(true);
+    }
+  }
 }

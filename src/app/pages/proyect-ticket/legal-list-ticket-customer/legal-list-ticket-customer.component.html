@@ -22,18 +22,30 @@
 
     <ng-template pTemplate="header">
       <tr>
-        <th scope="col" class="text-center color-1">FOLIO</th>
-        <th scope="col" class="text-center color-1">FECHA SOLICITUD</th>
-        <th scope="col" class="text-center color-1">CLIENTE</th>
-        <th scope="col" class="text-center color-1">SOLICITA</th>
-        <th scope="col" class="text-center color-1">ASUNTO</th>
-        <th scope="col" class="text-center color-1">DESCRIPCIÓN</th>
-        <th scope="col" class="text-center color-2">DOCTOS EN LUX CLOUD</th>
-        <th scope="col" class="text-center color-2">ESTATUS</th>
-        <th scope="col" class="text-center color-2">FECHA</th>
-        <th scope="col" class="text-center color-2">DÍAS</th>
-        <th scope="col" class="text-center color-2">RESPONSABLE</th>
-        <th scope="col" colspan="2" class="text-center color-2">SEGUIMIENTO</th>
+        <th scope="col" class="text-center color-1 th-cliente-font">FOLIO</th>
+        <th scope="col" class="text-center color-1 th-cliente-font">
+          FECHA SOLICITUD
+        </th>
+        <th scope="col" class="text-center color-1 th-cliente-font">CLIENTE</th>
+        <th scope="col" class="text-center color-1 th-cliente-font">
+          SOLICITA
+        </th>
+        <th scope="col" class="text-center color-1 th-cliente-font">ASUNTO</th>
+        <th scope="col" class="text-center color-1 th-cliente-font">
+          DESCRIPCIÓN
+        </th>
+        <th scope="col" class="text-center color-2 th-cliente-font">
+          DOCTOS ENVIADOS
+        </th>
+        <th scope="col" class="text-center color-2 th-cliente-font">ESTATUS</th>
+        <th scope="col" class="text-center color-2 th-cliente-font">
+          FECHA DE CONCLUSIÓN
+        </th>
+        <th scope="col" class="text-center color-2 th-cliente-font">DÍAS</th>
+        <th scope="col" class="text-center color-2 th-cliente-font">
+          RESPONSABLE
+        </th>
+        <th scope="col" class="text-center color-2">SEGUIMIENTO</th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-item>
@@ -43,17 +55,27 @@
         <td class="p-column-title">{{ item.customer }}</td>
         <td class="p-column-title">{{ item.requestPerson }}</td>
         <td class="p-column-title">{{ item.title }}</td>
-        <td class="p-column-title">
-          <div style="white-space: pre-line">
-            {{ item.request }}
-          </div>
+        <td class="p-column-title text-center">
+          @if (item.request.length > 0) {
+          <i
+            (click)="onModalViewDetail({ id: item.id })"
+            ngbTooltip="Ver detalles"
+            class="fa-duotone fa-book fa-xl pointer"
+          ></i>
+          }
         </td>
         <td class="p-column-title">
           <div class="text-center">
-            @if(item.documentCloud== "Sí"){
-            <i class="text-success fa-duotone fa-check-double fa-xl"></i>
-            } @else{
-            <i class="text-danger fa-duotone fa-x fa-xl"></i>
+            @if(item.documentCloud){
+            <i
+              class="fa-duotone fa-cloud-arrow-up fa-xl me-3"
+              ngbTooltip="Subida a LuxuryCloud"
+            ></i>
+            } @if(item.documentEmail){
+            <i
+              class="fa-duotone fa-envelope fa-xl"
+              ngbTooltip="Enviada por email"
+            ></i>
             }
           </div>
         </td>
@@ -79,22 +101,29 @@
           </p>
         </td>
         <td class="p-column-title">{{ item.completionDate }}</td>
-        <td class="p-column-title">{{ item.diferenciaDias }}</td>
+        <td class="p-column-title text-center">{{ item.diferenciaDias }}</td>
         <td class="p-column-title">{{ item.personResponsible }}</td>
-        <td class="p-column-title"></td>
-
-        <td class="p-column-title" class="hide-print-mode">
+        <td class="p-column-title">
           <div class="d-flex justify-content-center">
-            <custom-button-edit
-              (edit)="
-                onModalAddOrEdit({ id: item.id, title: 'EDITAR TICKET LEGAL' })
+            <button
+              type="button"
+              class="btn btn-sm btn-outline-warning position-relative me-1 pointer"
+              ngbTooltip="Seguimiento"
+              placement="top"
+              (click)="
+                onModalComentariosCliente({
+                  ticketId: item.id,
+                  title: 'Seguimiento'
+                })
               "
-            ></custom-button-edit>
-            @if (item.status !== 4) {
-            <custom-button-delete
-              (OnConfirm)="onDelete(item.id)"
-            ></custom-button-delete>
-            }
+            >
+              <i class="fa-regular fa-list text-warning"></i>
+              <span
+                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success"
+                >{{ item.tracking }}
+                <span class="visually-hidden">unread messages</span></span
+              >
+            </button>
           </div>
         </td>
       </tr>
@@ -124,5 +153,9 @@
     background: -ms-linear-gradient(90deg, #0f0c29 10%, #302b63 70%);
     background: -o-linear-gradient(90deg, #0f0c29 10%, #302b63 70%);
     background: linear-gradient(90deg, #0f0c29 10%, #302b63 70%);
+  }
+  .th-cliente-font {
+    text-align: center; /* Para centrar el texto */
+    font-weight: normal; /* Para la fuente delgada, puedes usar 'normal' o 'lighter' dependiendo de la familia de fuentes */
   }
 </style>

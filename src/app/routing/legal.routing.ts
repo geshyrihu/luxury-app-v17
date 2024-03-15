@@ -22,4 +22,11 @@ export default [
         'src/app/pages/proyect-ticket/legal-list-ticket-customer/legal-list-ticket-customer.component'
       ),
   },
+  {
+    path: 'ticket/:ticketId',
+    loadComponent: () =>
+      import(
+        'src/app/pages/proyect-ticket/ticket-individual/ticket-individual.component'
+      ),
+  },
 ] as Routes;
