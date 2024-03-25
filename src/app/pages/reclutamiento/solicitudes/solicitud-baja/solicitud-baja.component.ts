@@ -178,6 +178,10 @@ export default class SolicitudBajaComponent implements OnInit, OnDestroy {
     formData.append('reasonForLeaving', form.reasonForLeaving);
     formData.append('lawyerAssistance', form.lawyerAssistance.toString());
     formData.append('employeeInformed', form.employeeInformed.toString());
+    formData.append(
+      'requestPersonId',
+      this.authService.infoEmployeeDto.personId.toString()
+    );
     // ...
 
     const discountDescriptions = form.discountDescriptions;

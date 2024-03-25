@@ -1,11 +1,8 @@
-// @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;700&display=swap");
-
 .custom-table table {
   border-collapse: collapse !important;
   width: 100% !important;
 }
 
-.custom-table th,
 .custom-table td {
   border: 1px solid rgb(60, 60, 60) !important;
   color: black !important;
@@ -14,8 +11,13 @@
 }
 
 .custom-table th {
-  color: #f9f9f9 !important;
-  background-color: black !important;
+  border: 1px solid #fff !important;
+  background: linear-gradient(
+    to right,
+    #000000,
+    #2e2e2e
+  ); /* Degradado de colores para el primer grupo */
+  color: #fff !important; /* Color de texto */
   text-transform: uppercase;
 }
 
@@ -50,4 +52,28 @@
 table {
   font-size: 14px; /* Ajusta el tamaño de letra según tus necesidades */
   font-family: "IBM Plex Sans", sans-serif !important;
+}
+
+.color-gradient-1 {
+  background: linear-gradient(
+    to right,
+    #414141,
+    #548235
+  ); /* Degradado de colores para el primer grupo */
+  color: #fff; /* Color de texto */
+}
+
+.color-gradient-2 {
+  background: linear-gradient(
+    to right,
+    #0f0c29,
+    #302b63
+  ); /* Degradado de colores para el segundo grupo */
+  color: #fff; /* Color de texto */
+}
+
+th {
+  text-align: center; /* Para centrar el texto */
+  font-weight: normal; /* Para la fuente delgada, puedes usar 'normal' o 'lighter' dependiendo de la familia de fuentes */
+  padding: 10px; /* Añadimos un poco de espacio alrededor del texto */
 }

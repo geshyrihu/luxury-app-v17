@@ -53,6 +53,7 @@ export default class EstadoFinancieroListComponent
       .subscribe({
         next: (resp: any) => {
           this.data = this.customToastService.onCloseOnGetData(resp.body);
+          console.log('🚀 ~ resp.body:', resp.body);
         },
         error: (error) => {
           this.customToastService.onCloseToError(error);

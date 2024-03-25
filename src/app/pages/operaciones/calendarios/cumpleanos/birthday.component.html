@@ -7,3 +7,33 @@
     </div>
   </div>
 </div>
+<!-- <div class="slider">
+  <input
+    type="range"
+    min="1"
+    max="12"
+    step="1"
+    [(ngModel)]="selectedMonth"
+    (change)="selectMonth()"
+  />
+  <div class="month">{{ months[selectedMonth - 1] }}</div>
+</div> -->
+<style>
+  .slider {
+    width: 80%;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  input[type="range"] {
+    width: 100%;
+  }
+
+  .month {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+  }
+</style>

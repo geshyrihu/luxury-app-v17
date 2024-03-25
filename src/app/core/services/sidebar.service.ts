@@ -333,7 +333,8 @@ export class SidebarService {
       visible: this.authService.onValidateRoles([
         'SuperUsuario',
         'Residente',
-        'Legal',
+        'Contador',
+        'Asistente',
       ]),
       label: 'Tickets',
       icon: 'fa-thin fa-ticket',

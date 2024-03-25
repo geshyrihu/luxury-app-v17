@@ -21,38 +21,47 @@
     styleClass="custom-table"
   >
     <ng-template pTemplate="caption">
-      <app-table-header
-        title="TICKETS LEGAL"
-        [showAdd]="false"
-        [dt]="dt"
-      ></app-table-header>
-    </ng-template>
-    <div class="row">
-      <div class="col">
-        <!-- TODO: COLOCAR FILTROS POR MES, Y POR CLIENTE -->
+      <div class="row">
+        <div class="col-sm-10">
+          <app-table-header
+            title="TICKETS LEGAL"
+            (add)="onModalAddOrEdit({ id: '', title: 'AGREGAR TICKET LEGAL' })"
+            [dt]="dt"
+          ></app-table-header>
+        </div>
+        <div class="col-sm-2 d-flex align-items-center">
+          <input
+            class="form-control w-75 me-2"
+            type="month"
+            [(ngModel)]="inputValue"
+            (change)="onFilter(inputValue)"
+          />
+          <!-- Ajusta el espacio con "me-2" según sea necesario -->
+          <button ngbTooltip="Restaurar fecha" class="btn btn-primary">
+            <i
+              class="fa-duotone fa-window-restore pointer"
+              (click)="clearInput()"
+            ></i>
+          </button>
+        </div>
       </div>
-    </div>
-
+    </ng-template>
     <ng-template pTemplate="header">
       <tr>
-        <th scope="col" class="color-1 th-cliente-font">FOLIO</th>
-        <th scope="col" class="color-1 th-cliente-font">FECHA SOLICITUD</th>
-        <th scope="col" class="color-1 th-cliente-font">CLIENTE</th>
-        <th scope="col" class="color-1 th-cliente-font">SOLICITA</th>
-        <th scope="col" class="color-1 th-cliente-font">ASUNTO</th>
-        <th scope="col" class="color-1 th-cliente-font">DESCRIPCIÓN</th>
-        <th scope="col" class="color-2 th-cliente-font">DOCTOS ENVIADOS</th>
-        <th scope="col" class="color-2 th-cliente-font">ESTATUS</th>
-        <th scope="col" class="color-2 th-cliente-font">FECHA DE CONCLUSIÓN</th>
-        <th scope="col" class="color-2 th-cliente-font">DÍAS</th>
-        <th scope="col" class="color-2 th-cliente-font">RESPONSABLE</th>
-        <th scope="col" class="color-2 th-cliente-font">SEGUIMIENTO</th>
-        <th
-          scope="col"
-          class="th-cliente-font"
-          style="width: 15px"
-          class="hide-print-mode"
-        ></th>
+        <th scope="col" class="color-gradient-1">FOLIO</th>
+        <th scope="col" class="color-gradient-1">FECHA SOLICITUD</th>
+        <th scope="col" class="color-gradient-1" pSortableColumn="customer">
+          CLIENTE<p-sortIcon field="customer"></p-sortIcon>
+        </th>
+        <th scope="col" class="color-gradient-1">SOLICITA</th>
+        <th scope="col" class="color-gradient-1">ASUNTO</th>
+        <th scope="col" class="color-gradient-1">DESCRIPCIÓN</th>
+        <th scope="col" class="color-gradient-2">DOCTOS ENVIADOS</th>
+        <th scope="col" class="color-gradient-2">ESTATUS</th>
+        <th scope="col" class="color-gradient-2">FECHA DE CONCLUSIÓN</th>
+        <th scope="col" class="color-gradient-2">DÍAS</th>
+        <th scope="col" class="color-gradient-2">RESPONSABLE</th>
+        <th colspan="2" scope="col" class="color-gradient-2">SEGUIMIENTO</th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-item>
@@ -60,7 +69,10 @@
         <td class="p-column-title">{{ item.folio }}</td>
         <td class="p-column-title">{{ item.requestDate }}</td>
         <td class="p-column-title">{{ item.customer }}</td>
-        <td class="p-column-title">{{ item.requestPerson }}</td>
+        <td class="p-column-title">
+          {{ item.requestProfession }}
+          {{ item.requestPerson }}
+        </td>
         <td class="p-column-title">{{ item.title }}</td>
         <td class="p-column-title text-center">
           @if (item.request.length > 0) {
@@ -154,24 +166,27 @@
 </div>
 
 <style>
-  .color-1 {
-    font-family: "Playfair Display", serif;
-    background: -webkit-linear-gradient(90deg, #414141 10%, #548235 70%);
-    background: -moz-linear-gradient(90deg, #414141 10%, #548235 70%);
-    background: -ms-linear-gradient(90deg, #414141 10%, #548235 70%);
-    background: -o-linear-gradient(90deg, #414141 10%, #548235 70%);
-    background: linear-gradient(90deg, #414141 10%, #548235 70%);
+  .color-gradient-1 {
+    background: linear-gradient(
+      to right,
+      #414141,
+      #548235
+    ); /* Degradado de colores para el primer grupo */
+    color: #fff; /* Color de texto */
   }
-  .color-2 {
-    font-family: "Playfair Display", serif;
-    background: -webkit-linear-gradient(90deg, #0f0c29 10%, #302b63 70%);
-    background: -moz-linear-gradient(90deg, #0f0c29 10%, #302b63 70%);
-    background: -ms-linear-gradient(90deg, #0f0c29 10%, #302b63 70%);
-    background: -o-linear-gradient(90deg, #0f0c29 10%, #302b63 70%);
-    background: linear-gradient(90deg, #0f0c29 10%, #302b63 70%);
+
+  .color-gradient-2 {
+    background: linear-gradient(
+      to right,
+      #0f0c29,
+      #302b63
+    ); /* Degradado de colores para el segundo grupo */
+    color: #fff; /* Color de texto */
   }
-  .th-cliente-font {
+
+  th {
     text-align: center; /* Para centrar el texto */
     font-weight: normal; /* Para la fuente delgada, puedes usar 'normal' o 'lighter' dependiendo de la familia de fuentes */
+    padding: 10px; /* Añadimos un poco de espacio alrededor del texto */
   }
 </style>

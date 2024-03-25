@@ -3,7 +3,6 @@ import { FormGroup } from '@angular/forms';
 import { Subject, lastValueFrom, takeUntil } from 'rxjs';
 import { CustomToastService } from './custom-toast.service';
 import { DataService } from './data.service';
-
 @Injectable({
   providedIn: 'root',
 })
@@ -29,6 +28,7 @@ export class ApiRequestService implements OnDestroy {
     } catch (error) {
       // En caso de error, mostrar un mensaje de error y rechazar la promesa con false
       this.customToastService.onCloseToError(error);
+
       return false;
     }
   }
@@ -66,6 +66,7 @@ export class ApiRequestService implements OnDestroy {
       // Cuando se completa la carga con éxito, mostrar un mensaje de éxito y resolver la promesa con los datos
       this.customToastService.onClose();
       console.log('🚀 ~ urlApi:', urlApi, responseData.body);
+      console.log('🚀 ~ responseData.body:', responseData.body);
       return responseData.body;
     } catch (error) {
       // En caso de error, mostrar un mensaje de error y rechazar la promesa con null
@@ -101,10 +102,12 @@ export class ApiRequestService implements OnDestroy {
       );
       // Cuando se completa la carga con éxito, mostrar un mensaje de éxito y resolver la promesa con los datos
       this.customToastService.onCloseToSuccess();
-      console.log('🚀 ~ responseData.body post:', responseData.body);
+      console.log('🚀 ~Login post:', responseData.body);
       return responseData.body;
     } catch (error) {
+      console.log('🚀 ~ Ha ocurrido un error con el login:', error);
       // En caso de error, mostrar un mensaje de error y rechazar la promesa con null
+
       this.customToastService.onCloseToError(error);
       return null;
     }
@@ -123,6 +126,7 @@ export class ApiRequestService implements OnDestroy {
       console.log('🚀 ~ responseData.body post:', responseData.body);
       return true;
     } catch (error) {
+      console.log('🚀 ~ error:', error);
       // En caso de error, mostrar un mensaje de error y rechazar la promesa con null
       this.customToastService.onCloseToError(error);
       return false;

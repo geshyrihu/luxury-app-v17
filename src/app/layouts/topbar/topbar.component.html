@@ -1,9 +1,9 @@
 <p-toast position="top-left" [baseZIndex]="99999"></p-toast>
 <header id="page-topbar">
-  <div class="navbar-header">
+  <div class="navbar-header bg-custom-color">
     <div class="d-flex">
       <!-- LOGO -->
-      <div class="navbar-brand-box d-none d-lg-block">
+      <div class="navbar-brand-box d-none d-lg-block bg-custom-color">
         <a routerLink="/" class="logo logo-ligth">
           <span class="logo-sm"> </span>
           <span class="logo-lg">
@@ -14,7 +14,7 @@
       <!-- App Search-->
       <button
         type="button"
-        class="btn btn-sm font-size-16 header-item mt-2"
+        class="btn"
         id="vertical-menu-btn"
         (click)="toggleMobileMenu($event)"
       >
@@ -22,7 +22,7 @@
       </button>
       <button
         type="button"
-        class="btn btn-sm font-size-16 header-item mt-2 d-none d-lg-block"
+        class="btn header-item"
         ngbTooltip="Anterior"
         placement="bottom-start"
         (click)="onBack()"
@@ -31,27 +31,29 @@
       </button>
       <button
         type="button"
-        class="btn btn-sm px-3 font-size-16 header-item mt-2 d-none d-lg-block"
+        class="btn header-item"
         ngbTooltip="Siguiente"
         placement="bottom-start"
         (click)="onNext()"
       >
         <i class="fa-thin fa-angle-right"></i>
       </button>
+
       <!-- App Search-->
-      <div class="app-search me-1 mt-2">
+      <div class="app-search me-2 mt-1">
         <app-menu-select-customer></app-menu-select-customer>
       </div>
-      <form class="app-search d-none d-lg-block mt-2">
-        <div class="position-relative" (click)="onModalSearch()">
-          <input type="text" class="form-control" placeholder="Buscar..." />
-          <button class="btn btn-primary" type="button">
-            <i class="fa-regular fa-magnifying-glass align-middle"></i>
-          </button>
-        </div>
-      </form>
+
+      <div class="app-search mt-1">
+        <input
+          (click)="onModalSearch()"
+          type="text"
+          class="form-select"
+          placeholder="Buscar..."
+        />
+      </div>
     </div>
-    <div class="btn-group d-none d-lg-block" ngbDropdown>
+    <div class="btn-group d-none d-lg-block mt-1" ngbDropdown>
       <button
         type="button"
         class="btn btn-secondary dropdown-toggle"
@@ -74,37 +76,49 @@
           [routerLink]="['/accounts/actualizar-perfil']"
           class="btn btn-light w-100 waves-effect waves-light dropdown-item"
         >
-          <i class="fa-regular fa-key font-size-16 align-middle me-2"></i>
+          <!-- <i class="fa-regular fa-key font-size-16 align-middle me-2"></i> -->
           Cambiar contraseña
         </a>
         <button
           (click)="onModalDataAddress()"
           class="btn btn-light w-100 waves-effect waves-light dropdown-item"
         >
-          <i
+          <!-- <i
             class="fa-duotone fa-location-dot font-size-16 align-middle me-2"
-          ></i>
+          ></i> -->
           Actualizar mi dirección
         </button>
         <button
           (click)="onShowModalDatosPersonales()"
           class="btn btn-light w-100 waves-effect waves-light dropdown-item"
         >
-          <i
+          <!-- <i
             class="fa-duotone fa-memo-circle-info font-size-16 align-middle me-2"
-          ></i>
+          ></i> -->
           Complementar mi datos
         </button>
         <a
           class="btn btn-light w-100 waves-effect waves-light dropdown-item"
           (click)="logout()"
         >
-          <i
+          <!-- <i
             class="fa-regular fa-arrow-right-from-bracket font-size-16 align-middle me-2"
-          ></i>
+          ></i> -->
           Cerrar Sesión
         </a>
       </div>
     </div>
   </div>
 </header>
+<style>
+  .bg-custom-color {
+    background: linear-gradient(
+      to right,
+      #000000,
+      #505050
+    ); /* Degradado de colores para el primer grupo */
+  }
+  .navbar-header {
+    height: 60px !important;
+  }
+</style>

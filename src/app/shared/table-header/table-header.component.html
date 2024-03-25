@@ -14,8 +14,8 @@ Extra Large (xl): 1200px o más. -->
       <div
         class="page-title-box d-sm-flex align-items-center justify-content-between"
       >
-        <h4 class="mb-sm-0 font-size-18">
-          {{ title }}
+        <h4 class="mb-sm-0 font-size-20">
+          {{ title | uppercase }}
         </h4>
       </div>
     </div>
@@ -64,7 +64,7 @@ Extra Large (xl): 1200px o más. -->
   </div>
   @if (showAdd && rolAuth) {
   <div class="col-2">
-    <button class="btn btn-outline-info" (click)="onAdd($event)">
+    <button class="btn btn-outline-secondary" (click)="onAdd($event)">
       <i class="fa-solid fa-plus"></i>
     </button>
   </div>

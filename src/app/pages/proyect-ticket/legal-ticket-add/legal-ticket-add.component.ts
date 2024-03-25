@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { FlatpickrModule } from 'angularx-flatpickr';
 
 import LuxuryAppComponentsModule, {
@@ -47,7 +47,7 @@ export default class LegalTicketAddComponent implements OnInit {
     fechaAsamblea: [],
     fechaJunta: [],
     horaJunta: [],
-    provider: ['', Validators.required],
+    provider: [],
     request: [],
     condomino: [],
     documentCloud: [false],

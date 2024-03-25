@@ -30,6 +30,27 @@ export default class BirthdayComponent implements OnInit, OnDestroy {
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
+  selectedMonth: number = 3;
+  months: string[] = [
+    'Enero',
+    'Febrero',
+    'Marzo',
+    'Abril',
+    'Mayo',
+    'Junio',
+    'Julio',
+    'Agosto',
+    'Septiembre',
+    'Octubre',
+    'Noviembre',
+    'Diciembre',
+  ];
+
+  selectMonth() {
+    console.log('Selected Month:', this.selectedMonth);
+    // Aquí puedes realizar cualquier acción que necesites con el ID del mes seleccionado
+  }
+
   calendarOptions: CalendarOptions = {
     locale: esLocale, // Agrega el idioma español
     headerToolbar: {
@@ -55,10 +76,11 @@ export default class BirthdayComponent implements OnInit, OnDestroy {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
     this.dataService
-      .get('Employees/AllCumpleanos/' + this.customerIdService.customerId)
+      .get('employees/birthday/' + this.customerIdService.customerId)
       .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
+          console.log('🚀 ~ resp.body:', resp.body);
           this.calendarOptions = {
             initialView: 'dayGridMonth',
             headerToolbar: {

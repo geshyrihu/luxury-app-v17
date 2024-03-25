@@ -1,10 +1,12 @@
+// Imports propios de Angular
 import { Component, OnInit, inject } from '@angular/core';
-import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
-
-import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import { SignalrCustomService } from 'src/app/core/services/signalrcustom.service';
+
+// Imports creados por tu servidor
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import LegalTicketAddComponent from '../legal-ticket-add/legal-ticket-add.component';
 import LegalTicketEditComponent from '../legal-ticket-edit/legal-ticket-edit.component';
 import LegalTicketUpdateStatusComponent from '../legal-ticket-update-status/legal-ticket-update-status.component';
@@ -26,6 +28,7 @@ export default class LegalListTicketComponent implements OnInit {
   isSuperUser = this.authService.onValidateRoles(['SuperUsuario']);
 
   data: any[] = [];
+  inputValue: string = '';
 
   ngOnInit() {
     this.onLoadData();
@@ -33,29 +36,25 @@ export default class LegalListTicketComponent implements OnInit {
 
   // Función para cargar los datos de los bancos
   onLoadData() {
-    this.apiRequestService.onGetList('TicketLegal/All').then((result: any) => {
-      this.data = result;
-    });
-    // this.signalrcustomService.hubConnection.on(
-    //   'onLoadData ticket Legal',
-    //   (respuesta) => {
-    //     console.log('estamos desde el Componente.... ticket: ', respuesta);
-    //   }
-    // );
+    this.apiRequestService
+      .onGetList('TicketLegal/AllLegal')
+      .then((result: any) => {
+        this.data = result;
+      });
   }
 
-  onModalAddOrEdit(data: any) {
-    this.dialogHandlerService
-      .openDialog(
-        LegalTicketAddComponent,
-        data,
-        '',
-        this.dialogHandlerService.dialogSizeMd
-      )
-      .then((result: boolean) => {
-        if (result) {
-          this.onLoadData();
-        }
+  clearInput() {
+    this.inputValue = null; // Establece el valor del input en null
+    this.onFilter(null); // Llama a la función onFilter con el valor null
+  }
+
+  onFilter(mesanio: any) {
+    console.log('🚀 ~ mesanio:', mesanio);
+
+    this.apiRequestService
+      .onGetList('TicketLegal/AllLegal/' + mesanio)
+      .then((result: any) => {
+        this.data = result;
       });
   }
   onModalEdit(data: any) {
@@ -72,6 +71,22 @@ export default class LegalListTicketComponent implements OnInit {
         }
       });
   }
+
+  onModalAddOrEdit(data: any) {
+    this.dialogHandlerService
+      .openDialog(
+        LegalTicketAddComponent,
+        data,
+        '',
+        this.dialogHandlerService.dialogSizeMd
+      )
+      .then((result: boolean) => {
+        if (result) {
+          this.onLoadData();
+        }
+      });
+  }
+
   onModalUpdateStatus(data: any) {
     this.dialogHandlerService
       .openDialog(

@@ -9,11 +9,11 @@ import { RouterLink } from '@angular/router';
 })
 export default class TicketPanelComponent {
   ticketPanelMenuItems: TicketPanelMenu[] = [
-    // {
-    //   routerLink: '/ticket-panel/tickets',
-    //   title: 'Limpieza',
-    //   icon: 'fa-duotone fa-broom-wide',
-    // },
+    {
+      routerLink: '/operaciones/reporte/tiket-mantenimiento',
+      title: 'Mantenimiento',
+      icon: 'fa-duotone fa-screwdriver-wrench',
+    },
     {
       routerLink: '/legal/list-ticket-customer',
       title: 'Legal',

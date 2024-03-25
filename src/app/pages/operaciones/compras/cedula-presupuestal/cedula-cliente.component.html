@@ -135,23 +135,21 @@
           {{ item.presupuestoEjercido }}
         </td>
         <td class="p-column-title">
-          @if (item.disponible) {
           <div class="w3-container">
+            @if (item.disponible) {
             <div class="w3-tag w3-round w3-green" style="padding: 3px">
               <div class="w3-tag w3-round w3-green w3-border w3-border-white">
                 {{ item.presupuestoDisponible }}
               </div>
             </div>
-          </div>
-          } @if (!item.disponible) {
-          <div class="w3-container">
+            } @if (!item.disponible) {
             <div class="w3-tag w3-round w3-red" style="padding: 3px">
               <div class="w3-tag w3-round w3-red w3-border w3-border-white">
                 {{ item.presupuestoDisponible }}
               </div>
             </div>
+            }
           </div>
-          }
         </td>
         <td>
           <div class="d-flex justify-content-center">

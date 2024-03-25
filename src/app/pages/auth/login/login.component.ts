@@ -7,6 +7,7 @@ import {
   SecurityService,
 } from 'src/app/core/services/common-services';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -41,9 +42,21 @@ export default class LoginComponent implements OnInit {
     this.apiRequestService
       .onPostLogin('Auth/login', this.form.value)
       .then((result: any) => {
-        this.onRemember(this.form.get('remember').value);
-        this.router.navigateByUrl(localStorage.getItem('currentUrl'));
-        this.securityService.setAuthData(result.token);
+        console.log('🚀 ~ result:', result);
+
+        if (result.token != null) {
+          this.onRemember(this.form.get('remember').value);
+          this.router.navigateByUrl(localStorage.getItem('currentUrl'));
+          this.securityService.setAuthData(result.token);
+        } else {
+          Swal.fire({
+            allowOutsideClick: false,
+            icon: 'error',
+            title: 'Error',
+            // text: error.error['description'], // Aquí puedes acceder a la descripción del error
+            text: 'Usuario o contraseña incorrectas', // Aquí puedes acceder a la descripción del error
+          });
+        }
       });
   }
 
