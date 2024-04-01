@@ -4,13 +4,10 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomToastService,
-  DataService,
-} from 'src/app/core/services/common-services';
-
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { DataService } from 'src/app/core/services/data.service';
 import AddoreditPiscinaBitacoraComponent from '../addoredit-piscina-bitacora/addoredit-piscina-bitacora.component';
 @Component({
   selector: 's-list-piscina-bitacora',
@@ -19,10 +16,10 @@ import AddoreditPiscinaBitacoraComponent from '../addoredit-piscina-bitacora/add
   imports: [LuxuryAppComponentsModule],
 })
 export default class ListPiscinaBitacoraComponent implements OnInit, OnDestroy {
-  public customToastService = inject(CustomToastService);
-  public authService = inject(AuthService);
-  private dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
+  customToastService = inject(CustomToastService);
+  authService = inject(AuthService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
   private rutaActiva = inject(ActivatedRoute);

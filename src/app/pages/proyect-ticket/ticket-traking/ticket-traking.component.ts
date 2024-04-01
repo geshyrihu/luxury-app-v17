@@ -2,10 +2,8 @@ import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import {
-  ApiRequestService,
-  AuthService,
-} from 'src/app/core/services/common-services';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
 @Component({
   selector: 'app-ticket-traking',
   templateUrl: './ticket-traking.component.html',
@@ -13,11 +11,11 @@ import {
   imports: [LuxuryAppComponentsModule],
 })
 export default class TicketTrakingComponent implements OnInit, OnDestroy {
-  private formBuilder = inject(FormBuilder);
-  public ref = inject(DynamicDialogRef);
-  public config = inject(DynamicDialogConfig);
-  public authService = inject(AuthService);
-  public apiRequestService = inject(ApiRequestService);
+  formBuilder = inject(FormBuilder);
+  ref = inject(DynamicDialogRef);
+  config = inject(DynamicDialogConfig);
+  authService = inject(AuthService);
+  apiRequestService = inject(ApiRequestService);
 
   seguimientos: any[] = [];
   submitting: boolean = false;

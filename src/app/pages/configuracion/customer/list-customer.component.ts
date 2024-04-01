@@ -2,9 +2,8 @@ import { Component, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject } from 'rxjs';
-import { ICustomerDto } from 'src/app/core/interfaces/ICustomerDto.interface';
-import { ApiRequestService } from 'src/app/core/services/common-services';
-
+import { ICustomer } from 'src/app/core/interfaces/customer.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import { environment } from 'src/environments/environment';
 import AddOrEditClienteComponent from './addoredit-clientes.component';
@@ -18,11 +17,11 @@ import CustomerImagesComponent from './customer-images/customer-images.component
   imports: [LuxuryAppComponentsModule],
 })
 export default class ListCustomerComponent implements OnInit {
-  public dialogHandlerService = inject(DialogHandlerService);
-  public apiRequestService = inject(ApiRequestService);
+  dialogHandlerService = inject(DialogHandlerService);
+  apiRequestService = inject(ApiRequestService);
 
   urlBaseImg = `${environment.base_urlImg}Administration/customer/`;
-  data: ICustomerDto[] = [];
+  data: ICustomer[] = [];
   ref: DynamicDialogRef;
   title = 'Activos';
   state = true;

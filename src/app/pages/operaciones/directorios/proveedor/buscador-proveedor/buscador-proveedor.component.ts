@@ -4,12 +4,10 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomToastService,
-  DataService,
-} from 'src/app/core/services/common-services';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { DataService } from 'src/app/core/services/data.service';
 import { environment } from 'src/environments/environment';
 import AddoreditProveedorComponent from '../addoredit-proveedor/addoredit-proveedor.component';
 import CalificacionProveedorComponent from '../calificacion-proveedor/calificacion-proveedor.component';
@@ -22,12 +20,12 @@ import TarjetaProveedorComponent from '../tarjeta-proveedor/tarjeta-proveedor.co
   imports: [LuxuryAppComponentsModule, NgbRatingModule],
 })
 export default class BuscadorProvedorComponent implements OnInit, OnDestroy {
-  public customToastService = inject(CustomToastService);
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
+  customToastService = inject(CustomToastService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
   public messageService = inject(MessageService);
   public dialogService = inject(DialogService);
-  public authService = inject(AuthService);
+  authService = inject(AuthService);
 
   incluirInactivos: boolean = false;
   url_img = `${environment.base_urlImg}providers/`;

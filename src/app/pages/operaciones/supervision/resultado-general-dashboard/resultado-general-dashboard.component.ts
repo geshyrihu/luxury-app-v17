@@ -19,13 +19,13 @@ import { PeriodoMonthService } from 'src/app/core/services/periodo-month.service
 export default class ResultadoGeneralDashboardComponent
   implements OnInit, OnDestroy
 {
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
   public dateService = inject(DateService);
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
   public periodoMonthService = inject(PeriodoMonthService);
-  public customToastService = inject(CustomToastService);
+  customToastService = inject(CustomToastService);
 
   reporteFiltro: string = 'MINUTAS GENERAL';
 

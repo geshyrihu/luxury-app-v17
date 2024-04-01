@@ -2,14 +2,12 @@ import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { IDirectoryCondominiumAddOrEditDto } from 'src/app/core/interfaces/IDirectoryCondominiumAddOrEditDto.interface';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomToastService,
-  CustomerIdService,
-  DataService,
-} from 'src/app/core/services/common-services';
+import { IDirectoryCondominiumAddOrEdit } from 'src/app/core/interfaces/directory-condominium-add-or-edit.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
+import { DataService } from 'src/app/core/services/data.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
@@ -21,12 +19,12 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 export default class AddOrEditPropiedadesComponent
   implements OnInit, OnDestroy
 {
-  private formBuilder = inject(FormBuilder);
-  public authService = inject(AuthService);
-  public config = inject(DynamicDialogConfig);
-  public ref = inject(DynamicDialogRef);
-  private dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
+  formBuilder = inject(FormBuilder);
+  authService = inject(AuthService);
+  config = inject(DynamicDialogConfig);
+  ref = inject(DynamicDialogRef);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
   private customerIdService = inject(CustomerIdService);
   private customToastService = inject(CustomToastService);
 
@@ -58,7 +56,7 @@ export default class AddOrEditPropiedadesComponent
     this.customToastService.onLoading();
     if (this.id === 0) {
       this.dataService
-        .post<IDirectoryCondominiumAddOrEditDto>(
+        .post<IDirectoryCondominiumAddOrEdit>(
           `DirectoryCondominium/`,
           this.form.value
         )
@@ -75,7 +73,7 @@ export default class AddOrEditPropiedadesComponent
         });
     } else {
       this.dataService
-        .put<IDirectoryCondominiumAddOrEditDto>(
+        .put<IDirectoryCondominiumAddOrEdit>(
           `DirectoryCondominium/${this.id}`,
           this.form.value
         )
@@ -94,7 +92,7 @@ export default class AddOrEditPropiedadesComponent
   }
   getImem() {
     this.dataService
-      .get<IDirectoryCondominiumAddOrEditDto>(`DirectoryCondominium/${this.id}`)
+      .get<IDirectoryCondominiumAddOrEdit>(`DirectoryCondominium/${this.id}`)
       .subscribe((resp: any) => {
         this.form.patchValue(resp.body);
       });

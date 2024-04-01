@@ -1,11 +1,9 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
-import {
-  ApiRequestService,
-  CustomToastService,
-  DataService,
-} from 'src/app/core/services/common-services';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { DataService } from 'src/app/core/services/data.service';
 
 @Component({
   selector: 'app-info-cuenta',
@@ -13,9 +11,9 @@ import {
   standalone: true,
 })
 export default class InfoCuentaComponent implements OnInit, OnDestroy {
-  public config = inject(DynamicDialogConfig);
-  private dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
+  config = inject(DynamicDialogConfig);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
   private customToastService = inject(CustomToastService);
 
   id: number = 0;

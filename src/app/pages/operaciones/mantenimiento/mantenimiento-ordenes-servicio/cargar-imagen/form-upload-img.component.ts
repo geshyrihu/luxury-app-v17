@@ -11,8 +11,8 @@ import { environment } from 'src/environments/environment';
   imports: [LuxuryAppComponentsModule, FileUploadModule],
 })
 export default class FormUploadImgComponent {
-  public ref = inject(DynamicDialogRef);
-  public config = inject(DynamicDialogConfig);
+  ref = inject(DynamicDialogRef);
+  config = inject(DynamicDialogConfig);
 
   uploadedFiles: HttpHeaders[] | any = [];
   maxFileSize: number = 30000000;

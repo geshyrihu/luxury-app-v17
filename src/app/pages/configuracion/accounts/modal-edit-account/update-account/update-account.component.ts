@@ -1,13 +1,11 @@
 import { Component, Input, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { IEditarCuentaDto } from 'src/app/core/interfaces/IEditarCuentaDto.interface';
-import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomerIdService,
-} from 'src/app/core/services/common-services';
+import { IEditarCuenta } from 'src/app/core/interfaces/cuenta-edit.interface';
+import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
@@ -17,14 +15,14 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class UpdateAccountComponent implements OnInit {
-  private formBuilder = inject(FormBuilder);
-  public apiRequestService = inject(ApiRequestService);
-  public authService = inject(AuthService);
+  formBuilder = inject(FormBuilder);
+  apiRequestService = inject(ApiRequestService);
+  authService = inject(AuthService);
   public customerIdService = inject(CustomerIdService);
 
-  cb_customer: ISelectItemDto[] = [];
-  cb_employee: ISelectItemDto[] = [];
-  cb_profession: ISelectItemDto[] = [];
+  cb_customer: ISelectItem[] = [];
+  cb_employee: ISelectItem[] = [];
+  cb_profession: ISelectItem[] = [];
   submitting: boolean = false;
 
   @Input()
@@ -54,19 +52,19 @@ export default class UpdateAccountComponent implements OnInit {
 
     this.apiRequestService
       .onGetSelectItem(urlRle)
-      .then((response: ISelectItemDto[]) => {
+      .then((response: ISelectItem[]) => {
         this.cb_employee = response;
       });
 
     this.apiRequestService
       .onGetSelectItem('customers')
-      .then((response: ISelectItemDto[]) => {
+      .then((response: ISelectItem[]) => {
         this.cb_customer = response;
       });
 
     this.apiRequestService
       .onGetSelectItem('professions')
-      .then((response: ISelectItemDto[]) => {
+      .then((response: ISelectItem[]) => {
         this.cb_profession = response;
       });
   }
@@ -91,7 +89,7 @@ export default class UpdateAccountComponent implements OnInit {
     });
 
     this.apiRequestService
-      .onPut<IEditarCuentaDto>(
+      .onPut<IEditarCuenta>(
         `accounts/updateapplicationuser/${this.applicationUserId}`,
         this.form.value
       )

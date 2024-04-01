@@ -1,8 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
-import { ApiRequestService } from 'src/app/core/services/common-services';
-
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import AddoreditClasificacionEquipoComponent from './addoredit-clasificacion-equipo.component';
 
@@ -13,8 +12,8 @@ import AddoreditClasificacionEquipoComponent from './addoredit-clasificacion-equ
   imports: [LuxuryAppComponentsModule],
 })
 export default class ListClasificacionEquipoComponent implements OnInit {
-  public dialogHandlerService = inject(DialogHandlerService);
-  public apiRequestService = inject(ApiRequestService);
+  dialogHandlerService = inject(DialogHandlerService);
+  apiRequestService = inject(ApiRequestService);
 
   data: any[] = [];
   ref: DynamicDialogRef;

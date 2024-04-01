@@ -5,13 +5,11 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { EPosicionComite } from 'src/app/core/enums/position.comite.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
-import { IComiteVigilanciaAddOrEditDto } from 'src/app/core/interfaces/IComiteVigilanciaAddOrEditDto.interface';
-import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
-import {
-  ApiRequestService,
-  CustomerIdService,
-} from 'src/app/core/services/common-services';
+import { IComiteVigilanciaAddOrEdit } from 'src/app/core/interfaces/comite-vigilancia-add-or-edit.interface';
+import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DataService } from 'src/app/core/services/data.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 @Component({
@@ -23,19 +21,19 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 export default class AddOrEditComiteVigilanciaComponent
   implements OnInit, OnDestroy
 {
-  private formBuilder = inject(FormBuilder);
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
+  formBuilder = inject(FormBuilder);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
   public customerIdService = inject(CustomerIdService);
-  public ref = inject(DynamicDialogRef);
-  public config = inject(DynamicDialogConfig);
+  ref = inject(DynamicDialogRef);
+  config = inject(DynamicDialogConfig);
   private customToastService = inject(CustomToastService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
   submitting: boolean = false;
 
-  cb_position: ISelectItemDto[] = onGetSelectItemFromEnum(EPosicionComite);
-  cb_condomino: ISelectItemDto[] = [];
+  cb_position: ISelectItem[] = onGetSelectItemFromEnum(EPosicionComite);
+  cb_condomino: ISelectItem[] = [];
   id: number = 0;
   form: FormGroup = this.formBuilder.group({
     id: { value: this.id, disabled: true },
@@ -73,7 +71,7 @@ export default class AddOrEditComiteVigilanciaComponent
 
   onLoadData() {
     this.dataService
-      .get<IComiteVigilanciaAddOrEditDto>(`ComiteVigilancia/${this.id}`)
+      .get<IComiteVigilanciaAddOrEdit>(`ComiteVigilancia/${this.id}`)
       .subscribe((resp: any) => {
         this.form.patchValue(resp.body);
       });

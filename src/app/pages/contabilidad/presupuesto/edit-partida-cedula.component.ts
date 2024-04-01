@@ -1,20 +1,10 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { MessageService } from 'primeng/api';
-import {
-  DialogService,
-  DynamicDialogConfig,
-  DynamicDialogRef,
-} from 'primeng/dynamicdialog';
-import { Subject, takeUntil } from 'rxjs';
-import { CedulaPresupuestalDetalleAddOrEdit } from 'src/app/core/interfaces/ICedulaPresupuestalDetalleAddOrEdit.interface';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomToastService,
-  DataService,
-} from 'src/app/core/services/common-services';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { CedulaPresupuestalDetalleAddOrEdit } from 'src/app/core/class/cedula-presupuestal-detalle-add-or-edit.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
@@ -23,18 +13,12 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   standalone: true,
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
-export default class EditPartidaCedulaComponent implements OnInit, OnDestroy {
-  private formBuilder = inject(FormBuilder);
-  public customToastService = inject(CustomToastService);
-  private dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
-  public authService = inject(AuthService);
-  public config = inject(DynamicDialogConfig);
-  public dialogService = inject(DialogService);
-  public messageService = inject(MessageService);
-  public ref = inject(DynamicDialogRef);
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+export default class EditPartidaCedulaComponent implements OnInit {
+  formBuilder = inject(FormBuilder);
+  apiRequestService = inject(ApiRequestService);
+  authService = inject(AuthService);
+  config = inject(DynamicDialogConfig);
+  ref = inject(DynamicDialogRef);
 
   submitting: boolean = false;
 
@@ -54,35 +38,18 @@ export default class EditPartidaCedulaComponent implements OnInit, OnDestroy {
 
     // Deshabilitar el botón al iniciar el envío del formulario
     this.submitting = true;
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
+
     if (this.id === 0) {
-      this.dataService
-        .post(`CedulaPresupuestalDetalles`, budgetCardDTO)
-        .subscribe({
-          next: () => {
-            this.ref.close(true);
-            this.customToastService.onClose();
-          },
-          error: (error) => {
-            // Habilitar el botón nuevamente al finalizar el envío del formulario
-            this.submitting = false;
-            this.customToastService.onCloseToError(error);
-          },
+      this.apiRequestService
+        .onPost(`CedulaPresupuestalDetalles`, budgetCardDTO)
+        .then((result: boolean) => {
+          result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.dataService
-        .put(`CedulaPresupuestalDetalles/${this.id}`, budgetCardDTO)
-        .subscribe({
-          next: () => {
-            this.ref.close(true);
-            this.customToastService.onClose();
-          },
-          error: (error) => {
-            // Habilitar el botón nuevamente al finalizar el envío del formulario
-            this.submitting = false;
-            this.customToastService.onCloseToError(error);
-          },
+      this.apiRequestService
+        .onPut(`CedulaPresupuestalDetalles/${this.id}`, budgetCardDTO)
+        .then((result: boolean) => {
+          result ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }
@@ -96,23 +63,14 @@ export default class EditPartidaCedulaComponent implements OnInit, OnDestroy {
       applicationUserId: [''],
       presupuestoEjercido: [],
     });
-    this.dataService
-      .get(`CedulaPresupuestalDetalles/${this.id}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.form.patchValue(resp.body);
-          this.form.patchValue({
-            descripcion: resp.body.cuenta.descripcion,
-          });
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
-  }
 
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
+    this.apiRequestService
+      .onGetItem(`CedulaPresupuestalDetalles/${this.id}`)
+      .then((result: any) => {
+        this.form.patchValue(result);
+        this.form.patchValue({
+          descripcion: result.cuenta.descripcion,
+        });
+      });
   }
 }

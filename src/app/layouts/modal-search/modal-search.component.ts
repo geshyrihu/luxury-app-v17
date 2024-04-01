@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { SidebarService } from 'src/app/core/services/sidebar.service';
-import { MenuItem } from '../../core/interfaces/menu.model';
+import { IMenuItem } from '../../core/interfaces/menu.model';
 @Component({
   selector: 'app-modal-search',
   templateUrl: './modal-search.component.html',
@@ -14,9 +14,9 @@ import { MenuItem } from '../../core/interfaces/menu.model';
 export default class ModalSearchComponent implements OnInit {
   private router = inject(Router);
   private sidebarService = inject(SidebarService);
-  public ref = inject(DynamicDialogRef);
+  ref = inject(DynamicDialogRef);
 
-  menu: MenuItem[] = this.sidebarService.onLoadMenu;
+  menu: IMenuItem[] = this.sidebarService.onLoadMenu;
   menuFilter: { name: string; link: string }[] = [];
   private nameLinkList: { name: string; link: string }[] = [];
 
@@ -24,7 +24,7 @@ export default class ModalSearchComponent implements OnInit {
     this.mapMenu(this.menu);
   }
 
-  private mapMenu(menuItems: MenuItem[]) {
+  private mapMenu(menuItems: IMenuItem[]) {
     for (const item of menuItems) {
       if (item.visible && item.name && item.routerLink) {
         this.nameLinkList.push({

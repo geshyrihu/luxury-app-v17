@@ -10,11 +10,9 @@ import { Subject, takeUntil } from 'rxjs';
 import { EStatusTask } from 'src/app/core/enums/estatus-task.enum';
 import { ETypeMaintance } from 'src/app/core/enums/type-maintance.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
-import {
-  ApiRequestService,
-  CustomerIdService,
-} from 'src/app/core/services/common-services';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
@@ -34,13 +32,13 @@ export default class ServiceOrderAddOrEditComponent
   implements OnInit, OnDestroy
 {
   private customToastService = inject(CustomToastService);
-  public apiRequestService = inject(ApiRequestService);
-  private formBuilder = inject(FormBuilder);
-  public config = inject(DynamicDialogConfig);
+  apiRequestService = inject(ApiRequestService);
+  formBuilder = inject(FormBuilder);
+  config = inject(DynamicDialogConfig);
   public customerIdService = inject(CustomerIdService);
-  public dataService = inject(DataService);
+  dataService = inject(DataService);
   public dateService = inject(DateService);
-  public ref = inject(DynamicDialogRef);
+  ref = inject(DynamicDialogRef);
 
   public Editor = ClassicEditor;
 

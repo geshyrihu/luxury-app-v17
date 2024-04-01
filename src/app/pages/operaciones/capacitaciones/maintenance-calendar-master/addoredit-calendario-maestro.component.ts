@@ -13,7 +13,7 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { EMonth } from 'src/app/core/enums/month.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
-import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
+import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
@@ -37,19 +37,19 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 export default class AddOrEditCalendarioMaestroComponent
   implements OnInit, OnDestroy
 {
-  private dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
-  private formBuilder = inject(FormBuilder);
-  public config = inject(DynamicDialogConfig);
-  public ref = inject(DynamicDialogRef);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
+  formBuilder = inject(FormBuilder);
+  config = inject(DynamicDialogConfig);
+  ref = inject(DynamicDialogRef);
   private customToastService = inject(CustomToastService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
-  proveedoresSeleccionados: ISelectItemDto[] = [];
-  cb_equipoCalendarioMaestro: ISelectItemDto[] = [];
-  cb_providers: ISelectItemDto[] = [];
-  cb_meses: ISelectItemDto[] = onGetSelectItemFromEnum(EMonth);
+  proveedoresSeleccionados: ISelectItem[] = [];
+  cb_equipoCalendarioMaestro: ISelectItem[] = [];
+  cb_providers: ISelectItem[] = [];
+  cb_meses: ISelectItem[] = onGetSelectItemFromEnum(EMonth);
 
   id: number = 0;
   submitting: boolean = false;
@@ -125,13 +125,13 @@ export default class AddOrEditCalendarioMaestroComponent
   onLoadSelectItem() {
     this.apiRequestService
       .onGetSelectItem('EquipoCalendarioMaestro')
-      .then((response: ISelectItemDto[]) => {
+      .then((response: ISelectItem[]) => {
         this.cb_equipoCalendarioMaestro = response;
       });
 
     this.apiRequestService
       .onGetSelectItem('Providers')
-      .then((response: ISelectItemDto[]) => {
+      .then((response: ISelectItem[]) => {
         this.cb_providers = response;
       });
   }

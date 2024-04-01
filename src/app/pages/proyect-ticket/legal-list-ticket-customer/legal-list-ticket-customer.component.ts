@@ -14,8 +14,8 @@ import TicketTrakingRequestDetailComponent from '../ticket-traking-request-detai
   imports: [LuxuryAppComponentsModule],
 })
 export default class LegalListTicketComponent implements OnInit {
-  public dialogHandlerService = inject(DialogHandlerService);
-  public apiRequestService = inject(ApiRequestService);
+  dialogHandlerService = inject(DialogHandlerService);
+  apiRequestService = inject(ApiRequestService);
   public customerIdService = inject(CustomerIdService);
 
   data: any[] = [];

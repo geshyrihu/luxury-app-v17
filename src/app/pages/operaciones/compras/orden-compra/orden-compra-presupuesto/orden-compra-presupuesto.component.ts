@@ -3,14 +3,12 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomToastService,
-  CustomerIdService,
-  DataService,
-  OrdenCompraService,
-} from 'src/app/core/services/common-services';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
+import { DataService } from 'src/app/core/services/data.service';
+import { OrdenCompraService } from 'src/app/core/services/orden-compra.service';
 
 const fechaActual = new Date();
 
@@ -23,13 +21,13 @@ const fechaActual = new Date();
 export default class OrdenCompraPresupuestoComponent
   implements OnInit, OnDestroy
 {
-  public customToastService = inject(CustomToastService);
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
-  public authService = inject(AuthService);
+  customToastService = inject(CustomToastService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
+  authService = inject(AuthService);
   public ordenCompraService = inject(OrdenCompraService);
-  public ref = inject(DynamicDialogRef);
-  public config = inject(DynamicDialogConfig);
+  ref = inject(DynamicDialogRef);
+  config = inject(DynamicDialogConfig);
   public messageService = inject(MessageService);
   public customerIdService = inject(CustomerIdService);
 

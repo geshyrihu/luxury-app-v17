@@ -1,11 +1,11 @@
 import { Injectable, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, map, of } from 'rxjs';
-import { IModelToken } from '../interfaces/IModelToken.interface';
+import { IModelToken } from '../interfaces/model-token.interface';
 import {
-  InfoAccountAuthDto,
-  InfoEmployeeAuthDto,
-  UserTokenDto,
+  IInfoAccountAuth,
+  IInfoEmployeeAuth,
+  IUserToken,
 } from '../interfaces/user-token.interface';
 import { DataService } from './data.service';
 import { StorageService } from './storage.service';
@@ -15,12 +15,12 @@ import { StorageService } from './storage.service';
 })
 export class AuthService {
   private storageService = inject(StorageService);
-  private dataService = inject(DataService);
+  dataService = inject(DataService);
   private router = inject(Router);
 
-  userTokenDto: UserTokenDto;
-  infoUserAuthDto: InfoAccountAuthDto;
-  infoEmployeeDto: InfoEmployeeAuthDto;
+  userTokenDto: IUserToken;
+  infoUserAuthDto: IInfoAccountAuth;
+  infoEmployeeDto: IInfoEmployeeAuth;
 
   statusJWT: boolean = false;
   data: IModelToken = { token: '' };

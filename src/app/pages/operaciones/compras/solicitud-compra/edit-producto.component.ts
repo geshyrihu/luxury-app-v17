@@ -3,13 +3,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
-import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomToastService,
-  DataService,
-} from 'src/app/core/services/common-services';
+import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { DataService } from 'src/app/core/services/data.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import ValidationErrorsCustomInputComponent from 'src/app/custom-components/custom-input-form/validation-errors-custom-input/validation-errors-custom-input.component';
 
@@ -23,21 +21,21 @@ import ValidationErrorsCustomInputComponent from 'src/app/custom-components/cust
   ],
 })
 export default class EditProductoComponent implements OnInit, OnDestroy {
-  private formBuilder = inject(FormBuilder);
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
-  public config = inject(DynamicDialogConfig);
-  public ref = inject(DynamicDialogRef);
-  public authService = inject(AuthService);
-  public customToastService = inject(CustomToastService);
+  formBuilder = inject(FormBuilder);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
+  config = inject(DynamicDialogConfig);
+  ref = inject(DynamicDialogRef);
+  authService = inject(AuthService);
+  customToastService = inject(CustomToastService);
 
   submitting: boolean = false;
 
   id: any = 0;
   data: any;
   solicitudCompraId: number = 0;
-  cb_unidadMedida: ISelectItemDto[] = [];
-  cb_Productos: ISelectItemDto[] = [];
+  cb_unidadMedida: ISelectItem[] = [];
+  cb_Productos: ISelectItem[] = [];
   form: FormGroup;
   nombreProducto = '';
 

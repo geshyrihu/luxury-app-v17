@@ -6,12 +6,9 @@ import {
   DynamicDialogRef,
 } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
-import {
-  ApiRequestService,
-  CustomToastService,
-  DataService,
-} from 'src/app/core/services/common-services';
-
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { DataService } from 'src/app/core/services/data.service';
 import ServiceOrderAddOrEditComponent from '../../../mantenimiento-ordenes-servicio/addoredit-service-order.component';
 
 @Component({
@@ -23,9 +20,9 @@ import ServiceOrderAddOrEditComponent from '../../../mantenimiento-ordenes-servi
 export default class ServiceHistoryMachineryComponent
   implements OnInit, OnDestroy
 {
-  private dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
-  public config = inject(DynamicDialogConfig);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
+  config = inject(DynamicDialogConfig);
   private customToastService = inject(CustomToastService);
   public dialogService = inject(DialogService);
 

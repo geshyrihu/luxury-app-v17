@@ -4,13 +4,11 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
-import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomToastService,
-  DataService,
-} from 'src/app/core/services/common-services';
+import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { DataService } from 'src/app/core/services/data.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import { environment } from 'src/environments/environment';
 
@@ -21,12 +19,12 @@ import { environment } from 'src/environments/environment';
   imports: [LuxuryAppComponentsModule, NgSelectModule, CustomInputModule],
 })
 export default class AddoreditProveedorComponent implements OnInit, OnDestroy {
-  public authService = inject(AuthService);
-  public config = inject(DynamicDialogConfig);
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
-  private formBuilder = inject(FormBuilder);
-  public ref = inject(DynamicDialogRef);
+  authService = inject(AuthService);
+  config = inject(DynamicDialogConfig);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
+  formBuilder = inject(FormBuilder);
+  ref = inject(DynamicDialogRef);
   private customToastService = inject(CustomToastService);
 
   submitting: boolean = false;
@@ -34,8 +32,8 @@ export default class AddoreditProveedorComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   id = 0;
-  cb_category: ISelectItemDto[] = [];
-  cb_nivel_acceso: ISelectItemDto[] = [
+  cb_category: ISelectItem[] = [];
+  cb_nivel_acceso: ISelectItem[] = [
     {
       label: 'Publico',
       value: 0,
@@ -45,7 +43,7 @@ export default class AddoreditProveedorComponent implements OnInit, OnDestroy {
       value: 1,
     },
   ];
-  catecoriasSeleccinadas: ISelectItemDto[] = [];
+  catecoriasSeleccinadas: ISelectItem[] = [];
   cb_bancos: any[] = [];
   form: FormGroup;
 

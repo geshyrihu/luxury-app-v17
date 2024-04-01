@@ -5,13 +5,11 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { imageToBase64 } from 'src/app/core/helpers/enumeration';
 import { UserInfoDto } from 'src/app/core/interfaces/user-info.interface';
-import {
-  ApiRequestService,
-  CustomToastService,
-  CustomerIdService,
-  DataService,
-  DateService,
-} from 'src/app/core/services/common-services';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
+import { DataService } from 'src/app/core/services/data.service';
+import { DateService } from 'src/app/core/services/date.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import { environment } from 'src/environments/environment';
 
@@ -22,14 +20,14 @@ import { environment } from 'src/environments/environment';
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class AddoreditPersonComponent implements OnInit, OnDestroy {
-  public config = inject(DynamicDialogConfig);
+  config = inject(DynamicDialogConfig);
   public customerIdService = inject(CustomerIdService);
-  public customToastService = inject(CustomToastService);
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
+  customToastService = inject(CustomToastService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
   public dateService = inject(DateService);
-  private formBuilder = inject(FormBuilder);
-  public ref = inject(DynamicDialogRef);
+  formBuilder = inject(FormBuilder);
+  ref = inject(DynamicDialogRef);
 
   submitting: boolean = false;
 

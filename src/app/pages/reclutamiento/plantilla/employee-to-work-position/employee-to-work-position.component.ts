@@ -3,8 +3,8 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
-import { CustomerIdService } from 'src/app/core/services/common-services';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
 import Swal from 'sweetalert2';
@@ -17,14 +17,14 @@ import Swal from 'sweetalert2';
 export default class EmployeeToWorkPositionComponent
   implements OnInit, OnDestroy
 {
-  public config = inject(DynamicDialogConfig);
+  config = inject(DynamicDialogConfig);
   public customerIdService = inject(CustomerIdService);
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
   public dateService = inject(DateService);
-  public ref = inject(DynamicDialogRef);
+  ref = inject(DynamicDialogRef);
 
-  public customToastService = inject(CustomToastService);
+  customToastService = inject(CustomToastService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 

@@ -3,14 +3,11 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
-import { BusquedaProveedor } from 'src/app/core/interfaces/IBusquedaProveedor.interface';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomToastService,
-  DataService,
-} from 'src/app/core/services/common-services';
-
+import { IBusquedaProveedor } from 'src/app/core/interfaces/busqueda-proveedor.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { DataService } from 'src/app/core/services/data.service';
 import { environment } from 'src/environments/environment';
 import AddoreditProveedorComponent from '../addoredit-proveedor/addoredit-proveedor.component';
 import TarjetaProveedorComponent from '../tarjeta-proveedor/tarjeta-proveedor.component';
@@ -21,14 +18,14 @@ import TarjetaProveedorComponent from '../tarjeta-proveedor/tarjeta-proveedor.co
   imports: [LuxuryAppComponentsModule],
 })
 export default class ListProviderComponent implements OnInit, OnDestroy {
-  public customToastService = inject(CustomToastService);
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
+  customToastService = inject(CustomToastService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
   public messageService = inject(MessageService);
   public dialogService = inject(DialogService);
-  public authService = inject(AuthService);
+  authService = inject(AuthService);
 
-  data: BusquedaProveedor[] = [];
+  data: IBusquedaProveedor[] = [];
   ref: DynamicDialogRef;
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
@@ -45,7 +42,7 @@ export default class ListProviderComponent implements OnInit, OnDestroy {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
     this.dataService
-      .get<BusquedaProveedor[]>(`Proveedor/ListadoProveedores`)
+      .get<IBusquedaProveedor[]>(`Proveedor/ListadoProveedores`)
       .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
@@ -70,7 +67,7 @@ export default class ListProviderComponent implements OnInit, OnDestroy {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
     this.dataService
-      .get<BusquedaProveedor[]>(`Proveedor/Autorizar/${providerId}`)
+      .get<IBusquedaProveedor[]>(`Proveedor/Autorizar/${providerId}`)
       .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {

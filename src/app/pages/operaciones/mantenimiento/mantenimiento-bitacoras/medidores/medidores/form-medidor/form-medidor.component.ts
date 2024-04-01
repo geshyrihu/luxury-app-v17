@@ -3,14 +3,12 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
-import { IMedidorLecturaDto } from 'src/app/core/interfaces/IMedidorLecturaDto.interface';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomToastService,
-  CustomerIdService,
-  DataService,
-} from 'src/app/core/services/common-services';
+import { IMedidorLectura } from 'src/app/core/interfaces/medidor-lectura.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
+import { DataService } from 'src/app/core/services/data.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 @Component({
   selector: 'app-form-medidor',
@@ -19,12 +17,12 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class FormMedidorComponent implements OnInit, OnDestroy {
-  private formBuilder = inject(FormBuilder);
-  private dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
-  public ref = inject(DynamicDialogRef);
-  public config = inject(DynamicDialogConfig);
-  public authService = inject(AuthService);
+  formBuilder = inject(FormBuilder);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
+  ref = inject(DynamicDialogRef);
+  config = inject(DynamicDialogConfig);
+  authService = inject(AuthService);
   private customerIdService = inject(CustomerIdService);
   private customToastService = inject(CustomToastService);
 
@@ -61,7 +59,7 @@ export default class FormMedidorComponent implements OnInit, OnDestroy {
   }
   onLoadData() {
     this.dataService
-      .get<IMedidorLecturaDto>(`Medidor/${this.id}`)
+      .get<IMedidorLectura>(`Medidor/${this.id}`)
       .subscribe((resp: any) => {
         this.form.patchValue(resp.body);
       });

@@ -4,16 +4,13 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomToastService,
-  CustomerIdService,
-  DataService,
-  DateService,
-  FiltroCalendarService,
-} from 'src/app/core/services/common-services';
-
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
+import { DataService } from 'src/app/core/services/data.service';
+import { DateService } from 'src/app/core/services/date.service';
+import { FiltroCalendarService } from 'src/app/core/services/filtro-calendar.service';
 import Swal from 'sweetalert2';
 import AddPresentacionJuntaComiteComponent from './add-presentacion-junta-comite/add-presentacion-junta-comite.component';
 import AddoreditPresentacionJuntaComiteComponent from './addoredit-presentacion-junta-comite/addoredit-presentacion-junta-comite.component';
@@ -29,15 +26,15 @@ export default class PresentacionJuntaComiteComponent
   implements OnInit, OnDestroy
 {
   private rangoCalendarioService = inject(FiltroCalendarService);
-  public authService = inject(AuthService);
+  authService = inject(AuthService);
   public confirmationService = inject(ConfirmationService);
   public customerIdService = inject(CustomerIdService);
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
   public dateService = inject(DateService);
   public messageService = inject(MessageService);
   public route = inject(Router);
-  public customToastService = inject(CustomToastService);
+  customToastService = inject(CustomToastService);
   public dialogService = inject(DialogService);
 
   enviarEstadosFinancierosCondominos(id: any) {

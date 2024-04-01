@@ -12,7 +12,7 @@ import { DynamicDialogRef } from 'primeng/dynamicdialog';
   imports: [LuxuryAppComponentsModule, FlatpickrModule],
 })
 export default class FilterWorkplanComponent {
-  public ref = inject(DynamicDialogRef);
+  ref = inject(DynamicDialogRef);
   fechaInicial: Date = new Date(Date.now());
   fechaFinal: Date = new Date();
 

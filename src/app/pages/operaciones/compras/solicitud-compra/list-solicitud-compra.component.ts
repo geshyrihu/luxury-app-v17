@@ -4,14 +4,12 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subject, Subscription, takeUntil } from 'rxjs';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomToastService,
-  CustomerIdService,
-  DataService,
-  SolicitudCompraService,
-} from 'src/app/core/services/common-services';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
+import { DataService } from 'src/app/core/services/data.service';
+import { SolicitudCompraService } from 'src/app/core/services/solicitud-compra.service';
 
 @Component({
   selector: 'app-list-solicitud-compra',
@@ -20,14 +18,14 @@ import {
   imports: [LuxuryAppComponentsModule],
 })
 export default class ListSolicitudCompraComponent implements OnInit, OnDestroy {
-  public authService = inject(AuthService);
+  authService = inject(AuthService);
   public customerIdService = inject(CustomerIdService);
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
   public messageService = inject(MessageService);
   public router = inject(Router);
   public solicitudCompraService = inject(SolicitudCompraService);
-  public customToastService = inject(CustomToastService);
+  customToastService = inject(CustomToastService);
   public dialogService = inject(DialogService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente

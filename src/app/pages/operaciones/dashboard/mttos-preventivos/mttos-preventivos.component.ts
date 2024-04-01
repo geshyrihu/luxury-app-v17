@@ -4,8 +4,8 @@ import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
-import { CustomerIdService } from 'src/app/core/services/common-services';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
 import { PeriodoMonthService } from 'src/app/core/services/periodo-month.service';
@@ -21,9 +21,9 @@ export default class MantenimientosPreventivosComponent
   implements OnInit, OnDestroy
 {
   public dateService = inject(DateService);
-  public customToastService = inject(CustomToastService);
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
+  customToastService = inject(CustomToastService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
   public customerIdService = inject(CustomerIdService);

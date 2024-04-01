@@ -1,11 +1,8 @@
 import { Component, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
-import {
-  ApiRequestService,
-  AuthService,
-} from 'src/app/core/services/common-services';
-
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import AddOrEditUnidadMedidaComponent from './addoredit-unidad-medida.component';
 
@@ -16,9 +13,9 @@ import AddOrEditUnidadMedidaComponent from './addoredit-unidad-medida.component'
   imports: [LuxuryAppComponentsModule],
 })
 export default class ListUnidadMedidaComponent implements OnInit {
-  public authService = inject(AuthService);
-  public dialogHandlerService = inject(DialogHandlerService);
-  public apiRequestService = inject(ApiRequestService);
+  authService = inject(AuthService);
+  dialogHandlerService = inject(DialogHandlerService);
+  apiRequestService = inject(ApiRequestService);
 
   data: any[] = [];
 

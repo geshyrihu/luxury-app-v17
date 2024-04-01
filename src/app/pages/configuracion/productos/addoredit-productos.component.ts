@@ -10,11 +10,9 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject } from 'rxjs';
 import { EProductClasificacion } from 'src/app/core/enums/product-clasificacion.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
-import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
-import {
-  ApiRequestService,
-  AuthService,
-} from 'src/app/core/services/common-services';
+import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import { environment } from 'src/environments/environment';
 
@@ -25,11 +23,11 @@ import { environment } from 'src/environments/environment';
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class AddOrEditProductosComponent implements OnInit {
-  public authService = inject(AuthService);
-  public apiRequestService = inject(ApiRequestService);
-  private formBuilder = inject(FormBuilder);
-  public config = inject(DynamicDialogConfig);
-  public ref = inject(DynamicDialogRef);
+  authService = inject(AuthService);
+  apiRequestService = inject(ApiRequestService);
+  formBuilder = inject(FormBuilder);
+  config = inject(DynamicDialogConfig);
+  ref = inject(DynamicDialogRef);
 
   submitting: boolean = false;
 
@@ -41,8 +39,8 @@ export default class AddOrEditProductosComponent implements OnInit {
   photoFileUpdate: boolean = false;
   userId = '';
   form: FormGroup;
-  cb_category: ISelectItemDto[] = [];
-  cb_clasificacion: ISelectItemDto[] = onGetSelectItemFromEnum(
+  cb_category: ISelectItem[] = [];
+  cb_clasificacion: ISelectItem[] = onGetSelectItemFromEnum(
     EProductClasificacion
   );
 

@@ -1,22 +1,22 @@
-export interface MenuItem {
+export interface IMenuItem {
   visible: boolean;
   label: string;
   icon?: string;
   routerLink?: string;
   name?: string;
   badge?: any;
-  items?: SubMenuItem[];
+  items?: ISubMenuItem[];
 }
 
-export interface SubMenuItem {
+export interface ISubMenuItem {
   visible: boolean;
   label: string;
   routerLink?: string;
   name?: string;
-  items?: SubMenuItems[];
+  items?: ISubMenuItems[];
 }
 
-export interface SubMenuItems {
+export interface ISubMenuItems {
   visible: boolean;
   label: string;
   routerLink: string;

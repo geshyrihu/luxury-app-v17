@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { menuPanel } from './menu-panel';
+import { menuPanel } from 'src/app/core/conts/menu-panel';
 @Component({
   selector: 'app-panel',
   templateUrl: './panel.component.html',

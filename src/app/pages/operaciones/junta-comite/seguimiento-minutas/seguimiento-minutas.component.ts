@@ -3,13 +3,11 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomerIdService,
-  CustomToastService,
-  DataService,
-} from 'src/app/core/services/common-services';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
+import { DataService } from 'src/app/core/services/data.service';
 import ContMinutaSeguimientosComponent from 'src/app/pages/contabilidad/contabilidad-pendientes-minuta/cont-minuta-seguimientos.component';
 import AddoreditMinutaDetalleComponent from 'src/app/pages/operaciones/junta-comite/addoredit-minuta-detalle/addoredit-minuta-detalle.component';
 import AddorEditMeetingSeguimientoComponent from 'src/app/pages/operaciones/junta-comite/addoredit-seguimiento/addor-edit-meeting-seguimiento.component';
@@ -21,12 +19,12 @@ import AddorEditMeetingSeguimientoComponent from 'src/app/pages/operaciones/junt
   imports: [LuxuryAppComponentsModule],
 })
 export default class SeguimientoMinutaComponent implements OnInit, OnDestroy {
-  private dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
-  public authService = inject(AuthService);
-  public customToastService = inject(CustomToastService);
+  authService = inject(AuthService);
+  customToastService = inject(CustomToastService);
   public customerIdService = inject(CustomerIdService);
 
   data: any[] = [];

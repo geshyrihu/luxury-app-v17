@@ -12,13 +12,11 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
-import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomToastService,
-  DataService,
-} from 'src/app/core/services/common-services';
+import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { DataService } from 'src/app/core/services/data.service';
 import { SolicitudCompraService } from 'src/app/core/services/solicitud-compra.service';
 import TarjetaProductoComponent from 'src/app/pages/operaciones/mantenimiento/mantenimiento-catalogos/tarjeta-producto/tarjeta-producto.component';
 import { environment } from 'src/environments/environment';
@@ -30,13 +28,13 @@ import { environment } from 'src/environments/environment';
   imports: [LuxuryAppComponentsModule],
 })
 export default class AddProductComponent implements OnInit, OnDestroy {
-  public customToastService = inject(CustomToastService);
-  public authService = inject(AuthService);
-  private dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
+  customToastService = inject(CustomToastService);
+  authService = inject(AuthService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
-  private formBuilder = inject(FormBuilder);
+  formBuilder = inject(FormBuilder);
   private solicitudCompraService = inject(SolicitudCompraService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
@@ -48,7 +46,7 @@ export default class AddProductComponent implements OnInit, OnDestroy {
 
   @Input()
   solicitudCompraId: number = 0;
-  cb_measurement_units: ISelectItemDto[] = [];
+  cb_measurement_units: ISelectItem[] = [];
 
   @Output()
   updateData = new EventEmitter<void>();

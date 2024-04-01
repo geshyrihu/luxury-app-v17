@@ -4,12 +4,10 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { RatingModule } from 'primeng/rating';
 import { Subject, takeUntil } from 'rxjs';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomToastService,
-  DataService,
-} from 'src/app/core/services/common-services';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { DataService } from 'src/app/core/services/data.service';
 @Component({
   selector: 'app-calificacion-proveedor',
   templateUrl: './calificacion-proveedor.component.html',
@@ -19,12 +17,12 @@ import {
 export default class CalificacionProveedorComponent
   implements OnInit, OnDestroy
 {
-  public authService = inject(AuthService);
-  public config = inject(DynamicDialogConfig);
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
-  private formBuilder = inject(FormBuilder);
-  public ref = inject(DynamicDialogRef);
+  authService = inject(AuthService);
+  config = inject(DynamicDialogConfig);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
+  formBuilder = inject(FormBuilder);
+  ref = inject(DynamicDialogRef);
   private customToastService = inject(CustomToastService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { ITicketPanelMenu } from 'src/app/core/interfaces/ticket-panel.menu.interface';
 
 @Component({
   selector: 'app-ticket-panel',
@@ -8,7 +9,7 @@ import { RouterLink } from '@angular/router';
   standalone: true,
 })
 export default class TicketPanelComponent {
-  ticketPanelMenuItems: TicketPanelMenu[] = [
+  ticketPanelMenuItems: ITicketPanelMenu[] = [
     {
       routerLink: '/operaciones/reporte/tiket-mantenimiento',
       title: 'Mantenimiento',
@@ -26,9 +27,4 @@ export default class TicketPanelComponent {
     //   icon: 'fa-brands fa-pagelines',
     // },
   ];
-}
-export interface TicketPanelMenu {
-  routerLink: string;
-  title: string;
-  icon: string;
 }

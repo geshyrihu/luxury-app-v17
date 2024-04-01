@@ -3,11 +3,9 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
-import {
-  ApiRequestService,
-  CustomToastService,
-  DataService,
-} from 'src/app/core/services/common-services';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { DataService } from 'src/app/core/services/data.service';
 @Component({
   selector: 'app-addoredit-invited',
   templateUrl: './addoredit-invited.component.html',
@@ -15,10 +13,10 @@ import {
   imports: [LuxuryAppComponentsModule],
 })
 export default class AddOrEditInvitedComponent implements OnInit, OnDestroy {
-  public customToastService = inject(CustomToastService);
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
-  public config = inject(DynamicDialogConfig);
+  customToastService = inject(CustomToastService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
+  config = inject(DynamicDialogConfig);
   public messageService = inject(MessageService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente

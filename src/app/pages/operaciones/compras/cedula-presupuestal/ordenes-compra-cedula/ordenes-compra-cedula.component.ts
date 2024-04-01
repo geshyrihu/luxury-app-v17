@@ -23,9 +23,9 @@ import OrdenCompraComponent from '../../orden-compra/orden-compra/orden-compra.c
 })
 export default class OrdenesCompraCedulaComponent implements OnInit, OnDestroy {
   private customToastService = inject(CustomToastService);
-  public apiRequestService = inject(ApiRequestService);
-  private dataService = inject(DataService);
-  public config = inject(DynamicDialogConfig);
+  apiRequestService = inject(ApiRequestService);
+  dataService = inject(DataService);
+  config = inject(DynamicDialogConfig);
   public dialogService = inject(DialogService);
   public ordenCompraService = inject(OrdenCompraService);
 

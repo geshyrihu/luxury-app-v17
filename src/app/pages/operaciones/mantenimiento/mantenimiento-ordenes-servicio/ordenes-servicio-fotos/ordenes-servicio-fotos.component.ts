@@ -4,12 +4,10 @@ import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ImageModule } from 'primeng/image';
 import { Subject, takeUntil } from 'rxjs';
-import {
-  ApiRequestService,
-  CustomToastService,
-  CustomerIdService,
-  DataService,
-} from 'src/app/core/services/common-services';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
+import { DataService } from 'src/app/core/services/data.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -21,13 +19,13 @@ import { environment } from 'src/environments/environment';
 export default class OrdenesServicioFotosComponent
   implements OnInit, OnDestroy
 {
-  public config = inject(DynamicDialogConfig);
+  config = inject(DynamicDialogConfig);
   public customerIdService = inject(CustomerIdService);
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
   public messageService = inject(MessageService);
-  public ref = inject(DynamicDialogRef);
-  public customToastService = inject(CustomToastService);
+  ref = inject(DynamicDialogRef);
+  customToastService = inject(CustomToastService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 

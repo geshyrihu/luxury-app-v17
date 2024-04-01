@@ -5,14 +5,12 @@ import LuxuryAppComponentsModule, {
 } from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomToastService,
-  CustomerIdService,
-  DataService,
-  DateService,
-} from 'src/app/core/services/common-services';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
+import { DataService } from 'src/app/core/services/data.service';
+import { DateService } from 'src/app/core/services/date.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
@@ -24,14 +22,14 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 export default class CrudSalidasComponent implements OnInit, OnDestroy {
   private customerIdService = inject(CustomerIdService);
   private customToastService = inject(CustomToastService);
-  public apiRequestService = inject(ApiRequestService);
-  private dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
+  dataService = inject(DataService);
   private dateService = inject(DateService);
-  private formBuilder = inject(FormBuilder);
+  formBuilder = inject(FormBuilder);
 
-  public authService = inject(AuthService);
-  public config = inject(DynamicDialogConfig);
-  public ref = inject(DynamicDialogRef);
+  authService = inject(AuthService);
+  config = inject(DynamicDialogConfig);
+  ref = inject(DynamicDialogRef);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 

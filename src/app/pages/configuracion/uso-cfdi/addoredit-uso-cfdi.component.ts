@@ -2,10 +2,8 @@ import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import {
-  ApiRequestService,
-  AuthService,
-} from 'src/app/core/services/common-services';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
@@ -15,11 +13,11 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class AddoreditUsoCFDIComponent implements OnInit {
-  public authService = inject(AuthService);
-  public apiRequestService = inject(ApiRequestService);
-  private formBuilder = inject(FormBuilder);
-  public config = inject(DynamicDialogConfig);
-  public ref = inject(DynamicDialogRef);
+  authService = inject(AuthService);
+  apiRequestService = inject(ApiRequestService);
+  formBuilder = inject(FormBuilder);
+  config = inject(DynamicDialogConfig);
+  ref = inject(DynamicDialogRef);
 
   submitting: boolean = false;
 

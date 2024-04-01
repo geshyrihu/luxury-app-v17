@@ -7,12 +7,10 @@ import {
   DynamicDialogRef,
 } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
-import {
-  ApiRequestService,
-  CustomToastService,
-  CustomerIdService,
-  DataService,
-} from 'src/app/core/services/common-services';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
+import { DataService } from 'src/app/core/services/data.service';
 import SubirPdfComponent from 'src/app/shared/subir-pdf/subir-pdf.component';
 import { environment } from 'src/environments/environment';
 
@@ -23,11 +21,11 @@ import { environment } from 'src/environments/environment';
   imports: [LuxuryAppComponentsModule],
 })
 export default class ActivosDocumentosComponent {
-  public customToastService = inject(CustomToastService);
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
-  public config = inject(DynamicDialogConfig);
-  public ref = inject(DynamicDialogRef);
+  customToastService = inject(CustomToastService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
+  config = inject(DynamicDialogConfig);
+  ref = inject(DynamicDialogRef);
   public customerIdService = inject(CustomerIdService);
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);

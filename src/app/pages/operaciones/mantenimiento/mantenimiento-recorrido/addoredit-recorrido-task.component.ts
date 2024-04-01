@@ -3,11 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
-import {
-  ApiRequestService,
-  CustomToastService,
-  DataService,
-} from 'src/app/core/services/common-services';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { DataService } from 'src/app/core/services/data.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
@@ -20,11 +18,11 @@ export default class RecorridoTaskAddOrEditComponent
   implements OnInit, OnDestroy
 {
   private customToastService = inject(CustomToastService);
-  public apiRequestService = inject(ApiRequestService);
-  private formBuilder = inject(FormBuilder);
-  public config = inject(DynamicDialogConfig);
-  public dataService = inject(DataService);
-  public ref = inject(DynamicDialogRef);
+  apiRequestService = inject(ApiRequestService);
+  formBuilder = inject(FormBuilder);
+  config = inject(DynamicDialogConfig);
+  dataService = inject(DataService);
+  ref = inject(DynamicDialogRef);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 

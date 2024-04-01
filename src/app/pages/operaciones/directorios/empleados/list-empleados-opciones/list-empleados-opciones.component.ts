@@ -6,13 +6,11 @@ import {
   DynamicDialogRef,
 } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomToastService,
-  CustomerIdService,
-  DataService,
-} from 'src/app/core/services/common-services';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
+import { DataService } from 'src/app/core/services/data.service';
 import UpdatePasswordModalComponent from 'src/app/pages/configuracion/accounts/modal-edit-account/update-password-modal/update-password-modal.component';
 import AddoreditPersonDataComponent from 'src/app/pages/person/addoredit-person-data/addoredit-person-data.component';
 import ListPersonEmergencyContactComponent from 'src/app/pages/person/list-person-emergency-contact/list-person-emergency-contact.component';
@@ -37,13 +35,13 @@ import AddOrEditEmplopyeeComponent from '../addoredit-data-employee/addoredit-em
 export default class ListEmpleadosOpcionesComponent
   implements OnInit, OnDestroy
 {
-  private dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
   private dialogService = inject(DialogService);
-  public authService = inject(AuthService);
-  public config = inject(DynamicDialogConfig);
+  authService = inject(AuthService);
+  config = inject(DynamicDialogConfig);
   public customerIdService = inject(CustomerIdService);
-  public customToastService = inject(CustomToastService);
+  customToastService = inject(CustomToastService);
 
   tienePermiso: boolean = true;
   ngOnInit(): void {

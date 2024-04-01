@@ -2,11 +2,9 @@ import { Component, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable } from 'rxjs';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomerIdService,
-} from 'src/app/core/services/common-services';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import { environment } from 'src/environments/environment';
 import AddoreditInventarioIluminacionComponent from './addoredit-inventario-iluminacion.component';
@@ -17,10 +15,10 @@ import AddoreditInventarioIluminacionComponent from './addoredit-inventario-ilum
   imports: [LuxuryAppComponentsModule],
 })
 export default class InventarioIluminacionComponent implements OnInit {
-  public apiRequestService = inject(ApiRequestService);
-  public authService = inject(AuthService);
+  apiRequestService = inject(ApiRequestService);
+  authService = inject(AuthService);
   public customerIdService = inject(CustomerIdService);
-  public dialogHandlerService = inject(DialogHandlerService);
+  dialogHandlerService = inject(DialogHandlerService);
   public dialogService = inject(DialogService);
 
   urlImg = environment.base_urlImg + 'Administration/products/';

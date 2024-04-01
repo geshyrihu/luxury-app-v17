@@ -14,12 +14,10 @@ import { cb_ESiNo } from 'src/app/core/enums/si-no.enum';
 import { EStatus } from 'src/app/core/enums/status.enum';
 import { ETypeOfDeparture } from 'src/app/core/enums/type-of-departure.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
-import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
-import {
-  ApiRequestService,
-  CustomToastService,
-  DataService,
-} from 'src/app/core/services/common-services';
+import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { DataService } from 'src/app/core/services/data.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
@@ -29,20 +27,20 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class AddoreditSolicitudBajaComponent implements OnInit {
-  private formBuilder = inject(FormBuilder);
-  private dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
-  public ref = inject(DynamicDialogRef);
-  public config = inject(DynamicDialogConfig);
+  formBuilder = inject(FormBuilder);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
+  ref = inject(DynamicDialogRef);
+  config = inject(DynamicDialogConfig);
   private customToastService = inject(CustomToastService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   submitting: boolean = false;
 
-  cb_status: ISelectItemDto[] = onGetSelectItemFromEnum(EStatus);
-  cb_tipo_baja: ISelectItemDto[] = onGetSelectItemFromEnum(ETypeOfDeparture);
-  cb_si_no: ISelectItemDto[] = cb_ESiNo;
+  cb_status: ISelectItem[] = onGetSelectItemFromEnum(EStatus);
+  cb_tipo_baja: ISelectItem[] = onGetSelectItemFromEnum(ETypeOfDeparture);
+  cb_si_no: ISelectItem[] = cb_ESiNo;
 
   id: number = 0;
 

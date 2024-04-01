@@ -8,12 +8,10 @@ import {
   DynamicDialogRef,
 } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
-import { IDestinatariosMailReporte } from 'src/app/core/interfaces/IDestinatariosMailReporte.interface';
-import {
-  ApiRequestService,
-  CustomerIdService,
-} from 'src/app/core/services/common-services';
+import { IDestinatariosMailReporte } from 'src/app/core/interfaces/destinatarios-mail-reporte.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DataService } from 'src/app/core/services/data.service';
 
 @Component({
@@ -25,15 +23,15 @@ import { DataService } from 'src/app/core/services/data.service';
 export default class EnviarMailReporteSemanalComponent
   implements OnInit, OnDestroy
 {
-  private dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
-  private formBuilder = inject(FormBuilder);
-  public config = inject(DynamicDialogConfig);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
+  formBuilder = inject(FormBuilder);
+  config = inject(DynamicDialogConfig);
   public customerIdService = inject(CustomerIdService);
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
-  public ref = inject(DynamicDialogRef);
-  public customToastService = inject(CustomToastService);
+  ref = inject(DynamicDialogRef);
+  customToastService = inject(CustomToastService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 

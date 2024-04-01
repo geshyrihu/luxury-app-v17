@@ -7,13 +7,11 @@ import {
   DynamicDialogRef,
 } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
-import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomToastService,
-  DataService,
-} from 'src/app/core/services/common-services';
+import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { DataService } from 'src/app/core/services/data.service';
 import TarjetaProductoComponent from 'src/app/pages/operaciones/mantenimiento/mantenimiento-catalogos/tarjeta-producto/tarjeta-producto.component';
 
 import { environment } from 'src/environments/environment';
@@ -25,8 +23,8 @@ import { environment } from 'src/environments/environment';
   imports: [LuxuryAppComponentsModule],
 })
 export default class AddProductModalComponent implements OnInit {
-  public customToastService = inject(CustomToastService);
-  public apiRequestService = inject(ApiRequestService);
+  customToastService = inject(CustomToastService);
+  apiRequestService = inject(ApiRequestService);
 
   isInRole: boolean;
   id: any = 0;
@@ -37,7 +35,7 @@ export default class AddProductModalComponent implements OnInit {
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   solicitudCompraId: number = 0;
-  cb_unidadMedida: ISelectItemDto[] = [];
+  cb_unidadMedida: ISelectItem[] = [];
 
   constructor(
     private dataService: DataService,

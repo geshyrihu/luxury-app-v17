@@ -4,12 +4,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { ToastModule } from 'primeng/toast';
 import { Subject, takeUntil } from 'rxjs';
-import { InfoEmployeeAuthDto } from 'src/app/core/interfaces/user-token.interface';
-import {
-  AuthService,
-  CustomToastService,
-  DataService,
-} from 'src/app/core/services/common-services';
+import { IInfoEmployeeAuth } from 'src/app/core/interfaces/user-token.interface';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { DataService } from 'src/app/core/services/data.service';
 import { ProfielServiceService } from 'src/app/core/services/profiel-service.service';
 import { environment } from 'src/environments/environment';
 @Component({
@@ -19,16 +17,16 @@ import { environment } from 'src/environments/environment';
   imports: [LuxuryAppComponentsModule, CommonModule, NgbModule, ToastModule],
 })
 export default class UpdatePhotoEmployeeComponent implements OnInit, OnDestroy {
-  public authService = inject(AuthService);
-  private dataService = inject(DataService);
-  public customToastService = inject(CustomToastService);
+  authService = inject(AuthService);
+  dataService = inject(DataService);
+  customToastService = inject(CustomToastService);
   public profielServiceService = inject(ProfielServiceService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   base_urlImg = environment.base_urlImg + 'Administration/accounts/';
   personId?: number = 0;
-  infoEmployeeDto: InfoEmployeeAuthDto;
+  infoEmployeeDto: IInfoEmployeeAuth;
   errorMessage: string = '';
 
   ngOnInit(): void {
@@ -62,6 +60,7 @@ export default class UpdatePhotoEmployeeComponent implements OnInit, OnDestroy {
     this.customToastService.onLoading();
     const formData = new FormData();
     formData.append('file', this.imgUpload);
+
     this.dataService
       .put('person/updateImg/' + this.personId, formData)
       .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye

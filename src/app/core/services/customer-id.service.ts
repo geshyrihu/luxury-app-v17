@@ -9,7 +9,7 @@ import { StorageService } from './storage.service';
   providedIn: 'root',
 })
 export class CustomerIdService implements OnDestroy {
-  public dataService = inject(DataService);
+  dataService = inject(DataService);
   private storageService = inject(StorageService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente

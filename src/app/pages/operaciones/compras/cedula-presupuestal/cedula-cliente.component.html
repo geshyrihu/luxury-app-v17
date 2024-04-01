@@ -16,7 +16,7 @@
       <app-table-header
         [title]="titulo"
         [showAdd]="true"
-        (add)="onModalAdd(data)"
+        (add)="onModalAdd()"
         [dt]="dt"
       ></app-table-header>
       <br />
@@ -38,7 +38,7 @@
         </div>
         <div class="col-sm-2">
           <custom-button
-            (clicked)="editarPeriodo(id)"
+            (clicked)="editarPeriodo()"
             customClass=" btn-outline-info"
             label="Editar periodo"
           >

@@ -5,14 +5,12 @@ import LuxuryAppComponentsModule, {
 } from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomToastService,
-  CustomerIdService,
-  DataService,
-  DateService,
-} from 'src/app/core/services/common-services';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
+import { DataService } from 'src/app/core/services/data.service';
+import { DateService } from 'src/app/core/services/date.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
@@ -22,16 +20,16 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class AddOrEditEntradasComponent implements OnInit, OnDestroy {
-  private formBuilder = inject(FormBuilder);
-  public customToastService = inject(CustomToastService);
+  formBuilder = inject(FormBuilder);
+  customToastService = inject(CustomToastService);
   private customerIdService = inject(CustomerIdService);
-  private dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
   private dateService = inject(DateService);
-  public authService = inject(AuthService);
-  public config = inject(DynamicDialogConfig);
+  authService = inject(AuthService);
+  config = inject(DynamicDialogConfig);
 
-  public ref = inject(DynamicDialogRef);
+  ref = inject(DynamicDialogRef);
 
   submitting: boolean = false;
 

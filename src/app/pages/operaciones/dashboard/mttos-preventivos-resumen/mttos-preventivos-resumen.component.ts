@@ -8,8 +8,8 @@ import {
 } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
-import { CustomerIdService } from 'src/app/core/services/common-services';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
 import { PeriodoMonthService } from 'src/app/core/services/periodo-month.service';
@@ -23,15 +23,15 @@ import { PeriodoMonthService } from 'src/app/core/services/periodo-month.service
 export default class MantenimientosPreventivosResumenComponent
   implements OnInit, OnDestroy
 {
-  public config = inject(DynamicDialogConfig);
+  config = inject(DynamicDialogConfig);
   public customerIdService = inject(CustomerIdService);
   public messageService = inject(MessageService);
   public periodoMonthService = inject(PeriodoMonthService);
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
   public dateService = inject(DateService);
   public dialogService = inject(DialogService);
-  public customToastService = inject(CustomToastService);
+  customToastService = inject(CustomToastService);
 
   data: any[] = [];
   ref: DynamicDialogRef;

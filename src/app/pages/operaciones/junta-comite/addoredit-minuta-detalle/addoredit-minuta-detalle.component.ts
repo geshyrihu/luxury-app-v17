@@ -6,13 +6,11 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { EAreaMinutasDetalles } from 'src/app/core/enums/area-minutas-detalles.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
-import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomToastService,
-  DataService,
-} from 'src/app/core/services/common-services';
+import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { DataService } from 'src/app/core/services/data.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
@@ -24,12 +22,12 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 export default class AddoreditMinutaDetalleComponent
   implements OnInit, OnDestroy
 {
-  private formBuilder = inject(FormBuilder);
-  private dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
-  public ref = inject(DynamicDialogRef);
-  public config = inject(DynamicDialogConfig);
-  public authService = inject(AuthService);
+  formBuilder = inject(FormBuilder);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
+  ref = inject(DynamicDialogRef);
+  config = inject(DynamicDialogConfig);
+  authService = inject(AuthService);
   private customToastService = inject(CustomToastService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
@@ -51,7 +49,7 @@ export default class AddoreditMinutaDetalleComponent
       label: 'No Autorizado',
     },
   ];
-  cb_area: ISelectItemDto[] = onGetSelectItemFromEnum(EAreaMinutasDetalles);
+  cb_area: ISelectItem[] = onGetSelectItemFromEnum(EAreaMinutasDetalles);
   id: number = 0;
 
   form: FormGroup = this.formBuilder.group({

@@ -1,5 +1,5 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import { IFechasFiltro } from '../interfaces/IFechasFiltro.interface';
+import { IFechasFiltro } from '../interfaces/fechas-filtro.interface';
 
 // Creamos una instancia de fecha actual
 const date = new Date();

@@ -17,8 +17,8 @@ import { DataService } from 'src/app/core/services/data.service';
   imports: [LuxuryAppComponentsModule],
 })
 export default class PdfSolicitudCompraComponent implements OnInit, OnDestroy {
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
   public route = inject(ActivatedRoute);
   @ViewChild('htmlData') htmlData: ElementRef;
   idSolicituCompra: any;

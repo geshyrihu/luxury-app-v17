@@ -9,15 +9,13 @@ import { Subject, takeUntil } from 'rxjs';
 import { EStatusTask } from 'src/app/core/enums/estatus-task.enum';
 import { EPriority } from 'src/app/core/enums/priority.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
-import { IFilterTicket } from 'src/app/core/interfaces/IFilterTicket.interface';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomerIdService,
-  CustomToastService,
-  DataService,
-  DateService,
-} from 'src/app/core/services/common-services';
+import { IFilterTicket } from 'src/app/core/interfaces/filter-ticket.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
+import { DataService } from 'src/app/core/services/data.service';
+import { DateService } from 'src/app/core/services/date.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import { environment } from 'src/environments/environment';
 @Component({
@@ -29,13 +27,13 @@ import { environment } from 'src/environments/environment';
 export default class AddoreditTicketComponent implements OnInit, OnDestroy {
   private customerSelectListService = inject(CustomerIdService);
   private customToastService = inject(CustomToastService);
-  public apiRequestService = inject(ApiRequestService);
-  private dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
+  dataService = inject(DataService);
   private dateService = inject(DateService);
-  private formBuilder = inject(FormBuilder);
-  public authService = inject(AuthService);
-  public config = inject(DynamicDialogConfig);
-  public ref = inject(DynamicDialogRef);
+  formBuilder = inject(FormBuilder);
+  authService = inject(AuthService);
+  config = inject(DynamicDialogConfig);
+  ref = inject(DynamicDialogRef);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 

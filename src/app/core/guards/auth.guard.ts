@@ -5,13 +5,13 @@ import {
   RouterStateSnapshot,
 } from '@angular/router';
 import { tap } from 'rxjs/operators';
-import { AuthService } from '../services/common-services';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthGuard {
-  public authService = inject(AuthService);
+  authService = inject(AuthService);
   private route = inject(Router);
 
   /**

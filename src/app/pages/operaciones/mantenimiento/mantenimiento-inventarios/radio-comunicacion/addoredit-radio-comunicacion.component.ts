@@ -5,16 +5,14 @@ import LuxuryAppComponentsModule, {
 } from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
-import { IRadioComunicacionAddOrEditDto } from 'src/app/core/interfaces/IRadioComunicacionAddOrEditDto.interface';
-import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomToastService,
-  CustomerIdService,
-  DataService,
-  DateService,
-} from 'src/app/core/services/common-services';
+import { IRadioComunicacionAddOrEdit } from 'src/app/core/interfaces/radio-comunicacion-add-or-edit.interface';
+import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
+import { DataService } from 'src/app/core/services/data.service';
+import { DateService } from 'src/app/core/services/date.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import { environment } from 'src/environments/environment';
 
@@ -32,12 +30,12 @@ export default class AddOrEditRadioComunicacionComponent implements OnInit {
     if (this.id !== 0) this.onLoadData();
   }
   public dateService = inject(DateService);
-  private formBuilder = inject(FormBuilder);
-  public config = inject(DynamicDialogConfig);
-  public ref = inject(DynamicDialogRef);
-  public authService = inject(AuthService);
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
+  formBuilder = inject(FormBuilder);
+  config = inject(DynamicDialogConfig);
+  ref = inject(DynamicDialogRef);
+  authService = inject(AuthService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
   public customerIdService = inject(CustomerIdService);
   private customToastService = inject(CustomToastService);
 
@@ -47,11 +45,11 @@ export default class AddOrEditRadioComunicacionComponent implements OnInit {
 
   id: number = 0;
   urlBaseImg = '';
-  model: IRadioComunicacionAddOrEditDto;
+  model: IRadioComunicacionAddOrEdit;
   photoFileUpdate: boolean = false;
   userId = '';
-  cb_employee: ISelectItemDto[] = [];
-  cb_area_responsable: ISelectItemDto[] = [];
+  cb_employee: ISelectItem[] = [];
+  cb_area_responsable: ISelectItem[] = [];
   form: FormGroup = this.formBuilder.group({
     id: { value: this.id, disabled: true },
     marca: ['', Validators.required],
@@ -69,7 +67,7 @@ export default class AddOrEditRadioComunicacionComponent implements OnInit {
 
   onLoadData() {
     this.dataService
-      .get<IRadioComunicacionAddOrEditDto>(`RadioComunicacion/${this.id}`)
+      .get<IRadioComunicacionAddOrEdit>(`RadioComunicacion/${this.id}`)
       .subscribe((resp) => {
         this.urlBaseImg = `${environment.base_urlImg}customers/${resp.body.customerId}/radios/${resp.body.fotografia}`;
         this.form.patchValue(resp.body);
@@ -138,7 +136,7 @@ export default class AddOrEditRadioComunicacionComponent implements OnInit {
     });
   }
 
-  private createFormData(dto: IRadioComunicacionAddOrEditDto): FormData {
+  private createFormData(dto: IRadioComunicacionAddOrEdit): FormData {
     const formData = new FormData();
     formData.append('marca', dto.marca);
     formData.append('modelo', dto.modelo);

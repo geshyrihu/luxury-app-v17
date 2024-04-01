@@ -1,10 +1,8 @@
 import { Component, Input, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { IAddCustomerPermisoToUserDto } from 'src/app/core/interfaces/IAddCustomerPermisoToUserDto.interface';
-import {
-  ApiRequestService,
-  CustomToastService,
-} from 'src/app/core/services/common-services';
+import { IAddCustomerPermisoToUser } from 'src/app/core/interfaces/add-customer-permiso-to-user.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 @Component({
   selector: 'app-access-customer',
   templateUrl: './access-customer.component.html',
@@ -12,11 +10,11 @@ import {
   imports: [LuxuryAppComponentsModule],
 })
 export default class AccessCustomerComponent implements OnInit {
-  public customToastService = inject(CustomToastService);
-  public apiRequestService = inject(ApiRequestService);
+  customToastService = inject(CustomToastService);
+  apiRequestService = inject(ApiRequestService);
 
-  clientes: IAddCustomerPermisoToUserDto[] = [];
-  ActualizarClientes: IAddCustomerPermisoToUserDto[] = [];
+  clientes: IAddCustomerPermisoToUser[] = [];
+  ActualizarClientes: IAddCustomerPermisoToUser[] = [];
   checked = false;
   @Input()
   applicationUserId: string = '';

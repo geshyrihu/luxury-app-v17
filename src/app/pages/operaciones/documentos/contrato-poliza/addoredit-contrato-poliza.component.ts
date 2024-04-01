@@ -5,15 +5,13 @@ import LuxuryAppComponentsModule, {
 } from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
-import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomToastService,
-  CustomerIdService,
-  DataService,
-  DateService,
-} from 'src/app/core/services/common-services';
+import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
+import { DataService } from 'src/app/core/services/data.service';
+import { DateService } from 'src/app/core/services/date.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import { environment } from 'src/environments/environment';
 
@@ -27,15 +25,15 @@ export default class AddoreditContratoPolizaComponent
   implements OnInit, OnDestroy
 {
   private serviceIdCustomer = inject(CustomerIdService);
-  public authService = inject(AuthService);
-  public config = inject(DynamicDialogConfig);
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
+  authService = inject(AuthService);
+  config = inject(DynamicDialogConfig);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
   public dateService = inject(DateService);
-  private formBuilder = inject(FormBuilder);
+  formBuilder = inject(FormBuilder);
   private customToastService = inject(CustomToastService);
 
-  public ref = inject(DynamicDialogRef);
+  ref = inject(DynamicDialogRef);
 
   submitting: boolean = false;
 
@@ -44,7 +42,7 @@ export default class AddoreditContratoPolizaComponent
   id: number = 0;
   urlBaseImg = environment.base_urlImg;
   model: any;
-  cb_providers: ISelectItemDto[] = [];
+  cb_providers: ISelectItem[] = [];
   file: File;
   form: FormGroup = this.formBuilder.group({
     id: { value: this.id, disabled: true },

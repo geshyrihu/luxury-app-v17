@@ -7,15 +7,13 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { EState } from 'src/app/core/enums/state.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
-import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomToastService,
-  CustomerIdService,
-  DataService,
-  DateService,
-} from 'src/app/core/services/common-services';
+import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
+import { DataService } from 'src/app/core/services/data.service';
+import { DateService } from 'src/app/core/services/date.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import { environment } from 'src/environments/environment';
 
@@ -26,13 +24,13 @@ import { environment } from 'src/environments/environment';
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class AddoreditToolsComponent implements OnInit, OnDestroy {
-  public authService = inject(AuthService);
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
-  private formBuilder = inject(FormBuilder);
+  authService = inject(AuthService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
+  formBuilder = inject(FormBuilder);
   public dateService = inject(DateService);
-  public config = inject(DynamicDialogConfig);
-  public ref = inject(DynamicDialogRef);
+  config = inject(DynamicDialogConfig);
+  ref = inject(DynamicDialogRef);
   public customerIdService = inject(CustomerIdService);
   private customToastService = inject(CustomToastService);
 
@@ -47,7 +45,7 @@ export default class AddoreditToolsComponent implements OnInit, OnDestroy {
   photoFileUpdate: boolean = false;
 
   cb_category: any[] = [{}];
-  optionActive: ISelectItemDto[] = onGetSelectItemFromEnum(EState);
+  optionActive: ISelectItem[] = onGetSelectItemFromEnum(EState);
   form: FormGroup;
 
   ngOnInit(): void {

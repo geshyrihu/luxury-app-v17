@@ -3,15 +3,12 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
-import { IComiteVigilanciaDto } from 'src/app/core/interfaces/IComiteVigilanciaDto.interface';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomToastService,
-  CustomerIdService,
-  DataService,
-} from 'src/app/core/services/common-services';
-
+import { IComiteVigilancia } from 'src/app/core/interfaces/comite-vigilancia.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
+import { DataService } from 'src/app/core/services/data.service';
 import AddOrEditComiteVigilanciaComponent from './addoredit-comite-vigilancia.component';
 
 @Component({
@@ -23,15 +20,15 @@ import AddOrEditComiteVigilanciaComponent from './addoredit-comite-vigilancia.co
 export default class ListComiteVigilanciaComponent
   implements OnInit, OnDestroy
 {
-  public authService = inject(AuthService);
+  authService = inject(AuthService);
   public customerIdService = inject(CustomerIdService);
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
   public messageService = inject(MessageService);
-  public customToastService = inject(CustomToastService);
+  customToastService = inject(CustomToastService);
   public dialogService = inject(DialogService);
 
-  data: IComiteVigilanciaDto[] = [];
+  data: IComiteVigilancia[] = [];
 
   ref: DynamicDialogRef;
 
@@ -51,7 +48,7 @@ export default class ListComiteVigilanciaComponent
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
     this.dataService
-      .get<IComiteVigilanciaDto[]>(
+      .get<IComiteVigilancia[]>(
         'ComiteVigilancia/GetAll/' + this.customerIdService.getcustomerId()
       )
       .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye

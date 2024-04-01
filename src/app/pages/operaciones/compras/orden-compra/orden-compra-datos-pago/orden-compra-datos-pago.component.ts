@@ -5,7 +5,7 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { ETipoGasto } from 'src/app/core/enums/tipo-gasto.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
-import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
+import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
@@ -20,11 +20,11 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 export default class OrdenCompraDatosPagoComponent
   implements OnInit, OnDestroy
 {
-  private formBuilder = inject(FormBuilder);
-  public ref = inject(DynamicDialogRef);
-  public config = inject(DynamicDialogConfig);
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
+  formBuilder = inject(FormBuilder);
+  ref = inject(DynamicDialogRef);
+  config = inject(DynamicDialogConfig);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
   private customToastService = inject(CustomToastService);
 
   submitting: boolean = false;
@@ -32,11 +32,11 @@ export default class OrdenCompraDatosPagoComponent
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   ordenCompraDatosPagoId = 0;
-  cb_providers: ISelectItemDto[] = [];
-  cb_formaPago: ISelectItemDto[] = [];
-  cb_payment_method: ISelectItemDto[] = [];
-  cb_usoCfdi: ISelectItemDto[] = [];
-  cb_tipoGasto: ISelectItemDto[] = onGetSelectItemFromEnum(ETipoGasto);
+  cb_providers: ISelectItem[] = [];
+  cb_formaPago: ISelectItem[] = [];
+  cb_payment_method: ISelectItem[] = [];
+  cb_usoCfdi: ISelectItem[] = [];
+  cb_tipoGasto: ISelectItem[] = onGetSelectItemFromEnum(ETipoGasto);
   form: FormGroup = this.formBuilder.group({
     id: [0],
     ordenCompraId: [0],

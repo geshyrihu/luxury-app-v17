@@ -7,13 +7,11 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ContextMenuModule } from 'primeng/contextmenu';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomToastService,
-  DataService,
-  OrdenCompraService,
-} from 'src/app/core/services/common-services';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { DataService } from 'src/app/core/services/data.service';
+import { OrdenCompraService } from 'src/app/core/services/orden-compra.service';
 import OrdenCompraDatosPagoParcialComponent from '../components/orden-compra-datos-pago-parcial/orden-compra-datos-pago-parcial.component';
 import OrdenCompraDatosCotizacionComponent from '../components/orden-compra-parcial/orden-compra-datos-cotizacion.component';
 import OrdenCompraStatusParcialComponent from '../components/orden-compra-status-parcial/orden-compra-status-parcial.component';
@@ -41,10 +39,10 @@ import OrdenCompraEditPresupustoUtilizadoComponent from './orden-compra-edit-pre
   ],
 })
 export default class OrdenCompraComponent implements OnInit, OnDestroy {
-  public customToastService = inject(CustomToastService);
-  public authService = inject(AuthService);
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
+  customToastService = inject(CustomToastService);
+  authService = inject(AuthService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
   public routeActive = inject(ActivatedRoute);
   public router = inject(Router);
   public dialogService = inject(DialogService);

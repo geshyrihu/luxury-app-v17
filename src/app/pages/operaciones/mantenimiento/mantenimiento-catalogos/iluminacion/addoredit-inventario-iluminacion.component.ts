@@ -2,12 +2,10 @@ import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomerIdService,
-} from 'src/app/core/services/common-services';
+import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 @Component({
   selector: 'app-addoredit-inventario-iluminacion',
@@ -16,17 +14,17 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class AddoreditInventarioIluminacionComponent implements OnInit {
-  private formBuilder = inject(FormBuilder);
-  public apiRequestService = inject(ApiRequestService);
-  public ref = inject(DynamicDialogRef);
-  public config = inject(DynamicDialogConfig);
-  public authService = inject(AuthService);
+  formBuilder = inject(FormBuilder);
+  apiRequestService = inject(ApiRequestService);
+  ref = inject(DynamicDialogRef);
+  config = inject(DynamicDialogConfig);
+  authService = inject(AuthService);
   public customerIdService = inject(CustomerIdService);
 
   submitting: boolean = false;
 
-  cb_machinery: ISelectItemDto[] = [];
-  cb_producto: ISelectItemDto[] = [];
+  cb_machinery: ISelectItem[] = [];
+  cb_producto: ISelectItem[] = [];
 
   id: number = 0;
   form: FormGroup = this.formBuilder.group({

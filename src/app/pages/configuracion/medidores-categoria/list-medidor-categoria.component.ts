@@ -1,9 +1,8 @@
 import { Component, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
-import { IMedidorCategoriaDto } from 'src/app/core/interfaces/IMedidorCategoriaDto.interface';
-import { ApiRequestService } from 'src/app/core/services/common-services';
-
+import { IMedidorCategoria } from 'src/app/core/interfaces/medidor-categoria.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import FormMedidorCategoriaComponent from './addoredit-medidor-categoria.component';
 
@@ -14,10 +13,10 @@ import FormMedidorCategoriaComponent from './addoredit-medidor-categoria.compone
   imports: [LuxuryAppComponentsModule],
 })
 export default class ListMedidorCategoriaComponent implements OnInit {
-  public dialogHandlerService = inject(DialogHandlerService);
-  public apiRequestService = inject(ApiRequestService);
+  dialogHandlerService = inject(DialogHandlerService);
+  apiRequestService = inject(ApiRequestService);
 
-  data: IMedidorCategoriaDto[] = [];
+  data: IMedidorCategoria[] = [];
   ref: DynamicDialogRef;
 
   ngOnInit(): void {

@@ -1,6 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { ApiRequestService } from 'src/app/core/services/common-services';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
 
 @Component({
   selector: 'app-cont-minuta-pendientes-pdf',
@@ -9,7 +9,7 @@ import { ApiRequestService } from 'src/app/core/services/common-services';
   imports: [LuxuryAppComponentsModule],
 })
 export default class ConMinutaPendientesPdfComponent implements OnInit {
-  public apiRequestService = inject(ApiRequestService);
+  apiRequestService = inject(ApiRequestService);
 
   data: any[] = [];
 

@@ -15,9 +15,9 @@ import { DataService } from 'src/app/core/services/data.service';
 export default class OndenCompraPdfSolicitudPagoComponent
   implements OnInit, OnDestroy
 {
-  public customToastService = inject(CustomToastService);
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
+  customToastService = inject(CustomToastService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
   public routeActive = inject(ActivatedRoute);
   public messageService = inject(MessageService);
 

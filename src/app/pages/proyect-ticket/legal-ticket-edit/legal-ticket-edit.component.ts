@@ -2,7 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
+import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
@@ -14,15 +14,15 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class LegalTicketEditComponent implements OnInit {
-  private formBuilder = inject(FormBuilder);
-  public apiRequestService = inject(ApiRequestService);
+  formBuilder = inject(FormBuilder);
+  apiRequestService = inject(ApiRequestService);
   public auhtService = inject(AuthService);
-  public config = inject(DynamicDialogConfig);
-  public ref = inject(DynamicDialogRef);
+  config = inject(DynamicDialogConfig);
+  ref = inject(DynamicDialogRef);
 
   id: string = '';
   submitting: boolean = false;
-  employee: ISelectItemDto[] = [];
+  employee: ISelectItem[] = [];
 
   form: FormGroup = this.formBuilder.group({
     id: { value: this.id, disabled: true },

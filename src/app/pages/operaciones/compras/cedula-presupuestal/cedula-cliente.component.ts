@@ -1,17 +1,12 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { MessageService } from 'primeng/api';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Observable, Subject, takeUntil } from 'rxjs';
-import {
-  ApiRequestService,
-  CustomerIdService,
-} from 'src/app/core/services/common-services';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
-import { DataService } from 'src/app/core/services/data.service';
+import { Observable } from 'rxjs';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import AddPartidaCedulaComponent from 'src/app/pages/contabilidad/presupuesto/add-partida-cedula.component';
 import EditPartidaCedulaComponent from 'src/app/pages/contabilidad/presupuesto/edit-partida-cedula.component';
 
+import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import AddoreditPeriodoCedulaPresupuestalComponent from './addoredit-periodo-cedula.component';
 import OrdenesCompraCedulaComponent from './ordenes-compra-cedula/ordenes-compra-cedula.component';
 @Component({
@@ -19,24 +14,11 @@ import OrdenesCompraCedulaComponent from './ordenes-compra-cedula/ordenes-compra
   templateUrl: './cedula-cliente.component.html',
   standalone: true,
   imports: [LuxuryAppComponentsModule],
-
-  styles: [
-    `
-      .glass-dialog {
-        background: rgba(255, 255, 255, 0.8);
-      }
-    `,
-  ],
 })
-export default class CedulaClienteComponent implements OnInit, OnDestroy {
-  public apiRequestService = inject(ApiRequestService);
-  public customerIdService = inject(CustomerIdService);
-  public customToastService = inject(CustomToastService);
-  public dataService = inject(DataService);
-  public dialogService = inject(DialogService);
-  public messageService = inject(MessageService);
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+export default class CedulaClienteComponent implements OnInit {
+  dialogHandlerService = inject(DialogHandlerService);
+  apiRequestService = inject(ApiRequestService);
+  customerIdService = inject(CustomerIdService);
 
   id: number = 0;
   data: any[] = [];
@@ -44,13 +26,11 @@ export default class CedulaClienteComponent implements OnInit, OnDestroy {
   today = new Date();
   titulo = '';
   customerId$: Observable<number> = this.customerIdService.getCustomerId$();
-  ref: DynamicDialogRef;
   presupuestoMensual: string = '';
   presupuestoEjercido: string = '';
   presupuestoDisponible: string = '';
   presupuestoAnual: string = '';
   cb_cedulas: any[] = [];
-  loading: boolean = true;
 
   ngOnInit() {
     this.onLoadData();
@@ -64,33 +44,22 @@ export default class CedulaClienteComponent implements OnInit, OnDestroy {
   }
 
   onLoadData() {
-    this.loading = true;
-    this.dataService
-      .get(
+    this.apiRequestService
+      .onGetList(
         `CedulaPresupuestal/GetCedulaPresupuestal/${this.customerIdService.customerId}/${this.id}`
       )
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          if (resp.body !== null) {
-            this.titulo = `Cedula presupuestal ${resp.body.periodo}`;
-            this.id = resp.body.id;
-            this.data = resp.body.detalle;
-            this.presupuestoMensual = resp.body.cabPresupuestoMensual;
-            this.presupuestoEjercido = resp.body.cabPresupuestoEjercido;
-            this.presupuestoDisponible = resp.body.cabPresupuestoDisponible;
-            this.presupuestoAnual = resp.body.cabPresupuestoAnual;
-            //Atender.....
-          } else {
-            this.data = null;
-          }
-
-          this.loading = false;
-        },
-        error: (error) => {
-          this.loading = false;
-          this.customToastService.onCloseToError(error);
-        },
+      .then((result: any) => {
+        if (result !== null) {
+          this.titulo = `Cedula presupuestal ${result.periodo}`;
+          this.id = result.id;
+          this.data = result.detalle;
+          this.presupuestoMensual = result.cabPresupuestoMensual;
+          this.presupuestoEjercido = result.cabPresupuestoEjercido;
+          this.presupuestoDisponible = result.cabPresupuestoDisponible;
+          this.presupuestoAnual = result.cabPresupuestoAnual;
+        } else {
+          this.data = null;
+        }
       });
   }
 
@@ -99,73 +68,52 @@ export default class CedulaClienteComponent implements OnInit, OnDestroy {
     this.onLoadData();
   }
   onLoadCedulasCustomer(customerId: number) {
-    this.dataService
-      .get(`CedulaPresupuestal/GetCedulas/${customerId}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.cb_cedulas = resp.body;
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+    this.apiRequestService
+      .onGetList(`CedulaPresupuestal/GetCedulas/${customerId}`)
+      .then((result: any) => {
+        this.cb_cedulas = result;
       });
   }
-  onModalAdd(data: any) {
-    this.ref = this.dialogService.open(AddPartidaCedulaComponent, {
-      data: {
-        idBudgetCard: this.id,
-      },
-      header: 'Agregar Partida',
-      height: 'auto',
-      width: '80%',
-      styleClass: 'modal-md',
-      baseZIndex: 10000,
-      closeOnEscape: true,
-    });
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        this.onLoadData();
-        this.customToastService.onShowSuccess();
-      }
-    });
+  onModalAdd() {
+    this.dialogHandlerService
+      .openDialog(
+        AddPartidaCedulaComponent,
+        {
+          idBudgetCard: this.id,
+        },
+        'Agregar Partida',
+        this.dialogHandlerService.dialogSizeLg
+      )
+      .then((result: boolean) => {
+        if (result) this.onLoadData();
+      });
   }
   onModalEditar(data: any) {
-    this.ref = this.dialogService.open(EditPartidaCedulaComponent, {
-      data: {
-        id: data.id,
-      },
-      header: data.title,
-      height: 'auto',
-      styleClass: 'modal-md',
-      baseZIndex: 10000,
-      closeOnEscape: true,
-    });
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        this.customToastService.onShowSuccess();
-        this.onLoadData();
-      }
-    });
+    this.dialogHandlerService
+      .openDialog(
+        EditPartidaCedulaComponent,
+        data,
+        data.title,
+        this.dialogHandlerService.dialogSizeMd
+      )
+      .then((result: boolean) => {
+        if (result) this.onLoadData();
+      });
   }
   onModalOrdenesCompraCedula(partidaPresupuestalId: number) {
-    this.ref = this.dialogService.open(OrdenesCompraCedulaComponent, {
-      data: {
-        partidaPresupuestalId,
-        cedulaPresupuestalId: this.id,
-      },
-      header: 'Ordenes de Compra',
-      height: '100%',
-      width: '100%',
-      baseZIndex: 10000,
-      closeOnEscape: true,
-    });
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        this.customToastService.onShowSuccess();
-        this.onLoadData();
-      }
-    });
+    this.dialogHandlerService
+      .openDialog(
+        OrdenesCompraCedulaComponent,
+        {
+          partidaPresupuestalId,
+          cedulaPresupuestalId: this.id,
+        },
+        'Ordenes de Compra',
+        this.dialogHandlerService.dialogSizeMd
+      )
+      .then((result: boolean) => {
+        if (result) this.onLoadData();
+      });
   }
 
   onDelete(id: number) {
@@ -176,28 +124,19 @@ export default class CedulaClienteComponent implements OnInit, OnDestroy {
       });
   }
 
-  editarPeriodo(id: number) {
-    this.ref = this.dialogService.open(
-      AddoreditPeriodoCedulaPresupuestalComponent,
-      {
-        data: {
+  editarPeriodo() {
+    this.dialogHandlerService
+      .openDialog(
+        AddoreditPeriodoCedulaPresupuestalComponent,
+        {
           cedulaId: this.id,
         },
-        header: 'Editar Periodo',
-        height: 'auto',
-        styleClass: 'modal-sm',
-        baseZIndex: 10000,
-        closeOnEscape: true,
-      }
-    );
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        this.customToastService.onShowSuccess();
-        this.onLoadCedulasCustomer(this.customerIdService.customerId);
-      }
-    });
-  }
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
+        'Editar Periodo',
+        this.dialogHandlerService.dialogSizeMd
+      )
+      .then((result: boolean) => {
+        if (result)
+          this.onLoadCedulasCustomer(this.customerIdService.customerId);
+      });
   }
 }

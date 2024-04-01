@@ -18,13 +18,13 @@ import { FiltroCalendarService } from 'src/app/core/services/filtro-calendar.ser
 export default class PresentacionesJuntasComiteComponent
   implements OnInit, OnDestroy
 {
-  private dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
   private rangoCalendarioService = inject(FiltroCalendarService);
   private route = inject(Router);
   public dateService = inject(DateService);
   public messageService = inject(MessageService);
-  public customToastService = inject(CustomToastService);
+  customToastService = inject(CustomToastService);
 
   data: any[] = [];
   periodo: string = this.dateService.onParseToInputMonth(

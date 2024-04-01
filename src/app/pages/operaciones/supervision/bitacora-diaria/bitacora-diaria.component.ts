@@ -2,16 +2,13 @@ import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
-import { IFechasFiltro } from 'src/app/core/interfaces/IFechasFiltro.interface';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomToastService,
-  DataService,
-  DateService,
-  FiltroCalendarService,
-} from 'src/app/core/services/common-services';
-
+import { IFechasFiltro } from 'src/app/core/interfaces/fechas-filtro.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { DataService } from 'src/app/core/services/data.service';
+import { DateService } from 'src/app/core/services/date.service';
+import { FiltroCalendarService } from 'src/app/core/services/filtro-calendar.service';
 import { environment } from 'src/environments/environment';
 import AddOrEditBitacoraDiariaComponent from './addoredit-bitacora-diaria.component';
 const base_url = environment.base_urlImg + 'Administration/accounts/';
@@ -23,9 +20,9 @@ const base_url = environment.base_urlImg + 'Administration/accounts/';
 })
 export default class BitacoraDiariaComponent implements OnInit, OnDestroy {
   private dateService = inject(DateService);
-  public authService = inject(AuthService);
-  private dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
+  authService = inject(AuthService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
   private dialogService = inject(DialogService);
   private rangoCalendarioService = inject(FiltroCalendarService);
   private customToastService = inject(CustomToastService);

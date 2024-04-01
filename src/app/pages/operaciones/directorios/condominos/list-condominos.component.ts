@@ -3,14 +3,12 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
-import { IListCondominoDto } from 'src/app/core/interfaces/IListCondominoDto.interface';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomToastService,
-  CustomerIdService,
-  DataService,
-} from 'src/app/core/services/common-services';
+import { IListCondomino } from 'src/app/core/interfaces/list-condomino.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
+import { DataService } from 'src/app/core/services/data.service';
 
 import AddOrEditCondominosComponent from './addoredit-condominos.component';
 
@@ -21,15 +19,15 @@ import AddOrEditCondominosComponent from './addoredit-condominos.component';
   imports: [LuxuryAppComponentsModule],
 })
 export default class ListCondominosComponent implements OnInit, OnDestroy {
-  public customToastService = inject(CustomToastService);
-  public authService = inject(AuthService);
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
+  customToastService = inject(CustomToastService);
+  authService = inject(AuthService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
   public messageService = inject(MessageService);
   public dialogService = inject(DialogService);
   public customerIdService = inject(CustomerIdService);
 
-  data: IListCondominoDto[] = [];
+  data: IListCondomino[] = [];
   ref: DynamicDialogRef;
   customerId$: Observable<number> = this.customerIdService.getCustomerId$();
 
@@ -47,7 +45,7 @@ export default class ListCondominosComponent implements OnInit, OnDestroy {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
     this.dataService
-      .get<IListCondominoDto[]>(
+      .get<IListCondomino[]>(
         `ListCondomino/GetAllAsync/${this.customerIdService.customerId}`
       )
       .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye

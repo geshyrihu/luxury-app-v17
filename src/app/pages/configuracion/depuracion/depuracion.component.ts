@@ -1,8 +1,6 @@
 import { Component, inject } from '@angular/core';
-import {
-  ApiRequestService,
-  CustomToastService,
-} from 'src/app/core/services/common-services';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import CustomButtonModule from 'src/app/custom-components/custom-buttons/custom-button.module';
 
 @Component({
@@ -12,8 +10,8 @@ import CustomButtonModule from 'src/app/custom-components/custom-buttons/custom-
   standalone: true,
 })
 export default class DepuracionComponent {
-  public apiRequestService = inject(ApiRequestService);
-  public customToastService = inject(CustomToastService);
+  apiRequestService = inject(ApiRequestService);
+  customToastService = inject(CustomToastService);
 
   ActualizarDatosEmpleadoContatoData() {
     this.apiRequestService

@@ -11,17 +11,14 @@ import { Subject, takeUntil } from 'rxjs';
 import { EInventoryCategory } from 'src/app/core/enums/inventory-category.enum';
 import { EState } from 'src/app/core/enums/state.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
-import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomToastService,
-  CustomerIdService,
-  DataService,
-  DateService,
-} from 'src/app/core/services/common-services';
+import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
+import { DataService } from 'src/app/core/services/data.service';
+import { DateService } from 'src/app/core/services/date.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
-
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -32,13 +29,13 @@ import { environment } from 'src/environments/environment';
 })
 export default class AddOrEditActivosComponent implements OnInit, OnDestroy {
   public dateService = inject(DateService);
-  public authService = inject(AuthService);
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
-  private formBuilder = inject(FormBuilder);
+  authService = inject(AuthService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
+  formBuilder = inject(FormBuilder);
   public getdateService = inject(DateService);
-  public config = inject(DynamicDialogConfig);
-  public ref = inject(DynamicDialogRef);
+  config = inject(DynamicDialogConfig);
+  ref = inject(DynamicDialogRef);
   public customerIdService = inject(CustomerIdService);
   public dialogService = inject(DialogService);
   private customToastService = inject(CustomToastService);
@@ -56,13 +53,13 @@ export default class AddOrEditActivosComponent implements OnInit, OnDestroy {
   machineryDTO: any;
   photoFileUpdate: boolean = false;
   category: any;
-  cb_equipoClasificacion: ISelectItemDto[] = [];
+  cb_equipoClasificacion: ISelectItem[] = [];
 
   form: FormGroup;
 
-  cb_inventoryCategory: ISelectItemDto[] =
+  cb_inventoryCategory: ISelectItem[] =
     onGetSelectItemFromEnum(EInventoryCategory);
-  optionActive: ISelectItemDto[] = onGetSelectItemFromEnum(EState);
+  optionActive: ISelectItem[] = onGetSelectItemFromEnum(EState);
   ngOnInit(): void {
     this.onLoadEquipoClasificacion();
     this.urlBaseImg = `${

@@ -1,11 +1,9 @@
 import { Component, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { Observable } from 'rxjs';
-import {
-  ApiRequestService,
-  CustomerIdService,
-  DateService,
-} from 'src/app/core/services/common-services';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
+import { DateService } from 'src/app/core/services/date.service';
 import { FiltroCalendarService } from 'src/app/core/services/filtro-calendar.service';
 
 import { environment } from 'src/environments/environment';
@@ -20,7 +18,7 @@ export default class AccessLogComponent implements OnInit {
   public customerIdService = inject(CustomerIdService);
   private filtroCalendarService = inject(FiltroCalendarService);
 
-  public apiRequestService = inject(ApiRequestService);
+  apiRequestService = inject(ApiRequestService);
 
   urlImgApi = environment.base_urlImg + 'Administration/accounts/';
   data: any[] = [];

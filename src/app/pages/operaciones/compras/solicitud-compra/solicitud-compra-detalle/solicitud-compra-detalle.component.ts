@@ -16,9 +16,9 @@ import EditProductoComponent from '../edit-producto.component';
 })
 export default class SolicitudCompraDetalleComponent {
   private dialogService = inject(DialogService);
-  public customToastService = inject(CustomToastService);
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
+  customToastService = inject(CustomToastService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
   private solicitudCompraService = inject(SolicitudCompraService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente

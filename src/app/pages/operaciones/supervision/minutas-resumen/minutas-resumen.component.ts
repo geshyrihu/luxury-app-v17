@@ -16,9 +16,9 @@ import FiltroMinutasAreaComponent from '../filtro-minutas-area/filtro-minutas-ar
   imports: [LuxuryAppComponentsModule, MultiSelectModule],
 })
 export default class MinutasResumenComponent implements OnInit, OnDestroy {
-  public customToastService = inject(CustomToastService);
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
+  customToastService = inject(CustomToastService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
   public dateService = inject(DateService);
   public dialogService = inject(DialogService);
   public periodoMonthService = inject(PeriodoMonthService);

@@ -7,8 +7,8 @@ import { DataService } from './data.service';
   providedIn: 'root',
 })
 export class ApiRequestService implements OnDestroy {
-  public customToastService = inject(CustomToastService);
-  public dataService = inject(DataService);
+  customToastService = inject(CustomToastService);
+  dataService = inject(DataService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
@@ -37,7 +37,6 @@ export class ApiRequestService implements OnDestroy {
   async onGetSelectItem<T>(urlApi: string): Promise<T | null> {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
-
     try {
       const responseData = await lastValueFrom(
         this.dataService
@@ -66,7 +65,6 @@ export class ApiRequestService implements OnDestroy {
       // Cuando se completa la carga con éxito, mostrar un mensaje de éxito y resolver la promesa con los datos
       this.customToastService.onClose();
       console.log('🚀 ~ urlApi:', urlApi, responseData.body);
-      console.log('🚀 ~ responseData.body:', responseData.body);
       return responseData.body;
     } catch (error) {
       // En caso de error, mostrar un mensaje de error y rechazar la promesa con null
@@ -92,28 +90,7 @@ export class ApiRequestService implements OnDestroy {
     }
   }
 
-  // Metodo Post
-  async onPostLogin<T>(urlApi: string, data: any): Promise<T | null> {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    try {
-      const responseData = await lastValueFrom(
-        this.dataService.post<T>(urlApi, data).pipe(takeUntil(this.destroy$))
-      );
-      // Cuando se completa la carga con éxito, mostrar un mensaje de éxito y resolver la promesa con los datos
-      this.customToastService.onCloseToSuccess();
-      console.log('🚀 ~Login post:', responseData.body);
-      return responseData.body;
-    } catch (error) {
-      console.log('🚀 ~ Ha ocurrido un error con el login:', error);
-      // En caso de error, mostrar un mensaje de error y rechazar la promesa con null
-
-      this.customToastService.onCloseToError(error);
-      return null;
-    }
-  }
-
-  // Metodo Post
+  // onPost
   async onPost<T>(urlApi: string, data: any): Promise<boolean> {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();

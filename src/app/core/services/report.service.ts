@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IFilterTicket } from 'src/app/core/interfaces/IFilterTicket.interface';
+import { IFilterTicket } from 'src/app/core/interfaces/filter-ticket.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +13,6 @@ export class ReportService {
 
   dataReport: any[] = [];
 
-  
   getCustomerId() {
     return this.customerId;
   }

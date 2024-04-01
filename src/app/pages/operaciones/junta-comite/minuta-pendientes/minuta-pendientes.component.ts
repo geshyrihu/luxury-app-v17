@@ -3,12 +3,10 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { EStatusPipe } from 'src/app/core/pipes/status.pipe';
-import {
-  ApiRequestService,
-  CustomToastService,
-  CustomerIdService,
-  DataService,
-} from 'src/app/core/services/common-services';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
+import { DataService } from 'src/app/core/services/data.service';
 @Component({
   selector: 'app-minuta-pendientes',
   templateUrl: './minuta-pendientes.component.html',
@@ -16,9 +14,9 @@ import {
   imports: [LuxuryAppComponentsModule, EStatusPipe],
 })
 export default class MinutaPendientesComponent implements OnInit, OnDestroy {
-  public customToastService = inject(CustomToastService);
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
+  customToastService = inject(CustomToastService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
   public messageService = inject(MessageService);
   public customerIdService = inject(CustomerIdService);
   data: any[] = [];

@@ -1,13 +1,11 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { Observable, Subject, takeUntil } from 'rxjs';
-import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
-import {
-  ApiRequestService,
-  CustomToastService,
-  CustomerIdService,
-  DataService,
-} from 'src/app/core/services/common-services';
+import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
+import { DataService } from 'src/app/core/services/data.service';
 import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-general-anual-mantenimiento',
@@ -18,17 +16,17 @@ import { environment } from 'src/environments/environment';
 export default class GeneralAnualMantenimientoComponent
   implements OnInit, OnDestroy
 {
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
   public customerIdService = inject(CustomerIdService);
-  public customToastService = inject(CustomToastService);
+  customToastService = inject(CustomToastService);
 
   data: any[] = [];
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   customerId$: Observable<number> = this.customerIdService.getCustomerId$();
-  cb_providers: ISelectItemDto[] = [];
+  cb_providers: ISelectItem[] = [];
   providerId = '';
   pathImg = '';
 

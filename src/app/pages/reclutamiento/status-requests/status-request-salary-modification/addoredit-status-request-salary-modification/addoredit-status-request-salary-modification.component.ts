@@ -7,7 +7,7 @@ import { cb_ESiNo } from 'src/app/core/enums/si-no.enum';
 import { ETurnoTrabajo } from 'src/app/core/enums/turno-trabajo.enum';
 import { ETypeOfDeparture } from 'src/app/core/enums/type-of-departure.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
-import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
+import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
@@ -22,11 +22,11 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 export default class AddOrEditStatusRequestSalaryModificationComponent
   implements OnInit, OnDestroy
 {
-  private formBuilder = inject(FormBuilder);
-  private dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
-  public ref = inject(DynamicDialogRef);
-  public config = inject(DynamicDialogConfig);
+  formBuilder = inject(FormBuilder);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
+  ref = inject(DynamicDialogRef);
+  config = inject(DynamicDialogConfig);
   private customToastService = inject(CustomToastService);
 
   submitting: boolean = false;
@@ -35,11 +35,10 @@ export default class AddOrEditStatusRequestSalaryModificationComponent
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
-  cb_profession: ISelectItemDto[] = [];
-  cb_status: ISelectItemDto[] = onGetSelectItemFromEnum(ETurnoTrabajo);
-  cb_type_departure: ISelectItemDto[] =
-    onGetSelectItemFromEnum(ETypeOfDeparture);
-  cb_si_no: ISelectItemDto[] = cb_ESiNo;
+  cb_profession: ISelectItem[] = [];
+  cb_status: ISelectItem[] = onGetSelectItemFromEnum(ETurnoTrabajo);
+  cb_type_departure: ISelectItem[] = onGetSelectItemFromEnum(ETypeOfDeparture);
+  cb_si_no: ISelectItem[] = cb_ESiNo;
 
   form: FormGroup = this.formBuilder.group({
     id: { value: this.config.data.id, disabled: true },

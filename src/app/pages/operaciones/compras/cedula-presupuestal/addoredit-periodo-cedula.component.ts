@@ -8,12 +8,10 @@ import {
   DynamicDialogRef,
 } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomToastService,
-  DataService,
-} from 'src/app/core/services/common-services';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { DataService } from 'src/app/core/services/data.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
@@ -25,15 +23,15 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 export default class AddoreditPeriodoCedulaPresupuestalComponent
   implements OnInit, OnDestroy
 {
-  public authService = inject(AuthService);
-  public config = inject(DynamicDialogConfig);
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
+  authService = inject(AuthService);
+  config = inject(DynamicDialogConfig);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
   public dialogService = inject(DialogService);
-  private formBuilder = inject(FormBuilder);
+  formBuilder = inject(FormBuilder);
   public messageService = inject(MessageService);
-  public customToastService = inject(CustomToastService);
-  public ref = inject(DynamicDialogRef);
+  customToastService = inject(CustomToastService);
+  ref = inject(DynamicDialogRef);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 

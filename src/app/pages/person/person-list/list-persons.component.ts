@@ -3,12 +3,9 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
-import {
-  ApiRequestService,
-  CustomToastService,
-  DataService,
-} from 'src/app/core/services/common-services';
-
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { DataService } from 'src/app/core/services/data.service';
 import { environment } from 'src/environments/environment';
 import CardEmployeeComponent from '../../operaciones/directorios/empleados/card-employee/card-employee.component';
 import AddoreditPersonDataComponent from '../addoredit-person-data/addoredit-person-data.component';
@@ -25,9 +22,9 @@ import PersonUpdatePhotoComponent from '../person-update-photo/update-image-pers
   providers: [ApiRequestService, ConfirmationService],
 })
 export default class ListPersonComponent implements OnInit, OnDestroy {
-  public apiRequestService = inject(ApiRequestService);
-  public customToastService = inject(CustomToastService);
-  public dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
+  customToastService = inject(CustomToastService);
+  dataService = inject(DataService);
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
 

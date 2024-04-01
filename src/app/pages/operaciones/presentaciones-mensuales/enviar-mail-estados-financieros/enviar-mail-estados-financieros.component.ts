@@ -8,12 +8,10 @@ import {
   DynamicDialogRef,
 } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
-import { IDestinatariosMailReporte } from 'src/app/core/interfaces/IDestinatariosMailReporte.interface';
-import {
-  ApiRequestService,
-  CustomerIdService,
-} from 'src/app/core/services/common-services';
+import { IDestinatariosMailReporte } from 'src/app/core/interfaces/destinatarios-mail-reporte.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DataService } from 'src/app/core/services/data.service';
 
 @Component({
@@ -24,12 +22,12 @@ import { DataService } from 'src/app/core/services/data.service';
 })
 export default class EnviarMailEstadosFinancierosComponent {
   public customerIdService = inject(CustomerIdService);
-  public customToastService = inject(CustomToastService);
-  private formBuilder = inject(FormBuilder);
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
-  public ref = inject(DynamicDialogRef);
-  public config = inject(DynamicDialogConfig);
+  customToastService = inject(CustomToastService);
+  formBuilder = inject(FormBuilder);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
+  ref = inject(DynamicDialogRef);
+  config = inject(DynamicDialogConfig);
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
 

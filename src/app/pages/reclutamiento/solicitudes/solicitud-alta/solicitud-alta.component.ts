@@ -6,13 +6,11 @@ import { Subject, takeUntil } from 'rxjs';
 import { ETypeContractRegister } from 'src/app/core/enums/type-contract-register.enum';
 import { ETypeContract } from 'src/app/core/enums/type-contract.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
-import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomToastService,
-  DataService,
-} from 'src/app/core/services/common-services';
+import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { DataService } from 'src/app/core/services/data.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import ValidationErrorsCustomInputComponent from 'src/app/custom-components/custom-input-form/validation-errors-custom-input/validation-errors-custom-input.component';
 
@@ -29,12 +27,12 @@ import ValidationErrorsCustomInputComponent from 'src/app/custom-components/cust
 })
 export default class SolicitudAltaComponent implements OnInit, OnDestroy {
   private customToastService = inject(CustomToastService);
-  public apiRequestService = inject(ApiRequestService);
-  private dataService = inject(DataService);
-  private formBuilder = inject(FormBuilder);
-  public authService = inject(AuthService);
-  public config = inject(DynamicDialogConfig);
-  public ref = inject(DynamicDialogRef);
+  apiRequestService = inject(ApiRequestService);
+  dataService = inject(DataService);
+  formBuilder = inject(FormBuilder);
+  authService = inject(AuthService);
+  config = inject(DynamicDialogConfig);
+  ref = inject(DynamicDialogRef);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
@@ -43,7 +41,7 @@ export default class SolicitudAltaComponent implements OnInit, OnDestroy {
   submitting: boolean = false;
 
   cb_typeContractRegister = onGetSelectItemFromEnum(ETypeContractRegister);
-  cb_vacantes: ISelectItemDto[] = [];
+  cb_vacantes: ISelectItem[] = [];
 
   employeeId = this.config.data.employeeId;
   customerId = this.config.data.customerId;

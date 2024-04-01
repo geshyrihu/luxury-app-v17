@@ -4,19 +4,16 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
-import { IFilterTicket } from 'src/app/core/interfaces/IFilterTicket.interface';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomerIdService,
-  CustomToastService,
-  DataService,
-  DateService,
-  ReportService,
-  TicketFilterService,
-} from 'src/app/core/services/common-services';
+import { IFilterTicket } from 'src/app/core/interfaces/filter-ticket.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
+import { DataService } from 'src/app/core/services/data.service';
+import { DateService } from 'src/app/core/services/date.service';
+import { ReportService } from 'src/app/core/services/report.service';
+import { TicketFilterService } from 'src/app/core/services/ticket-filter.service';
 import CardEmployeeComponent from 'src/app/pages/operaciones/directorios/empleados/card-employee/card-employee.component';
-
 import { environment } from 'src/environments/environment';
 import EnviarMailReporteSemanalComponent from '../../enviar-email/enviar-mail-reporte-semanal/enviar-mail-reporte-semanal.component';
 import AddoreditTicketComponent from '../addoredit-ticket/addoredit-ticket.component';
@@ -32,17 +29,17 @@ import FilterTicketComponent from '../ticket-filter/ticket-filter.component';
   imports: [LuxuryAppComponentsModule],
 })
 export default class ListTicketComponent implements OnInit, OnDestroy {
-  public authService = inject(AuthService);
+  authService = inject(AuthService);
   public customerIdService = inject(CustomerIdService);
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
   public dateService = inject(DateService);
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
   public ticketFilterService = inject(TicketFilterService);
   public reportService = inject(ReportService);
   public router = inject(Router);
-  public customToastService = inject(CustomToastService);
+  customToastService = inject(CustomToastService);
 
   base_urlImg = '';
   customerId$: Observable<number> = this.customerIdService.getCustomerId$();

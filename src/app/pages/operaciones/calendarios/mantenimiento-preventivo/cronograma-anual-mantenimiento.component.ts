@@ -4,13 +4,11 @@ import * as FileSaver from 'file-saver';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
-import {
-  ApiRequestService,
-  CustomToastService,
-  CustomerIdService,
-  DataService,
-} from 'src/app/core/services/common-services';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CronogramaMantenimientoService } from 'src/app/core/services/cronograma-mantenimiento.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
+import { DataService } from 'src/app/core/services/data.service';
 import AddoreditMaintenancePreventiveComponent from './addoredit-maintenance-preventive.component';
 
 @Component({
@@ -22,9 +20,9 @@ import AddoreditMaintenancePreventiveComponent from './addoredit-maintenance-pre
 export default class CronogramaAnualMantenimientoComponent
   implements OnInit, OnDestroy
 {
-  public customToastService = inject(CustomToastService);
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
+  customToastService = inject(CustomToastService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
   public customerIdService = inject(CustomerIdService);
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);

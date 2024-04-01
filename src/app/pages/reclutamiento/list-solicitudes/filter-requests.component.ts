@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import saveAs from 'file-saver';
 import { Subject, takeUntil } from 'rxjs';
-import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
+import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
@@ -17,11 +17,11 @@ import CustomButtonModule from 'src/app/custom-components/custom-buttons/custom-
 })
 export default class FilterRequestsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {}
-  private dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
   private router = inject(Router);
   private filterRequestsService = inject(FilterRequestsService);
-  public customToastService = inject(CustomToastService);
+  customToastService = inject(CustomToastService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
@@ -37,7 +37,7 @@ export default class FilterRequestsComponent implements OnInit, OnDestroy {
   statusRequestValue: string = 'Pendiente';
 
   @Input() noCandidates: number = 0;
-  cb_status_request: ISelectItemDto[] = [
+  cb_status_request: ISelectItem[] = [
     { value: 'Pendiente', label: 'Pendiente' },
     { value: 'Proceso', label: 'Proceso' },
     { value: 'Concluido', label: 'Concluido' },

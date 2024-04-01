@@ -3,12 +3,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
-import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
-import {
-  ApiRequestService,
-  CustomToastService,
-  DataService,
-} from 'src/app/core/services/common-services';
+import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { DataService } from 'src/app/core/services/data.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
@@ -20,11 +18,11 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 export default class AddOrEditCatalogoDescripcionComponent
   implements OnInit, OnDestroy
 {
-  private formBuilder = inject(FormBuilder);
-  public config = inject(DynamicDialogConfig);
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
-  public ref = inject(DynamicDialogRef);
+  formBuilder = inject(FormBuilder);
+  config = inject(DynamicDialogConfig);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
+  ref = inject(DynamicDialogRef);
   private customToastService = inject(CustomToastService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
@@ -33,15 +31,15 @@ export default class AddOrEditCatalogoDescripcionComponent
 
   id: number = 0;
 
-  cb_area_responsable: ISelectItemDto[] = [
+  cb_area_responsable: ISelectItem[] = [
     { value: 'CONTABLE', label: 'CONTABLE' },
     { value: 'OPERACIONES', label: ' OPERACIONES' },
     { value: 'JURIDICO', label: 'JURIDICO' },
     { value: 'MANTENIMIENTO', label: 'MANTENIMIENTO' },
   ];
 
-  cb_grupo: ISelectItemDto[] = [];
-  cb_state: ISelectItemDto[] = [
+  cb_grupo: ISelectItem[] = [];
+  cb_state: ISelectItem[] = [
     { value: 1, label: 'Activo' },
     { value: 0, label: 'Inactivo' },
   ];

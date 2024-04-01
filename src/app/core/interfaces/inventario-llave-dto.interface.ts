@@ -1,4 +1,4 @@
-export interface InventarioLlaveDto {
+export interface IInventarioLlave {
   id: number;
   descripcion: string;
   marca: string;

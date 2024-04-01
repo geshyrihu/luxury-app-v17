@@ -6,7 +6,7 @@ import {
   DynamicDialogRef,
 } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
-import { IFechasFiltro } from 'src/app/core/interfaces/IFechasFiltro.interface';
+import { IFechasFiltro } from 'src/app/core/interfaces/fechas-filtro.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
@@ -27,11 +27,11 @@ export default class BitacoraIndividualComponent implements OnInit, OnDestroy {
   public dateService = inject(DateService);
   public rangoCalendarioService = inject(FiltroCalendarService);
   public dialogService = inject(DialogService);
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
-  public ref = inject(DynamicDialogRef);
-  public config = inject(DynamicDialogConfig);
-  public customToastService = inject(CustomToastService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
+  ref = inject(DynamicDialogRef);
+  config = inject(DynamicDialogConfig);
+  customToastService = inject(CustomToastService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 

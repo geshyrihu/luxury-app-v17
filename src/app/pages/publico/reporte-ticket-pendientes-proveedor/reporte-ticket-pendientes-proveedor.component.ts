@@ -2,13 +2,11 @@ import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { Subject, takeUntil } from 'rxjs';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomToastService,
-  DataService,
-  ReportService,
-} from 'src/app/core/services/common-services';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { DataService } from 'src/app/core/services/data.service';
+import { ReportService } from 'src/app/core/services/report.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -20,12 +18,12 @@ import { environment } from 'src/environments/environment';
 export default class ReporteTicketPendientesProveedorComponent
   implements OnInit
 {
-  public authService = inject(AuthService);
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
+  authService = inject(AuthService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
   public reportService = inject(ReportService);
   public router = inject(Router);
-  public customToastService = inject(CustomToastService);
+  customToastService = inject(CustomToastService);
   public routerActivate = inject(ActivatedRoute);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente

@@ -3,13 +3,11 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomerIdService,
-  CustomToastService,
-  DataService,
-} from 'src/app/core/services/common-services';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
+import { DataService } from 'src/app/core/services/data.service';
 import { environment } from 'src/environments/environment';
 import AddOrEditCustomerProviderComponent from '../addoredit-customer-provider.component';
 @Component({
@@ -19,10 +17,10 @@ import AddOrEditCustomerProviderComponent from '../addoredit-customer-provider.c
   templateUrl: './mis-proveedores.component.html',
 })
 export default class MisProveedoresComponent implements OnInit, OnDestroy {
-  private dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
-  public authService = inject(AuthService);
-  public customToastService = inject(CustomToastService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
+  authService = inject(AuthService);
+  customToastService = inject(CustomToastService);
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
   public customerIdService = inject(CustomerIdService);

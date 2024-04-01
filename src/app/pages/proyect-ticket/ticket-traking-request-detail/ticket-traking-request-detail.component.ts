@@ -11,7 +11,7 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 })
 export default class TicketTrakingRequestDetailComponent implements OnInit {
   private apiRequestService = inject(ApiRequestService);
-  public config = inject(DynamicDialogConfig);
+  config = inject(DynamicDialogConfig);
 
   data: string = '';
   id = this.config.data.id;

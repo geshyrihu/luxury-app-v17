@@ -1,11 +1,8 @@
 import { Component, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
-import {
-  ApiRequestService,
-  AuthService,
-} from 'src/app/core/services/common-services';
-
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import { environment } from 'src/environments/environment';
 import AddOrEditProductosComponent from './addoredit-productos.component';
@@ -17,9 +14,9 @@ import AddOrEditProductosComponent from './addoredit-productos.component';
   imports: [LuxuryAppComponentsModule],
 })
 export default class ListProductosComponent implements OnInit {
-  public authService = inject(AuthService);
-  public dialogHandlerService = inject(DialogHandlerService);
-  public apiRequestService = inject(ApiRequestService);
+  authService = inject(AuthService);
+  dialogHandlerService = inject(DialogHandlerService);
+  apiRequestService = inject(ApiRequestService);
 
   urlBaseImg = `${environment.base_urlImg}Administration/products/`;
   urlBaseImgUser = `${environment.base_urlImg}Administration/accounts/`;

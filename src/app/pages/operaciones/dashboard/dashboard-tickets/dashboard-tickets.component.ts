@@ -2,12 +2,10 @@ import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
-import {
-  ApiRequestService,
-  CustomToastService,
-  CustomerIdService,
-  DataService,
-} from 'src/app/core/services/common-services';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
+import { DataService } from 'src/app/core/services/data.service';
 import DashboardTicketsResumenComponent from '../dashboard-tickets-resumen/dashboard-tickets-resumen.component';
 @Component({
   selector: 'app-dashboard-tickets',
@@ -16,11 +14,11 @@ import DashboardTicketsResumenComponent from '../dashboard-tickets-resumen/dashb
   imports: [LuxuryAppComponentsModule],
 })
 export default class DashboardTicketsComponent implements OnInit, OnDestroy {
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
   public customerIdService = inject(CustomerIdService);
   public dialogService = inject(DialogService);
-  public customToastService = inject(CustomToastService);
+  customToastService = inject(CustomToastService);
 
   data: any[] = [];
   customerId$: Observable<number> = this.customerIdService.getCustomerId$();

@@ -7,11 +7,9 @@ import {
   onGetNameEnumeration,
   onGetSelectItemFromEnum,
 } from 'src/app/core/helpers/enumeration';
-import {
-  ApiRequestService,
-  CustomToastService,
-  DataService,
-} from 'src/app/core/services/common-services';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { DataService } from 'src/app/core/services/data.service';
 
 @Component({
   selector: 'app-filtro-minutas-area',
@@ -20,11 +18,11 @@ import {
   imports: [LuxuryAppComponentsModule],
 })
 export default class FiltroMinutasAreaComponent implements OnInit, OnDestroy {
-  private dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
-  public ref = inject(DynamicDialogRef);
-  public config = inject(DynamicDialogConfig);
-  public customToastService = inject(CustomToastService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
+  ref = inject(DynamicDialogRef);
+  config = inject(DynamicDialogConfig);
+  customToastService = inject(CustomToastService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 

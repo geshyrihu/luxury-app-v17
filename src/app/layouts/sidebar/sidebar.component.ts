@@ -12,7 +12,7 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import MetisMenu from 'metismenujs';
 import { SimplebarAngularModule } from 'simplebar-angular';
 import { SidebarService } from 'src/app/core/services/sidebar.service';
-import { MenuItem } from '../../core/interfaces/menu.model';
+import { IMenuItem } from '../../core/interfaces/menu.model';
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
@@ -33,7 +33,7 @@ export default class SidebarComponent implements OnInit {
   private sidebarService = inject(SidebarService);
   @ViewChild('sideMenu') sideMenu!: ElementRef;
   menu: any;
-  menuItems: MenuItem[] = [];
+  menuItems: IMenuItem[] = [];
   ngOnInit(): void {
     // Cargar elementos del menú desde el servicio de la barra lateral
     this.menuItems = this.sidebarService.onLoadMenu;
@@ -51,7 +51,7 @@ export default class SidebarComponent implements OnInit {
    * Comprueba si un elemento del menú tiene subelementos
    * @param item Elemento del menú
    */
-  hasItems(item: MenuItem) {
+  hasItems(item: IMenuItem) {
     return item.items !== undefined ? item.items.length > 0 : false;
   }
 

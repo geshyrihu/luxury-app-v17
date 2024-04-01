@@ -7,12 +7,10 @@ import { Subject, takeUntil } from 'rxjs';
 import { EFuenteReclutamiento } from 'src/app/core/enums/fuente-reclutamiento';
 import { EStatus } from 'src/app/core/enums/status.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
-import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
-import {
-  ApiRequestService,
-  CustomToastService,
-  DataService,
-} from 'src/app/core/services/common-services';
+import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { DataService } from 'src/app/core/services/data.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
@@ -22,18 +20,18 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   imports: [LuxuryAppComponentsModule, FlatpickrModule, CustomInputModule],
 })
 export default class AddOrEditVacanteComponent implements OnInit, OnDestroy {
-  private formBuilder = inject(FormBuilder);
-  private dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
-  public ref = inject(DynamicDialogRef);
-  public config = inject(DynamicDialogConfig);
-  public customToastService = inject(CustomToastService);
+  formBuilder = inject(FormBuilder);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
+  ref = inject(DynamicDialogRef);
+  config = inject(DynamicDialogConfig);
+  customToastService = inject(CustomToastService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
   submitting: boolean = false;
 
-  cb_status: ISelectItemDto[] = onGetSelectItemFromEnum(EStatus);
-  cb_fuente: ISelectItemDto[] = onGetSelectItemFromEnum(EFuenteReclutamiento);
+  cb_status: ISelectItem[] = onGetSelectItemFromEnum(EStatus);
+  cb_fuente: ISelectItem[] = onGetSelectItemFromEnum(EFuenteReclutamiento);
   id: number = 0;
 
   form: FormGroup = this.formBuilder.group({

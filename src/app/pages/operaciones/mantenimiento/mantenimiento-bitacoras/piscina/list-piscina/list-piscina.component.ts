@@ -4,14 +4,11 @@ import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ImageModule } from 'primeng/image';
 import { Observable, Subject, takeUntil } from 'rxjs';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomToastService,
-  CustomerIdService,
-  DataService,
-} from 'src/app/core/services/common-services';
-
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
+import { DataService } from 'src/app/core/services/data.service';
 import { environment } from 'src/environments/environment';
 import AddOrEditPiscinaComponent from '../addoredit-piscina/addoredit-piscina.component';
 
@@ -22,12 +19,12 @@ import AddOrEditPiscinaComponent from '../addoredit-piscina/addoredit-piscina.co
   imports: [LuxuryAppComponentsModule, ImageModule],
 })
 export default class ListPiscinaComponent implements OnInit, OnDestroy {
-  private dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
-  public authService = inject(AuthService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
+  authService = inject(AuthService);
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
-  public customToastService = inject(CustomToastService);
+  customToastService = inject(CustomToastService);
   public customerIdService = inject(CustomerIdService);
 
   data: any[] = [];

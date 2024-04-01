@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
+import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
@@ -13,15 +13,15 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class CreateAccountComponent implements OnInit {
-  private formBuilder = inject(FormBuilder);
-  public apiRequestService = inject(ApiRequestService);
-  public config = inject(DynamicDialogConfig);
-  public ref = inject(DynamicDialogRef);
+  formBuilder = inject(FormBuilder);
+  apiRequestService = inject(ApiRequestService);
+  config = inject(DynamicDialogConfig);
+  ref = inject(DynamicDialogRef);
 
   submitting: boolean = false;
 
-  cb_profession: ISelectItemDto[] = [];
-  cb_customer: ISelectItemDto[] = [];
+  cb_profession: ISelectItem[] = [];
+  cb_customer: ISelectItem[] = [];
 
   form: FormGroup = this.formBuilder.group({
     userName: ['', Validators.required],
@@ -38,12 +38,12 @@ export default class CreateAccountComponent implements OnInit {
   onLoadSelectItem() {
     this.apiRequestService
       .onGetSelectItem('customers')
-      .then((items: ISelectItemDto[]) => {
+      .then((items: ISelectItem[]) => {
         this.cb_customer = items;
       });
     this.apiRequestService
       .onGetSelectItem('Professions')
-      .then((resp: ISelectItemDto[]) => {
+      .then((resp: ISelectItem[]) => {
         this.cb_profession = resp;
       });
   }

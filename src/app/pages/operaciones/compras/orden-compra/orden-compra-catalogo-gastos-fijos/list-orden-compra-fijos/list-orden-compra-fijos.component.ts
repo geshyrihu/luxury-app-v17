@@ -4,15 +4,12 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomToastService,
-  CustomerIdService,
-  DataService,
-  OrdenCompraService,
-} from 'src/app/core/services/common-services';
-
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
+import { DataService } from 'src/app/core/services/data.service';
+import { OrdenCompraService } from 'src/app/core/services/orden-compra.service';
 import CreateOrdenCompraComponent from '../../orden-compra/create-orden-compra/create-orden-compra.component';
 import OrdenCompraComponent from '../../orden-compra/orden-compra.component';
 
@@ -25,10 +22,10 @@ import OrdenCompraComponent from '../../orden-compra/orden-compra.component';
 export default class ListOrdenCompraFijosComponent
   implements OnInit, OnDestroy
 {
-  public customToastService = inject(CustomToastService);
-  public authService = inject(AuthService);
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
+  customToastService = inject(CustomToastService);
+  authService = inject(AuthService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
   public messageService = inject(MessageService);
   public dialogService = inject(DialogService);
   public router = inject(Router);

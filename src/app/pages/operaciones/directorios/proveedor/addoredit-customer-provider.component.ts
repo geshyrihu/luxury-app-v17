@@ -8,13 +8,11 @@ import {
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
-import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
-import {
-  ApiRequestService,
-  CustomToastService,
-  DataService,
-} from 'src/app/core/services/common-services';
+import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
+import { DataService } from 'src/app/core/services/data.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 @Component({
   selector: 'app-add-or-edit-customer-provider',
@@ -26,14 +24,14 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 export default class AddOrEditCustomerProviderComponent implements OnInit {
   private customerIdService = inject(CustomerIdService);
   private customToastService = inject(CustomToastService);
-  public apiRequestService = inject(ApiRequestService);
-  private formBuilder = inject(FormBuilder);
-  public config = inject(DynamicDialogConfig);
-  public dataService = inject(DataService);
-  public ref = inject(DynamicDialogRef);
+  apiRequestService = inject(ApiRequestService);
+  formBuilder = inject(FormBuilder);
+  config = inject(DynamicDialogConfig);
+  dataService = inject(DataService);
+  ref = inject(DynamicDialogRef);
 
-  cb_providers: ISelectItemDto[] = [];
-  cb_categories: ISelectItemDto[] = [];
+  cb_providers: ISelectItem[] = [];
+  cb_categories: ISelectItem[] = [];
   customerId: number = this.customerIdService.customerId;
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
@@ -143,9 +141,4 @@ export default class AddOrEditCustomerProviderComponent implements OnInit {
       categoryName: find?.label,
     });
   }
-}
-export interface CustomerProviderAddOrEdit {
-  customerId: number;
-  providerId: number;
-  categoryId: number;
 }

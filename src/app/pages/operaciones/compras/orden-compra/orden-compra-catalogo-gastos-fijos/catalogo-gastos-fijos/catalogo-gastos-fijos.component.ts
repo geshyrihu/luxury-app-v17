@@ -5,15 +5,12 @@ import LuxuryAppComponentsModule, {
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
 import { CatalogoGastosFijosService } from 'src/app/core/services/catalogo-gastos-fijos.service';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomToastService,
-  CustomerIdService,
-  DataService,
-} from 'src/app/core/services/common-services';
-
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
+import { DataService } from 'src/app/core/services/data.service';
 import ModalOrdenCompraGrastosFijosComponent from '../modal-orden-compra-gastos-fijos/modal-orden-compra-grastos-fijos.component';
 
 const date = new Date();
@@ -25,10 +22,10 @@ const date = new Date();
   imports: [LuxuryAppComponentsModule],
 })
 export default class CatalogoGastosFijosComponent implements OnInit, OnDestroy {
-  public customToastService = inject(CustomToastService);
-  public authService = inject(AuthService);
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
+  customToastService = inject(CustomToastService);
+  authService = inject(AuthService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
   public customerIdService = inject(CustomerIdService);

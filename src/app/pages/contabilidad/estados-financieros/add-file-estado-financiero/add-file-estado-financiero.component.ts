@@ -1,12 +1,9 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subject, takeUntil } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
-import { DataService } from 'src/app/core/services/data.service';
 
 @Component({
   selector: 'app-add-file-estado-financiero',
@@ -14,23 +11,16 @@ import { DataService } from 'src/app/core/services/data.service';
   standalone: true,
   imports: [LuxuryAppComponentsModule],
 })
-export default class AddFileEstadoFinancieroComponent
-  implements OnInit, OnDestroy
-{
-  private formBuilder = inject(FormBuilder);
-  private customToastService = inject(CustomToastService);
-  public apiRequestService = inject(ApiRequestService);
-  public authService = inject(AuthService);
-  public config = inject(DynamicDialogConfig);
-  public dataService = inject(DataService);
-  public ref = inject(DynamicDialogRef);
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+export default class AddFileEstadoFinancieroComponent implements OnInit {
+  formBuilder = inject(FormBuilder);
+  apiRequestService = inject(ApiRequestService);
+  authService = inject(AuthService);
+  config = inject(DynamicDialogConfig);
+  ref = inject(DynamicDialogRef);
 
   submitting: boolean = false;
   id: number = 0;
   filePath: string = '';
-  errorMessage: string = '';
 
   form: FormGroup = this.formBuilder.group({
     nameFileEstadoFinanciero: [''],
@@ -49,25 +39,14 @@ export default class AddFileEstadoFinancieroComponent
     const model = this.onCreateFormData(this.form.value);
     // Deshabilitar el botón al iniciar el envío del formulario
     this.submitting = true;
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
 
-    this.dataService
-      .post(
+    this.apiRequestService
+      .onPost(
         `EstadoFinanciero/UploadFile/${this.id}/${this.authService.infoEmployeeDto.personId}`,
         model
       )
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          this.ref.close(true);
-          this.customToastService.onClose();
-        },
-        error: (error) => {
-          // Habilitar el botón nuevamente al finalizar el envío del formulario
-          this.submitting = false;
-          this.customToastService.onCloseToError(error);
-        },
+      .then((result: boolean) => {
+        result ? this.ref.close(true) : (this.submitting = false);
       });
   }
 
@@ -77,9 +56,5 @@ export default class AddFileEstadoFinancieroComponent
       formData.append('nameFileEstadoFinanciero', dto.nameFileEstadoFinanciero);
     }
     return formData;
-  }
-
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
   }
 }

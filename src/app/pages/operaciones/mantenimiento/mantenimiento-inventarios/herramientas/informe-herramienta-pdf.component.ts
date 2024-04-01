@@ -1,6 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { CustomerIdService } from 'src/app/core/services/common-services';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { ReporteHerramientasPdfService } from 'src/app/core/services/reporte-herramientas-pdf.service';
 import { environment } from 'src/environments/environment';
 @Component({

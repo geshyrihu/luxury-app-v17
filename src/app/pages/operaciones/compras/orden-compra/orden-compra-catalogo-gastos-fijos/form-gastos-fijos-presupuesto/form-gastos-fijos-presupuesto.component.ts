@@ -3,15 +3,12 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
 import { CatalogoGastosFijosService } from 'src/app/core/services/catalogo-gastos-fijos.service';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomToastService,
-  CustomerIdService,
-  DataService,
-} from 'src/app/core/services/common-services';
-
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
+import { DataService } from 'src/app/core/services/data.service';
 @Component({
   selector: 'app-form-gastos-fijos-presupuesto',
   templateUrl: './form-gastos-fijos-presupuesto.component.html',
@@ -21,12 +18,12 @@ import {
 export default class FormGastosFijosPresupuestoComponent
   implements OnInit, OnDestroy
 {
-  public customToastService = inject(CustomToastService);
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
-  public authService = inject(AuthService);
-  public ref = inject(DynamicDialogRef);
-  public config = inject(DynamicDialogConfig);
+  customToastService = inject(CustomToastService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
+  authService = inject(AuthService);
+  ref = inject(DynamicDialogRef);
+  config = inject(DynamicDialogConfig);
   public messageService = inject(MessageService);
   public catalogoGastosFijosService = inject(CatalogoGastosFijosService);
   public customerIdService = inject(CustomerIdService);

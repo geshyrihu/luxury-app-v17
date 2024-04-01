@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { MenuItem } from '../interfaces/menu.model';
+import { IMenuItem } from '../interfaces/menu.model';
 import { AuthService } from './auth.service';
 
 @Injectable({
@@ -11,7 +11,7 @@ export class SidebarService {
   get onLoadMenu() {
     return this.menu;
   }
-  menu: MenuItem[] = [
+  menu: IMenuItem[] = [
     {
       visible: this.authService.onValidateRoles(['SuperUsuario']),
       label: 'Configuración',
@@ -47,7 +47,7 @@ export class SidebarService {
           name: 'Legal-Minutas',
         },
         {
-          visible: this.authService.onValidateRoles(['SuperUsuario']),
+          visible: this.authService.onValidateRoles(['Legal', 'SuperUsuario']),
           label: 'Legal Tickets',
           routerLink: '/legal/list-ticket-legal',
           name: 'Tickets',
@@ -109,30 +109,14 @@ export class SidebarService {
           routerLink: '/contabilidad/reporte-envio-financieros',
           name: 'Reporte-Envio-Financieros',
         },
-
         {
-          visible: this.authService.onValidateRoles(['SuperUsuario']),
-          label: 'Catalogo de Cuentas',
-          items: [
-            {
-              visible: this.authService.onValidateRoles(['SuperUsuario']),
-              label: 'Cuentas 1er Nivel',
-              routerLink: '//contabilidad/catalogo-cuentas-primer-nivel',
-              name: 'Cuentas 1er Nivel',
-            },
-            {
-              visible: this.authService.onValidateRoles(['SuperUsuario']),
-              label: 'Cuentas 2do Nivel',
-              routerLink: '//contabilidad/catalogo-cuentas-segundo-nivel',
-              name: 'Cuentas 2do Nivel',
-            },
-            {
-              visible: this.authService.onValidateRoles(['SuperUsuario']),
-              label: 'Cuentas',
-              routerLink: '//contabilidad/catalogo-cuentas',
-              name: 'Cuentas',
-            },
-          ],
+          visible: this.authService.onValidateRoles([
+            'Contador',
+            'SuperUsuario',
+          ]),
+          label: 'Catalogo de cuentas',
+          routerLink: '/contabilidad/catalogo-cuentas',
+          name: 'Cuentas',
         },
       ],
     },

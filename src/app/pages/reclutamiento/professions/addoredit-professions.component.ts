@@ -3,8 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
-import { IProfessionAddOrEditDto } from 'src/app/core/interfaces/IProfessionAddOrEditDto.interface';
-import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
+import { IProfessionAddOrEdit } from 'src/app/core/interfaces/profession-add-or-edit.interface';
+import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
@@ -19,11 +19,11 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 export default class AddOrEditProfessionsComponent
   implements OnInit, OnDestroy
 {
-  public config = inject(DynamicDialogConfig);
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
-  private formBuilder = inject(FormBuilder);
-  public ref = inject(DynamicDialogRef);
+  config = inject(DynamicDialogConfig);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
+  formBuilder = inject(FormBuilder);
+  ref = inject(DynamicDialogRef);
   private customToastService = inject(CustomToastService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
@@ -31,7 +31,7 @@ export default class AddOrEditProfessionsComponent
 
   id: number = 0;
 
-  cb_area_responsable: ISelectItemDto[] = [];
+  cb_area_responsable: ISelectItem[] = [];
   form: FormGroup = this.formBuilder.group({
     id: { value: this.id, disabled: true },
     nameProfession: ['', [Validators.required, Validators.minLength(5)]],
@@ -61,7 +61,7 @@ export default class AddOrEditProfessionsComponent
 
   onLoadData(id: number) {
     this.dataService
-      .get<IProfessionAddOrEditDto>(`Professions/${id}`)
+      .get<IProfessionAddOrEdit>(`Professions/${id}`)
       .subscribe((resp: any) => {
         this.form.patchValue(resp.body);
       });

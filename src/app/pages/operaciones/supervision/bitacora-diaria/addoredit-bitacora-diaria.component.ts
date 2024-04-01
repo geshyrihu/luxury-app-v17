@@ -5,13 +5,11 @@ import LuxuryAppComponentsModule, {
 } from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomToastService,
-  DataService,
-  DateService,
-} from 'src/app/core/services/common-services';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { DataService } from 'src/app/core/services/data.service';
+import { DateService } from 'src/app/core/services/date.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
@@ -23,13 +21,13 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 export default class AddOrEditBitacoraDiariaComponent
   implements OnInit, OnDestroy
 {
-  public authService = inject(AuthService);
-  private dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
+  authService = inject(AuthService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
 
-  private formBuilder = inject(FormBuilder);
-  public config = inject(DynamicDialogConfig);
-  public ref = inject(DynamicDialogRef);
+  formBuilder = inject(FormBuilder);
+  config = inject(DynamicDialogConfig);
+  ref = inject(DynamicDialogRef);
   private dateService = inject(DateService);
   private customToastService = inject(CustomToastService);
 

@@ -6,6 +6,7 @@ import LuxuryAppComponentsModule, {
 } from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
+import { phonePrefixes } from 'src/app/core/conts/phone-number-prefix';
 import { EEducationLevel } from 'src/app/core/enums/education-level.enum';
 import { EMaritalStatus } from 'src/app/core/enums/marital.status';
 import { ECountry } from 'src/app/core/enums/paises.enum';
@@ -13,8 +14,7 @@ import { ESex } from 'src/app/core/enums/sex.enum';
 import { EBloodType } from 'src/app/core/enums/tipo-sangre';
 import { ETypeContract } from 'src/app/core/enums/type-contract.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
-import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
-import { phonePrefixes } from 'src/app/core/interfaces/phone-number-prefix';
+import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
@@ -31,14 +31,14 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 })
 export default class AddoreditPersonDataComponent implements OnInit, OnDestroy {
   private customToastService = inject(CustomToastService);
-  public apiRequestService = inject(ApiRequestService);
-  private formBuilder = inject(FormBuilder);
-  public authService = inject(AuthService);
-  public config = inject(DynamicDialogConfig);
+  apiRequestService = inject(ApiRequestService);
+  formBuilder = inject(FormBuilder);
+  authService = inject(AuthService);
+  config = inject(DynamicDialogConfig);
   public customerIdService = inject(CustomerIdService);
-  public dataService = inject(DataService);
+  dataService = inject(DataService);
   public datepipe = inject(DatePipe);
-  public ref = inject(DynamicDialogRef);
+  ref = inject(DynamicDialogRef);
 
   personId = 0;
   submitting: boolean = false;
@@ -52,10 +52,10 @@ export default class AddoreditPersonDataComponent implements OnInit, OnDestroy {
   cb_sex = onGetSelectItemFromEnum(ESex);
   cb_type_contract = onGetSelectItemFromEnum(ETypeContract);
 
-  cb_profession: ISelectItemDto[];
+  cb_profession: ISelectItem[];
   cb_phonePrefixes: any = phonePrefixes;
-  cb_customer: ISelectItemDto[] = [];
-  cb_state: ISelectItemDto[] = [];
+  cb_customer: ISelectItem[] = [];
+  cb_state: ISelectItem[] = [];
   form: FormGroup;
 
   ngOnInit(): void {

@@ -4,11 +4,9 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { SharedModule } from 'primeng/api';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { TableModule } from 'primeng/table';
-import { IDestinatariosMailReporte } from 'src/app/core/interfaces/IDestinatariosMailReporte.interface';
-import {
-  ApiRequestService,
-  CustomerIdService,
-} from 'src/app/core/services/common-services';
+import { IDestinatariosMailReporte } from 'src/app/core/interfaces/destinatarios-mail-reporte.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import TableHeaderComponent from '../table-header/table-header.component';
 @Component({
   selector: 'app-listado-condominos',
@@ -24,9 +22,9 @@ import TableHeaderComponent from '../table-header/table-header.component';
 })
 export default class ListadoCondominosComponent implements OnInit {
   public customerIdService = inject(CustomerIdService);
-  public apiRequestService = inject(ApiRequestService);
+  apiRequestService = inject(ApiRequestService);
 
-  public ref = inject(DynamicDialogRef);
+  ref = inject(DynamicDialogRef);
   data: any[] = [];
   destinatariosFinal: IDestinatariosMailReporte[] = [];
 

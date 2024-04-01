@@ -2,12 +2,10 @@ import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
-import { IFichaTecnicaActivoDto } from 'src/app/core/interfaces/IFichaTecnicaActivoDto.interface';
-import {
-  ApiRequestService,
-  CustomToastService,
-  DataService,
-} from 'src/app/core/services/common-services';
+import { IFichaTecnicaActivo } from 'src/app/core/interfaces/ficha-tecnica-activo.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { DataService } from 'src/app/core/services/data.service';
 import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-ficha-tecnica-activo',
@@ -16,14 +14,14 @@ import { environment } from 'src/environments/environment';
   imports: [LuxuryAppComponentsModule],
 })
 export default class FichaTecnicaActivoComponent implements OnInit, OnDestroy {
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
-  public ref = inject(DynamicDialogRef);
-  public config = inject(DynamicDialogConfig);
-  public customToastService = inject(CustomToastService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
+  ref = inject(DynamicDialogRef);
+  config = inject(DynamicDialogConfig);
+  customToastService = inject(CustomToastService);
 
   urlImgBase: string = environment.base_urlImg;
-  data: IFichaTecnicaActivoDto;
+  data: IFichaTecnicaActivo;
   id: number = 0;
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
@@ -37,7 +35,7 @@ export default class FichaTecnicaActivoComponent implements OnInit, OnDestroy {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
     this.dataService
-      .get<IFichaTecnicaActivoDto>(`Machineries/Fichatecnica/${this.id}`)
+      .get<IFichaTecnicaActivo>(`Machineries/Fichatecnica/${this.id}`)
       .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {

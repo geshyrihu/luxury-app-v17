@@ -3,7 +3,7 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
-import { IFechasFiltro } from 'src/app/core/interfaces/IFechasFiltro.interface';
+import { IFechasFiltro } from 'src/app/core/interfaces/fechas-filtro.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
@@ -19,10 +19,10 @@ import { FiltroCalendarService } from 'src/app/core/services/filtro-calendar.ser
 export default class ResultadoGeneralPosicionComponent
   implements OnInit, OnDestroy
 {
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
   public dateService = inject(DateService);
-  public customToastService = inject(CustomToastService);
+  customToastService = inject(CustomToastService);
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
   public rangoCalendarioService = inject(FiltroCalendarService);

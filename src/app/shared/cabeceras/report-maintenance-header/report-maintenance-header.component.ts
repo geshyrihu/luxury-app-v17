@@ -17,11 +17,11 @@ import { environment } from 'src/environments/environment';
 export default class ReportMaintenanceHeaderComponent
   implements OnInit, OnDestroy
 {
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
   public customerIdService = inject(CustomerIdService);
   public filterReportOperationService = inject(TicketFilterService);
-  public customToastService = inject(CustomToastService);
+  customToastService = inject(CustomToastService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 

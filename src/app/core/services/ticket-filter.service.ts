@@ -1,12 +1,12 @@
 import { Injectable, inject } from '@angular/core';
+import { IFilterTicket } from 'src/app/core/interfaces/filter-ticket.interface';
 import { AuthService } from './auth.service';
 import { CustomerIdService } from './customer-id.service';
-import { IFilterTicket } from 'src/app/core/interfaces/IFilterTicket.interface';
 @Injectable({
   providedIn: 'root',
 })
 export class TicketFilterService {
-  public authService = inject(AuthService);
+  authService = inject(AuthService);
   private customerIdService = inject(CustomerIdService);
 
   filterTicket: IFilterTicket = {

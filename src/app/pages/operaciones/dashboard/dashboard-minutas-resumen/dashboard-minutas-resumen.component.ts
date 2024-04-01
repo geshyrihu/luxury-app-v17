@@ -7,12 +7,10 @@ import {
   DynamicDialogRef,
 } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
-import {
-  ApiRequestService,
-  CustomToastService,
-  CustomerIdService,
-  DataService,
-} from 'src/app/core/services/common-services';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
+import { DataService } from 'src/app/core/services/data.service';
 @Component({
   selector: 'app-dashboard-minutas-resumen',
   templateUrl: './dashboard-minutas-resumen.component.html',
@@ -22,13 +20,13 @@ import {
 export default class DashboardMinutasResumenComponent
   implements OnInit, OnDestroy
 {
-  public customToastService = inject(CustomToastService);
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
+  customToastService = inject(CustomToastService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
   public customerIdService = inject(CustomerIdService);
-  public config = inject(DynamicDialogConfig);
+  config = inject(DynamicDialogConfig);
 
   data: any[] = [];
   ref: DynamicDialogRef;

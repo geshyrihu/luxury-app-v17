@@ -1,8 +1,7 @@
 import { Component, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
-import { ApiRequestService } from 'src/app/core/services/common-services';
-
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import AddOrEditEmailDataComponent from './addoredit-email-data.component';
 
@@ -13,8 +12,8 @@ import AddOrEditEmailDataComponent from './addoredit-email-data.component';
   imports: [LuxuryAppComponentsModule],
 })
 export default class ListEmailDataComponent {
-  public apiRequestService = inject(ApiRequestService);
-  public dialogHandlerService = inject(DialogHandlerService);
+  apiRequestService = inject(ApiRequestService);
+  dialogHandlerService = inject(DialogHandlerService);
 
   data: any[] = [];
   ref: DynamicDialogRef;

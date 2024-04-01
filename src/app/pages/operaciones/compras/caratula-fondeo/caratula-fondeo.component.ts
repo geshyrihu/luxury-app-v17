@@ -7,13 +7,11 @@ import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable } from 'rxjs';
 import { ETipoGasto } from 'src/app/core/enums/tipo-gasto.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
-import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
+import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CaratulaFondeoService } from 'src/app/core/services/caratula-fondeo.service';
-import {
-  ApiRequestService,
-  CustomerIdService,
-  DataService,
-} from 'src/app/core/services/common-services';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
+import { DataService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
@@ -27,17 +25,17 @@ const date = new Date();
 })
 export default class CaratulaFondeoComponent implements OnInit {
   public dateService = inject(DateService);
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
-  private formBuilder = inject(FormBuilder);
-  public ref = inject(DynamicDialogRef);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
+  formBuilder = inject(FormBuilder);
+  ref = inject(DynamicDialogRef);
   public customerIdService = inject(CustomerIdService);
   public router = inject(Router);
   public caratulaFondeoService = inject(CaratulaFondeoService);
 
   submitting: boolean = false;
 
-  tipoGasto: ISelectItemDto[] = onGetSelectItemFromEnum(ETipoGasto);
+  tipoGasto: ISelectItem[] = onGetSelectItemFromEnum(ETipoGasto);
   form: FormGroup = this.formBuilder.group({
     fechaInicial: ['', Validators.required],
     fechaFinal: [this.dateService.getDateFormat(date), Validators.required],

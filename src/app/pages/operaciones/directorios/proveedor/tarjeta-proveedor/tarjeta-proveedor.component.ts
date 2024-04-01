@@ -12,9 +12,9 @@ import { environment } from 'src/environments/environment';
   imports: [LuxuryAppComponentsModule],
 })
 export default class TarjetaProveedorComponent implements OnInit, OnDestroy {
-  public config = inject(DynamicDialogConfig);
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
+  config = inject(DynamicDialogConfig);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
   model: any;

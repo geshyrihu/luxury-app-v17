@@ -2,11 +2,9 @@ import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { passwordValidation } from 'src/app/core/directives/password-validation.directive';
-import { ChangePassword } from 'src/app/core/interfaces/change-password.interface';
-import {
-  ApiRequestService,
-  AuthService,
-} from 'src/app/core/services/common-services';
+import { IChangePassword } from 'src/app/core/interfaces/change-password.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'app-update-password',
@@ -15,9 +13,9 @@ import {
   imports: [LuxuryAppComponentsModule],
 })
 export default class UpdatePasswordComponent implements OnInit {
-  private formBuilder = inject(FormBuilder);
-  public apiRequestService = inject(ApiRequestService);
-  public authService = inject(AuthService);
+  formBuilder = inject(FormBuilder);
+  apiRequestService = inject(ApiRequestService);
+  authService = inject(AuthService);
 
   submitting: boolean = false;
 
@@ -51,7 +49,7 @@ export default class UpdatePasswordComponent implements OnInit {
   updatePassword() {
     if (!this.apiRequestService.validateForm(this.formUpdatePassword)) return;
 
-    const model: ChangePassword = {
+    const model: IChangePassword = {
       currentPassword: this.formUpdatePassword.get('currentPassword').value,
       newPassword: this.formUpdatePassword.get('newPassword').value,
     };

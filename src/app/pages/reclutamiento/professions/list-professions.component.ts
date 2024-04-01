@@ -3,14 +3,12 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
-import { IProfessionDto } from 'src/app/core/interfaces/IProfessionDto.interface';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomToastService,
-  DataService,
-} from 'src/app/core/services/common-services';
-
+import { INewProfession } from 'src/app/core/interfaces/new-profession.interface';
+import { IProfession } from 'src/app/core/interfaces/profession.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { DataService } from 'src/app/core/services/data.service';
 import AddOrEditProfessionsComponent from './addoredit-professions.component';
 import DescripcionPuestoComponent from './descripcion-puesto.component';
 
@@ -21,10 +19,10 @@ import DescripcionPuestoComponent from './descripcion-puesto.component';
   imports: [LuxuryAppComponentsModule],
 })
 export default class ListProfessionsComponent implements OnInit, OnDestroy {
-  public customToastService = inject(CustomToastService);
-  public authService = inject(AuthService);
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
+  customToastService = inject(CustomToastService);
+  authService = inject(AuthService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
   public messageService = inject(MessageService);
   public dialogService = inject(DialogService);
 
@@ -41,7 +39,7 @@ export default class ListProfessionsComponent implements OnInit, OnDestroy {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
     this.dataService
-      .get<IProfessionDto>('Professions/')
+      .get<IProfession>('Professions/')
       .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
@@ -58,9 +56,9 @@ export default class ListProfessionsComponent implements OnInit, OnDestroy {
     this.data.splice(event.dragIndex, 1);
     this.data.splice(event.dropIndex, 0, movedItem);
 
-    let newdate: NewProfession[] = [];
+    let newdate: INewProfession[] = [];
     for (let i = 0; i < this.data.length; i++) {
-      const elemento: NewProfession = {
+      const elemento: INewProfession = {
         hierarchy: i,
         id: this.data[i].id,
       };
@@ -83,7 +81,7 @@ export default class ListProfessionsComponent implements OnInit, OnDestroy {
       });
   }
 
-  onDelete(data: IProfessionDto) {
+  onDelete(data: IProfession) {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
     this.dataService
@@ -135,8 +133,4 @@ export default class ListProfessionsComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.dataService.ngOnDestroy();
   }
-}
-export interface NewProfession {
-  id: number;
-  hierarchy: number;
 }

@@ -28,20 +28,7 @@ export default [
     loadComponent: () =>
       import('src/app/pages/configuracion/bancos/list-banco.component'),
   },
-  {
-    path: 'catalogo-cuentas-primer-nivel',
-    loadComponent: () =>
-      import(
-        'src/app/pages/contabilidad/cuentas-primer-nivel/cuentas-primer-nivel.component'
-      ),
-  },
-  {
-    path: 'catalogo-cuentas-segundo-nivel',
-    loadComponent: () =>
-      import(
-        'src/app/pages/contabilidad/cuentas-segundo-nivel/cuentas-segundo-nivel.component'
-      ),
-  },
+
   {
     path: 'catalogo-cuentas',
     loadComponent: () =>
@@ -68,13 +55,7 @@ export default [
     loadComponent: () =>
       import('src/app/pages/configuracion/uso-cfdi/list-uso-cfdi.component'),
   },
-  {
-    path: 'cedulas-presupuestales',
-    loadComponent: () =>
-      import(
-        'src/app/pages/contabilidad/presupuesto/list-cedulas-presupuestales.component'
-      ),
-  },
+
   {
     path: 'reporte-envio-financieros',
     loadComponent: () =>

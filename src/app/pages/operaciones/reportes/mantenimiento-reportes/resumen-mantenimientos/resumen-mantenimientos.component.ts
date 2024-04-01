@@ -2,8 +2,8 @@ import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
-import { CustomerIdService } from 'src/app/core/services/common-services';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
 import { PeriodoMonthService } from 'src/app/core/services/periodo-month.service';
@@ -17,9 +17,9 @@ import PagetitleReportComponent from 'src/app/shared/cabeceras/pagetitlereport/p
 export default class ResumenMantenimientosComponent
   implements OnInit, OnDestroy
 {
-  private dataService = inject(DataService);
+  dataService = inject(DataService);
   public customerIdService = inject(CustomerIdService);
-  public customToastService = inject(CustomToastService);
+  customToastService = inject(CustomToastService);
   public dateService = inject(DateService);
   public periodoMonthService = inject(PeriodoMonthService);
 

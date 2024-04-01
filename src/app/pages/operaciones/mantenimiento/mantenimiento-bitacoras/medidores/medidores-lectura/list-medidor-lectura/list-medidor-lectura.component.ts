@@ -5,14 +5,11 @@ import * as FileSaver from 'file-saver';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
-import { IMedidorLecturaDto } from 'src/app/core/interfaces/IMedidorLecturaDto.interface';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomToastService,
-  DataService,
-} from 'src/app/core/services/common-services';
-
+import { IMedidorLectura } from 'src/app/core/interfaces/medidor-lectura.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { DataService } from 'src/app/core/services/data.service';
 import AdminFormMedidorLecturaComponent from '../admin-form-medidor-lectura/admin-form-medidor-lectura.component';
 import FormMedidorLecturaComponent from '../form-medidor-lectura/form-medidor-lectura.component';
 @Component({
@@ -22,10 +19,10 @@ import FormMedidorLecturaComponent from '../form-medidor-lectura/form-medidor-le
   imports: [LuxuryAppComponentsModule],
 })
 export default class ListMedidorLecturaComponent implements OnInit, OnDestroy {
-  public authService = inject(AuthService);
-  public customToastService = inject(CustomToastService);
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
+  authService = inject(AuthService);
+  customToastService = inject(CustomToastService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
   public route = inject(ActivatedRoute);
@@ -48,7 +45,7 @@ export default class ListMedidorLecturaComponent implements OnInit, OnDestroy {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
     this.dataService
-      .get<IMedidorLecturaDto[]>(`MedidorLectura/GetAll/${this.medidorId}`)
+      .get<IMedidorLectura[]>(`MedidorLectura/GetAll/${this.medidorId}`)
       .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {

@@ -3,16 +3,12 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomToastService,
-  CustomerIdService,
-  DataService,
-} from 'src/app/core/services/common-services';
-
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
+import { DataService } from 'src/app/core/services/data.service';
 import EditSalidasComponent from './edit-salidas/edit-salidas.component';
-
 @Component({
   selector: 'app-list-salidas',
   templateUrl: './list-salidas.component.html',
@@ -20,11 +16,11 @@ import EditSalidasComponent from './edit-salidas/edit-salidas.component';
   imports: [LuxuryAppComponentsModule],
 })
 export default class ListSalidasComponent implements OnInit, OnDestroy {
-  public authService = inject(AuthService);
-  public customToastService = inject(CustomToastService);
+  authService = inject(AuthService);
+  customToastService = inject(CustomToastService);
   private customerIdService = inject(CustomerIdService);
-  private dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
 

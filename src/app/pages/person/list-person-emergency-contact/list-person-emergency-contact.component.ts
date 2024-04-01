@@ -8,11 +8,9 @@ import {
   DynamicDialogRef,
 } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
-import {
-  ApiRequestService,
-  CustomToastService,
-  DataService,
-} from 'src/app/core/services/common-services';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { DataService } from 'src/app/core/services/data.service';
 import AddoreditPersonEmergencyContactComponent from '../addoredit-person-emergency-contact/addoredit-person-emergency-contact.component';
 
 @Component({
@@ -25,12 +23,12 @@ import AddoreditPersonEmergencyContactComponent from '../addoredit-person-emerge
 export default class ListPersonEmergencyContactComponent
   implements OnInit, OnDestroy
 {
-  public config = inject(DynamicDialogConfig);
-  public customToastService = inject(CustomToastService);
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
+  config = inject(DynamicDialogConfig);
+  customToastService = inject(CustomToastService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
   public messageService = inject(MessageService);
-  public ref = inject(DynamicDialogRef);
+  ref = inject(DynamicDialogRef);
 
   public dialogService = inject(DialogService);
 

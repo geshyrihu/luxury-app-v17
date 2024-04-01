@@ -5,15 +5,13 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { EExtintor } from 'src/app/core/enums/extintor.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
-import { IInventarioExtintorDto } from 'src/app/core/interfaces/IInventarioExtintorDto.interface';
-import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomToastService,
-  CustomerIdService,
-  DataService,
-} from 'src/app/core/services/common-services';
+import { IInventarioExtintor } from 'src/app/core/interfaces/inventario-extintor.interface';
+import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
+import { DataService } from 'src/app/core/services/data.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import { environment } from 'src/environments/environment';
 
@@ -27,19 +25,19 @@ export default class AddoreditInventarioExtintorComponent
   implements OnInit, OnDestroy
 {
   private customToastService = inject(CustomToastService);
-  public apiRequestService = inject(ApiRequestService);
-  private formBuilder = inject(FormBuilder);
-  public authService = inject(AuthService);
-  public config = inject(DynamicDialogConfig);
+  apiRequestService = inject(ApiRequestService);
+  formBuilder = inject(FormBuilder);
+  authService = inject(AuthService);
+  config = inject(DynamicDialogConfig);
   public customerIdService = inject(CustomerIdService);
-  public dataService = inject(DataService);
-  public ref = inject(DynamicDialogRef);
+  dataService = inject(DataService);
+  ref = inject(DynamicDialogRef);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   submitting: boolean = false;
 
-  cb_extintor: ISelectItemDto[] = onGetSelectItemFromEnum(EExtintor);
+  cb_extintor: ISelectItem[] = onGetSelectItemFromEnum(EExtintor);
   urlBaseImg = `${environment.base_urlImg}customers/`;
   photoFileUpdate: boolean = false;
   id: number = 0;
@@ -64,7 +62,7 @@ export default class AddoreditInventarioExtintorComponent
   }
   onLoadData() {
     this.dataService
-      .get<IInventarioExtintorDto>(`InventarioExtintor/${this.id}`)
+      .get<IInventarioExtintor>(`InventarioExtintor/${this.id}`)
       .subscribe((resp: any) => {
         this.urlBaseImg = `${environment.base_urlImg}/customers/${resp.body.customerId}/extintor/${resp.body.photo}`;
         this.form.patchValue(resp.body);

@@ -4,14 +4,12 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService, SelectItem } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
-import {
-  ApiRequestService,
-  AuthService,
-  CatalogoGastosFijosService,
-  CustomToastService,
-  CustomerIdService,
-  DataService,
-} from 'src/app/core/services/common-services';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CatalogoGastosFijosService } from 'src/app/core/services/catalogo-gastos-fijos.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
+import { DataService } from 'src/app/core/services/data.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
@@ -23,13 +21,13 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 export default class FormCatalogoGastosFijosComponent
   implements OnInit, OnDestroy
 {
-  public customToastService = inject(CustomToastService);
-  public authService = inject(AuthService);
-  private formBuilder = inject(FormBuilder);
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
-  public ref = inject(DynamicDialogRef);
-  public config = inject(DynamicDialogConfig);
+  customToastService = inject(CustomToastService);
+  authService = inject(AuthService);
+  formBuilder = inject(FormBuilder);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
+  ref = inject(DynamicDialogRef);
+  config = inject(DynamicDialogConfig);
   public messageService = inject(MessageService);
   public catalogoGastosFijosService = inject(CatalogoGastosFijosService);
   public customerIdService = inject(CustomerIdService);

@@ -4,12 +4,10 @@ import LuxuryAppComponentsModule, {
   flatpickrFactory,
 } from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { ICustomerAddOrEditDto } from 'src/app/core/interfaces/ICustomerAddOrEditDto.interface';
-import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
-import {
-  ApiRequestService,
-  DateService,
-} from 'src/app/core/services/common-services';
+import { ICustomerAddOrEdit } from 'src/app/core/interfaces/customer-add-or-edit.interface';
+import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { DateService } from 'src/app/core/services/date.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import { environment } from 'src/environments/environment';
 
@@ -20,22 +18,22 @@ import { environment } from 'src/environments/environment';
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class AddOrEditClienteComponent implements OnInit {
-  private formBuilder = inject(FormBuilder);
-  public apiRequestService = inject(ApiRequestService);
-  public config = inject(DynamicDialogConfig);
+  formBuilder = inject(FormBuilder);
+  apiRequestService = inject(ApiRequestService);
+  config = inject(DynamicDialogConfig);
   public dateService = inject(DateService);
-  public ref = inject(DynamicDialogRef);
+  ref = inject(DynamicDialogRef);
 
   submitting: boolean = false;
 
   id: any = 0;
-  optionActive: ISelectItemDto[] = [
+  optionActive: ISelectItem[] = [
     { value: true, label: 'Activo' },
     { value: false, label: 'Inactivo' },
   ];
 
   urlBaseImg = `${environment.base_urlImg}Administration/customer/`;
-  model: ICustomerAddOrEditDto;
+  model: ICustomerAddOrEdit;
   photoFileUpdate: boolean = false;
 
   form: FormGroup = this.formBuilder.group({
@@ -64,7 +62,7 @@ export default class AddOrEditClienteComponent implements OnInit {
 
   onLoadData() {
     this.apiRequestService
-      .onGetItem<ICustomerAddOrEditDto>(`Customers/${this.id}`)
+      .onGetItem<ICustomerAddOrEdit>(`Customers/${this.id}`)
       .then((result: any) => {
         this.model = result;
         const register = this.dateService.getDateFormat(result.register);
@@ -96,7 +94,7 @@ export default class AddOrEditClienteComponent implements OnInit {
   }
 
   private createFormData(
-    customerAdCustomerAddOrEdit: ICustomerAddOrEditDto
+    customerAdCustomerAddOrEdit: ICustomerAddOrEdit
   ): FormData {
     const formData = new FormData();
     formData.append('active', String(customerAdCustomerAddOrEdit.active));

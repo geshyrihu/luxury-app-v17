@@ -5,15 +5,13 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { EMonth } from 'src/app/core/enums/month.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
-import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
+import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import { CurrencyMexicoPipe } from 'src/app/core/pipes/currencyMexico.pipe';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomToastService,
-  CustomerIdService,
-  DataService,
-} from 'src/app/core/services/common-services';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
+import { DataService } from 'src/app/core/services/data.service';
 import AddoreditMaintenancePreventiveComponent from '../addoredit-maintenance-preventive.component';
 const date = new Date();
 
@@ -26,10 +24,10 @@ const date = new Date();
 export default class ListadoAnualMantenimientoComponent
   implements OnInit, OnDestroy
 {
-  public customToastService = inject(CustomToastService);
-  public authService = inject(AuthService);
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
+  customToastService = inject(CustomToastService);
+  authService = inject(AuthService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
   public customerIdService = inject(CustomerIdService);
   public messageService = inject(MessageService);
   public dialogService = inject(DialogService);
@@ -41,7 +39,7 @@ export default class ListadoAnualMantenimientoComponent
 
   customerId$: Observable<number> = this.customerIdService.getCustomerId$();
   month = date.getMonth();
-  months: ISelectItemDto[] = onGetSelectItemFromEnum(EMonth);
+  months: ISelectItem[] = onGetSelectItemFromEnum(EMonth);
 
   ngOnInit() {
     this.onLoadData();

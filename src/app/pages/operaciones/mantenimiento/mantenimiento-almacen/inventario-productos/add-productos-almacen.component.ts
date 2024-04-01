@@ -2,15 +2,12 @@ import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
-import { IProductoListAddDto } from 'src/app/core/interfaces/IProductoListAddDto.interface.interface';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomToastService,
-  CustomerIdService,
-  DataService,
-} from 'src/app/core/services/common-services';
-
+import { IProductoListAdd } from 'src/app/core/interfaces/product-list-add-or-edit.interface.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
+import { DataService } from 'src/app/core/services/data.service';
 import TarjetaProductoComponent from '../../mantenimiento-catalogos/tarjeta-producto/tarjeta-producto.component';
 
 @Component({
@@ -20,13 +17,13 @@ import TarjetaProductoComponent from '../../mantenimiento-catalogos/tarjeta-prod
   imports: [LuxuryAppComponentsModule],
 })
 export default class AddProductosAlmacenComponent implements OnInit, OnDestroy {
-  private dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
-  public customToastService = inject(CustomToastService);
-  public authService = inject(AuthService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
+  customToastService = inject(CustomToastService);
+  authService = inject(AuthService);
   public customerIdService = inject(CustomerIdService);
   public dialogService = inject(DialogService);
-  public ref = inject(DynamicDialogRef);
+  ref = inject(DynamicDialogRef);
 
   data: any[] = [];
   cb_UnidadMedida: any[] = [];
@@ -82,7 +79,7 @@ export default class AddProductosAlmacenComponent implements OnInit, OnDestroy {
         },
       });
   }
-  onSubmit(item: IProductoListAddDto) {
+  onSubmit(item: IProductoListAdd) {
     item.employeeId = this.authService.userTokenDto.infoEmployeeDto.employeeId;
     item.customerId = this.customerIdService.customerId;
 

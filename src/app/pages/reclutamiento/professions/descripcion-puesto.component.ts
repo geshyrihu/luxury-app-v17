@@ -13,10 +13,10 @@ import { DataService } from 'src/app/core/services/data.service';
   imports: [LuxuryAppComponentsModule, AutosizeDirective],
 })
 export default class DescripcionPuestoComponent implements OnInit, OnDestroy {
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
-  public config = inject(DynamicDialogConfig);
-  public customToastService = inject(CustomToastService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
+  config = inject(DynamicDialogConfig);
+  customToastService = inject(CustomToastService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
   profesion: any;

@@ -2,10 +2,8 @@ import { Component, inject } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
-import {
-  AuthService,
-  CustomToastService,
-} from 'src/app/core/services/common-services';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import BitacoraMantenimientoComponent from 'src/app/pages/operaciones/mantenimiento/mantenimiento-bitacoras/recorridos/bitacora-mantenimiento.component';
 import DashboardMinutasComponent from './dashboard-minutas/dashboard-minutas.component';
 import DashboardTicketsComponent from './dashboard-tickets/dashboard-tickets.component';
@@ -25,8 +23,8 @@ import MantenimientosPreventivosComponent from './mttos-preventivos/mttos-preven
 })
 export default class DashboardComponent {
   private modalService = inject(NgbModal);
-  public customToastService = inject(CustomToastService);
-  public authService = inject(AuthService);
+  customToastService = inject(CustomToastService);
+  authService = inject(AuthService);
 
   ref: DynamicDialogRef;
 

@@ -6,13 +6,11 @@ import { Subject, takeUntil } from 'rxjs';
 import { AutosizeDirective } from 'src/app/core/directives/autosize-text-area.diective';
 import { ETurnoTrabajo } from 'src/app/core/enums/turno-trabajo.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
-import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomToastService,
-  DataService,
-} from 'src/app/core/services/common-services';
+import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { DataService } from 'src/app/core/services/data.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
@@ -22,13 +20,13 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   imports: [LuxuryAppComponentsModule, AutosizeDirective, CustomInputModule],
 })
 export default class SolicitudVacanteComponent implements OnInit, OnDestroy {
-  private dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
-  private formBuilder = inject(FormBuilder);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
+  formBuilder = inject(FormBuilder);
   private customToastService = inject(CustomToastService);
-  public config = inject(DynamicDialogConfig);
-  public ref = inject(DynamicDialogRef);
-  public authService = inject(AuthService);
+  config = inject(DynamicDialogConfig);
+  ref = inject(DynamicDialogRef);
+  authService = inject(AuthService);
 
   workPositionId: number = this.config.data.workPositionId;
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
@@ -38,7 +36,7 @@ export default class SolicitudVacanteComponent implements OnInit, OnDestroy {
 
   id: number = 0;
 
-  cb_turnoTrabajo: ISelectItemDto[] = onGetSelectItemFromEnum(ETurnoTrabajo);
+  cb_turnoTrabajo: ISelectItem[] = onGetSelectItemFromEnum(ETurnoTrabajo);
   form: FormGroup = this.formBuilder.group({
     id: [this.config.data.workPositionId],
     professionName: [, Validators.required],

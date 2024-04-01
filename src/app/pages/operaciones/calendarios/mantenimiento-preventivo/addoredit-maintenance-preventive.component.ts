@@ -8,14 +8,12 @@ import { Subject, takeUntil } from 'rxjs';
 import { ERecurrence } from 'src/app/core/enums/recurrence.enum';
 import { ETypeMaintance } from 'src/app/core/enums/type-maintance.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
-import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomToastService,
-  CustomerIdService,
-  DataService,
-} from 'src/app/core/services/common-services';
+import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
+import { DataService } from 'src/app/core/services/data.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
@@ -28,20 +26,20 @@ export default class AddoreditMaintenancePreventiveComponent
   implements OnInit, OnDestroy
 {
   private customToastService = inject(CustomToastService);
-  public apiRequestService = inject(ApiRequestService);
-  private formBuilder = inject(FormBuilder);
-  public authService = inject(AuthService);
-  public config = inject(DynamicDialogConfig);
+  apiRequestService = inject(ApiRequestService);
+  formBuilder = inject(FormBuilder);
+  authService = inject(AuthService);
+  config = inject(DynamicDialogConfig);
   public customerIdService = inject(CustomerIdService);
-  public dataService = inject(DataService);
-  public ref = inject(DynamicDialogRef);
+  dataService = inject(DataService);
+  ref = inject(DynamicDialogRef);
 
   public Editor = ClassicEditor;
 
-  cb_machinery: ISelectItemDto[] = [];
-  cb_providers: ISelectItemDto[] = [];
-  cb_recurrencia: ISelectItemDto[] = onGetSelectItemFromEnum(ERecurrence);
-  cb_subCuentaId: ISelectItemDto[] = [];
+  cb_machinery: ISelectItem[] = [];
+  cb_providers: ISelectItem[] = [];
+  cb_recurrencia: ISelectItem[] = onGetSelectItemFromEnum(ERecurrence);
+  cb_subCuentaId: ISelectItem[] = [];
   cb_TypeMaintance: SelectItem[] = onGetSelectItemFromEnum(ETypeMaintance);
 
   submitting: boolean = false;
@@ -91,7 +89,7 @@ export default class AddoreditMaintenancePreventiveComponent
       });
     this.apiRequestService
       .onGetSelectItem('CuentasContables')
-      .then((response: ISelectItemDto[]) => {
+      .then((response: ISelectItem[]) => {
         this.cb_subCuentaId = response;
       });
   }

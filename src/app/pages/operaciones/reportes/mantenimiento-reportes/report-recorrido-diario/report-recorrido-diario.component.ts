@@ -2,11 +2,9 @@ import { Component, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
-import {
-  ApiRequestService,
-  CustomerIdService,
-} from 'src/app/core/services/common-services';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
 import { PeriodoMonthService } from 'src/app/core/services/periodo-month.service';
@@ -18,10 +16,10 @@ import PagetitleReportComponent from 'src/app/shared/cabeceras/pagetitlereport/p
   imports: [LuxuryAppComponentsModule, PagetitleReportComponent],
 })
 export default class ReportRecorridoDiarioComponent implements OnInit {
-  private dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
   public customerIdService = inject(CustomerIdService);
-  public customToastService = inject(CustomToastService);
+  customToastService = inject(CustomToastService);
   public dateService = inject(DateService);
   public periodoMonthService = inject(PeriodoMonthService);
 

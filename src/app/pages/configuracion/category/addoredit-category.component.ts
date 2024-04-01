@@ -2,8 +2,8 @@ import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { ICategoryAddOrEditDto } from 'src/app/core/interfaces/ICategoryAddOrEditDto.interface';
-import { ApiRequestService } from 'src/app/core/services/common-services';
+import { ICategoryAddOrEdit } from 'src/app/core/interfaces/category-add-or-edit.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
@@ -13,10 +13,10 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class AddOrEditCategoryComponent implements OnInit {
-  private formBuilder = inject(FormBuilder);
-  public config = inject(DynamicDialogConfig);
-  public ref = inject(DynamicDialogRef);
-  public apiRequestService = inject(ApiRequestService);
+  formBuilder = inject(FormBuilder);
+  config = inject(DynamicDialogConfig);
+  ref = inject(DynamicDialogRef);
+  apiRequestService = inject(ApiRequestService);
 
   submitting: boolean = false;
 
@@ -45,8 +45,8 @@ export default class AddOrEditCategoryComponent implements OnInit {
 
   onLoadData() {
     this.apiRequestService
-      .onGetItem<ICategoryAddOrEditDto>(`Categories/${this.id}`)
-      .then((result: ICategoryAddOrEditDto) => {
+      .onGetItem<ICategoryAddOrEdit>(`Categories/${this.id}`)
+      .then((result: ICategoryAddOrEdit) => {
         this.form.patchValue(result);
       });
   }

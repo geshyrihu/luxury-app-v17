@@ -1,3 +1,3 @@
-export interface RecoveryPassword {
+export interface IRecoveryPassword {
   email: string;
 }

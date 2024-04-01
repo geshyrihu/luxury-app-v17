@@ -1,19 +1,19 @@
 import { Injectable } from '@angular/core';
-import { IFondeoCaratulaDto } from '../interfaces/IFondeoCaratulaDto.interface';
-import { IRequestFondeoCaratulaDto } from '../interfaces/IRequestFondeoCaratulaDto.interface';
+import { IFondeoCaratula } from '../interfaces/fondeo-caratula.interface';
+import { IRequestFondeoCaratula } from '../interfaces/request-fondeo-caratula.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CaratulaFondeoService {
-  data: IFondeoCaratulaDto;
-  requestFondeoCaratulaDto: IRequestFondeoCaratulaDto;
+  data: IFondeoCaratula;
+  requestFondeoCaratulaDto: IRequestFondeoCaratula;
 
   getRequestFondeoCaratulaDto() {
     return this.requestFondeoCaratulaDto;
   }
 
-  createRequestFondeoCaratulaDto(item: IRequestFondeoCaratulaDto) {
+  createRequestFondeoCaratulaDto(item: IRequestFondeoCaratula) {
     this.requestFondeoCaratulaDto = item;
   }
 }

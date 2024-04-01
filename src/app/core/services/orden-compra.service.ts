@@ -6,7 +6,7 @@ import { DataService } from './data.service';
   providedIn: 'root',
 })
 export class OrdenCompraService implements OnDestroy {
-  private dataService = inject(DataService);
+  dataService = inject(DataService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 

@@ -1,14 +1,9 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subject, takeUntil } from 'rxjs';
-import { CedulaPresupuestalDetalleAddOrEdit } from 'src/app/core/interfaces/ICedulaPresupuestalDetalleAddOrEdit.interface';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomToastService,
-  DataService,
-} from 'src/app/core/services/common-services';
+import { CedulaPresupuestalDetalleAddOrEdit } from 'src/app/core/class/cedula-presupuestal-detalle-add-or-edit.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'app-add-partida-cedula',
@@ -16,15 +11,11 @@ import {
   standalone: true,
   imports: [LuxuryAppComponentsModule],
 })
-export default class AddPartidaCedulaComponent implements OnInit, OnDestroy {
-  private dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
-  public config = inject(DynamicDialogConfig);
-  public authService = inject(AuthService);
-  public ref = inject(DynamicDialogRef);
-  private customToastService = inject(CustomToastService);
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+export default class AddPartidaCedulaComponent implements OnInit {
+  apiRequestService = inject(ApiRequestService);
+  config = inject(DynamicDialogConfig);
+  authService = inject(AuthService);
+  ref = inject(DynamicDialogRef);
 
   data: any[] = [];
   cedulaPresupuestalId: number = 0;
@@ -38,28 +29,19 @@ export default class AddPartidaCedulaComponent implements OnInit, OnDestroy {
     this.onLoadData();
   }
   onLoadData() {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .get(
+    this.apiRequestService
+      .onGetList(
         `SelectItem/AddCuentaCedulaPresupuestal/${this.config.data.idBudgetCard}`
       )
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.data = resp.body.map(function (cuenta: any) {
-            return {
-              id: cuenta.id,
-              numeroCuenta: cuenta.numeroCuenta,
-              descripcion: cuenta.descripcion,
-              presupuestoMensual: 0,
-            };
-          });
-          this.customToastService.onClose();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+      .then((result: any) => {
+        this.data = result.map(function (cuenta: any) {
+          return {
+            id: cuenta.id,
+            numeroCuenta: cuenta.numeroCuenta,
+            descripcion: cuenta.descripcion,
+            presupuestoMensual: 0,
+          };
+        });
       });
   }
   onSubmit(item: any) {
@@ -74,26 +56,11 @@ export default class AddPartidaCedulaComponent implements OnInit, OnDestroy {
 
     // Deshabilitar el botón al iniciar el envío del formulario
     this.submitting = true;
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
 
-    this.dataService
-      .post(`CedulaPresupuestalDetalles`, model)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          this.customToastService.onShowSuccess();
-          this.onLoadData();
-        },
-        error: (error) => {
-          // Habilitar el botón nuevamente al finalizar el envío del formulario
-          this.submitting = false;
-          this.customToastService.onCloseToError(error);
-        },
+    this.apiRequestService
+      .onPost(`CedulaPresupuestalDetalles`, model)
+      .then(() => {
+        this.onLoadData();
       });
-  }
-
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
   }
 }

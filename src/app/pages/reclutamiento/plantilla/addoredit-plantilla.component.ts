@@ -6,15 +6,13 @@ import { Subject, takeUntil } from 'rxjs';
 import { EState } from 'src/app/core/enums/state.enum';
 import { ETurnoTrabajo } from 'src/app/core/enums/turno-trabajo.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
-import { IWorkPositionAddOrEditDto } from 'src/app/core/interfaces/IEmpresaOrganigramaAddOrEditDto.interface';
-import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomToastService,
-  CustomerIdService,
-  DataService,
-} from 'src/app/core/services/common-services';
+import { IWorkPositionAddOrEdit } from 'src/app/core/interfaces/empresa-organigrama-add-or-edit.interface';
+import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
+import { DataService } from 'src/app/core/services/data.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 @Component({
   selector: 'app-addoredit-plantilla',
@@ -24,22 +22,22 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 })
 export default class AddoreditPlantillaComponent implements OnInit, OnDestroy {
   private customToastService = inject(CustomToastService);
-  public apiRequestService = inject(ApiRequestService);
-  private formBuilder = inject(FormBuilder);
-  public authService = inject(AuthService);
-  public config = inject(DynamicDialogConfig);
+  apiRequestService = inject(ApiRequestService);
+  formBuilder = inject(FormBuilder);
+  authService = inject(AuthService);
+  config = inject(DynamicDialogConfig);
   public customerIdService = inject(CustomerIdService);
-  public dataService = inject(DataService);
-  public ref = inject(DynamicDialogRef);
+  dataService = inject(DataService);
+  ref = inject(DynamicDialogRef);
 
   submitting: boolean = false;
 
   id: number = 0;
   checked: boolean = false;
-  cb_profession: ISelectItemDto[] = [];
-  cb_employee: ISelectItemDto[] = [];
-  cb_turnoTrabajo: ISelectItemDto[] = onGetSelectItemFromEnum(ETurnoTrabajo);
-  cb_state: ISelectItemDto[] = onGetSelectItemFromEnum(EState);
+  cb_profession: ISelectItem[] = [];
+  cb_employee: ISelectItem[] = [];
+  cb_turnoTrabajo: ISelectItem[] = onGetSelectItemFromEnum(ETurnoTrabajo);
+  cb_state: ISelectItem[] = onGetSelectItemFromEnum(EState);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
@@ -82,7 +80,7 @@ export default class AddoreditPlantillaComponent implements OnInit, OnDestroy {
   }
   onLoadData() {
     this.dataService
-      .get<IWorkPositionAddOrEditDto>(`WorkPosition/GetForEdit/${this.id}`)
+      .get<IWorkPositionAddOrEdit>(`WorkPosition/GetForEdit/${this.id}`)
       .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {

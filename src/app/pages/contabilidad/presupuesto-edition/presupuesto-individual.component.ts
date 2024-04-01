@@ -1,18 +1,12 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { MessageService } from 'primeng/api';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subject, takeUntil } from 'rxjs';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomToastService,
-  DataService,
-} from 'src/app/core/services/common-services';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
+import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import EditPartidaCedulaComponent from 'src/app/pages/contabilidad/presupuesto/edit-partida-cedula.component';
-
 import OrdenesCompraCedulaComponent from '../../operaciones/compras/cedula-presupuestal/ordenes-compra-cedula/ordenes-compra-cedula.component';
 import AddPartidaCedulaComponent from '../presupuesto/add-partida-cedula.component';
 import InfoCuentaComponent from './info-cuenta/info-cuenta.component';
@@ -27,13 +21,10 @@ import PresupuestoEditionFileComponent from './presupuesto-edition-file/presupue
   imports: [LuxuryAppComponentsModule],
 })
 export default class PresupuestoIndividualComponent implements OnInit {
-  public authService = inject(AuthService);
+  authService = inject(AuthService);
   public customerIdService = inject(CustomerIdService);
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
-  public dialogService = inject(DialogService);
-  public messageService = inject(MessageService);
-  public customToastService = inject(CustomToastService);
+  apiRequestService = inject(ApiRequestService);
+  dialogHandlerService = inject(DialogHandlerService);
   private activatedRoute = inject(ActivatedRoute);
 
   // Declaración e inicialización de variables
@@ -41,51 +32,34 @@ export default class PresupuestoIndividualComponent implements OnInit {
   employeeId: number = this.authService.infoEmployeeDto.employeeId;
   data: any;
   ref: DynamicDialogRef; // Referencia a un cuadro de diálogo modal
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   ngOnInit() {
     this.id = this.activatedRoute.snapshot.params.id;
-
     // Cuando se inicia el componente, cargar los datos de los bancos
     this.onLoadData();
   }
   // Función para cargar los datos de los bancos
   onLoadData() {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-
-    // Realizar una solicitud HTTP para obtener datos de bancos
-    this.dataService
-      .get('Presupuesto/GetById/' + this.id)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.data = this.customToastService.onCloseOnGetData(resp.body);
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+    this.apiRequestService
+      .onGetItem(`Presupuesto/GetById/${this.id}`)
+      .then((result: any) => {
+        this.data = result;
       });
   }
 
-  onModalAdd(data: any) {
-    this.ref = this.dialogService.open(AddPartidaCedulaComponent, {
-      data: {
-        idBudgetCard: this.id,
-      },
-      header: 'Agregar Partida',
-      height: 'auto',
-      width: '80%',
-      styleClass: 'modal-md',
-      baseZIndex: 10000,
-      closeOnEscape: true,
-    });
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        this.onLoadData();
-        this.customToastService.onShowSuccess();
-      }
-    });
+  onModalAdd() {
+    this.dialogHandlerService
+      .openDialog(
+        AddPartidaCedulaComponent,
+        {
+          idBudgetCard: this.id,
+        },
+        'Agregar Partida',
+        this.dialogHandlerService.dialogSizeMd
+      )
+      .then((result: boolean) => {
+        if (result) this.onLoadData();
+      });
   }
 
   // Función para eliminar un partida presupuestal
@@ -94,100 +68,72 @@ export default class PresupuestoIndividualComponent implements OnInit {
       .onDelete(`cedulapresupuestal/cedulapresupuestaldetalle/${id}`)
       .then((result: boolean) => {
         if (result) {
-          this.data = this.data.filter((item) => item.id !== id);
-
-          // // Elimina el elemento de la matriz
-          // const index = this.data.budgetDetailDto.findIndex(
-          //   (item) => item.id === id
-          // );
-          // if (index !== -1) {
-          //   this.data.budgetDetailDto.splice(index, 1);
-          // }
-          // // Forza una actualización de la vista
-          // this.cdr.detectChanges();
+          this.data = this.data.filter((item: any) => item.id !== id);
         }
       });
   }
   // Función para eliminar
   onGetHistorial(id: number) {
-    this.ref = this.dialogService.open(
+    this.dialogHandlerService.openDialog(
       PresupuestoDetalleEdicionHistorialComponent,
       {
-        data: {
-          id,
-        },
-        header: 'Historial de movimientos',
-        styleClass: 'modal-md ',
-        closeOnEscape: true,
-        baseZIndex: 10000,
-      }
+        id: this.id,
+      },
+      'Historial de movimientos',
+      this.dialogHandlerService.dialogSizeMd
     );
   }
   onModalInfoCuenta(id: number) {
-    this.ref = this.dialogService.open(InfoCuentaComponent, {
-      data: {
-        id,
+    this.dialogHandlerService.openDialog(
+      InfoCuentaComponent,
+      {
+        id: this.id,
       },
-      header: 'Consideraciones',
-      styleClass: 'modal-md ',
-      closeOnEscape: true,
-      baseZIndex: 10000,
-    });
+      'Consideraciones',
+      this.dialogHandlerService.dialogSizeMd
+    );
   }
 
   // Función para abrir un cuadro de diálogo modal para agregar o editar información sobre un banco
   onModalAddOrEdit(data: any) {
-    this.ref = this.dialogService.open(EditPartidaCedulaComponent, {
-      data: {
-        id: data.id,
-      },
-      header: data.title,
-      styleClass: 'modal-md ',
-      closeOnEscape: true,
-      baseZIndex: 10000,
-    });
-
-    // Escuchar el evento 'onClose' cuando se cierra el cuadro de diálogo
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        // Cuando se recibe 'true', mostrar un mensaje de éxito y volver a cargar los datos
-        this.customToastService.onShowSuccess();
-        this.onLoadData();
-      }
-    });
+    this.dialogHandlerService
+      .openDialog(
+        EditPartidaCedulaComponent,
+        {
+          id: this.id,
+        },
+        data.title,
+        this.dialogHandlerService.dialogSizeMd
+      )
+      .then((result: boolean) => {
+        if (result) this.onLoadData();
+      });
   }
 
   ServiciosMttoProgramados(cuentaId: number) {
-    this.ref = this.dialogService.open(MantenimientosProgramadosComponent, {
-      data: {
-        cuentaId,
+    this.dialogHandlerService.openDialog(
+      MantenimientosProgramadosComponent,
+      {
+        cuentaId: cuentaId,
       },
-      header: 'Mantenimientos programados',
-      styleClass: 'modal-md ',
-      closeOnEscape: true,
-      baseZIndex: 10000,
-    });
+      'Mantenimientos programados',
+      this.dialogHandlerService.dialogSizeMd
+    );
   }
 
   onModalDocument(id: number) {
-    this.ref = this.dialogService.open(PresupuestoEditionFileComponent, {
-      data: {
-        id,
-      },
-      header: 'Soporte documentos',
-      styleClass: 'modal-lg',
-      closeOnEscape: true,
-      baseZIndex: 10000,
-    });
-
-    // Escuchar el evento 'onClose' cuando se cierra el cuadro de diálogo
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        // Cuando se recibe 'true', mostrar un mensaje de éxito y volver a cargar los datos
-        this.customToastService.onShowSuccess();
-        this.onLoadData();
-      }
-    });
+    this.dialogHandlerService
+      .openDialog(
+        PresupuestoEditionFileComponent,
+        {
+          id: id,
+        },
+        'Soporte documentos',
+        this.dialogHandlerService.dialogSizeMd
+      )
+      .then((result: boolean) => {
+        if (result) this.onLoadData();
+      });
   }
 
   onEnterPressed(item: any) {
@@ -199,40 +145,30 @@ export default class PresupuestoIndividualComponent implements OnInit {
       employeeId: this.employeeId,
       monthlyBudget: item.monthlyBudget,
     };
-    // Realizar una solicitud HTTP para obtener datos de bancos
-    this.dataService
-      .post(`Presupuesto/UpdateAccount/`, data)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          // Cuando se actualiza el elemento con éxito, buscar su índice en la matriz
-          const index = this.data.budgetDetailDto.findIndex(
-            (existingItem) => existingItem.id === data.id
-          );
-          // Calcula el porcentaje de aumento
-          const porcentaje = this.PorcentajeAumento(
-            data.monthlyBudget,
-            item.monthlyBudgetFormet
-          ); // Reemplaza 'originalValor' por el valor correcto
 
-          if (index !== -1) {
-            // Actualiza el elemento en la matriz
-            this.data.budgetDetailDto[index] = {
-              ...this.data.budgetDetailDto[index],
-              monthlyBudget: parseFloat(data.monthlyBudget).toLocaleString(),
-              percentageIncrease: porcentaje,
-              totalBudget: (
-                this.data.duracion * parseFloat(data.monthlyBudget)
-              ).toLocaleString(),
-            };
-          }
+    this.apiRequestService
+      .onPost(`Presupuesto/UpdateAccount/`, data)
+      .then((_) => {
+        const index = this.data.budgetDetailDto.findIndex(
+          (existingItem) => existingItem.id === data.id
+        );
+        // Calcula el porcentaje de aumento
+        const porcentaje = this.PorcentajeAumento(
+          data.monthlyBudget,
+          item.monthlyBudgetFormet
+        ); // Reemplaza 'originalValor' por el valor correcto
 
-          // Oculta el mensaje de carga
-          // this.customToastService.onCloseToSuccess();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+        if (index !== -1) {
+          // Actualiza el elemento en la matriz
+          this.data.budgetDetailDto[index] = {
+            ...this.data.budgetDetailDto[index],
+            monthlyBudget: parseFloat(data.monthlyBudget).toLocaleString(),
+            percentageIncrease: porcentaje,
+            totalBudget: (
+              this.data.duracion * parseFloat(data.monthlyBudget)
+            ).toLocaleString(),
+          };
+        }
       });
   }
   onEnterPressedPorcentaje(item: any) {
@@ -262,33 +198,25 @@ export default class PresupuestoIndividualComponent implements OnInit {
       monthlyBudget: newmonthlyBudget,
     };
 
-    // Luego, realiza la solicitud POST con el objeto actualizado
-    this.dataService
-      .post(`Presupuesto/UpdateAccount/`, data)
-      .pipe(takeUntil(this.destroy$))
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          // Cuando se actualiza el elemento con éxito, buscar su índice en la matriz
-          const index = this.data.budgetDetailDto.findIndex(
-            (existingItem) => existingItem.id === data.id
-          );
+    this.apiRequestService
+      .onPost(`Presupuesto/UpdateAccount/`, data)
+      .then((result: boolean) => {
+        // Cuando se actualiza el elemento con éxito, buscar su índice en la matriz
+        const index = this.data.budgetDetailDto.findIndex(
+          (existingItem) => existingItem.id === data.id
+        );
 
-          if (index !== -1) {
-            // Actualiza el elemento en la matriz
-            this.data.budgetDetailDto[index] = {
-              ...this.data.budgetDetailDto[index],
-              monthlyBudget: newmonthlyBudget.toLocaleString(),
-              percentageIncrease: percentageIncrease.toFixed(2) + '%',
-              totalBudget: (
-                this.data.duracion * newmonthlyBudget
-              ).toLocaleString(),
-            };
-          }
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+        if (index !== -1) {
+          // Actualiza el elemento en la matriz
+          this.data.budgetDetailDto[index] = {
+            ...this.data.budgetDetailDto[index],
+            monthlyBudget: newmonthlyBudget.toLocaleString(),
+            percentageIncrease: percentageIncrease.toFixed(2) + '%',
+            totalBudget: (
+              this.data.duracion * newmonthlyBudget
+            ).toLocaleString(),
+          };
+        }
       });
   }
 
@@ -296,17 +224,19 @@ export default class PresupuestoIndividualComponent implements OnInit {
     presupuestoAnteriorDetalleId: number,
     presupuestoAnteriorId: number
   ) {
-    this.ref = this.dialogService.open(OrdenesCompraCedulaComponent, {
-      data: {
-        partidaPresupuestalId: presupuestoAnteriorDetalleId,
-        cedulaPresupuestalId: presupuestoAnteriorId,
-      },
-      header: 'Ordenes de Compra',
-      height: '100%',
-      width: '100%',
-      baseZIndex: 10000,
-      closeOnEscape: true,
-    });
+    this.dialogHandlerService
+      .openDialog(
+        OrdenesCompraCedulaComponent,
+        {
+          partidaPresupuestalId: presupuestoAnteriorDetalleId,
+          cedulaPresupuestalId: presupuestoAnteriorId,
+        },
+        'Ordenes de Compra',
+        this.dialogHandlerService.dialogSizeMd
+      )
+      .then((result: boolean) => {
+        if (result) this.onLoadData();
+      });
   }
 
   private PorcentajeAumento(
@@ -330,11 +260,5 @@ export default class PresupuestoIndividualComponent implements OnInit {
     const porcentajeAumento = (aumento / originalValorNumero) * 100;
 
     return porcentajeAumento.toFixed(2) + '%';
-  }
-
-  ngOnDestroy(): void {
-    // Cuando se destruye el componente, desvincular y liberar recursos
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 }

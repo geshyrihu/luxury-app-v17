@@ -2,11 +2,9 @@ import { Component, OnInit, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { ResetPasswordDto } from 'src/app/core/interfaces/user-info.interface';
-import {
-  ApiRequestService,
-  CustomToastService,
-} from 'src/app/core/services/common-services';
+import { IResetPassword } from 'src/app/core/interfaces/reset-password.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 @Component({
   selector: 'app-update-password-modal',
   templateUrl: './update-password-modal.component.html',
@@ -15,13 +13,13 @@ import {
 })
 export default class UpdatePasswordModalComponent implements OnInit {
   private customToastService = inject(CustomToastService);
-  public apiRequestService = inject(ApiRequestService);
-  public config = inject(DynamicDialogConfig);
-  public ref = inject(DynamicDialogRef);
+  apiRequestService = inject(ApiRequestService);
+  config = inject(DynamicDialogConfig);
+  ref = inject(DynamicDialogRef);
 
   submitting: boolean = false;
   applicationUserId: string = this.config.data.applicationUserId;
-  userInfoDto: ResetPasswordDto;
+  userInfoDto: IResetPassword;
 
   form: FormGroup;
 

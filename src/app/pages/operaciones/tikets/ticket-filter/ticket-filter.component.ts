@@ -7,8 +7,8 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { EStatusTask } from 'src/app/core/enums/estatus-task.enum';
 import { EPriority } from 'src/app/core/enums/priority.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
-import { IFilterTicket } from 'src/app/core/interfaces/IFilterTicket.interface';
-import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
+import { IFilterTicket } from 'src/app/core/interfaces/filter-ticket.interface';
+import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { TicketFilterService } from 'src/app/core/services/ticket-filter.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
@@ -21,18 +21,18 @@ import { DataService } from '../../../../core/services/data.service';
 })
 export default class FilterTicketComponent implements OnInit {
   private filterReportOperation = inject(TicketFilterService);
-  private formBuilder = inject(FormBuilder);
-  private dataService = inject(DataService);
-  public config = inject(DynamicDialogConfig);
-  public ref = inject(DynamicDialogRef);
-  public apiRequestService = inject(ApiRequestService);
+  formBuilder = inject(FormBuilder);
+  dataService = inject(DataService);
+  config = inject(DynamicDialogConfig);
+  ref = inject(DynamicDialogRef);
+  apiRequestService = inject(ApiRequestService);
 
   filterTicket: IFilterTicket;
-  cb_status: ISelectItemDto[] = onGetSelectItemFromEnum(EStatusTask);
-  cb_priority: ISelectItemDto[] = onGetSelectItemFromEnum(EPriority);
-  cb_area_responsable: ISelectItemDto[] = [];
-  cb_customer: ISelectItemDto[] = [];
-  cb_solicitantes: ISelectItemDto[] = [];
+  cb_status: ISelectItem[] = onGetSelectItemFromEnum(EStatusTask);
+  cb_priority: ISelectItem[] = onGetSelectItemFromEnum(EPriority);
+  cb_area_responsable: ISelectItem[] = [];
+  cb_customer: ISelectItem[] = [];
+  cb_solicitantes: ISelectItem[] = [];
   messageError: string = '';
 
   form: FormGroup;

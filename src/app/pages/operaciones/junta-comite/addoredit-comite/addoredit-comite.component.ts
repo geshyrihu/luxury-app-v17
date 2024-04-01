@@ -3,12 +3,10 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
-import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
-import {
-  ApiRequestService,
-  CustomToastService,
-  DataService,
-} from 'src/app/core/services/common-services';
+import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { DataService } from 'src/app/core/services/data.service';
 @Component({
   selector: 'app-addoredit-comite',
   templateUrl: './addoredit-comite.component.html',
@@ -16,10 +14,10 @@ import {
   imports: [LuxuryAppComponentsModule],
 })
 export default class AddOrEditComiteComponent implements OnInit, OnDestroy {
-  public apiRequestService = inject(ApiRequestService);
-  public config = inject(DynamicDialogConfig);
-  public customToastService = inject(CustomToastService);
-  public dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
+  config = inject(DynamicDialogConfig);
+  customToastService = inject(CustomToastService);
+  dataService = inject(DataService);
   public messageService = inject(MessageService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
@@ -28,7 +26,7 @@ export default class AddOrEditComiteComponent implements OnInit, OnDestroy {
   @Input()
   meetingId: number;
   cb_ParticipantComite: any[] = [];
-  cb_Comite: ISelectItemDto[] = [];
+  cb_Comite: ISelectItem[] = [];
   comiteparticipante = '';
   participantsList: any[] = [];
   listaParticipantesComite: any[] = [];

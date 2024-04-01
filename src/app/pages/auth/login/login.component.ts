@@ -1,11 +1,13 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import {
-  ApiRequestService,
-  SecurityService,
-} from 'src/app/core/services/common-services';
+import { catchError, throwError } from 'rxjs';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { DataService } from 'src/app/core/services/data.service';
+import { SecurityService } from 'src/app/core/services/security.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import Swal from 'sweetalert2';
 @Component({
@@ -15,11 +17,13 @@ import Swal from 'sweetalert2';
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class LoginComponent implements OnInit {
-  private formBuilder = inject(FormBuilder);
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
-  private securityService = inject(SecurityService);
-  public apiRequestService = inject(ApiRequestService);
+  activateRoute = inject(ActivatedRoute);
+  apiRequestService = inject(ApiRequestService);
+  customToastService = inject(CustomToastService);
+  dataService = inject(DataService);
+  formBuilder = inject(FormBuilder);
+  router = inject(Router);
+  securityService = inject(SecurityService);
 
   fieldTextType!: boolean;
   form: FormGroup;
@@ -28,7 +32,8 @@ export default class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     // Captura el returnUrl de los queryParams o asigna '/' por defecto
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+    this.returnUrl =
+      this.activateRoute.snapshot.queryParams['returnUrl'] || '/';
     // Inicializa el formulario al cargar el componente
     this.onLoadForm();
     // Reinicia los datos de autenticación
@@ -38,24 +43,33 @@ export default class LoginComponent implements OnInit {
   onSubmit() {
     // Verifica si el formulario es inválido y marca todos los campos como tocados si es así
     if (!this.apiRequestService.validateForm(this.form)) return;
+    this.dataService
+      .post('Auth/login', this.form.value)
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          let errorMessage = 'Ha ocurrido un error en la solicitud.';
 
-    this.apiRequestService
-      .onPostLogin('Auth/login', this.form.value)
-      .then((result: any) => {
-        console.log('🚀 ~ result:', result);
+          if (error.error && error.error.description) {
+            errorMessage = error.error.description;
+          }
 
-        if (result.token != null) {
-          this.onRemember(this.form.get('remember').value);
-          this.router.navigateByUrl(localStorage.getItem('currentUrl'));
-          this.securityService.setAuthData(result.token);
-        } else {
           Swal.fire({
             allowOutsideClick: false,
             icon: 'error',
             title: 'Error',
-            // text: error.error['description'], // Aquí puedes acceder a la descripción del error
-            text: 'Usuario o contraseña incorrectas', // Aquí puedes acceder a la descripción del error
+            text: errorMessage,
           });
+
+          // Retornar un observable con un error para que la cadena de observables continúe
+          return throwError(errorMessage);
+        })
+      )
+      .subscribe((resp: any) => {
+        if (resp.body.token != null) {
+          this.onRemember(this.form.get('remember').value);
+          this.router.navigateByUrl(localStorage.getItem('currentUrl'));
+          this.securityService.setAuthData(resp.body.token);
+          this.customToastService.onCloseToSuccess();
         }
       });
   }

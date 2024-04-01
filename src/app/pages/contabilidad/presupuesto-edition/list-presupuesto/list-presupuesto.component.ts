@@ -1,15 +1,13 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { MessageService } from 'primeng/api';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { Observable } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataService } from 'src/app/core/services/data.service';
-
+import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import AddoreditPeriodoCedulaPresupuestalComponent from '../../../operaciones/compras/cedula-presupuestal/addoredit-periodo-cedula.component';
 import PresupuestoAddComponent from '../presupuesto-add/presupuesto-add.component';
 
@@ -20,19 +18,15 @@ import PresupuestoAddComponent from '../presupuesto-add/presupuesto-add.componen
   imports: [LuxuryAppComponentsModule],
 })
 export default class ListPresupuestoComponent implements OnInit {
-  public authService = inject(AuthService);
+  apiRequestService = inject(ApiRequestService);
+  dialogHandlerService = inject(DialogHandlerService);
+  authService = inject(AuthService);
   public customerIdService = inject(CustomerIdService);
-  public customToastService = inject(CustomToastService);
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
-  public dialogService = inject(DialogService);
-  public messageService = inject(MessageService);
+  customToastService = inject(CustomToastService);
   public router = inject(Router);
 
   data: any[] = [];
   ref: DynamicDialogRef;
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   customerId$: Observable<number> = this.customerIdService.getCustomerId$();
 
@@ -44,79 +38,57 @@ export default class ListPresupuestoComponent implements OnInit {
     });
   }
   onLoadData() {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .get(`Presupuesto/GetList/${this.customerIdService.customerId}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.data = this.customToastService.onCloseOnGetData(resp.body);
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+    this.apiRequestService
+      .onGetList(`Presupuesto/GetList/${this.customerIdService.customerId}`)
+      .then((result: any) => {
+        this.data = result;
       });
   }
 
   onFinished(cedulaId: number, finished: boolean) {
-    this.dataService
-      .get(`Presupuesto/Finished/${cedulaId}/${finished}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          // Actualiza solo el registro afectado en lugar de toda la lista
-          const updatedRecord = resp.body;
-          const recordIndex = this.data.findIndex(
-            (record) => record.id === updatedRecord.id
-          );
-          if (recordIndex !== -1) {
-            this.data[recordIndex] = updatedRecord;
-          }
-          this.customToastService.onCloseToSuccess();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+    this.apiRequestService
+      .onGetItem(`Presupuesto/Finished/${cedulaId}/${finished}`)
+      .then((result: any) => {
+        // Actualiza solo el registro afectado en lugar de toda la lista
+        const updatedRecord = result;
+        const recordIndex = this.data.findIndex(
+          (record) => record.id === updatedRecord.id
+        );
+        if (recordIndex !== -1) {
+          this.data[recordIndex] = updatedRecord;
+        }
+        this.customToastService.onCloseToSuccess();
       });
   }
 
   onAddPresupuesto(id: number) {
-    this.ref = this.dialogService.open(PresupuestoAddComponent, {
-      header: 'Agregar presupuesto',
-      data: {
-        id,
-      },
-      height: 'auto',
-      styleClass: 'modal-sm',
-      baseZIndex: 10000,
-      closeOnEscape: true,
-    });
-    this.ref.onClose.subscribe(() => {
-      this.onLoadData();
-    });
+    this.dialogHandlerService
+      .openDialog(
+        PresupuestoAddComponent,
+        {
+          id: id,
+        },
+        'Agregar presupuesto',
+        this.dialogHandlerService.dialogSizeMd
+      )
+      .then((result: boolean) => {
+        if (result) this.onLoadData();
+      });
   }
 
   onModalAddOrEdit(id: number) {
-    this.ref = this.dialogService.open(
-      AddoreditPeriodoCedulaPresupuestalComponent,
-      {
-        data: {
+    this.dialogHandlerService
+      .openDialog(
+        AddoreditPeriodoCedulaPresupuestalComponent,
+        {
           cedulaId: id,
         },
-        header: 'Editar Periodo',
-        height: 'auto',
-        styleClass: 'modal-sm',
-        baseZIndex: 10000,
-        closeOnEscape: true,
-      }
-    );
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        this.customToastService.onShowSuccess();
-        this.onLoadData();
-      }
-    });
+        'Editar Periodo',
+        this.dialogHandlerService.dialogSizeMd
+      )
+      .then((result: boolean) => {
+        if (result) this.onLoadData();
+      });
   }
   onGetPresupuestoDetalle(id: number) {
     this.router.navigate(['/operaciones/compras/presupuesto-individual/', id]);

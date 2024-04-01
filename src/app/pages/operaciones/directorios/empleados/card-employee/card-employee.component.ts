@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
-import { IUserCardDto } from 'src/app/core/interfaces/IUserCardDto.interface';
+import { IUserCard } from 'src/app/core/interfaces/user-card.interface';
 import PhoneFormatPipe from 'src/app/core/pipes/phone-format.pipe';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
@@ -15,17 +15,17 @@ import { environment } from 'src/environments/environment';
   imports: [LuxuryAppComponentsModule, PhoneFormatPipe],
 })
 export default class CardEmployeeComponent implements OnInit, OnDestroy {
-  private dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
-  public ref = inject(DynamicDialogRef);
-  public config = inject(DynamicDialogConfig);
-  public customToastService = inject(CustomToastService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
+  ref = inject(DynamicDialogRef);
+  config = inject(DynamicDialogConfig);
+  customToastService = inject(CustomToastService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   urlImage: string = '';
   employeeId: number = 0;
-  user: IUserCardDto;
+  user: IUserCard;
 
   ngOnInit(): void {
     this.employeeId = this.config.data.employeeId;
@@ -34,7 +34,7 @@ export default class CardEmployeeComponent implements OnInit, OnDestroy {
 
   onLoadData() {
     this.dataService
-      .get<IUserCardDto>(`Auth/CardUser/${this.employeeId}`)
+      .get<IUserCard>(`Auth/CardUser/${this.employeeId}`)
       .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {

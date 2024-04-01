@@ -4,18 +4,15 @@ import { MessageService } from 'primeng/api';
 import { LocaleSettings } from 'primeng/calendar';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
-import { IFechasFiltro } from 'src/app/core/interfaces/IFechasFiltro.interface';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomToastService,
-  CustomerIdService,
-  DataService,
-  DateService,
-  FiltroCalendarService,
-} from 'src/app/core/services/common-services';
+import { IFechasFiltro } from 'src/app/core/interfaces/fechas-filtro.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
+import { DataService } from 'src/app/core/services/data.service';
+import { DateService } from 'src/app/core/services/date.service';
+import { FiltroCalendarService } from 'src/app/core/services/filtro-calendar.service';
 import CardEmployeeComponent from 'src/app/pages/operaciones/directorios/empleados/card-employee/card-employee.component';
-
 import FormBitacoraMantenimientoComponent from './form-bitacora-mantenimiento.component';
 
 @Component({
@@ -28,10 +25,10 @@ export default class BitacoraMantenimientoComponent
   implements OnInit, OnDestroy
 {
   public dateService = inject(DateService);
-  public customToastService = inject(CustomToastService);
+  customToastService = inject(CustomToastService);
   public dialogService = inject(DialogService);
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
   public authServide = inject(AuthService);
   public messageService = inject(MessageService);
   public customerIdService = inject(CustomerIdService);

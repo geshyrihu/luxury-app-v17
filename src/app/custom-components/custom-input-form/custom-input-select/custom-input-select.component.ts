@@ -6,7 +6,7 @@ import {
   NG_VALUE_ACCESSOR,
 } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
+import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import ValidationErrorsCustomInputComponent from '../validation-errors-custom-input/validation-errors-custom-input.component';
 @Component({
   selector: 'custom-input-select',
@@ -29,7 +29,7 @@ export default class CustomInputSelectComponent
   implements ControlValueAccessor
 {
   @Input() control: FormControl;
-  @Input() data: ISelectItemDto[];
+  @Input() data: ISelectItem[];
   @Input() hidden: boolean = true;
   @Input() horizontal: boolean = true;
   @Input() label: string;

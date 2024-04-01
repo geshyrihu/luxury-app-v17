@@ -1,4 +1,4 @@
-export interface EmailDataAddOrEditDto {
+export interface IEmailDataAddOrEdit {
   applicationUserId: string;
   port: number;
   smtp: string;

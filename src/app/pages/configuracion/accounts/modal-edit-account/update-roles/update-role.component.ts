@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { IRolesDto } from 'src/app/core/interfaces/IRolesDto.interface';
-import { ApiRequestService } from 'src/app/core/services/common-services';
+import { IRoles } from 'src/app/core/interfaces/roles.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
 @Component({
   selector: 'app-update-role',
   templateUrl: './update-role.component.html',
@@ -9,10 +9,10 @@ import { ApiRequestService } from 'src/app/core/services/common-services';
   imports: [LuxuryAppComponentsModule],
 })
 export default class UpdateRoleComponent implements OnInit {
-  public apiRequestService = inject(ApiRequestService);
+  apiRequestService = inject(ApiRequestService);
 
-  roles: IRolesDto[] = [];
-  rolesUpdate: IRolesDto[] = [];
+  roles: IRoles[] = [];
+  rolesUpdate: IRoles[] = [];
   checked = false;
 
   @Input()

@@ -7,12 +7,10 @@ import { Subject, takeUntil } from 'rxjs';
 import { cb_ESiNo } from 'src/app/core/enums/si-no.enum';
 import { EStatus } from 'src/app/core/enums/status.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
-import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
-import {
-  ApiRequestService,
-  CustomToastService,
-  DataService,
-} from 'src/app/core/services/common-services';
+import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { DataService } from 'src/app/core/services/data.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
@@ -24,19 +22,19 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 export default class AddoreditModificacionSalarioComponent
   implements OnInit, OnDestroy
 {
-  private dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
-  private formBuilder = inject(FormBuilder);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
+  formBuilder = inject(FormBuilder);
   private customToastService = inject(CustomToastService);
-  public config = inject(DynamicDialogConfig);
-  public ref = inject(DynamicDialogRef);
+  config = inject(DynamicDialogConfig);
+  ref = inject(DynamicDialogRef);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   submitting: boolean = false;
 
-  cb_status: ISelectItemDto[] = onGetSelectItemFromEnum(EStatus);
-  cb_si_no: ISelectItemDto[] = cb_ESiNo;
+  cb_status: ISelectItem[] = onGetSelectItemFromEnum(EStatus);
+  cb_si_no: ISelectItem[] = cb_ESiNo;
   id: number = 0;
 
   form: FormGroup = this.formBuilder.group({
@@ -100,21 +98,4 @@ export default class AddoreditModificacionSalarioComponent
   ngOnDestroy(): void {
     this.dataService.ngOnDestroy();
   }
-}
-
-export interface RequestSalaryModificationAddOrEditDto {
-  employeeId: number;
-  workPositionId: number;
-  requestDate: string;
-  soport: string;
-  professionCurrentId: number;
-  professionNewId: number;
-  currentSalary: number;
-  finalSalary: number;
-  executionDate: string;
-  folio: string;
-  retroactive: boolean;
-  status: string;
-  applicationUserId: string;
-  confirmationFinish: boolean;
 }

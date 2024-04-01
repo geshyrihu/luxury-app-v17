@@ -5,16 +5,13 @@ import saveAs from 'file-saver';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
-import { IMeetingIndexDto } from 'src/app/core/interfaces/IMeetingIndexDto.interface';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomToastService,
-  CustomerIdService,
-  DataService,
-  ReportService,
-} from 'src/app/core/services/common-services';
-
+import { IMeetingIndex } from 'src/app/core/interfaces/meeting-index.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
+import { DataService } from 'src/app/core/services/data.service';
+import { ReportService } from 'src/app/core/services/report.service';
 import AddOrEditMeetingDetailComponent from './addoredit-meeting-detail.component';
 import AddOrEditMeetingComponent from './addoredit-meeting.component';
 import AddoreditMinutaDetalleComponent from './addoredit-minuta-detalle/addoredit-minuta-detalle.component';
@@ -27,18 +24,18 @@ import AddorEditMeetingSeguimientoComponent from './addoredit-seguimiento/addor-
   imports: [LuxuryAppComponentsModule],
 })
 export default class ListMinutasComponent implements OnInit, OnDestroy {
-  public authService = inject(AuthService);
+  authService = inject(AuthService);
   public confirmationService = inject(ConfirmationService);
   public customerIdService = inject(CustomerIdService);
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
   public reportService = inject(ReportService);
   public route = inject(Router);
-  public customToastService = inject(CustomToastService);
+  customToastService = inject(CustomToastService);
 
-  data: IMeetingIndexDto[] = [];
+  data: IMeetingIndex[] = [];
   tipoJunta: string = 'Comité';
   ref: DynamicDialogRef;
 
@@ -59,7 +56,7 @@ export default class ListMinutasComponent implements OnInit, OnDestroy {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
     this.dataService
-      .get<IMeetingIndexDto[]>(
+      .get<IMeetingIndex[]>(
         `Meetings/GetAll/${this.customerIdService.customerId}/${this.tipoJunta}`
       )
       .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
@@ -104,7 +101,7 @@ export default class ListMinutasComponent implements OnInit, OnDestroy {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
     this.dataService
-      .get<IMeetingIndexDto[]>(`SendEmail/Meeting/${meetingId}`)
+      .get<IMeetingIndex[]>(`SendEmail/Meeting/${meetingId}`)
       .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {

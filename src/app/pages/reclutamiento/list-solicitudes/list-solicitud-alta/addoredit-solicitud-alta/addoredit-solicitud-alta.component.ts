@@ -7,12 +7,10 @@ import { Subject, takeUntil } from 'rxjs';
 import { EStatus } from 'src/app/core/enums/status.enum';
 import { ETypeContractRegister } from 'src/app/core/enums/type-contract-register.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
-import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
-import {
-  ApiRequestService,
-  CustomToastService,
-  DataService,
-} from 'src/app/core/services/common-services';
+import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { DataService } from 'src/app/core/services/data.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
@@ -24,15 +22,15 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 export default class AddOrEditSolicitudAltaComponent
   implements OnInit, OnDestroy
 {
-  private formBuilder = inject(FormBuilder);
-  private dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
-  public ref = inject(DynamicDialogRef);
-  public config = inject(DynamicDialogConfig);
+  formBuilder = inject(FormBuilder);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
+  ref = inject(DynamicDialogRef);
+  config = inject(DynamicDialogConfig);
   private customToastService = inject(CustomToastService);
 
   submitting: boolean = false;
-  empleados: ISelectItemDto[] = [];
+  empleados: ISelectItem[] = [];
   cb_status = onGetSelectItemFromEnum(EStatus);
   cb_typeContractRegister = onGetSelectItemFromEnum(ETypeContractRegister);
   id: number = 0;

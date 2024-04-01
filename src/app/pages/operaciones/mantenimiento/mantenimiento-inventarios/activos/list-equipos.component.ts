@@ -5,15 +5,12 @@ import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subject, Subscription } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomToastService,
-  CustomerIdService,
-  DataService,
-} from 'src/app/core/services/common-services';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
+import { DataService } from 'src/app/core/services/data.service';
 import AddoreditMaintenancePreventiveComponent from 'src/app/pages/operaciones/calendarios/mantenimiento-preventivo/addoredit-maintenance-preventive.component';
-
 import { environment } from 'src/environments/environment';
 import BitacoraIndividualComponent from '../../mantenimiento-bitacoras/recorridos/bitacora-individual.component';
 import OrderServiceComponent from '../orden-service/order-service.component';
@@ -29,11 +26,11 @@ import ServiceHistoryMachineryComponent from './service-history-machinery/servic
   imports: [LuxuryAppComponentsModule],
 })
 export default class ListEquiposComponent implements OnInit, OnDestroy {
-  public customToastService = inject(CustomToastService);
+  customToastService = inject(CustomToastService);
   public customerIdService = inject(CustomerIdService);
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
-  public authService = inject(AuthService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
+  authService = inject(AuthService);
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
   public rutaActiva = inject(ActivatedRoute);

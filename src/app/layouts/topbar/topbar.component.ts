@@ -6,12 +6,10 @@ import { NgbDropdownModule, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DialogModule } from 'primeng/dialog';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { InfoEmployeeAuthDto } from 'src/app/core/interfaces/user-token.interface';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomToastService,
-} from 'src/app/core/services/common-services';
+import { IInfoEmployeeAuth } from 'src/app/core/interfaces/user-token.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import { ProfielServiceService } from 'src/app/core/services/profiel-service.service';
 import AddoreditPersonDataComponent from 'src/app/pages/person/addoredit-person-data/addoredit-person-data.component';
@@ -37,19 +35,19 @@ import ModalSearchComponent from '../modal-search/modal-search.component';
 export class TopbarComponent implements OnInit {
   private location = inject(Location);
   private router = inject(Router);
-  public authService = inject(AuthService);
-  public customToastService = inject(CustomToastService);
+  authService = inject(AuthService);
+  customToastService = inject(CustomToastService);
   public dialogService = inject(DialogService);
   public profielServiceService = inject(ProfielServiceService);
-  public dialogHandlerService = inject(DialogHandlerService);
-  public apiRequestService = inject(ApiRequestService);
+  dialogHandlerService = inject(DialogHandlerService);
+  apiRequestService = inject(ApiRequestService);
 
   personId: number = this.authService.userTokenDto.infoEmployeeDto.personId;
 
   @Output() settingsButtonClicked = new EventEmitter();
 
   valueset: any;
-  dataInfo: InfoEmployeeAuthDto;
+  dataInfo: IInfoEmployeeAuth;
   imagenPerfilUrl = '';
   ref: DynamicDialogRef | undefined;
 

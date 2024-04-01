@@ -5,14 +5,12 @@ import LuxuryAppComponentsModule, {
 } from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
-import { IMeetingDertailsSeguimientoAddOrEditDto } from 'src/app/core/interfaces/IMeetingDertailsSeguimientoAddOrEditDto.interface';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomToastService,
-  DataService,
-  DateService,
-} from 'src/app/core/services/common-services';
+import { IMeetingDertailsSeguimientoAddOrEdit } from 'src/app/core/interfaces/meeting-dertails-seguimiento-add-or-edit.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { DataService } from 'src/app/core/services/data.service';
+import { DateService } from 'src/app/core/services/date.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
@@ -25,12 +23,12 @@ export default class AddorEditMeetingSeguimientoComponent
   implements OnInit, OnDestroy
 {
   public dateService = inject(DateService);
-  private formBuilder = inject(FormBuilder);
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
-  public ref = inject(DynamicDialogRef);
-  public config = inject(DynamicDialogConfig);
-  public authService = inject(AuthService);
+  formBuilder = inject(FormBuilder);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
+  ref = inject(DynamicDialogRef);
+  config = inject(DynamicDialogConfig);
+  authService = inject(AuthService);
   private customToastService = inject(CustomToastService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
@@ -79,7 +77,7 @@ export default class AddorEditMeetingSeguimientoComponent
     this.customToastService.onLoading();
     if (this.id === 0) {
       this.dataService
-        .post<IMeetingDertailsSeguimientoAddOrEditDto>(
+        .post<IMeetingDertailsSeguimientoAddOrEdit>(
           `MeetingDertailsSeguimiento`,
           this.form.value
         )
@@ -96,7 +94,7 @@ export default class AddorEditMeetingSeguimientoComponent
         });
     } else {
       this.dataService
-        .put<IMeetingDertailsSeguimientoAddOrEditDto>(
+        .put<IMeetingDertailsSeguimientoAddOrEdit>(
           `MeetingDertailsSeguimiento/${this.id}`,
           this.form.value
         )

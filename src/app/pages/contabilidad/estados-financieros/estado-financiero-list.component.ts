@@ -1,13 +1,10 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { MessageService } from 'primeng/api';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { Observable } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataService } from 'src/app/core/services/data.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import { environment } from 'src/environments/environment';
 import AddFileEstadoFinancieroComponent from './add-file-estado-financiero/add-file-estado-financiero.component';
@@ -17,19 +14,11 @@ import AddFileEstadoFinancieroComponent from './add-file-estado-financiero/add-f
   standalone: true,
   imports: [LuxuryAppComponentsModule],
 })
-export default class EstadoFinancieroListComponent
-  implements OnInit, OnDestroy
-{
+export default class EstadoFinancieroListComponent implements OnInit {
   private authService = inject(AuthService);
   private customerIdService = inject(CustomerIdService);
-  public messageService = inject(MessageService);
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
-  public customToastService = inject(CustomToastService);
-  public dialogHandlerService = inject(DialogHandlerService);
-  public dialogService = inject(DialogService);
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+  dialogHandlerService = inject(DialogHandlerService);
+  apiRequestService = inject(ApiRequestService);
 
   data: any[] = [];
   ref: DynamicDialogRef;
@@ -45,19 +34,12 @@ export default class EstadoFinancieroListComponent
   }
 
   onLoadData(): void {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .get(`EstadoFinanciero/ToCustomer/${this.customerIdService.customerId}/`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.data = this.customToastService.onCloseOnGetData(resp.body);
-          console.log('🚀 ~ resp.body:', resp.body);
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+    this.apiRequestService
+      .onGetList(
+        `EstadoFinanciero/ToCustomer/${this.customerIdService.customerId}/`
+      )
+      .then((result: any) => {
+        this.data = result;
       });
   }
 
@@ -77,52 +59,31 @@ export default class EstadoFinancieroListComponent
       });
   }
   onAuthorize(id: string) {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .get(
+    this.apiRequestService
+      .onGetItem(
         `EstadoFinanciero/Authorize/${id}/${this.authService.infoEmployeeDto.personId}`
       )
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          this.customToastService.onCloseToSuccess();
-          this.onLoadData();
-        },
-        error: (error) => {
-          // Habilitar el botón nuevamente al finalizar el envío del formulario
-          this.customToastService.onCloseToError(error);
-        },
+      .then((_) => {
+        this.onLoadData();
       });
   }
   onDesauthorize(id: string) {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .get(`EstadoFinanciero/Desauthorize/${id}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          this.customToastService.onCloseToSuccess();
-          this.onLoadData();
-        },
-        error: (error) => {
-          // Habilitar el botón nuevamente al finalizar el envío del formulario
-          this.customToastService.onCloseToError(error);
-        },
+    this.apiRequestService
+      .onGetItem(`EstadoFinanciero/Desauthorize/${id}`)
+      .then((_) => {
+        this.onLoadData();
       });
   }
 
   // onSendEstadosFinancieros(data: any) {
   onSendEstadosFinancieros(data: any) {
-    this.apiRequestService.onPost(
-      `EstadoFinanciero/Send/${data.id}/${this.authService.infoEmployeeDto.personId}`,
-      null
-    );
-  }
-
-  // Destruir componente
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
+    this.apiRequestService
+      .onPost(
+        `EstadoFinanciero/Send/${data.id}/${this.authService.infoEmployeeDto.personId}`,
+        null
+      )
+      .then((_) => {
+        this.onLoadData();
+      });
   }
 }

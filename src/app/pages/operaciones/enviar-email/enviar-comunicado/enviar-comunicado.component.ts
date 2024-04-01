@@ -9,13 +9,11 @@ import {
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
-import { IDestinatariosMailReporte } from 'src/app/core/interfaces/IDestinatariosMailReporte.interface';
-import {
-  ApiRequestService,
-  CustomToastService,
-  CustomerIdService,
-  DataService,
-} from 'src/app/core/services/common-services';
+import { IDestinatariosMailReporte } from 'src/app/core/interfaces/destinatarios-mail-reporte.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
+import { DataService } from 'src/app/core/services/data.service';
 import AgregarCorreoElectronicoComponent from 'src/app/shared/agregar-correo-electronico/agregar-correo-electronico.component';
 import ListadoCondominosComponent from 'src/app/shared/listado-condominos/listado-condominos.component';
 
@@ -26,10 +24,10 @@ import ListadoCondominosComponent from 'src/app/shared/listado-condominos/listad
   imports: [LuxuryAppComponentsModule, ReactiveFormsModule, FileUploadModule],
 })
 export default class EnviarComunicadoComponent {
-  public apiRequestService = inject(ApiRequestService);
+  apiRequestService = inject(ApiRequestService);
   public customerIdService = inject(CustomerIdService);
-  public customToastService = inject(CustomToastService);
-  public dataService = inject(DataService);
+  customToastService = inject(CustomToastService);
+  dataService = inject(DataService);
   public dialogService = inject(DialogService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente

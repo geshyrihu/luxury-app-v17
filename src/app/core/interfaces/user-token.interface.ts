@@ -1,12 +1,12 @@
-export interface UserTokenDto {
+export interface IUserToken {
   token: string;
   expiration: string;
   roles: string[];
-  infoUserAuthDto: InfoAccountAuthDto;
-  infoEmployeeDto?: InfoEmployeeAuthDto;
+  infoUserAuthDto: IInfoAccountAuth;
+  infoEmployeeDto?: IInfoEmployeeAuth;
 }
 
-export interface InfoAccountAuthDto {
+export interface IInfoAccountAuth {
   applicationUserId: string;
   phone: string;
   email: string;
@@ -16,7 +16,7 @@ export interface InfoAccountAuthDto {
   customer: string;
 }
 
-export interface InfoEmployeeAuthDto {
+export interface IInfoEmployeeAuth {
   employeeId: number | null;
   personId: number | null;
   firstName: string;

@@ -7,12 +7,10 @@ import {
   DynamicDialogRef,
 } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomToastService,
-  DataService,
-} from 'src/app/core/services/common-services';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { DataService } from 'src/app/core/services/data.service';
 import AddProductosAlmacenComponent from 'src/app/pages/operaciones/mantenimiento/mantenimiento-almacen/inventario-productos/add-productos-almacen.component';
 
 import { environment } from 'src/environments/environment';
@@ -26,12 +24,12 @@ import { environment } from 'src/environments/environment';
 export default class OrdenCompraDetalleAddProductoComponent
   implements OnInit, OnDestroy
 {
-  public customToastService = inject(CustomToastService);
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
-  public config = inject(DynamicDialogConfig);
-  public ref = inject(DynamicDialogRef);
-  public authService = inject(AuthService);
+  customToastService = inject(CustomToastService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
+  config = inject(DynamicDialogConfig);
+  ref = inject(DynamicDialogRef);
+  authService = inject(AuthService);
   public messageService = inject(MessageService);
   public dialogService = inject(DialogService);
 

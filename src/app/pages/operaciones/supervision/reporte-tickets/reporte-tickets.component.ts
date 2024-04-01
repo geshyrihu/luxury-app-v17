@@ -3,11 +3,9 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
-import {
-  ApiRequestService,
-  CustomerIdService,
-} from 'src/app/core/services/common-services';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
 import { PeriodoMonthService } from 'src/app/core/services/periodo-month.service';
@@ -22,13 +20,13 @@ const base_urlImg = environment.base_urlImg + 'Administration/accounts/';
 })
 export default class ReporteTicketsComponent implements OnInit, OnDestroy {
   private customerIdService = inject(CustomerIdService);
-  private dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
   public dateService = inject(DateService);
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
   public periodoMonthService = inject(PeriodoMonthService);
-  public customToastService = inject(CustomToastService);
+  customToastService = inject(CustomToastService);
 
   base_urlImg = '';
   data: any[] = [];

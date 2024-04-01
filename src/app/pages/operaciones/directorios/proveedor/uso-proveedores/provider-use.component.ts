@@ -11,11 +11,11 @@ import { DataService } from 'src/app/core/services/data.service';
   imports: [LuxuryAppComponentsModule],
 })
 export default class ProviderUseComponent implements OnInit, OnDestroy {
-  public ref = inject(DynamicDialogRef);
-  public config = inject(DynamicDialogConfig);
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
-  public customToastService = inject(CustomToastService);
+  ref = inject(DynamicDialogRef);
+  config = inject(DynamicDialogConfig);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
+  customToastService = inject(CustomToastService);
   data: any[] = [];
   providerId: number = 0;
 

@@ -1,13 +1,10 @@
 import { Component, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
-import {
-  ApiRequestService,
-  AuthService,
-} from 'src/app/core/services/common-services';
-
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
-import { IUseCFDIDto } from '../../../core/interfaces/IUseCfdi.interface';
+import { IUseCFDI } from '../../../core/interfaces/use-cfdi.interface';
 import AddoreditUsoCFDIComponent from './addoredit-uso-cfdi.component';
 
 @Component({
@@ -17,11 +14,11 @@ import AddoreditUsoCFDIComponent from './addoredit-uso-cfdi.component';
   imports: [LuxuryAppComponentsModule],
 })
 export default class ListUsoCfdiComponent implements OnInit {
-  public authService = inject(AuthService);
-  public dialogHandlerService = inject(DialogHandlerService);
-  public apiRequestService = inject(ApiRequestService);
+  authService = inject(AuthService);
+  dialogHandlerService = inject(DialogHandlerService);
+  apiRequestService = inject(ApiRequestService);
 
-  data: IUseCFDIDto[] = [];
+  data: IUseCFDI[] = [];
 
   ref: DynamicDialogRef;
   ngOnInit(): void {

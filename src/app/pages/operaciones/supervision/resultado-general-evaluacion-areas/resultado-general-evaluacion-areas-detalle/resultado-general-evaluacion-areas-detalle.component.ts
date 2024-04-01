@@ -7,10 +7,8 @@ import { Subject, takeUntil } from 'rxjs';
 import { EAreaMinutasDetalles } from 'src/app/core/enums/area-minutas-detalles.enum';
 import { EStatusTask } from 'src/app/core/enums/estatus-task.enum';
 import { EStatusPipe } from 'src/app/core/pipes/status.pipe';
-import {
-  CustomToastService,
-  DataService,
-} from 'src/app/core/services/common-services';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { DataService } from 'src/app/core/services/data.service';
 
 @Component({
   selector: 'app-resultado-general-evaluacion-areas-detalle',
@@ -27,9 +25,9 @@ import {
 export default class ResultadoGeneralEvaluacionAreasDetalleComponent
   implements OnInit, OnDestroy
 {
-  private dataService = inject(DataService);
-  public config = inject(DynamicDialogConfig);
-  public customToastService = inject(CustomToastService);
+  dataService = inject(DataService);
+  config = inject(DynamicDialogConfig);
+  customToastService = inject(CustomToastService);
 
   data: any;
 

@@ -12,7 +12,7 @@ import {
   FormControl,
   NG_VALUE_ACCESSOR,
 } from '@angular/forms';
-import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
+import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import ValidationErrorsCustomInputComponent from '../validation-errors-custom-input/validation-errors-custom-input.component';
 
 @Component({
@@ -38,7 +38,7 @@ export default class CustomInputDatalistComponent
   @Input() readonly: boolean = false;
   @Input() hidden: boolean = true;
   @Input() dataListId: string;
-  @Input() data: ISelectItemDto[];
+  @Input() data: ISelectItem[];
   value: any;
   onChange: any;
   onTouch: any;

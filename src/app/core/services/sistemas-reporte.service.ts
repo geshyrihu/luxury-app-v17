@@ -5,7 +5,7 @@ import { DataService } from './data.service';
   providedIn: 'root',
 })
 export class SistemasReporteService {
-  private dataService = inject(DataService);
+  dataService = inject(DataService);
 
   data: any[] = [];
   applicationUser: any[] = [];

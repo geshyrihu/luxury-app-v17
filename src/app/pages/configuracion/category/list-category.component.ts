@@ -1,9 +1,8 @@
 import { Component, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
-import { ICategoryDto } from 'src/app/core/interfaces/ICategory.interface';
-import { ApiRequestService } from 'src/app/core/services/common-services';
-
+import { ICategory } from 'src/app/core/interfaces/category.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import AddOrEditCategoryComponent from './addoredit-category.component';
 
@@ -14,10 +13,10 @@ import AddOrEditCategoryComponent from './addoredit-category.component';
   imports: [LuxuryAppComponentsModule],
 })
 export default class ListCategoryComponent implements OnInit {
-  public dialogHandlerService = inject(DialogHandlerService);
-  public apiRequestService = inject(ApiRequestService);
+  dialogHandlerService = inject(DialogHandlerService);
+  apiRequestService = inject(ApiRequestService);
 
-  data: ICategoryDto[] = [];
+  data: ICategory[] = [];
   ref: DynamicDialogRef;
 
   ngOnInit(): void {

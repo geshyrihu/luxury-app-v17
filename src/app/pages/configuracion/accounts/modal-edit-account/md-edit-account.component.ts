@@ -1,11 +1,9 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
-import {
-  ApiRequestService,
-  AuthService,
-} from 'src/app/core/services/common-services';
+import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
 import AccessCustomerComponent from './customer-account/access-customer.component';
 import UpdateAccountComponent from './update-account/update-account.component';
 import UpdatePasswordAccountComponent from './update-password/update-password-account.component';
@@ -23,12 +21,12 @@ import UpdateRoleComponent from './update-roles/update-role.component';
   ],
 })
 export default class MdEditAccountComponent implements OnInit, OnDestroy {
-  public apiRequestService = inject(ApiRequestService);
-  public config = inject(DynamicDialogConfig);
-  public ref = inject(DynamicDialogRef);
-  public authService = inject(AuthService);
+  apiRequestService = inject(ApiRequestService);
+  config = inject(DynamicDialogConfig);
+  ref = inject(DynamicDialogRef);
+  authService = inject(AuthService);
 
-  cb_emplyee: ISelectItemDto[] = [];
+  cb_emplyee: ISelectItem[] = [];
   data: any;
   applicationUserId: string = '';
   email: string = '';

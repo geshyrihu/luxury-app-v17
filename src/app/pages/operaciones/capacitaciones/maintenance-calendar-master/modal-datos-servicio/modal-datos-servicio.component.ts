@@ -13,7 +13,7 @@ import TarjetaProveedorComponent from 'src/app/pages/operaciones/directorios/pro
   imports: [LuxuryAppComponentsModule],
 })
 export default class ModalDatosServicioComponent implements OnInit {
-  public config = inject(DynamicDialogConfig);
+  config = inject(DynamicDialogConfig);
   public dialogService = inject(DialogService);
   data: any;
   proveedores: any;

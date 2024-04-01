@@ -2,14 +2,12 @@ import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomToastService,
-  DataService,
-  FiltroCalendarService,
-  SistemasReporteService,
-} from 'src/app/core/services/common-services';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { DataService } from 'src/app/core/services/data.service';
+import { FiltroCalendarService } from 'src/app/core/services/filtro-calendar.service';
+import { SistemasReporteService } from 'src/app/core/services/sistemas-reporte.service';
 import CardEmployeeComponent from '../../directorios/empleados/card-employee/card-employee.component';
 @Component({
   selector: 'app-sistemas-reporte-pdf',
@@ -18,11 +16,11 @@ import CardEmployeeComponent from '../../directorios/empleados/card-employee/car
   imports: [LuxuryAppComponentsModule],
 })
 export default class SistemasReportePdfComponent implements OnInit, OnDestroy {
-  public customToastService = inject(CustomToastService);
+  customToastService = inject(CustomToastService);
   public sistemasReporteService = inject(SistemasReporteService);
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
-  public authService = inject(AuthService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
+  authService = inject(AuthService);
   private rangoCalendarioService = inject(FiltroCalendarService);
   public dialogService = inject(DialogService);
 

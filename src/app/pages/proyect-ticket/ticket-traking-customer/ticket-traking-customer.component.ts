@@ -10,8 +10,8 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
   imports: [LuxuryAppComponentsModule],
 })
 export class TicketTrakingCustomerComponent implements OnInit {
-  public config = inject(DynamicDialogConfig);
-  public apiRequestService = inject(ApiRequestService);
+  config = inject(DynamicDialogConfig);
+  apiRequestService = inject(ApiRequestService);
 
   seguimientos: any[] = [];
   submitting: boolean = false;

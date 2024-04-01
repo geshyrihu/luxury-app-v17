@@ -16,10 +16,10 @@ import ResumenMinutaGraficoComponent from '../resumen-minuta-grafico/resumen-min
   imports: [LuxuryAppComponentsModule, ResumenMinutaGraficoComponent],
 })
 export default class ResumenMinutaComponent implements OnInit, OnDestroy {
-  public customToastService = inject(CustomToastService);
+  customToastService = inject(CustomToastService);
   public reportService = inject(ReportService);
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
   public activatedRoute = inject(ActivatedRoute);
   public clipboard = inject(Clipboard);
 

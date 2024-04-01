@@ -4,15 +4,12 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomToastService,
-  DataService,
-  FilterRequestsService,
-  StatusSolicitudVacanteService,
-} from 'src/app/core/services/common-services';
-
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { DataService } from 'src/app/core/services/data.service';
+import { FilterRequestsService } from 'src/app/core/services/filter-requests.service';
+import { StatusSolicitudVacanteService } from 'src/app/core/services/status-solicitud-vacante.service';
 import FilterRequestsComponent from '../filter-requests.component';
 import AddoreditModificacionSalarioComponent from './addoredit-modificacion-salario/addoredit-modificacion-salario.component';
 
@@ -25,10 +22,10 @@ import AddoreditModificacionSalarioComponent from './addoredit-modificacion-sala
 export default class ListSolicitudModificacionSalarioComponent
   implements OnInit
 {
-  public customToastService = inject(CustomToastService);
-  public authService = inject(AuthService);
-  private dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
+  customToastService = inject(CustomToastService);
+  authService = inject(AuthService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
   private filterRequestsService = inject(FilterRequestsService);

@@ -29,11 +29,11 @@ import CreateOrdenCompraComponent from '../../orden-compra/orden-compra/create-o
   ],
 })
 export default class ModalEditCotizacionComponent implements OnInit, OnDestroy {
-  public customToastService = inject(CustomToastService);
-  public ref = inject(DynamicDialogRef);
-  public config = inject(DynamicDialogConfig);
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
+  customToastService = inject(CustomToastService);
+  ref = inject(DynamicDialogRef);
+  config = inject(DynamicDialogConfig);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
   public router = inject(Router);

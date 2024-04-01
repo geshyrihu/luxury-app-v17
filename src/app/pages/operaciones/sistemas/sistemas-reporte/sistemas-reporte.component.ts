@@ -3,16 +3,13 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomToastService,
-  DataService,
-  DateService,
-  FiltroCalendarService,
-} from 'src/app/core/services/common-services';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { DataService } from 'src/app/core/services/data.service';
+import { DateService } from 'src/app/core/services/date.service';
+import { FiltroCalendarService } from 'src/app/core/services/filtro-calendar.service';
 import { SistemasReporteService } from 'src/app/core/services/sistemas-reporte.service';
-
 import { environment } from 'src/environments/environment';
 import CardEmployeeComponent from '../../directorios/empleados/card-employee/card-employee.component';
 import AddoreditSistemasReporteComponent from '../addoredit-sistemas-reporte/addoredit-sistemas-reporte.component';
@@ -24,11 +21,11 @@ import AddoreditSistemasReporteComponent from '../addoredit-sistemas-reporte/add
   imports: [LuxuryAppComponentsModule],
 })
 export default class SistemasReporteComponent implements OnInit, OnDestroy {
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
   public dateService = inject(DateService);
-  public customToastService = inject(CustomToastService);
-  public authService = inject(AuthService);
+  customToastService = inject(CustomToastService);
+  authService = inject(AuthService);
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
   public sistemasReporteService = inject(SistemasReporteService);

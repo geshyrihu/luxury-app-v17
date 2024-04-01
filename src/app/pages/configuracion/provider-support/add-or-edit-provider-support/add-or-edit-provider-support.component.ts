@@ -2,8 +2,8 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
-import { ApiRequestService } from 'src/app/core/services/common-services';
+import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
@@ -14,17 +14,17 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 })
 export default class AddOrEditProviderSupportComponent {
   private config = inject(DynamicDialogConfig);
-  public apiRequestService = inject(ApiRequestService);
-  private formBuilder = inject(FormBuilder);
+  apiRequestService = inject(ApiRequestService);
+  formBuilder = inject(FormBuilder);
   private ref = inject(DynamicDialogRef);
 
   submitting: boolean = false;
   id: string = '';
 
-  cb_persons: ISelectItemDto[] = [];
-  cb_professions: ISelectItemDto[] = [];
-  cb_providers: ISelectItemDto[] = [];
-  cb_customers: ISelectItemDto[] = [];
+  cb_persons: ISelectItem[] = [];
+  cb_professions: ISelectItem[] = [];
+  cb_providers: ISelectItem[] = [];
+  cb_customers: ISelectItem[] = [];
 
   form: FormGroup = this.formBuilder.group({
     id: { value: this.id, disabled: true },

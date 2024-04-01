@@ -5,14 +5,12 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { EHabitant } from 'src/app/core/enums/habitant.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
-import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomToastService,
-  CustomerIdService,
-  DataService,
-} from 'src/app/core/services/common-services';
+import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
+import { DataService } from 'src/app/core/services/data.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
@@ -22,12 +20,12 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class AddOrEditCondominosComponent implements OnInit, OnDestroy {
-  private formBuilder = inject(FormBuilder);
-  public authService = inject(AuthService);
-  public config = inject(DynamicDialogConfig);
-  public ref = inject(DynamicDialogRef);
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
+  formBuilder = inject(FormBuilder);
+  authService = inject(AuthService);
+  config = inject(DynamicDialogConfig);
+  ref = inject(DynamicDialogRef);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
   public customerIdService = inject(CustomerIdService);
   private customToastService = inject(CustomToastService);
 
@@ -38,7 +36,7 @@ export default class AddOrEditCondominosComponent implements OnInit, OnDestroy {
   id: number = 0;
   customerId: number = this.customerIdService.customerId;
   cb_directory_condominium: any[] = [];
-  cb_enviarMails: ISelectItemDto[] = [
+  cb_enviarMails: ISelectItem[] = [
     {
       label: 'Sí',
       value: true,
@@ -48,7 +46,7 @@ export default class AddOrEditCondominosComponent implements OnInit, OnDestroy {
       value: false,
     },
   ];
-  cb_Habitant: ISelectItemDto[] = onGetSelectItemFromEnum(EHabitant);
+  cb_Habitant: ISelectItem[] = onGetSelectItemFromEnum(EHabitant);
   form: FormGroup = this.formBuilder.group({
     id: { value: this.id, disabled: true },
     customerId: [this.customerId],

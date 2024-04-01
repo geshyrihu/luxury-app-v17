@@ -3,10 +3,8 @@ import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import {
-  ApiRequestService,
-  AuthService,
-} from 'src/app/core/services/common-services';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
 import AddoreditMinutaDetalleComponent from 'src/app/pages/operaciones/junta-comite/addoredit-minuta-detalle/addoredit-minuta-detalle.component';
 import AddorEditMeetingSeguimientoComponent from 'src/app/pages/operaciones/junta-comite/addoredit-seguimiento/addor-edit-meeting-seguimiento.component';
 
@@ -20,9 +18,9 @@ import ContMinutaSeguimientosComponent from './cont-minuta-seguimientos.componen
   imports: [LuxuryAppComponentsModule, NgbTooltip],
 })
 export default class ContListMinutaPendientesComponent implements OnInit {
-  public apiRequestService = inject(ApiRequestService);
-  public dialogHandlerService = inject(DialogHandlerService);
-  public authService = inject(AuthService);
+  apiRequestService = inject(ApiRequestService);
+  dialogHandlerService = inject(DialogHandlerService);
+  authService = inject(AuthService);
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
 

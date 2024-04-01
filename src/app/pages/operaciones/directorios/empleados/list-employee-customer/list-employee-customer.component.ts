@@ -3,15 +3,12 @@ import { ActivatedRoute } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
-import { IEmployeeDto } from 'src/app/core/interfaces/IEmployeeDto.interface';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomToastService,
-  CustomerIdService,
-  DataService,
-} from 'src/app/core/services/common-services';
-
+import { IEmployee } from 'src/app/core/interfaces/employee.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
+import { DataService } from 'src/app/core/services/data.service';
 import { environment } from 'src/environments/environment';
 import AddAccountCustomerComponent from '../add-account-to-customer/add-account-customer.component';
 import CardEmployeeComponent from '../card-employee/card-employee.component';
@@ -26,17 +23,17 @@ const base_urlImg = environment.base_urlImg + 'Administration/accounts/';
 })
 export default class ListEmployeeComponent implements OnInit, OnDestroy {
   private customerIdService = inject(CustomerIdService);
-  private dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
   private dialogService = inject(DialogService);
   private rutaActiva = inject(ActivatedRoute);
-  public authService = inject(AuthService);
-  public customToastService = inject(CustomToastService);
+  authService = inject(AuthService);
+  customToastService = inject(CustomToastService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   activo: boolean = true;
-  data: IEmployeeDto[] = [];
+  data: IEmployee[] = [];
   getAllEmployeeActive: any = [];
   ref: DynamicDialogRef;
 
@@ -67,7 +64,7 @@ export default class ListEmployeeComponent implements OnInit, OnDestroy {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
     this.dataService
-      .get<IEmployeeDto[]>(
+      .get<IEmployee[]>(
         `employees/list/${this.customerIdService.customerId}/${this.activo}/${this.tipoContrato}`
       )
       .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye

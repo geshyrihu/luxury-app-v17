@@ -18,10 +18,10 @@ import { DateService } from 'src/app/core/services/date.service';
 export default class AddOrEditMeetingDetailComponent
   implements OnInit, OnDestroy
 {
-  public customToastService = inject(CustomToastService);
-  public config = inject(DynamicDialogConfig);
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
+  customToastService = inject(CustomToastService);
+  config = inject(DynamicDialogConfig);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
   public dateService = inject(DateService);
   public messageService = inject(MessageService);
   public dialogService = inject(DialogService);

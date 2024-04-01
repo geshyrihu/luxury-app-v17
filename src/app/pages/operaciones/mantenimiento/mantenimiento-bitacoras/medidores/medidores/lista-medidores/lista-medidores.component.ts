@@ -4,14 +4,12 @@ import * as FileSaver from 'file-saver';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
-import { IMedidorDto } from 'src/app/core/interfaces/IMedidorDto.interface';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomToastService,
-  CustomerIdService,
-  DataService,
-} from 'src/app/core/services/common-services';
+import { IMedidor } from 'src/app/core/interfaces/medidor.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
+import { DataService } from 'src/app/core/services/data.service';
 import FormMedidorLecturaComponent from '../../medidores-lectura/form-medidor-lectura/form-medidor-lectura.component';
 import FormMedidorComponent from '../form-medidor/form-medidor.component';
 @Component({
@@ -21,15 +19,15 @@ import FormMedidorComponent from '../form-medidor/form-medidor.component';
   imports: [LuxuryAppComponentsModule],
 })
 export default class ListMedidorComponent implements OnInit, OnDestroy {
-  public authService = inject(AuthService);
-  public customToastService = inject(CustomToastService);
+  authService = inject(AuthService);
+  customToastService = inject(CustomToastService);
   private customerIdService = inject(CustomerIdService);
-  private dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
 
-  data: IMedidorDto[] = [];
+  data: IMedidor[] = [];
   ref: DynamicDialogRef;
   customerId$: Observable<number> = this.customerIdService.getCustomerId$();
 
@@ -46,7 +44,7 @@ export default class ListMedidorComponent implements OnInit, OnDestroy {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
     this.dataService
-      .get<IMedidorDto[]>(`Medidor/GetAll/${this.customerIdService.customerId}`)
+      .get<IMedidor[]>(`Medidor/GetAll/${this.customerIdService.customerId}`)
       .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {

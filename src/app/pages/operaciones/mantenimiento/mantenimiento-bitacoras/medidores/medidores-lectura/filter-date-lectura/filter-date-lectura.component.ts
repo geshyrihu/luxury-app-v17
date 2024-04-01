@@ -16,8 +16,8 @@
 // })
 // export default class FilterDateLecturaComponent implements OnInit {
 //   public dateService = inject(DateService);
-//   public ref = inject(DynamicDialogRef);
-//   public config = inject(DynamicDialogConfig);
+//   ref = inject(DynamicDialogRef);
+//   config = inject(DynamicDialogConfig);
 //   tipe: string = this.config.data.tipe;
 
 //   cb_Years: any[] = this.onLoadYears();

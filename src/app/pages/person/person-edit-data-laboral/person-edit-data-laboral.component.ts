@@ -6,13 +6,11 @@ import { Subject, takeUntil } from 'rxjs';
 import { EEducationLevel } from 'src/app/core/enums/education-level.enum';
 import { ETypeContract } from 'src/app/core/enums/type-contract.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
-import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomToastService,
-  DataService,
-} from 'src/app/core/services/common-services';
+import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { DataService } from 'src/app/core/services/data.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
@@ -24,11 +22,11 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 export default class PersonEditDataLaboralComponent implements OnInit {
   private apiRequestService = inject(ApiRequestService);
   private customToastService = inject(CustomToastService);
-  private dataService = inject(DataService);
-  private formBuilder = inject(FormBuilder);
-  public authService = inject(AuthService);
-  public config = inject(DynamicDialogConfig);
-  public ref = inject(DynamicDialogRef);
+  dataService = inject(DataService);
+  formBuilder = inject(FormBuilder);
+  authService = inject(AuthService);
+  config = inject(DynamicDialogConfig);
+  ref = inject(DynamicDialogRef);
 
   employeeId: number = 0;
   personId: number = 0;
@@ -37,10 +35,9 @@ export default class PersonEditDataLaboralComponent implements OnInit {
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
-  cb_education_level: ISelectItemDto[] =
-    onGetSelectItemFromEnum(EEducationLevel);
-  cb_type_contract: ISelectItemDto[] = onGetSelectItemFromEnum(ETypeContract);
-  cb_state: ISelectItemDto[] = [
+  cb_education_level: ISelectItem[] = onGetSelectItemFromEnum(EEducationLevel);
+  cb_type_contract: ISelectItem[] = onGetSelectItemFromEnum(ETypeContract);
+  cb_state: ISelectItem[] = [
     {
       label: 'Activo',
       value: true,
@@ -51,8 +48,8 @@ export default class PersonEditDataLaboralComponent implements OnInit {
     },
   ];
 
-  cb_profession: ISelectItemDto[];
-  cb_customer: ISelectItemDto[] = [];
+  cb_profession: ISelectItem[];
+  cb_customer: ISelectItem[] = [];
   // Inicializacion de formulario
 
   form: FormGroup = this.formBuilder.group({

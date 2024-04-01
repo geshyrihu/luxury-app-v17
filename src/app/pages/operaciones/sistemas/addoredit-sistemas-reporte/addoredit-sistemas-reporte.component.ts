@@ -6,14 +6,12 @@ import { Subject, takeUntil } from 'rxjs';
 import { EStatusTask } from 'src/app/core/enums/estatus-task.enum';
 import { EPriority } from 'src/app/core/enums/priority.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
-import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomToastService,
-  DataService,
-  DateService,
-} from 'src/app/core/services/common-services';
+import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { DataService } from 'src/app/core/services/data.service';
+import { DateService } from 'src/app/core/services/date.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import { environment } from 'src/environments/environment';
 @Component({
@@ -25,12 +23,12 @@ import { environment } from 'src/environments/environment';
 export default class AddoreditSistemasReporteComponent
   implements OnInit, OnDestroy
 {
-  public authService = inject(AuthService);
-  private dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
-  private formBuilder = inject(FormBuilder);
-  public config = inject(DynamicDialogConfig);
-  public ref = inject(DynamicDialogRef);
+  authService = inject(AuthService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
+  formBuilder = inject(FormBuilder);
+  config = inject(DynamicDialogConfig);
+  ref = inject(DynamicDialogRef);
   private dateService = inject(DateService);
   private customToastService = inject(CustomToastService);
 
@@ -43,7 +41,7 @@ export default class AddoreditSistemasReporteComponent
   //TODOñ REVISAR ESTE CustomerId
   _customerId: number = 0;
   cb_status = onGetSelectItemFromEnum(EStatusTask);
-  cb_priority: ISelectItemDto[] = onGetSelectItemFromEnum(EPriority);
+  cb_priority: ISelectItem[] = onGetSelectItemFromEnum(EPriority);
   cb_area_responsable: any[] = [];
   cb_user: any[] = [];
   cb_responsableSistemas: any[] = [];

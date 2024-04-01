@@ -3,15 +3,12 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
-import { InventarioLlaveDto } from 'src/app/core/interfaces/inventario-llave-dto.interface';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomToastService,
-  CustomerIdService,
-  DataService,
-} from 'src/app/core/services/common-services';
-
+import { IInventarioLlave } from 'src/app/core/interfaces/inventario-llave-dto.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
+import { DataService } from 'src/app/core/services/data.service';
 import FormInventarioLlaveComponent from './form-inventario-llave.component';
 
 @Component({
@@ -21,15 +18,15 @@ import FormInventarioLlaveComponent from './form-inventario-llave.component';
   imports: [LuxuryAppComponentsModule],
 })
 export default class ListLlavesComponent implements OnInit, OnDestroy {
-  public customToastService = inject(CustomToastService);
-  public authService = inject(AuthService);
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
+  customToastService = inject(CustomToastService);
+  authService = inject(AuthService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
   public customerIdService = inject(CustomerIdService);
 
-  data: InventarioLlaveDto[] = [];
+  data: IInventarioLlave[] = [];
 
   ref: DynamicDialogRef;
 
@@ -50,7 +47,7 @@ export default class ListLlavesComponent implements OnInit, OnDestroy {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
     this.dataService
-      .get<InventarioLlaveDto[]>(
+      .get<IInventarioLlave[]>(
         `InventarioLlave/GetAll/${this.customerIdService.customerId}`
       )
       .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye

@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
-import { IBankDto } from 'src/app/core/interfaces/IBankDto.interface';
+import { IBank } from 'src/app/core/interfaces/bank.interface';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import { ApiRequestService } from '../../../core/services/api-request.service';
 import AddOrEditBancoComponent from './addoredit-banco.component';
@@ -13,11 +13,11 @@ import AddOrEditBancoComponent from './addoredit-banco.component';
   imports: [LuxuryAppComponentsModule],
 })
 export default class ListBancoComponent implements OnInit {
-  public dialogHandlerService = inject(DialogHandlerService);
-  public apiRequestService = inject(ApiRequestService);
+  apiRequestService = inject(ApiRequestService);
+  dialogHandlerService = inject(DialogHandlerService);
 
   // Declaración e inicialización de variables
-  data: IBankDto[] = [];
+  data: IBank[] = [];
   ref: DynamicDialogRef; // Referencia a un cuadro de diálogo modal
 
   ngOnInit(): void {

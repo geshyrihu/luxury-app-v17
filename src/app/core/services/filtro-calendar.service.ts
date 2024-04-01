@@ -1,7 +1,7 @@
 import { EventEmitter, Injectable, inject } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
+import { IFechasFiltro } from 'src/app/core/interfaces/fechas-filtro.interface';
 import { DateService } from './date.service';
-import { IFechasFiltro } from 'src/app/core/interfaces/IFechasFiltro.interface';
 
 // Creamos una instancia de la fecha actual
 const date = new Date();

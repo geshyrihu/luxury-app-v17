@@ -12,10 +12,10 @@ import { AuthService } from 'src/app/core/services/auth.service';
   imports: [LuxuryAppComponentsModule],
 })
 export default class LegalTicketUpdateStatusComponent implements OnInit {
-  public apiRequestService = inject(ApiRequestService);
+  apiRequestService = inject(ApiRequestService);
   public auhtService = inject(AuthService);
-  public config = inject(DynamicDialogConfig);
-  public ref = inject(DynamicDialogRef);
+  config = inject(DynamicDialogConfig);
+  ref = inject(DynamicDialogRef);
 
   loading = false;
   status: EStatus = 0;

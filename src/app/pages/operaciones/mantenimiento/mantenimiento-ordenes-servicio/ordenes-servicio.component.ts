@@ -3,16 +3,13 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subject, Subscription, takeUntil } from 'rxjs';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomToastService,
-  CustomerIdService,
-  DataService,
-  DateService,
-  ReporteOrdenesServicioService,
-} from 'src/app/core/services/common-services';
-
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
+import { DataService } from 'src/app/core/services/data.service';
+import { DateService } from 'src/app/core/services/date.service';
+import { ReporteOrdenesServicioService } from 'src/app/core/services/reporte-ordenes-servicio.service';
 import SubirPdfComponent from 'src/app/shared/subir-pdf/subir-pdf.component';
 import { environment } from 'src/environments/environment';
 import ServiceOrderAddOrEditComponent from './addoredit-service-order.component';
@@ -30,15 +27,15 @@ const date = new Date();
 export default class OrdenesServicioComponentComponent
   implements OnInit, OnDestroy, OnChanges
 {
-  public authService = inject(AuthService);
+  authService = inject(AuthService);
   public customerIdService = inject(CustomerIdService);
   public messageService = inject(MessageService);
   public reporteOrdenesServicioService = inject(ReporteOrdenesServicioService);
   public dialogService = inject(DialogService);
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
   public dateService = inject(DateService);
-  public customToastService = inject(CustomToastService);
+  customToastService = inject(CustomToastService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 

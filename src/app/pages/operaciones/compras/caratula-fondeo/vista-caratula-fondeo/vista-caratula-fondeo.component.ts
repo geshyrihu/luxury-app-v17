@@ -13,11 +13,11 @@ import { ITable } from 'pdfmake-wrapper/lib/interfaces';
 import { MenuItem } from 'primeng/api';
 import { ContextMenuModule } from 'primeng/contextmenu';
 import { Subject, takeUntil } from 'rxjs';
-import { IFondeoCaratulaDto } from 'src/app/core/interfaces/IFondeoCaratulaDto.interface';
+import { IFondeoCaratula } from 'src/app/core/interfaces/fondeo-caratula.interface';
 import {
-  IItemsFondeoCaratulaDto,
+  IItemsFondeoCaratula,
   TableRowItemFondeoCaratulaDto,
-} from 'src/app/core/interfaces/IItemsFondeoCaratulaDto.interface';
+} from 'src/app/core/interfaces/items-fondeo-caratula.interface';
 import { CurrencyMexicoPipe } from 'src/app/core/pipes/currencyMexico.pipe';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CaratulaFondeoService } from 'src/app/core/services/caratula-fondeo.service';
@@ -38,14 +38,14 @@ PdfMakeWrapper.useFont('roboto');
 export default class VistaCaratulaFondeoComponent implements OnInit, OnDestroy {
   public dateService = inject(DateService);
   public caratulaFondeoService = inject(CaratulaFondeoService);
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
   public router = inject(Router);
-  public customToastService = inject(CustomToastService);
+  customToastService = inject(CustomToastService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
-  data: IFondeoCaratulaDto;
+  data: IFondeoCaratula;
   dataSelect: any;
   items: MenuItem[] = [
     {
@@ -95,7 +95,7 @@ export default class VistaCaratulaFondeoComponent implements OnInit, OnDestroy {
     }
   }
 
-  viewItem(model: IItemsFondeoCaratulaDto) {
+  viewItem(model: IItemsFondeoCaratula) {
     var i = this.data.itemsFondeoCaratulaDto.indexOf(model);
     if (i !== -1) {
       this.data.itemsFondeoCaratulaDto.splice(i, 1);
@@ -150,7 +150,7 @@ export default class VistaCaratulaFondeoComponent implements OnInit, OnDestroy {
 
     pdf.create().download('caratula.pdf');
   }
-  createTable(data: IItemsFondeoCaratulaDto[]): ITable {
+  createTable(data: IItemsFondeoCaratula[]): ITable {
     return new Table([
       [
         'No.',
@@ -187,9 +187,7 @@ export default class VistaCaratulaFondeoComponent implements OnInit, OnDestroy {
       .fontSize(8).end;
   }
 
-  extractData(
-    data: IItemsFondeoCaratulaDto[]
-  ): TableRowItemFondeoCaratulaDto[] {
+  extractData(data: IItemsFondeoCaratula[]): TableRowItemFondeoCaratulaDto[] {
     return data.map((row, index) => [
       (row.id = index + 1),
       this.dateService.formDateToStringLocale(new Date(row.fecha)),

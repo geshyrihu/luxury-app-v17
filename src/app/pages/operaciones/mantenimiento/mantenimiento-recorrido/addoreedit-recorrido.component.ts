@@ -5,12 +5,10 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { ERouteRecurrence } from 'src/app/core/enums/route-recurrence.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
-import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
-import {
-  ApiRequestService,
-  CustomerIdService,
-} from 'src/app/core/services/common-services';
+import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DataService } from 'src/app/core/services/data.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
@@ -21,11 +19,11 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class RecorridoAddOrEditComponent implements OnInit, OnDestroy {
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
-  private formBuilder = inject(FormBuilder);
-  public config = inject(DynamicDialogConfig);
-  public ref = inject(DynamicDialogRef);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
+  formBuilder = inject(FormBuilder);
+  config = inject(DynamicDialogConfig);
+  ref = inject(DynamicDialogRef);
   public customerIdService = inject(CustomerIdService);
   private customToastService = inject(CustomToastService);
 
@@ -35,11 +33,10 @@ export default class RecorridoAddOrEditComponent implements OnInit, OnDestroy {
 
   form: FormGroup;
   id: number = 0;
-  cb_machinery: ISelectItemDto[] = [];
+  cb_machinery: ISelectItem[] = [];
   idMachinery: number = null;
   // cb_RouteRecurrence: ISelectItemDto[] = [];
-  cb_RouteRecurrence: ISelectItemDto[] =
-    onGetSelectItemFromEnum(ERouteRecurrence);
+  cb_RouteRecurrence: ISelectItem[] = onGetSelectItemFromEnum(ERouteRecurrence);
 
   onLoadSelectItem() {
     this.apiRequestService

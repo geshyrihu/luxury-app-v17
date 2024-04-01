@@ -4,14 +4,11 @@ import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ImageModule } from 'primeng/image';
 import { Observable, Subject, takeUntil } from 'rxjs';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomToastService,
-  CustomerIdService,
-  DataService,
-} from 'src/app/core/services/common-services';
-
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
+import { DataService } from 'src/app/core/services/data.service';
 import AddoreditInventarioPinturaComponent from './addoredit-inventario-pintura.component';
 @Component({
   selector: 'app-inventario-pintura',
@@ -20,13 +17,13 @@ import AddoreditInventarioPinturaComponent from './addoredit-inventario-pintura.
   imports: [LuxuryAppComponentsModule, ImageModule],
 })
 export default class InventarioPinturaComponent implements OnInit, OnDestroy {
-  public authService = inject(AuthService);
+  authService = inject(AuthService);
   public customerIdService = inject(CustomerIdService);
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
-  public customToastService = inject(CustomToastService);
+  customToastService = inject(CustomToastService);
 
   urlImg: string = '';
   data: any[] = [];

@@ -1,8 +1,8 @@
 import { Component, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
-import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
-import { IAccountDto } from 'src/app/core/interfaces/account-dto.interface';
+import { IAccount } from 'src/app/core/interfaces/account-dto.interface';
+import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import CardEmployeeComponent from 'src/app/pages/operaciones/directorios/empleados/card-employee/card-employee.component';
 
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
@@ -18,12 +18,12 @@ import MdEditAccountComponent from '../modal-edit-account/md-edit-account.compon
   imports: [LuxuryAppComponentsModule],
 })
 export default class ListAccountComponent implements OnInit {
-  public dialogHandlerService = inject(DialogHandlerService);
-  public apiRequestService = inject(ApiRequestService);
+  dialogHandlerService = inject(DialogHandlerService);
+  apiRequestService = inject(ApiRequestService);
 
-  cb_customer: ISelectItemDto[] = [];
-  cb_profession: ISelectItemDto[] = [];
-  data: IAccountDto[] = [];
+  cb_customer: ISelectItem[] = [];
+  cb_profession: ISelectItem[] = [];
+  data: IAccount[] = [];
   applicationUserId: string = '';
   employeeId: number = 0;
   ref: DynamicDialogRef;

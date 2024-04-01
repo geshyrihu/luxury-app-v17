@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { ApiRequestService } from 'src/app/core/services/common-services';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
 @Component({
   selector: 'app-list-roles',
   templateUrl: './list-roles.component.html',
@@ -9,7 +9,7 @@ import { ApiRequestService } from 'src/app/core/services/common-services';
   imports: [LuxuryAppComponentsModule],
 })
 export default class ListRolesComponent implements OnInit {
-  public apiRequestService = inject(ApiRequestService);
+  apiRequestService = inject(ApiRequestService);
   data: any[] = [];
 
   ngOnInit(): void {

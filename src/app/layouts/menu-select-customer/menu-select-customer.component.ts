@@ -13,9 +13,9 @@ import { DataService } from 'src/app/core/services/data.service';
   providers: [DataService],
 })
 export default class MenuSelectCustomerComponent implements OnInit {
-  public authService = inject(AuthService);
+  authService = inject(AuthService);
   private customerIdService = inject(CustomerIdService);
-  public apiRequestService = inject(ApiRequestService);
+  apiRequestService = inject(ApiRequestService);
 
   cb_customer: any[] = [];
   customerId = this.customerIdService.customerId;

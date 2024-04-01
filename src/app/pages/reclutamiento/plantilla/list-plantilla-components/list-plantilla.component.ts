@@ -4,17 +4,14 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
-import { IWorkPositionDto } from 'src/app/core/interfaces/IEmpresaOrganigramaDto.interface';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomToastService,
-  CustomerIdService,
-  DataService,
-  StatusSolicitudVacanteService,
-} from 'src/app/core/services/common-services';
+import { IWorkPosition } from 'src/app/core/interfaces/empresa-organigrama.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
+import { DataService } from 'src/app/core/services/data.service';
+import { StatusSolicitudVacanteService } from 'src/app/core/services/status-solicitud-vacante.service';
 import CardEmployeeComponent from 'src/app/pages/operaciones/directorios/empleados/card-employee/card-employee.component';
-
 import { environment } from 'src/environments/environment';
 import DescripcionPuestoComponent from '../../professions/descripcion-puesto.component';
 import SolicitudVacanteComponent from '../../solicitudes/solicitud-vacante/solicitud-vacante.component';
@@ -30,12 +27,12 @@ import HoursWorkPositionComponent from '../hours-work-position.component';
 })
 export default class ListWorkPlantillaComponent implements OnInit, OnDestroy {
   private router = inject(Router);
-  public authService = inject(AuthService);
+  authService = inject(AuthService);
   public confirmationService = inject(ConfirmationService);
   public customerIdService = inject(CustomerIdService);
-  public customToastService = inject(CustomToastService);
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
+  customToastService = inject(CustomToastService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
   public statusSolicitudVacanteService = inject(StatusSolicitudVacanteService);
@@ -60,7 +57,7 @@ export default class ListWorkPlantillaComponent implements OnInit, OnDestroy {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
     this.dataService
-      .get<IWorkPositionDto[]>(
+      .get<IWorkPosition[]>(
         'workposition/getall/' +
           this.customerIdService.getcustomerId() +
           '/' +

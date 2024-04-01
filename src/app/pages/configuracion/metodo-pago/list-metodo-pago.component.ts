@@ -12,8 +12,8 @@ import AddoreditMetodoPagoComponent from './addoredit-metodo-pago.component';
   imports: [LuxuryAppComponentsModule],
 })
 export default class ListMetodoPagoComponent implements OnInit {
-  public dialogHandlerService = inject(DialogHandlerService);
-  public apiRequestService = inject(ApiRequestService);
+  dialogHandlerService = inject(DialogHandlerService);
+  apiRequestService = inject(ApiRequestService);
 
   data: any[] = [];
 

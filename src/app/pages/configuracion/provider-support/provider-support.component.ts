@@ -2,10 +2,9 @@ import { Component, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject } from 'rxjs';
-import {
-  ApiRequestService,
-  AuthService,
-} from 'src/app/core/services/common-services';
+import { IProviderSupportList } from 'src/app/core/interfaces/provider-support-list.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import { environment } from 'src/environments/environment';
 import AddOrEditprovidersupportComponent from './add-or-edit-provider-support/add-or-edit-provider-support.component';
@@ -17,15 +16,15 @@ import AddOrEditprovidersupportComponent from './add-or-edit-provider-support/ad
   imports: [LuxuryAppComponentsModule],
 })
 export default class providersupportComponent implements OnInit {
-  public authService = inject(AuthService);
+  authService = inject(AuthService);
   public dialogService = inject(DialogService);
-  public apiRequestService = inject(ApiRequestService);
-  public dialogHandlerService = inject(DialogHandlerService);
+  apiRequestService = inject(ApiRequestService);
+  dialogHandlerService = inject(DialogHandlerService);
 
   url_img = `${environment.base_urlImg}providers/`;
 
   // Declaración e inicialización de variables
-  data: ProviderSupportListDto[] = [];
+  data: IProviderSupportList[] = [];
   ref: DynamicDialogRef; // Referencia a un cuadro de diálogo modal
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
@@ -62,15 +61,4 @@ export default class providersupportComponent implements OnInit {
         if (result) this.data = this.data.filter((item) => item.id !== id);
       });
   }
-}
-export interface ProviderSupportListDto {
-  id: string;
-  fullName: string;
-  email: string;
-  phoneNumber: string;
-  providerId: number;
-  nameProvider: string;
-  nameComercial: string;
-  professionId: number;
-  nameProfession: string;
 }

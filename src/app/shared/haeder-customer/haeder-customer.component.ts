@@ -1,11 +1,9 @@
 import {} from '@angular/common';
 import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
 import { Observable, Subject, takeUntil } from 'rxjs';
-import {
-  ApiRequestService,
-  CustomToastService,
-  CustomerIdService,
-} from 'src/app/core/services/common-services';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { TicketFilterService } from 'src/app/core/services/ticket-filter.service';
 import { environment } from 'src/environments/environment';
@@ -16,11 +14,11 @@ import { environment } from 'src/environments/environment';
   standalone: true,
 })
 export default class HaederCustomerComponent implements OnInit, OnDestroy {
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
   public customerIdService = inject(CustomerIdService);
   public filterReportOperationService = inject(TicketFilterService);
-  public customToastService = inject(CustomToastService);
+  customToastService = inject(CustomToastService);
 
   logoCustomer = '';
   nameCustomer = '';

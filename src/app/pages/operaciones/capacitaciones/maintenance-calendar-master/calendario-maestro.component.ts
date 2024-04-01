@@ -3,12 +3,10 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomToastService,
-  DataService,
-} from 'src/app/core/services/common-services';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { DataService } from 'src/app/core/services/data.service';
 import AddOrEditCalendarioMaestroComponent from './addoredit-calendario-maestro.component';
 import ModalDatosServicioComponent from './modal-datos-servicio/modal-datos-servicio.component';
 
@@ -19,12 +17,12 @@ import ModalDatosServicioComponent from './modal-datos-servicio/modal-datos-serv
   imports: [LuxuryAppComponentsModule],
 })
 export default class CalendarioMaestroComponent implements OnInit, OnDestroy {
-  public customToastService = inject(CustomToastService);
-  private dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
+  customToastService = inject(CustomToastService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
-  public authService = inject(AuthService);
+  authService = inject(AuthService);
 
   data: any[] = [];
   ref: DynamicDialogRef;

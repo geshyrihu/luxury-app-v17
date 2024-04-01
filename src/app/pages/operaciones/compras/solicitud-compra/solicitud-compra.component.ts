@@ -8,15 +8,13 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { EStatusOrdenCompra } from 'src/app/core/enums/estatus-orden-compra.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
-import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomToastService,
-  CustomerIdService,
-  DataService,
-  DateService,
-} from 'src/app/core/services/common-services';
+import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
+import { DataService } from 'src/app/core/services/data.service';
+import { DateService } from 'src/app/core/services/date.service';
 import CreateOrdenCompraComponent from '../orden-compra/orden-compra/create-orden-compra/create-orden-compra.component';
 import AddProductModalComponent from './add-product-modal.component';
 import AddProductComponent from './add-product.component';
@@ -34,12 +32,12 @@ import SolicitudCompraDetalleComponent from './solicitud-compra-detalle/solicitu
   ],
 })
 export default class SolicitudCompraComponent implements OnInit, OnDestroy {
-  public customToastService = inject(CustomToastService);
-  public authService = inject(AuthService);
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
+  customToastService = inject(CustomToastService);
+  authService = inject(AuthService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
   public dateService = inject(DateService);
-  private formBuilder = inject(FormBuilder);
+  formBuilder = inject(FormBuilder);
   public routeActive = inject(ActivatedRoute);
   public router = inject(Router);
   public dialogService = inject(DialogService);
@@ -50,7 +48,7 @@ export default class SolicitudCompraComponent implements OnInit, OnDestroy {
 
   submitting: boolean = false;
 
-  statusCompra: ISelectItemDto[] = onGetSelectItemFromEnum(EStatusOrdenCompra);
+  statusCompra: ISelectItem[] = onGetSelectItemFromEnum(EStatusOrdenCompra);
   _cb_Status = [];
   id: number = 0;
   solicitudCompra: any;

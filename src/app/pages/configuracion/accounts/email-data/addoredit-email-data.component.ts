@@ -2,11 +2,9 @@ import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { EmailDataAddOrEditDto } from 'src/app/core/interfaces/email-data-add-or-edit.interface';
-import {
-  ApiRequestService,
-  AuthService,
-} from 'src/app/core/services/common-services';
+import { IEmailDataAddOrEdit } from 'src/app/core/interfaces/email-data-add-or-edit.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
@@ -16,11 +14,11 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class AddOrEditEmailDataComponent implements OnInit {
-  private formBuilder = inject(FormBuilder);
-  public apiRequestService = inject(ApiRequestService);
-  public authService = inject(AuthService);
-  public config = inject(DynamicDialogConfig);
-  public ref = inject(DynamicDialogRef);
+  formBuilder = inject(FormBuilder);
+  apiRequestService = inject(ApiRequestService);
+  authService = inject(AuthService);
+  config = inject(DynamicDialogConfig);
+  ref = inject(DynamicDialogRef);
 
   id: number = 0;
   applicationUserId: number = 0;
@@ -45,7 +43,7 @@ export default class AddOrEditEmailDataComponent implements OnInit {
 
   onLoadData() {
     this.apiRequestService
-      .onGetList<EmailDataAddOrEditDto>(
+      .onGetList<IEmailDataAddOrEdit>(
         `EmailData/GetByAccountId/${this.applicationUserId}`
       )
       .then((result: any) => {

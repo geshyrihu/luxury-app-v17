@@ -3,16 +3,13 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
-import { IMedidorLecturaDto } from 'src/app/core/interfaces/IMedidorLecturaDto.interface';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomToastService,
-  DataService,
-} from 'src/app/core/services/common-services';
+import { IMedidorLectura } from 'src/app/core/interfaces/medidor-lectura.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { DataService } from 'src/app/core/services/data.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
-const date = new Date();
 @Component({
   selector: 'app-admin-form-medidor-lectura',
   templateUrl: './admin-form-medidor-lectura.component.html',
@@ -22,12 +19,12 @@ const date = new Date();
 export default class AdminFormMedidorLecturaComponent
   implements OnInit, OnDestroy
 {
-  private formBuilder = inject(FormBuilder);
-  private dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
-  public ref = inject(DynamicDialogRef);
-  public config = inject(DynamicDialogConfig);
-  public authService = inject(AuthService);
+  formBuilder = inject(FormBuilder);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
+  ref = inject(DynamicDialogRef);
+  config = inject(DynamicDialogConfig);
+  authService = inject(AuthService);
   private customToastService = inject(CustomToastService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
@@ -56,7 +53,7 @@ export default class AdminFormMedidorLecturaComponent
   }
   onLoadData() {
     this.dataService
-      .get<IMedidorLecturaDto>(`MedidorLectura/${this.id}`)
+      .get<IMedidorLectura>(`MedidorLectura/${this.id}`)
       .subscribe((resp: any) => {
         this.form.patchValue(resp.body);
       });

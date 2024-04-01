@@ -14,15 +14,13 @@ import { Subject, takeUntil } from 'rxjs';
 import { cb_ESiNo } from 'src/app/core/enums/si-no.enum';
 import { ETipoBaja } from 'src/app/core/enums/tipo-baja.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
-import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomToastService,
-  CustomerIdService,
-  DataService,
-  DateService,
-} from 'src/app/core/services/common-services';
+import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
+import { DataService } from 'src/app/core/services/data.service';
+import { DateService } from 'src/app/core/services/date.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
@@ -33,14 +31,14 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 })
 export default class SolicitudBajaComponent implements OnInit, OnDestroy {
   private customToastService = inject(CustomToastService);
-  public apiRequestService = inject(ApiRequestService);
-  private dataService = inject(DataService);
-  private formBuilder = inject(FormBuilder);
-  public authService = inject(AuthService);
-  public config = inject(DynamicDialogConfig);
+  apiRequestService = inject(ApiRequestService);
+  dataService = inject(DataService);
+  formBuilder = inject(FormBuilder);
+  authService = inject(AuthService);
+  config = inject(DynamicDialogConfig);
   public customerIdService = inject(CustomerIdService);
   public dateService = inject(DateService);
-  public ref = inject(DynamicDialogRef);
+  ref = inject(DynamicDialogRef);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
@@ -50,8 +48,8 @@ export default class SolicitudBajaComponent implements OnInit, OnDestroy {
 
   employeeId: number = this.config.data.employeeId;
 
-  cb_type_departure: ISelectItemDto[] = onGetSelectItemFromEnum(ETipoBaja);
-  cb_si_no: ISelectItemDto[] = cb_ESiNo;
+  cb_type_departure: ISelectItem[] = onGetSelectItemFromEnum(ETipoBaja);
+  cb_si_no: ISelectItem[] = cb_ESiNo;
   tipobaja: ETipoBaja = ETipoBaja.Despido;
   mensajeRenuncia =
     'Adjunta la renuncia firmada por el empleado, si no regreso a firmar se considera abandono de trabajo';
@@ -262,23 +260,4 @@ export default class SolicitudBajaComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.dataService.ngOnDestroy();
   }
-}
-
-export interface SolicitudBajaDto {
-  profession: number;
-  executionDate: string;
-  employee: number;
-  phoneEmployee: string;
-  typeOfDeparture: string;
-  reasonForLeaving: string;
-  discountDescription: DiscountDescription[];
-  supportFiles: File[];
-  lawyerAssistance: boolean;
-  employeeInformed: boolean;
-}
-
-export interface DiscountDescription {
-  enviar: true;
-  description: string;
-  price: number;
 }

@@ -8,16 +8,13 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { ETypeMeeting } from 'src/app/core/enums/type-meeting.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
-import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomToastService,
-  DataService,
-  DateService,
-} from 'src/app/core/services/common-services';
-
-import { IMeetingDto } from '../../../core/interfaces/IMeetingDto.interface';
+import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { DataService } from 'src/app/core/services/data.service';
+import { DateService } from 'src/app/core/services/date.service';
+import { IMeeting } from '../../../core/interfaces/meeting.interface';
 import AddOrEditListAdministrationComponent from './addoredit-administration/addoredit-list-administration.component';
 import AddOrEditComiteComponent from './addoredit-comite/addoredit-comite.component';
 import AddOrEditInvitedComponent from './addoredit-invitado/addoredit-invited.component';
@@ -36,14 +33,14 @@ const date = new Date();
 })
 export default class AddOrEditMeetingComponent implements OnInit, OnDestroy {
   public dateService = inject(DateService);
-  public authService = inject(AuthService);
-  public config = inject(DynamicDialogConfig);
-  public ref = inject(DynamicDialogRef);
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
-  private formBuilder = inject(FormBuilder);
+  authService = inject(AuthService);
+  config = inject(DynamicDialogConfig);
+  ref = inject(DynamicDialogRef);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
+  formBuilder = inject(FormBuilder);
   public messageService = inject(MessageService);
-  public customToastService = inject(CustomToastService);
+  customToastService = inject(CustomToastService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
@@ -56,7 +53,7 @@ export default class AddOrEditMeetingComponent implements OnInit, OnDestroy {
   idNew: number;
   customerId: number;
   participantInvitado: any[] = [];
-  cb_typeMeeting: ISelectItemDto[] = onGetSelectItemFromEnum(ETypeMeeting);
+  cb_typeMeeting: ISelectItem[] = onGetSelectItemFromEnum(ETypeMeeting);
   form: FormGroup;
 
   ngOnInit() {
@@ -77,7 +74,7 @@ export default class AddOrEditMeetingComponent implements OnInit, OnDestroy {
   onSubmit() {
     if (!this.apiRequestService.validateForm(this.form)) return;
     else {
-      const model: IMeetingDto = this.form.value;
+      const model: IMeeting = this.form.value;
 
       if (this.id !== 0) {
         // Mostrar un mensaje de carga

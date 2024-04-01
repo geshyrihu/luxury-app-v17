@@ -11,8 +11,8 @@ import { environment } from 'src/environments/environment';
   imports: [FileUploadModule, SharedModule],
 })
 export default class SubirPdfComponent implements OnInit {
-  public ref = inject(DynamicDialogRef);
-  public config = inject(DynamicDialogConfig);
+  ref = inject(DynamicDialogRef);
+  config = inject(DynamicDialogConfig);
   uploadedFiles: HttpHeaders[] | any = [];
   maxFileSize: number = 20000000;
   url: string = '';

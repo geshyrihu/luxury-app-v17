@@ -12,9 +12,9 @@ import LegalTicketAddComponent from '../../proyect-ticket/legal-ticket-add/legal
   providers: [CustomToastService],
 })
 export class LegalTicketRequestComponent {
-  public customToastService = inject(CustomToastService);
+  customToastService = inject(CustomToastService);
   public dialogService = inject(DialogService);
-  public dialogHandlerService = inject(DialogHandlerService);
+  dialogHandlerService = inject(DialogHandlerService);
 
   onModalTicketLegal() {
     this.dialogHandlerService.openDialog(

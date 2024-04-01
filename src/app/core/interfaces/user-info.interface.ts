@@ -2,7 +2,8 @@ export interface UserInfoDto {
   email?: string;
   password?: string;
 }
-export interface ResetPasswordDto {
+export interface UpdatePasswordDto {
+  userName?: string;
   id?: string;
   password?: string;
 }

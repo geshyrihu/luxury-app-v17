@@ -12,8 +12,8 @@ import { ReportService } from 'src/app/core/services/report.service';
 })
 export default class ResumenMinutaGraficoComponent {
   public reportService = inject(ReportService);
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
   view: [number, number] = [700, 400];
 
   get single() {

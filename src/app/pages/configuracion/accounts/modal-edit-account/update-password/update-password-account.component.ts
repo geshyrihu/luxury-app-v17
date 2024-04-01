@@ -1,8 +1,8 @@
 import { Component, Input, OnInit, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { ResetPasswordDto } from 'src/app/core/interfaces/user-info.interface';
-import { ApiRequestService } from 'src/app/core/services/common-services';
+import { UpdatePasswordDto } from 'src/app/core/interfaces/user-info.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
 @Component({
   selector: 'app-update-password-account',
   templateUrl: './update-password-account.component.html',
@@ -10,13 +10,13 @@ import { ApiRequestService } from 'src/app/core/services/common-services';
   imports: [LuxuryAppComponentsModule],
 })
 export default class UpdatePasswordAccountComponent implements OnInit {
-  public apiRequestService = inject(ApiRequestService);
+  apiRequestService = inject(ApiRequestService);
 
   submitting: boolean = false;
 
   @Input()
   applicationUserId: string = '';
-  userInfoDto: ResetPasswordDto;
+  userInfoDto: UpdatePasswordDto;
 
   form: FormGroup;
   ngOnInit(): void {

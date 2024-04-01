@@ -10,15 +10,13 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { cb_ESiNo } from 'src/app/core/enums/si-no.enum';
-import { ISelectItemDto } from 'src/app/core/interfaces/ISelectItemDto.interface';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomToastService,
-  CustomerIdService,
-  DataService,
-  DateService,
-} from 'src/app/core/services/common-services';
+import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
+import { DataService } from 'src/app/core/services/data.service';
+import { DateService } from 'src/app/core/services/date.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
@@ -28,15 +26,15 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   imports: [LuxuryAppComponentsModule, CustomInputModule, FileUploadModule],
 })
 export default class SolicitudModificacionSalarioComponent {
-  private dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
-  private formBuilder = inject(FormBuilder);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
+  formBuilder = inject(FormBuilder);
   private customToastService = inject(CustomToastService);
-  public config = inject(DynamicDialogConfig);
+  config = inject(DynamicDialogConfig);
   public customerIdService = inject(CustomerIdService);
   public dateService = inject(DateService);
-  public ref = inject(DynamicDialogRef);
-  public authService = inject(AuthService);
+  ref = inject(DynamicDialogRef);
+  authService = inject(AuthService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
@@ -46,8 +44,8 @@ export default class SolicitudModificacionSalarioComponent {
 
   id: number = 0;
 
-  cb_profession: ISelectItemDto[] = [];
-  cb_si_no: ISelectItemDto[] = cb_ESiNo;
+  cb_profession: ISelectItem[] = [];
+  cb_si_no: ISelectItem[] = cb_ESiNo;
 
   form: FormGroup = this.formBuilder.group({
     employeeId: ['', Validators.required],

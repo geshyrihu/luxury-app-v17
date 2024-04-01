@@ -3,15 +3,12 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
-import { IRadioComunicacionDto } from 'src/app/core/interfaces/IRadioComunicacionDto.interface';
-import {
-  ApiRequestService,
-  AuthService,
-  CustomToastService,
-  CustomerIdService,
-  DataService,
-} from 'src/app/core/services/common-services';
-
+import { IRadioComunicacion } from 'src/app/core/interfaces/radio-comunicacion.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomToastService } from 'src/app/core/services/custom-toast.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
+import { DataService } from 'src/app/core/services/data.service';
 import { environment } from 'src/environments/environment';
 import AddOrEditRadioComunicacionComponent from './addoredit-radio-comunicacion.component';
 @Component({
@@ -21,15 +18,15 @@ import AddOrEditRadioComunicacionComponent from './addoredit-radio-comunicacion.
   imports: [LuxuryAppComponentsModule],
 })
 export default class RadioComunicacionComponent implements OnDestroy {
-  public customToastService = inject(CustomToastService);
-  public authService = inject(AuthService);
-  public dataService = inject(DataService);
-  public apiRequestService = inject(ApiRequestService);
+  customToastService = inject(CustomToastService);
+  authService = inject(AuthService);
+  dataService = inject(DataService);
+  apiRequestService = inject(ApiRequestService);
   public dialogService = inject(DialogService);
   public messageService = inject(MessageService);
   public customerIdService = inject(CustomerIdService);
 
-  data: IRadioComunicacionDto[] = [];
+  data: IRadioComunicacion[] = [];
 
   ref: DynamicDialogRef;
 
@@ -51,7 +48,7 @@ export default class RadioComunicacionComponent implements OnDestroy {
     this.customToastService.onLoading();
 
     this.dataService
-      .get<IRadioComunicacionDto[]>(
+      .get<IRadioComunicacion[]>(
         `RadioComunicacion/GetAll/${this.customerIdService.customerId}`
       )
       .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
