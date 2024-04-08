@@ -20,7 +20,7 @@ export default class PersonAddoreditAddressComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);
-  private customToastService = inject(CustomToastService);
+  customToastService = inject(CustomToastService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
@@ -67,7 +67,6 @@ export default class PersonAddoreditAddressComponent implements OnInit {
   onSubmit() {
     if (!this.apiRequestService.validateForm(this.form)) return;
 
-    // Deshabilitar el botón al iniciar el envío del formulario
     this.submitting = true;
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();

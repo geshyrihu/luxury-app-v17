@@ -26,7 +26,7 @@ export default class FormBitacoraMantenimientoComponent
 {
   formBuilder = inject(FormBuilder);
   authService = inject(AuthService);
-  public customerIdService = inject(CustomerIdService);
+  customerIdService = inject(CustomerIdService);
   dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
   ref = inject(DynamicDialogRef);
@@ -77,7 +77,7 @@ export default class FormBitacoraMantenimientoComponent
 
   onSubmit() {
     if (!this.apiRequestService.validateForm(this.form)) return;
-    // Deshabilitar el botón al iniciar el envío del formulario
+
     this.submitting = true;
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();

@@ -67,7 +67,7 @@ export default class AddOrEditVacanteComponent implements OnInit, OnDestroy {
     if (!this.apiRequestService.validateForm(this.form)) return;
 
     this.id = this.config.data.id;
-    // Deshabilitar el botón al iniciar el envío del formulario
+
     this.submitting = true;
     if (this.id === 0) {
       this.dataService

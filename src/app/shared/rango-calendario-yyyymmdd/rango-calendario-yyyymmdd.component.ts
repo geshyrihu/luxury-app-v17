@@ -14,7 +14,7 @@ const date = new Date();
   imports: [FormsModule, FlatpickrModule],
 })
 export default class RangoCalendarioyyyymmddComponent implements OnInit {
-  public dateService = inject(DateService);
+  dateService = inject(DateService);
   fechaInicioDate: Date = new Date(date.getFullYear(), date.getMonth(), 1); //Dia primero del mes actual
   fechaFinalDate: Date = new Date(date.getFullYear(), date.getMonth() + 1, 0); //Dia Ultimo del mes Actual
 

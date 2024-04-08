@@ -22,10 +22,9 @@ export default class RadioComunicacionComponent implements OnDestroy {
   authService = inject(AuthService);
   dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
-  public dialogService = inject(DialogService);
-  public messageService = inject(MessageService);
-  public customerIdService = inject(CustomerIdService);
-
+  dialogService = inject(DialogService);
+  messageService = inject(MessageService);
+  customerIdService = inject(CustomerIdService);
   data: IRadioComunicacion[] = [];
 
   ref: DynamicDialogRef;

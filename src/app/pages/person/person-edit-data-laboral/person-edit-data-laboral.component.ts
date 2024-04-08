@@ -21,7 +21,7 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 })
 export default class PersonEditDataLaboralComponent implements OnInit {
   private apiRequestService = inject(ApiRequestService);
-  private customToastService = inject(CustomToastService);
+  customToastService = inject(CustomToastService);
   dataService = inject(DataService);
   formBuilder = inject(FormBuilder);
   authService = inject(AuthService);
@@ -98,7 +98,7 @@ export default class PersonEditDataLaboralComponent implements OnInit {
   onSubmit() {
     // Metodo para validar el formulario
     this.apiRequestService.validateForm(this.form);
-    // Deshabilitar el botón al iniciar el envío del formulario
+
     this.submitting = true;
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();

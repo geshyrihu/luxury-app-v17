@@ -28,7 +28,7 @@ import { environment } from 'src/environments/environment';
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class AddOrEditActivosComponent implements OnInit, OnDestroy {
-  public dateService = inject(DateService);
+  dateService = inject(DateService);
   authService = inject(AuthService);
   dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
@@ -36,9 +36,9 @@ export default class AddOrEditActivosComponent implements OnInit, OnDestroy {
   public getdateService = inject(DateService);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
-  public customerIdService = inject(CustomerIdService);
-  public dialogService = inject(DialogService);
-  private customToastService = inject(CustomToastService);
+  customerIdService = inject(CustomerIdService);
+  dialogService = inject(DialogService);
+  customToastService = inject(CustomToastService);
 
   public Editor = ClassicEditor;
 
@@ -108,7 +108,7 @@ export default class AddOrEditActivosComponent implements OnInit, OnDestroy {
     if (!this.apiRequestService.validateForm(this.form)) return;
 
     const model = this.createFormData(this.form.value);
-    // Deshabilitar el botón al iniciar el envío del formulario
+
     this.submitting = true;
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();

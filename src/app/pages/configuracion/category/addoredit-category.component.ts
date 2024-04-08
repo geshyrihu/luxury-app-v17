@@ -54,7 +54,6 @@ export default class AddOrEditCategoryComponent implements OnInit {
   onSubmit() {
     if (!this.apiRequestService.validateForm(this.form)) return;
 
-    // Deshabilitar el botón al iniciar el envío del formulario
     this.submitting = true;
 
     if (this.id === 0) {

@@ -54,7 +54,6 @@ export default class AddPartidaCedulaComponent implements OnInit {
     model.applicationUserId = this.applicationUserId;
     model.presupuestoEjercido = 0;
 
-    // Deshabilitar el botón al iniciar el envío del formulario
     this.submitting = true;
 
     this.apiRequestService

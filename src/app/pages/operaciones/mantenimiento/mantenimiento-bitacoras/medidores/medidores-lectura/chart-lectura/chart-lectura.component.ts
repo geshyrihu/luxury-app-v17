@@ -1,15 +1,13 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { NgChartsModule } from 'ng2-charts';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { Observable } from 'rxjs';
 import { IChartType } from 'src/app/core/interfaces/chart-type.interface';
 import { IDataSet } from 'src/app/core/interfaces/data-set.interface';
 import { IFechasFiltro } from 'src/app/core/interfaces/fechas-filtro.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
-import { DataService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
 import { FiltroCalendarService } from 'src/app/core/services/filtro-calendar.service';
 @Component({
@@ -18,16 +16,11 @@ import { FiltroCalendarService } from 'src/app/core/services/filtro-calendar.ser
   standalone: true,
   imports: [LuxuryAppComponentsModule, NgChartsModule],
 })
-export default class ChartLecturaComponent implements OnInit, OnDestroy {
-  dataService = inject(DataService);
+export default class ChartLecturaComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  private rutaActiva = inject(ActivatedRoute);
-  public dateService = inject(DateService);
-  public dialogService = inject(DialogService);
-  public filtroCalendarService = inject(FiltroCalendarService);
-  customToastService = inject(CustomToastService);
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+  rutaActiva = inject(ActivatedRoute);
+  dateService = inject(DateService);
+  filtroCalendarService = inject(FiltroCalendarService);
 
   data: IDataSet;
   title: string = '';
@@ -81,55 +74,31 @@ export default class ChartLecturaComponent implements OnInit, OnDestroy {
   }
 
   onDataGraficoDiaria() {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-
-    this.dataService
-      .get(
-        `MedidorLectura/DataGraficoDiaria/${this.medidorId}/${this.fechaInicial}/${this.fechaFinal}`
-      )
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.data = this.customToastService.onCloseOnGetData(resp.body);
-          this.onLoadChart(
-            this.data.label,
-            this.data.backgroundColor,
-            this.data.hoverBackgroundColor,
-            this.data.labels,
-            this.data.data
-          );
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
+    const urlApi = `MedidorLectura/DataGraficoDiaria/${this.medidorId}/${this.fechaInicial}/${this.fechaFinal}`;
+    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      this.data = result;
+      this.onLoadChart(
+        this.data.label,
+        this.data.backgroundColor,
+        this.data.hoverBackgroundColor,
+        this.data.labels,
+        this.data.data
+      );
+    });
   }
 
   onDataGraficoMensual(fechaInicial: string, fechaFinal: string) {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-
-    this.dataService
-      .get(
-        `MedidorLectura/DataGraficoMensual/${this.medidorId}/${fechaInicial}/${fechaFinal}`
-      )
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.data = this.customToastService.onCloseOnGetData(resp.body);
-          this.onLoadChart(
-            this.data.label,
-            this.data.backgroundColor,
-            this.data.hoverBackgroundColor,
-            this.data.labels,
-            this.data.data
-          );
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
+    const urlApi = `MedidorLectura/DataGraficoMensual/${this.medidorId}/${fechaInicial}/${fechaFinal}`;
+    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      this.data = result;
+      this.onLoadChart(
+        this.data.label,
+        this.data.backgroundColor,
+        this.data.hoverBackgroundColor,
+        this.data.labels,
+        this.data.data
+      );
+    });
   }
   lineBarChart: IChartType;
   // lineBarChartDiario: ChartType;
@@ -178,8 +147,5 @@ export default class ChartLecturaComponent implements OnInit, OnDestroy {
         },
       },
     };
-  }
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
   }
 }

@@ -1,11 +1,8 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { MessageService } from 'primeng/api';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subject, takeUntil } from 'rxjs';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
-import { DataService } from 'src/app/core/services/data.service';
+import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import AddOrEditCalendarioMaestroEquipoComponent from './addoredit-calendario-maestro-equipo.component';
 
 @Component({
@@ -14,37 +11,22 @@ import AddOrEditCalendarioMaestroEquipoComponent from './addoredit-calendario-ma
   standalone: true,
   imports: [LuxuryAppComponentsModule],
 })
-export default class CalendarioMaestroEquipoComponent
-  implements OnInit, OnDestroy
-{
-  customToastService = inject(CustomToastService);
-  dataService = inject(DataService);
+export default class CalendarioMaestroEquipoComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  public dialogService = inject(DialogService);
-  public messageService = inject(MessageService);
+  dialogHandlerService = inject(DialogHandlerService);
 
   data: any[] = [];
   ref: DynamicDialogRef;
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   ngOnInit(): void {
     this.onLoadData();
   }
 
   onLoadData() {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .get('CalendarioMaestroEquipo')
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.data = this.customToastService.onCloseOnGetData(resp.body);
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+    this.apiRequestService
+      .onGetList('CalendarioMaestroEquipo')
+      .then((result: any) => {
+        this.data = result;
       });
   }
   onDelete(id: number) {
@@ -56,27 +38,15 @@ export default class CalendarioMaestroEquipoComponent
   }
 
   onModalAddOrEdit(data: any) {
-    this.ref = this.dialogService.open(
-      AddOrEditCalendarioMaestroEquipoComponent,
-      {
-        data: {
-          id: data.id,
-        },
-        header: data.title,
-        styleClass: 'modal-sm ',
-        closeOnEscape: true,
-        baseZIndex: 10000,
-      }
-    );
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        this.customToastService.onShowSuccess();
-        this.onLoadData();
-      }
-    });
-  }
-
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
+    this.dialogHandlerService
+      .openDialog(
+        AddOrEditCalendarioMaestroEquipoComponent,
+        data,
+        data.title,
+        this.dialogHandlerService.dialogSizeSm
+      )
+      .then((result: boolean) => {
+        if (result) this.onLoadData();
+      });
   }
 }

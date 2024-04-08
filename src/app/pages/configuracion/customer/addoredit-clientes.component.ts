@@ -21,7 +21,7 @@ export default class AddOrEditClienteComponent implements OnInit {
   formBuilder = inject(FormBuilder);
   apiRequestService = inject(ApiRequestService);
   config = inject(DynamicDialogConfig);
-  public dateService = inject(DateService);
+  dateService = inject(DateService);
   ref = inject(DynamicDialogRef);
 
   submitting: boolean = false;

@@ -1,13 +1,10 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { NgbRatingModule } from '@ng-bootstrap/ng-bootstrap';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { MessageService } from 'primeng/api';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subject, takeUntil } from 'rxjs';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
-import { DataService } from 'src/app/core/services/data.service';
+import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import { environment } from 'src/environments/environment';
 import AddoreditProveedorComponent from '../addoredit-proveedor/addoredit-proveedor.component';
 import CalificacionProveedorComponent from '../calificacion-proveedor/calificacion-proveedor.component';
@@ -19,18 +16,13 @@ import TarjetaProveedorComponent from '../tarjeta-proveedor/tarjeta-proveedor.co
   standalone: true,
   imports: [LuxuryAppComponentsModule, NgbRatingModule],
 })
-export default class BuscadorProvedorComponent implements OnInit, OnDestroy {
-  customToastService = inject(CustomToastService);
-  dataService = inject(DataService);
+export default class BuscadorProvedorComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  public messageService = inject(MessageService);
-  public dialogService = inject(DialogService);
+  dialogHandlerService = inject(DialogHandlerService);
   authService = inject(AuthService);
 
   incluirInactivos: boolean = false;
   url_img = `${environment.base_urlImg}providers/`;
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   ref: DynamicDialogRef;
 
@@ -45,61 +37,45 @@ export default class BuscadorProvedorComponent implements OnInit, OnDestroy {
     this.incluirInactivos = !this.incluirInactivos;
     this.buscar();
   }
-  onDelete(id: number) {
-    this.apiRequestService
-      .onDelete(`providers/${id}`)
+
+  showModalCardProveedor(data: any) {
+    this.dialogHandlerService.openDialog(
+      TarjetaProveedorComponent,
+      data,
+      data.title,
+      this.dialogHandlerService.dialogSizeLg
+    );
+  }
+  showModalCalificarProveedor(data: any) {
+    this.dialogHandlerService
+      .openDialog(
+        CalificacionProveedorComponent,
+        {
+          providerId: data.providerId,
+          userId:
+            this.authService.userTokenDto.infoUserAuthDto.applicationUserId,
+        },
+        'Calificar a ' + data.nameProvider,
+        this.dialogHandlerService.dialogSizeSm
+      )
       .then((result: boolean) => {
         if (result) this.buscar();
       });
   }
 
-  showModalCardProveedor(data: any) {
-    this.ref = this.dialogService.open(TarjetaProveedorComponent, {
-      data: {
-        id: data.providerId,
-      },
-      header: data.title,
-      styleClass: 'modal-lg',
-      baseZIndex: 10000,
-      closeOnEscape: true,
-    });
-  }
-  showModalCalificarProveedor(data: any) {
-    this.ref = this.dialogService.open(CalificacionProveedorComponent, {
-      data: {
-        providerId: data.providerId,
-        userId: this.authService.userTokenDto.infoUserAuthDto.applicationUserId,
-      },
-      header: 'Calificar a ' + data.nameProvider,
-      styleClass: 'modal-sm',
-      baseZIndex: 10000,
-      closeOnEscape: true,
-    });
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        this.customToastService.onShowSuccess();
-        this.buscar();
-      }
-    });
-  }
-
   showModalAddOrEdit(data: any) {
-    this.ref = this.dialogService.open(AddoreditProveedorComponent, {
-      data: {
-        id: data.id,
-      },
-      header: data.title,
-      height: '100%',
-      width: '100%',
-      baseZIndex: 10000,
-      closeOnEscape: true,
-    });
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        this.customToastService.onShowSuccess();
-        this.buscar();
-      }
-    });
+    this.dialogHandlerService
+      .openDialog(
+        AddoreditProveedorComponent,
+        {
+          id: data.id,
+        },
+        data.title,
+        this.dialogHandlerService.dialogSizeFull
+      )
+      .then((result: boolean) => {
+        if (result) this.buscar();
+      });
   }
 
   calificacionPromedio(data: any, valor: string): number {
@@ -112,17 +88,10 @@ export default class BuscadorProvedorComponent implements OnInit, OnDestroy {
     return restult;
   }
   onActivateProvider(data: any) {
-    this.dataService
-      .put(`Providers/ChangeState/${data.providerId}/${data.state}`, null)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.buscar();
-          // this.onLoadData(this.stateProvider);
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+    this.apiRequestService
+      .onPut(`Providers/ChangeState/${data.providerId}/${data.state}`, null)
+      .then((result: boolean) => {
+        this.buscar();
       });
   }
 
@@ -131,23 +100,18 @@ export default class BuscadorProvedorComponent implements OnInit, OnDestroy {
     this.resultados = [];
     this.loading = true;
 
-    this.dataService
-      .get(
-        'proveedor/buscarProveedor/' + this.incluirInactivos + '/' + this.filtro
-      )
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.resultados = resp.body;
-          this.loading = false;
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
+    const urlApi = `proveedor/buscarProveedor/${this.incluirInactivos}/${this.filtro}`;
+    this.apiRequestService.onGetListNotLoading(urlApi).then((result: any) => {
+      this.resultados = result;
+      this.loading = false;
+    });
   }
 
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
+  onDelete(id: number) {
+    this.apiRequestService
+      .onDelete(`providers/${id}`)
+      .then((result: boolean) => {
+        if (result) this.buscar();
+      });
   }
 }

@@ -22,7 +22,7 @@ import PresupuestoEditionFileComponent from './presupuesto-edition-file/presupue
 })
 export default class PresupuestoIndividualComponent implements OnInit {
   authService = inject(AuthService);
-  public customerIdService = inject(CustomerIdService);
+  customerIdService = inject(CustomerIdService);
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
   private activatedRoute = inject(ActivatedRoute);

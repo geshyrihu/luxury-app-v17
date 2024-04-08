@@ -37,7 +37,7 @@ export class TopbarComponent implements OnInit {
   private router = inject(Router);
   authService = inject(AuthService);
   customToastService = inject(CustomToastService);
-  public dialogService = inject(DialogService);
+  dialogService = inject(DialogService);
   public profielServiceService = inject(ProfielServiceService);
   dialogHandlerService = inject(DialogHandlerService);
   apiRequestService = inject(ApiRequestService);

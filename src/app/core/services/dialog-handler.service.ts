@@ -5,7 +5,7 @@ import { DialogService } from 'primeng/dynamicdialog';
   providedIn: 'root',
 })
 export class DialogHandlerService {
-  private dialogService = inject(DialogService);
+  dialogService = inject(DialogService);
 
   openDialog(
     component: any,

@@ -5,15 +5,6 @@
     styleClass="custom-table"
     [tableStyle]="{ 'min-width': '50rem' }"
   >
-    <ng-template pTemplate="caption">
-      <app-table-header
-        [title]="'Historial de movimientos'"
-        [dt]="dt"
-        [showSearch]="false"
-        [showAdd]="false"
-      ></app-table-header>
-    </ng-template>
-
     <ng-template pTemplate="header">
       <tr>
         <th scope="col">Fecha</th>

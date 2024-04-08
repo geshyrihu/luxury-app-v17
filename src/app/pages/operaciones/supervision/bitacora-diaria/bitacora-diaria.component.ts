@@ -19,13 +19,13 @@ const base_url = environment.base_urlImg + 'Administration/accounts/';
   imports: [LuxuryAppComponentsModule],
 })
 export default class BitacoraDiariaComponent implements OnInit, OnDestroy {
-  private dateService = inject(DateService);
+  dateService = inject(DateService);
   authService = inject(AuthService);
   dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
-  private dialogService = inject(DialogService);
+  dialogService = inject(DialogService);
   private rangoCalendarioService = inject(FiltroCalendarService);
-  private customToastService = inject(CustomToastService);
+  customToastService = inject(CustomToastService);
 
   loading: boolean = true;
   base_url = base_url;

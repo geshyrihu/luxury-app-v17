@@ -1,27 +1,16 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { MessageService } from 'primeng/api';
-import { Subject, takeUntil } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
-import { DataService } from 'src/app/core/services/data.service';
 @Component({
   selector: 'app-onden-compra-pdf-solicitud-pago',
   templateUrl: './onden-compra-pdf-solicitud-pago.component.html',
   standalone: true,
   imports: [LuxuryAppComponentsModule],
 })
-export default class OndenCompraPdfSolicitudPagoComponent
-  implements OnInit, OnDestroy
-{
-  customToastService = inject(CustomToastService);
-  dataService = inject(DataService);
+export default class OndenCompraPdfSolicitudPagoComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  public routeActive = inject(ActivatedRoute);
-  public messageService = inject(MessageService);
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+  routeActive = inject(ActivatedRoute);
 
   model: any;
   ordenCompraId: number = 0;
@@ -48,27 +37,18 @@ export default class OndenCompraPdfSolicitudPagoComponent
   }
 
   onLoadData() {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .get(`OrdenCompra/SolicitudPago/${this.ordenCompraId}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.model = resp.body;
-          if (this.model.ordenCompraAuth.applicationUserAuthId !== null) {
-            this.nombreAutorizador = `${this.model.ordenCompraAuth.applicationUserAuth.firstName} ${this.model.ordenCompraAuth.applicationUserAuth.lastName}`;
-          }
-          if (this.model.ordenCompraDetalle) {
-            this.onLoadOrdenCompraDetalle(this.model.ordenCompraDetalle);
-          }
-          this.ordenCompraPresupuesto =
-            this.model.ordenCompraPresupuestoUtilizado;
-          this.customToastService.onClose();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+    this.apiRequestService
+      .onGetSelectItem(`OrdenCompra/SolicitudPago/${this.ordenCompraId}`)
+      .then((response: any) => {
+        this.model = response;
+        if (this.model.ordenCompraAuth.applicationUserAuthId !== null) {
+          this.nombreAutorizador = `${this.model.ordenCompraAuth.applicationUserAuth.firstName} ${this.model.ordenCompraAuth.applicationUserAuth.lastName}`;
+        }
+        if (this.model.ordenCompraDetalle) {
+          this.onLoadOrdenCompraDetalle(this.model.ordenCompraDetalle);
+        }
+        this.ordenCompraPresupuesto =
+          this.model.ordenCompraPresupuestoUtilizado;
       });
   }
 
@@ -98,8 +78,5 @@ export default class OndenCompraPdfSolicitudPagoComponent
     this.subtotal = subTotal;
 
     this.total = this.subtotal + this.iva - this.retencionIva;
-  }
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
   }
 }

@@ -21,10 +21,10 @@ export default class ResultadoGeneralPosicionComponent
 {
   dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
-  public dateService = inject(DateService);
+  dateService = inject(DateService);
   customToastService = inject(CustomToastService);
-  public dialogService = inject(DialogService);
-  public messageService = inject(MessageService);
+  dialogService = inject(DialogService);
+  messageService = inject(MessageService);
   public rangoCalendarioService = inject(FiltroCalendarService);
 
   fechaInicial: string = '';

@@ -29,10 +29,10 @@ export default class SolicitudModificacionSalarioComponent {
   dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
   formBuilder = inject(FormBuilder);
-  private customToastService = inject(CustomToastService);
+  customToastService = inject(CustomToastService);
   config = inject(DynamicDialogConfig);
-  public customerIdService = inject(CustomerIdService);
-  public dateService = inject(DateService);
+  customerIdService = inject(CustomerIdService);
+  dateService = inject(DateService);
   ref = inject(DynamicDialogRef);
   authService = inject(AuthService);
 
@@ -92,7 +92,6 @@ export default class SolicitudModificacionSalarioComponent {
 
     var model = this.createFormData(this.form.value);
 
-    // Deshabilitar el botón al iniciar el envío del formulario
     this.submitting = true;
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();

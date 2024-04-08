@@ -1,15 +1,12 @@
-import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { MessageService, SelectItem } from 'primeng/api';
+import { SelectItem } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subject, takeUntil } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CatalogoGastosFijosService } from 'src/app/core/services/catalogo-gastos-fijos.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataService } from 'src/app/core/services/data.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
@@ -18,23 +15,15 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   standalone: true,
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
-export default class FormCatalogoGastosFijosComponent
-  implements OnInit, OnDestroy
-{
-  customToastService = inject(CustomToastService);
+export default class FormCatalogoGastosFijosComponent implements OnInit {
+  apiRequestService = inject(ApiRequestService);
+  customerIdService = inject(CustomerIdService);
   authService = inject(AuthService);
   formBuilder = inject(FormBuilder);
-  dataService = inject(DataService);
-  apiRequestService = inject(ApiRequestService);
   ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);
-  public messageService = inject(MessageService);
-  public catalogoGastosFijosService = inject(CatalogoGastosFijosService);
-  public customerIdService = inject(CustomerIdService);
-
+  catalogoGastosFijosService = inject(CatalogoGastosFijosService);
   submitting: boolean = false;
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   @Input()
   id: number = 0;
@@ -55,8 +44,6 @@ export default class FormCatalogoGastosFijosComponent
     usoCFDIId: ['', Validators.required],
     metodoDePagoId: ['', Validators.required],
     formaDePagoId: ['', Validators.required],
-    // metodoDePagoId: [19, Validators.required],
-    // formaDePagoId: [1, Validators.required],
     catalogoGastosFijosPresupuesto: this.formBuilder.array([]),
     catalogoGastosFijosDetalles: this.formBuilder.array([]),
     applicationUserId: [
@@ -97,70 +84,36 @@ export default class FormCatalogoGastosFijosComponent
   }
 
   onLoadData() {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
+    this.apiRequestService
+      .onGetItem(`CatalogoGastosFijos/${this.id}`)
+      .then((result: any) => {
+        this.catalogoGastosFijosService.setCatalogoGastosFijosId(result.id);
 
-    this.dataService
-      .get<any>(`CatalogoGastosFijos/${this.id}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.catalogoGastosFijosService.setCatalogoGastosFijosId(
-            resp.body.id
-          );
-
-          this.form.patchValue(resp.body);
-          this.form.patchValue({
-            providerName: resp.body.provider,
-          });
-          this.customToastService.onClose();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+        this.form.patchValue(result);
+        this.form.patchValue({
+          providerName: result.provider,
+        });
       });
   }
 
   onSubmit() {
     if (!this.apiRequestService.validateForm(this.form)) return;
-    // Deshabilitar el botón al iniciar el envío del formulario
+
     this.submitting = true;
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
+
     if (this.id === 0) {
-      this.dataService
-        .post(`CatalogoGastosFijos`, this.form.value)
-        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-        .subscribe({
-          next: (resp: any) => {
-            this.id = resp.body.id;
-            this.onLoadData();
-            this.customToastService.onCloseToSuccess();
-          },
-          error: (error) => {
-            // Habilitar el botón nuevamente al finalizar el envío del formulario
-            this.submitting = false;
-            this.customToastService.onCloseToError(error);
-          },
+      this.apiRequestService
+        .onPost(`CatalogoGastosFijos`, this.form.value)
+        .then((result: any) => {
+          this.id = result.id;
+          this.onLoadData();
         });
     } else {
-      this.dataService
-        .put(`CatalogoGastosFijos/${this.id}`, this.form.value)
-        .subscribe({
-          next: () => {
-            this.onLoadData();
-            this.customToastService.onCloseToSuccess();
-          },
-          error: (error) => {
-            // Habilitar el botón nuevamente al finalizar el envío del formulario
-            this.submitting = false;
-            this.customToastService.onCloseToError(error);
-          },
+      this.apiRequestService
+        .onPut(`CatalogoGastosFijos/${this.id}`, this.form.value)
+        .then((result: boolean) => {
+          this.onLoadData();
         });
     }
-  }
-
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
   }
 }

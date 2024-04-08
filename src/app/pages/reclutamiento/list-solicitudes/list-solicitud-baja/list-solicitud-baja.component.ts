@@ -22,8 +22,8 @@ export default class ListSolicitudBajaComponent implements OnInit {
   authService = inject(AuthService);
   dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
-  public dialogService = inject(DialogService);
-  public messageService = inject(MessageService);
+  dialogService = inject(DialogService);
+  messageService = inject(MessageService);
   private filterRequestsService = inject(FilterRequestsService);
 
   data: any[] = [];

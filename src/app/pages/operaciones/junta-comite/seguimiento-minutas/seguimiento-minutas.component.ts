@@ -1,13 +1,11 @@
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { MessageService } from 'primeng/api';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { Observable } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataService } from 'src/app/core/services/data.service';
+import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import ContMinutaSeguimientosComponent from 'src/app/pages/contabilidad/contabilidad-pendientes-minuta/cont-minuta-seguimientos.component';
 import AddoreditMinutaDetalleComponent from 'src/app/pages/operaciones/junta-comite/addoredit-minuta-detalle/addoredit-minuta-detalle.component';
 import AddorEditMeetingSeguimientoComponent from 'src/app/pages/operaciones/junta-comite/addoredit-seguimiento/addor-edit-meeting-seguimiento.component';
@@ -18,20 +16,14 @@ import AddorEditMeetingSeguimientoComponent from 'src/app/pages/operaciones/junt
   standalone: true,
   imports: [LuxuryAppComponentsModule],
 })
-export default class SeguimientoMinutaComponent implements OnInit, OnDestroy {
-  dataService = inject(DataService);
+export default class SeguimientoMinutaComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  public dialogService = inject(DialogService);
-  public messageService = inject(MessageService);
+  dialogHandlerService = inject(DialogHandlerService);
   authService = inject(AuthService);
-  customToastService = inject(CustomToastService);
-  public customerIdService = inject(CustomerIdService);
+  customerIdService = inject(CustomerIdService);
 
   data: any[] = [];
-
   ref: DynamicDialogRef;
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   statusFiltro: number = 0;
   customerId$: Observable<number> = this.customerIdService.getCustomerId$();
@@ -44,98 +36,68 @@ export default class SeguimientoMinutaComponent implements OnInit, OnDestroy {
   }
 
   onLoadData(filtro: number) {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .get(
-        `Meetings/SeguimientoMinutas/${this.customerIdService.customerId}/${filtro}`
-      )
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.data = this.customToastService.onCloseOnGetData(resp.body);
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
+    const urlApi = `Meetings/SeguimientoMinutas/${this.customerIdService.customerId}/${filtro}`;
+    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      this.data = result;
+    });
   }
 
   onModalAddOrEditSeguimiento(
     meetingDetailsId: any,
     idMeetingSeguimiento: any
   ) {
-    this.ref = this.dialogService.open(AddorEditMeetingSeguimientoComponent, {
-      data: {
-        meetingDetailsId,
-        idMeetingSeguimiento,
-      },
-      header: 'Seguimiento',
-      styleClass: 'modal-md',
-      closeOnEscape: true,
-      baseZIndex: 10000,
-    });
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        this.customToastService.onShowSuccess();
-        this.onLoadData(this.statusFiltro);
-      }
-    });
-  }
-
-  onModalAddOrEditMinutaDetalle(data: any) {
-    this.ref = this.dialogService.open(AddoreditMinutaDetalleComponent, {
-      data: {
-        id: data.id,
-        areaResponsable: data.areaResponsable,
-      },
-      header: data.header,
-      styleClass: 'modal-md',
-      closeOnEscape: true,
-      autoZIndex: true,
-    });
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        this.customToastService.onShowSuccess();
-        this.onLoadData(this.statusFiltro);
-      }
-    });
-  }
-
-  onDeleteSeguimiento(id: number) {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .delete(`MeetingDertailsSeguimiento/${id}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          this.onLoadData(this.statusFiltro);
-          this.customToastService.onCloseToSuccess();
+    this.dialogHandlerService
+      .openDialog(
+        AddorEditMeetingSeguimientoComponent,
+        {
+          meetingDetailsId,
+          idMeetingSeguimiento,
         },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+        'Seguimiento',
+        this.dialogHandlerService.dialogSizeMd
+      )
+      .then((result: boolean) => {
+        if (result) this.onLoadData(this.statusFiltro);
       });
   }
 
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
+  onModalAddOrEditMinutaDetalle(data: any) {
+    this.dialogHandlerService
+      .openDialog(
+        AddoreditMinutaDetalleComponent,
+        {
+          id: data.id,
+          areaResponsable: data.areaResponsable,
+        },
+        data.title,
+        this.dialogHandlerService.dialogSizeMd
+      )
+      .then((result: boolean) => {
+        if (result) this.onLoadData(this.statusFiltro);
+      });
+  }
+
+  onDeleteSeguimiento(id: number) {
+    this.apiRequestService
+      .onDelete(`MeetingDertailsSeguimiento/${id}`)
+      .then((result: boolean) => {
+        this.onLoadData(this.statusFiltro);
+      });
   }
 
   onModalTodosSeguimientos(idItem: number) {
-    this.ref = this.dialogService.open(ContMinutaSeguimientosComponent, {
-      data: {
-        idItem,
-      },
-      header: 'Seguimientos',
-      width: '80%',
-      closeOnEscape: true,
-      baseZIndex: 10000,
-    });
-    this.ref.onClose.subscribe(() => {
-      this.onLoadData(this.statusFiltro);
-    });
+    this.dialogHandlerService
+      .openDialog(
+        ContMinutaSeguimientosComponent,
+        {
+          idItem,
+        },
+        'Seguimientos',
+        this.dialogHandlerService.dialogSizeMd
+      )
+      .then((result: boolean) => {
+        if (result) this.onLoadData(this.statusFiltro);
+      });
   }
   onFiltrarData(filtro: number) {
     this.statusFiltro = filtro;

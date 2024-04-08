@@ -25,8 +25,8 @@ export default class ListPersonComponent implements OnInit, OnDestroy {
   apiRequestService = inject(ApiRequestService);
   customToastService = inject(CustomToastService);
   dataService = inject(DataService);
-  public dialogService = inject(DialogService);
-  public messageService = inject(MessageService);
+  dialogService = inject(DialogService);
+  messageService = inject(MessageService);
 
   data: any[] = [];
   url = environment.base_urlImg;

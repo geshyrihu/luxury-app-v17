@@ -1,12 +1,8 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subject, takeUntil } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
-import { DataService } from 'src/app/core/services/data.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
@@ -15,16 +11,11 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   standalone: true,
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
-export default class OrdenCompraStatusComponent implements OnInit, OnDestroy {
-  customToastService = inject(CustomToastService);
-  dataService = inject(DataService);
+export default class OrdenCompraStatusComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   formBuilder = inject(FormBuilder);
   ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);
-  public messageService = inject(MessageService);
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   submitting: boolean = false;
 
@@ -45,40 +36,20 @@ export default class OrdenCompraStatusComponent implements OnInit, OnDestroy {
   }
 
   onLoadData() {
-    this.dataService
-      .get(`OrdenCompraStatus/${this.ordenCompraId}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.ordenCompraStatus = resp.body;
-          this.form.patchValue(resp.body);
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+    this.apiRequestService
+      .onGetItem(`OrdenCompraStatus/${this.ordenCompraId}`)
+      .then((result: any) => {
+        this.ordenCompraStatus = result;
+        this.form.patchValue(result);
       });
   }
   onSubmit() {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    // Deshabilitar el botón al iniciar el envío del formulario
     this.submitting = true;
-    this.dataService
-      .put(`OrdenCompraStatus/${this.ordenCompraStatus.id}`, this.form.value)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          this.ref.close(true);
-          this.customToastService.onCloseToSuccess();
-        },
-        error: (error) => {
-          // Habilitar el botón nuevamente al finalizar el envío del formulario
-          this.submitting = false;
-          this.customToastService.onCloseToError(error);
-        },
+
+    this.apiRequestService
+      .onPut(`OrdenCompraStatus/${this.ordenCompraStatus.id}`, this.form.value)
+      .then((result: boolean) => {
+        result ? this.ref.close(true) : (this.submitting = false);
       });
-  }
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
   }
 }

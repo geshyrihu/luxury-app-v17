@@ -19,8 +19,8 @@ export default class OrdenesServicioReporteProveedorComponent
   implements OnInit, OnDestroy
 {
   config = inject(DynamicDialogConfig);
-  public customerIdService = inject(CustomerIdService);
-  public messageService = inject(MessageService);
+  customerIdService = inject(CustomerIdService);
+  messageService = inject(MessageService);
   dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
   ref = inject(DynamicDialogRef);

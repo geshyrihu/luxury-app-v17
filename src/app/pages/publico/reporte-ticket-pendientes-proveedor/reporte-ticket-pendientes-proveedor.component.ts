@@ -22,7 +22,7 @@ export default class ReporteTicketPendientesProveedorComponent
   dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
   public reportService = inject(ReportService);
-  public router = inject(Router);
+  router = inject(Router);
   customToastService = inject(CustomToastService);
   public routerActivate = inject(ActivatedRoute);
 

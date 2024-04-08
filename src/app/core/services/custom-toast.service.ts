@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
   providedIn: 'root',
 })
 export class CustomToastService {
-  public messageService = inject(MessageService);
+  messageService = inject(MessageService);
 
   /**
    * Muestra un mensaje de éxito.

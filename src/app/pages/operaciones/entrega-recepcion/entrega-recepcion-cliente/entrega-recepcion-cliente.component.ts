@@ -1,14 +1,12 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { MessageService } from 'primeng/api';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { Observable } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataService } from 'src/app/core/services/data.service';
+import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import CrudEntregaRecepcionClienteComponent from '../addoredit-entrega-recepcion-cliente/addoredit-entrega-recepcion-cliente.component';
 
 @Component({
@@ -17,17 +15,11 @@ import CrudEntregaRecepcionClienteComponent from '../addoredit-entrega-recepcion
   standalone: true,
   imports: [LuxuryAppComponentsModule],
 })
-export default class EntregaRecepcionClienteComponent
-  implements OnInit, OnDestroy
-{
-  customToastService = inject(CustomToastService);
-  authService = inject(AuthService);
-  dataService = inject(DataService);
+export default class EntregaRecepcionClienteComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  public customerIdService = inject(CustomerIdService);
-  public messageService = inject(MessageService);
-  public dialogService = inject(DialogService);
-  // public viewPdfService = inject(ViewPdfService);
+  dialogHandlerService = inject(DialogHandlerService);
+  authService = inject(AuthService);
+  customerIdService = inject(CustomerIdService);
 
   public route = inject(Router);
 
@@ -39,8 +31,6 @@ export default class EntregaRecepcionClienteComponent
     { value: 'OPERACIONES Y MANTENIMIENTO' },
   ];
   ref: DynamicDialogRef;
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   departamento = this.cb_departamento[0].value;
 
@@ -54,7 +44,6 @@ export default class EntregaRecepcionClienteComponent
   }
 
   ngOnInit(): void {
-    this.customerId$ = this.customerIdService.getCustomerId$();
     this.onValidarCargo();
     this.onLoadData();
     this.customerId$.subscribe(() => {
@@ -66,53 +55,33 @@ export default class EntregaRecepcionClienteComponent
     this.onLoadData();
   }
   onLoadData() {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
     // * Peticion para generar los items de entrega recepcion
-    this.dataService
-      .get('EntregaRecepcionCliente/GenerateData')
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {},
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
+    const urlApi1 = 'EntregaRecepcionCliente/GenerateData';
+    this.apiRequestService.onGetItem(urlApi1).then((result: any) => {});
+
     // * Peticion para generar los items de entrega recepcion
-    this.dataService
-      .get(
-        'EntregaRecepcionCliente/' +
-          this.customerIdService.customerId +
-          '/' +
-          this.departamento
-      )
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.data = this.customToastService.onCloseOnGetData(resp.body);
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
+
+    const urlApi =
+      'EntregaRecepcionCliente/' +
+      this.customerIdService.customerId +
+      '/' +
+      this.departamento;
+    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      this.data = result;
+    });
   }
 
   onModalAddOrEdit(data: any) {
-    this.ref = this.dialogService.open(CrudEntregaRecepcionClienteComponent, {
-      data: {
-        id: data.id,
-      },
-      header: data.title,
-      styleClass: 'modal-md ',
-      closeOnEscape: true,
-      baseZIndex: 10000,
-    });
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        this.customToastService.onShowSuccess();
-        this.onLoadData();
-      }
-    });
+    this.dialogHandlerService
+      .openDialog(
+        CrudEntregaRecepcionClienteComponent,
+        data,
+        data.title,
+        this.dialogHandlerService.dialogSizeMd
+      )
+      .then((result: boolean) => {
+        if (result) this.onLoadData();
+      });
   }
   navigateToPdf(url: string) {
     const urlFinal =
@@ -125,53 +94,28 @@ export default class EntregaRecepcionClienteComponent
   }
 
   onValidarDocument(id: number) {
-    this.dataService
-      .put(
+    this.apiRequestService
+      .onPut(
         `EntregaRecepcionCliente/ValidarArchivo/${this.authService.userTokenDto.infoEmployeeDto.employeeId}/${id}`,
         null
       )
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          this.onLoadData();
-          this.customToastService.onShowSuccess();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+      .then((result: boolean) => {
+        this.onLoadData();
       });
   }
   onInvalidarDocument(id: number) {
-    this.dataService
-      .put(`EntregaRecepcionCliente/InvalidarArchivo/${id}`, null)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          this.onLoadData();
-          this.customToastService.onShowSuccess();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+    this.apiRequestService
+      .onPut(`EntregaRecepcionCliente/InvalidarArchivo/${id}`, null)
+      .then((result: boolean) => {
+        this.onLoadData();
       });
   }
 
   onDeleteFile(id: number) {
-    this.dataService
-      .delete(`EntregaRecepcionCliente/DeleteFile/${id}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          this.customToastService.onShowSuccess();
-          this.onLoadData();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+    this.apiRequestService
+      .onDelete(`EntregaRecepcionCliente/DeleteFile/${id}`)
+      .then((result: boolean) => {
+        this.onLoadData();
       });
-  }
-
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
   }
 }

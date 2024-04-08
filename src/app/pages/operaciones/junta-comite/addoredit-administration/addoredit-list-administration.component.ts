@@ -1,27 +1,16 @@
-import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
-import { Subject, takeUntil } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
-import { DataService } from 'src/app/core/services/data.service';
 @Component({
   selector: 'app-addoredit-list-administration',
   templateUrl: './addoredit-list-administration.component.html',
   standalone: true,
   imports: [LuxuryAppComponentsModule],
 })
-export default class AddOrEditListAdministrationComponent
-  implements OnInit, OnDestroy
-{
+export default class AddOrEditListAdministrationComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   config = inject(DynamicDialogConfig);
-  customToastService = inject(CustomToastService);
-  dataService = inject(DataService);
-  public messageService = inject(MessageService);
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   @Input()
   customerId: number;
@@ -38,69 +27,32 @@ export default class AddOrEditListAdministrationComponent
     this.onLoadData();
   }
   onLoadCB() {
-    this.dataService
-      .get(
-        'SelectItem/GetListAdministracionMinuta/' +
-          this.customerId +
-          '/' +
-          this.meetingId
-      )
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.cb_Administration = resp.body;
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
+    const urlApi = `SelectItem/GetListAdministracionMinuta/${this.customerId}/${this.meetingId}`;
+    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      this.cb_Administration = result;
+    });
   }
 
   onSubmit() {
-    this.dataService
-      .get(
-        `MeetingAdministracion/AgregarParticipantesAdministracion/${this.meetingId}/${this.administrationparticipante}`
-      )
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.customToastService.onShowSuccess();
-          this.onLoadData();
-          this.onLoadCB();
-        },
-        error: (err) => {
-          this.customToastService.onShowError();
-        },
-      });
+    const urlApi = `MeetingAdministracion/AgregarParticipantesAdministracion/${this.meetingId}/${this.administrationparticipante}`;
+    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+      this.onLoadData();
+      this.onLoadCB();
+    });
   }
   onDelete(idParticipant: number): void {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .delete(`MeetingAdministracion/${idParticipant}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          this.onLoadData();
-          this.onLoadCB();
-          this.customToastService.onCloseToSuccess();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+    this.apiRequestService
+      .onDelete(`MeetingAdministracion/${idParticipant}`)
+      .then((result: boolean) => {
+        this.onLoadData();
+        this.onLoadCB();
       });
   }
 
   onLoadData() {
-    this.dataService
-      .get(
-        `MeetingAdministracion/ParticipantesAdministracion/${this.meetingId}`
-      )
-      .subscribe((resp: any) => {
-        this.listaParticipantesAdministration = resp.body;
-      });
-  }
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
+    const urlApi = `MeetingAdministracion/ParticipantesAdministracion/${this.meetingId}`;
+    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      this.listaParticipantesAdministration = result;
+    });
   }
 }

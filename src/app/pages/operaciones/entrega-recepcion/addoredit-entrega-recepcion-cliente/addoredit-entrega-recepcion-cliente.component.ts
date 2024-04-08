@@ -1,16 +1,13 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subject, takeUntil } from 'rxjs';
 import { EState } from 'src/app/core/enums/state.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataService } from 'src/app/core/services/data.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
@@ -19,19 +16,13 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   standalone: true,
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
-export default class CrudEntregaRecepcionClienteComponent
-  implements OnInit, OnDestroy
-{
+export default class CrudEntregaRecepcionClienteComponent implements OnInit {
+  apiRequestService = inject(ApiRequestService);
   authService = inject(AuthService);
   formBuilder = inject(FormBuilder);
-  dataService = inject(DataService);
-  apiRequestService = inject(ApiRequestService);
   ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);
-  public customerIdService = inject(CustomerIdService);
-  private customToastService = inject(CustomToastService);
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+  customerIdService = inject(CustomerIdService);
 
   id: number = 0;
 
@@ -52,51 +43,32 @@ export default class CrudEntregaRecepcionClienteComponent
   }
 
   onSubmit() {
-    this.id = this.config.data.id;
+    console.log(this.form.value);
     if (!this.apiRequestService.validateForm(this.form)) return;
-
+    console.log('se paso validacion de form');
     const model = this.onCreateFormData(this.form.value);
-    // Deshabilitar el botón al iniciar el envío del formulario
+    console.log('se paso formdata');
     this.submitting = true;
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
 
-    this.dataService
-      .put(
+    this.apiRequestService
+      .onPut(
         `EntregaRecepcionCliente/${this.id}/${
           this.authService.userTokenDto.infoEmployeeDto.employeeId
         }/${this.customerIdService.getcustomerId()}`,
         model
       )
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          this.ref.close(true);
-          this.customToastService.onClose();
-        },
-        error: (error) => {
-          // Habilitar el botón nuevamente al finalizar el envío del formulario
-          this.submitting = false;
-          this.customToastService.onCloseToError(error);
-        },
+      .then((result: boolean) => {
+        result ? this.ref.close(true) : (this.submitting = false);
       });
   }
   onLoadData() {
-    this.dataService
-      .get(`EntregaRecepcionDescripcion/${this.id}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.form.patchValue(resp.body);
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
+    const urlApi = `EntregaRecepcionDescripcion/${this.id}`;
+    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+      this.form.patchValue(result);
+    });
   }
   change(file: any) {
     this.form.patchValue({ archivo: file });
-    this.submitting = true;
   }
   get f() {
     return this.f.form.controls;
@@ -112,9 +84,5 @@ export default class CrudEntregaRecepcionClienteComponent
       formData.append('archivo', dto.archivo);
     }
     return formData;
-  }
-
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
   }
 }

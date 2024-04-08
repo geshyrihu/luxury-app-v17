@@ -29,8 +29,8 @@ export default class AddoreditSistemasReporteComponent
   formBuilder = inject(FormBuilder);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
-  private dateService = inject(DateService);
-  private customToastService = inject(CustomToastService);
+  dateService = inject(DateService);
+  customToastService = inject(CustomToastService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
@@ -122,7 +122,7 @@ export default class AddoreditSistemasReporteComponent
   onSubmit() {
     if (!this.apiRequestService.validateForm(this.form)) return;
     const model = this.createFormData(this.form.value);
-    // Deshabilitar el botón al iniciar el envío del formulario
+
     this.submitting = true;
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();

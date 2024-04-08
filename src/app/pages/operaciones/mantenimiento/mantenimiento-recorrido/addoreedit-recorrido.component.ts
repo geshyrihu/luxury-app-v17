@@ -24,8 +24,8 @@ export default class RecorridoAddOrEditComponent implements OnInit, OnDestroy {
   formBuilder = inject(FormBuilder);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
-  public customerIdService = inject(CustomerIdService);
-  private customToastService = inject(CustomToastService);
+  customerIdService = inject(CustomerIdService);
+  customToastService = inject(CustomToastService);
 
   submitting: boolean = false;
 
@@ -88,7 +88,7 @@ export default class RecorridoAddOrEditComponent implements OnInit, OnDestroy {
   onSubmit() {
     if (!this.apiRequestService.validateForm(this.form)) return;
     this.id = this.config.data.id;
-    // Deshabilitar el botón al iniciar el envío del formulario
+
     this.submitting = true;
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();

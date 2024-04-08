@@ -18,8 +18,7 @@ export default class UpdateAccountComponent implements OnInit {
   formBuilder = inject(FormBuilder);
   apiRequestService = inject(ApiRequestService);
   authService = inject(AuthService);
-  public customerIdService = inject(CustomerIdService);
-
+  customerIdService = inject(CustomerIdService);
   cb_customer: ISelectItem[] = [];
   cb_employee: ISelectItem[] = [];
   cb_profession: ISelectItem[] = [];
@@ -81,7 +80,7 @@ export default class UpdateAccountComponent implements OnInit {
   }
   onSubmit() {
     if (!this.apiRequestService.validateForm(this.form)) return;
-    // Deshabilitar el botón al iniciar el envío del formulario
+
     this.submitting = true;
 
     this.form.patchValue({

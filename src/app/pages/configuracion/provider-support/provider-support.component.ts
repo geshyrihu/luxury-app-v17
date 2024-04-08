@@ -17,7 +17,7 @@ import AddOrEditprovidersupportComponent from './add-or-edit-provider-support/ad
 })
 export default class providersupportComponent implements OnInit {
   authService = inject(AuthService);
-  public dialogService = inject(DialogService);
+  dialogService = inject(DialogService);
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
 

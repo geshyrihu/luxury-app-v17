@@ -1,15 +1,13 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { MessageService } from 'primeng/api';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { Observable } from 'rxjs';
 import { IListCondomino } from 'src/app/core/interfaces/list-condomino.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataService } from 'src/app/core/services/data.service';
 
+import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import AddOrEditCondominosComponent from './addoredit-condominos.component';
 
 @Component({
@@ -18,45 +16,28 @@ import AddOrEditCondominosComponent from './addoredit-condominos.component';
   standalone: true,
   imports: [LuxuryAppComponentsModule],
 })
-export default class ListCondominosComponent implements OnInit, OnDestroy {
-  customToastService = inject(CustomToastService);
-  authService = inject(AuthService);
-  dataService = inject(DataService);
+export default class ListCondominosComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  public messageService = inject(MessageService);
-  public dialogService = inject(DialogService);
-  public customerIdService = inject(CustomerIdService);
+  dialogHandlerService = inject(DialogHandlerService);
+  authService = inject(AuthService);
+  customerIdService = inject(CustomerIdService);
 
   data: IListCondomino[] = [];
   ref: DynamicDialogRef;
   customerId$: Observable<number> = this.customerIdService.getCustomerId$();
 
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
-
   ngOnInit(): void {
     this.onLoadData();
-    this.customerId$ = this.customerIdService.getCustomerId$();
     this.customerId$.subscribe(() => {
       this.onLoadData();
     });
   }
 
   onLoadData() {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .get<IListCondomino[]>(
-        `ListCondomino/GetAllAsync/${this.customerIdService.customerId}`
-      )
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.data = this.customToastService.onCloseOnGetData(resp.body);
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
+    const urlApi = `ListCondomino/GetAllAsync/${this.customerIdService.customerId}`;
+    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      this.data = result;
+    });
   }
 
   onDelete(id: number) {
@@ -68,22 +49,15 @@ export default class ListCondominosComponent implements OnInit, OnDestroy {
   }
 
   showModalAddOrEdit(data: any) {
-    this.ref = this.dialogService.open(AddOrEditCondominosComponent, {
-      data: {
-        id: data.id,
-      },
-      header: data.title,
-      styleClass: 'modal-md',
-      closeOnEscape: true,
-    });
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        this.customToastService.onShowSuccess();
-        this.onLoadData();
-      }
-    });
-  }
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
+    this.dialogHandlerService
+      .openDialog(
+        AddOrEditCondominosComponent,
+        data,
+        data.title,
+        this.dialogHandlerService.dialogSizeMd
+      )
+      .then((result: boolean) => {
+        if (result) this.onLoadData();
+      });
   }
 }

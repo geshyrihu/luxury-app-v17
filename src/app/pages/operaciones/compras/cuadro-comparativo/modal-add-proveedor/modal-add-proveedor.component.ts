@@ -1,18 +1,11 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule, {
   flatpickrFactory,
 } from 'app/shared/luxuryapp-components.module';
-import {
-  DialogService,
-  DynamicDialogConfig,
-  DynamicDialogRef,
-} from 'primeng/dynamicdialog';
-import { Subject, takeUntil } from 'rxjs';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
-import { DataService } from 'src/app/core/services/data.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
@@ -21,19 +14,13 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   standalone: true,
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
-export default class ModalAddProveedorComponent implements OnInit, OnDestroy {
+export default class ModalAddProveedorComponent implements OnInit {
+  apiRequestService = inject(ApiRequestService);
+  config = inject(DynamicDialogConfig);
   formBuilder = inject(FormBuilder);
   ref = inject(DynamicDialogRef);
-  config = inject(DynamicDialogConfig);
-  dataService = inject(DataService);
-  apiRequestService = inject(ApiRequestService);
-  public dialogService = inject(DialogService);
-  customToastService = inject(CustomToastService);
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   submitting: boolean = false;
-
   form: FormGroup;
   cb_providers: ISelectItem[] = [];
 
@@ -62,37 +49,18 @@ export default class ModalAddProveedorComponent implements OnInit, OnDestroy {
   }
 
   onLoadProviders() {
-    this.dataService
-      .get(
-        `CotizacionProveedor/GetProviders/${this.config.data.solicitudCompraId}`
-      )
-      .subscribe((resp: any) => {
-        this.cb_providers = resp.body;
-      });
+    const url = `CotizacionProveedor/GetProviders/${this.config.data.solicitudCompraId}`;
+    this.apiRequestService.onGetList(url).then((result: any) => {
+      this.cb_providers = result;
+    });
   }
 
   onSubmit() {
-    // Deshabilitar el botón al iniciar el envío del formulario
     this.submitting = true;
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .post('CotizacionProveedor', this.form.value)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          this.ref.close(true);
-          this.customToastService.onClose();
-        },
-        error: (error) => {
-          // Habilitar el botón nuevamente al finalizar el envío del formulario
-          this.submitting = false;
-          this.customToastService.onCloseToError(error);
-        },
+    this.apiRequestService
+      .onPost(`cotizacionproveedor`, this.form.value)
+      .then((result: boolean) => {
+        result ? this.ref.close(true) : (this.submitting = false);
       });
-  }
-
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
   }
 }

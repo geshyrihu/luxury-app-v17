@@ -43,13 +43,12 @@ export default class OrdenCompraComponent implements OnInit, OnDestroy {
   authService = inject(AuthService);
   dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
-  public routeActive = inject(ActivatedRoute);
-  public router = inject(Router);
-  public dialogService = inject(DialogService);
-  public messageService = inject(MessageService);
-  public ordenCompraService = inject(OrdenCompraService);
-
-  public confirmationService = inject(ConfirmationService);
+  routeActive = inject(ActivatedRoute);
+  router = inject(Router);
+  dialogService = inject(DialogService);
+  messageService = inject(MessageService);
+  ordenCompraService = inject(OrdenCompraService);
+  confirmationService = inject(ConfirmationService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 

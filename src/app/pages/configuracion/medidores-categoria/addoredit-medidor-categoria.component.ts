@@ -43,7 +43,6 @@ export default class FormMedidorCategoriaComponent implements OnInit {
     if (!this.apiRequestService.validateForm(this.form)) return;
     // this.id = this.config.data.id;
 
-    // Deshabilitar el botón al iniciar el envío del formulario
     this.submitting = true;
 
     if (this.id === 0) {

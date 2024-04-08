@@ -26,8 +26,8 @@ export default class ListSolicitudModificacionSalarioComponent
   authService = inject(AuthService);
   dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
-  public dialogService = inject(DialogService);
-  public messageService = inject(MessageService);
+  dialogService = inject(DialogService);
+  messageService = inject(MessageService);
   private filterRequestsService = inject(FilterRequestsService);
   public statusSolicitudVacanteService = inject(StatusSolicitudVacanteService);
 

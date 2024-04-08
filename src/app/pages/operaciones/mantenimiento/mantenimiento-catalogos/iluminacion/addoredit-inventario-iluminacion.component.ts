@@ -19,8 +19,7 @@ export default class AddoreditInventarioIluminacionComponent implements OnInit {
   ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);
   authService = inject(AuthService);
-  public customerIdService = inject(CustomerIdService);
-
+  customerIdService = inject(CustomerIdService);
   submitting: boolean = false;
 
   cb_machinery: ISelectItem[] = [];
@@ -68,7 +67,7 @@ export default class AddoreditInventarioIluminacionComponent implements OnInit {
   }
   onSubmit() {
     if (!this.apiRequestService.validateForm(this.form)) return;
-    // Deshabilitar el botón al iniciar el envío del formulario
+
     this.submitting = true;
 
     if (this.id === 0) {

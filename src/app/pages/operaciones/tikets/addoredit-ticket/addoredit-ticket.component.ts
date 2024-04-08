@@ -26,10 +26,10 @@ import { environment } from 'src/environments/environment';
 })
 export default class AddoreditTicketComponent implements OnInit, OnDestroy {
   private customerSelectListService = inject(CustomerIdService);
-  private customToastService = inject(CustomToastService);
+  customToastService = inject(CustomToastService);
   apiRequestService = inject(ApiRequestService);
   dataService = inject(DataService);
-  private dateService = inject(DateService);
+  dateService = inject(DateService);
   formBuilder = inject(FormBuilder);
   authService = inject(AuthService);
   config = inject(DynamicDialogConfig);
@@ -175,7 +175,6 @@ export default class AddoreditTicketComponent implements OnInit, OnDestroy {
   }
 
   onticketConcluido(status: any, model: any) {
-    // Deshabilitar el botón al iniciar el envío del formulario
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
     this.dataService
@@ -198,7 +197,7 @@ export default class AddoreditTicketComponent implements OnInit, OnDestroy {
   onSubmit() {
     if (!this.apiRequestService.validateForm(this.form)) return;
     const model = this.createFormData(this.form.value);
-    // Deshabilitar el botón al iniciar el envío del formulario
+
     this.submitting = true;
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();

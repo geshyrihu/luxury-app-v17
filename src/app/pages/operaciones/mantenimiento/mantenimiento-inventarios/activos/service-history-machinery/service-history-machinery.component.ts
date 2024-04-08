@@ -23,8 +23,8 @@ export default class ServiceHistoryMachineryComponent
   dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
   config = inject(DynamicDialogConfig);
-  private customToastService = inject(CustomToastService);
-  public dialogService = inject(DialogService);
+  customToastService = inject(CustomToastService);
+  dialogService = inject(DialogService);
 
   id: number = this.config.data.id;
 

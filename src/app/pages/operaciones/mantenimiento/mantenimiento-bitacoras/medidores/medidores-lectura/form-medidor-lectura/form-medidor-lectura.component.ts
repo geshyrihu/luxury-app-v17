@@ -1,13 +1,9 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subject, takeUntil } from 'rxjs';
-import { IMedidorLectura } from 'src/app/core/interfaces/medidor-lectura.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
-import { DataService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
 const date = new Date();
 @Component({
@@ -16,17 +12,14 @@ const date = new Date();
   standalone: true,
   imports: [LuxuryAppComponentsModule],
 })
-export default class FormMedidorLecturaComponent implements OnInit, OnDestroy {
-  formBuilder = inject(FormBuilder);
-  public dateService = inject(DateService);
-  dataService = inject(DataService);
+export default class FormMedidorLecturaComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
+  formBuilder = inject(FormBuilder);
+  dateService = inject(DateService);
   authService = inject(AuthService);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
-  private customToastService = inject(CustomToastService);
 
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
   submitting: boolean = false;
 
   dateString: string = this.dateService.getDateFormat(date);
@@ -49,23 +42,18 @@ export default class FormMedidorLecturaComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.id = this.config.data.id;
     this.medidorId = this.config.data.medidorId;
-    this.dataService
-      .get(`MedidorLectura/UltimaLectura/${this.medidorId}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          if (resp.body !== null) {
-            this.dateStringUltimoRegistro = this.dateService.getDateFormat(
-              resp.body.fechaRegistro
-            );
-            this.validarUltimaLectura();
-            this.ultimaLectura = resp.body.lectura;
-          }
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
+
+    const urlApi = `MedidorLectura/UltimaLectura/${this.medidorId}`;
+    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+      if (result !== null) {
+        this.dateStringUltimoRegistro = this.dateService.getDateFormat(
+          result.fechaRegistro
+        );
+        this.validarUltimaLectura();
+        this.ultimaLectura = result.lectura;
+      }
+    });
+
     if (this.id !== 0) this.onLoadData();
 
     this.form = this.formBuilder.group({
@@ -77,50 +65,28 @@ export default class FormMedidorLecturaComponent implements OnInit, OnDestroy {
     });
   }
   onLoadData() {
-    this.dataService
-      .get<IMedidorLectura>(`MedidorLectura/${this.id}`)
-      .subscribe((resp: any) => {
-        this.form.patchValue(resp.body);
-      });
+    const urlApi = `MedidorLectura/${this.id}`;
+    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+      this.form.patchValue(result);
+    });
   }
   onSubmit() {
-    if (this.form.value.lectura == 0) {
-      return;
-    }
+    if (this.form.value.lectura == 0) return;
     if (!this.apiRequestService.validateForm(this.form)) return;
-    this.id = this.config.data.id;
-    // Deshabilitar el botón al iniciar el envío del formulario
+
     this.submitting = true;
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
+
     if (this.id === 0) {
-      this.dataService
-        .post(`MedidorLectura`, this.form.value)
-        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-        .subscribe({
-          next: () => {
-            this.ref.close(true);
-            this.customToastService.onClose();
-          },
-          error: (error) => {
-            // Habilitar el botón nuevamente al finalizar el envío del formulario
-            this.submitting = false;
-            this.customToastService.onCloseToError(error);
-          },
+      this.apiRequestService
+        .onPost(`MedidorLectura`, this.form.value)
+        .then((result: boolean) => {
+          result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.dataService
-        .put(`MedidorLectura/${this.id}`, this.form.value)
-        .subscribe({
-          next: () => {
-            this.ref.close(true);
-            this.customToastService.onClose();
-          },
-          error: (error) => {
-            // Habilitar el botón nuevamente al finalizar el envío del formulario
-            this.submitting = false;
-            this.customToastService.onCloseToError(error);
-          },
+      this.apiRequestService
+        .onPut(`MedidorLectura/${this.id}`, this.form.value)
+        .then((result: boolean) => {
+          result ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }
@@ -135,9 +101,7 @@ export default class FormMedidorLecturaComponent implements OnInit, OnDestroy {
       this.laLecturaEsMenor = false;
     }
   }
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
-  }
+
   get f() {
     return this.form.controls;
   }

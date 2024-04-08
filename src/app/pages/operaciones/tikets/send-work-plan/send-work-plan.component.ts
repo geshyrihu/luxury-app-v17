@@ -16,8 +16,8 @@ import { DataService } from 'src/app/core/services/data.service';
 export default class SendWorkPlanComponent {
   dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
-  private customToastService = inject(CustomToastService);
-  private customerIdService = inject(CustomerIdService);
+  customToastService = inject(CustomToastService);
+  customerIdService = inject(CustomerIdService);
   private authService = inject(AuthService);
 
   ref: DynamicDialogRef; // Referencia a un cuadro de diálogo modal

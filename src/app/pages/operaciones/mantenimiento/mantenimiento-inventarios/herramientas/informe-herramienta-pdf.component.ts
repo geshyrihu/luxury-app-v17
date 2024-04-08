@@ -11,7 +11,7 @@ import { environment } from 'src/environments/environment';
 })
 export default class InformeHerramientaPdfComponent implements OnInit {
   public reporteHerramientasPdfService = inject(ReporteHerramientasPdfService);
-  public customerIdService = inject(CustomerIdService);
+  customerIdService = inject(CustomerIdService);
   data: any[] = [];
   base_urlImg = '';
 

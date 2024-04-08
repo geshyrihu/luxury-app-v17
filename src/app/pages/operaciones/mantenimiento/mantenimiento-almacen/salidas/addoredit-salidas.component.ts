@@ -1,15 +1,12 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule, {
   flatpickrFactory,
 } from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subject, takeUntil } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
@@ -19,19 +16,15 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   standalone: true,
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
-export default class CrudSalidasComponent implements OnInit, OnDestroy {
-  private customerIdService = inject(CustomerIdService);
-  private customToastService = inject(CustomToastService);
+export default class CrudSalidasComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  dataService = inject(DataService);
-  private dateService = inject(DateService);
+  customerIdService = inject(CustomerIdService);
+  dateService = inject(DateService);
   formBuilder = inject(FormBuilder);
 
   authService = inject(AuthService);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   submitting: boolean = false;
 
@@ -56,21 +49,11 @@ export default class CrudSalidasComponent implements OnInit, OnDestroy {
         this.cb_measurement_unit = response;
       });
 
-    this.dataService
-      .get(
-        `InventarioProducto/GetExistenciaProducto/${this.customerIdService.customerId}/${this.config.data.idProducto}`
-      )
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          if (resp.body !== null) {
-            this.existenciaActual = resp.body.existencia;
-          }
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
+    const urlApi = `InventarioProducto/GetExistenciaProducto/${this.customerIdService.customerId}/${this.config.data.idProducto}`;
+    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+      if (result) this.existenciaActual = result.existencia;
+    });
+
     // ...para obtener la cantidad actual de producto existentes
     this.id = this.config.data.id;
 
@@ -104,66 +87,35 @@ export default class CrudSalidasComponent implements OnInit, OnDestroy {
     return this.form.controls;
   }
   onLoadData() {
-    this.dataService
-      .get(`SalidaProductos/${this.id}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.nombreProducto = resp.body.producto;
-          this.cantidadActual = resp.body.cantidad;
-          resp.body.fechaSalida = this.dateService.getDateFormat(
-            resp.body.fechaSalida
-          );
-          this.form.patchValue(resp.body);
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
+    const urlApi = `salidaproductos/${this.id}`;
+    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+      this.nombreProducto = result.producto;
+      this.cantidadActual = result.cantidad;
+      result.fechaSalida = this.dateService.getDateFormat(result.fechaSalida);
+      this.form.patchValue(result);
+    });
   }
 
   onSubmit() {
-    this.id = this.config.data.id;
-    // Deshabilitar el botón al iniciar el envío del formulario
+    if (!this.apiRequestService.validateForm(this.form)) return;
+
     this.submitting = true;
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
 
     if (this.id === 0) {
-      this.dataService
-        .post('SalidaProductos', this.form.value)
-        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-        .subscribe({
-          next: () => {
-            this.ref.close(true);
-            this.customToastService.onClose();
-          },
-          error: (error) => {
-            // Habilitar el botón nuevamente al finalizar el envío del formulario
-            this.submitting = false;
-            this.customToastService.onCloseToError(error);
-          },
+      this.apiRequestService
+        .onPost('SalidaProductos', this.form.value)
+        .then((result: boolean) => {
+          result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.dataService
-        .put(
+      this.apiRequestService
+        .onPut(
           `SalidaProductos/${this.id}/${this.cantidadActual}`,
           this.form.value
         )
-        .subscribe({
-          next: () => {
-            this.ref.close(true);
-            this.customToastService.onClose();
-          },
-          error: (error) => {
-            // Habilitar el botón nuevamente al finalizar el envío del formulario
-            this.submitting = false;
-            this.customToastService.onCloseToError(error);
-          },
+        .then((result: boolean) => {
+          result ? this.ref.close(true) : (this.submitting = false);
         });
     }
-  }
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
   }
 }

@@ -17,10 +17,10 @@ export default class ReporteCompletoActivosComponent
   implements OnInit, OnDestroy
 {
   customToastService = inject(CustomToastService);
-  public customerIdService = inject(CustomerIdService);
+  customerIdService = inject(CustomerIdService);
   dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
-  public messageService = inject(MessageService); // private reporteActivosPdfService: ReporteActivosPdfService
+  messageService = inject(MessageService); // private reporteActivosPdfService: ReporteActivosPdfService
 
   base_urlImg = '';
   data: any[] = [];

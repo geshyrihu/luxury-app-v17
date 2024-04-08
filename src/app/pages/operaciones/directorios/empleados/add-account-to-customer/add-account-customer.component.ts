@@ -1,14 +1,11 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subject, takeUntil } from 'rxjs';
 import { imageToBase64 } from 'src/app/core/helpers/enumeration';
 import { UserInfoDto } from 'src/app/core/interfaces/user-info.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import { environment } from 'src/environments/environment';
@@ -19,19 +16,15 @@ import { environment } from 'src/environments/environment';
   standalone: true,
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
-export default class AddAccountCustomerComponent implements OnInit, OnDestroy {
-  config = inject(DynamicDialogConfig);
-  public customerIdService = inject(CustomerIdService);
-  customToastService = inject(CustomToastService);
-  dataService = inject(DataService);
+export default class AddAccountCustomerComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  public dateService = inject(DateService);
+  config = inject(DynamicDialogConfig);
+  customerIdService = inject(CustomerIdService);
+  dateService = inject(DateService);
   formBuilder = inject(FormBuilder);
   ref = inject(DynamicDialogRef);
 
   submitting: boolean = false;
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   noImg = `${environment.base_urlImg}no-img.png`;
   imgBase64: string = '';
@@ -59,24 +52,13 @@ export default class AddAccountCustomerComponent implements OnInit, OnDestroy {
   register() {
     if (!this.apiRequestService.validateForm(this.form)) return;
     const formData = this.createFormData(this.form.value);
-    // Deshabilitar el botón al iniciar el envío del formulario
-    this.submitting = true;
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
 
-    this.dataService
-      .post('Employees/CreateEmployee', formData)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          this.ref.close(true);
-          this.customToastService.onClose();
-        },
-        error: (error) => {
-          // Habilitar el botón nuevamente al finalizar el envío del formulario
-          this.submitting = false;
-          this.customToastService.onCloseToError(error);
-        },
+    this.submitting = true;
+
+    this.apiRequestService
+      .onPost('Employees/CreateEmployee', formData)
+      .then((result: boolean) => {
+        result ? this.ref.close(true) : (this.submitting = false);
       });
   }
 
@@ -126,38 +108,19 @@ export default class AddAccountCustomerComponent implements OnInit, OnDestroy {
 
   searchExistingPerson(fullName: any) {
     this.existingPerson = [];
-    this.dataService
-      .get('Employees/SearchExistingPerson/' + fullName.target.value)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp) => {
-          this.existingPerson = resp.body;
-        },
-        error: (error) => {
-          // Habilitar el botón nuevamente al finalizar el envío del formulario
-          this.submitting = false;
-          this.customToastService.onCloseToError(error);
-        },
-      });
+    const urlApi = 'Employees/SearchExistingPerson/' + fullName.target.value;
+    this.apiRequestService.onGetListNotLoading(urlApi).then((result: any) => {
+      this.existingPerson = result;
+    });
   }
   existingPerson: any;
   existingPhone: any;
   searchExistingPhone(phone: any) {
     this.existingPhone = [];
-    this.dataService
-      .get('Employees/SearchExistingPhone/' + phone.target.value)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp) => {
-          this.existingPhone = resp.body;
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
-  }
 
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
+    const urlApi = 'Employees/SearchExistingPhone/' + phone.target.value;
+    this.apiRequestService.onGetListNotLoading(urlApi).then((result: any) => {
+      this.existingPhone = result;
+    });
   }
 }

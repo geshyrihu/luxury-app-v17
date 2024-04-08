@@ -16,7 +16,7 @@ import AddFileEstadoFinancieroComponent from './add-file-estado-financiero/add-f
 })
 export default class EstadoFinancieroListComponent implements OnInit {
   private authService = inject(AuthService);
-  private customerIdService = inject(CustomerIdService);
+  customerIdService = inject(CustomerIdService);
   dialogHandlerService = inject(DialogHandlerService);
   apiRequestService = inject(ApiRequestService);
 

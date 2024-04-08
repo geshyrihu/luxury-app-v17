@@ -1,13 +1,11 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { MessageService } from 'primeng/api';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { Observable } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
+import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import { PeriodoMonthService } from 'src/app/core/services/periodo-month.service';
 import MantenimientosPreventivosResumenComponent from '../mttos-preventivos-resumen/mttos-preventivos-resumen.component';
 
@@ -17,23 +15,15 @@ import MantenimientosPreventivosResumenComponent from '../mttos-preventivos-resu
   standalone: true,
   imports: [LuxuryAppComponentsModule],
 })
-export default class MantenimientosPreventivosComponent
-  implements OnInit, OnDestroy
-{
-  public dateService = inject(DateService);
-  customToastService = inject(CustomToastService);
-  dataService = inject(DataService);
+export default class MantenimientosPreventivosComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  public dialogService = inject(DialogService);
-  public messageService = inject(MessageService);
-  public customerIdService = inject(CustomerIdService);
-  public periodoMonthService = inject(PeriodoMonthService);
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+  dialogHandlerService = inject(DialogHandlerService);
+  dateService = inject(DateService);
+  customerIdService = inject(CustomerIdService);
+  periodoMonthService = inject(PeriodoMonthService);
 
   ref: DynamicDialogRef;
   customerId$: Observable<number> = this.customerIdService.getCustomerId$();
-
   ordenesServicio: any = [];
 
   onChangePeriodo(periodo: string) {
@@ -50,7 +40,7 @@ export default class MantenimientosPreventivosComponent
       this.dateService.getDateFormat(this.periodoMonthService.getPeriodoInicio),
       this.dateService.getDateFormat(this.periodoMonthService.getPeriodoFin)
     );
-    this.customerId$.subscribe((resp) => {
+    this.customerId$.subscribe(() => {
       this.onLoadOrdenServicio(
         this.dateService.getDateFormat(
           this.periodoMonthService.getPeriodoInicio
@@ -61,40 +51,20 @@ export default class MantenimientosPreventivosComponent
   }
 
   onLoadOrdenServicio(fehcaInicio: string, getPeriodoFin: string) {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .get(
-        `Dashboard/OrdenesServicio/${this.customerIdService.getcustomerId()}/${fehcaInicio}/${getPeriodoFin}`
-      )
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.ordenesServicio = resp.body;
-          this.customToastService.onClose();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
+    const urlApi = `Dashboard/OrdenesServicio/${this.customerIdService.getcustomerId()}/${fehcaInicio}/${getPeriodoFin}`;
+    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      this.ordenesServicio = result;
+    });
   }
 
   onClick(estatus?: number) {
-    this.ref = this.dialogService.open(
+    this.dialogHandlerService.openDialog(
       MantenimientosPreventivosResumenComponent,
       {
-        data: {
-          estatus,
-        },
-        width: '100%',
-        height: '100%',
-        header: 'Ordenes de Mantenimiento Preventivo',
-        closeOnEscape: true,
-      }
+        estatus,
+      },
+      'Ordenes de Mantenimiento Preventivo',
+      this.dialogHandlerService.dialogSizeFull
     );
-  }
-
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
   }
 }

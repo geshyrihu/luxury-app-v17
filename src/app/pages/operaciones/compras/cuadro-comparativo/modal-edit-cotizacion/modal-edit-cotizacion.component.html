@@ -8,7 +8,7 @@
 <div class="card">
   <div class="card-body">
     <div class="row">
-      <div class="col-sm-5">
+      <!-- <div class="col-sm-5">
         <div class="form-group">
           <label>Proveedor</label>
           <input
@@ -27,8 +27,8 @@
             }
           </datalist>
         </div>
-      </div>
-      <div class="col-sm-7">
+      </div> -->
+      <div class="col-sm-12 text-end">
         <button
           (click)="onDeleteProvider()"
           class="btn btn-outline-danger me-1 mt-3 float-end"
@@ -54,44 +54,41 @@
       </div>
       <div class="col-12 mt-2">
         <div class="row">
-          <div class="col-sm-4">
-            <div class="row">
-              <label class="col-sm-4">Garantia</label>
-              <div class="col-sm-8">
-                <input
-                  class="form-control"
-                  [(ngModel)]="garantia"
-                  type="text"
-                  (change)="onUpdateProvider()"
-                />
-              </div>
-            </div>
+          <div class="col-sm-3">
+            <label>Proveedor</label>
+            <input
+              class="form-control"
+              [(ngModel)]="nameProvider"
+              type="text"
+              (change)="onUpdateProvider()"
+            />
           </div>
-          <div class="col-sm-4">
-            <div class="row">
-              <label class="col-sm-4">Tiempo de entrega</label>
-              <div class="col-sm-8">
-                <input
-                  class="form-control"
-                  [(ngModel)]="entrega"
-                  type="text"
-                  (change)="onUpdateProvider()"
-                />
-              </div>
-            </div>
+          <div class="col-sm-3">
+            <label>Garantia</label>
+            <input
+              class="form-control"
+              [(ngModel)]="garantia"
+              type="text"
+              (change)="onUpdateProvider()"
+            />
           </div>
-          <div class="col-sm-4">
-            <div class="row">
-              <label class="col-sm-4">Politica de pago</label>
-              <div class="col-sm-8">
-                <input
-                  class="form-control"
-                  [(ngModel)]="politicaPago"
-                  type="text"
-                  (change)="onUpdateProvider()"
-                />
-              </div>
-            </div>
+          <div class="col-sm-3">
+            <label>Tiempo de entrega</label>
+            <input
+              class="form-control"
+              [(ngModel)]="entrega"
+              type="text"
+              (change)="onUpdateProvider()"
+            />
+          </div>
+          <div class="col-sm-3">
+            <label>Politica de pago</label>
+            <input
+              class="form-control"
+              [(ngModel)]="politicaPago"
+              type="text"
+              (change)="onUpdateProvider()"
+            />
           </div>
         </div>
       </div>

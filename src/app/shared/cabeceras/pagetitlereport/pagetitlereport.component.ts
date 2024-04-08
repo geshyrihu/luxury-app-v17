@@ -19,11 +19,11 @@ import { environment } from 'src/environments/environment';
  * Page Title Component
  */
 export default class PagetitleReportComponent implements OnDestroy {
-  public customerIdService = inject(CustomerIdService);
+  customerIdService = inject(CustomerIdService);
   dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
   public periodoMonthService = inject(PeriodoMonthService);
-  public dateService = inject(DateService);
+  dateService = inject(DateService);
   customToastService = inject(CustomToastService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente

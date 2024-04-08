@@ -26,7 +26,7 @@ import ValidationErrorsCustomInputComponent from 'src/app/custom-components/cust
   providers: [DataService],
 })
 export default class SolicitudAltaComponent implements OnInit, OnDestroy {
-  private customToastService = inject(CustomToastService);
+  customToastService = inject(CustomToastService);
   apiRequestService = inject(ApiRequestService);
   dataService = inject(DataService);
   formBuilder = inject(FormBuilder);
@@ -101,7 +101,6 @@ export default class SolicitudAltaComponent implements OnInit, OnDestroy {
   onSubmit() {
     if (!this.apiRequestService.validateForm(this.form)) return;
 
-    // Deshabilitar el botón al iniciar el envío del formulario
     this.submitting = true;
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();

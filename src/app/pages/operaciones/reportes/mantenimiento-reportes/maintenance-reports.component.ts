@@ -23,10 +23,9 @@ import ResumenMantenimientosComponent from './resumen-mantenimientos/resumen-man
 export default class MaintenanceReportsComponent implements OnInit {
   dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
-  public dateService = inject(DateService);
+  dateService = inject(DateService);
   public periodoMonthService = inject(PeriodoMonthService);
-  public customerIdService = inject(CustomerIdService);
-
+  customerIdService = inject(CustomerIdService);
   menu: any;
 
   onFilterPeriod(periodo: string) {

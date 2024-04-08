@@ -24,7 +24,7 @@ export default class AddOrEditProfessionsComponent
   apiRequestService = inject(ApiRequestService);
   formBuilder = inject(FormBuilder);
   ref = inject(DynamicDialogRef);
-  private customToastService = inject(CustomToastService);
+  customToastService = inject(CustomToastService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
   submitting: boolean = false;
@@ -71,7 +71,7 @@ export default class AddOrEditProfessionsComponent
     if (!this.apiRequestService.validateForm(this.form)) return;
 
     this.id = this.config.data.id;
-    // Deshabilitar el botón al iniciar el envío del formulario
+
     this.submitting = true;
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();

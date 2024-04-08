@@ -26,9 +26,9 @@ export default class ActivosDocumentosComponent {
   apiRequestService = inject(ApiRequestService);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
-  public customerIdService = inject(CustomerIdService);
-  public dialogService = inject(DialogService);
-  public messageService = inject(MessageService);
+  customerIdService = inject(CustomerIdService);
+  dialogService = inject(DialogService);
+  messageService = inject(MessageService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 

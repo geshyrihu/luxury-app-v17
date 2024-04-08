@@ -20,10 +20,10 @@ export default class OrdenesServicioFotosComponent
   implements OnInit, OnDestroy
 {
   config = inject(DynamicDialogConfig);
-  public customerIdService = inject(CustomerIdService);
+  customerIdService = inject(CustomerIdService);
   dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
-  public messageService = inject(MessageService);
+  messageService = inject(MessageService);
   ref = inject(DynamicDialogRef);
   customToastService = inject(CustomToastService);
 

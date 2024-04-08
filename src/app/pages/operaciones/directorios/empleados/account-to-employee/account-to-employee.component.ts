@@ -1,11 +1,8 @@
 import { Component, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subject, takeUntil } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataService } from 'src/app/core/services/data.service';
 
 @Component({
   selector: 'app-account-to-employee',
@@ -14,13 +11,10 @@ import { DataService } from 'src/app/core/services/data.service';
   imports: [LuxuryAppComponentsModule],
 })
 export default class AccountToEmployeeComponent implements OnInit {
+  apiRequestService = inject(ApiRequestService);
   ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);
-  dataService = inject(DataService);
-  apiRequestService = inject(ApiRequestService);
-  private customToastService = inject(CustomToastService);
-  private customerIdService = inject(CustomerIdService);
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+  customerIdService = inject(CustomerIdService);
 
   submitting: boolean = false;
   personId: number = 0;
@@ -39,45 +33,21 @@ export default class AccountToEmployeeComponent implements OnInit {
   }
 
   onSubmit() {
-    // Deshabilitar el botón al iniciar el envío del formulario
     this.submitting = true;
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
 
-    this.dataService
-      .get(
+    this.apiRequestService
+      .onGetItem(
         `accounts/updateaccounttoemployee/${this.personId}/${this.applicationUserId}`
       )
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          this.ref.close(true);
-          this.customToastService.onClose();
-        },
-        error: (error) => {
-          // Habilitar el botón nuevamente al finalizar el envío del formulario
-          this.submitting = false;
-          this.customToastService.onCloseToError(error);
-        },
+      .then(() => {
+        this.ref.close(true);
       });
   }
 
   onLoadAccount() {
-    this.dataService
-      .get(
-        `Employees/GetListAccountUser/${this.customerIdService.customerId}/${this.personId}`
-      )
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.applicationUserList = resp.body;
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
-  }
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
+    const urlApi = `Employees/GetListAccountUser/${this.customerIdService.customerId}/${this.personId}`;
+    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      this.applicationUserList = result;
+    });
   }
 }

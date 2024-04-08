@@ -15,7 +15,7 @@
 //   imports: [CommonModule, ComponentsModule],
 // })
 // export default class FilterDateLecturaComponent implements OnInit {
-//   public dateService = inject(DateService);
+//   dateService = inject(DateService);
 //   ref = inject(DynamicDialogRef);
 //   config = inject(DynamicDialogConfig);
 //   tipe: string = this.config.data.tipe;

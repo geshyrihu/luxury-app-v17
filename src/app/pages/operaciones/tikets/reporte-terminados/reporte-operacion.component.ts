@@ -24,7 +24,7 @@ export default class ReporteOperacionComponent implements OnInit, OnDestroy {
   public ticketFilterService = inject(TicketFilterService);
   dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
-  public customerIdService = inject(CustomerIdService);
+  customerIdService = inject(CustomerIdService);
   urlImg = '';
   data: any[] = [];
   customerId: number;

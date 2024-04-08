@@ -20,13 +20,7 @@ import CreateOrdenCompraComponent from '../../orden-compra/orden-compra/create-o
   selector: 'app-modal-edit-cotizacion',
   templateUrl: './modal-edit-cotizacion.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    FormsModule,
-    LuxuryAppComponentsModule,
-    CommonModule,
-    ToastModule,
-  ],
+  imports: [LuxuryAppComponentsModule, FormsModule, CommonModule, ToastModule],
 })
 export default class ModalEditCotizacionComponent implements OnInit, OnDestroy {
   customToastService = inject(CustomToastService);
@@ -34,9 +28,9 @@ export default class ModalEditCotizacionComponent implements OnInit, OnDestroy {
   config = inject(DynamicDialogConfig);
   dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
-  public dialogService = inject(DialogService);
-  public messageService = inject(MessageService);
-  public router = inject(Router);
+  dialogService = inject(DialogService);
+  messageService = inject(MessageService);
+  router = inject(Router);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
@@ -46,9 +40,10 @@ export default class ModalEditCotizacionComponent implements OnInit, OnDestroy {
   solicitudCompraDetalle: any;
   solicitudCompraId = 0;
   providerId = 0;
-  providerName: string = '';
+  // providerName: string = '';
+  nameProvider: string = '';
   posicionCotizacion: number = 0;
-  cb_providers: any[] = [];
+  // cb_providers: any[] = [];
   proveedorResult: any[] = [];
   cotizacionesRelacionadas: any[] = [];
 
@@ -60,51 +55,42 @@ export default class ModalEditCotizacionComponent implements OnInit, OnDestroy {
     this.solicitudCompraId = this.config.data.solicitudCompraId;
     this.posicionCotizacion = this.config.data.posicionCotizacion;
 
-    this.apiRequestService
-      .onGetSelectItem('Providers')
-      .then((response: any) => {
-        this.cb_providers = response;
-      });
-    this.onLoadSelectItemProvider();
+    // this.apiRequestService
+    //   .onGetSelectItem('Providers')
+    //   .then((response: any) => {
+    //     this.cb_providers = response;
+    //   });
+    // this.onLoadSelectItemProvider();
     this.onGetCotizacioProveedor();
     this.onCotizacionesRelacionadas();
     this.onLoadData();
   }
 
-  onLoadSelectItemProvider() {
-    this.dataService
-      .get('CotizacionProveedor/GetProviders/' + this.solicitudCompraId)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.cb_providers = resp.body;
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
-  }
+  // onLoadSelectItemProvider() {
+  //   const url = 'CotizacionProveedor/GetProviders/' + this.solicitudCompraId;
+  //   this.apiRequestService.onGetList(url).then((result: any) => {
+  //     this.cb_providers = result;
+  //   });
+  // }
 
   onGetCotizacioProveedor() {
-    this.dataService
-      .get<any>(
-        `CotizacionProveedor/GetPosicionCotizacion/${this.solicitudCompraId}/${this.posicionCotizacion}`
-      )
-      .subscribe((resp: any) => {
-        this.cotizacionProveedor = resp.body;
-        this.garantia = resp.body.garantia;
-        this.entrega = resp.body.entrega;
-        this.politicaPago = resp.body.politicaPago;
-        this.providerId = resp.body.providerId;
-        this.providerName = resp.body.provider;
-      });
+    const url = `CotizacionProveedor/GetPosicionCotizacion/${this.solicitudCompraId}/${this.posicionCotizacion}`;
+    this.apiRequestService.onGetItem(url).then((result: any) => {
+      this.cotizacionProveedor = result;
+      this.garantia = result.garantia;
+      this.entrega = result.entrega;
+      this.politicaPago = result.politicaPago;
+      this.providerId = result.providerId;
+      this.nameProvider = result.nameProvider;
+    });
   }
   onLoadData() {
     this.dataService
-      .get<any>(`SolicitudCompra/${this.solicitudCompraId}`)
+      .get<any>(`solicitudcompra/${this.solicitudCompraId}`)
       .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
+          console.log('🚀 ~ resp.body: solicitudcompra', resp.body);
           this.solicitudCompra = resp.body;
           this.solicitudCompraDetalle = resp.body.solicitudCompraDetalle;
         },
@@ -115,7 +101,8 @@ export default class ModalEditCotizacionComponent implements OnInit, OnDestroy {
   }
 
   onUpdateProvider() {
-    this.cotizacionProveedor.providerId = this.providerId;
+    // this.cotizacionProveedor.providerId = this.providerId;
+    this.cotizacionProveedor.nameProvider = this.nameProvider;
     this.cotizacionProveedor.garantia = this.garantia;
     this.cotizacionProveedor.entrega = this.entrega;
     this.cotizacionProveedor.politicaPago = this.politicaPago;
@@ -201,7 +188,7 @@ export default class ModalEditCotizacionComponent implements OnInit, OnDestroy {
       data: {
         solicitudCompraId: this.solicitudCompra.id,
         folioSolicitudCompra: this.solicitudCompra.folio,
-        proveedorId: this.cotizacionProveedor.providerId,
+        // proveedorId: this.cotizacionProveedor.providerId,
         posicionCotizacion: this.posicionCotizacion,
       },
       header: 'Crear Orden de compra',
@@ -225,17 +212,22 @@ export default class ModalEditCotizacionComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (resp: any) => {
           this.cotizacionesRelacionadas = resp.body;
+          console.log(
+            '🚀 ~ this.cotizacionesRelacionadas:',
+            this.cotizacionesRelacionadas
+          );
         },
         error: (error) => {
           this.customToastService.onCloseToError(error);
         },
       });
   }
-  public saveProviderId(e): void {
-    let find = this.cb_providers.find((x) => x?.label === e.target.value);
-    this.providerId = find?.value;
-    this.onUpdateProvider();
-  }
+  // public saveProviderId(e): void {
+  //   let find = this.cb_providers.find((x) => x?.label === e.target.value);
+  //   this.providerId = find?.value;
+  //   this.onUpdateProvider();
+  // }
+  public saveProviderId(e): void {}
 
   ngOnDestroy(): void {
     this.dataService.ngOnDestroy();

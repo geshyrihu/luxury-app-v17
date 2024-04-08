@@ -1,11 +1,8 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { MessageService } from 'primeng/api';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataService } from 'src/app/core/services/data.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -14,44 +11,26 @@ import { environment } from 'src/environments/environment';
   standalone: true,
   imports: [LuxuryAppComponentsModule],
 })
-export default class MantenimientosComponent implements OnInit, OnDestroy {
-  public customerIdService = inject(CustomerIdService);
-  dataService = inject(DataService);
+export default class MantenimientosComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  public messageService = inject(MessageService);
-  customToastService = inject(CustomToastService);
+  customerIdService = inject(CustomerIdService);
 
   data: any[] = [];
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   customerId$: Observable<number> = this.customerIdService.getCustomerId$();
   base_urlImg = environment.base_urlImg;
 
   ngOnInit() {
     this.onLoadData();
-    this.customerId$ = this.customerIdService.getCustomerId$();
     this.customerId$.subscribe(() => {
       this.onLoadData();
     });
   }
   onLoadData() {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .get(
-        'EntregaRecepcion/InventarioMantenimientos/' +
-          this.customerIdService.customerId
-      )
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.data = this.customToastService.onCloseOnGetData(resp.body);
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
+    const urlApi = `EntregaRecepcion/InventarioMantenimientos/${this.customerIdService.customerId}`;
+    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      this.data = result;
+    });
   }
 
   calcularEquiposTotal(name) {
@@ -66,9 +45,5 @@ export default class MantenimientosComponent implements OnInit, OnDestroy {
     }
 
     return total;
-  }
-
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
   }
 }

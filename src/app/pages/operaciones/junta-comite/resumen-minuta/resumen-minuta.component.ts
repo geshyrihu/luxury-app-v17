@@ -1,11 +1,8 @@
 import { Clipboard } from '@angular/cdk/clipboard';
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { Subject, takeUntil } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
-import { DataService } from 'src/app/core/services/data.service';
 import { ReportService } from 'src/app/core/services/report.service';
 import ResumenMinutaGraficoComponent from '../resumen-minuta-grafico/resumen-minuta-grafico.component';
 
@@ -15,15 +12,11 @@ import ResumenMinutaGraficoComponent from '../resumen-minuta-grafico/resumen-min
   standalone: true,
   imports: [LuxuryAppComponentsModule, ResumenMinutaGraficoComponent],
 })
-export default class ResumenMinutaComponent implements OnInit, OnDestroy {
-  customToastService = inject(CustomToastService);
-  public reportService = inject(ReportService);
-  dataService = inject(DataService);
+export default class ResumenMinutaComponent implements OnInit {
+  reportService = inject(ReportService);
   apiRequestService = inject(ApiRequestService);
-  public activatedRoute = inject(ActivatedRoute);
-  public clipboard = inject(Clipboard);
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+  activatedRoute = inject(ActivatedRoute);
+  clipboard = inject(Clipboard);
 
   data: any[] = [];
   dataGrafico: any[] = [];
@@ -33,39 +26,15 @@ export default class ResumenMinutaComponent implements OnInit, OnDestroy {
   }
 
   onLoadData() {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .get(
-        `MeetingDertailsSeguimiento/ResumenMinutasPresentacion/${this.activatedRoute.snapshot.params.meetingId}`
-      )
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.data = this.customToastService.onCloseOnGetData(resp.body);
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
-    this.dataService
-      .get(
-        `MeetingDertailsSeguimiento/ResumenMinutasGraficoPresentacion/${this.activatedRoute.snapshot.params.meetingId}`
-      )
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.dataGrafico = resp.body;
-          this.reportService.setDataGrafico(resp.body);
-          this.customToastService.onClose();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
-  }
+    const urlApi1 = `MeetingDertailsSeguimiento/ResumenMinutasPresentacion/${this.activatedRoute.snapshot.params.meetingId}`;
+    this.apiRequestService.onGetList(urlApi1).then((result: any) => {
+      this.data = result;
+    });
 
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
+    const urlApi = `MeetingDertailsSeguimiento/ResumenMinutasGraficoPresentacion/${this.activatedRoute.snapshot.params.meetingId}`;
+    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      this.dataGrafico = result;
+      this.reportService.setDataGrafico(result);
+    });
   }
 }

@@ -3,14 +3,13 @@
   <div class="card-body">
     <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
       <!-- Id -->
-      @if (authService.onValidateRoles(['SuperUsuario'])) {
+      @if (authService.onValidateRoles(['SuperUsuario'])) { }
       <custom-input-text
         [control]="form.get('id')"
         formControlName="id"
         label="Id"
         placeholder="id"
       ></custom-input-text>
-      } @if (authService.onValidateRoles(['SuperUsuario'])) {
       <custom-input-datalist
         (propagar)="saveprofessionIdId($event)"
         [control]="form.get('professionName')"
@@ -19,7 +18,7 @@
         label="Profesion"
         dataListId="professionNameDatalistOptions"
       ></custom-input-datalist>
-      }
+      @if (authService.onValidateRoles(['SuperUsuario'])) { }
       <!-- Profesion -->
       <!-- Colaborador -->
       <custom-input-datalist
@@ -46,14 +45,12 @@
       ></custom-input-number>
       <!-- Sueldo -->
       <!-- Horarios -->
-      @if (authService.onValidateRoles(['SuperUsuario'])) {
       <custom-input-select
         [control]="form.get('turnoTrabajo')"
         formControlName="turnoTrabajo"
         label="Turno de trabajo"
         [data]="cb_turnoTrabajo"
       ></custom-input-select>
-      } @if (authService.onValidateRoles(['SuperUsuario'])) {
       <div class="form-group row mb-2">
         <label class="font-weight-lighter col-sm-3">Lunes</label>
         <div class="col-9">
@@ -75,7 +72,7 @@
           </div>
         </div>
       </div>
-      } @if (authService.onValidateRoles(['SuperUsuario'])) {
+
       <div class="form-group row mb-2">
         <label class="font-weight-lighter col-sm-3">Martes</label>
         <div class="col-9">
@@ -97,7 +94,6 @@
           </div>
         </div>
       </div>
-      } @if (authService.onValidateRoles(['SuperUsuario'])) {
       <div class="form-group row mb-2">
         <label class="font-weight-lighter col-sm-3">Miercoles</label>
         <div class="col-9">
@@ -119,7 +115,6 @@
           </div>
         </div>
       </div>
-      } @if (authService.onValidateRoles(['SuperUsuario'])) {
       <div class="form-group row mb-2">
         <label class="font-weight-lighter col-sm-3">Jueves</label>
         <div class="col-9">
@@ -141,7 +136,6 @@
           </div>
         </div>
       </div>
-      } @if (authService.onValidateRoles(['SuperUsuario'])) {
       <div class="form-group row mb-2">
         <label class="font-weight-lighter col-sm-3">Viernes</label>
         <div class="col-9">
@@ -163,7 +157,6 @@
           </div>
         </div>
       </div>
-      } @if (authService.onValidateRoles(['SuperUsuario'])) {
       <div class="form-group row mb-2">
         <label class="font-weight-lighter col-sm-3">Sabado</label>
         <div class="col-9">
@@ -185,7 +178,6 @@
           </div>
         </div>
       </div>
-      } @if (authService.onValidateRoles(['SuperUsuario'])) {
       <div class="form-group row mb-2">
         <label class="font-weight-lighter col-sm-3">Domingo</label>
         <div class="col-9">
@@ -207,21 +199,18 @@
           </div>
         </div>
       </div>
-      } @if (authService.onValidateRoles(['SuperUsuario'])) {
       <custom-input-text-area
         [control]="form.get('observationsWorkShift')"
         formControlName="observationsWorkShift"
         label="Obr. referentes al horario"
         placeholder="Observaciones referentes al horario"
       ></custom-input-text-area>
-      } @if (authService.onValidateRoles(['SuperUsuario'])) {
       <custom-input-select
         [control]="form.get('state')"
         formControlName="state"
         label="Vacante activa"
         [data]="cb_state"
       ></custom-input-select>
-      }
       <custom-button-submit [disabled]="this.form.invalid || submitting" />
     </form>
   </div>

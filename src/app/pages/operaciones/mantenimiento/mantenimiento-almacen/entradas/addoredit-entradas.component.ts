@@ -1,15 +1,12 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule, {
   flatpickrFactory,
 } from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subject, takeUntil } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
@@ -19,21 +16,16 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   standalone: true,
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
-export default class AddOrEditEntradasComponent implements OnInit, OnDestroy {
-  formBuilder = inject(FormBuilder);
-  customToastService = inject(CustomToastService);
-  private customerIdService = inject(CustomerIdService);
-  dataService = inject(DataService);
+export default class AddOrEditEntradasComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  private dateService = inject(DateService);
+  formBuilder = inject(FormBuilder);
+  customerIdService = inject(CustomerIdService);
+  dateService = inject(DateService);
   authService = inject(AuthService);
   config = inject(DynamicDialogConfig);
 
   ref = inject(DynamicDialogRef);
-
   submitting: boolean = false;
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   form: FormGroup = this.formBuilder.group({
     id: { value: 0, disabled: true },
@@ -95,76 +87,41 @@ export default class AddOrEditEntradasComponent implements OnInit, OnDestroy {
     if (this.id !== 0) this.onLoadData();
   }
   onLoadData() {
-    this.dataService
-      .get(`EntradaProducto/${this.id}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.nombreProducto = resp.body.nombreProducto;
-          this.cantidadActual = resp.body.cantidad;
-          this.form.patchValue(resp.body);
-          this.form.patchValue({
-            fechaEntrada: this.dateService.getDateFormat(
-              resp.body.fechaEntrada
-            ),
-          });
-          this.form.patchValue({
-            providerId: resp.body.providerId,
-          });
-          this.form.patchValue({
-            providerName: resp.body.provider,
-          });
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+    const urlApi = `EntradaProducto/${this.id}`;
+    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+      this.nombreProducto = result.nombreProducto;
+      this.cantidadActual = result.cantidad;
+      this.form.patchValue(result);
+      this.form.patchValue({
+        fechaEntrada: this.dateService.getDateFormat(result.fechaEntrada),
       });
+      this.form.patchValue({
+        providerId: result.providerId,
+      });
+      this.form.patchValue({
+        providerName: result.provider,
+      });
+    });
   }
 
   // convenience getter for easy access to form fields
 
   onSubmit() {
-    this.id = this.config.data.id;
-
-    // Deshabilitar el botón al iniciar el envío del formulario
+    if (!this.apiRequestService.validateForm(this.form)) return;
     this.submitting = true;
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
+
     if (this.id === 0) {
-      this.dataService
-        .post('EntradaProducto', this.form.value)
-        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-        .subscribe({
-          next: () => {
-            this.ref.close(true);
-            this.customToastService.onClose();
-          },
-          error: (error) => {
-            // Habilitar el botón nuevamente al finalizar el envío del formulario
-            this.submitting = false;
-            this.customToastService.onCloseToError(error);
-          },
+      this.apiRequestService
+        .onPost(`EntradaProducto`, this.form.value)
+        .then((result: boolean) => {
+          result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.dataService
-        .put(
-          `EntradaProducto/${this.id}/${this.cantidadActual}`,
-          this.form.value
-        )
-        .subscribe({
-          next: () => {
-            this.ref.close(true);
-            this.customToastService.onClose();
-          },
-          error: (error) => {
-            // Habilitar el botón nuevamente al finalizar el envío del formulario
-            this.submitting = false;
-            this.customToastService.onCloseToError(error);
-          },
+      this.apiRequestService
+        .onPut(`EntradaProducto/${this.id}`, this.form.value)
+        .then((result: boolean) => {
+          result ? this.ref.close(true) : (this.submitting = false);
         });
     }
-  }
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
   }
 }

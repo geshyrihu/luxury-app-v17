@@ -1,36 +1,27 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { RatingModule } from 'primeng/rating';
-import { Subject, takeUntil } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
-import { DataService } from 'src/app/core/services/data.service';
 @Component({
   selector: 'app-calificacion-proveedor',
   templateUrl: './calificacion-proveedor.component.html',
   standalone: true,
   imports: [LuxuryAppComponentsModule, RatingModule],
 })
-export default class CalificacionProveedorComponent
-  implements OnInit, OnDestroy
-{
+export default class CalificacionProveedorComponent implements OnInit {
+  apiRequestService = inject(ApiRequestService);
   authService = inject(AuthService);
   config = inject(DynamicDialogConfig);
-  dataService = inject(DataService);
-  apiRequestService = inject(ApiRequestService);
   formBuilder = inject(FormBuilder);
   ref = inject(DynamicDialogRef);
-  private customToastService = inject(CustomToastService);
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   submitting: boolean = false;
-
   providerId: number = 0;
   qualificationProviderId: number = 0;
+
   form: FormGroup = this.formBuilder.group({
     employeeId: [
       this.authService.userTokenDto.infoEmployeeDto.employeeId,
@@ -48,65 +39,35 @@ export default class CalificacionProveedorComponent
   }
 
   onLoadData() {
-    this.dataService
-      .get(
-        `ProveedorCalificacion/${this.authService.userTokenDto.infoEmployeeDto.employeeId}/${this.providerId}`
-      )
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          if (resp.body !== null) {
-            this.qualificationProviderId = resp.body.id;
-            this.form.patchValue(resp.body);
-          }
-        },
-        error: (err) => {
-          err.error;
-        },
-      });
+    const urlApi = `ProveedorCalificacion/${this.authService.userTokenDto.infoEmployeeDto.employeeId}/${this.providerId}`;
+    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+      if (!result) {
+        this.qualificationProviderId = result.id;
+        this.form.patchValue(result);
+      }
+    });
   }
 
   onSubmit() {
     if (!this.apiRequestService.validateForm(this.form)) return;
-    // Deshabilitar el botón al iniciar el envío del formulario
+
     this.submitting = true;
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
 
     if (this.qualificationProviderId === 0) {
-      this.dataService
-        .post(`ProveedorCalificacion`, this.form.value)
-        .subscribe({
-          next: () => {
-            this.ref.close(true);
-            this.customToastService.onClose();
-          },
-          error: (error) => {
-            // Habilitar el botón nuevamente al finalizar el envío del formulario
-            this.submitting = false;
-            this.customToastService.onCloseToError(error);
-          },
+      this.apiRequestService
+        .onPost(`ProveedorCalificacion`, this.form.value)
+        .then((result: boolean) => {
+          result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.dataService
-        .put(
+      this.apiRequestService
+        .onPut(
           `ProveedorCalificacion/${this.qualificationProviderId}`,
           this.form.value
         )
-        .subscribe({
-          next: () => {
-            this.ref.close(true);
-            this.customToastService.onClose();
-          },
-          error: (error) => {
-            // Habilitar el botón nuevamente al finalizar el envío del formulario
-            this.submitting = false;
-            this.customToastService.onCloseToError(error);
-          },
+        .then((result: boolean) => {
+          result ? this.ref.close(true) : (this.submitting = false);
         });
     }
-  }
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
   }
 }

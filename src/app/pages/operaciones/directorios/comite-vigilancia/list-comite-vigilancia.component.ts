@@ -1,14 +1,12 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { MessageService } from 'primeng/api';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { Observable } from 'rxjs';
 import { IComiteVigilancia } from 'src/app/core/interfaces/comite-vigilancia.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataService } from 'src/app/core/services/data.service';
+import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import AddOrEditComiteVigilanciaComponent from './addoredit-comite-vigilancia.component';
 
 @Component({
@@ -17,49 +15,29 @@ import AddOrEditComiteVigilanciaComponent from './addoredit-comite-vigilancia.co
   standalone: true,
   imports: [LuxuryAppComponentsModule],
 })
-export default class ListComiteVigilanciaComponent
-  implements OnInit, OnDestroy
-{
-  authService = inject(AuthService);
-  public customerIdService = inject(CustomerIdService);
-  dataService = inject(DataService);
+export default class ListComiteVigilanciaComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  public messageService = inject(MessageService);
-  customToastService = inject(CustomToastService);
-  public dialogService = inject(DialogService);
+  dialogHandlerService = inject(DialogHandlerService);
+  authService = inject(AuthService);
+  customerIdService = inject(CustomerIdService);
 
   data: IComiteVigilancia[] = [];
-
   ref: DynamicDialogRef;
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
-
   customerId$: Observable<number> = this.customerIdService.getCustomerId$();
 
   ngOnInit(): void {
     this.onLoadData();
-    this.customerId$ = this.customerIdService.getCustomerId$();
     this.customerId$.subscribe(() => {
       this.onLoadData();
     });
   }
 
   onLoadData() {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .get<IComiteVigilancia[]>(
-        'ComiteVigilancia/GetAll/' + this.customerIdService.getcustomerId()
-      )
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.data = this.customToastService.onCloseOnGetData(resp.body);
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
+    const urlApi =
+      'ComiteVigilancia/GetAll/' + this.customerIdService.getcustomerId();
+    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      this.data = result;
+    });
   }
   onDelete(id: number) {
     this.apiRequestService
@@ -70,23 +48,17 @@ export default class ListComiteVigilanciaComponent
   }
 
   onModalAddOrEdit(data: any) {
-    this.ref = this.dialogService.open(AddOrEditComiteVigilanciaComponent, {
-      data: {
-        id: data.id,
-      },
-      header: data.title,
-      styleClass: 'modal-md',
-      closeOnEscape: true,
-      baseZIndex: 10000,
-    });
-    this.ref.onClose.subscribe((resp: any) => {
-      if (resp !== undefined) {
-        this.onLoadData();
-        this.customToastService.onShowSuccess();
-      }
-    });
-  }
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
+    this.dialogHandlerService
+      .openDialog(
+        AddOrEditComiteVigilanciaComponent,
+        {
+          id: data.id,
+        },
+        data.title,
+        this.dialogHandlerService.dialogSizeMd
+      )
+      .then((result: boolean) => {
+        if (result) this.onLoadData();
+      });
   }
 }

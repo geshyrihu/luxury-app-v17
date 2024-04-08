@@ -28,11 +28,11 @@ export default class AddoreditToolsComponent implements OnInit, OnDestroy {
   dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
   formBuilder = inject(FormBuilder);
-  public dateService = inject(DateService);
+  dateService = inject(DateService);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
-  public customerIdService = inject(CustomerIdService);
-  private customToastService = inject(CustomToastService);
+  customerIdService = inject(CustomerIdService);
+  customToastService = inject(CustomToastService);
 
   submitting: boolean = false;
 
@@ -103,7 +103,6 @@ export default class AddoreditToolsComponent implements OnInit, OnDestroy {
     if (!this.apiRequestService.validateForm(this.form)) return;
     const formDataDto = this.onCreateFormData(this.form.value);
 
-    // Deshabilitar el botón al iniciar el envío del formulario
     this.submitting = true;
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();

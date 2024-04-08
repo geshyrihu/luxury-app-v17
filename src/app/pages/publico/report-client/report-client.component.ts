@@ -17,7 +17,7 @@ export default class ReportClientComponent implements OnInit, OnDestroy {
   dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
   public rutaActiva = inject(ActivatedRoute);
-  public customerIdService = inject(CustomerIdService);
+  customerIdService = inject(CustomerIdService);
   customToastService = inject(CustomToastService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente

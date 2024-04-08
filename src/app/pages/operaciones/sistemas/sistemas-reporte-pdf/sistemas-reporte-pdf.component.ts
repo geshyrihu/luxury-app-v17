@@ -22,7 +22,7 @@ export default class SistemasReportePdfComponent implements OnInit, OnDestroy {
   apiRequestService = inject(ApiRequestService);
   authService = inject(AuthService);
   private rangoCalendarioService = inject(FiltroCalendarService);
-  public dialogService = inject(DialogService);
+  dialogService = inject(DialogService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 

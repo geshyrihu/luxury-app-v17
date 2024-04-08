@@ -23,9 +23,9 @@ export default class LineTimeOperationReportComponent
   customToastService = inject(CustomToastService);
   dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
-  public customerIdService = inject(CustomerIdService);
-  public messageService = inject(MessageService);
-  public dialogService = inject(DialogService);
+  customerIdService = inject(CustomerIdService);
+  messageService = inject(MessageService);
+  dialogService = inject(DialogService);
   authService = inject(AuthService);
   public route = inject(ActivatedRoute);
   ref: DynamicDialogRef;

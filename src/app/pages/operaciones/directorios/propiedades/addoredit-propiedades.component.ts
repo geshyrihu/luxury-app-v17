@@ -1,13 +1,10 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { IDirectoryCondominiumAddOrEdit } from 'src/app/core/interfaces/directory-condominium-add-or-edit.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataService } from 'src/app/core/services/data.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
@@ -16,17 +13,13 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   standalone: true,
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
-export default class AddOrEditPropiedadesComponent
-  implements OnInit, OnDestroy
-{
+export default class AddOrEditPropiedadesComponent implements OnInit {
+  apiRequestService = inject(ApiRequestService);
   formBuilder = inject(FormBuilder);
   authService = inject(AuthService);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
-  dataService = inject(DataService);
-  apiRequestService = inject(ApiRequestService);
-  private customerIdService = inject(CustomerIdService);
-  private customToastService = inject(CustomToastService);
+  customerIdService = inject(CustomerIdService);
 
   submitting: boolean = false;
 
@@ -44,60 +37,32 @@ export default class AddOrEditPropiedadesComponent
     this.customerId = this.customerIdService.customerId;
     this.id = this.config.data.id;
     if (this.id !== 0) {
-      this.getImem();
+      this.onLoadData();
     }
   }
   submit() {
     if (!this.apiRequestService.validateForm(this.form)) return;
-
-    // Deshabilitar el botón al iniciar el envío del formulario
     this.submitting = true;
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
+
     if (this.id === 0) {
-      this.dataService
-        .post<IDirectoryCondominiumAddOrEdit>(
-          `DirectoryCondominium/`,
-          this.form.value
-        )
-        .subscribe({
-          next: () => {
-            this.ref.close(true);
-            this.customToastService.onClose();
-          },
-          error: (error) => {
-            // Habilitar el botón nuevamente al finalizar el envío del formulario
-            this.submitting = false;
-            this.customToastService.onCloseToError(error);
-          },
+      this.apiRequestService
+        .onPost(`DirectoryCondominium`, this.form.value)
+        .then((result: boolean) => {
+          result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.dataService
-        .put<IDirectoryCondominiumAddOrEdit>(
-          `DirectoryCondominium/${this.id}`,
-          this.form.value
-        )
-        .subscribe({
-          next: () => {
-            this.ref.close(true);
-            this.customToastService.onClose();
-          },
-          error: (error) => {
-            // Habilitar el botón nuevamente al finalizar el envío del formulario
-            this.submitting = false;
-            this.customToastService.onCloseToError(error);
-          },
+      this.apiRequestService
+        .onPut(`DirectoryCondominium/${this.id}`, this.form.value)
+        .then((result: boolean) => {
+          result ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }
-  getImem() {
-    this.dataService
-      .get<IDirectoryCondominiumAddOrEdit>(`DirectoryCondominium/${this.id}`)
-      .subscribe((resp: any) => {
-        this.form.patchValue(resp.body);
+  onLoadData() {
+    this.apiRequestService
+      .onGetItem(`DirectoryCondominium/${this.id}`)
+      .then((result: any) => {
+        this.form.patchValue(result);
       });
-  }
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
   }
 }

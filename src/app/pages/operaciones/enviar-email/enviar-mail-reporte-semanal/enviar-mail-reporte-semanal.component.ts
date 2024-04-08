@@ -27,9 +27,9 @@ export default class EnviarMailReporteSemanalComponent
   apiRequestService = inject(ApiRequestService);
   formBuilder = inject(FormBuilder);
   config = inject(DynamicDialogConfig);
-  public customerIdService = inject(CustomerIdService);
-  public dialogService = inject(DialogService);
-  public messageService = inject(MessageService);
+  customerIdService = inject(CustomerIdService);
+  dialogService = inject(DialogService);
+  messageService = inject(MessageService);
   ref = inject(DynamicDialogRef);
   customToastService = inject(CustomToastService);
 

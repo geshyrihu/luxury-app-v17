@@ -1,14 +1,11 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subject, takeUntil } from 'rxjs';
 import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
-import { DataService } from 'src/app/core/services/data.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import { environment } from 'src/environments/environment';
 
@@ -18,18 +15,14 @@ import { environment } from 'src/environments/environment';
   standalone: true,
   imports: [LuxuryAppComponentsModule, NgSelectModule, CustomInputModule],
 })
-export default class AddoreditProveedorComponent implements OnInit, OnDestroy {
+export default class AddoreditProveedorComponent implements OnInit {
+  apiRequestService = inject(ApiRequestService);
   authService = inject(AuthService);
   config = inject(DynamicDialogConfig);
-  dataService = inject(DataService);
-  apiRequestService = inject(ApiRequestService);
   formBuilder = inject(FormBuilder);
   ref = inject(DynamicDialogRef);
-  private customToastService = inject(CustomToastService);
 
   submitting: boolean = false;
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   id = 0;
   cb_category: ISelectItem[] = [];
@@ -116,53 +109,32 @@ export default class AddoreditProveedorComponent implements OnInit, OnDestroy {
   }
 
   getItem() {
-    this.dataService
-      .get(`Proveedor/${this.id}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe((resp: any) => {
-        this.form.patchValue(resp.body);
-        this.form.patchValue({ bankId: resp.body.bankId });
-        this.form.patchValue({ bankName: resp.body.bankName });
-        this.urlLogo = `${this.urlBaseImg}${resp.body.pathPhoto}`;
+    this.apiRequestService
+      .onGetItem(`Proveedor/${this.id}`)
+      .then((result: any) => {
+        this.form.patchValue(result);
+        this.form.patchValue({ bankId: result.bankId });
+        this.form.patchValue({ bankName: result.bankName });
+        this.urlLogo = `${this.urlBaseImg}${result.pathPhoto}`;
       });
   }
   onSubmit() {
     if (!this.apiRequestService.validateForm(this.form)) return;
     const model = this.onCreateFormData(this.form.value);
-    // Deshabilitar el botón al iniciar el envío del formulario
+
     this.submitting = true;
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
 
     if (this.id === 0) {
-      this.dataService
-        .post(`Proveedor/`, model)
-        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-        .subscribe({
-          next: () => {
-            this.ref.close(true);
-            this.customToastService.onClose();
-          },
-          error: (error) => {
-            // Habilitar el botón nuevamente al finalizar el envío del formulario
-            this.submitting = false;
-            this.customToastService.onCloseToError(error);
-          },
+      this.apiRequestService
+        .onPost(`Proveedor/`, model)
+        .then((result: boolean) => {
+          result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.dataService
-        .put(`Proveedor/${this.id}`, model)
-        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-        .subscribe({
-          next: () => {
-            this.ref.close(true);
-            this.customToastService.onClose();
-          },
-          error: (error) => {
-            // Habilitar el botón nuevamente al finalizar el envío del formulario
-            this.submitting = false;
-            this.customToastService.onCloseToError(error);
-          },
+      this.apiRequestService
+        .onPut(`Proveedor/${this.id}`, model)
+        .then((result: boolean) => {
+          result ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }
@@ -223,23 +195,14 @@ export default class AddoreditProveedorComponent implements OnInit, OnDestroy {
   }
 
   onValidarRFC() {
-    this.dataService
-      .get('Providers/ValidarRfc/' + this.valueRfc)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.rfcCoincidente = resp.body;
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+    this.apiRequestService
+      .onGetList('Providers/ValidarRfc/' + this.valueRfc)
+      .then((result: any) => {
+        this.rfcCoincidente = result;
       });
   }
 
   change(file: any) {
     this.form.patchValue({ constanciaFiscal: file });
-  }
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
   }
 }

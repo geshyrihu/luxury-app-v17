@@ -23,20 +23,30 @@ export default class DepuracionComponent {
   }
 
   UpdateAccounts() {
-    this.apiRequestService.onGetList('depuracion/updateaccounts').then(() => {
-      this.customToastService.onShowSuccess();
-      this.customToastService.onClose();
-    });
+    this.apiRequestService
+      .onGetList('UpdateDataBase/updateaccounts')
+      .then(() => {
+        this.customToastService.onShowSuccess();
+        this.customToastService.onClose();
+      });
   }
   DeleteFolios() {
-    this.apiRequestService.onGetList('depuracion/DeleteFolios').then(() => {
+    this.apiRequestService.onGetList('UpdateDataBase/DeleteFolios').then(() => {
       this.customToastService.onShowSuccess();
       this.customToastService.onClose();
     });
   }
   UpdateFinancieros() {
     this.apiRequestService
-      .onGetList('depuracion/UpdateFinancieros')
+      .onGetList('UpdateDataBase/UpdateFinancieros')
+      .then(() => {
+        this.customToastService.onShowSuccess();
+        this.customToastService.onClose();
+      });
+  }
+  UpdateCotizacionProveedor() {
+    this.apiRequestService
+      .onGetList('UpdateDataBase/UpdateCotizacionProveedor')
       .then(() => {
         this.customToastService.onShowSuccess();
         this.customToastService.onClose();

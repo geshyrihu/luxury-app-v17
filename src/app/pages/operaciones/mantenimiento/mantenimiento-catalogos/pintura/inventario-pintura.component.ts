@@ -18,11 +18,11 @@ import AddoreditInventarioPinturaComponent from './addoredit-inventario-pintura.
 })
 export default class InventarioPinturaComponent implements OnInit, OnDestroy {
   authService = inject(AuthService);
-  public customerIdService = inject(CustomerIdService);
+  customerIdService = inject(CustomerIdService);
   dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
-  public dialogService = inject(DialogService);
-  public messageService = inject(MessageService);
+  dialogService = inject(DialogService);
+  messageService = inject(MessageService);
   customToastService = inject(CustomToastService);
 
   urlImg: string = '';

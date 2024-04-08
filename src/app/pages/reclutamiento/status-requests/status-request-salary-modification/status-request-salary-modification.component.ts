@@ -24,12 +24,12 @@ export default class StatusRequestSalaryModificationComponent
   implements OnInit, OnDestroy
 {
   private statusSolicitudVacanteService = inject(StatusSolicitudVacanteService);
-  public customerIdService = inject(CustomerIdService);
+  customerIdService = inject(CustomerIdService);
   dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
-  public dialogService = inject(DialogService);
+  dialogService = inject(DialogService);
   customToastService = inject(CustomToastService);
-  public router = inject(Router);
+  router = inject(Router);
   authService = inject(AuthService);
 
   workPositionId = this.statusSolicitudVacanteService.getworkPositionId();

@@ -1,16 +1,13 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule, {
   flatpickrFactory,
 } from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subject, takeUntil } from 'rxjs';
 import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import { environment } from 'src/environments/environment';
@@ -21,23 +18,16 @@ import { environment } from 'src/environments/environment';
   standalone: true,
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
-export default class AddoreditContratoPolizaComponent
-  implements OnInit, OnDestroy
-{
-  private serviceIdCustomer = inject(CustomerIdService);
+export default class AddoreditContratoPolizaComponent implements OnInit {
+  apiRequestService = inject(ApiRequestService);
+  customerIdService = inject(CustomerIdService);
   authService = inject(AuthService);
   config = inject(DynamicDialogConfig);
-  dataService = inject(DataService);
-  apiRequestService = inject(ApiRequestService);
-  public dateService = inject(DateService);
+  dateService = inject(DateService);
   formBuilder = inject(FormBuilder);
-  private customToastService = inject(CustomToastService);
 
   ref = inject(DynamicDialogRef);
-
   submitting: boolean = false;
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   id: number = 0;
   urlBaseImg = environment.base_urlImg;
@@ -48,7 +38,7 @@ export default class AddoreditContratoPolizaComponent
     id: { value: this.id, disabled: true },
     providerId: ['', Validators.required],
     providerName: ['', Validators.required],
-    customerId: [this.serviceIdCustomer.getcustomerId(), Validators.required],
+    customerId: [this.customerIdService.getcustomerId(), Validators.required],
     description: ['', Validators.required],
     startDate: ['', Validators.required],
     endDate: ['', Validators.required],
@@ -76,59 +66,37 @@ export default class AddoreditContratoPolizaComponent
   }
 
   onLoadData() {
-    this.dataService
-      .get(`ContratoPoliza/${this.id}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe((resp: any) => {
-        this.id = resp.body.id;
-        this.form.patchValue(resp.body);
-        this.form.patchValue({
-          providerId: resp.body.providerId,
-        });
-        this.form.patchValue({
-          providerName: resp.body.providerName,
-        });
+    const urlApi = `ContratoPoliza/${this.id}`;
+    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+      this.id = result.id;
+      this.form.patchValue(result);
+      this.form.patchValue({
+        providerId: result.providerId,
       });
+      this.form.patchValue({
+        providerName: result.providerName,
+      });
+    });
   }
   submit() {
     let formData = this.createModel(this.form);
 
     if (!this.apiRequestService.validateForm(this.form)) return;
     this.id = this.config.data.id;
-    // Deshabilitar el botón al iniciar el envío del formulario
+
     this.submitting = true;
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
 
     if (this.id === 0) {
-      this.dataService
-        .post(`ContratoPoliza`, formData)
-        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-        .subscribe({
-          next: () => {
-            this.ref.close(true);
-            this.customToastService.onClose();
-          },
-          error: (error) => {
-            // Habilitar el botón nuevamente al finalizar el envío del formulario
-            this.submitting = false;
-            this.customToastService.onCloseToError(error);
-          },
+      this.apiRequestService
+        .onPost(`ContratoPoliza`, formData)
+        .then((result: boolean) => {
+          result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.dataService
-        .put(`ContratoPoliza/${this.id}`, formData)
-        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-        .subscribe({
-          next: () => {
-            this.ref.close(true);
-            this.customToastService.onClose();
-          },
-          error: (error) => {
-            // Habilitar el botón nuevamente al finalizar el envío del formulario
-            this.submitting = false;
-            this.customToastService.onCloseToError(error);
-          },
+      this.apiRequestService
+        .onPut(`ContratoPoliza/${this.id}`, formData)
+        .then((result: boolean) => {
+          result ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }
@@ -153,10 +121,6 @@ export default class AddoreditContratoPolizaComponent
       'endDate',
       this.dateService.getDateFormat(form.get('endDate').value)
     );
-
     return formData;
-  }
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
   }
 }

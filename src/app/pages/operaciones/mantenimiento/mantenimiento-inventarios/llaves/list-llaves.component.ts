@@ -22,10 +22,9 @@ export default class ListLlavesComponent implements OnInit, OnDestroy {
   authService = inject(AuthService);
   dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
-  public dialogService = inject(DialogService);
-  public messageService = inject(MessageService);
-  public customerIdService = inject(CustomerIdService);
-
+  dialogService = inject(DialogService);
+  messageService = inject(MessageService);
+  customerIdService = inject(CustomerIdService);
   data: IInventarioLlave[] = [];
 
   ref: DynamicDialogRef;

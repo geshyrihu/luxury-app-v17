@@ -1,14 +1,11 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subject, takeUntil } from 'rxjs';
 import { ETipoGasto } from 'src/app/core/enums/tipo-gasto.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
-import { DataService } from 'src/app/core/services/data.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
@@ -17,19 +14,13 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   standalone: true,
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
-export default class OrdenCompraDatosPagoComponent
-  implements OnInit, OnDestroy
-{
+export default class OrdenCompraDatosPagoComponent implements OnInit {
+  apiRequestService = inject(ApiRequestService);
   formBuilder = inject(FormBuilder);
   ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);
-  dataService = inject(DataService);
-  apiRequestService = inject(ApiRequestService);
-  private customToastService = inject(CustomToastService);
 
   submitting: boolean = false;
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   ordenCompraDatosPagoId = 0;
   cb_providers: ISelectItem[] = [];
@@ -80,40 +71,22 @@ export default class OrdenCompraDatosPagoComponent
       this.cb_formaPago = response;
     });
 
-    this.dataService
-      .get(`OrdenCompraDatosPago/${this.ordenCompraDatosPagoId}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.form.patchValue(resp.body);
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+    this.apiRequestService
+      .onGetItem(`OrdenCompraDatosPago/${this.ordenCompraDatosPagoId}`)
+      .then((result: any) => {
+        this.form.patchValue(result);
       });
   }
   onSubmit() {
-    // Deshabilitar el botón al iniciar el envío del formulario
     this.submitting = true;
-    this.dataService
-      .put(
+
+    this.apiRequestService
+      .onPut(
         `OrdenCompraDatosPago/${this.ordenCompraDatosPagoId}`,
         this.form.value
       )
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          this.ref.close(true);
-          this.customToastService.onClose();
-        },
-        error: (error) => {
-          // Habilitar el botón nuevamente al finalizar el envío del formulario
-          this.submitting = false;
-          this.customToastService.onCloseToError(error);
-        },
+      .then((result: boolean) => {
+        result ? this.ref.close(true) : (this.submitting = false);
       });
-  }
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
   }
 }

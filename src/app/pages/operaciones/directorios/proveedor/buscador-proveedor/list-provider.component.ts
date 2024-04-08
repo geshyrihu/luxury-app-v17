@@ -1,13 +1,10 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { MessageService } from 'primeng/api';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subject, takeUntil } from 'rxjs';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { IBusquedaProveedor } from 'src/app/core/interfaces/busqueda-proveedor.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
-import { DataService } from 'src/app/core/services/data.service';
+import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import { environment } from 'src/environments/environment';
 import AddoreditProveedorComponent from '../addoredit-proveedor/addoredit-proveedor.component';
 import TarjetaProveedorComponent from '../tarjeta-proveedor/tarjeta-proveedor.component';
@@ -17,18 +14,13 @@ import TarjetaProveedorComponent from '../tarjeta-proveedor/tarjeta-proveedor.co
   standalone: true,
   imports: [LuxuryAppComponentsModule],
 })
-export default class ListProviderComponent implements OnInit, OnDestroy {
-  customToastService = inject(CustomToastService);
-  dataService = inject(DataService);
+export default class ListProviderComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  public messageService = inject(MessageService);
-  public dialogService = inject(DialogService);
+  dialogHandlerService = inject(DialogHandlerService);
   authService = inject(AuthService);
 
   data: IBusquedaProveedor[] = [];
   ref: DynamicDialogRef;
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   url_img = `${environment.base_urlImg}providers/`;
 
@@ -39,19 +31,10 @@ export default class ListProviderComponent implements OnInit, OnDestroy {
     return this.authService.onValidateRoles(value);
   }
   onLoadData() {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .get<IBusquedaProveedor[]>(`Proveedor/ListadoProveedores`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.data = this.customToastService.onCloseOnGetData(resp.body);
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
+    const urlApi = `Proveedor/ListadoProveedores`;
+    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      this.data = result;
+    });
   }
 
   onDelete(id: number) {
@@ -64,67 +47,39 @@ export default class ListProviderComponent implements OnInit, OnDestroy {
   }
 
   onAutorizarProvider(providerId: number) {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .get<IBusquedaProveedor[]>(`Proveedor/Autorizar/${providerId}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          this.onLoadData();
-          this.customToastService.onClose();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
+    const urlApi = `Proveedor/Autorizar/${providerId}`;
+    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      this.onLoadData();
+    });
   }
 
   showModalCardProveedor(data: any) {
-    this.ref = this.dialogService.open(TarjetaProveedorComponent, {
-      data: {
-        id: data.id,
-      },
-      header: data.title,
-      styleClass: 'modal-lg',
-      baseZIndex: 10000,
-      closeOnEscape: true,
-    });
+    this.dialogHandlerService.openDialog(
+      TarjetaProveedorComponent,
+      data,
+      data.title,
+      this.dialogHandlerService.dialogSizeLg
+    );
   }
 
   showModalAddOrEdit(data: any) {
-    this.ref = this.dialogService.open(AddoreditProveedorComponent, {
-      data: {
-        id: data.id,
-      },
-      header: data.title,
-      height: '100%',
-      width: '100%',
-      baseZIndex: 10000,
-      closeOnEscape: true,
-    });
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        this.customToastService.onShowSuccess();
-        this.onLoadData();
-      }
-    });
+    this.dialogHandlerService
+      .openDialog(
+        AddoreditProveedorComponent,
+        data,
+        data.title,
+        this.dialogHandlerService.dialogSizeFull
+      )
+      .then((result: boolean) => {
+        if (result) this.onLoadData();
+      });
   }
 
   onActivateProvider(data: any) {
-    this.dataService
-      .put(`Providers/ChangeState/${data.providerId}/${data.state}`, null)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.onLoadData();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+    this.apiRequestService
+      .onPut(`Providers/ChangeState/${data.providerId}/${data.state}`, null)
+      .then((result: boolean) => {
+        this.onLoadData();
       });
-  }
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
   }
 }

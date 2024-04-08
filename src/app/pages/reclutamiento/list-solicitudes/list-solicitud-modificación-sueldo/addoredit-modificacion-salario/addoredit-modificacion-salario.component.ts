@@ -25,7 +25,7 @@ export default class AddoreditModificacionSalarioComponent
   dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
   formBuilder = inject(FormBuilder);
-  private customToastService = inject(CustomToastService);
+  customToastService = inject(CustomToastService);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
 
@@ -76,7 +76,7 @@ export default class AddoreditModificacionSalarioComponent
     if (!this.apiRequestService.validateForm(this.form)) return;
 
     this.id = this.config.data.id;
-    // Deshabilitar el botón al iniciar el envío del formulario
+
     this.submitting = true;
 
     this.dataService

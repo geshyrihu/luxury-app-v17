@@ -30,15 +30,15 @@ import FilterTicketComponent from '../ticket-filter/ticket-filter.component';
 })
 export default class ListTicketComponent implements OnInit, OnDestroy {
   authService = inject(AuthService);
-  public customerIdService = inject(CustomerIdService);
+  customerIdService = inject(CustomerIdService);
   dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
-  public dateService = inject(DateService);
-  public dialogService = inject(DialogService);
-  public messageService = inject(MessageService);
+  dateService = inject(DateService);
+  dialogService = inject(DialogService);
+  messageService = inject(MessageService);
   public ticketFilterService = inject(TicketFilterService);
   public reportService = inject(ReportService);
-  public router = inject(Router);
+  router = inject(Router);
   customToastService = inject(CustomToastService);
 
   base_urlImg = '';

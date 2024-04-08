@@ -23,8 +23,8 @@ export default class ListProfessionsComponent implements OnInit, OnDestroy {
   authService = inject(AuthService);
   dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
-  public messageService = inject(MessageService);
-  public dialogService = inject(DialogService);
+  messageService = inject(MessageService);
+  dialogService = inject(DialogService);
 
   data: any[] = [];
   ref: DynamicDialogRef;

@@ -28,14 +28,14 @@ export default class PresentacionJuntaComiteComponent
   private rangoCalendarioService = inject(FiltroCalendarService);
   authService = inject(AuthService);
   public confirmationService = inject(ConfirmationService);
-  public customerIdService = inject(CustomerIdService);
+  customerIdService = inject(CustomerIdService);
   dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
-  public dateService = inject(DateService);
-  public messageService = inject(MessageService);
+  dateService = inject(DateService);
+  messageService = inject(MessageService);
   public route = inject(Router);
   customToastService = inject(CustomToastService);
-  public dialogService = inject(DialogService);
+  dialogService = inject(DialogService);
 
   enviarEstadosFinancierosCondominos(id: any) {
     this.ref = this.dialogService.open(EnviarMailEstadosFinancierosComponent, {

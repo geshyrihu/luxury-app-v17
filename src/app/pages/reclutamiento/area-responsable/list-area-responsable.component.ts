@@ -16,8 +16,8 @@ import AddOrEditAreaResponsableComponent from './addoredit-area-responsable.comp
 export default class ListAreaResponsableComponent implements OnInit, OnDestroy {
   dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
-  private dialogService = inject(DialogService);
-  private customToastService = inject(CustomToastService);
+  dialogService = inject(DialogService);
+  customToastService = inject(CustomToastService);
 
   data: any[] = [];
   ref: DynamicDialogRef;

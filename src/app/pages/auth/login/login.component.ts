@@ -43,6 +43,8 @@ export default class LoginComponent implements OnInit {
   onSubmit() {
     // Verifica si el formulario es inválido y marca todos los campos como tocados si es así
     if (!this.apiRequestService.validateForm(this.form)) return;
+
+    Swal.showLoading();
     this.dataService
       .post('Auth/login', this.form.value)
       .pipe(

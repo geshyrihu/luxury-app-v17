@@ -21,11 +21,11 @@ import { environment } from 'src/environments/environment';
 })
 export default class AddoreditPersonComponent implements OnInit, OnDestroy {
   config = inject(DynamicDialogConfig);
-  public customerIdService = inject(CustomerIdService);
+  customerIdService = inject(CustomerIdService);
   customToastService = inject(CustomToastService);
   dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
-  public dateService = inject(DateService);
+  dateService = inject(DateService);
   formBuilder = inject(FormBuilder);
   ref = inject(DynamicDialogRef);
 
@@ -60,7 +60,7 @@ export default class AddoreditPersonComponent implements OnInit, OnDestroy {
   onSubmit() {
     if (!this.apiRequestService.validateForm(this.form)) return;
     const formData = this.createFormData(this.form.value);
-    // Deshabilitar el botón al iniciar el envío del formulario
+
     this.submitting = true;
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();

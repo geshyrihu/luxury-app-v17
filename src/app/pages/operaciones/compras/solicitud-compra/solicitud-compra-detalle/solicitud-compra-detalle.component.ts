@@ -1,10 +1,8 @@
 import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subject, takeUntil } from 'rxjs';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
-import { DataService } from 'src/app/core/services/data.service';
+import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import { SolicitudCompraService } from 'src/app/core/services/solicitud-compra.service';
 import EditProductoComponent from '../edit-producto.component';
 
@@ -15,13 +13,9 @@ import EditProductoComponent from '../edit-producto.component';
   imports: [LuxuryAppComponentsModule],
 })
 export default class SolicitudCompraDetalleComponent {
-  private dialogService = inject(DialogService);
-  customToastService = inject(CustomToastService);
-  dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
-  private solicitudCompraService = inject(SolicitudCompraService);
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+  dialogHandlerService = inject(DialogHandlerService);
+  solicitudCompraService = inject(SolicitudCompraService);
 
   @Input()
   SolicitudCompraDetalle: any[] = [];
@@ -33,46 +27,28 @@ export default class SolicitudCompraDetalleComponent {
   ref: DynamicDialogRef;
 
   editProduct(data: any) {
-    this.ref = this.dialogService.open(EditProductoComponent, {
-      data: {
-        solicitudCompraId: this.solicitudCompraId,
-        id: data.id,
-      },
-      header: 'Editar Producto',
-      width: '600px',
-      closeOnEscape: true,
-      baseZIndex: 10000,
-    });
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        this.customToastService.onShowSuccess();
-        this.onUpdateData();
-        // this.onLoadData();
-      }
-    });
+    this.dialogHandlerService
+      .openDialog(
+        EditProductoComponent,
+        {
+          solicitudCompraId: this.solicitudCompraId,
+          id: data.id,
+        },
+        'Editar Producto',
+        this.dialogHandlerService.dialogSizeMd
+      )
+      .then((result: boolean) => {
+        if (result) this.onUpdateData();
+      });
   }
   onUpdateData() {
     this.updateData.emit();
   }
 
   onDeleteProduct(id: number) {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .delete(`SolicitudCompraDetalle/${id}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          this.onUpdateData();
-          this.solicitudCompraService.onDeleteProduct();
-          this.customToastService.onCloseToSuccess();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
-  }
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
+    this.apiRequestService.onDelete(`solicitudcompradetalle/${id}`).then(() => {
+      this.onUpdateData();
+      this.solicitudCompraService.onDeleteProduct();
+    });
   }
 }

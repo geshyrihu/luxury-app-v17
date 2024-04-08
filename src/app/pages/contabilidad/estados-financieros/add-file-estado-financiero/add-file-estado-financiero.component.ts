@@ -37,7 +37,7 @@ export default class AddFileEstadoFinancieroComponent implements OnInit {
 
     this.id = this.config.data.id;
     const model = this.onCreateFormData(this.form.value);
-    // Deshabilitar el botón al iniciar el envío del formulario
+
     this.submitting = true;
 
     this.apiRequestService

@@ -21,15 +21,15 @@ import { DataService } from 'src/app/core/services/data.service';
   imports: [LuxuryAppComponentsModule],
 })
 export default class EnviarMailEstadosFinancierosComponent {
-  public customerIdService = inject(CustomerIdService);
+  customerIdService = inject(CustomerIdService);
   customToastService = inject(CustomToastService);
   formBuilder = inject(FormBuilder);
   dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
   ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);
-  public dialogService = inject(DialogService);
-  public messageService = inject(MessageService);
+  dialogService = inject(DialogService);
+  messageService = inject(MessageService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 

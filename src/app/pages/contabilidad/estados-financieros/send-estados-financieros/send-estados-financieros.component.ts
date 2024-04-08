@@ -16,7 +16,7 @@ import {
   imports: [LuxuryAppComponentsModule],
 })
 export default class SendEstadosFinancierosComponent {
-  public customerIdService = inject(CustomerIdService);
+  customerIdService = inject(CustomerIdService);
   formBuilder = inject(FormBuilder);
   ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);

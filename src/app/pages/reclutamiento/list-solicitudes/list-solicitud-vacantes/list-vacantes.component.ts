@@ -32,11 +32,11 @@ export default class ListVacantesComponent implements OnInit, OnDestroy {
   apiRequestService = inject(ApiRequestService);
   private filterRequestsService = inject(FilterRequestsService);
   authService = inject(AuthService);
-  public dialogService = inject(DialogService);
-  public messageService = inject(MessageService);
+  dialogService = inject(DialogService);
+  messageService = inject(MessageService);
   public statusSolicitudVacanteService = inject(StatusSolicitudVacanteService);
   customToastService = inject(CustomToastService);
-  public router = inject(Router);
+  router = inject(Router);
 
   data: any[] = [];
   ref: DynamicDialogRef;

@@ -25,14 +25,14 @@ import AddorEditMeetingSeguimientoComponent from './addoredit-seguimiento/addor-
 })
 export default class ListMinutasComponent implements OnInit, OnDestroy {
   authService = inject(AuthService);
-  public confirmationService = inject(ConfirmationService);
-  public customerIdService = inject(CustomerIdService);
+  confirmationService = inject(ConfirmationService);
+  customerIdService = inject(CustomerIdService);
   dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
-  public dialogService = inject(DialogService);
-  public messageService = inject(MessageService);
-  public reportService = inject(ReportService);
-  public route = inject(Router);
+  dialogService = inject(DialogService);
+  messageService = inject(MessageService);
+  reportService = inject(ReportService);
+  route = inject(Router);
   customToastService = inject(CustomToastService);
 
   data: IMeetingIndex[] = [];

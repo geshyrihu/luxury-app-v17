@@ -17,7 +17,7 @@ export default class CabeceraSolicitudPagoPdfComponent
 {
   dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
-  public customerIdService = inject(CustomerIdService);
+  customerIdService = inject(CustomerIdService);
   customToastService = inject(CustomToastService);
 
   data: any;

@@ -88,7 +88,6 @@ export default class PersonUpdatePhotoComponent implements OnInit, OnDestroy {
     const formData = new FormData();
     formData.append('file', this.imgUpload);
 
-    // Deshabilitar el botón al iniciar el envío del formulario
     this.submitting = true;
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();

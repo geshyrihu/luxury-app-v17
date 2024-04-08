@@ -1,13 +1,9 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subject, takeUntil } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataService } from 'src/app/core/services/data.service';
 import { OrdenCompraService } from 'src/app/core/services/orden-compra.service';
 
 const fechaActual = new Date();
@@ -18,20 +14,13 @@ const fechaActual = new Date();
   standalone: true,
   imports: [LuxuryAppComponentsModule],
 })
-export default class OrdenCompraPresupuestoComponent
-  implements OnInit, OnDestroy
-{
-  customToastService = inject(CustomToastService);
-  dataService = inject(DataService);
+export default class OrdenCompraPresupuestoComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   authService = inject(AuthService);
-  public ordenCompraService = inject(OrdenCompraService);
-  ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);
-  public messageService = inject(MessageService);
-  public customerIdService = inject(CustomerIdService);
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+  customerIdService = inject(CustomerIdService);
+  ordenCompraService = inject(OrdenCompraService);
+  ref = inject(DynamicDialogRef);
 
   anio: number = fechaActual.getFullYear();
   data: any[] = [];
@@ -41,51 +30,35 @@ export default class OrdenCompraPresupuestoComponent
   cedulaId: number = 0;
   cb_cedulas: any[] = [];
 
+  submitting: boolean = false;
+
   ngOnInit(): void {
     this.onLoadCedulasCustomer(this.customerIdService.getcustomerId());
     this.total = this.ordenCompraService.getTotalPorCubrir();
     this.ordenCompraId = this.config.data.ordenCompraId;
   }
   onLoadData() {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .get(
-        // `OrdenCompraPresupuesto/GetAll/${this.customerIdService.customerId}/${this.cedulaId}/${this.ordenCompraId}`
-        `OrdenCompraPresupuesto/GetAll/${this.cedulaId}/${this.ordenCompraId}`
-      )
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.data = this.customToastService.onCloseOnGetData(resp.body);
-          this.data.forEach(
-            (x) => (
-              (x.dineroUsado = this.total),
-              (x.ordenCompraId = this.ordenCompraId)
-            )
-          );
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
+    const urlApi = `OrdenCompraPresupuesto/GetAll/${this.cedulaId}/${this.ordenCompraId}`;
+
+    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      this.data = result;
+      this.data.forEach(
+        (x) => (
+          (x.dineroUsado = this.total), (x.ordenCompraId = this.ordenCompraId)
+        )
+      );
+    });
   }
   onSubmit(partidaPresupuestal: any) {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .post(`OrdenCompraPresupuesto`, partidaPresupuestal)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          const valor =
-            this.ordenCompraService.getTotalOrdenCompra() -
-            partidaPresupuestal.gastoUsado;
-          this.ref.close(true);
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+    this.submitting = true;
+
+    this.apiRequestService
+      .onPost(`OrdenCompraPresupuesto`, partidaPresupuestal)
+      .then((result: boolean) => {
+        const valor =
+          this.ordenCompraService.getTotalOrdenCompra() -
+          partidaPresupuestal.gastoUsado;
+        result ? this.ref.close(true) : (this.submitting = false);
       });
   }
   actualizarAnio() {
@@ -98,24 +71,14 @@ export default class OrdenCompraPresupuestoComponent
   }
 
   onLoadCedulasCustomer(customerId: number) {
-    this.dataService
-      .get(`CedulaPresupuestal/GetCedulas/${customerId}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          if (resp.body) {
-            this.cedulaId = resp.body[0].value;
-            this.onLoadData();
-          }
+    const urlApi = `CedulaPresupuestal/GetCedulas/${customerId}`;
+    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      if (result) {
+        this.cedulaId = result[0].value;
+        this.onLoadData();
+      }
 
-          this.cb_cedulas = resp.body;
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
-  }
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
+      this.cb_cedulas = result;
+    });
   }
 }

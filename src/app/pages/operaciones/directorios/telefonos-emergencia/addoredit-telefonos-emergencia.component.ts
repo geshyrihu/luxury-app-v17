@@ -2,10 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subject, takeUntil } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
-import { DataService } from 'src/app/core/services/data.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import { environment } from 'src/environments/environment';
 
@@ -16,14 +13,10 @@ import { environment } from 'src/environments/environment';
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class AddOrEditTelefonosEmergenciaComponent {
+  apiRequestService = inject(ApiRequestService);
   formBuilder = inject(FormBuilder);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
-  dataService = inject(DataService);
-  apiRequestService = inject(ApiRequestService);
-  private customToastService = inject(CustomToastService);
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   submitting: boolean = false;
 
@@ -54,50 +47,30 @@ export default class AddOrEditTelefonosEmergenciaComponent {
   }
 
   onLoadData() {
-    this.dataService
-      .get(`TelefonosEmergencia/${this.id}`)
-      .subscribe((resp: any) => {
-        this.urlBaseImg = `${environment.base_urlImg}Administration/tel-emergencia/${resp.body.logo}`;
-        this.form.patchValue(resp.body);
-      });
+    const urlApi = `TelefonosEmergencia/${this.id}`;
+    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+      this.urlBaseImg = `${environment.base_urlImg}Administration/tel-emergencia/${result.logo}`;
+      this.form.patchValue(result);
+    });
   }
 
   onSubmit() {
     if (!this.apiRequestService.validateForm(this.form)) return;
     const formData = this.createFormData(this.form.value);
-    // Deshabilitar el botón al iniciar el envío del formulario
+
     this.submitting = true;
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
 
     if (this.id === 0) {
-      this.dataService
-        .post('TelefonosEmergencia', formData)
-        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-        .subscribe({
-          next: () => {
-            this.ref.close(true);
-            this.customToastService.onClose();
-          },
-          error: (error) => {
-            // Habilitar el botón nuevamente al finalizar el envío del formulario
-            this.submitting = false;
-            this.customToastService.onCloseToError(error);
-          },
+      this.apiRequestService
+        .onPost('TelefonosEmergencia', formData)
+        .then((result: boolean) => {
+          result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.dataService
-        .put(`TelefonosEmergencia/${this.id}`, formData)
-        .subscribe({
-          next: () => {
-            this.ref.close(true);
-            this.customToastService.onClose();
-          },
-          error: (error) => {
-            // Habilitar el botón nuevamente al finalizar el envío del formulario
-            this.submitting = false;
-            this.customToastService.onCloseToError(error);
-          },
+      this.apiRequestService
+        .onPut(`TelefonosEmergencia/${this.id}`, formData)
+        .then((result: boolean) => {
+          result ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }
@@ -113,9 +86,5 @@ export default class AddOrEditTelefonosEmergenciaComponent {
       formData.append('logo', dto.logo);
     }
     return formData;
-  }
-
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
   }
 }

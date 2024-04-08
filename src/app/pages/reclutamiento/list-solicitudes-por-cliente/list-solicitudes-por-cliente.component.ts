@@ -24,10 +24,10 @@ export default class ListSolicitudesPorClienteComponent implements OnInit {
   dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
   customToastService = inject(CustomToastService);
-  public customerIdService = inject(CustomerIdService);
-  public dialogService = inject(DialogService);
+  customerIdService = inject(CustomerIdService);
+  dialogService = inject(DialogService);
   public statusSolicitudVacanteService = inject(StatusSolicitudVacanteService);
-  public router = inject(Router);
+  router = inject(Router);
   authService = inject(AuthService);
 
   customerId$: Observable<number> = this.customerIdService.getCustomerId$();

@@ -22,9 +22,9 @@ import ResultadoGeneralEvaluacionAreasDetalleComponent from './resultado-general
 export default class EvaluacionAreasComponent implements OnInit, OnDestroy {
   dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
-  public dateService = inject(DateService);
-  public dialogService = inject(DialogService);
-  public messageService = inject(MessageService);
+  dateService = inject(DateService);
+  dialogService = inject(DialogService);
+  messageService = inject(MessageService);
   public rangoCalendarioService = inject(FiltroCalendarService);
   customToastService = inject(CustomToastService);
 

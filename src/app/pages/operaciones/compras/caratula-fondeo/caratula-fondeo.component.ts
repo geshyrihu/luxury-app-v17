@@ -11,7 +11,6 @@ import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CaratulaFondeoService } from 'src/app/core/services/caratula-fondeo.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
@@ -24,14 +23,13 @@ const date = new Date();
   providers: [MessageService],
 })
 export default class CaratulaFondeoComponent implements OnInit {
-  public dateService = inject(DateService);
-  dataService = inject(DataService);
+  dateService = inject(DateService);
   apiRequestService = inject(ApiRequestService);
   formBuilder = inject(FormBuilder);
   ref = inject(DynamicDialogRef);
-  public customerIdService = inject(CustomerIdService);
-  public router = inject(Router);
-  public caratulaFondeoService = inject(CaratulaFondeoService);
+  customerIdService = inject(CustomerIdService);
+  router = inject(Router);
+  caratulaFondeoService = inject(CaratulaFondeoService);
 
   submitting: boolean = false;
 
@@ -55,7 +53,7 @@ export default class CaratulaFondeoComponent implements OnInit {
   }
   onSubmit() {
     if (!this.apiRequestService.validateForm(this.form)) return;
-    // Deshabilitar el botón al iniciar el envío del formulario
+
     this.submitting = true;
 
     const CaratulaFondeo = {

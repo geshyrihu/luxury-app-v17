@@ -18,11 +18,11 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 })
 export default class PersonEditDataPrincipalComponent implements OnInit {
   config = inject(DynamicDialogConfig);
-  public customerIdService = inject(CustomerIdService);
+  customerIdService = inject(CustomerIdService);
   customToastService = inject(CustomToastService);
   dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
-  public dateService = inject(DateService);
+  dateService = inject(DateService);
   formBuilder = inject(FormBuilder);
   ref = inject(DynamicDialogRef);
 
@@ -52,7 +52,6 @@ export default class PersonEditDataPrincipalComponent implements OnInit {
   onSubmit() {
     if (!this.apiRequestService.validateForm(this.form)) return;
 
-    // Deshabilitar el botón al iniciar el envío del formulario
     this.submitting = true;
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();

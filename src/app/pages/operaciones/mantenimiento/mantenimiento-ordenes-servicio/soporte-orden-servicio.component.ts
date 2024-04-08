@@ -15,11 +15,11 @@ import { environment } from 'src/environments/environment';
 export default class SoporteOrdenServicioComponent
   implements OnInit, OnDestroy
 {
-  public dateService = inject(DateService);
+  dateService = inject(DateService);
   private route = inject(ActivatedRoute);
   dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
-  private customerIdService = inject(CustomerIdService);
+  customerIdService = inject(CustomerIdService);
 
   id: string = '';
   item: any;

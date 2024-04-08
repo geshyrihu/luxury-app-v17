@@ -30,14 +30,14 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   imports: [LuxuryAppComponentsModule, CustomInputModule, FileUploadModule],
 })
 export default class SolicitudBajaComponent implements OnInit, OnDestroy {
-  private customToastService = inject(CustomToastService);
+  customToastService = inject(CustomToastService);
   apiRequestService = inject(ApiRequestService);
   dataService = inject(DataService);
   formBuilder = inject(FormBuilder);
   authService = inject(AuthService);
   config = inject(DynamicDialogConfig);
-  public customerIdService = inject(CustomerIdService);
-  public dateService = inject(DateService);
+  customerIdService = inject(CustomerIdService);
+  dateService = inject(DateService);
   ref = inject(DynamicDialogRef);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
@@ -122,7 +122,6 @@ export default class SolicitudBajaComponent implements OnInit, OnDestroy {
 
     var model = this.createFormData(this.form.value);
 
-    // Deshabilitar el botón al iniciar el envío del formulario
     this.submitting = true;
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();

@@ -1,4 +1,5 @@
 <p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+
 <div class="card">
   <p-table
     #dt
@@ -15,7 +16,6 @@
             [title]="'Puestos de trabajo'"
             (add)="onModalAddOrEdit({ id: 0, title: 'Nuevo Registro' })"
             [dt]="dt"
-            [showAdd]="authService.onValidateRoles(['SuperUsuario'])"
           ></app-table-header>
         </div>
         <div class="col-sm-2">

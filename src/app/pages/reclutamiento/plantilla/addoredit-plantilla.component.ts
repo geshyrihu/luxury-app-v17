@@ -21,12 +21,12 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class AddoreditPlantillaComponent implements OnInit, OnDestroy {
-  private customToastService = inject(CustomToastService);
+  customToastService = inject(CustomToastService);
   apiRequestService = inject(ApiRequestService);
   formBuilder = inject(FormBuilder);
   authService = inject(AuthService);
   config = inject(DynamicDialogConfig);
-  public customerIdService = inject(CustomerIdService);
+  customerIdService = inject(CustomerIdService);
   dataService = inject(DataService);
   ref = inject(DynamicDialogRef);
 
@@ -106,7 +106,7 @@ export default class AddoreditPlantillaComponent implements OnInit, OnDestroy {
       professionName: '',
       employeeName: '',
     });
-    // Deshabilitar el botón al iniciar el envío del formulario
+
     this.submitting = true;
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();

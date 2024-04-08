@@ -1,12 +1,11 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subject, takeUntil } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
-import { DataService } from 'src/app/core/services/data.service';
+import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import ModalAddProveedorComponent from './modal-add-proveedor/modal-add-proveedor.component';
 import ModalEditCotizacionComponent from './modal-edit-cotizacion/modal-edit-cotizacion.component';
 
@@ -16,15 +15,14 @@ import ModalEditCotizacionComponent from './modal-edit-cotizacion/modal-edit-cot
   standalone: true,
   imports: [LuxuryAppComponentsModule],
 })
-export default class CuadroComparativoComponent implements OnInit, OnDestroy {
-  customToastService = inject(CustomToastService);
-  dataService = inject(DataService);
+export default class CuadroComparativoComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  public routeActive = inject(ActivatedRoute);
-  public dialogService = inject(DialogService);
-  public messageService = inject(MessageService);
+  dialogHandlerService = inject(DialogHandlerService);
 
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+  customToastService = inject(CustomToastService);
+  routeActive = inject(ActivatedRoute);
+  dialogService = inject(DialogService);
+  messageService = inject(MessageService);
 
   ref: DynamicDialogRef;
 
@@ -58,83 +56,72 @@ export default class CuadroComparativoComponent implements OnInit, OnDestroy {
   }
 
   onModalAddProveedor() {
-    this.ref = this.dialogService.open(ModalAddProveedorComponent, {
-      data: {
-        solicitudCompraId: this.solicitudCompraId,
-      },
-      header: 'Selecciona un proveedor',
-      styleClass: 'modal-md',
-      closeOnEscape: true,
-      baseZIndex: 10000,
-    });
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        this.onResetTotal();
-        this.onLoadData();
-      }
-      this.onResetTotal();
-      this.onLoadData();
-    });
+    this.dialogHandlerService
+      .openDialog(
+        ModalAddProveedorComponent,
+        {
+          solicitudCompraId: this.solicitudCompraId,
+        },
+        'Selecciona un proveedor',
+        this.dialogHandlerService.dialogSizeMd
+      )
+      .then((result: boolean) => {
+        if (result) {
+          this.onResetTotal();
+          this.onLoadData();
+        }
+      });
   }
   onLoadData() {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.onResetProvider();
-    this.dataService
-      .get<any>(`SolicitudCompra/CuadroComparativo/${this.solicitudCompraId}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.folio = resp.body.folio;
-          this.solicitudCompra = resp.body;
-          this.cotizacionProveedor = this.solicitudCompra.cotizacionProveedor;
-          this.solicitudCompraDetalle =
-            this.solicitudCompra.solicitudCompraDetalle;
+    const urlApi = `solicitudcompra/cuadrocomparativo/${this.solicitudCompraId}`;
 
-          if (this.cotizacionProveedor.length === 1) {
-            this.provider1 = this.cotizacionProveedor[0].provider;
-            for (let n of this.solicitudCompraDetalle) {
-              this.total1 += n.total;
-            }
-          }
-          if (this.cotizacionProveedor.length === 2) {
-            this.provider1 = this.cotizacionProveedor[0].provider;
-            this.provider2 = this.cotizacionProveedor[1].provider;
-            for (let n of this.solicitudCompraDetalle) {
-              this.total1 += n.total;
-            }
-            for (let n of this.solicitudCompraDetalle) {
-              this.total2 += n.total2;
-            }
-          }
-          if (this.cotizacionProveedor.length === 3) {
-            this.provider1 = this.cotizacionProveedor[0].provider;
+    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+      console.log('🚀 ~ solicitudcompra/cuadrocomparativo:', result);
+      this.folio = result.folio;
+      this.solicitudCompra = result;
+      this.cotizacionProveedor = this.solicitudCompra.cotizacionProveedor;
+      this.solicitudCompraDetalle = this.solicitudCompra.solicitudCompraDetalle;
 
-            this.provider2 = this.cotizacionProveedor[1].provider;
+      if (this.cotizacionProveedor.length === 1) {
+        this.provider1 = this.cotizacionProveedor[0].nameProvider;
+        for (let n of this.solicitudCompraDetalle) {
+          this.total1 += n.total;
+        }
+      }
+      if (this.cotizacionProveedor.length === 2) {
+        this.provider1 = this.cotizacionProveedor[0].nameProvider;
+        this.provider2 = this.cotizacionProveedor[1].nameProvider;
+        for (let n of this.solicitudCompraDetalle) {
+          this.total1 += n.total;
+        }
+        for (let n of this.solicitudCompraDetalle) {
+          this.total2 += n.total2;
+        }
+      }
+      if (this.cotizacionProveedor.length === 3) {
+        this.provider1 = this.cotizacionProveedor[0].nameProvider;
 
-            this.provider3 = this.cotizacionProveedor[2].provider;
+        this.provider2 = this.cotizacionProveedor[1].nameProvider;
 
-            for (let n of this.solicitudCompraDetalle) {
-              this.total1 += n.total;
-            }
-            for (let n of this.solicitudCompraDetalle) {
-              this.total2 += n.total2;
-            }
-            for (let n of this.solicitudCompraDetalle) {
-              this.total3 += n.total3;
-            }
-          }
-          this.onEvaluationPriceTotal();
-          this.ontotalPreciosMenores(this.solicitudCompraDetalle);
-          this.customToastService.onClose();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
+        this.provider3 = this.cotizacionProveedor[2].nameProvider;
+
+        for (let n of this.solicitudCompraDetalle) {
+          this.total1 += n.total;
+        }
+        for (let n of this.solicitudCompraDetalle) {
+          this.total2 += n.total2;
+        }
+        for (let n of this.solicitudCompraDetalle) {
+          this.total3 += n.total3;
+        }
+      }
+      this.onEvaluationPriceTotal();
+      this.ontotalPreciosMenores(this.solicitudCompraDetalle);
+    });
   }
 
   onEditCotizacion(posicionCotizacion: number) {
+    //TODO: Refactorizar para usar el servicio de dialogos
     this.ref = this.dialogService.open(ModalEditCotizacionComponent, {
       data: {
         solicitudCompraId: this.solicitudCompraId,
@@ -312,8 +299,5 @@ export default class CuadroComparativoComponent implements OnInit, OnDestroy {
     this.mejorPrecioTotal2 = 0;
     this.mejorPrecioTotal3 = 0;
     this.totalMejorPrecioTotal = 0;
-  }
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
   }
 }

@@ -1,19 +1,16 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { SelectItem } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subject, takeUntil } from 'rxjs';
 import { ERecurrence } from 'src/app/core/enums/recurrence.enum';
 import { ETypeMaintance } from 'src/app/core/enums/type-maintance.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataService } from 'src/app/core/services/data.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
@@ -22,19 +19,15 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   standalone: true,
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
-export default class AddoreditMaintenancePreventiveComponent
-  implements OnInit, OnDestroy
-{
-  private customToastService = inject(CustomToastService);
+export default class AddoreditMaintenancePreventiveComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   formBuilder = inject(FormBuilder);
   authService = inject(AuthService);
   config = inject(DynamicDialogConfig);
-  public customerIdService = inject(CustomerIdService);
-  dataService = inject(DataService);
+  customerIdService = inject(CustomerIdService);
   ref = inject(DynamicDialogRef);
 
-  public Editor = ClassicEditor;
+  Editor = ClassicEditor;
 
   cb_machinery: ISelectItem[] = [];
   cb_providers: ISelectItem[] = [];
@@ -43,8 +36,6 @@ export default class AddoreditMaintenancePreventiveComponent
   cb_TypeMaintance: SelectItem[] = onGetSelectItemFromEnum(ETypeMaintance);
 
   submitting: boolean = false;
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   form: FormGroup;
   id: any = 0;
@@ -79,8 +70,8 @@ export default class AddoreditMaintenancePreventiveComponent
       .onGetSelectItem(
         `MachineriesGetAll/${this.customerIdService.getcustomerId()}`
       )
-      .then((resp: any) => {
-        this.cb_machinery = resp;
+      .then((response: any) => {
+        this.cb_machinery = response;
       });
     this.apiRequestService
       .onGetSelectItem('Providers')
@@ -96,23 +87,18 @@ export default class AddoreditMaintenancePreventiveComponent
 
   onGetMachinerySelectItem() {
     if (this.config.data.idMachinery !== 0) {
-      this.dataService
-        .get(
+      this.apiRequestService
+        .onGetList(
           `Machineries/GetMachinerySelectItem/${this.config.data.idMachinery}`
         )
-        .subscribe({
-          next: (resp: any) => {
-            this.form.patchValue({
-              machineryId: resp.body.value,
-              machineryName: resp.body.label,
-            });
-            this.form.patchValue({
-              typeMaintance: ETypeMaintance.Preventivo,
-            });
-          },
-          error: (error) => {
-            this.customToastService.onCloseToError(error);
-          },
+        .then((result: any) => {
+          this.form.patchValue({
+            machineryId: result.value,
+            machineryName: result.label,
+          });
+          this.form.patchValue({
+            typeMaintance: ETypeMaintance.Preventivo,
+          });
         });
     }
   }
@@ -163,41 +149,40 @@ export default class AddoreditMaintenancePreventiveComponent
     });
   }
   LoadCopy() {
-    this.dataService
-      .get(`MaintenanceCalendars/Get/${this.config.data.id}`)
-      .subscribe((resp: any) => {
+    this.apiRequestService
+      .onGetItem(`MaintenanceCalendars/Get/${this.config.data.id}`)
+      .then((result: any) => {
         this.id = 0;
-        this.onPathForm(resp);
+        this.onPathForm(result);
       });
   }
   onLoadData() {
-    this.dataService
-      .get(`MaintenanceCalendars/Get/${this.config.data.id}`)
-      .subscribe((resp: any) => {
-        this.id = resp.body.id;
-
-        this.onPathForm(resp);
+    this.apiRequestService
+      .onGetItem(`MaintenanceCalendars/Get/${this.config.data.id}`)
+      .then((result: any) => {
+        this.id = result.id;
+        this.onPathForm(result);
       });
   }
-  onPathForm(resp: any) {
-    this.form.patchValue(resp.body);
+  onPathForm(result: any) {
+    this.form.patchValue(result);
     this.form.patchValue({
-      machineryId: resp.body.machineryId.value,
+      machineryId: result.machineryId.value,
     });
     this.form.patchValue({
-      machineryName: resp.body.machineryId.label,
+      machineryName: result.machineryId.label,
     });
     this.form.patchValue({
-      providerId: resp.body.providerId.value,
+      providerId: result.providerId.value,
     });
     this.form.patchValue({
-      providerName: resp.body.providerId.label,
+      providerName: result.providerId.label,
     });
     this.form.patchValue({
-      cuentaId: resp.body.cuenta.value,
+      cuentaId: result.cuenta.value,
     });
     this.form.patchValue({
-      cuentaName: resp.body.cuenta.label,
+      cuentaName: result.cuenta.label,
     });
   }
   // convenience getter for easy access to form fields
@@ -205,42 +190,20 @@ export default class AddoreditMaintenancePreventiveComponent
   submit() {
     if (!this.apiRequestService.validateForm(this.form)) return;
 
-    // Deshabilitar el botón al iniciar el envío del formulario
     this.submitting = true;
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
+
     if (this.id === 0) {
-      this.dataService
-        .post(`MaintenanceCalendars`, this.form.value)
-        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-        .subscribe({
-          next: () => {
-            this.ref.close(true);
-            this.customToastService.onClose();
-          },
-          error: (error) => {
-            // Habilitar el botón nuevamente al finalizar el envío del formulario
-            this.submitting = false;
-            this.customToastService.onCloseToError(error);
-          },
+      this.apiRequestService
+        .onPost(`MaintenanceCalendars`, this.form.value)
+        .then((result: boolean) => {
+          result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.dataService
-        .put(`MaintenanceCalendars/${this.id}`, this.form.value)
-        .subscribe({
-          next: () => {
-            this.ref.close(true);
-            this.customToastService.onClose();
-          },
-          error: (error) => {
-            // Habilitar el botón nuevamente al finalizar el envío del formulario
-            this.submitting = false;
-            this.customToastService.onCloseToError(error);
-          },
+      this.apiRequestService
+        .onPut(`MaintenanceCalendars/${this.id}`, this.form.value)
+        .then((result: boolean) => {
+          result ? this.ref.close(true) : (this.submitting = false);
         });
     }
-  }
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
   }
 }

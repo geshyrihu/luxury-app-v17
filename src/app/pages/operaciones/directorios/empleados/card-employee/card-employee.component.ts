@@ -1,12 +1,9 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subject, takeUntil } from 'rxjs';
 import { IUserCard } from 'src/app/core/interfaces/user-card.interface';
 import PhoneFormatPipe from 'src/app/core/pipes/phone-format.pipe';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
-import { DataService } from 'src/app/core/services/data.service';
 import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-card-employee',
@@ -14,14 +11,10 @@ import { environment } from 'src/environments/environment';
   standalone: true,
   imports: [LuxuryAppComponentsModule, PhoneFormatPipe],
 })
-export default class CardEmployeeComponent implements OnInit, OnDestroy {
-  dataService = inject(DataService);
+export default class CardEmployeeComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);
-  customToastService = inject(CustomToastService);
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   urlImage: string = '';
   employeeId: number = 0;
@@ -33,20 +26,11 @@ export default class CardEmployeeComponent implements OnInit, OnDestroy {
   }
 
   onLoadData() {
-    this.dataService
-      .get<IUserCard>(`Auth/CardUser/${this.employeeId}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.user = resp.body;
-          this.urlImage = `${environment.base_urlImg}Administration/accounts/${this.user.photoPath}`;
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+    this.apiRequestService
+      .onGetItem(`Auth/CardUser/${this.employeeId}`)
+      .then((result: any) => {
+        this.user = result;
+        this.urlImage = `${environment.base_urlImg}Administration/accounts/${this.user.photoPath}`;
       });
-  }
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
   }
 }

@@ -24,9 +24,9 @@ import CustomBarChartComponent from 'src/app/shared/graficos/ng2-chart/custom-ba
 export default class ReportBitacoraAlbercaComponent implements OnInit {
   dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
-  public customerIdService = inject(CustomerIdService);
+  customerIdService = inject(CustomerIdService);
   customToastService = inject(CustomToastService);
-  public dateService = inject(DateService);
+  dateService = inject(DateService);
   public periodoMonthService = inject(PeriodoMonthService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente

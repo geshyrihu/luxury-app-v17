@@ -19,12 +19,12 @@ const base_urlImg = environment.base_urlImg + 'Administration/accounts/';
   imports: [LuxuryAppComponentsModule, ReporteTicketsComponent],
 })
 export default class ReporteTicketsComponent implements OnInit, OnDestroy {
-  private customerIdService = inject(CustomerIdService);
+  customerIdService = inject(CustomerIdService);
   dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
-  public dateService = inject(DateService);
-  public dialogService = inject(DialogService);
-  public messageService = inject(MessageService);
+  dateService = inject(DateService);
+  dialogService = inject(DialogService);
+  messageService = inject(MessageService);
   public periodoMonthService = inject(PeriodoMonthService);
   customToastService = inject(CustomToastService);
 

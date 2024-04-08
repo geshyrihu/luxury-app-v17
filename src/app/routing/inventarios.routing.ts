@@ -43,13 +43,7 @@ export default [
         'src/app/pages/operaciones/mantenimiento/mantenimiento-inventarios/activos/reporte-completo-activos/reporte-completo-activos.component'
       ),
   },
-  {
-    path: 'actas-entrega-equipos',
-    loadComponent: () =>
-      import(
-        'src/app/pages/operaciones/mantenimiento/mantenimiento-actas-entrega/actas-entrega-equipos.component'
-      ),
-  },
+
   {
     path: 'reporte-herramientas',
     loadComponent: () =>

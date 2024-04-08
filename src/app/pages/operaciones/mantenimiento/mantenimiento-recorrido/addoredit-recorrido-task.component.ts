@@ -17,7 +17,7 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 export default class RecorridoTaskAddOrEditComponent
   implements OnInit, OnDestroy
 {
-  private customToastService = inject(CustomToastService);
+  customToastService = inject(CustomToastService);
   apiRequestService = inject(ApiRequestService);
   formBuilder = inject(FormBuilder);
   config = inject(DynamicDialogConfig);
@@ -58,7 +58,7 @@ export default class RecorridoTaskAddOrEditComponent
   onSubmit() {
     if (!this.apiRequestService.validateForm(this.form)) return;
     this.id = this.config.data.id;
-    // Deshabilitar el botón al iniciar el envío del formulario
+
     this.submitting = true;
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();

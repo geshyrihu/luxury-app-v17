@@ -1,34 +1,23 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subject, takeUntil } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CatalogoGastosFijosService } from 'src/app/core/services/catalogo-gastos-fijos.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataService } from 'src/app/core/services/data.service';
 @Component({
   selector: 'app-form-gastos-fijos-presupuesto',
   templateUrl: './form-gastos-fijos-presupuesto.component.html',
   standalone: true,
   imports: [LuxuryAppComponentsModule],
 })
-export default class FormGastosFijosPresupuestoComponent
-  implements OnInit, OnDestroy
-{
-  customToastService = inject(CustomToastService);
-  dataService = inject(DataService);
+export default class FormGastosFijosPresupuestoComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   authService = inject(AuthService);
   ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);
-  public messageService = inject(MessageService);
-  public catalogoGastosFijosService = inject(CatalogoGastosFijosService);
-  public customerIdService = inject(CustomerIdService);
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+  catalogoGastosFijosService = inject(CatalogoGastosFijosService);
+  customerIdService = inject(CustomerIdService);
 
   data: any[] = [];
   presupuestoAgregados: any[] = [];
@@ -45,22 +34,11 @@ export default class FormGastosFijosPresupuestoComponent
   }
 
   onLoadPresupuesto() {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .get(
-        `OrdenCompraPresupuesto/GetAllForGastosFijos/${this.customerIdService.customerId}/${this.cedulaId}/${this.catalogoGastosFijosId}`
-      )
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.data = this.customToastService.onCloseOnGetData(resp.body);
-          this.onLoadPresupuestoAgregados();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
+    const urlApi = `OrdenCompraPresupuesto/GetAllForGastosFijos/${this.customerIdService.customerId}/${this.cedulaId}/${this.catalogoGastosFijosId}`;
+    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      this.data = result;
+      this.onLoadPresupuestoAgregados();
+    });
   }
 
   onSubmit(partidaPresupuestal: any) {
@@ -70,91 +48,48 @@ export default class FormGastosFijosPresupuestoComponent
       dineroUsado: partidaPresupuestal.dineroUsado,
       catalogoGastosFijosId: this.catalogoGastosFijosId,
     };
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .post(`CatalogoGastosFijosPresupuesto`, model)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          this.onLoadPresupuestoAgregados();
-          this.onLoadPresupuesto();
-          this.customToastService.onClose();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+
+    this.apiRequestService
+      .onPost(`CatalogoGastosFijosPresupuesto`, model)
+      .then((result: boolean) => {
+        this.onLoadPresupuestoAgregados();
+        this.onLoadPresupuesto();
       });
   }
 
   onLoadPresupuestoAgregados() {
-    this.dataService
-      .get(
-        `CatalogoGastosFijosPresupuesto/PresupuestoOrdenCompraFijos/${this.catalogoGastosFijosId}`
-      )
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.presupuestoAgregados = resp.body;
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
+    const urlApi = `CatalogoGastosFijosPresupuesto/PresupuestoOrdenCompraFijos/${this.catalogoGastosFijosId}`;
+
+    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      this.presupuestoAgregados = result;
+    });
   }
 
   deletePresupuestoAgregado(id: number) {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .delete(`CatalogoGastosFijosPresupuesto/${id}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          this.onLoadPresupuesto();
-          this.onLoadPresupuestoAgregados();
-          this.customToastService.onCloseToSuccess();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+    this.apiRequestService
+      .onDelete(`CatalogoGastosFijosPresupuesto/${id}`)
+      .then((result: boolean) => {
+        this.onLoadPresupuesto();
+        this.onLoadPresupuestoAgregados();
       });
   }
 
   onUpdatePresupuestoAgregado(item: any) {
-    this.dataService
-      .put(`CatalogoGastosFijosPresupuesto/${item.id}`, item)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.customToastService.onShowSuccess();
-          this.onLoadPresupuestoAgregados();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+    this.apiRequestService
+      .onPut(`CatalogoGastosFijosPresupuesto/${item.id}`, item)
+      .then((result: boolean) => {
+        console.log('🚀 ~ result:', result);
+        this.onLoadPresupuestoAgregados();
       });
   }
 
   onLoadCedulas() {
-    this.dataService
-      .get(
-        `CedulaPresupuestal/GetCedulas/${this.customerIdService.getcustomerId()}`
-      )
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          if (resp.body) {
-            this.cedulaId = resp.body[0].value;
-          }
-          this.cb_cedulas = resp.body;
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
-  }
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
+    const urlApi = `CedulaPresupuestal/GetCedulas/${this.customerIdService.getcustomerId()}`;
+    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      if (result) {
+        this.cedulaId = result[0].value;
+      }
+      this.cb_cedulas = result;
+    });
   }
 }

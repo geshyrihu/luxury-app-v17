@@ -17,10 +17,10 @@ import ResumenOrdenesServicioGraficoComponent from '../resumen-ordenes-servicio-
 export default class ResumenOrdenesServicioComponent
   implements OnInit, OnDestroy
 {
-  public customerIdService = inject(CustomerIdService);
+  customerIdService = inject(CustomerIdService);
   dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
-  public dateService = inject(DateService);
+  dateService = inject(DateService);
   public reporteOrdenesServicioService = inject(ReporteOrdenesServicioService);
   customToastService = inject(CustomToastService);
 

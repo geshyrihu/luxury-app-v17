@@ -24,10 +24,10 @@ import { FiltroCalendarService } from 'src/app/core/services/filtro-calendar.ser
 })
 export default class PresupuestoAddComponent implements OnInit {
   config = inject(DynamicDialogConfig);
-  public customerIdService = inject(CustomerIdService);
+  customerIdService = inject(CustomerIdService);
   apiRequestService = inject(ApiRequestService);
-  public dateService = inject(DateService);
-  public messageService = inject(MessageService);
+  dateService = inject(DateService);
+  messageService = inject(MessageService);
   public rangoCalendarioService = inject(FiltroCalendarService);
   ref = inject(DynamicDialogRef);
   authService = inject(AuthService);

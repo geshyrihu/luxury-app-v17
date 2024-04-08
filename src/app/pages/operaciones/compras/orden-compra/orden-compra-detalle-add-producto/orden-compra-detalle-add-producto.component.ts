@@ -1,17 +1,10 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { MessageService } from 'primeng/api';
-import {
-  DialogService,
-  DynamicDialogConfig,
-  DynamicDialogRef,
-} from 'primeng/dynamicdialog';
-import { Subject, takeUntil } from 'rxjs';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
-import { DataService } from 'src/app/core/services/data.service';
-import AddProductosAlmacenComponent from 'src/app/pages/operaciones/mantenimiento/mantenimiento-almacen/inventario-productos/add-productos-almacen.component';
+import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
+import AddOrEditProductosComponent from 'src/app/pages/configuracion/productos/addoredit-productos.component';
 
 import { environment } from 'src/environments/environment';
 
@@ -21,19 +14,13 @@ import { environment } from 'src/environments/environment';
   standalone: true,
   imports: [LuxuryAppComponentsModule],
 })
-export default class OrdenCompraDetalleAddProductoComponent
-  implements OnInit, OnDestroy
-{
-  customToastService = inject(CustomToastService);
-  dataService = inject(DataService);
+export default class OrdenCompraDetalleAddProductoComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
+  dialogHandlerService = inject(DialogHandlerService);
+
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
   authService = inject(AuthService);
-  public messageService = inject(MessageService);
-  public dialogService = inject(DialogService);
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   ordenCompraId: number = 0;
   data: any[] = [];
@@ -55,19 +42,10 @@ export default class OrdenCompraDetalleAddProductoComponent
   }
 
   onLoadProduct() {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .get(`OrdenCompraDetalle/AddProductoToOrder/${this.ordenCompraId}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.data = this.customToastService.onCloseOnGetData(resp.body);
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
+    var urlApi = `OrdenCompraDetalle/AddProductoToOrder/${this.ordenCompraId}`;
+    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      this.data = result;
+    });
   }
 
   onSubmit(item: any) {
@@ -78,36 +56,26 @@ export default class OrdenCompraDetalleAddProductoComponent
 
     item.applicationUserId =
       this.authService.userTokenDto.infoUserAuthDto.applicationUserId;
-    this.dataService
-      .post<any>(`OrdenCompraDetalle/`, item)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          this.customToastService.onShowSuccess();
-          this.mensajeError = false;
-          this.onLoadProduct();
-          this.ref.close(true);
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+
+    this.apiRequestService
+      .onPost(`OrdenCompraDetalle/`, item)
+      .then((result: boolean) => {
+        this.mensajeError = false;
+        this.onLoadProduct();
       });
   }
 
   // ... Llamada al Modal agregar o editar
   showModalAddOrEdit() {
     this.ref.close();
-    this.ref = this.dialogService.open(AddProductosAlmacenComponent, {
-      data: {
+
+    this.dialogHandlerService.openDialog(
+      AddOrEditProductosComponent,
+      {
         id: 0,
       },
-      header: 'Crear Producto',
-      styleClass: 'modal-md',
-      closeOnEscape: true,
-      baseZIndex: 10000,
-    });
-  }
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
+      'Crear Producto',
+      this.dialogHandlerService.dialogSizeMd
+    );
   }
 }

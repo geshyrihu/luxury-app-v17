@@ -33,11 +33,10 @@ export default class RecoveryPasswordComponent implements OnInit {
     if (!this.apiRequestService.validateForm(this.form)) return;
 
     this.errorMessage = '';
-    console.log(this.form.value);
+
     this.dataService.post(`auth/RecoverPassword`, this.form.value).subscribe(
       () => {
         // Manejar el éxito de la solicitud si es necesario
-        console.log('Solicitud exitosa');
         this.successMessage =
           'Revisa tu correo electrónico, y sigue las intrucciones para restablecer tu contraseña';
       },

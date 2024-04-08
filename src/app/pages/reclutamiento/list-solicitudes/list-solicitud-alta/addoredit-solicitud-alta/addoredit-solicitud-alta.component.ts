@@ -27,7 +27,7 @@ export default class AddOrEditSolicitudAltaComponent
   apiRequestService = inject(ApiRequestService);
   ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);
-  private customToastService = inject(CustomToastService);
+  customToastService = inject(CustomToastService);
 
   submitting: boolean = false;
   empleados: ISelectItem[] = [];
@@ -98,7 +98,6 @@ export default class AddOrEditSolicitudAltaComponent
     if (!this.apiRequestService.validateForm(this.form)) return;
 
     this.id = this.config.data.id;
-    // Deshabilitar el botón al iniciar el envío del formulario
 
     this.form.patchValue({
       requestPositionCandidateId: null,

@@ -23,11 +23,11 @@ import AddoreditSistemasReporteComponent from '../addoredit-sistemas-reporte/add
 export default class SistemasReporteComponent implements OnInit, OnDestroy {
   dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
-  public dateService = inject(DateService);
+  dateService = inject(DateService);
   customToastService = inject(CustomToastService);
   authService = inject(AuthService);
-  public dialogService = inject(DialogService);
-  public messageService = inject(MessageService);
+  dialogService = inject(DialogService);
+  messageService = inject(MessageService);
   public sistemasReporteService = inject(SistemasReporteService);
   private filtroCalendarService = inject(FiltroCalendarService);
 

@@ -14,7 +14,7 @@ import TarjetaProveedorComponent from 'src/app/pages/operaciones/directorios/pro
 })
 export default class ModalDatosServicioComponent implements OnInit {
   config = inject(DynamicDialogConfig);
-  public dialogService = inject(DialogService);
+  dialogService = inject(DialogService);
   data: any;
   proveedores: any;
   ref: DynamicDialogRef;

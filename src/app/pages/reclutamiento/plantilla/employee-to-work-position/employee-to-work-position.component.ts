@@ -18,10 +18,10 @@ export default class EmployeeToWorkPositionComponent
   implements OnInit, OnDestroy
 {
   config = inject(DynamicDialogConfig);
-  public customerIdService = inject(CustomerIdService);
+  customerIdService = inject(CustomerIdService);
   dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
-  public dateService = inject(DateService);
+  dateService = inject(DateService);
   ref = inject(DynamicDialogRef);
 
   customToastService = inject(CustomToastService);

@@ -19,8 +19,8 @@ export default class MinutasResumenComponent implements OnInit, OnDestroy {
   customToastService = inject(CustomToastService);
   dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
-  public dateService = inject(DateService);
-  public dialogService = inject(DialogService);
+  dateService = inject(DateService);
+  dialogService = inject(DialogService);
   public periodoMonthService = inject(PeriodoMonthService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente

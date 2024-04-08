@@ -26,9 +26,9 @@ import MultiAxisChartComponent from 'src/app/shared/graficos/primeng-chart/multi
 export default class ReportConsumosComponent implements OnInit, OnDestroy {
   dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
-  public customerIdService = inject(CustomerIdService);
+  customerIdService = inject(CustomerIdService);
   customToastService = inject(CustomToastService);
-  public dateService = inject(DateService);
+  dateService = inject(DateService);
   public periodoMonthService = inject(PeriodoMonthService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente

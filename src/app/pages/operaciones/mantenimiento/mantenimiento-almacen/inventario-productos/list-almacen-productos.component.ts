@@ -1,13 +1,11 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { MessageService } from 'primeng/api';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { Observable } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataService } from 'src/app/core/services/data.service';
+import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import { environment } from 'src/environments/environment';
 import TarjetaProductoComponent from '../../mantenimiento-catalogos/tarjeta-producto/tarjeta-producto.component';
 import AddOrEditEntradasComponent from '../entradas/addoredit-entradas.component';
@@ -23,18 +21,11 @@ const urlImgBase = environment.base_urlImg;
   standalone: true,
   imports: [LuxuryAppComponentsModule],
 })
-export default class ListAlmacenProductosComponent
-  implements OnInit, OnDestroy
-{
-  private customerIdService = inject(CustomerIdService);
-  dataService = inject(DataService);
+export default class ListAlmacenProductosComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
+  dialogHandlerService = inject(DialogHandlerService);
+  customerIdService = inject(CustomerIdService);
   authService = inject(AuthService);
-  public dialogService = inject(DialogService);
-  public messageService = inject(MessageService);
-  customToastService = inject(CustomToastService);
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   data: any[] = [];
   ref: DynamicDialogRef;
@@ -75,22 +66,12 @@ export default class ListAlmacenProductosComponent
   }
 
   onLoadData() {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .get(
-        'InventarioProducto/GetAsyncAll/' + this.customerIdService.customerId
-      )
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.data = this.customToastService.onCloseOnGetData(resp.body);
-          this.updateRowGroupMetaData();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
+    const urlApi =
+      'InventarioProducto/GetAsyncAll/' + this.customerIdService.customerId;
+    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      this.data = result;
+      this.updateRowGroupMetaData();
+    });
   }
 
   onDelete(id: number) {
@@ -102,94 +83,78 @@ export default class ListAlmacenProductosComponent
   }
 
   editProductos(data: any) {
-    this.ref = this.dialogService.open(EditProductosAlmacenComponent, {
-      data: {
-        id: data.id,
-        idProducto: data.idProducto,
-      },
-      header: data.title,
-      styleClass: 'modal-md',
-      closeOnEscape: true,
-      baseZIndex: 10000,
-    });
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        this.customToastService.onShowSuccess();
-        this.onLoadData();
-      }
-    });
+    this.dialogHandlerService
+      .openDialog(
+        EditProductosAlmacenComponent,
+        {
+          id: data.id,
+          idProducto: data.idProducto,
+        },
+        data.title,
+        this.dialogHandlerService.dialogSizeMd
+      )
+      .then((result: boolean) => {
+        if (result) this.onLoadData();
+      });
   }
   addProductos(data: any) {
-    this.ref = this.dialogService.open(AddProductosAlmacenComponent, {
-      data: {
-        id: data.id,
-        idProducto: data.idProducto,
-      },
-      header: data.title,
-      height: 'auto',
-      closeOnEscape: true,
-      baseZIndex: 10000,
-    });
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        this.customToastService.onShowSuccess();
-        this.onLoadData();
-      }
-    });
+    this.dialogHandlerService
+      .openDialog(
+        AddProductosAlmacenComponent,
+        {
+          id: data.id,
+          idProducto: data.idProducto,
+        },
+        data.title,
+        this.dialogHandlerService.dialogSizeMd
+      )
+      .then((result: boolean) => {
+        if (result) this.onLoadData();
+      });
   }
 
   onAddEntrada(data: any) {
-    this.ref = this.dialogService.open(AddOrEditEntradasComponent, {
-      data: {
-        id: 0,
-        idProducto: data.idProducto,
-        nombreProducto: data.nombreProducto,
-      },
-      header: 'Entrada de Productos',
-      styleClass: 'modal-md',
-      closeOnEscape: true,
-      baseZIndex: 10000,
-    });
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        this.customToastService.onShowSuccess();
-        this.onLoadData();
-      }
-    });
+    this.dialogHandlerService
+      .openDialog(
+        AddOrEditEntradasComponent,
+        {
+          id: 0,
+          idProducto: data.idProducto,
+          nombreProducto: data.nombreProducto,
+        },
+        'Entrada de Productos',
+        this.dialogHandlerService.dialogSizeMd
+      )
+      .then((result: boolean) => {
+        if (result) this.onLoadData();
+      });
   }
   onAddSalida(data: any) {
-    this.ref = this.dialogService.open(CrudSalidasComponent, {
-      data: {
-        id: data.id,
-        idInventarioProducto: data.idInventarioProducto,
-        idProducto: data.idProducto,
-        nombreProducto: data.nombreProducto,
-      },
-      header: 'Salida de Productos',
-      styleClass: 'modal-md',
-      closeOnEscape: true,
-      baseZIndex: 10000,
-    });
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        this.customToastService.onShowSuccess();
-        this.onLoadData();
-      }
-    });
+    this.dialogHandlerService
+      .openDialog(
+        CrudSalidasComponent,
+        {
+          id: data.id,
+          idInventarioProducto: data.idInventarioProducto,
+          idProducto: data.idProducto,
+          nombreProducto: data.nombreProducto,
+        },
+        'Salida de Productos',
+        this.dialogHandlerService.dialogSizeMd
+      )
+      .then((result: boolean) => {
+        if (result) this.onLoadData();
+      });
   }
 
   onModalTarjetaProducto(productoId: number): void {
-    this.ref = this.dialogService.open(TarjetaProductoComponent, {
-      data: {
+    this.dialogHandlerService.openDialog(
+      TarjetaProductoComponent,
+      {
         productoId: productoId,
       },
-      header: 'Tarjeta de Producto',
-      width: '1000px',
-      closeOnEscape: true,
-      baseZIndex: 10000,
-    });
-  }
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
+      'Tarjeta de Producto',
+      this.dialogHandlerService.dialogSizeLg
+    );
   }
 }

@@ -19,12 +19,12 @@ import { environment } from 'src/environments/environment';
 })
 export default class PendingReportComponent implements OnInit, OnDestroy {
   authService = inject(AuthService);
-  public customerIdService = inject(CustomerIdService);
+  customerIdService = inject(CustomerIdService);
   dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
   public filterReportOperationService = inject(TicketFilterService);
   public reportService = inject(ReportService);
-  public router = inject(Router);
+  router = inject(Router);
   customToastService = inject(CustomToastService);
   urlImg = '';
   data: any[] = [];

@@ -29,15 +29,15 @@ export default class AddOrEditRadioComunicacionComponent implements OnInit {
     this.id = this.config.data.id;
     if (this.id !== 0) this.onLoadData();
   }
-  public dateService = inject(DateService);
+  dateService = inject(DateService);
   formBuilder = inject(FormBuilder);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
   authService = inject(AuthService);
   dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
-  public customerIdService = inject(CustomerIdService);
-  private customToastService = inject(CustomToastService);
+  customerIdService = inject(CustomerIdService);
+  customToastService = inject(CustomToastService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
@@ -83,7 +83,7 @@ export default class AddOrEditRadioComunicacionComponent implements OnInit {
   onSubmit() {
     if (!this.apiRequestService.validateForm(this.form)) return;
     const formData = this.createFormData(this.form.value);
-    // Deshabilitar el botón al iniciar el envío del formulario
+
     this.submitting = true;
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();

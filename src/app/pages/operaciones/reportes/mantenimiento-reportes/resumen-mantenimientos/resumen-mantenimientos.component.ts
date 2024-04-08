@@ -18,9 +18,9 @@ export default class ResumenMantenimientosComponent
   implements OnInit, OnDestroy
 {
   dataService = inject(DataService);
-  public customerIdService = inject(CustomerIdService);
+  customerIdService = inject(CustomerIdService);
   customToastService = inject(CustomToastService);
-  public dateService = inject(DateService);
+  dateService = inject(DateService);
   public periodoMonthService = inject(PeriodoMonthService);
 
   data: any;

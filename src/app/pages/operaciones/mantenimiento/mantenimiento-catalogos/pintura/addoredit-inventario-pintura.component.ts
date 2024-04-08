@@ -24,8 +24,8 @@ export default class AddoreditInventarioPinturaComponent
   apiRequestService = inject(ApiRequestService);
   ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);
-  public customerIdService = inject(CustomerIdService);
-  private customToastService = inject(CustomToastService);
+  customerIdService = inject(CustomerIdService);
+  customToastService = inject(CustomToastService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
@@ -86,7 +86,7 @@ export default class AddoreditInventarioPinturaComponent
     let model = this.form.value;
     if (!this.apiRequestService.validateForm(this.form)) return;
     this.id = this.config.data.id;
-    // Deshabilitar el botón al iniciar el envío del formulario
+
     this.submitting = true;
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();

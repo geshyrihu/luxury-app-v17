@@ -21,7 +21,7 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   imports: [LuxuryAppComponentsModule, CustomInputModule, FlatpickrModule],
 })
 export default class LegalTicketAddComponent implements OnInit {
-  private customerIdService = inject(CustomerIdService);
+  customerIdService = inject(CustomerIdService);
   formBuilder = inject(FormBuilder);
   private signalrCustomService = inject(SignalrCustomService);
   apiRequestService = inject(ApiRequestService);

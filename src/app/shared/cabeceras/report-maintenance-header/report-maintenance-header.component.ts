@@ -19,7 +19,7 @@ export default class ReportMaintenanceHeaderComponent
 {
   dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
-  public customerIdService = inject(CustomerIdService);
+  customerIdService = inject(CustomerIdService);
   public filterReportOperationService = inject(TicketFilterService);
   customToastService = inject(CustomToastService);
 

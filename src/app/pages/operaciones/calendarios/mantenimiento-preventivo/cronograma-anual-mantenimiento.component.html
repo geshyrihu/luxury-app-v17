@@ -85,13 +85,14 @@
         @for (item of meses; track item) {
         <td class="text-center">
           @for (servicio of customer.maintenanceCalendars; track servicio) {
-          <div>
+          <div class="mb-1">
             @if (item == servicio.month) {
             <span
               (click)="onModalItem(servicio.id)"
-              class="fa-regular fa-circle text-secondary pointer"
+              class="fa-duotone fa-rectangle-wide fa-2xl text-success pointer"
             ></span>
             }
+            <!-- <i class=""></i> -->
           </div>
           }
         </td>

@@ -1,15 +1,11 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import * as FileSaver from 'file-saver';
-import { MessageService } from 'primeng/api';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subject, takeUntil } from 'rxjs';
-import { IMedidorLectura } from 'src/app/core/interfaces/medidor-lectura.interface';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
-import { DataService } from 'src/app/core/services/data.service';
+import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import AdminFormMedidorLecturaComponent from '../admin-form-medidor-lectura/admin-form-medidor-lectura.component';
 import FormMedidorLecturaComponent from '../form-medidor-lectura/form-medidor-lectura.component';
 @Component({
@@ -18,19 +14,14 @@ import FormMedidorLecturaComponent from '../form-medidor-lectura/form-medidor-le
   standalone: true,
   imports: [LuxuryAppComponentsModule],
 })
-export default class ListMedidorLecturaComponent implements OnInit, OnDestroy {
-  authService = inject(AuthService);
-  customToastService = inject(CustomToastService);
-  dataService = inject(DataService);
+export default class ListMedidorLecturaComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  public dialogService = inject(DialogService);
-  public messageService = inject(MessageService);
-  public route = inject(ActivatedRoute);
+  dialogHandlerService = inject(DialogHandlerService);
+  authService = inject(AuthService);
+  route = inject(ActivatedRoute);
 
   data: any[] = [];
   ref: DynamicDialogRef;
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   medidorId: number = 0;
   constructor() {
@@ -42,19 +33,10 @@ export default class ListMedidorLecturaComponent implements OnInit, OnDestroy {
   }
 
   onLoadData() {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .get<IMedidorLectura[]>(`MedidorLectura/GetAll/${this.medidorId}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.data = this.customToastService.onCloseOnGetData(resp.body);
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
+    const urlApi = `MedidorLectura/GetAll/${this.medidorId}`;
+    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      this.data = result;
+    });
   }
 
   exportExcel() {
@@ -86,41 +68,35 @@ export default class ListMedidorLecturaComponent implements OnInit, OnDestroy {
   }
 
   modalAddEdit(data: any) {
-    this.ref = this.dialogService.open(AdminFormMedidorLecturaComponent, {
-      data: {
-        id: data.id,
-        medidorId: this.medidorId,
-      },
-      header: data.title,
-      styleClass: 'modal-md',
-      closeOnEscape: true,
-      baseZIndex: 10000,
-    });
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        this.customToastService.onShowSuccess();
-        this.onLoadData();
-      }
-    });
+    this.dialogHandlerService
+      .openDialog(
+        AdminFormMedidorLecturaComponent,
+        {
+          id: data.id,
+          medidorId: this.medidorId,
+        },
+        data.title,
+        this.dialogHandlerService.dialogSizeMd
+      )
+      .then((result: boolean) => {
+        if (result) this.onLoadData();
+      });
   }
 
   modalMedidorLecturaAddEdit(data: any) {
-    this.ref = this.dialogService.open(FormMedidorLecturaComponent, {
-      data: {
-        medidorId: data.id,
-        id: 0,
-      },
-      header: data.title,
-      styleClass: 'modal-md',
-      closeOnEscape: true,
-      baseZIndex: 10000,
-    });
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        this.customToastService.onShowSuccess();
-        this.onLoadData();
-      }
-    });
+    this.dialogHandlerService
+      .openDialog(
+        FormMedidorLecturaComponent,
+        {
+          medidorId: data.id,
+          id: 0,
+        },
+        data.title,
+        this.dialogHandlerService.dialogSizeMd
+      )
+      .then((result: boolean) => {
+        if (result) this.onLoadData();
+      });
   }
 
   meses = [
@@ -136,7 +112,4 @@ export default class ListMedidorLecturaComponent implements OnInit, OnDestroy {
     'Octubre',
   ];
   numeros = [65, 59, 80, 81, 56, 55, 40, 36, 95, 85];
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
-  }
 }

@@ -1,15 +1,11 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { MessageService } from 'primeng/api';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Observable, Subject, takeUntil } from 'rxjs';
-import { IFechasFiltro } from 'src/app/core/interfaces/fechas-filtro.interface';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { Observable } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataService } from 'src/app/core/services/data.service';
-import { FiltroCalendarService } from 'src/app/core/services/filtro-calendar.service';
+import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import DashboardMinutasResumenComponent from '../dashboard-minutas-resumen/dashboard-minutas-resumen.component';
 
 @Component({
@@ -18,53 +14,28 @@ import DashboardMinutasResumenComponent from '../dashboard-minutas-resumen/dashb
   standalone: true,
   imports: [LuxuryAppComponentsModule],
 })
-export default class DashboardMinutasComponent implements OnInit, OnDestroy {
-  customToastService = inject(CustomToastService);
-  authService = inject(AuthService);
-  dataService = inject(DataService);
+export default class DashboardMinutasComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  public dialogService = inject(DialogService);
-  public messageService = inject(MessageService);
-  public rangoCalendarioService = inject(FiltroCalendarService);
-  private customerIdService = inject(CustomerIdService);
+  dialogHandlerService = inject(DialogHandlerService);
+  authService = inject(AuthService);
+  customerIdService = inject(CustomerIdService);
 
   customerId$: Observable<number> = this.customerIdService.getCustomerId$();
   data: any = [];
   ref: DynamicDialogRef;
 
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
-
-  constructor() {
-    this.customerId$ = this.customerIdService.getCustomerId$();
-    this.onLoadData();
-  }
-
   ngOnInit(): void {
+    this.onLoadData(this.customerIdService.getcustomerId());
     this.customerId$.subscribe((resp) => {
-      this.onLoadData();
-    });
-    this.onLoadData();
-    this.rangoCalendarioService.fechas$.subscribe((resp: IFechasFiltro) => {
-      this.onLoadData();
+      this.onLoadData(this.customerIdService.getcustomerId());
     });
   }
 
-  onLoadData() {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .get(
-        `Dashboard/MinutasPendientes/${this.customerIdService.getcustomerId()}`
-      )
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.data = this.customToastService.onCloseOnGetData(resp.body);
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
+  onLoadData(customerId: number) {
+    const urlApi = `Dashboard/MinutasPendientes/${customerId}`;
+    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      this.data = result;
+    });
   }
 
   onModalAddOrEditMinutaDetalle(eAreaMinutasDetalles: number) {
@@ -79,24 +50,14 @@ export default class DashboardMinutasComponent implements OnInit, OnDestroy {
     if (eAreaMinutasDetalles == 2) {
       titulo = 'Legal';
     }
-    this.ref = this.dialogService.open(DashboardMinutasResumenComponent, {
-      data: {
+
+    this.dialogHandlerService.openDialog(
+      DashboardMinutasResumenComponent,
+      {
         eAreaMinutasDetalles,
       },
-      header: 'Pendientes ' + titulo,
-      width: '100%',
-      height: '100%',
-      closeOnEscape: true,
-      autoZIndex: true,
-    });
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        this.customToastService.onShowSuccess();
-        this.onLoadData();
-      }
-    });
-  }
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
+      'Pendientes ' + titulo,
+      this.dialogHandlerService.dialogSizeFull
+    );
   }
 }

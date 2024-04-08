@@ -21,9 +21,9 @@ export default class ListPresupuestoComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
   authService = inject(AuthService);
-  public customerIdService = inject(CustomerIdService);
+  customerIdService = inject(CustomerIdService);
   customToastService = inject(CustomToastService);
-  public router = inject(Router);
+  router = inject(Router);
 
   data: any[] = [];
   ref: DynamicDialogRef;

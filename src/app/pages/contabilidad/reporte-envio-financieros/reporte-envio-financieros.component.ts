@@ -14,7 +14,7 @@ import { PeriodoMonthService } from 'src/app/core/services/periodo-month.service
 export default class ReporteEnvioFinancierosComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   public periodoMonthService = inject(PeriodoMonthService);
-  public dateService = inject(DateService);
+  dateService = inject(DateService);
 
   // Declaración e inicialización de variables
   data: any[] = [];

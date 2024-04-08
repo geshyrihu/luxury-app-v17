@@ -1,12 +1,10 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataService } from 'src/app/core/services/data.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
@@ -15,17 +13,13 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   standalone: true,
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
-export default class FormControlPrestamoHerramientaComponent
-  implements OnInit, OnDestroy
-{
-  formBuilder = inject(FormBuilder);
-  dataService = inject(DataService);
+export default class FormControlPrestamoHerramientaComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
+  formBuilder = inject(FormBuilder);
   ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);
   authService = inject(AuthService);
-  public customerIdService = inject(CustomerIdService);
-  private customToastService = inject(CustomToastService);
+  customerIdService = inject(CustomerIdService);
 
   submitting: boolean = false;
 
@@ -83,64 +77,40 @@ export default class FormControlPrestamoHerramientaComponent
     return this.form.controls;
   }
   onLoadData() {
-    this.dataService
-      .get(`ControlPrestamoHerramientas/${this.id}`)
-      .subscribe((resp: any) => {
-        this.form.patchValue(resp.body);
-        this.form.patchValue({
-          employee: resp.body.employee,
-        });
-        this.form.patchValue({
-          employeeId: resp.body.employeeId,
-        });
-        this.form.patchValue({
-          tool: resp.body.tool,
-        });
-        this.form.patchValue({
-          toolId: resp.body.toolId,
-        });
+    const urlApi = `banks/${this.id}`;
+    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+      this.form.patchValue(result);
+      this.form.patchValue({
+        employee: result.employee,
       });
+      this.form.patchValue({
+        employeeId: result.employeeId,
+      });
+      this.form.patchValue({
+        tool: result.tool,
+      });
+      this.form.patchValue({
+        toolId: result.toolId,
+      });
+    });
   }
   onSubmit() {
     if (!this.apiRequestService.validateForm(this.form)) return;
-    this.id = this.config.data.id;
 
-    // Deshabilitar el botón al iniciar el envío del formulario
     this.submitting = true;
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
+
     if (this.id === 0) {
-      this.dataService
-        .post(`ControlPrestamoHerramientas`, this.form.value)
-        .subscribe({
-          next: () => {
-            this.ref.close(true);
-            this.customToastService.onClose();
-          },
-          error: (error) => {
-            // Habilitar el botón nuevamente al finalizar el envío del formulario
-            this.submitting = false;
-            this.customToastService.onCloseToError(error);
-          },
+      this.apiRequestService
+        .onPost(`ControlPrestamoHerramientas`, this.form.value)
+        .then((result: boolean) => {
+          result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.dataService
-        .put(`ControlPrestamoHerramientas/${this.id}`, this.form.value)
-        .subscribe({
-          next: () => {
-            this.ref.close(true);
-            this.customToastService.onClose();
-          },
-          error: (error) => {
-            // Habilitar el botón nuevamente al finalizar el envío del formulario
-            this.submitting = false;
-            this.customToastService.onCloseToError(error);
-          },
+      this.apiRequestService
+        .onPut(`ControlPrestamoHerramientas/${this.id}`, this.form.value)
+        .then((result: boolean) => {
+          result ? this.ref.close(true) : (this.submitting = false);
         });
     }
-  }
-
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
   }
 }

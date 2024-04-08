@@ -1,14 +1,13 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { Observable } from 'rxjs';
 import { IEmployee } from 'src/app/core/interfaces/employee.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataService } from 'src/app/core/services/data.service';
+import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import { environment } from 'src/environments/environment';
 import AddAccountCustomerComponent from '../add-account-to-customer/add-account-customer.component';
 import CardEmployeeComponent from '../card-employee/card-employee.component';
@@ -21,16 +20,12 @@ const base_urlImg = environment.base_urlImg + 'Administration/accounts/';
   standalone: true,
   imports: [LuxuryAppComponentsModule],
 })
-export default class ListEmployeeComponent implements OnInit, OnDestroy {
-  private customerIdService = inject(CustomerIdService);
-  dataService = inject(DataService);
+export default class ListEmployeeComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  private dialogService = inject(DialogService);
-  private rutaActiva = inject(ActivatedRoute);
+  dialogHandlerService = inject(DialogHandlerService);
+  customerIdService = inject(CustomerIdService);
+  rutaActiva = inject(ActivatedRoute);
   authService = inject(AuthService);
-  customToastService = inject(CustomToastService);
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   activo: boolean = true;
   data: IEmployee[] = [];
@@ -61,21 +56,11 @@ export default class ListEmployeeComponent implements OnInit, OnDestroy {
   }
 
   onLoadData() {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .get<IEmployee[]>(
-        `employees/list/${this.customerIdService.customerId}/${this.activo}/${this.tipoContrato}`
-      )
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.data = this.customToastService.onCloseOnGetData(resp.body);
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
+    const urlApi = `employees/list/${this.customerIdService.customerId}/${this.activo}/${this.tipoContrato}`;
+
+    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      this.data = result;
+    });
   }
 
   onModalEmpleadoOpciones(
@@ -84,50 +69,43 @@ export default class ListEmployeeComponent implements OnInit, OnDestroy {
     employeeId: number,
     active: boolean
   ) {
-    this.ref = this.dialogService.open(ListEmpleadosOpcionesComponent, {
-      data: {
-        applicationUserId,
-        personId,
-        employeeId,
-        active,
-      },
-      header: 'Opciones',
-      baseZIndex: 10000,
-      closeOnEscape: true,
-      styleClass: 'modal-lg',
-    });
-    this.ref.onClose.subscribe(() => {
-      this.onLoadData();
-    });
+    this.dialogHandlerService
+      .openDialog(
+        ListEmpleadosOpcionesComponent,
+        {
+          applicationUserId,
+          personId,
+          employeeId,
+          active,
+        },
+        'Opciones',
+        this.dialogHandlerService.dialogSizeMd
+      )
+      .then((result: boolean) => {
+        if (result) this.onLoadData();
+      });
   }
   showModalAddAccount() {
-    this.ref = this.dialogService.open(AddAccountCustomerComponent, {
-      data: {},
-      header: 'Agregar cuenta de usuario',
-      styleClass: 'modal-lg',
-      baseZIndex: 10000,
-      closeOnEscape: true,
-    });
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        this.customToastService.onShowSuccess();
-        this.onLoadData();
-      }
-    });
+    this.dialogHandlerService
+      .openDialog(
+        AddAccountCustomerComponent,
+        {},
+        'Agregar cuenta de usuario',
+        this.dialogHandlerService.dialogSizeMd
+      )
+      .then((result: boolean) => {
+        if (result) this.onLoadData();
+      });
   }
 
   onCardEmployee(employeeId: number) {
-    this.ref = this.dialogService.open(CardEmployeeComponent, {
-      data: {
+    this.dialogHandlerService.openDialog(
+      CardEmployeeComponent,
+      {
         employeeId,
       },
-      header: 'Colaborador',
-      styleClass: 'modal-sm',
-      closeOnEscape: true,
-      baseZIndex: 10000,
-    });
-  }
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
+      'Colaborador',
+      this.dialogHandlerService.dialogSizeSm
+    );
   }
 }

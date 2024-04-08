@@ -22,8 +22,8 @@ export default class PresentacionesJuntasComiteComponent
   apiRequestService = inject(ApiRequestService);
   private rangoCalendarioService = inject(FiltroCalendarService);
   private route = inject(Router);
-  public dateService = inject(DateService);
-  public messageService = inject(MessageService);
+  dateService = inject(DateService);
+  messageService = inject(MessageService);
   customToastService = inject(CustomToastService);
 
   data: any[] = [];

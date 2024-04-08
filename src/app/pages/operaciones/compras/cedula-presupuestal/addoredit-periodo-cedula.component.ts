@@ -1,17 +1,9 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { MessageService } from 'primeng/api';
-import {
-  DialogService,
-  DynamicDialogConfig,
-  DynamicDialogRef,
-} from 'primeng/dynamicdialog';
-import { Subject, takeUntil } from 'rxjs';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
-import { DataService } from 'src/app/core/services/data.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
@@ -21,19 +13,13 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class AddoreditPeriodoCedulaPresupuestalComponent
-  implements OnInit, OnDestroy
+  implements OnInit
 {
+  apiRequestService = inject(ApiRequestService);
   authService = inject(AuthService);
   config = inject(DynamicDialogConfig);
-  dataService = inject(DataService);
-  apiRequestService = inject(ApiRequestService);
-  public dialogService = inject(DialogService);
   formBuilder = inject(FormBuilder);
-  public messageService = inject(MessageService);
-  customToastService = inject(CustomToastService);
   ref = inject(DynamicDialogRef);
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   submitting: boolean = false;
 
@@ -52,52 +38,26 @@ export default class AddoreditPeriodoCedulaPresupuestalComponent
     this.onLoadItem();
   }
   onLoadItem() {
-    this.dataService
-      .get<any>(`CedulaPresupuestal/GetCedulaPresuppuestal/${this.id}`)
-      .subscribe((resp: any) => {
-        this.form.patchValue(resp.body);
-      });
+    const url = `CedulaPresupuestal/GetCedulaPresuppuestal/${this.id}`;
+    this.apiRequestService.onGetItem(url).then((result: any) => {
+      this.form.patchValue(result);
+    });
   }
   onSubmit() {
-    const cedulaDto: any = this.form.value;
     if (!this.apiRequestService.validateForm(this.form)) return;
 
-    // Deshabilitar el botón al iniciar el envío del formulario
-    this.submitting = true;
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
     if (this.id === 0) {
-      this.dataService
-        .post(`CedulaPresupuestal`, cedulaDto)
-        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-        .subscribe({
-          next: () => {
-            this.customToastService.onClose();
-            this.ref.close(true);
-          },
-          error: (error) => {
-            // Habilitar el botón nuevamente al finalizar el envío del formulario
-            this.submitting = false;
-            this.customToastService.onCloseToError(error);
-          },
+      this.apiRequestService
+        .onPost(`CedulaPresupuestal`, this.form.value)
+        .then((result: boolean) => {
+          result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.dataService
-        .put(`CedulaPresupuestal/Actualizar/${this.id}`, cedulaDto)
-        .subscribe({
-          next: () => {
-            this.customToastService.onClose();
-            this.ref.close(true);
-          },
-          error: (error) => {
-            // Habilitar el botón nuevamente al finalizar el envío del formulario
-            this.submitting = false;
-            this.customToastService.onCloseToError(error);
-          },
+      this.apiRequestService
+        .onPut(`CedulaPresupuestal/Actualizar/${this.id}`, this.form.value)
+        .then((result: boolean) => {
+          result ? this.ref.close(true) : (this.submitting = false);
         });
     }
-  }
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
   }
 }

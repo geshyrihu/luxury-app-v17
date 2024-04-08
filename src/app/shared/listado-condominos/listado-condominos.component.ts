@@ -21,7 +21,7 @@ import TableHeaderComponent from '../table-header/table-header.component';
   ],
 })
 export default class ListadoCondominosComponent implements OnInit {
-  public customerIdService = inject(CustomerIdService);
+  customerIdService = inject(CustomerIdService);
   apiRequestService = inject(ApiRequestService);
 
   ref = inject(DynamicDialogRef);

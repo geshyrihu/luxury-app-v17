@@ -30,12 +30,12 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   providers: [DatePipe],
 })
 export default class AddoreditPersonDataComponent implements OnInit, OnDestroy {
-  private customToastService = inject(CustomToastService);
+  customToastService = inject(CustomToastService);
   apiRequestService = inject(ApiRequestService);
   formBuilder = inject(FormBuilder);
   authService = inject(AuthService);
   config = inject(DynamicDialogConfig);
-  public customerIdService = inject(CustomerIdService);
+  customerIdService = inject(CustomerIdService);
   dataService = inject(DataService);
   public datepipe = inject(DatePipe);
   ref = inject(DynamicDialogRef);

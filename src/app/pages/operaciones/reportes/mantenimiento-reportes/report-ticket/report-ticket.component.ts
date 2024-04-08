@@ -26,9 +26,9 @@ const base_urlImg = environment.base_urlImg;
 export default class ReportTicketComponent implements OnInit, OnDestroy {
   dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
-  public customerIdService = inject(CustomerIdService);
+  customerIdService = inject(CustomerIdService);
   customToastService = inject(CustomToastService);
-  public dateService = inject(DateService);
+  dateService = inject(DateService);
   public periodoMonthService = inject(PeriodoMonthService);
 
   data: any;

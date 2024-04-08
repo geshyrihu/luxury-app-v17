@@ -21,8 +21,8 @@ export default class ContListMinutaPendientesComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
   authService = inject(AuthService);
-  public dialogService = inject(DialogService);
-  public messageService = inject(MessageService);
+  dialogService = inject(DialogService);
+  messageService = inject(MessageService);
 
   data: any[] = [];
   ref: DynamicDialogRef;

@@ -1,39 +1,27 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import {
-  DialogService,
-  DynamicDialogConfig,
-  DynamicDialogRef,
-} from 'primeng/dynamicdialog';
-import { Subject, takeUntil } from 'rxjs';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { IFechasFiltro } from 'src/app/core/interfaces/fechas-filtro.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
-import { DataService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
+import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import { FiltroCalendarService } from 'src/app/core/services/filtro-calendar.service';
 import CardEmployeeComponent from 'src/app/pages/operaciones/directorios/empleados/card-employee/card-employee.component';
 
-const date = new Date();
-const mesActual = date.getMonth();
-const mesAnterior = new Date(date.getFullYear(), mesActual - 1, 1);
 @Component({
   selector: 'app-bitacora-individual',
   templateUrl: './bitacora-individual.component.html',
   standalone: true,
   imports: [LuxuryAppComponentsModule],
 })
-export default class BitacoraIndividualComponent implements OnInit, OnDestroy {
-  public dateService = inject(DateService);
-  public rangoCalendarioService = inject(FiltroCalendarService);
-  public dialogService = inject(DialogService);
-  dataService = inject(DataService);
+export default class BitacoraIndividualComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
+  dialogHandlerService = inject(DialogHandlerService);
+
+  dateService = inject(DateService);
+  rangoCalendarioService = inject(FiltroCalendarService);
   ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);
-  customToastService = inject(CustomToastService);
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   machineryId: number;
   nameMachinery: string = '';
@@ -66,35 +54,24 @@ export default class BitacoraIndividualComponent implements OnInit, OnDestroy {
     this.onLoadData();
   }
   onCardEmployee(employeeId: number) {
-    this.ref = this.dialogService.open(CardEmployeeComponent, {
-      data: {
-        employeeId,
-      },
-      header: 'Tarjeta de Usuario',
-      styleClass: 'modal-sm',
-      closeOnEscape: true,
-      baseZIndex: 10000,
-    });
+    this.dialogHandlerService
+      .openDialog(
+        CardEmployeeComponent,
+        {
+          employeeId,
+        },
+        'Tarjeta de Usuario',
+        this.dialogHandlerService.dialogSizeMd
+      )
+      .then((result: boolean) => {
+        if (result) this.onLoadData();
+      });
   }
 
   onLoadData() {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .get(
-        `BitacoraMantenimiento/BitacoraIndividual/${this.machineryId}/${this.fechaInicial}/${this.fechaFinal}`
-      )
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.data = this.customToastService.onCloseOnGetData(resp.body);
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
-  }
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
+    const urlApi = `BitacoraMantenimiento/BitacoraIndividual/${this.machineryId}/${this.fechaInicial}/${this.fechaFinal}`;
+    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      this.data = result;
+    });
   }
 }

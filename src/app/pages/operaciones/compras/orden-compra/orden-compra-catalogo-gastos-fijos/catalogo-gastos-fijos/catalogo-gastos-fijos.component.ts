@@ -1,16 +1,14 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule, {
   flatpickrFactory,
 } from 'app/shared/luxuryapp-components.module';
-import { MessageService } from 'primeng/api';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { Observable } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CatalogoGastosFijosService } from 'src/app/core/services/catalogo-gastos-fijos.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataService } from 'src/app/core/services/data.service';
+import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import ModalOrdenCompraGrastosFijosComponent from '../modal-orden-compra-gastos-fijos/modal-orden-compra-grastos-fijos.component';
 
 const date = new Date();
@@ -21,22 +19,17 @@ const date = new Date();
   standalone: true,
   imports: [LuxuryAppComponentsModule],
 })
-export default class CatalogoGastosFijosComponent implements OnInit, OnDestroy {
-  customToastService = inject(CustomToastService);
-  authService = inject(AuthService);
-  dataService = inject(DataService);
+export default class CatalogoGastosFijosComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  public dialogService = inject(DialogService);
-  public messageService = inject(MessageService);
-  public customerIdService = inject(CustomerIdService);
-  public catalogoGastosFijosService = inject(CatalogoGastosFijosService);
+  dialogHandlerService = inject(DialogHandlerService);
+  authService = inject(AuthService);
+  customerIdService = inject(CustomerIdService);
+  catalogoGastosFijosService = inject(CatalogoGastosFijosService);
 
   data: any = [];
   ref: DynamicDialogRef;
   customerId$: Observable<number> = this.customerIdService.getCustomerId$();
   fechaSolicitud: string = '';
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   ngOnInit(): void {
     flatpickrFactory();
@@ -49,21 +42,11 @@ export default class CatalogoGastosFijosComponent implements OnInit, OnDestroy {
   }
 
   onLoadData() {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .get<any[]>(
-        'CatalogoGastosFijos/GetAll/' + this.customerIdService.customerId
-      )
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.data = this.customToastService.onCloseOnGetData(resp.body);
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
+    const urlApi =
+      'CatalogoGastosFijos/GetAll/' + this.customerIdService.customerId;
+    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      this.data = result;
+    });
   }
   onDelete(id: number) {
     this.apiRequestService
@@ -76,53 +59,28 @@ export default class CatalogoGastosFijosComponent implements OnInit, OnDestroy {
   onModal(data: any) {
     this.catalogoGastosFijosService.setCatalogoGastosFijosId(data.id);
 
-    this.ref = this.dialogService.open(ModalOrdenCompraGrastosFijosComponent, {
-      data: {
-        title: data.title,
-      },
-      header: '',
-      width: '1400px',
-      closeOnEscape: true,
-      baseZIndex: 10000,
-    });
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        this.customToastService.onShowSuccess();
+    this.dialogHandlerService
+      .openDialog(
+        ModalOrdenCompraGrastosFijosComponent,
+        {
+          title: data.title,
+        },
+        '',
+        this.dialogHandlerService.dialogSizeFull
+      )
+      .then(() => {
+        // TODO: REVISAR PORQUE NO LLEGA SEÑAL Y SE RECARGA
         this.onLoadData();
-      }
-    });
+      });
   }
 
   crearOrder(id: number, value: any) {
-    this.dataService
-      .get(`CatalogoGastosFijos/ValidarCreateOrder/${id}/${value}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {},
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
+    const urlApi = `CatalogoGastosFijos/ValidarCreateOrder/${id}/${value}`;
+    this.apiRequestService.onGetList(urlApi).then(() => {});
   }
 
   createOrdenesCompra() {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .get(
-        `OrdenCompra/GenerarOrdenCompraFijos/${this.fechaSolicitud}/${this.customerIdService.customerId}`
-      )
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.customToastService.onCloseToSuccess();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
-  }
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
+    const urlApi = `OrdenCompra/GenerarOrdenCompraFijos/${this.fechaSolicitud}/${this.customerIdService.customerId}`;
+    this.apiRequestService.onGetList(urlApi).then((result: any) => {});
   }
 }

@@ -14,8 +14,8 @@ import { environment } from 'src/environments/environment';
   imports: [LuxuryAppComponentsModule],
 })
 export default class AccessLogComponent implements OnInit {
-  public dateService = inject(DateService);
-  public customerIdService = inject(CustomerIdService);
+  dateService = inject(DateService);
+  customerIdService = inject(CustomerIdService);
   private filtroCalendarService = inject(FiltroCalendarService);
 
   apiRequestService = inject(ApiRequestService);

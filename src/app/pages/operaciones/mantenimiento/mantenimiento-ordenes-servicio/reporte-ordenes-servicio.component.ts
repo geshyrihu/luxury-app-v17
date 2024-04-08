@@ -21,9 +21,9 @@ export default class ReporteOrdenesServicioComponent
   customToastService = inject(CustomToastService);
   dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
-  public customerIdService = inject(CustomerIdService);
-  public messageService = inject(MessageService);
-  public dateService = inject(DateService);
+  customerIdService = inject(CustomerIdService);
+  messageService = inject(MessageService);
+  dateService = inject(DateService);
   public periodoMonthService = inject(PeriodoMonthService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente

@@ -1,42 +1,31 @@
-import {
-  Component,
-  ElementRef,
-  OnDestroy,
-  OnInit,
-  ViewChild,
-  inject,
-} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
-import { DataService } from 'src/app/core/services/data.service';
 @Component({
   selector: 'app-pdf-solicitud-compra',
   templateUrl: './pdf-solicitud-compra.component.html',
   standalone: true,
   imports: [LuxuryAppComponentsModule],
 })
-export default class PdfSolicitudCompraComponent implements OnInit, OnDestroy {
-  dataService = inject(DataService);
+export default class PdfSolicitudCompraComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  public route = inject(ActivatedRoute);
-  @ViewChild('htmlData') htmlData: ElementRef;
+  route = inject(ActivatedRoute);
+
   idSolicituCompra: any;
   folioCotizacion = '';
   model: any;
 
   ngOnInit(): void {
     this.idSolicituCompra = this.route.snapshot.paramMap.get('id');
-    this.dataService
-      .get(
+
+    this.apiRequestService
+      .onGetItem(
         `SolicitudCompra/GetSolicitudCompraIndividual/${this.idSolicituCompra}`
       )
-      .subscribe((resp: any) => {
-        this.folioCotizacion = resp.body.folio;
-        this.model = resp.body.solicitudCompraDetalle;
+      .then((result: any) => {
+        this.folioCotizacion = result.folio;
+        this.model = result.solicitudCompraDetalle;
       });
-  }
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
   }
 }

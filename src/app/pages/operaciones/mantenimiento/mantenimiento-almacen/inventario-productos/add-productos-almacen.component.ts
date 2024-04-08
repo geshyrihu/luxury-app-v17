@@ -1,13 +1,11 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subject, takeUntil } from 'rxjs';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { IProductoListAdd } from 'src/app/core/interfaces/product-list-add-or-edit.interface.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataService } from 'src/app/core/services/data.service';
+import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import TarjetaProductoComponent from '../../mantenimiento-catalogos/tarjeta-producto/tarjeta-producto.component';
 
 @Component({
@@ -16,20 +14,17 @@ import TarjetaProductoComponent from '../../mantenimiento-catalogos/tarjeta-prod
   standalone: true,
   imports: [LuxuryAppComponentsModule],
 })
-export default class AddProductosAlmacenComponent implements OnInit, OnDestroy {
-  dataService = inject(DataService);
+export default class AddProductosAlmacenComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  customToastService = inject(CustomToastService);
+  dialogHandlerService = inject(DialogHandlerService);
   authService = inject(AuthService);
-  public customerIdService = inject(CustomerIdService);
-  public dialogService = inject(DialogService);
+  customerIdService = inject(CustomerIdService);
+
   ref = inject(DynamicDialogRef);
 
   data: any[] = [];
   cb_UnidadMedida: any[] = [];
   mensajeError = '';
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   onLoadSelectItem() {
     this.apiRequestService
@@ -45,39 +40,25 @@ export default class AddProductosAlmacenComponent implements OnInit, OnDestroy {
   }
 
   onModalTarjetaProducto(productoId: number): void {
-    this.ref = this.dialogService.open(TarjetaProductoComponent, {
-      data: {
-        productoId: productoId,
-      },
-      header: 'Tarjeta de Producto',
-      width: '1000px',
-      closeOnEscape: true,
-      baseZIndex: 10000,
-    });
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        this.customToastService.onShowSuccess();
-        this.onLoadData();
-      }
-    });
+    this.dialogHandlerService
+      .openDialog(
+        TarjetaProductoComponent,
+        {
+          productoId: productoId,
+        },
+        'Tarjeta de Producto',
+        this.dialogHandlerService.dialogSizeMd
+      )
+      .then((result: boolean) => {
+        if (result) this.onLoadData();
+      });
   }
 
   onLoadData() {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .get(
-        `InventarioProducto/GetProductoDropdownDto/${this.customerIdService.customerId}`
-      )
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.data = this.customToastService.onCloseOnGetData(resp.body);
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
+    const urlApi = `InventarioProducto/GetProductoDropdownDto/${this.customerIdService.customerId}`;
+    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      this.data = result;
+    });
   }
   onSubmit(item: IProductoListAdd) {
     item.employeeId = this.authService.userTokenDto.infoEmployeeDto.employeeId;
@@ -93,24 +74,12 @@ export default class AddProductosAlmacenComponent implements OnInit, OnDestroy {
         'Completa todos los campos :Existencia, Unidad, Stok Max,   Stok Min';
       return;
     }
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
 
-    this.dataService
-      .post(`InventarioProducto/`, item)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          this.mensajeError = '';
-          this.customToastService.onClose();
-          this.onLoadData();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+    this.apiRequestService
+      .onPost(`InventarioProducto/`, item)
+      .then((result: boolean) => {
+        this.mensajeError = '';
+        this.onLoadData();
       });
-  }
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
   }
 }

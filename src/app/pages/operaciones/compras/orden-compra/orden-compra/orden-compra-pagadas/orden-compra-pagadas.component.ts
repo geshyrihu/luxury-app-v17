@@ -1,16 +1,13 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { MessageService } from 'primeng/api';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { Observable } from 'rxjs';
 import { CurrencyMexicoPipe } from 'src/app/core/pipes/currencyMexico.pipe';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataService } from 'src/app/core/services/data.service';
+import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import { OrdenCompraService } from 'src/app/core/services/orden-compra.service';
-
 import OrdenCompraComponent from '../orden-compra.component';
 
 @Component({
@@ -19,22 +16,17 @@ import OrdenCompraComponent from '../orden-compra.component';
   standalone: true,
   imports: [LuxuryAppComponentsModule, CurrencyMexicoPipe],
 })
-export default class OrdenCompraPagadasComponent implements OnInit, OnDestroy {
-  customToastService = inject(CustomToastService);
-  dataService = inject(DataService);
+export default class OrdenCompraPagadasComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  public customerIdService = inject(CustomerIdService);
-  public router = inject(Router);
-  public dialogService = inject(DialogService);
-  public messageService = inject(MessageService);
-  public ordenCompraService = inject(OrdenCompraService);
+  dialogHandlerService = inject(DialogHandlerService);
+  customerIdService = inject(CustomerIdService);
+  router = inject(Router);
+  ordenCompraService = inject(OrdenCompraService);
 
   data: any[] = [];
   customerId$: Observable<number> = this.customerIdService.getCustomerId$();
   tipo = 1;
   ref: DynamicDialogRef;
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   ngOnInit(): void {
     this.onLoadData(1);
@@ -45,40 +37,25 @@ export default class OrdenCompraPagadasComponent implements OnInit, OnDestroy {
   }
 
   onLoadData(type: any) {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .get(`OrdenCompra/Pagadas/${this.customerIdService.customerId}/${type}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.data = this.customToastService.onCloseOnGetData(resp.body);
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
+    const urlApi = `OrdenCompra/Pagadas/${this.customerIdService.customerId}/${type}`;
+    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      this.data = result;
+    });
   }
   onAddOrEdit(id: number) {
     this.ordenCompraService.setOrdenCompraId(id);
-    this.ref = this.dialogService.open(OrdenCompraComponent, {
-      data: {
-        id,
-      },
-      header: 'Editar Orden de Compra',
-      width: '100%',
-      height: '100%',
-      closeOnEscape: true,
-      baseZIndex: 10000,
-    });
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        this.customToastService.onShowSuccess();
-        this.onLoadData(this.tipo);
-      }
-    });
-  }
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
+
+    this.dialogHandlerService
+      .openDialog(
+        OrdenCompraComponent,
+        {
+          id,
+        },
+        'Editar Orden de Compra',
+        this.dialogHandlerService.dialogSizeFull
+      )
+      .then((result: boolean) => {
+        if (result) this.onLoadData(this.tipo);
+      });
   }
 }

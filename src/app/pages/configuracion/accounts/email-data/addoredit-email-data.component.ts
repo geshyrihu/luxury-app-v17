@@ -73,7 +73,6 @@ export default class AddOrEditEmailDataComponent implements OnInit {
     }
   }
   TestEmail(): void {
-    // Deshabilitar el botón al iniciar el envío del formulario
     this.submitting = true;
 
     this.apiRequestService

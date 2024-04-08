@@ -36,7 +36,8 @@ export default class AddOrEditBancoComponent implements OnInit {
     if (this.id !== 0) this.onLoadData();
   }
   onLoadData() {
-    this.apiRequestService.onGetItem(`Banks/${this.id}`).then((result: any) => {
+    const urlApi = `banks/${this.id}`;
+    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
       this.form.patchValue(result);
     });
   }

@@ -73,6 +73,20 @@ export class ApiRequestService implements OnDestroy {
     }
   }
 
+  async onGetListNotLoading<T>(urlApi: string): Promise<T | null> {
+    try {
+      const responseData = await lastValueFrom(
+        this.dataService.get<T>(urlApi).pipe(takeUntil(this.destroy$))
+      );
+      console.log('🚀 ~ urlApi:', urlApi, responseData.body);
+      return responseData.body;
+    } catch (error) {
+      // En caso de error, mostrar un mensaje de error y rechazar la promesa con null
+      this.customToastService.onShowError();
+      return null;
+    }
+  }
+
   // Obtener un item x Id
   async onGetItem<T>(urlApi: string): Promise<T | null> {
     // Mostrar un mensaje de carga
@@ -91,27 +105,25 @@ export class ApiRequestService implements OnDestroy {
   }
 
   // onPost
-  async onPost<T>(urlApi: string, data: any): Promise<boolean> {
-    // Mostrar un mensaje de carga
+
+  async onPost<T>(urlApi: string, data: any): Promise<boolean | T> {
     this.customToastService.onLoading();
     try {
       const responseData = await lastValueFrom(
         this.dataService.post<T>(urlApi, data).pipe(takeUntil(this.destroy$))
       );
-      // Cuando se completa la carga con éxito, mostrar un mensaje de éxito y resolver la promesa con los datos
       this.customToastService.onCloseToSuccess();
       console.log('🚀 ~ responseData.body post:', responseData.body);
-      return true;
+      return responseData.body; // Devuelve los datos recibidos
     } catch (error) {
       console.log('🚀 ~ error:', error);
-      // En caso de error, mostrar un mensaje de error y rechazar la promesa con null
       this.customToastService.onCloseToError(error);
       return false;
     }
   }
 
   // Metodo Put
-  async onPut<T>(urlApi: string, data: any): Promise<boolean> {
+  async onPut<T>(urlApi: string, data: any): Promise<boolean | T> {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
     try {
@@ -121,7 +133,8 @@ export class ApiRequestService implements OnDestroy {
       // Cuando se completa la carga con éxito, mostrar un mensaje de éxito y resolver la promesa con los datos
       this.customToastService.onCloseToSuccess();
       console.log('🚀 ~ responseData.body put:', responseData.body);
-      return true;
+      return responseData.body; // Devuelve los datos recibidos;
+      // return true;
     } catch (error) {
       // En caso de error, mostrar un mensaje de error y rechazar la promesa con null
       this.customToastService.onCloseToError(error);

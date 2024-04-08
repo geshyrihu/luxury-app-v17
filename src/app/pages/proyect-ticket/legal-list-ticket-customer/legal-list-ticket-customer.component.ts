@@ -16,8 +16,7 @@ import TicketTrakingRequestDetailComponent from '../ticket-traking-request-detai
 export default class LegalListTicketComponent implements OnInit {
   dialogHandlerService = inject(DialogHandlerService);
   apiRequestService = inject(ApiRequestService);
-  public customerIdService = inject(CustomerIdService);
-
+  customerIdService = inject(CustomerIdService);
   data: any[] = [];
 
   ngOnInit() {

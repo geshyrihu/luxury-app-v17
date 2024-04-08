@@ -28,7 +28,7 @@ export default class AddoreditPersonEmergencyContactComponent
   customToastService = inject(CustomToastService);
   dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
-  public messageService = inject(MessageService);
+  messageService = inject(MessageService);
   ref = inject(DynamicDialogRef);
 
   id: string = '';
@@ -76,7 +76,7 @@ export default class AddoreditPersonEmergencyContactComponent
 
   onSubmit() {
     if (!this.apiRequestService.validateForm(this.form)) return;
-    // Deshabilitar el botón al iniciar el envío del formulario
+
     this.submitting = true;
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();

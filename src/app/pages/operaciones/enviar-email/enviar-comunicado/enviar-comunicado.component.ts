@@ -25,10 +25,10 @@ import ListadoCondominosComponent from 'src/app/shared/listado-condominos/listad
 })
 export default class EnviarComunicadoComponent {
   apiRequestService = inject(ApiRequestService);
-  public customerIdService = inject(CustomerIdService);
+  customerIdService = inject(CustomerIdService);
   customToastService = inject(CustomToastService);
   dataService = inject(DataService);
-  public dialogService = inject(DialogService);
+  dialogService = inject(DialogService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
@@ -116,7 +116,7 @@ export default class EnviarComunicadoComponent {
   }
   onSubmit() {
     let model = this.onCreateFormData();
-    // Deshabilitar el botón al iniciar el envío del formulario
+
     this.submitting = true;
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();

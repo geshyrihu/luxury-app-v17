@@ -20,9 +20,9 @@ export default class GastosMantenimientoComponent implements OnInit, OnDestroy {
   customToastService = inject(CustomToastService);
   dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
-  public customerIdService = inject(CustomerIdService);
-  public messageService = inject(MessageService);
-  public dialogService = inject(DialogService);
+  customerIdService = inject(CustomerIdService);
+  messageService = inject(MessageService);
+  dialogService = inject(DialogService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 

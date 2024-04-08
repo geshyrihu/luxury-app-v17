@@ -35,7 +35,6 @@ export default class UpdatePasswordAccountComponent implements OnInit {
   }
 
   onSubmit() {
-    // Deshabilitar el botón al iniciar el envío del formulario
     this.submitting = true;
 
     this.apiRequestService

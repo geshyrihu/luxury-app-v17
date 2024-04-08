@@ -24,14 +24,14 @@ import FormBitacoraMantenimientoComponent from './form-bitacora-mantenimiento.co
 export default class BitacoraMantenimientoComponent
   implements OnInit, OnDestroy
 {
-  public dateService = inject(DateService);
+  dateService = inject(DateService);
   customToastService = inject(CustomToastService);
-  public dialogService = inject(DialogService);
+  dialogService = inject(DialogService);
   dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
   public authServide = inject(AuthService);
-  public messageService = inject(MessageService);
-  public customerIdService = inject(CustomerIdService);
+  messageService = inject(MessageService);
+  customerIdService = inject(CustomerIdService);
   public rangoCalendarioService = inject(FiltroCalendarService);
 
   customerList: any[] = [];

@@ -24,12 +24,12 @@ import { environment } from 'src/environments/environment';
 export default class AddoreditInventarioExtintorComponent
   implements OnInit, OnDestroy
 {
-  private customToastService = inject(CustomToastService);
+  customToastService = inject(CustomToastService);
   apiRequestService = inject(ApiRequestService);
   formBuilder = inject(FormBuilder);
   authService = inject(AuthService);
   config = inject(DynamicDialogConfig);
-  public customerIdService = inject(CustomerIdService);
+  customerIdService = inject(CustomerIdService);
   dataService = inject(DataService);
   ref = inject(DynamicDialogRef);
 
@@ -75,7 +75,7 @@ export default class AddoreditInventarioExtintorComponent
     if (!this.apiRequestService.validateForm(this.form)) return;
     this.id = this.config.data.id;
     const formData = this.createFormData(this.form.value);
-    // Deshabilitar el botón al iniciar el envío del formulario
+
     this.submitting = true;
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();

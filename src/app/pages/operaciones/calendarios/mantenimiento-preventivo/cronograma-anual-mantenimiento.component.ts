@@ -1,14 +1,12 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import * as FileSaver from 'file-saver';
-import { MessageService } from 'primeng/api';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { Observable } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CronogramaMantenimientoService } from 'src/app/core/services/cronograma-mantenimiento.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataService } from 'src/app/core/services/data.service';
+import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import AddoreditMaintenancePreventiveComponent from './addoredit-maintenance-preventive.component';
 
 @Component({
@@ -17,20 +15,11 @@ import AddoreditMaintenancePreventiveComponent from './addoredit-maintenance-pre
   standalone: true,
   imports: [LuxuryAppComponentsModule],
 })
-export default class CronogramaAnualMantenimientoComponent
-  implements OnInit, OnDestroy
-{
-  customToastService = inject(CustomToastService);
-  dataService = inject(DataService);
+export default class CronogramaAnualMantenimientoComponent {
   apiRequestService = inject(ApiRequestService);
-  public customerIdService = inject(CustomerIdService);
-  public dialogService = inject(DialogService);
-  public messageService = inject(MessageService);
-  public cronogramaMantenimientoService = inject(
-    CronogramaMantenimientoService
-  );
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+  dialogHandlerService = inject(DialogHandlerService);
+  customerIdService = inject(CustomerIdService);
+  cronogramaMantenimientoService = inject(CronogramaMantenimientoService);
 
   customerId$: Observable<number> = this.customerIdService.getCustomerId$();
   cronogramaAnual: any = [];
@@ -66,71 +55,37 @@ export default class CronogramaAnualMantenimientoComponent
     });
   }
 
-  onLoadData(filtro?: any) {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    if (this.filtroId == 10) {
-      this.dataService
-        .get(
-          `MaintenanceCalendars/CronogramaAnual/${this.customerIdService.customerId}`
-        )
-        .subscribe({
-          next: (resp: any) => {
-            this.cronogramaAnual = resp.body;
-            if (!this.cronogramaAnual) {
-              this.customToastService.onClose();
-            }
-          },
-          error: (error) => {
-            this.customToastService.onCloseToError(error);
-          },
-        });
-    } else {
-      this.dataService
-        .get(
-          `MaintenanceCalendars/CronogramaAnual/${this.customerIdService.customerId}/${this.filtroId}`
-        )
-        .subscribe({
-          next: (resp: any) => {
-            this.cronogramaAnual = resp.body;
-            if (!this.cronogramaAnual) {
-              this.customToastService.onClose();
-            }
-          },
-          error: (error) => {
-            this.customToastService.onCloseToError(error);
-          },
-        });
-    }
-    this.customToastService.onClose();
+  onLoadData() {
+    const endpoint =
+      this.filtroId === 10
+        ? `MaintenanceCalendars/CronogramaAnual/${this.customerIdService.customerId}`
+        : `MaintenanceCalendars/CronogramaAnual/${this.customerIdService.customerId}/${this.filtroId}`;
+
+    this.apiRequestService.onGetItem(endpoint).then((result: any) => {
+      this.cronogramaAnual = result;
+    });
   }
 
   exportExcel() {
     let dataCalendar = [];
-    this.dataService
-      .get(
+    this.apiRequestService
+      .onGetItem(
         `MaintenanceCalendars/ExportCalendar/${this.customerIdService.customerId}`
       )
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          dataCalendar = resp.body;
-          import('xlsx').then((xlsx) => {
-            const worksheet = xlsx.utils.json_to_sheet(dataCalendar);
-            const workbook = {
-              Sheets: { data: worksheet },
-              SheetNames: ['data'],
-            };
-            const excelBuffer: any = xlsx.write(workbook, {
-              bookType: 'xlsx',
-              type: 'array',
-            });
-            this.saveAsExcelFile(excelBuffer, 'Calendario de Mantenimiento');
+      .then((result: any) => {
+        dataCalendar = result;
+        import('xlsx').then((xlsx) => {
+          const worksheet = xlsx.utils.json_to_sheet(dataCalendar);
+          const workbook = {
+            Sheets: { data: worksheet },
+            SheetNames: ['data'],
+          };
+          const excelBuffer: any = xlsx.write(workbook, {
+            bookType: 'xlsx',
+            type: 'array',
           });
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+          this.saveAsExcelFile(excelBuffer, 'Calendario de Mantenimiento');
+        });
       });
   }
 
@@ -148,28 +103,20 @@ export default class CronogramaAnualMantenimientoComponent
   }
 
   onModalItem(id: number) {
-    this.ref = this.dialogService.open(
-      AddoreditMaintenancePreventiveComponent,
-      {
-        data: {
+    this.dialogHandlerService
+      .openDialog(
+        AddoreditMaintenancePreventiveComponent,
+        {
           idnombre: id,
           id: id,
           task: 'edit',
           header: 'Editar regitro ' + id,
         },
-        header: 'Editar regitro',
-        styleClass: 'modal-lg ',
-        closeOnEscape: true,
-      }
-    );
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        this.customToastService.onShowSuccess();
-        this.onLoadData();
-      }
-    });
-  }
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
+        'Editar regitro',
+        this.dialogHandlerService.dialogSizeLg
+      )
+      .then((result: boolean) => {
+        if (result) this.onLoadData();
+      });
   }
 }

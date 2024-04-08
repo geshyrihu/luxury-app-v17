@@ -1,12 +1,9 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subject, takeUntil } from 'rxjs';
 import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
-import { DataService } from 'src/app/core/services/data.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
@@ -16,16 +13,12 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class AddOrEditCalendarioMaestroEquipoComponent
-  implements OnInit, OnDestroy
+  implements OnInit
 {
-  formBuilder = inject(FormBuilder);
-  dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
+  formBuilder = inject(FormBuilder);
   ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);
-  private customToastService = inject(CustomToastService);
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   cb_equipoClasificacion: ISelectItem[] = [];
   id: number = 0;
@@ -44,66 +37,36 @@ export default class AddOrEditCalendarioMaestroEquipoComponent
   }
 
   onLoadData(id: number) {
-    this.dataService
-      .get(`CalendarioMaestroEquipo/${id}`)
-      .subscribe((resp: any) => {
-        this.form.patchValue(resp.body);
-      });
+    const url = `CalendarioMaestroEquipo/${id}`;
+    this.apiRequestService.onGetItem(url).then((result: any) => {
+      this.form.patchValue(result);
+    });
   }
   onSubmit() {
     if (!this.apiRequestService.validateForm(this.form)) return;
 
-    // Deshabilitar el botón al iniciar el envío del formulario
     this.submitting = true;
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
+
     if (this.id === 0) {
-      this.dataService
-        .post('CalendarioMaestroEquipo', this.form.value)
-        .subscribe({
-          next: () => {
-            this.ref.close(true);
-            this.customToastService.onClose();
-          },
-          error: (error) => {
-            // Habilitar el botón nuevamente al finalizar el envío del formulario
-            this.submitting = false;
-            this.customToastService.onCloseToError(error);
-          },
+      this.apiRequestService
+        .onPost(`CalendarioMaestroEquipo`, this.form.value)
+        .then((result: boolean) => {
+          result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.dataService
-        .put(`CalendarioMaestroEquipo/${this.id}`, this.form.value)
-        .subscribe({
-          next: () => {
-            this.ref.close(true);
-            this.customToastService.onClose();
-          },
-          error: (error) => {
-            // Habilitar el botón nuevamente al finalizar el envío del formulario
-            this.submitting = false;
-            this.customToastService.onCloseToError(error);
-          },
+      this.apiRequestService
+        .onPut(`CalendarioMaestroEquipo/${this.id}`, this.form.value)
+        .then((result: boolean) => {
+          result ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }
 
-  //TODO: Hacer servicio ISelectItem
   onLoadEquipoClasificacion() {
-    this.dataService
-      .get('EquipoClasificacion/SelectItem')
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.cb_equipoClasificacion = resp.body;
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+    this.apiRequestService
+      .onGetList('EquipoClasificacion/SelectItem')
+      .then((result: any) => {
+        this.cb_equipoClasificacion = result;
       });
-  }
-
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
   }
 }

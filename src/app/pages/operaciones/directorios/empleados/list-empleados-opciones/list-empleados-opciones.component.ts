@@ -1,16 +1,9 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import {
-  DialogService,
-  DynamicDialogConfig,
-  DynamicDialogRef,
-} from 'primeng/dynamicdialog';
-import { Subject, takeUntil } from 'rxjs';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataService } from 'src/app/core/services/data.service';
 import UpdatePasswordModalComponent from 'src/app/pages/configuracion/accounts/modal-edit-account/update-password-modal/update-password-modal.component';
 import AddoreditPersonDataComponent from 'src/app/pages/person/addoredit-person-data/addoredit-person-data.component';
 import ListPersonEmergencyContactComponent from 'src/app/pages/person/list-person-emergency-contact/list-person-emergency-contact.component';
@@ -21,10 +14,10 @@ import SolicitudAltaComponent from 'src/app/pages/reclutamiento/solicitudes/soli
 import SolicitudBajaComponent from 'src/app/pages/reclutamiento/solicitudes/solicitud-baja/solicitud-baja.component';
 import SolicitudModificacionSalarioComponent from 'src/app/pages/reclutamiento/solicitudes/solicitud-modificacion-salario/solicitud-modificacion-salario.component';
 
+import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import Swal from 'sweetalert2';
 import PersonUpdatePhotoComponent from '../../../../person/person-update-photo/update-image-person.component';
 import AccountToEmployeeComponent from '../account-to-employee/account-to-employee.component';
-import AddOrEditEmplopyeeComponent from '../addoredit-data-employee/addoredit-employee.component';
 
 @Component({
   selector: 'app-list-empleados-opciones',
@@ -32,16 +25,12 @@ import AddOrEditEmplopyeeComponent from '../addoredit-data-employee/addoredit-em
   standalone: true,
   imports: [LuxuryAppComponentsModule],
 })
-export default class ListEmpleadosOpcionesComponent
-  implements OnInit, OnDestroy
-{
-  dataService = inject(DataService);
+export default class ListEmpleadosOpcionesComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  private dialogService = inject(DialogService);
+  dialogHandlerService = inject(DialogHandlerService);
   authService = inject(AuthService);
   config = inject(DynamicDialogConfig);
-  public customerIdService = inject(CustomerIdService);
-  customToastService = inject(CustomToastService);
+  customerIdService = inject(CustomerIdService);
 
   tienePermiso: boolean = true;
   ngOnInit(): void {
@@ -59,7 +48,6 @@ export default class ListEmpleadosOpcionesComponent
   }
 
   ref: DynamicDialogRef;
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   applicationUserId: string = this.config.data.applicationUserId;
   personId: string = this.config.data.personId;
@@ -76,175 +64,119 @@ export default class ListEmpleadosOpcionesComponent
   // si es usuario es asistente o administrador no podria editar empleados que son asistentes o administradores
   onValidarAdminAsis() {
     // ProfessionId Administrador= 5, Asistente = 6
-
-    this.dataService
-      .get(`employees/validaradminasis/${this.employeeId}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.tienePermiso = resp.body;
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+    this.apiRequestService
+      .onGetItem(`employees/validaradminasis/${this.employeeId}`)
+      .then((result: any) => {
+        this.tienePermiso = result;
       });
   }
 
   // Datos Principales
   onShowModalDatosPrincipales() {
-    this.ref = this.dialogService.open(PersonEditDataPrincipalComponent, {
-      data: {
+    this.dialogHandlerService.openDialog(
+      PersonEditDataPrincipalComponent,
+      {
         personId: this.personId,
       },
-      header: 'Datos Principales',
-      styleClass: 'modal-w-100',
-      baseZIndex: 10000,
-      closeOnEscape: true,
-    });
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        this.customToastService.onShowSuccess();
-      }
-    });
+      'Datos Principales',
+      this.dialogHandlerService.dialogSizeFull
+    );
   }
   // Datos Personales
   onShowModalDatosPersonales() {
-    this.ref = this.dialogService.open(AddoreditPersonDataComponent, {
-      data: {
+    this.dialogHandlerService.openDialog(
+      AddoreditPersonDataComponent,
+      {
         personId: this.personId,
       },
-      header: 'Datos Personales',
-      styleClass: 'modal-w-100',
-      baseZIndex: 10000,
-      closeOnEscape: true,
-    });
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        this.customToastService.onShowSuccess();
-      }
-    });
+      'Datos Personales',
+      this.dialogHandlerService.dialogSizeFull
+    );
   }
   // Datos Laborales
   onShowModalDatosLaboral() {
-    this.ref = this.dialogService.open(PersonEditDataLaboralComponent, {
-      data: {
+    this.dialogHandlerService.openDialog(
+      PersonEditDataLaboralComponent,
+      {
         employeeId: this.employeeId,
         personId: this.personId,
       },
-      header: 'Datos laborales',
-      styleClass: 'modal-w-100',
-      baseZIndex: 10000,
-      closeOnEscape: true,
-    });
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        this.customToastService.onShowSuccess();
-      }
-    });
+      'Datos laborales',
+      this.dialogHandlerService.dialogSizeFull
+    );
   }
 
   // Modal datos direccion
   onModalDataAddress() {
-    this.ref = this.dialogService.open(PersonAddoreditAddressComponent, {
-      data: {
+    this.dialogHandlerService.openDialog(
+      PersonAddoreditAddressComponent,
+      {
         personId: this.personId,
       },
-      header: 'Dirección',
-      styleClass: 'modal-lg',
-      baseZIndex: 10000,
-      closeOnEscape: true,
-    });
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        this.customToastService.onShowSuccess();
-        if (resp) {
-          this.customToastService.onShowSuccess();
-        }
-      }
-    });
+      'Dirección',
+      this.dialogHandlerService.dialogSizeFull
+    );
   }
   onShowModalEmergencyContact() {
-    this.ref = this.dialogService.open(ListPersonEmergencyContactComponent, {
-      data: {
+    this.dialogHandlerService.openDialog(
+      ListPersonEmergencyContactComponent,
+      {
         personId: this.personId,
       },
-      header: 'Contactos de Emergencia',
-      styleClass: 'modal-lg',
-      baseZIndex: 10000,
-      closeOnEscape: true,
-    });
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        this.customToastService.onShowSuccess();
-      }
-    });
+      'Contactos de Emergencia',
+      this.dialogHandlerService.dialogSizeFull
+    );
   }
 
   onShowModalActualizarImagen() {
-    this.ref = this.dialogService.open(PersonUpdatePhotoComponent, {
-      data: {
+    this.dialogHandlerService.openDialog(
+      PersonUpdatePhotoComponent,
+      {
         personId: this.personId,
       },
-      header: 'Actualizar Foto',
-      baseZIndex: 10000,
-      closeOnEscape: true,
-      styleClass: 'modal-md',
-    });
-
-    // Escuchar el evento 'onClose' cuando se cierra el cuadro de diálogo
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        // Cuando se recibe 'true', mostrar un mensaje de éxito y volver a cargar los datos
-        this.customToastService.onShowSuccess();
-      }
-    });
+      'Actualizar Foto',
+      this.dialogHandlerService.dialogSizeMd
+    );
   }
 
   onModalUpdatePassword() {
-    this.ref = this.dialogService.open(UpdatePasswordModalComponent, {
-      data: {
+    this.dialogHandlerService.openDialog(
+      UpdatePasswordModalComponent,
+      {
         applicationUserId: this.applicationUserId,
       },
-      header: 'Cambio de contraseña',
-      styleClass: 'modal-md',
-      closeOnEscape: true,
-      baseZIndex: 10000,
-    });
+      'Cambio de contraseña',
+      this.dialogHandlerService.dialogSizeMd
+    );
   }
   onModalAccountToEmployee() {
-    this.ref = this.dialogService.open(AccountToEmployeeComponent, {
-      data: {
+    this.dialogHandlerService.openDialog(
+      AccountToEmployeeComponent,
+      {
         personId: this.personId,
         applicationUserId: this.applicationUserId,
       },
-      header: 'Asignar cuenta de usuario',
-      styleClass: 'modal-lg',
-      baseZIndex: 10000,
-      closeOnEscape: true,
-    });
+      'Asignar cuenta de usuario',
+      this.dialogHandlerService.dialogSizeLg
+    );
   }
 
   // Solicitud de alta
 
   onModalSolicitudALta() {
-    this.ref = this.dialogService.open(SolicitudAltaComponent, {
-      data: {
-        employeeId: this.employeeId,
-        customerId: this.customerIdService.customerId,
-      },
-      header: 'Solicitud de alta',
-      width: '100%',
-      height: '100%',
-      closeOnEscape: true,
-      baseZIndex: 10000,
-    });
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        // Cuando se recibe 'true', mostrar un mensaje de éxito y volver a cargar los datos
-        this.customToastService.onShowSuccess();
-        this.onValidarSolicitudesAbiertas();
-      }
-    });
+    this.dialogHandlerService
+      .openDialog(
+        SolicitudAltaComponent,
+        {
+          employeeId: this.employeeId,
+          customerId: this.customerIdService.customerId,
+        },
+        'Solicitud de alta',
+        this.dialogHandlerService.dialogSizeFull
+      )
+      .then((result: boolean) => {
+        if (result) this.onValidarSolicitudesAbiertas();
+      });
   }
   onDelete() {
     Swal.fire({
@@ -258,19 +190,9 @@ export default class ListEmpleadosOpcionesComponent
       cancelButtonText: 'Cancelar!',
     }).then((result) => {
       if (result.value) {
-        // Mostrar un mensaje de carga
-        this.customToastService.onLoading();
-        this.dataService
-          .delete(`Employees/${this.employeeId}`)
-          .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-          .subscribe({
-            next: () => {
-              this.customToastService.onCloseToSuccess();
-            },
-            error: (error) => {
-              this.customToastService.onCloseToError(error);
-            },
-          });
+        this.apiRequestService
+          .onDelete(`Employees/${this.employeeId}`)
+          .then(() => {});
       }
     });
   }
@@ -286,124 +208,68 @@ export default class ListEmpleadosOpcionesComponent
       cancelButtonText: 'Cancelar!',
     }).then((result) => {
       if (result.value) {
-        this.dataService
-          .get(`Employees/Bloqueo/${this.employeeId}`)
-          .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-          .subscribe({
-            next: () => {
-              this.customToastService.onCloseToSuccess();
-              this.active = !this.active;
-            },
-            error: (error) => {
-              this.customToastService.onCloseToError(error);
-            },
+        this.apiRequestService
+          .onGetItem(`Employees/Bloqueo/${this.employeeId}`)
+          .then(() => {
+            this.active = !this.active;
           });
       }
-    });
-  }
-
-  onShowModalAddOrEdit() {
-    this.ref = this.dialogService.open(AddOrEditEmplopyeeComponent, {
-      data: {
-        id: this.employeeId,
-        // tipoContrato: this.tipoContrato,
-      },
-      header: 'Actualizar datos',
-      width: '100%',
-      height: 'auto',
-      baseZIndex: 10000,
-      closeOnEscape: true,
-    });
-    this.ref.onClose.subscribe((resp: boolean) => {
-      this.customToastService.onShowSuccess();
     });
   }
 
   // Metodo para solicitar baja del empleado
 
   onModalSolicitudBaja() {
-    this.ref = this.dialogService.open(SolicitudBajaComponent, {
-      data: {
-        employeeId: this.employeeId,
-      },
-      header: 'Solicitud de baja',
-      width: '100%',
-      height: '100%',
-      closeOnEscape: true,
-      baseZIndex: 10000,
-    });
-    // Escuchar el evento 'onClose' cuando se cierra el cuadro de diálogo
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        // Cuando se recibe 'true', mostrar un mensaje de éxito y volver a cargar los datos
-        this.customToastService.onShowSuccess();
-        this.onValidarSolicitudesAbiertas();
-      }
-    });
+    this.dialogHandlerService
+      .openDialog(
+        SolicitudBajaComponent,
+        {
+          employeeId: this.employeeId,
+        },
+        'Solicitud de baja',
+        this.dialogHandlerService.dialogSizeFull
+      )
+      .then((result: boolean) => {
+        if (result) this.onValidarSolicitudesAbiertas();
+      });
   }
 
   //Solicitar Modificacion de salario
 
   onModalSolicitudModificacionSalarion() {
-    this.ref = this.dialogService.open(SolicitudModificacionSalarioComponent, {
-      data: {
-        workPositionId: this.employeeId,
-      },
-      header: 'Solicitud de Modificación de salario',
-      width: '100%',
-      height: '100%',
-      closeOnEscape: true,
-      baseZIndex: 10000,
-    });
-    // Escuchar el evento 'onClose' cuando se cierra el cuadro de diálogo
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        // Cuando se recibe 'true', mostrar un mensaje de éxito y volver a cargar los datos
-        this.customToastService.onShowSuccess();
-        this.onValidarSolicitudesAbiertas();
-      }
-    });
+    this.dialogHandlerService
+      .openDialog(
+        SolicitudModificacionSalarioComponent,
+        {
+          workPositionId: this.employeeId,
+        },
+        'Solicitud de Modificación de salario',
+        this.dialogHandlerService.dialogSizeFull
+      )
+      .then((result: boolean) => {
+        if (result) this.onValidarSolicitudesAbiertas();
+      });
   }
 
   // Metodo para validar si hay solicitudes abiertas
   // Solicitud de baja
   // Solicitud de modificacion de salario
   onValidarSolicitudesAbiertas() {
-    this.dataService
-      .get(`employees/validarsolicitudesabiertas/${this.employeeId}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.workPosition = resp.body.workPosition;
-          this.solicitudAltaStatus = resp.body.solicitudAlta;
-          this.solicitudBajaStatus = resp.body.solicitudBaja;
-          this.solicitudModificacionSalarioStatus =
-            resp.body.solicitudModificacionSalario;
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
+    const urlApi = `employees/validarsolicitudesabiertas/${this.employeeId}`;
+    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+      this.workPosition = result.workPosition;
+      this.solicitudAltaStatus = result.solicitudAlta;
+      this.solicitudBajaStatus = result.solicitudBaja;
+      this.solicitudModificacionSalarioStatus =
+        result.solicitudModificacionSalario;
+    });
   }
 
   // Validar si el usuario tiene una profesion asignada valida para solicitar estas acciones
   onValidarProfession() {
-    this.dataService
-      .get(`employees/validarprofession/${this.employeeId}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.accionPermitida = resp.body;
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
-  }
-
-  ngOnDestroy() {
-    // Cuando se destruye el componente, desvincular y liberar recursos
-    this.destroy$.next();
-    this.destroy$.complete();
+    const urlApi = `employees/validarprofession/${this.employeeId}`;
+    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+      this.accionPermitida = result;
+    });
   }
 }

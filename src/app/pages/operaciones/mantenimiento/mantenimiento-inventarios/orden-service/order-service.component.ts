@@ -25,8 +25,8 @@ export default class OrderServiceComponent implements OnInit, OnDestroy {
   customToastService = inject(CustomToastService);
   dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
-  public messageService = inject(MessageService);
-  public dialogService = inject(DialogService);
+  messageService = inject(MessageService);
+  dialogService = inject(DialogService);
   authService = inject(AuthService);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);

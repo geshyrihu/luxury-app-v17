@@ -11,7 +11,7 @@ import { FiltroCalendarService } from 'src/app/core/services/filtro-calendar.ser
 })
 export default class CalendarRangeComponent {
   private filtroCalendarService = inject(FiltroCalendarService);
-  private dateService = inject(DateService);
+  dateService = inject(DateService);
 
   fechaInicial: string = this.dateService.onParseToInputMonth(
     this.filtroCalendarService.fechaInicial

@@ -24,11 +24,11 @@ export default class ListRecorridoComponent implements OnInit, OnDestroy {
   customToastService = inject(CustomToastService);
   authService = inject(AuthService);
   public confirmationService = inject(ConfirmationService);
-  public customerIdService = inject(CustomerIdService);
+  customerIdService = inject(CustomerIdService);
   dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
-  public dialogService = inject(DialogService);
-  public messageService = inject(MessageService);
+  dialogService = inject(DialogService);
+  messageService = inject(MessageService);
 
   pathImg = environment.base_urlImg;
   data: any[] = [];

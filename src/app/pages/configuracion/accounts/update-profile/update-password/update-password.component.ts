@@ -55,7 +55,6 @@ export default class UpdatePasswordComponent implements OnInit {
     };
     const id = this.authService.userTokenDto.infoUserAuthDto.applicationUserId;
 
-    // Deshabilitar el botón al iniciar el envío del formulario
     this.submitting = true;
 
     this.apiRequestService

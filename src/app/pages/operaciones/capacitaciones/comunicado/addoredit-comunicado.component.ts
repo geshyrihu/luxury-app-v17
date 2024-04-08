@@ -1,14 +1,11 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule, {
   flatpickrFactory,
 } from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subject, takeUntil } from 'rxjs';
 import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
-import { DataService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
@@ -18,23 +15,17 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   standalone: true,
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
-export default class AddOrEditComunicadoComponent implements OnInit, OnDestroy {
-  public dateService = inject(DateService);
-  formBuilder = inject(FormBuilder);
-  dataService = inject(DataService);
+export default class AddOrEditComunicadoComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);
-  private customToastService = inject(CustomToastService);
+  dateService = inject(DateService);
+  ref = inject(DynamicDialogRef);
+  formBuilder = inject(FormBuilder);
 
   submitting: boolean = false;
   id: number = 0;
-
   errorMessage: string = '';
   file: any = null;
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
-
   cb_area_responsable: ISelectItem[] = [];
 
   form: FormGroup = this.formBuilder.group({
@@ -55,19 +46,10 @@ export default class AddOrEditComunicadoComponent implements OnInit, OnDestroy {
     this.form.patchValue({ area: this.config.data.titulo });
   }
   onLoadData() {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .get(`Comunicado/${this.id}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.form.patchValue(resp.body);
-          this.customToastService.onClose();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+    this.apiRequestService
+      .onGetItem(`Comunicado/${this.id}`)
+      .then((result: any) => {
+        this.form.patchValue(result);
       });
   }
 
@@ -84,46 +66,24 @@ export default class AddOrEditComunicadoComponent implements OnInit, OnDestroy {
 
     const model = this.onCreateFormData(this.form.value);
     this.id = this.config.data.id;
-    // Deshabilitar el botón al iniciar el envío del formulario
+
     this.submitting = true;
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
+
     if (this.id === 0) {
-      this.dataService
-        .post(`Comunicado`, model)
-        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-        .subscribe({
-          next: () => {
-            this.ref.close(true);
-            this.customToastService.onClose();
-          },
-          error: (error) => {
-            // Habilitar el botón nuevamente al finalizar el envío del formulario
-            this.submitting = false;
-            this.customToastService.onCloseToError(error);
-          },
+      this.apiRequestService
+        .onPost(`Comunicado`, model)
+        .then((result: boolean) => {
+          result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.dataService
-        .put(`Comunicado/${this.id}`, model)
-        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-        .subscribe({
-          next: () => {
-            this.ref.close(true);
-            this.customToastService.onClose();
-          },
-          error: (error) => {
-            // Habilitar el botón nuevamente al finalizar el envío del formulario
-            this.submitting = false;
-            this.customToastService.onCloseToError(error);
-          },
+      this.apiRequestService
+        .onPut(`Comunicado/${this.id}`, model)
+        .then((result: boolean) => {
+          result ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }
 
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
-  }
   uploadFile(event) {
     this.file = event.target.files[0];
   }

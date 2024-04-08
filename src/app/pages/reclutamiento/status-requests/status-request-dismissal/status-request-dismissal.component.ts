@@ -26,11 +26,11 @@ export default class StatusRequestDismissalComponent
 {
   private statusSolicitudVacanteService = inject(StatusSolicitudVacanteService);
   authService = inject(AuthService);
-  public customerIdService = inject(CustomerIdService);
+  customerIdService = inject(CustomerIdService);
   dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
-  public dialogService = inject(DialogService);
-  public router = inject(Router);
+  dialogService = inject(DialogService);
+  router = inject(Router);
   customToastService = inject(CustomToastService);
 
   workPositionId = this.statusSolicitudVacanteService.getworkPositionId();

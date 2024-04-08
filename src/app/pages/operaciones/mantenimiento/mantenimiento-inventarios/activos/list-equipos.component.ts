@@ -27,14 +27,14 @@ import ServiceHistoryMachineryComponent from './service-history-machinery/servic
 })
 export default class ListEquiposComponent implements OnInit, OnDestroy {
   customToastService = inject(CustomToastService);
-  public customerIdService = inject(CustomerIdService);
+  customerIdService = inject(CustomerIdService);
   dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
   authService = inject(AuthService);
-  public dialogService = inject(DialogService);
-  public messageService = inject(MessageService);
+  dialogService = inject(DialogService);
+  messageService = inject(MessageService);
   public rutaActiva = inject(ActivatedRoute);
-  public router = inject(Router);
+  router = inject(Router);
 
   public subscriber: Subscription;
 

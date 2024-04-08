@@ -1,12 +1,8 @@
 import { Component, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { MessageService } from 'primeng/api';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subject, takeUntil } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
-import { DataService } from 'src/app/core/services/data.service';
+import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import { environment } from 'src/environments/environment';
 import AddOrEditTelefonosEmergenciaComponent from './addoredit-telefonos-emergencia.component';
 
@@ -17,38 +13,23 @@ import AddOrEditTelefonosEmergenciaComponent from './addoredit-telefonos-emergen
   imports: [LuxuryAppComponentsModule],
 })
 export default class TelefonosEmergenciaComponent {
-  authService = inject(AuthService);
-  dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
-  public messageService = inject(MessageService);
-  customToastService = inject(CustomToastService);
-  public dialogService = inject(DialogService);
+  dialogHandlerService = inject(DialogHandlerService);
+
+  authService = inject(AuthService);
 
   data: any[] = [];
   urlImg = `${environment.base_urlImg}Administration/tel-emergencia/`;
-
-  ref: DynamicDialogRef;
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   ngOnInit(): void {
     this.onLoadData();
   }
 
   onLoadData() {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .get('TelefonosEmergencia')
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.data = this.customToastService.onCloseOnGetData(resp.body);
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
+    const urlApi = `TelefonosEmergencia`;
+    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      this.data = result;
+    });
   }
   onDelete(id: number) {
     this.apiRequestService
@@ -59,24 +40,15 @@ export default class TelefonosEmergenciaComponent {
   }
 
   onModalAddOrEdit(data: any) {
-    this.ref = this.dialogService.open(AddOrEditTelefonosEmergenciaComponent, {
-      data: {
-        id: data.id,
-      },
-      header: data.title,
-      styleClass: 'modal-md ',
-      closeOnEscape: true,
-      baseZIndex: 10000,
-    });
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        this.customToastService.onShowSuccess();
-        this.onLoadData();
-      }
-    });
-  }
-
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
+    this.dialogHandlerService
+      .openDialog(
+        AddOrEditTelefonosEmergenciaComponent,
+        data,
+        data.title,
+        this.dialogHandlerService.dialogSizeMd
+      )
+      .then((result: boolean) => {
+        if (result) this.onLoadData();
+      });
   }
 }

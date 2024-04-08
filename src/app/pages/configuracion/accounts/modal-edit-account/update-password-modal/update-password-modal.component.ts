@@ -12,7 +12,7 @@ import { CustomToastService } from 'src/app/core/services/custom-toast.service';
   imports: [LuxuryAppComponentsModule],
 })
 export default class UpdatePasswordModalComponent implements OnInit {
-  private customToastService = inject(CustomToastService);
+  customToastService = inject(CustomToastService);
   apiRequestService = inject(ApiRequestService);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);

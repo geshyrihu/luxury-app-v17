@@ -21,7 +21,7 @@ export default class TicketSeguimientoComponent implements OnInit, OnDestroy {
   ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);
   authService = inject(AuthService);
-  private customToastService = inject(CustomToastService);
+  customToastService = inject(CustomToastService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
@@ -89,7 +89,6 @@ export default class TicketSeguimientoComponent implements OnInit, OnDestroy {
   onSubmit() {
     if (!this.apiRequestService.validateForm(this.form)) return;
 
-    // Deshabilitar el botón al iniciar el envío del formulario
     this.submitting = true;
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();

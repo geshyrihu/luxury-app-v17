@@ -1,19 +1,11 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule, {
   flatpickrFactory,
 } from 'app/shared/luxuryapp-components.module';
-import { MessageService } from 'primeng/api';
-import {
-  DialogService,
-  DynamicDialogConfig,
-  DynamicDialogRef,
-} from 'primeng/dynamicdialog';
-import { Subject, takeUntil } from 'rxjs';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
-import { DataService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
@@ -23,19 +15,14 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   standalone: true,
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
-export default class ModalOrdenCompraComponent implements OnInit, OnDestroy {
+export default class ModalOrdenCompraComponent implements OnInit {
+  apiRequestService = inject(ApiRequestService);
   formBuilder = inject(FormBuilder);
   authService = inject(AuthService);
   config = inject(DynamicDialogConfig);
-  customToastService = inject(CustomToastService);
-  dataService = inject(DataService);
-  apiRequestService = inject(ApiRequestService);
-  public dateService = inject(DateService);
-  public dialogService = inject(DialogService);
-  public messageService = inject(MessageService);
+  dateService = inject(DateService);
   ref = inject(DynamicDialogRef);
 
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
   submitting: boolean = false;
 
   ordenCompraId: number = 0;
@@ -60,38 +47,22 @@ export default class ModalOrdenCompraComponent implements OnInit, OnDestroy {
   }
 
   onLoadData() {
-    this.dataService
-      .get(`OrdenCompra/GetForEdit/${this.ordenCompraId}`)
-      .subscribe((resp: any) => {
-        resp.body.fechaSolicitud = this.dateService.getDateFormat(
-          resp.body.fechaSolicitud
+    this.apiRequestService
+      .onGetItem(`OrdenCompra/GetForEdit/${this.ordenCompraId}`)
+      .then((result: any) => {
+        result.fechaSolicitud = this.dateService.getDateFormat(
+          result.fechaSolicitud
         );
-        this.form.patchValue(resp.body);
+        this.form.patchValue(result);
       });
   }
   onSubmit() {
-    // Deshabilitar el botón al iniciar el envío del formulario
     this.submitting = true;
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
 
-    this.dataService
-      .put(`OrdenCompra/${this.ordenCompraId}`, this.form.value)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          this.ref.close(true);
-          this.customToastService.onClose();
-        },
-        error: (error) => {
-          // Habilitar el botón nuevamente al finalizar el envío del formulario
-          this.submitting = false;
-          this.customToastService.onCloseToError(error);
-        },
+    this.apiRequestService
+      .onPut(`OrdenCompra/${this.ordenCompraId}`, this.form.value)
+      .then((result: boolean) => {
+        result ? this.ref.close(true) : (this.submitting = false);
       });
-  }
-
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
   }
 }

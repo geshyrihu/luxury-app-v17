@@ -18,7 +18,7 @@ export default class AddoreditPresentacionJuntaComiteComponent
   implements OnInit, OnDestroy
 {
   formBuilder = inject(FormBuilder);
-  private customToastService = inject(CustomToastService);
+  customToastService = inject(CustomToastService);
   apiRequestService = inject(ApiRequestService);
   authService = inject(AuthService);
   config = inject(DynamicDialogConfig);
@@ -52,7 +52,7 @@ export default class AddoreditPresentacionJuntaComiteComponent
 
     this.id = this.config.data.id;
     const model = this.onCreateFormData(this.form.value);
-    // Deshabilitar el botón al iniciar el envío del formulario
+
     this.submitting = true;
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();

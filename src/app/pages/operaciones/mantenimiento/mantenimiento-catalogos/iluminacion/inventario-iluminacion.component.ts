@@ -17,9 +17,9 @@ import AddoreditInventarioIluminacionComponent from './addoredit-inventario-ilum
 export default class InventarioIluminacionComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   authService = inject(AuthService);
-  public customerIdService = inject(CustomerIdService);
+  customerIdService = inject(CustomerIdService);
   dialogHandlerService = inject(DialogHandlerService);
-  public dialogService = inject(DialogService);
+  dialogService = inject(DialogService);
 
   urlImg = environment.base_urlImg + 'Administration/products/';
   data: any[] = [];

@@ -1,11 +1,7 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { MessageService } from 'primeng/api';
-import { Subject, takeUntil } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
-import { DataService } from 'src/app/core/services/data.service';
 import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-orden-compra-pdf',
@@ -13,15 +9,9 @@ import { environment } from 'src/environments/environment';
   standalone: true,
   imports: [LuxuryAppComponentsModule],
 })
-export default class OrdenCompraPdfComponent implements OnInit, OnDestroy {
-  customToastService = inject(CustomToastService);
-  dataService = inject(DataService);
+export default class OrdenCompraPdfComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  public routeActive = inject(ActivatedRoute);
-
-  public messageService = inject(MessageService);
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+  routeActive = inject(ActivatedRoute);
 
   url: string = environment.base_urlImg + 'Administration/customer/';
   model: any;
@@ -43,66 +33,44 @@ export default class OrdenCompraPdfComponent implements OnInit, OnDestroy {
   }
 
   onLoadData() {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .get(`ordencompra/Pdf/${this.ordenCompraId}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.model = resp.body;
-          this.ordenCompraDetalle = this.model.ordenCompraDetalle;
+    this.apiRequestService
+      .onGetItem(`ordencompra/Pdf/${this.ordenCompraId}`)
+      .then((result: any) => {
+        this.model = result;
+        this.ordenCompraDetalle = this.model.ordenCompraDetalle;
 
-          for (let n of this.ordenCompraDetalle) {
-            this.total += n.total;
+        for (let n of this.ordenCompraDetalle) {
+          this.total += n.total;
+        }
+        let subTotal = 0;
+        let retencionIva = 0;
+        let ivaTotal = 0;
+
+        for (let n of this.model.ordenCompraDetalle) {
+          subTotal += n.subTotal;
+          if (n.unidadMedidaId === 14) {
+            retencionIva += n.subTotal;
           }
-          let subTotal = 0;
-          let retencionIva = 0;
-          let ivaTotal = 0;
+        }
+        for (let n of this.model.ordenCompraDetalle) {
+          ivaTotal += n.iva;
+        }
 
-          for (let n of this.model.ordenCompraDetalle) {
-            subTotal += n.subTotal;
-            if (n.unidadMedidaId === 14) {
-              retencionIva += n.subTotal;
-            }
-          }
-          for (let n of this.model.ordenCompraDetalle) {
-            ivaTotal += n.iva;
-          }
+        this.retencionIva = retencionIva * 0.06;
 
-          this.retencionIva = retencionIva * 0.06;
+        this.subtotal = subTotal;
+        this.iva = ivaTotal;
 
-          this.subtotal = subTotal;
-          this.iva = ivaTotal;
+        this.subtotal = subTotal;
 
-          this.subtotal = subTotal;
-
-          this.total = this.subtotal + this.iva - this.retencionIva;
-          this.customToastService.onClose();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+        this.total = this.subtotal + this.iva - this.retencionIva;
       });
   }
 
   onGetOrdenCompraPresupuesto() {
-    this.dataService
-      .get<any>(
-        `OrdenCompraPresupuesto/GetAllForOrdenCompra/${this.ordenCompraId}`
-      )
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.ordenCompraPresupuesto = resp.body;
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
-  }
-
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
+    const urlApi = `OrdenCompraPresupuesto/GetAllForOrdenCompra/${this.ordenCompraId}`;
+    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      this.ordenCompraPresupuesto = result;
+    });
   }
 }

@@ -27,10 +27,10 @@ export default class ListPersonEmergencyContactComponent
   customToastService = inject(CustomToastService);
   dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
-  public messageService = inject(MessageService);
+  messageService = inject(MessageService);
   ref = inject(DynamicDialogRef);
 
-  public dialogService = inject(DialogService);
+  dialogService = inject(DialogService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
   personId: number = 0;

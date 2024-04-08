@@ -17,12 +17,12 @@ import FichaTecnicaActivoComponent from '../../operaciones/mantenimiento/manteni
   imports: [LuxuryAppComponentsModule],
 })
 export default class MiEdificioComponent implements OnInit, OnDestroy {
-  public customerIdService = inject(CustomerIdService);
+  customerIdService = inject(CustomerIdService);
   customToastService = inject(CustomToastService);
   dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
-  public dialogService = inject(DialogService);
-  public messageService = inject(MessageService);
+  dialogService = inject(DialogService);
+  messageService = inject(MessageService);
 
   baseUrlImg = environment.base_urlImg;
   data: any;

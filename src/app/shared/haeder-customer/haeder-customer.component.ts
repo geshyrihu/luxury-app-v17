@@ -16,8 +16,8 @@ import { environment } from 'src/environments/environment';
 export default class HaederCustomerComponent implements OnInit, OnDestroy {
   dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
-  public customerIdService = inject(CustomerIdService);
-  public filterReportOperationService = inject(TicketFilterService);
+  customerIdService = inject(CustomerIdService);
+  filterReportOperationService = inject(TicketFilterService);
   customToastService = inject(CustomToastService);
 
   logoCustomer = '';

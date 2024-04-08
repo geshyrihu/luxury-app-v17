@@ -22,14 +22,14 @@ import { DateService } from 'src/app/core/services/date.service';
 export default class AddPresentacionJuntaComiteComponent
   implements OnInit, OnDestroy
 {
-  private customToastService = inject(CustomToastService);
+  customToastService = inject(CustomToastService);
   apiRequestService = inject(ApiRequestService);
   formBuilder = inject(FormBuilder);
   authService = inject(AuthService);
   config = inject(DynamicDialogConfig);
-  public customerIdService = inject(CustomerIdService);
+  customerIdService = inject(CustomerIdService);
   dataService = inject(DataService);
-  public dateService = inject(DateService);
+  dateService = inject(DateService);
   ref = inject(DynamicDialogRef);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
@@ -79,7 +79,7 @@ export default class AddPresentacionJuntaComiteComponent
     if (!this.apiRequestService.validateForm(this.form)) return;
 
     this.id = this.config.data.id;
-    // Deshabilitar el botón al iniciar el envío del formulario
+
     this.submitting = true;
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();

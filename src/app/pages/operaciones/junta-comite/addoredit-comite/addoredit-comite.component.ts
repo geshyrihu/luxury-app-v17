@@ -1,26 +1,18 @@
-import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
-import { Subject, takeUntil } from 'rxjs';
 import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
-import { DataService } from 'src/app/core/services/data.service';
 @Component({
   selector: 'app-addoredit-comite',
   templateUrl: './addoredit-comite.component.html',
   standalone: true,
   imports: [LuxuryAppComponentsModule],
 })
-export default class AddOrEditComiteComponent implements OnInit, OnDestroy {
+export default class AddOrEditComiteComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   config = inject(DynamicDialogConfig);
-  customToastService = inject(CustomToastService);
-  dataService = inject(DataService);
-  public messageService = inject(MessageService);
 
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
   @Input()
   customerId: number;
   @Input()
@@ -36,69 +28,34 @@ export default class AddOrEditComiteComponent implements OnInit, OnDestroy {
     this.onLoadData();
   }
   onLoadCB() {
-    this.dataService
-      .get(
-        'SelectItem/GetListComiteMinuta/' +
-          this.customerId +
-          '/' +
-          this.meetingId
-      )
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.cb_ParticipantComite = resp.body;
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
+    const urlApi = `SelectItem/GetListComiteMinuta/${this.customerId}/${this.meetingId}`;
+    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      this.cb_ParticipantComite = result;
+    });
   }
 
   onSubmit() {
-    this.dataService
-      .get(
-        `MeetingComite/AgregarParticipantesComite/${this.meetingId}/${this.comiteparticipante}`
-      )
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.customToastService.onShowSuccess();
-          this.onLoadData();
-          this.onLoadCB();
-        },
-        error: (err) => {
-          this.customToastService.onShowError();
-        },
-      });
+    const urlApi = `MeetingComite/AgregarParticipantesComite/${this.meetingId}/${this.comiteparticipante}`;
+    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+      this.onLoadData();
+      this.onLoadCB();
+    });
   }
   onDelete(idParticipant: number): void {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .delete(`MeetingComite/${idParticipant}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          this.onLoadData();
-          this.onLoadCB();
-          this.customToastService.onCloseToSuccess();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+    this.apiRequestService
+      .onDelete(`MeetingComite/${idParticipant}`)
+      .then((result: boolean) => {
+        this.onLoadData();
+        this.onLoadCB();
       });
   }
 
   onLoadData() {
     this.comiteparticipante = '';
 
-    this.dataService
-      .get(`MeetingComite/ParticipantesComite/${this.meetingId}`)
-      .subscribe((resp: any) => {
-        this.listaParticipantesComite = resp.body;
-      });
-  }
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
+    const urlApi = `MeetingComite/ParticipantesComite/${this.meetingId}`;
+    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      this.listaParticipantesComite = result;
+    });
   }
 }
