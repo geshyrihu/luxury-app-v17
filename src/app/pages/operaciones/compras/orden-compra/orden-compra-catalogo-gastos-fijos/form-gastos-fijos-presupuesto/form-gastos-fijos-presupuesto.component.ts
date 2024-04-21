@@ -78,7 +78,6 @@ export default class FormGastosFijosPresupuestoComponent implements OnInit {
     this.apiRequestService
       .onPut(`CatalogoGastosFijosPresupuesto/${item.id}`, item)
       .then((result: boolean) => {
-        console.log('🚀 ~ result:', result);
         this.onLoadPresupuestoAgregados();
       });
   }

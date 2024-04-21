@@ -49,8 +49,6 @@ export default class LegalListTicketComponent implements OnInit {
   }
 
   onFilter(mesanio: any) {
-    console.log('🚀 ~ mesanio:', mesanio);
-
     this.apiRequestService
       .onGetList('TicketLegal/AllLegal/' + mesanio)
       .then((result: any) => {

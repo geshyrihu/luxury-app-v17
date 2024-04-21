@@ -38,7 +38,7 @@ export default class OndenCompraPdfSolicitudPagoComponent implements OnInit {
 
   onLoadData() {
     this.apiRequestService
-      .onGetSelectItem(`OrdenCompra/SolicitudPago/${this.ordenCompraId}`)
+      .onGetItem(`OrdenCompra/SolicitudPago/${this.ordenCompraId}`)
       .then((response: any) => {
         this.model = response;
         if (this.model.ordenCompraAuth.applicationUserAuthId !== null) {

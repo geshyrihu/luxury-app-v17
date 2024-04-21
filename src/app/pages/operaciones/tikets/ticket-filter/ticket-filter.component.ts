@@ -76,21 +76,8 @@ export default class FilterTicketComponent implements OnInit {
         this.filterReportOperation.getfilterTicket
       )
       .subscribe((response: any) => {
-        console.log('🚀 ~ response:', response);
         this.cb_solicitantes = response.body;
       });
-    // this.apiRequestService
-    //   .onPost(
-    //     'SelectItem/EmpleadosSolicitudTicket',
-    //     this.filterReportOperation.getfilterTicket
-    //   )
-    //   .then((response: any) => {
-    //     console.log('🚀 ~ response:', response);
-    //     // this.cb_area_responsable = response.map((selectList: any) => ({
-    //     //   value: selectList.value,
-    //     //   label: selectList.label,
-    //     // }));
-    //   });
   }
   onResetForm() {
     this.form.reset();

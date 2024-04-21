@@ -78,7 +78,6 @@ export default class ListTicketComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
-          console.log('🚀 ~ resp:', resp.body);
           this.data = this.customToastService.onCloseOnGetData(resp.body);
           this.dataCompleta = this.data;
         },

@@ -54,7 +54,7 @@
             [class.two]="cotizacionProveedor.length === 2"
             [class.three]="cotizacionProveedor.length === 3"
             class="text-center font-size-14 pointer"
-            (click)="onEditCotizacion(1)"
+            (click)="onEditCotizacion(1, cotizacionProveedorId1)"
           >
             {{ provider1 | uppercase }}
           </th>
@@ -64,7 +64,7 @@
             [class.three]="cotizacionProveedor.length === 3"
             scope="col"
             class="text-center pointer font-size-14"
-            (click)="onEditCotizacion(2)"
+            (click)="onEditCotizacion(2, cotizacionProveedorId2)"
           >
             {{ provider2 | uppercase }}
           </th>
@@ -73,7 +73,7 @@
             [class.three]="cotizacionProveedor.length === 3"
             scope="col"
             class="text-center pointer font-size-14"
-            (click)="onEditCotizacion(3)"
+            (click)="onEditCotizacion(3, cotizacionProveedorId3)"
           >
             {{ provider3 | uppercase }}
           </th>
@@ -235,18 +235,18 @@
       [class.two]="cotizacionProveedor.length === 2"
       [class.three]="cotizacionProveedor.length === 3"
     >
-      {{ cotizacionProveedor[0].entrega }}
+      {{ cotizacionProveedor[0]?.entrega }}
     </td>
     } @if (provider2 !== undefined) {
     <td
       [class.two]="cotizacionProveedor.length === 2"
       [class.three]="cotizacionProveedor.length === 3"
     >
-      {{ cotizacionProveedor[1].entrega }}
+      {{ cotizacionProveedor[1]?.entrega }}
     </td>
     } @if (provider3 !== undefined) {
     <td [class.three]="cotizacionProveedor.length === 3">
-      {{ cotizacionProveedor[2].entrega }}
+      {{ cotizacionProveedor[2]?.entrega }}
     </td>
     }
   </tr>
@@ -263,18 +263,18 @@
       [class.two]="cotizacionProveedor.length === 2"
       [class.three]="cotizacionProveedor.length === 3"
     >
-      {{ cotizacionProveedor[0].garantia }}
+      {{ cotizacionProveedor[0]?.garantia }}
     </td>
     } @if (provider2 !== undefined) {
     <td
       [class.two]="cotizacionProveedor.length === 2"
       [class.three]="cotizacionProveedor.length === 3"
     >
-      {{ cotizacionProveedor[1].garantia }}
+      {{ cotizacionProveedor[1]?.garantia }}
     </td>
     } @if (provider3 !== undefined) {
     <td [class.three]="cotizacionProveedor.length === 3">
-      {{ cotizacionProveedor[2].garantia }}
+      {{ cotizacionProveedor[2]?.garantia }}
     </td>
     }
   </tr>
@@ -291,18 +291,18 @@
       [class.two]="cotizacionProveedor.length === 2"
       [class.three]="cotizacionProveedor.length === 3"
     >
-      {{ cotizacionProveedor[0].politicaPago }}
+      {{ cotizacionProveedor[0]?.politicaPago }}
     </td>
     } @if (provider2 !== undefined) {
     <td
       [class.two]="cotizacionProveedor.length === 2"
       [class.three]="cotizacionProveedor.length === 3"
     >
-      {{ cotizacionProveedor[1].politicaPago }}
+      {{ cotizacionProveedor[1]?.politicaPago }}
     </td>
     } @if (provider3 !== undefined) {
     <td [class.three]="cotizacionProveedor.length === 3">
-      {{ cotizacionProveedor[2].politicaPago }}
+      {{ cotizacionProveedor[2]?.politicaPago }}
     </td>
     }
   </tr>

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DialogModule } from 'primeng/dialog';
+import { DragDropModule } from 'primeng/dragdrop';
 import { EditorModule } from 'primeng/editor';
 import { ImageModule } from 'primeng/image';
 import { InputTextModule } from 'primeng/inputtext';
@@ -19,6 +20,7 @@ import { ToastModule } from 'primeng/toast';
     MultiSelectModule,
     InputTextModule,
     EditorModule,
+    DragDropModule,
   ],
   exports: [
     TableModule,
@@ -30,6 +32,7 @@ import { ToastModule } from 'primeng/toast';
     MultiSelectModule,
     InputTextModule,
     EditorModule,
+    DragDropModule,
   ],
 })
 export default class PrimeNgModule {}

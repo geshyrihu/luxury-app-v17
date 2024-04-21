@@ -66,7 +66,7 @@ export default class ListOrdenCompraComponent implements OnInit {
           id,
         },
         'Editar Orden de Compra',
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerService.dialogSizeFull
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();
@@ -78,7 +78,7 @@ export default class ListOrdenCompraComponent implements OnInit {
         CreateOrdenCompraComponent,
         {},
         'Nueva Orden de compra',
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerService.dialogSizeFull
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();
@@ -91,7 +91,7 @@ export default class ListOrdenCompraComponent implements OnInit {
         CaratulaFondeoComponent,
         {},
         'Caratula',
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerService.dialogSizeFull
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();

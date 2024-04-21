@@ -2,37 +2,40 @@
   <app-report-header></app-report-header>
   <h4 class="h4">Reporte de Pendientes</h4>
   @for (item of data; track item) {
-  <div class="alert alert-light p-1">
+  <ngb-alert [dismissible]="false" type="secondary">
+    {{ item.key }}
+  </ngb-alert>
+  <!-- <div class="alert alert-light p-1">
     <h5 class="h5">
       {{ item.key }}
     </h5>
-  </div>
+  </div> -->
   <table class="table table-sm">
     @for (detalles of item.weeklyReportPDFDTO; track detalles) {
     <tbody>
       <tr class="mb-2 breakPage">
-        <td style="width: 30%">
+        <td style="width: 40%">
           <img
             [src]="urlImg + detalles.photoPathBefore"
             alt=""
             class="h-50 w-50 rounded"
           />
         </td>
-        <td style="width: 70%">
+        <td style="width: 60%">
           <table class="table table-sm">
             <tbody>
               <tr>
-                <td style="width: 30%">Solicitud</td>
+                <!-- <td style="width: 30%">Solicitud</td> -->
                 <td style="width: 70%">{{ detalles.activity }}</td>
               </tr>
-              <tr>
+              <!-- <tr>
                 <td style="width: 30%">Solicita</td>
                 <td style="width: 70%">
                   {{ detalles.employeeCargoReporte }},{{
                     detalles.dateRequest | date : "fullDate"
                   }}
                 </td>
-              </tr>
+              </tr> -->
               <!--
                     <tr>
                       <td style="width: 30%">Responsable</td>

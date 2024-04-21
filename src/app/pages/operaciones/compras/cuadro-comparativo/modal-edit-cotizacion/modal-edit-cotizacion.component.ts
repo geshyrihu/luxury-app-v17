@@ -14,6 +14,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
+import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import CreateOrdenCompraComponent from '../../orden-compra/orden-compra/create-orden-compra/create-orden-compra.component';
 
 @Component({
@@ -23,11 +24,13 @@ import CreateOrdenCompraComponent from '../../orden-compra/orden-compra/create-o
   imports: [LuxuryAppComponentsModule, FormsModule, CommonModule, ToastModule],
 })
 export default class ModalEditCotizacionComponent implements OnInit, OnDestroy {
+  apiRequestService = inject(ApiRequestService);
+  dialogHandlerService = inject(DialogHandlerService);
+
   customToastService = inject(CustomToastService);
   ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);
   dataService = inject(DataService);
-  apiRequestService = inject(ApiRequestService);
   dialogService = inject(DialogService);
   messageService = inject(MessageService);
   router = inject(Router);
@@ -39,11 +42,8 @@ export default class ModalEditCotizacionComponent implements OnInit, OnDestroy {
   solicitudCompra: any;
   solicitudCompraDetalle: any;
   solicitudCompraId = 0;
-  providerId = 0;
-  // providerName: string = '';
   nameProvider: string = '';
   posicionCotizacion: number = 0;
-  // cb_providers: any[] = [];
   proveedorResult: any[] = [];
   cotizacionesRelacionadas: any[] = [];
 
@@ -54,24 +54,12 @@ export default class ModalEditCotizacionComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.solicitudCompraId = this.config.data.solicitudCompraId;
     this.posicionCotizacion = this.config.data.posicionCotizacion;
+    this.cotizacionProveedorId = this.config.data.cotizacionProveedorId;
 
-    // this.apiRequestService
-    //   .onGetSelectItem('Providers')
-    //   .then((response: any) => {
-    //     this.cb_providers = response;
-    //   });
-    // this.onLoadSelectItemProvider();
     this.onGetCotizacioProveedor();
     this.onCotizacionesRelacionadas();
     this.onLoadData();
   }
-
-  // onLoadSelectItemProvider() {
-  //   const url = 'CotizacionProveedor/GetProviders/' + this.solicitudCompraId;
-  //   this.apiRequestService.onGetList(url).then((result: any) => {
-  //     this.cb_providers = result;
-  //   });
-  // }
 
   onGetCotizacioProveedor() {
     const url = `CotizacionProveedor/GetPosicionCotizacion/${this.solicitudCompraId}/${this.posicionCotizacion}`;
@@ -80,7 +68,6 @@ export default class ModalEditCotizacionComponent implements OnInit, OnDestroy {
       this.garantia = result.garantia;
       this.entrega = result.entrega;
       this.politicaPago = result.politicaPago;
-      this.providerId = result.providerId;
       this.nameProvider = result.nameProvider;
     });
   }
@@ -90,7 +77,6 @@ export default class ModalEditCotizacionComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
-          console.log('🚀 ~ resp.body: solicitudcompra', resp.body);
           this.solicitudCompra = resp.body;
           this.solicitudCompraDetalle = resp.body.solicitudCompraDetalle;
         },
@@ -101,7 +87,6 @@ export default class ModalEditCotizacionComponent implements OnInit, OnDestroy {
   }
 
   onUpdateProvider() {
-    // this.cotizacionProveedor.providerId = this.providerId;
     this.cotizacionProveedor.nameProvider = this.nameProvider;
     this.cotizacionProveedor.garantia = this.garantia;
     this.cotizacionProveedor.entrega = this.entrega;
@@ -169,7 +154,7 @@ export default class ModalEditCotizacionComponent implements OnInit, OnDestroy {
     this.customToastService.onLoading();
     this.dataService
       .delete(
-        `solicitudCompra/DeleteProvider/${this.solicitudCompraId}/${this.providerId}`
+        `solicitudCompra/deleteprovider/${this.solicitudCompraId}/${this.cotizacionProveedorId}`
       )
       .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
@@ -183,26 +168,17 @@ export default class ModalEditCotizacionComponent implements OnInit, OnDestroy {
       });
   }
   onModalCreateOrdenCompra() {
-    this.ref.close();
-    this.ref = this.dialogService.open(CreateOrdenCompraComponent, {
-      data: {
+    this.ref.close(true);
+    this.dialogHandlerService.openDialog(
+      CreateOrdenCompraComponent,
+      {
         solicitudCompraId: this.solicitudCompra.id,
         folioSolicitudCompra: this.solicitudCompra.folio,
-        // proveedorId: this.cotizacionProveedor.providerId,
         posicionCotizacion: this.posicionCotizacion,
       },
-      header: 'Crear Orden de compra',
-      width: '1000px',
-      closeOnEscape: true,
-      baseZIndex: 10000,
-    });
-    this.ref.onClose.subscribe((ordenCompraId: number) => {
-      if (ordenCompraId !== undefined) {
-        this.router.navigateByUrl(
-          `operaciones/compras/orden-compra/${ordenCompraId}`
-        );
-      }
-    });
+      'Crear Orden de compra',
+      this.dialogHandlerService.dialogSizeLg
+    );
   }
 
   onCotizacionesRelacionadas() {
@@ -212,24 +188,14 @@ export default class ModalEditCotizacionComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (resp: any) => {
           this.cotizacionesRelacionadas = resp.body;
-          console.log(
-            '🚀 ~ this.cotizacionesRelacionadas:',
-            this.cotizacionesRelacionadas
-          );
         },
         error: (error) => {
           this.customToastService.onCloseToError(error);
         },
       });
   }
-  // public saveProviderId(e): void {
-  //   let find = this.cb_providers.find((x) => x?.label === e.target.value);
-  //   this.providerId = find?.value;
-  //   this.onUpdateProvider();
-  // }
-  public saveProviderId(e): void {}
 
   ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
+    this.ref.close(true);
   }
 }

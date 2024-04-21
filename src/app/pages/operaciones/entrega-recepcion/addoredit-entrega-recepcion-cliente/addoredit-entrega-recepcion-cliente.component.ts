@@ -45,9 +45,7 @@ export default class CrudEntregaRecepcionClienteComponent implements OnInit {
   onSubmit() {
     console.log(this.form.value);
     if (!this.apiRequestService.validateForm(this.form)) return;
-    console.log('se paso validacion de form');
     const model = this.onCreateFormData(this.form.value);
-    console.log('se paso formdata');
     this.submitting = true;
 
     this.apiRequestService

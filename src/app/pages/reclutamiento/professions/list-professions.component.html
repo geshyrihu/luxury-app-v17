@@ -33,34 +33,19 @@
 
   <ng-template pTemplate="header">
     <tr>
-      <th pReorderableColumn scope="col" style="width: 5%">#</th>
-      <th
-        pReorderableColumn
-        scope="col"
-        style="width: 15%"
-        pSortableColumn="hierarchy"
-      >
+      <th scope="col" style="width: 5%">#</th>
+      <th scope="col" style="width: 15%" pSortableColumn="hierarchy">
         JERARQUÍA
         <p-sortIcon field="hierarchy"></p-sortIcon>
       </th>
-      <th
-        pReorderableColumn
-        scope="col"
-        style="width: 15%"
-        pSortableColumn="professionkey"
-      >
+      <th scope="col" style="width: 15%" pSortableColumn="professionkey">
         FOLIO
         <p-sortIcon field="professionkey"></p-sortIcon>
       </th>
-      <th
-        pReorderableColumn
-        scope="col"
-        style="width: 75%"
-        pSortableColumn="nameProfession"
-      >
+      <th scope="col" style="width: 75%" pSortableColumn="nameProfession">
         PROFESION <p-sortIcon field="nameProfession"></p-sortIcon>
       </th>
-      <th pReorderableColumn scope="col" style="width: 10%"></th>
+      <th scope="col" style="width: 10%"></th>
     </tr>
   </ng-template>
 

@@ -1,0 +1,109 @@
+<div class="row">
+  <div class="col-12">
+    <div
+      class="page-title-box d-sm-flex align-items-center justify-content-between"
+    >
+      <h4 class="font-size-18">LISTADO DE AMENIDADES</h4>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-6">
+    <div class="card">
+      <p-table
+        #dt
+        [globalFilterFields]="['name']"
+        [value]="data"
+        styleClass="custom-table"
+      >
+        <ng-template pTemplate="caption">
+          <input
+            type="text"
+            (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+            placeholder="Ingresa texto para buscar..."
+            class="form-control w-100"
+          />
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th scope="col" class="p-column-title" pSortableColumn="name">
+              Amenidad <p-sortIcon field="name"></p-sortIcon>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item>
+          <tr (dblclick)="onDoubleClick(item)">
+            <td class="pointer">
+              {{ item.name }}
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <div class="card">
+      <p-table
+        #dt1
+        [globalFilterFields]="['name']"
+        [value]="dataCustomer"
+        styleClass="custom-table"
+        [reorderableColumns]="true"
+        (onRowReorder)="onRowReorder($event)"
+      >
+        <ng-template pTemplate="caption">
+          <div class="row">
+            <div class="col-sm-10">
+              <input
+                type="text"
+                (input)="
+                  dt1.filterGlobal($any($event.target).value, 'contains')
+                "
+                placeholder="Ingresa texto para buscar..."
+                class="form-control w-100"
+              />
+            </div>
+            <div class="col-sm-2">
+              <a
+                [routerLink]="['/configuracion/list-recorrido']"
+                routerLinkActive="router-link-active"
+                >Recorrido</a
+              >
+            </div>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th scope="col" style="width: 5%">#</th>
+
+            <th scope="col" colspan="2" pSortableColumn="name">
+              Amenidad <p-sortIcon field="name"></p-sortIcon>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item let-index="rowIndex">
+          <tr (dblclick)="onRemoveItem(item.id)" [pReorderableRow]="index">
+            <td class="p-column-title text-center">
+              <i class="fa-duotone fa-bars" pReorderableRowHandle> </i>
+            </td>
+            <td class="pointer">
+              <p>{{ item.location }} {{ item.number }} - {{ item.name }}</p>
+            </td>
+            <td>
+              <div class="d-flex justify-content-center">
+                <custom-button
+                  ngbTooltip="Agregar Inspeccion"
+                  icon="fa-sharp fa-light fa-plus"
+                  (clicked)="
+                    onModalAddOrEdit({ id: item.id, title: 'Agregar' })
+                  "
+                ></custom-button>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>

@@ -43,7 +43,7 @@ export class DialogHandlerService {
 
   private subscribeToDialogClose(ref: any): Promise<boolean> {
     return new Promise<boolean>((resolve) => {
-      ref.onClose.subscribe((resp: boolean) => {
+      ref.onClose.subscribe((resp: any) => {
         if (resp) resolve(resp);
       });
     });

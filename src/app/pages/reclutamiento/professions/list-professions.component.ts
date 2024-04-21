@@ -53,6 +53,7 @@ export default class ListProfessionsComponent implements OnInit, OnDestroy {
 
   onRowReorder(event: any) {
     let movedItem = this.data[event.dragIndex];
+
     this.data.splice(event.dragIndex, 1);
     this.data.splice(event.dropIndex, 0, movedItem);
 

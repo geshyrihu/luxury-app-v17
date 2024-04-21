@@ -31,7 +31,6 @@ export default class TicketIndividualComponent implements OnInit {
       .onGetItem('TicketLegal/individual/' + this.ticketId)
       .then((result: any) => {
         this.data = result;
-        console.log('🚀 ~ result:', result);
       });
   }
 }

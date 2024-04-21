@@ -1,15 +1,14 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Observable, Subject, takeUntil } from 'rxjs';
-import { IWorkPosition } from 'src/app/core/interfaces/empresa-organigrama.interface';
+import { Observable } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataService } from 'src/app/core/services/data.service';
+import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import { StatusSolicitudVacanteService } from 'src/app/core/services/status-solicitud-vacante.service';
 import CardEmployeeComponent from 'src/app/pages/operaciones/directorios/empleados/card-employee/card-employee.component';
 import { environment } from 'src/environments/environment';
@@ -25,28 +24,26 @@ import HoursWorkPositionComponent from '../hours-work-position.component';
   standalone: true,
   imports: [LuxuryAppComponentsModule],
 })
-export default class ListWorkPlantillaComponent implements OnInit, OnDestroy {
-  private router = inject(Router);
+export default class ListWorkPlantillaComponent implements OnInit {
+  apiRequestService = inject(ApiRequestService);
+  dialogHandlerService = inject(DialogHandlerService);
+
+  router = inject(Router);
   authService = inject(AuthService);
-  public confirmationService = inject(ConfirmationService);
+  confirmationService = inject(ConfirmationService);
   customerIdService = inject(CustomerIdService);
   customToastService = inject(CustomToastService);
-  dataService = inject(DataService);
-  apiRequestService = inject(ApiRequestService);
   dialogService = inject(DialogService);
   messageService = inject(MessageService);
-  public statusSolicitudVacanteService = inject(StatusSolicitudVacanteService);
+  statusSolicitudVacanteService = inject(StatusSolicitudVacanteService);
 
   customerId$: Observable<number> = this.customerIdService.getCustomerId$();
   data: any[] = [];
   pahtBaseImg = environment.base_urlImg + 'Administration/accounts/';
   ref: DynamicDialogRef;
 
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
-
   state = 0;
   ngOnInit(): void {
-    this.customerId$ = this.customerIdService.getCustomerId$();
     this.onLoadData();
     this.customerId$.subscribe(() => {
       this.onLoadData();
@@ -54,24 +51,12 @@ export default class ListWorkPlantillaComponent implements OnInit, OnDestroy {
   }
 
   onLoadData() {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .get<IWorkPosition[]>(
-        'workposition/getall/' +
-          this.customerIdService.getcustomerId() +
-          '/' +
-          this.state
-      )
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.data = this.customToastService.onCloseOnGetData(resp.body);
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
+    const urlApi = `workposition/getall/${this.customerIdService.getcustomerId()}/${
+      this.state
+    }`;
+    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      this.data = result;
+    });
   }
 
   //Modal para visualizar horarios de la vacante
@@ -199,7 +184,7 @@ export default class ListWorkPlantillaComponent implements OnInit, OnDestroy {
         id: data.id,
       },
       header: data.title,
-      styleClass: 'modal-md',
+      styleClass: 'modal-lg',
       closeOnEscape: true,
       baseZIndex: 10000,
     });
@@ -218,21 +203,7 @@ export default class ListWorkPlantillaComponent implements OnInit, OnDestroy {
         if (result) this.data = this.data.filter((item) => item.id !== id);
       });
   }
-  SendMailTest() {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .get('SolicitudesReclutamiento/SendMailTest')
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (_) => {
-          this.customToastService.onClose();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
-  }
+
   onValidateShowTIcket(professionId: number): boolean {
     let permission = true;
     if (professionId == 5) {
@@ -269,9 +240,6 @@ export default class ListWorkPlantillaComponent implements OnInit, OnDestroy {
       'Residente',
       'SuperUsuario',
     ]);
-  }
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
   }
 
   // Metodo para validar si el cliente es luxury, nada mas puede ver la info reclutamiento,

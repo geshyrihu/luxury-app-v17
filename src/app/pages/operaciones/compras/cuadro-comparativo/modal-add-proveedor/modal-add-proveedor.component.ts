@@ -26,35 +26,16 @@ export default class ModalAddProveedorComponent implements OnInit {
 
   ngOnInit(): void {
     flatpickrFactory();
-    this.onLoadProviders();
     this.form = this.formBuilder.group({
       solicitudCompraId: [
         this.config.data.solicitudCompraId,
         Validators.required,
       ],
-      providerId: ['', { validators: [Validators.required] }],
-      providerName: ['', { validators: [Validators.required] }],
+      nameProvider: ['', { validators: [Validators.required] }],
       fechaCotizacion: ['', { validators: [Validators.required] }],
       numeroCotizacion: [''],
     });
   }
-  public saveProviderId(e): void {
-    let find = this.cb_providers.find(
-      (x) => x.label.toLowerCase() === e.target.value.toLowerCase()
-    );
-
-    this.form.patchValue({
-      providerId: find?.value,
-    });
-  }
-
-  onLoadProviders() {
-    const url = `CotizacionProveedor/GetProviders/${this.config.data.solicitudCompraId}`;
-    this.apiRequestService.onGetList(url).then((result: any) => {
-      this.cb_providers = result;
-    });
-  }
-
   onSubmit() {
     this.submitting = true;
     this.apiRequestService

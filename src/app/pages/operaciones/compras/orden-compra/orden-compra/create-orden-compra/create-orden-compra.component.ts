@@ -1,5 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import LuxuryAppComponentsModule, {
   flatpickrFactory,
 } from 'app/shared/luxuryapp-components.module';
@@ -18,6 +19,7 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 })
 export default class CreateOrdenCompraComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
+  router = inject(Router);
 
   authService = inject(AuthService);
   config = inject(DynamicDialogConfig);
@@ -33,20 +35,22 @@ export default class CreateOrdenCompraComponent implements OnInit {
   ordenCompraId = 0;
   form: FormGroup;
   date: string = '';
-  proveedorIdRecibido: number = 0;
   posicionCotizacion: number = 0;
 
+  providerId = 0;
+  providerName: string = '';
+  cb_providers: any[] = [];
+
   ngOnInit(): void {
+    this.onLoadSelectItemProvider();
     flatpickrFactory();
     this.solicitudCompraId = this.config.data.solicitudCompraId;
-    // this.proveedorIdRecibido = this.config.data.proveedorId;
     this.posicionCotizacion = this.config.data.posicionCotizacion;
+
     if (this.posicionCotizacion === undefined) {
       this.posicionCotizacion = 0;
     }
-    this.proveedorIdRecibido = 0;
-    // if (this.proveedorIdRecibido === undefined) {
-    // }
+
     this.date = this.dateService.getDateFormat(new Date());
     if (this.solicitudCompraId !== undefined) {
       this.onLoadSolicitudCompra();
@@ -62,6 +66,14 @@ export default class CreateOrdenCompraComponent implements OnInit {
       justificacionGasto: ['', Validators.required],
       revisadoPorResidente: [''],
       employeeId: [this.authService.userTokenDto.infoEmployeeDto.employeeId],
+    });
+  }
+
+  onLoadSelectItemProvider() {
+    const url = 'providers';
+    this.apiRequestService.onGetSelectItem(url).then((result: any) => {
+      console.log('🚀 ~ result:', result);
+      this.cb_providers = result;
     });
   }
 
@@ -89,18 +101,27 @@ export default class CreateOrdenCompraComponent implements OnInit {
     if (this.ordenCompraId === 0) {
       this.apiRequestService
         .onPost(
-          `OrdenCompra/${this.proveedorIdRecibido}/${this.posicionCotizacion}`,
+          `ordencompra/${this.providerId}/${this.posicionCotizacion}`,
           this.form.value
         )
         .then((result: any) => {
-          this.ref.close(result.id);
+          if (result) {
+            this.router.navigateByUrl(
+              `operaciones/compras/orden-compra/${result.id}`
+            );
+            this.submitting = false;
+          }
         });
     } else {
       this.apiRequestService
         .onPut(`OrdenCompra/${this.ordenCompraId}`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((result: any) => {
+          result ? this.ref.close(result.id) : (this.submitting = false);
         });
     }
+  }
+  public saveProviderId(e): void {
+    let find = this.cb_providers.find((x) => x?.label === e.target.value);
+    this.providerId = find?.value;
   }
 }

@@ -44,7 +44,6 @@ export default class LegalTicketEditComponent implements OnInit {
     this.apiRequestService
       .onGetItem(`TicketLegal/${this.id}`)
       .then((result: any) => {
-        console.log('🚀 ~ result:', result);
         this.form.patchValue(result);
       });
   }

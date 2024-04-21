@@ -52,7 +52,7 @@ export default class ListOrdenCompraFijosComponent implements OnInit {
       .openDialog(
         CreateOrdenCompraComponent,
         {},
-        'Nueva Orden de compra',
+        'Nueva Orden de  b',
         this.dialogHandlerService.dialogSizeMd
       )
       .then((result: boolean) => {

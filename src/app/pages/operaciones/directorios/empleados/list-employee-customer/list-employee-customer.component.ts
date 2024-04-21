@@ -12,6 +12,7 @@ import { environment } from 'src/environments/environment';
 import AddAccountCustomerComponent from '../add-account-to-customer/add-account-customer.component';
 import CardEmployeeComponent from '../card-employee/card-employee.component';
 import ListEmpleadosOpcionesComponent from '../list-empleados-opciones/list-empleados-opciones.component';
+import { WorkPositionOptionsComponent } from '../work-position-options/work-position-options.component';
 
 const base_urlImg = environment.base_urlImg + 'Administration/accounts/';
 @Component({
@@ -21,11 +22,11 @@ const base_urlImg = environment.base_urlImg + 'Administration/accounts/';
   imports: [LuxuryAppComponentsModule],
 })
 export default class ListEmployeeComponent implements OnInit {
+  authService = inject(AuthService);
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
   customerIdService = inject(CustomerIdService);
   rutaActiva = inject(ActivatedRoute);
-  authService = inject(AuthService);
 
   activo: boolean = true;
   data: IEmployee[] = [];
@@ -40,7 +41,6 @@ export default class ListEmployeeComponent implements OnInit {
   ngOnInit(): void {
     this.tipoContrato = this.rutaActiva.snapshot.params.parametro;
     this.onLoadData();
-    this.customerId$ = this.customerIdService.getCustomerId$();
     this.rutaActiva.url.subscribe((url) => {
       this.tipoContrato = url[1].path;
       this.onLoadData();
@@ -79,13 +79,46 @@ export default class ListEmployeeComponent implements OnInit {
           active,
         },
         'Opciones',
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerService.dialogSizeLg
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();
       });
   }
-  showModalAddAccount() {
+  onModalWorkPositionOptions(workPositionId: number) {
+    this.dialogHandlerService
+      .openDialog(
+        WorkPositionOptionsComponent,
+        {
+          workPositionId,
+        },
+        'Opciones Puesto de trabajo',
+        this.dialogHandlerService.dialogSizeLg
+      )
+      .then((result: boolean) => {
+        if (result) this.onLoadData();
+      });
+  }
+  onValidateShowTIcket(professionId: number): boolean {
+    let permission = true;
+    if (professionId == 5) {
+      permission = this.authService.onValidateRoles([
+        'SupervisionOperativa',
+        'SuperUsuario',
+        'Reclutamiento',
+      ]);
+    }
+    if (professionId == 6) {
+      permission = this.authService.onValidateRoles([
+        'SupervisionOperativa',
+        'SuperUsuario',
+        'Reclutamiento',
+        'Residente',
+      ]);
+    }
+    return permission;
+  }
+  showModalAddEmployee() {
     this.dialogHandlerService
       .openDialog(
         AddAccountCustomerComponent,

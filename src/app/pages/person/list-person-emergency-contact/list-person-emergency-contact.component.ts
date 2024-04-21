@@ -50,6 +50,7 @@ export default class ListPersonEmergencyContactComponent
       .subscribe({
         next: (resp: any) => {
           this.data = this.customToastService.onCloseOnGetData(resp.body);
+          console.log('🚀 ~ this.data:', this.data);
         },
         error: (error) => {
           this.customToastService.onCloseToError(error);
@@ -57,11 +58,11 @@ export default class ListPersonEmergencyContactComponent
       });
   }
 
-  onDelete(item: any) {
+  onDelete(item: string) {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
     this.dataService
-      .delete(`ContactEmployees/${item.id}`)
+      .delete(`PersonEmergencyContact/${item}`)
       .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: () => {

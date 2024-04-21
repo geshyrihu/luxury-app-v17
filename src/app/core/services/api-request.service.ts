@@ -28,7 +28,6 @@ export class ApiRequestService implements OnDestroy {
     } catch (error) {
       // En caso de error, mostrar un mensaje de error y rechazar la promesa con false
       this.customToastService.onCloseToError(error);
-
       return false;
     }
   }

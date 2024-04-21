@@ -1,3 +1,23 @@
+<div class="form-group row mb-1">
+  <label class="col-3">Proveedor</label>
+  <div class="col-sm-9">
+    <input
+      ngbTooltip="selecciona otro proveedor"
+      placement="top"
+      [(ngModel)]="providerName"
+      class="form-control"
+      list="providerDatalistOptions"
+      id="providerDataList"
+      placeholder="Escribir para buscar..."
+      (change)="saveProviderId($event)"
+    />
+    <datalist id="providerDatalistOptions">
+      @for (item of cb_providers; track item) {
+      <option [value]="item.label"></option>
+      }
+    </datalist>
+  </div>
+</div>
 <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
   <custom-input-date
     [control]="form.get('fechaSolicitud')"
@@ -29,3 +49,4 @@
 
   <custom-button-submit [disabled]="this.form.invalid || submitting" />
 </form>
+asdgsdfg

@@ -13,43 +13,26 @@ export default class DepuracionComponent {
   apiRequestService = inject(ApiRequestService);
   customToastService = inject(CustomToastService);
 
-  ActualizarDatosEmpleadoContatoData() {
+  UpdatePersonToEmployee() {
     this.apiRequestService
-      .onGetList('Depuracion/ActualizarDatosEmpleadoContatoData')
+      .onGetList('UpdateDataBase/UpdatePersonToEmployee')
       .then(() => {
         this.customToastService.onShowSuccess();
         this.customToastService.onClose();
       });
   }
-
-  UpdateAccounts() {
+  UpdatePhoneCustomer() {
     this.apiRequestService
-      .onGetList('UpdateDataBase/updateaccounts')
+      .onGetList('UpdateDataBase/UpdatePhoneCustomer')
       .then(() => {
         this.customToastService.onShowSuccess();
         this.customToastService.onClose();
       });
   }
-  DeleteFolios() {
-    this.apiRequestService.onGetList('UpdateDataBase/DeleteFolios').then(() => {
+  InsertData() {
+    this.apiRequestService.onGetList('UpdateDataBase/InsertData').then(() => {
       this.customToastService.onShowSuccess();
       this.customToastService.onClose();
     });
-  }
-  UpdateFinancieros() {
-    this.apiRequestService
-      .onGetList('UpdateDataBase/UpdateFinancieros')
-      .then(() => {
-        this.customToastService.onShowSuccess();
-        this.customToastService.onClose();
-      });
-  }
-  UpdateCotizacionProveedor() {
-    this.apiRequestService
-      .onGetList('UpdateDataBase/UpdateCotizacionProveedor')
-      .then(() => {
-        this.customToastService.onShowSuccess();
-        this.customToastService.onClose();
-      });
   }
 }

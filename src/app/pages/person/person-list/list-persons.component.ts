@@ -46,6 +46,7 @@ export default class ListPersonComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (resp: any) => {
           this.data = this.customToastService.onCloseOnGetData(resp.body);
+          console.log('🚀 ~ this.data:', this.data);
         },
         error: (error) => {
           this.customToastService.onCloseToError(error);

@@ -1,4 +1,8 @@
-import { LocationStrategy, PathLocationStrategy } from '@angular/common';
+import {
+  IMAGE_CONFIG,
+  LocationStrategy,
+  PathLocationStrategy,
+} from '@angular/common';
 import {
   HTTP_INTERCEPTORS,
   HttpClientModule,
@@ -27,6 +31,13 @@ import { JwtInterceptor } from './core/services/jwt-interceptor.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    {
+      provide: IMAGE_CONFIG,
+      useValue: {
+        disableImageSizeWarning: true,
+        disableImageLazyLoadWarning: true,
+      },
+    },
     importProvidersFrom(
       // Módulo de traducción que configura el idioma predeterminado como español
       TranslateModule.forRoot({

@@ -30,6 +30,7 @@ export default class PresupuestoIndividualComponent implements OnInit {
   // Declaración e inicialización de variables
   id: number = 0;
   employeeId: number = this.authService.infoEmployeeDto.employeeId;
+  personId: number = this.authService.infoEmployeeDto.personId;
   data: any;
   ref: DynamicDialogRef; // Referencia a un cuadro de diálogo modal
 
@@ -77,7 +78,7 @@ export default class PresupuestoIndividualComponent implements OnInit {
     this.dialogHandlerService.openDialog(
       PresupuestoDetalleEdicionHistorialComponent,
       {
-        id: this.id,
+        id,
       },
       'Historial de movimientos',
       this.dialogHandlerService.dialogSizeMd
@@ -143,6 +144,7 @@ export default class PresupuestoIndividualComponent implements OnInit {
     const data = {
       id: item.id,
       employeeId: this.employeeId,
+      personId: this.personId,
       monthlyBudget: item.monthlyBudget,
     };
 
@@ -195,6 +197,7 @@ export default class PresupuestoIndividualComponent implements OnInit {
     const data = {
       id: item.id,
       employeeId: this.employeeId,
+      personId: this.personId,
       monthlyBudget: newmonthlyBudget,
     };
 

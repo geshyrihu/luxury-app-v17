@@ -2,12 +2,9 @@ import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subject, takeUntil } from 'rxjs';
 import { ITicketseguimiento } from 'src/app/core/interfaces/ticketseguimiento.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
-import { DataService } from 'src/app/core/services/data.service';
 @Component({
   selector: 'app-ticket-seguimiento',
   templateUrl: './ticket-seguimiento.component.html',
@@ -15,15 +12,11 @@ import { DataService } from 'src/app/core/services/data.service';
   imports: [LuxuryAppComponentsModule],
 })
 export default class TicketSeguimientoComponent implements OnInit, OnDestroy {
-  formBuilder = inject(FormBuilder);
-  dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
+  formBuilder = inject(FormBuilder);
   ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);
   authService = inject(AuthService);
-  customToastService = inject(CustomToastService);
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   seguimientos: ITicketseguimiento[] = [];
   submitting: boolean = false;
@@ -37,6 +30,10 @@ export default class TicketSeguimientoComponent implements OnInit, OnDestroy {
   form: FormGroup = this.formBuilder.group({
     id: { value: this.id, disabled: true },
     weeklyReportId: [this.weeklyReportId, Validators.required],
+    personId: [
+      this.authService.userTokenDto.infoEmployeeDto.personId,
+      Validators.required,
+    ],
     employeeId: [
       this.authService.userTokenDto.infoEmployeeDto.employeeId,
       Validators.required,
@@ -68,20 +65,12 @@ export default class TicketSeguimientoComponent implements OnInit, OnDestroy {
 
   onCargaListaseguimientos() {
     this.loading = true;
-    this.dataService
-      .get<ITicketseguimiento[]>(
-        `TicketSeguimiento/seguimientos/${this.weeklyReportId}`
-      )
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.seguimientos = resp.body;
-          this.loading = false;
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
+
+    const urlApi = `TicketSeguimiento/seguimientos/${this.weeklyReportId}`;
+    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      this.seguimientos = result;
+      this.loading = false;
+    });
   }
   get f() {
     return this.form.controls;
@@ -90,29 +79,18 @@ export default class TicketSeguimientoComponent implements OnInit, OnDestroy {
     if (!this.apiRequestService.validateForm(this.form)) return;
 
     this.submitting = true;
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
 
-    this.dataService
-      .post(`TicketSeguimiento`, this.form.value)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (_) => {
-          this.onCargaListaseguimientos();
-          this.form.patchValue({
-            seguimiento: '',
-          });
-          this.seguimientoLenght = 200;
-          this.customToastService.onCloseToSuccess();
-        },
-        error: (error) => {
-          // Habilitar el botón nuevamente al finalizar el envío del formulario
-          this.submitting = false;
-          this.customToastService.onCloseToError(error);
-        },
+    this.apiRequestService
+      .onPost(`TicketSeguimiento`, this.form.value)
+      .then((_) => {
+        this.onCargaListaseguimientos();
+        this.form.patchValue({
+          seguimiento: '',
+        });
+        this.seguimientoLenght = 200;
       });
   }
   ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
+    this.ref.close(true);
   }
 }

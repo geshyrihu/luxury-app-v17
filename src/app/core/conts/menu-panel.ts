@@ -87,6 +87,32 @@ export let menuPanel: IMenuPanel[] = [
     ],
   },
   {
+    group: 'Recorridos',
+
+    items: [
+      {
+        title: 'Catalogo Amenidades',
+        path: '/configuracion/catalogo-amenidades',
+      },
+      {
+        title: 'Catalog Inspection',
+        path: '/configuracion/catalog-inspection',
+      },
+      {
+        title: 'Residencial Localizaciones',
+        path: '/configuracion/residential-location',
+      },
+      {
+        title: 'Clientes Amenities Catalogo',
+        path: '/configuracion/customer-amenities-catalog',
+      },
+      {
+        title: 'Recorridos',
+        path: '/configuracion/list-recorrido',
+      },
+    ],
+  },
+  {
     group: 'General',
 
     items: [
