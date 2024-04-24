@@ -51,7 +51,7 @@ export default class AddOrEditPiscinaComponent implements OnInit {
       pathImage: [''],
       typePiscina: [0, Validators.required],
       employeeId: [this.authService.userTokenDto.infoEmployeeDto.employeeId],
-      customerId: [this.customerIdService.getcustomerId()],
+      customerId: [this.customerIdService.getCustomerId()],
     });
   }
 
@@ -61,7 +61,7 @@ export default class AddOrEditPiscinaComponent implements OnInit {
       this.model = result;
       this.urlBaseImg = `${
         environment.base_urlImg
-      }customers/${this.customerIdService.getcustomerId()}/piscina/`;
+      }customers/${this.customerIdService.getCustomerId()}/piscina/`;
       this.form.patchValue(result);
     });
   }

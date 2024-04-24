@@ -25,9 +25,9 @@ export default class DashboardMinutasComponent implements OnInit {
   ref: DynamicDialogRef;
 
   ngOnInit(): void {
-    this.onLoadData(this.customerIdService.getcustomerId());
+    this.onLoadData(this.customerIdService.getCustomerId());
     this.customerId$.subscribe((resp) => {
-      this.onLoadData(this.customerIdService.getcustomerId());
+      this.onLoadData(this.customerIdService.getCustomerId());
     });
   }
 

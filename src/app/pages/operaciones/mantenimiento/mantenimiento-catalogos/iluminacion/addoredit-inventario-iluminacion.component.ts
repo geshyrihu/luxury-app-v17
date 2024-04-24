@@ -89,7 +89,7 @@ export default class AddoreditInventarioIluminacionComponent implements OnInit {
     this.apiRequestService
       .onGetList(
         'Machineries/GetAutocompeteInv/' +
-          this.customerIdService.getcustomerId()
+          this.customerIdService.getCustomerId()
       )
       .then((result: any) => {
         this.cb_machinery = result;

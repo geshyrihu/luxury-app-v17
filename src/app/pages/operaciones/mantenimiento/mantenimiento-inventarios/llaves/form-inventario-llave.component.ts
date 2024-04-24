@@ -36,7 +36,7 @@ export default class FormInventarioLlaveComponent implements OnInit, OnDestroy {
   cb_equipoClasificacion: ISelectItem[] = [];
   form: FormGroup = this.formBuilder.group({
     id: { value: this.id, disabled: true },
-    customerId: [this.customerIdService.getcustomerId(), [Validators.required]],
+    customerId: [this.customerIdService.getCustomerId(), [Validators.required]],
     descripcion: ['', [Validators.required]],
     marca: ['', [Validators.required]],
     numeroLlave: ['', [Validators.required]],

@@ -69,7 +69,7 @@ export default class ListRecorridoComponent implements OnInit, OnDestroy {
 
     this.dataService
       .get(
-        `Routes/GetAll/${this.customerIdService.getcustomerId()}/${value}/${
+        `Routes/GetAll/${this.customerIdService.getCustomerId()}/${value}/${
           this.filterValue
         }`
       )

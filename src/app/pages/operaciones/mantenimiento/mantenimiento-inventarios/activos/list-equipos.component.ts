@@ -58,7 +58,7 @@ export default class ListEquiposComponent implements OnInit, OnDestroy {
     this.inventoryCategoryId = this.rutaActiva.snapshot.params.categoria;
     this.base_urlImg = this.urlImg(this.customerId);
     this.customerId$ = this.customerIdService.getCustomerId$();
-    this.customerId = this.customerIdService.getcustomerId();
+    this.customerId = this.customerIdService.getCustomerId();
     this.onLoadData();
     this.subscriber = this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
@@ -73,7 +73,7 @@ export default class ListEquiposComponent implements OnInit, OnDestroy {
         this.onLoadData();
       });
     this.customerId$.subscribe((resp) => {
-      this.customerId = this.customerIdService.getcustomerId();
+      this.customerId = this.customerIdService.getCustomerId();
       this.onLoadData();
     });
   }

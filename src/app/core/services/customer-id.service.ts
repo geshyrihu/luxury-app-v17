@@ -66,7 +66,7 @@ export class CustomerIdService implements OnDestroy {
    * Obtiene el valor actual del ID del cliente.
    * @returns El valor actual del ID del cliente.
    */
-  getcustomerId() {
+  getCustomerId() {
     return this.customerId;
   }
 
@@ -76,8 +76,11 @@ export class CustomerIdService implements OnDestroy {
       .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
+          console.log('🚀 ~ resp.body:', resp.body);
           this.nameCustomer = resp.body.nameCustomer;
           this.logoCustomer = `${environment.base_urlImg}Administration/customer/${resp.body.photoPath}`;
+
+          this.customerId$.next(customerId); // Notificar a los observadores sobre el cambio en el ID del cliente.
         },
         error: (error) => {
           console.error(error.error);

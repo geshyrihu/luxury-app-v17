@@ -48,7 +48,7 @@ export default class MiEdificioComponent implements OnInit, OnDestroy {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
     this.dataService
-      .get('MiEdificio/Caratula/' + this.customerIdService.getcustomerId())
+      .get('MiEdificio/Caratula/' + this.customerIdService.getCustomerId())
       .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {

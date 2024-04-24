@@ -80,7 +80,7 @@ export default class AddAccountCustomerComponent implements OnInit {
     formData.append('email', model.email);
     formData.append(
       'customerId',
-      String(this.customerIdService.getcustomerId())
+      String(this.customerIdService.getCustomerId())
     );
     formData.append('firstName', model.firstName);
     formData.append('lastName', model.lastName);

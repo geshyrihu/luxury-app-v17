@@ -168,7 +168,7 @@ export default class AddOrEditRadioComunicacionComponent implements OnInit {
   onLoadSelectItem() {
     this.apiRequestService
       .onGetSelectItem(
-        `EmployeeActivo/${this.customerIdService.getcustomerId()}`
+        `EmployeeActivo/${this.customerIdService.getCustomerId()}`
       )
       .then((response: any) => {
         this.cb_employee = response;

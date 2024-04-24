@@ -37,10 +37,10 @@ export default class ReporteTicketsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.onLoadData();
-    this.urlImg(this.customerIdService.getcustomerId());
+    this.urlImg(this.customerIdService.getCustomerId());
     this.customerId$ = this.customerIdService.getCustomerId$();
     this.customerId$.subscribe((resp) => {
-      this.urlImg(this.customerIdService.getcustomerId());
+      this.urlImg(this.customerIdService.getCustomerId());
       this.onLoadData();
     });
   }

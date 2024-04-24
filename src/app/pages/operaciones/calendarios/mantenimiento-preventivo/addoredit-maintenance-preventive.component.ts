@@ -68,7 +68,7 @@ export default class AddoreditMaintenancePreventiveComponent implements OnInit {
   onLoadSelectItem() {
     this.apiRequestService
       .onGetSelectItem(
-        `MachineriesGetAll/${this.customerIdService.getcustomerId()}`
+        `MachineriesGetAll/${this.customerIdService.getCustomerId()}`
       )
       .then((response: any) => {
         this.cb_machinery = response;
@@ -139,7 +139,7 @@ export default class AddoreditMaintenancePreventiveComponent implements OnInit {
       providerId: ['', Validators.required],
       recurrence: ['', Validators.required],
       typeMaintance: ['', Validators.required],
-      customerId: [this.customerIdService.getcustomerId()],
+      customerId: [this.customerIdService.getCustomerId()],
       employeeId: [this.authService.userTokenDto.infoEmployeeDto.employeeId],
       cuentaId: ['', Validators.required],
       // temp

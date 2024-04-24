@@ -180,7 +180,7 @@ export default class ListTicketComponent implements OnInit, OnDestroy {
       if (resp.fechaInicial && resp.fechaFinal) {
         this.dataService
           .get(
-            `Ticket/FilterWorkPlan/${this.customerIdService.getcustomerId()}/${this.dateService.getDateFormat(
+            `Ticket/FilterWorkPlan/${this.customerIdService.getCustomerId()}/${this.dateService.getDateFormat(
               resp.fechaInicial
             )}/${this.dateService.getDateFormat(resp.fechaFinal)}`
           )
@@ -287,7 +287,7 @@ export default class ListTicketComponent implements OnInit, OnDestroy {
       const liga =
         // 'http://luxurybuildingapp.com:1008/#/publico/reporte-operacion/' +
         'http://luxurybuildingapp.com/publico/reporte-operacion/' +
-        this.customerIdService.getcustomerId() +
+        this.customerIdService.getCustomerId() +
         '/' +
         this.dateService.getDateFormat(
           this.ticketFilterService.filterTicket.finishedStart

@@ -46,7 +46,7 @@ export default class ReportConsumosComponent implements OnInit, OnDestroy {
 
     this.dataService
       .get<IChartData[]>(
-        `MaintenanceReport/DataGraficoMensual/${this.customerIdService.getcustomerId()}/${this.dateService.getDateFormat(
+        `MaintenanceReport/DataGraficoMensual/${this.customerIdService.getCustomerId()}/${this.dateService.getDateFormat(
           this.periodoMonthService.getPeriodoInicio
         )}`
       )

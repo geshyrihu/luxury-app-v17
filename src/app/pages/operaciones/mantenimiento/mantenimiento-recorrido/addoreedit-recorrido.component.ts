@@ -41,7 +41,7 @@ export default class RecorridoAddOrEditComponent implements OnInit, OnDestroy {
   onLoadSelectItem() {
     this.apiRequestService
       .onGetSelectItem(
-        `MachineriesGetAll/${this.customerIdService.getcustomerId()}`
+        `MachineriesGetAll/${this.customerIdService.getCustomerId()}`
       )
       .then((response: any) => {
         this.cb_machinery = response;

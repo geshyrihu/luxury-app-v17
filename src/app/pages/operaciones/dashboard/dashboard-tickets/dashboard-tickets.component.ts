@@ -29,7 +29,7 @@ export default class DashboardTicketsComponent implements OnInit {
     });
   }
   onLoadData() {
-    const urlApi = `Dashboard/TicketPendientes/${this.customerIdService.getcustomerId()}`;
+    const urlApi = `Dashboard/TicketPendientes/${this.customerIdService.getCustomerId()}`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });

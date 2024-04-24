@@ -86,7 +86,7 @@ export default class EntregaRecepcionClienteComponent implements OnInit {
   navigateToPdf(url: string) {
     const urlFinal =
       'customers/' +
-      this.customerIdService.getcustomerId() +
+      this.customerIdService.getCustomerId() +
       '/entregarecepcion/' +
       url;
     // this.viewPdfService.setNameDocument(urlFinal);

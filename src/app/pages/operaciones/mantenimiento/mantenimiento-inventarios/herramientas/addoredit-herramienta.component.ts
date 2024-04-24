@@ -70,7 +70,7 @@ export default class AddoreditToolsComponent implements OnInit, OnDestroy {
         this.authService.userTokenDto.infoEmployeeDto.employeeId,
         [Validators.required],
       ],
-      customerId: [this.customerIdService.getcustomerId()],
+      customerId: [this.customerIdService.getCustomerId()],
     });
   }
 
@@ -92,7 +92,7 @@ export default class AddoreditToolsComponent implements OnInit, OnDestroy {
         );
         this.urlBaseImg = `${
           environment.base_urlImg
-        }customers/${this.customerIdService.getcustomerId()}/tools/${
+        }customers/${this.customerIdService.getCustomerId()}/tools/${
           this.model.photoPath
         }`;
         this.form.patchValue(resp.body);

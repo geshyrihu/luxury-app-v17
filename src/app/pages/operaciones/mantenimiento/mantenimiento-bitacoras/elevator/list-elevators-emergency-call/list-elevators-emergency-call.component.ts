@@ -5,42 +5,41 @@ import { Observable } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
-import { environment } from 'src/environments/environment';
-import AddoreditContratoPolizaComponent from './addoredit-contrato-poliza.component';
+import AddOrEditElevatorsEmergencyCallComponent from '../add-or-edit-elevators-emergency-call/add-or-edit-elevators-emergency-call.component';
+
 @Component({
-  selector: 'app-contrato-poliza',
-  templateUrl: './list-contrato-poliza.component.html',
+  selector: 'app-list-elevators-emergency-call',
+  templateUrl: './list-elevators-emergency-call.component.html',
   standalone: true,
   imports: [LuxuryAppComponentsModule],
 })
-export default class ListContratoPolizaComponent implements OnInit {
+export default class ListElevatorsEmergencyCallComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
-
   customerIdService = inject(CustomerIdService);
-  data: any[] = [];
 
-  ref: DynamicDialogRef;
+  data: any[] = [];
+  ref: DynamicDialogRef; // Referencia a un cuadro de diálogo modal
 
   customerId$: Observable<number> = this.customerIdService.getCustomerId$();
-  urlBase = environment.base_urlImg;
 
   ngOnInit(): void {
     this.onLoadData();
-    this.customerId$.subscribe((resp) => {
+    this.customerId$.subscribe(() => {
       this.onLoadData();
     });
   }
 
   onLoadData() {
-    const urlApi = `ContratoPoliza/GetAll/${this.customerIdService.getCustomerId()}`;
+    const urlApi = `ElevatorsEmergencyCall/list/${this.customerIdService.customerId}`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
   }
+
   onDelete(id: number) {
     this.apiRequestService
-      .onDelete(`contratopoliza/${id}`)
+      .onDelete(`ElevatorsEmergencyCall/${id}`)
       .then((result: boolean) => {
         if (result) this.data = this.data.filter((item) => item.id !== id);
       });
@@ -49,19 +48,16 @@ export default class ListContratoPolizaComponent implements OnInit {
   onModalAddOrEdit(data: any) {
     this.dialogHandlerService
       .openDialog(
-        AddoreditContratoPolizaComponent,
-        data,
+        AddOrEditElevatorsEmergencyCallComponent,
+        {
+          id: data.id,
+          customerId: this.customerIdService.customerId,
+        },
         data.title,
         this.dialogHandlerService.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();
       });
-  }
-  onDeleteDocument(id: number) {
-    const urlApi = `ContratoPoliza/DeleteDocument/${id}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
-      this.onLoadData();
-    });
   }
 }

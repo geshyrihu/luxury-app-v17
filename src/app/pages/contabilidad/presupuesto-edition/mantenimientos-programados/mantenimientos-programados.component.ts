@@ -30,7 +30,7 @@ export default class MantenimientosProgramadosComponent implements OnInit {
       .onGetList(
         `Presupuesto/ServiciosMttoProgramados/${
           this.cuentaId
-        }/${this.customerIdService.getcustomerId()}`
+        }/${this.customerIdService.getCustomerId()}`
       )
       .then((result: any) => {
         this.data = result;

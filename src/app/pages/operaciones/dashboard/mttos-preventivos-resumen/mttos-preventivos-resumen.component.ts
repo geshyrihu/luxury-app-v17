@@ -34,7 +34,7 @@ export default class MantenimientosPreventivosResumenComponent
     );
   }
   onLoadData(fechaInicial: string, fechaFinal: string, status?: any) {
-    const urlApi = `Dashboard/DashboardOrdenServicio/${this.customerIdService.getcustomerId()}/${fechaInicial}/${fechaFinal}/${status}`;
+    const urlApi = `Dashboard/DashboardOrdenServicio/${this.customerIdService.getCustomerId()}/${fechaInicial}/${fechaFinal}/${status}`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });

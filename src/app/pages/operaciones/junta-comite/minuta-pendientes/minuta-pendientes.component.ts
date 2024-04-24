@@ -24,7 +24,7 @@ export default class MinutaPendientesComponent implements OnInit {
     });
   }
   onLoadData() {
-    const urlApi = `Meetings/MinutaAllPendientes/${this.customerIdService.getcustomerId()}`;
+    const urlApi = `Meetings/MinutaAllPendientes/${this.customerIdService.getCustomerId()}`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });

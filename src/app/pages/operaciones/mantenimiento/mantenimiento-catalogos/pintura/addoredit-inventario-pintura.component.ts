@@ -127,7 +127,7 @@ export default class AddoreditInventarioPinturaComponent
     this.dataService
       .get(
         'Machineries/GetAutocompeteInv/' +
-          this.customerIdService.getcustomerId()
+          this.customerIdService.getCustomerId()
       )
       .subscribe((resp: any) => {
         this.cb_machinery = resp.body;

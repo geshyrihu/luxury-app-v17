@@ -57,7 +57,7 @@ export default class CaratulaFondeoComponent implements OnInit {
     this.submitting = true;
 
     const CaratulaFondeo = {
-      customerId: this.customerIdService.getcustomerId(),
+      customerId: this.customerIdService.getCustomerId(),
       fechaInicial: this.form.get('fechaInicial').value,
       fechaFinal: this.form.get('fechaFinal').value,
       eTipoGasto: this.form.get('eTipoGasto').value,

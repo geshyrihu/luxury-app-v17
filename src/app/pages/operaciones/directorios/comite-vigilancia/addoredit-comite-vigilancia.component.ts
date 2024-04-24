@@ -37,14 +37,14 @@ export default class AddOrEditComiteVigilanciaComponent implements OnInit {
   ngOnInit(): void {
     this.apiRequestService
       .onGetSelectItem(
-        `listcondomino/${this.customerIdService.getcustomerId()}`
+        `listcondomino/${this.customerIdService.getCustomerId()}`
       )
       .then((response: any) => {
         this.cb_condomino = response;
       });
 
     this.form.patchValue({
-      customerId: this.customerIdService.getcustomerId(),
+      customerId: this.customerIdService.getCustomerId(),
     });
 
     this.id = this.config.data.id;

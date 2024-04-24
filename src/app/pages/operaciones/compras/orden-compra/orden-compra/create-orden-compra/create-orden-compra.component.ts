@@ -57,7 +57,7 @@ export default class CreateOrdenCompraComponent implements OnInit {
     }
     this.form = this.formBuilder.group({
       id: [0, Validators.required],
-      customerId: [this.customerIdService.getcustomerId(), Validators.required],
+      customerId: [this.customerIdService.getCustomerId(), Validators.required],
       folio: [''],
       fechaSolicitud: [this.date, Validators.required],
       folioSolicitudCompra: [''],

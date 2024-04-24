@@ -76,7 +76,7 @@ export default class SolicitudCompraComponent implements OnInit {
   createForm() {
     return (this.form = this.formBuilder.group({
       id: { value: this.id, disabled: true },
-      customerId: [this.customerIdService.getcustomerId()],
+      customerId: [this.customerIdService.getCustomerId()],
       fechaSolicitud: [],
       solicita: ['', Validators.required],
       equipoOInstalacion: ['', Validators.required],

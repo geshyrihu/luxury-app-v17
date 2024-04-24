@@ -29,7 +29,7 @@ export default class ListPiscinaComponent implements OnInit {
   customerId$: Observable<number> = this.customerIdService.getCustomerId$();
   urlBaseImg = `${
     environment.base_urlImg
-  }customers/${this.customerIdService.getcustomerId()}/piscina/`;
+  }customers/${this.customerIdService.getCustomerId()}/piscina/`;
   ngOnInit(): void {
     this.onLoadData();
     this.customerId$.subscribe(() => {

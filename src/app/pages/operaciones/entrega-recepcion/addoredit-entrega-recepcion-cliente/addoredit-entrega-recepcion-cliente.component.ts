@@ -52,7 +52,7 @@ export default class CrudEntregaRecepcionClienteComponent implements OnInit {
       .onPut(
         `EntregaRecepcionCliente/${this.id}/${
           this.authService.userTokenDto.infoEmployeeDto.employeeId
-        }/${this.customerIdService.getcustomerId()}`,
+        }/${this.customerIdService.getCustomerId()}`,
         model
       )
       .then((result: boolean) => {

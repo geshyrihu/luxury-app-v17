@@ -38,7 +38,7 @@ export default class AddoreditContratoPolizaComponent implements OnInit {
     id: { value: this.id, disabled: true },
     providerId: ['', Validators.required],
     providerName: ['', Validators.required],
-    customerId: [this.customerIdService.getcustomerId(), Validators.required],
+    customerId: [this.customerIdService.getCustomerId(), Validators.required],
     description: ['', Validators.required],
     startDate: ['', Validators.required],
     endDate: ['', Validators.required],

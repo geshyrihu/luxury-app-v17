@@ -38,7 +38,7 @@ export default class ListDocumentoComponent implements OnInit {
   }
 
   onLoadData() {
-    const urlApi = `DocumentoCustomer/GetAll/${this.customerIdService.getcustomerId()}`;
+    const urlApi = `DocumentoCustomer/GetAll/${this.customerIdService.getCustomerId()}`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });

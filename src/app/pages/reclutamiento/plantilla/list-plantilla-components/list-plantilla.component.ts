@@ -51,7 +51,7 @@ export default class ListWorkPlantillaComponent implements OnInit {
   }
 
   onLoadData() {
-    const urlApi = `workposition/getall/${this.customerIdService.getcustomerId()}/${
+    const urlApi = `workposition/getall/${this.customerIdService.getCustomerId()}/${
       this.state
     }`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {

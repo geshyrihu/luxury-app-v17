@@ -62,7 +62,7 @@ export default class ServiceOrderAddOrEditComponent
 
   ngOnInit(): void {
     flatpickrFactory();
-    this.customerId = this.customerIdService.getcustomerId();
+    this.customerId = this.customerIdService.getCustomerId();
     this.id = this.config.data.id;
     this.idMachinery = this.config.data.machineryId;
     this.idProvider = this.config.data.providerId;
@@ -74,7 +74,7 @@ export default class ServiceOrderAddOrEditComponent
   onLoadSelectItem() {
     this.apiRequestService
       .onGetSelectItem(
-        `MachineriesGetAll/${this.customerIdService.getcustomerId()}`
+        `MachineriesGetAll/${this.customerIdService.getCustomerId()}`
       )
       .then((response: any) => {
         this.cb_machinery = response;

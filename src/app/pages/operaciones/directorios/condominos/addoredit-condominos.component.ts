@@ -60,7 +60,7 @@ export default class AddOrEditCondominosComponent implements OnInit {
 
     this.apiRequestService
       .onGetSelectItem(
-        `DirectoryCondominium/${this.customerIdService.getcustomerId()}`
+        `DirectoryCondominium/${this.customerIdService.getCustomerId()}`
       )
       .then((response: any) => {
         this.cb_directory_condominium = response;

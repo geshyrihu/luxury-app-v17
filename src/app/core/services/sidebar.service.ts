@@ -188,6 +188,60 @@ export class SidebarService {
         {
           visible: this.authService.onValidateRoles([
             'GerenteMantenimiento',
+            'SupervisionOperativa',
+          ]),
+          label: 'Recorridos',
+          items: [
+            {
+              visible: this.authService.onValidateRoles([
+                'GerenteMantenimiento',
+                'SuperUsuario',
+              ]),
+              label: 'Catalogo de amenidades',
+              routerLink: '/configuracion/catalogo-amenidades',
+              name: 'Catalogo de amenidades',
+            },
+            {
+              visible: this.authService.onValidateRoles([
+                'GerenteMantenimiento',
+                'SuperUsuario',
+              ]),
+              label: 'Catalogo de Inspecciones',
+              routerLink: '/configuracion/catalog-inspection',
+              name: 'Catalogo de Inspecciones',
+            },
+            {
+              visible: this.authService.onValidateRoles([
+                'GerenteMantenimiento',
+                'SuperUsuario',
+              ]),
+              label: 'Catalogo de localizaciones',
+              routerLink: '/configuracion/residential-location',
+              name: 'Catalogo de localizaciones',
+            },
+            {
+              visible: this.authService.onValidateRoles([
+                'GerenteMantenimiento',
+                'SuperUsuario',
+              ]),
+              label: 'Clientes Amenidades',
+              routerLink: '/configuracion/customer-amenities-catalog',
+              name: 'Clientes Amenidades',
+            },
+            {
+              visible: this.authService.onValidateRoles([
+                'GerenteMantenimiento',
+                'SuperUsuario',
+              ]),
+              label: 'Recorrido',
+              routerLink: '/configuracion/list-recorrido',
+              name: 'Recorrido',
+            },
+          ],
+        },
+        {
+          visible: this.authService.onValidateRoles([
+            'GerenteMantenimiento',
             'SuperUsuario',
           ]),
           label: 'Entrega Recepción',
@@ -594,6 +648,30 @@ export class SidebarService {
           label: 'Albercas',
           routerLink: '/mantenimiento/bitacora/piscina',
           name: 'Bitacoras-alberca',
+        },
+        {
+          visible: this.authService.onValidateRoles([
+            'GerenteMantenimiento',
+            'Mantenimiento',
+            'Residente',
+            'Asistente',
+            'SuperUsuario',
+          ]),
+          label: 'Llamados Emergencia Elevadores',
+          routerLink: '/mantenimiento/bitacora/elevators-emergency-call',
+          name: 'Reporte de elevadores',
+        },
+        {
+          visible: this.authService.onValidateRoles([
+            'GerenteMantenimiento',
+            'Mantenimiento',
+            'Residente',
+            'Asistente',
+            'SuperUsuario',
+          ]),
+          label: 'Refacciones Elevadores',
+          routerLink: '/mantenimiento/bitacora/elevator-spare-parts-change',
+          name: 'Cambio de refacciones elevadores',
         },
       ],
     },

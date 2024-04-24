@@ -31,13 +31,13 @@ export default class FormControlPrestamoHerramientaComponent implements OnInit {
 
   ngOnInit(): void {
     this.apiRequestService
-      .onGetSelectItem(`Employee/${this.customerIdService.getcustomerId()}`)
+      .onGetSelectItem(`Employee/${this.customerIdService.getCustomerId()}`)
       .then((response: any) => {
         this.cb_employee = response;
       });
 
     this.apiRequestService
-      .onGetSelectItem(`tool/${this.customerIdService.getcustomerId()}`)
+      .onGetSelectItem(`tool/${this.customerIdService.getCustomerId()}`)
       .then((response: any) => {
         this.cb_tool = response;
       });
@@ -77,7 +77,7 @@ export default class FormControlPrestamoHerramientaComponent implements OnInit {
     return this.form.controls;
   }
   onLoadData() {
-    const urlApi = `banks/${this.id}`;
+    const urlApi = `controlprestamoherramientas/${this.id}`;
     this.apiRequestService.onGetItem(urlApi).then((result: any) => {
       this.form.patchValue(result);
       this.form.patchValue({
@@ -101,13 +101,13 @@ export default class FormControlPrestamoHerramientaComponent implements OnInit {
 
     if (this.id === 0) {
       this.apiRequestService
-        .onPost(`ControlPrestamoHerramientas`, this.form.value)
+        .onPost(`controlprestamoherramientas`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
       this.apiRequestService
-        .onPut(`ControlPrestamoHerramientas/${this.id}`, this.form.value)
+        .onPut(`controlprestamoherramientas/${this.id}`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
         });

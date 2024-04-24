@@ -69,7 +69,7 @@ export default class AddoreditTicketComponent implements OnInit, OnDestroy {
     flatpickrFactory();
     this.urlBaseImg = `${
       environment.base_urlImg
-    }customers/${this.customerSelectListService.getcustomerId()}/report/`;
+    }customers/${this.customerSelectListService.getCustomerId()}/report/`;
     this.onLoadSelectItem();
     this.id = this.config.data.id;
     if (this.id !== 0) this.onLoadData(this.id);
@@ -92,7 +92,7 @@ export default class AddoreditTicketComponent implements OnInit, OnDestroy {
 
     this.apiRequestService
       .onGetSelectItem(
-        `GetUserCustomer/${this.customerSelectListService.getcustomerId()}`
+        `GetUserCustomer/${this.customerSelectListService.getCustomerId()}`
       )
       .then((response: any) => {
         this.cb_user_customers = response;
@@ -110,7 +110,7 @@ export default class AddoreditTicketComponent implements OnInit, OnDestroy {
       priority: [1, Validators.required],
       responsibleAreaId: [12, Validators.required],
       status: [this.status, Validators.required],
-      customerId: [this.customerSelectListService.getcustomerId()],
+      customerId: [this.customerSelectListService.getCustomerId()],
       fechaProgamacion: [this.getFormattedDate(10), Validators.required],
       fechaLimite: [this.getFormattedDate(10), Validators.required],
       employeeResponsableId: ['', Validators.required],

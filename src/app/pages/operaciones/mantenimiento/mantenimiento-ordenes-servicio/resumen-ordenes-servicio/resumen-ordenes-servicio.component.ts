@@ -38,7 +38,7 @@ export default class ResumenOrdenesServicioComponent
   customerId: Number;
 
   ngOnInit(): void {
-    this.customerId = this.customerIdService.getcustomerId();
+    this.customerId = this.customerIdService.getCustomerId();
     this.onLoadData();
   }
 

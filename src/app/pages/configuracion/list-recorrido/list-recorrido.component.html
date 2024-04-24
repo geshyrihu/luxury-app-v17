@@ -1,8 +1,34 @@
 <p-toast position="top-left" [baseZIndex]="99999"></p-toast>
 
-<ngb-alert [dismissible]="false" class="text-center" type="dark">
-  <h3>RECORRIDO DIARIO</h3>
-</ngb-alert>
+<div class="text-center with-image">
+  <div class="image-container">
+    <img
+      src="assets/images/logo-luxury.jpg"
+      alt="Imagen"
+      class="left-floated-image"
+    />
+  </div>
+  <div class="alert-content">
+    <h3>RECORRIDO DIARIO</h3>
+  </div>
+</div>
+<br />
+<br />
+<div class="row">
+  <div class="col-6">
+    <p class="p-0 m-0">
+      <strong> RESIDENCIAL: {{ customerName }}</strong>
+    </p>
+    <p class="p-0 m-0"><strong> AREA:</strong></p>
+    <p class="p-0 m-0"><strong> RESPONSABLE:</strong></p>
+  </div>
+  <div class="col-6">
+    <p class="p-0 m-0"><strong> FECHA:</strong></p>
+    <p class="p-0 m-0"><strong> HORA DE INICIO:</strong></p>
+    <p class="p-0 m-0"><strong> HORA DE TERMINO:</strong></p>
+  </div>
+</div>
+
 @for (item of cb_departaments; track $index) {
 <button
   class="btn mb-1 me-1 hide-print-mode"
@@ -68,5 +94,26 @@
   td,
   th {
     border: 1px solid black; /* Define un borde de 1px sólido negro para todas las celdas */
+  }
+
+  .with-image {
+    display: flex;
+    align-items: center;
+  }
+
+  .image-container {
+    margin-right: 10px; /* Espacio entre la imagen y el texto */
+  }
+
+  .left-floated-image {
+    float: left;
+    max-width: 100px; /* ajusta el ancho máximo de la imagen según sea necesario */
+    height: auto; /* permite que la altura se ajuste automáticamente */
+    margin-right: 10px; /* Espacio entre la imagen y el texto */
+  }
+
+  .alert-content {
+    flex-grow: 1; /* Ocupa el espacio restante */
+    text-align: center; /* Centra el texto */
   }
 </style>

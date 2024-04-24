@@ -43,7 +43,7 @@ export default class GastosMantenimientoComponent implements OnInit, OnDestroy {
     this.customToastService.onLoading();
     this.dataService
       .get(
-        `MaintenanceCalendars/SummaryOfExpenses/${this.customerIdService.getcustomerId()}`
+        `MaintenanceCalendars/SummaryOfExpenses/${this.customerIdService.getCustomerId()}`
       )
       .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
@@ -58,7 +58,7 @@ export default class GastosMantenimientoComponent implements OnInit, OnDestroy {
       });
     this.dataService
       .get(
-        `MaintenanceCalendars/Resumengastos/${this.customerIdService.getcustomerId()}`
+        `MaintenanceCalendars/Resumengastos/${this.customerIdService.getCustomerId()}`
       )
       .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({

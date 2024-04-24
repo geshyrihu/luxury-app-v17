@@ -98,7 +98,7 @@ export default class SolicitudModificacionSalarioComponent {
 
     this.dataService
       .post(
-        `SolicitudesReclutamiento/SolicitudModificacionSalario/${this.customerIdService.getcustomerId()}/${
+        `SolicitudesReclutamiento/SolicitudModificacionSalario/${this.customerIdService.getCustomerId()}/${
           this.authService.infoUserAuthDto.applicationUserId
         } `,
         model

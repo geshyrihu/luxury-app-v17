@@ -32,10 +32,10 @@ export default class ReporteCompletoActivosComponent
 
   ngOnInit(): void {
     this.customerId$ = this.customerIdService.getCustomerId$();
-    this.customerId = this.customerIdService.getcustomerId();
+    this.customerId = this.customerIdService.getCustomerId();
     this.onLoadData();
     this.customerId$.subscribe((resp) => {
-      this.customerId = this.customerIdService.getcustomerId();
+      this.customerId = this.customerIdService.getCustomerId();
       this.onLoadData();
     });
   }

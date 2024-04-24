@@ -83,7 +83,7 @@ export default class FormGastosFijosPresupuestoComponent implements OnInit {
   }
 
   onLoadCedulas() {
-    const urlApi = `CedulaPresupuestal/GetCedulas/${this.customerIdService.getcustomerId()}`;
+    const urlApi = `CedulaPresupuestal/GetCedulas/${this.customerIdService.getCustomerId()}`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       if (result) {
         this.cedulaId = result[0].value;

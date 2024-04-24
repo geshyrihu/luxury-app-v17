@@ -40,7 +40,7 @@ export default class AddPresentacionJuntaComiteComponent
 
   form: FormGroup = this.formBuilder.group({
     id: { value: this.id, disabled: true },
-    customerId: [this.customerIdService.getcustomerId()],
+    customerId: [this.customerIdService.getCustomerId()],
     fechaCorrespondiente: ['', Validators.required],
     fechaJunta: [''],
   });

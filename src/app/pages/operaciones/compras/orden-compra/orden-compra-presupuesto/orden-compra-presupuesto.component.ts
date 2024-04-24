@@ -33,7 +33,7 @@ export default class OrdenCompraPresupuestoComponent implements OnInit {
   submitting: boolean = false;
 
   ngOnInit(): void {
-    this.onLoadCedulasCustomer(this.customerIdService.getcustomerId());
+    this.onLoadCedulasCustomer(this.customerIdService.getCustomerId());
     this.total = this.ordenCompraService.getTotalPorCubrir();
     this.ordenCompraId = this.config.data.ordenCompraId;
   }

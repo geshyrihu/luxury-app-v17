@@ -35,7 +35,7 @@ export default class ListadoCondominosComponent implements OnInit {
   onLoadSelectItem() {
     this.apiRequestService
       .onGetSelectItem(
-        `ResidentesEdificio/${this.customerIdService.getcustomerId()}`
+        `ResidentesEdificio/${this.customerIdService.getCustomerId()}`
       )
       .then((response: any) => {
         this.data = response;

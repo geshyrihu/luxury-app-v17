@@ -56,7 +56,7 @@ export default class SendEstadosFinancierosComponent {
   onLoadSelectItem() {
     this.apiRequestService
       .onGetList(
-        `EstadoFinanciero/propietarios/${this.customerIdService.getcustomerId()}`
+        `EstadoFinanciero/propietarios/${this.customerIdService.getCustomerId()}`
       )
       .then((result: any) => {
         this.destinatarios = result;

@@ -40,7 +40,7 @@ export default class CabeceraSolicitudPagoPdfComponent
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
     this.dataService
-      .get('Customers/' + this.customerIdService.getcustomerId())
+      .get('Customers/' + this.customerIdService.getCustomerId())
       .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {

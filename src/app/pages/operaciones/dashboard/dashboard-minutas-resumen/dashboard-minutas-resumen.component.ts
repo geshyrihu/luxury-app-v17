@@ -25,7 +25,7 @@ export default class DashboardMinutasResumenComponent implements OnInit {
     this.onLoadData();
   }
   onLoadData() {
-    const urlApi = `Dashboard/MinutasPendientesResumen/${this.customerIdService.getcustomerId()}/${
+    const urlApi = `Dashboard/MinutasPendientesResumen/${this.customerIdService.getCustomerId()}/${
       this.eAreaMinutasDetalles
     }`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {

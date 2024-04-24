@@ -56,7 +56,7 @@ export default class FormBitacoraMantenimientoComponent
       this.authService.userTokenDto.infoUserAuthDto.applicationUserId;
     this.onLoadMachinery();
     this.form = this.formBuilder.group({
-      customerId: [this.customerIdService.getcustomerId(), Validators.required],
+      customerId: [this.customerIdService.getCustomerId(), Validators.required],
       machineryId: ['', Validators.required],
       machinery: ['', Validators.required],
       descripcion: ['', Validators.required],
@@ -102,7 +102,7 @@ export default class FormBitacoraMantenimientoComponent
   onLoadMachinery() {
     this.dataService
       .get(
-        `SelectItem/ListadoInstalaciones/${this.customerIdService.getcustomerId()}`
+        `SelectItem/ListadoInstalaciones/${this.customerIdService.getCustomerId()}`
       )
       .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({

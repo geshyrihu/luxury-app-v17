@@ -44,7 +44,7 @@ export default class AddoreditInventarioExtintorComponent
 
   form: FormGroup = this.formBuilder.group({
     id: { value: this.id, disabled: true },
-    customerId: [this.customerIdService.getcustomerId(), Validators.required],
+    customerId: [this.customerIdService.getCustomerId(), Validators.required],
     eExtintor: ['', Validators.required],
     ubicacion: ['', Validators.required],
     photo: [''],

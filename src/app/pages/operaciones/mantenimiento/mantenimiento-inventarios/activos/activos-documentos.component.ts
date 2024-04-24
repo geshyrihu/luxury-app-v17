@@ -39,7 +39,7 @@ export default class ActivosDocumentosComponent {
   onLoadData() {
     this.url = `${
       environment.base_urlImg
-    }customers/${this.customerIdService.getcustomerId()}/machinery/`;
+    }customers/${this.customerIdService.getCustomerId()}/machinery/`;
     this.machineryId = this.config.data.machineryId;
     if (this.machineryId !== 0) this.onLoadData();
     this.dataService

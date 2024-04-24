@@ -48,7 +48,7 @@ export default class InventarioExtintorComponent implements OnInit, OnDestroy {
     this.customToastService.onLoading();
     this.dataService
       .get<IInventarioExtintor[]>(
-        'InventarioExtintor/GetAll/' + this.customerIdService.getcustomerId()
+        'InventarioExtintor/GetAll/' + this.customerIdService.getCustomerId()
       )
       .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({

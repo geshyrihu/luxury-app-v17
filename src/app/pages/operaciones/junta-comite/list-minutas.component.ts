@@ -166,7 +166,7 @@ export default class ListMinutasComponent implements OnInit, OnDestroy {
     // this.reportService.setIdMinuta(id);
     this.route.navigate([
       'publico/reporte-minuta/' +
-        this.customerIdService.getcustomerId() +
+        this.customerIdService.getCustomerId() +
         '/' +
         id,
     ]);
@@ -180,7 +180,7 @@ export default class ListMinutasComponent implements OnInit, OnDestroy {
     this.customToastService.onLoading();
     this.dataService
       .get(
-        `Meetings/SendEmailResponsible/${id}/${this.customerIdService.getcustomerId()}/${eAreaMinutasDetalles}/${
+        `Meetings/SendEmailResponsible/${id}/${this.customerIdService.getCustomerId()}/${eAreaMinutasDetalles}/${
           this.authService.infoUserAuthDto.applicationUserId
         }`
       )

@@ -1,6 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import saveAs from 'file-saver';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
@@ -32,27 +31,36 @@ export default class ListRecorridoComponent implements OnInit {
 
   departamentId = 3;
   departamentLabel = 'MANTENIMIENTO';
+  customerName = '';
   ref: DynamicDialogRef; // Referencia a un cuadro de diálogo modal
 
   customerId$: Observable<number> = this.customerIdService.getCustomerId$();
   amenitiesByLocation: { location: string; amenities: any[] }[];
 
   ngOnInit(): void {
-    this.onLoadData(this.departamentId);
+    this.onLoadData(this.departamentId, this.customerIdService.customerId);
     this.customerId$.subscribe(() => {
-      this.onLoadData(this.departamentId);
+      this.onLoadData(this.departamentId, this.customerIdService.customerId);
     });
   }
 
   onSelectDepartament(departamentId: number) {
     this.departamentId = departamentId;
-    this.onLoadData(departamentId);
+    this.onLoadData(departamentId, this.customerIdService.customerId);
   }
   // Función para cargar los datos de los bancos
-  onLoadData(departamentId: number) {
-    const urlApi = `customeramenitiescatalog/inspection/${this.customerIdService.customerId}/${departamentId}`;
+  onLoadData(departamentId: number, customerId: number) {
+    const urlApi = `customeramenitiescatalog/inspection/${customerId}/${departamentId}`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.data = result;
+      this.onLoadDataCustomer(customerId);
+    });
+  }
+
+  onLoadDataCustomer(customerId: number) {
+    const urlApi = `customers/${customerId}`;
+    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      this.customerName = result.nameCustomer;
     });
   }
 
@@ -64,35 +72,4 @@ export default class ListRecorridoComponent implements OnInit {
         if (result) this.data = this.data.filter((item) => item.id !== id);
       });
   }
-
-  // TODO: generar pdf desde Api
-  generatePDF() {
-    const urlApi = `customeramenitiescatalog/generatepdf`;
-    this.dataService.getFile(urlApi).subscribe({
-      next: (resp: Blob) => {
-        // Crea un objeto de tipo Blob a partir de la respuesta
-        const blob = new Blob([resp], {
-          type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-        });
-
-        // Utiliza la función saveAs del paquete 'file-saver' para descargar el archivo
-        saveAs(blob, 'Recorrido.pdf');
-      },
-      error: (error) => {
-        console.log('🚀 ~ error:', error.error);
-      },
-    });
-  }
-}
-export enum EDepartament {
-  Administracion,
-  Legal,
-  Contabilidad,
-  Mantenimiento,
-  Limpieza,
-  Operaciones,
-  Jardineria,
-  Sistemas,
-  Seguridad,
-  Constructora,
 }

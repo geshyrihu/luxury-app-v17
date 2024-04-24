@@ -51,7 +51,7 @@ export default class MantenimientosPreventivosComponent implements OnInit {
   }
 
   onLoadOrdenServicio(fehcaInicio: string, getPeriodoFin: string) {
-    const urlApi = `Dashboard/OrdenesServicio/${this.customerIdService.getcustomerId()}/${fehcaInicio}/${getPeriodoFin}`;
+    const urlApi = `Dashboard/OrdenesServicio/${this.customerIdService.getCustomerId()}/${fehcaInicio}/${getPeriodoFin}`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.ordenesServicio = result;
     });

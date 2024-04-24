@@ -43,7 +43,7 @@ export default class AddoreditPlantillaComponent implements OnInit, OnDestroy {
 
   form: FormGroup = this.formBuilder.group({
     id: { value: this.id, disabled: true },
-    customerId: [this.customerIdService.getcustomerId(), Validators.required],
+    customerId: [this.customerIdService.getCustomerId(), Validators.required],
     folio: [''],
     professionId: ['', Validators.required],
     responsibleAreaId: [''],
@@ -155,7 +155,7 @@ export default class AddoreditPlantillaComponent implements OnInit, OnDestroy {
 
   onLoadSelectItem() {
     this.apiRequestService
-      .onGetSelectItem(`Employee/${this.customerIdService.getcustomerId()}`)
+      .onGetSelectItem(`Employee/${this.customerIdService.getCustomerId()}`)
       .then((response: any) => {
         this.cb_employee = response;
       });

@@ -73,4 +73,20 @@ export default [
       ),
     title: 'Prestamo de herramientas',
   },
+  {
+    path: 'elevator-spare-parts-change',
+    loadComponent: () =>
+      import(
+        'src/app/pages/operaciones/mantenimiento/mantenimiento-bitacoras/elevator/list-elevator-spare-parts-change/list-elevator-spare-parts-change.component'
+      ),
+    title: 'Cambio de refaccion',
+  },
+  {
+    path: 'elevators-emergency-call',
+    loadComponent: () =>
+      import(
+        'src/app/pages/operaciones/mantenimiento/mantenimiento-bitacoras/elevator/list-elevators-emergency-call/list-elevators-emergency-call.component'
+      ),
+    title: 'Reporte de Emergencia',
+  },
 ] as Routes;

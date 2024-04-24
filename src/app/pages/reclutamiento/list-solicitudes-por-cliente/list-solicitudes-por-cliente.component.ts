@@ -54,7 +54,7 @@ export default class ListSolicitudesPorClienteComponent implements OnInit {
     this.dataService
       .get(
         'SolicitudesReclutamiento/solicitudesporcliente/' +
-          this.customerIdService.getcustomerId() +
+          this.customerIdService.getCustomerId() +
           '/' +
           this.authService.infoEmployeeDto.employeeId
       )

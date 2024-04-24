@@ -46,7 +46,7 @@ export default class UpdateAccountComponent implements OnInit {
 
   onLoadEmployee() {
     const urlRle = !this.authService.onValidateRoles(['SuperUsuario'])
-      ? `getallemployeeactive/${this.customerIdService.getcustomerId()}`
+      ? `getallemployeeactive/${this.customerIdService.getCustomerId()}`
       : 'getallemployeeactive';
 
     this.apiRequestService

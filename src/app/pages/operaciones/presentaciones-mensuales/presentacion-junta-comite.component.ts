@@ -89,14 +89,14 @@ export default class PresentacionJuntaComiteComponent
     this.customerId$ = this.customerIdService.getCustomerId$();
     this.onLoadData();
     this.url =
-      'customers/' + this.customerIdService.getcustomerId() + '/presentacion/';
+      'customers/' + this.customerIdService.getCustomerId() + '/presentacion/';
     this.applicationUserId =
       this.authService.userTokenDto.infoUserAuthDto.applicationUserId;
     this.customerId$.subscribe((resp) => {
       this.onLoadData();
       this.url =
         'customers/' +
-        this.customerIdService.getcustomerId() +
+        this.customerIdService.getCustomerId() +
         '/presentacion/';
     });
   }
@@ -122,7 +122,7 @@ export default class PresentacionJuntaComiteComponent
     this.customToastService.onLoading();
     this.dataService
       .get(
-        `PresentacionJuntaComite/GetAll/${this.customerIdService.getcustomerId()}`
+        `PresentacionJuntaComite/GetAll/${this.customerIdService.getCustomerId()}`
       )
       .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({

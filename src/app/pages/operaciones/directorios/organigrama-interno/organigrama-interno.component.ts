@@ -31,7 +31,7 @@ export default class OrganigramaInternoComponent implements OnInit {
 
   onLoadData() {
     const urlApi =
-      'OrganigramaInterno/' + this.customerIdService.getcustomerId();
+      'OrganigramaInterno/' + this.customerIdService.getCustomerId();
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });

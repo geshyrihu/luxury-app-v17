@@ -34,7 +34,7 @@ export default class ListComiteVigilanciaComponent implements OnInit {
 
   onLoadData() {
     const urlApi =
-      'ComiteVigilancia/GetAll/' + this.customerIdService.getcustomerId();
+      'ComiteVigilancia/GetAll/' + this.customerIdService.getCustomerId();
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });

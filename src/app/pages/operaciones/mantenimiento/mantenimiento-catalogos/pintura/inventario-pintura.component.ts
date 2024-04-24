@@ -47,7 +47,7 @@ export default class InventarioPinturaComponent implements OnInit, OnDestroy {
     this.customToastService.onLoading();
     this.dataService
       .get<any[]>(
-        'InventarioPintura/GetAll/' + this.customerIdService.getcustomerId()
+        'InventarioPintura/GetAll/' + this.customerIdService.getCustomerId()
       )
       .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({

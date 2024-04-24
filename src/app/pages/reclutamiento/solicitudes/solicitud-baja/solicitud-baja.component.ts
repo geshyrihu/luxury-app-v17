@@ -129,7 +129,7 @@ export default class SolicitudBajaComponent implements OnInit, OnDestroy {
     this.dataService
       .post(
         `solicitudesreclutamiento/solicitudbaja/
-          ${this.customerIdService.getcustomerId()}/${this.employeeId}/${
+          ${this.customerIdService.getCustomerId()}/${this.employeeId}/${
           this.authService.infoUserAuthDto.applicationUserId
         }`,
         model

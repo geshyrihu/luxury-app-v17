@@ -64,7 +64,7 @@ export default class EnviarMailEstadosFinancierosComponent {
   onLoadSelectItem() {
     this.apiRequestService
       .onGetSelectItem(
-        `ResidentesEdificio/${this.customerIdService.getcustomerId()}`
+        `ResidentesEdificio/${this.customerIdService.getCustomerId()}`
       )
       .then((response: any) => {
         this.destinatarios = response;

@@ -70,7 +70,7 @@ export default class EnviarMailReporteSemanalComponent
   onLoadSelectItem() {
     this.apiRequestService
       .onGetSelectItem(
-        `ResidentesEdificio/${this.customerIdService.getcustomerId()}`
+        `ResidentesEdificio/${this.customerIdService.getCustomerId()}`
       )
       .then((response: any) => {
         this.destinatarios = response;
@@ -82,7 +82,7 @@ export default class EnviarMailReporteSemanalComponent
     this.customToastService.onLoading();
     this.dataService
       .post(
-        `SendEmail/ReporteSemanal/${this.customerIdService.getcustomerId()}/${
+        `SendEmail/ReporteSemanal/${this.customerIdService.getCustomerId()}/${
           this.fechaInicial
         }/${this.fechaFinal}`,
         this.onFilterDestinatarios()

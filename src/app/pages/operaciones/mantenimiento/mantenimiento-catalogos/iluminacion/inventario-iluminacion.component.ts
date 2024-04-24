@@ -39,7 +39,7 @@ export default class InventarioIluminacionComponent implements OnInit {
   onLoadData() {
     this.apiRequestService
       .onGetList(
-        'InventarioIluminacion/GetAll/' + this.customerIdService.getcustomerId()
+        'InventarioIluminacion/GetAll/' + this.customerIdService.getCustomerId()
       )
       .then((result: any) => {
         this.data = result;

@@ -49,7 +49,7 @@ export default class AddOrEditActivosComponent implements OnInit, OnDestroy {
   urlBaseImg = '';
   public id: number = 0;
   user = this.authService.userTokenDto.infoUserAuthDto.applicationUserId;
-  customerId: number = this.customerIdService.getcustomerId();
+  customerId: number = this.customerIdService.getCustomerId();
   machineryDTO: any;
   photoFileUpdate: boolean = false;
   category: any;
@@ -64,7 +64,7 @@ export default class AddOrEditActivosComponent implements OnInit, OnDestroy {
     this.onLoadEquipoClasificacion();
     this.urlBaseImg = `${
       environment.base_urlImg
-    }customers/${this.customerIdService.getcustomerId()}/machinery/`;
+    }customers/${this.customerIdService.getCustomerId()}/machinery/`;
     this.category = this.config.data.inventoryCategory;
 
     if (this.config.data.id !== 0) this.onLoadData(this.config.data.id);
