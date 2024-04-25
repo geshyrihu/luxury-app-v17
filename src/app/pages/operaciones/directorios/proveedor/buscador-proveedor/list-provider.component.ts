@@ -8,6 +8,7 @@ import { DialogHandlerService } from 'src/app/core/services/dialog-handler.servi
 import { environment } from 'src/environments/environment';
 import AddoreditProveedorComponent from '../addoredit-proveedor/addoredit-proveedor.component';
 import TarjetaProveedorComponent from '../tarjeta-proveedor/tarjeta-proveedor.component';
+import ProviderUseComponent from '../uso-proveedores/provider-use.component';
 @Component({
   selector: 'app-list-provider',
   templateUrl: './list-provider.component.html',
@@ -56,6 +57,14 @@ export default class ListProviderComponent implements OnInit {
   showModalCardProveedor(data: any) {
     this.dialogHandlerService.openDialog(
       TarjetaProveedorComponent,
+      data,
+      data.title,
+      this.dialogHandlerService.dialogSizeLg
+    );
+  }
+  onConicidencias(data: any) {
+    this.dialogHandlerService.openDialog(
+      ProviderUseComponent,
       data,
       data.title,
       this.dialogHandlerService.dialogSizeLg

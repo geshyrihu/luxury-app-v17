@@ -13,26 +13,28 @@ export default class DepuracionComponent {
   apiRequestService = inject(ApiRequestService);
   customToastService = inject(CustomToastService);
 
-  UpdatePersonToEmployee() {
+  // UpdatePersonToEmployee() {
+  //   this.apiRequestService
+  //     .onGetList('UpdateDataBase/UpdatePersonToEmployee')
+  //     .then(() => {
+  //       this.customToastService.onShowSuccess();
+  //       this.customToastService.onClose();
+  //     });
+  // }
+  // UpdatePhoneCustomer() {
+  //   this.apiRequestService
+  //     .onGetList('UpdateDataBase/UpdatePhoneCustomer')
+  //     .then(() => {
+  //       this.customToastService.onShowSuccess();
+  //       this.customToastService.onClose();
+  //     });
+  // }
+  DeleteQualificationProvider() {
     this.apiRequestService
-      .onGetList('UpdateDataBase/UpdatePersonToEmployee')
+      .onGetList('UpdateDataBase/DeleteQualificationProvider')
       .then(() => {
         this.customToastService.onShowSuccess();
         this.customToastService.onClose();
       });
-  }
-  UpdatePhoneCustomer() {
-    this.apiRequestService
-      .onGetList('UpdateDataBase/UpdatePhoneCustomer')
-      .then(() => {
-        this.customToastService.onShowSuccess();
-        this.customToastService.onClose();
-      });
-  }
-  InsertData() {
-    this.apiRequestService.onGetList('UpdateDataBase/InsertData').then(() => {
-      this.customToastService.onShowSuccess();
-      this.customToastService.onClose();
-    });
   }
 }

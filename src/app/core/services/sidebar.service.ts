@@ -196,6 +196,7 @@ export class SidebarService {
               visible: this.authService.onValidateRoles([
                 'GerenteMantenimiento',
                 'SuperUsuario',
+                'SupervisionOperativa',
               ]),
               label: 'Catalogo de amenidades',
               routerLink: '/configuracion/catalogo-amenidades',
@@ -205,6 +206,7 @@ export class SidebarService {
               visible: this.authService.onValidateRoles([
                 'GerenteMantenimiento',
                 'SuperUsuario',
+                'SupervisionOperativa',
               ]),
               label: 'Catalogo de Inspecciones',
               routerLink: '/configuracion/catalog-inspection',
@@ -214,6 +216,7 @@ export class SidebarService {
               visible: this.authService.onValidateRoles([
                 'GerenteMantenimiento',
                 'SuperUsuario',
+                'SupervisionOperativa',
               ]),
               label: 'Catalogo de localizaciones',
               routerLink: '/configuracion/residential-location',
@@ -223,6 +226,7 @@ export class SidebarService {
               visible: this.authService.onValidateRoles([
                 'GerenteMantenimiento',
                 'SuperUsuario',
+                'SupervisionOperativa',
               ]),
               label: 'Clientes Amenidades',
               routerLink: '/configuracion/customer-amenities-catalog',
@@ -232,6 +236,7 @@ export class SidebarService {
               visible: this.authService.onValidateRoles([
                 'GerenteMantenimiento',
                 'SuperUsuario',
+                'SupervisionOperativa',
               ]),
               label: 'Recorrido',
               routerLink: '/configuracion/list-recorrido',

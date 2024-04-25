@@ -171,7 +171,18 @@
                 })
               "
             ></custom-button>
-            }
+            } @if (item.activo && validateRole(['SuperUsuario'])) { }
+            <custom-button
+              ngbTooltip="Uso"
+              [customClass]="'btn-sm btn-outline-success'"
+              icon="fa-regular fa-list text-success"
+              (clicked)="
+                onConicidencias({
+                  providerId: item.providerId,
+                  state: !item.activo
+                })
+              "
+            ></custom-button>
           </div>
         </td>
       </tr>
