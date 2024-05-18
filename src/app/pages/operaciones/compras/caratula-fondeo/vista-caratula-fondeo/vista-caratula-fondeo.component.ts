@@ -1,7 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { Columns, Img, PdfMakeWrapper, Stack } from 'pdfmake-wrapper';
 import { MenuItem } from 'primeng/api';
 import { ContextMenuModule } from 'primeng/contextmenu';
 import { IFondeoCaratula } from 'src/app/core/interfaces/fondeo-caratula.interface';
@@ -16,7 +15,6 @@ import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DateService } from 'src/app/core/services/date.service';
 import { environment } from 'src/environments/environment';
 
-PdfMakeWrapper.useFont('roboto');
 @Component({
   selector: 'app-vista-caratula-fondeo',
   templateUrl: './vista-caratula-fondeo.component.html',
@@ -109,26 +107,5 @@ export default class VistaCaratulaFondeoComponent implements OnInit {
     });
 
     return formatter.format(value);
-  }
-
-  async columsStructure() {
-    return new Columns([await this.sidebar(), 'Columna 2']).end;
-  }
-  async sidebar() {
-    return new Stack([
-      await this.img(),
-      'About me',
-      'Contact',
-      'Skills',
-      'Languages',
-    ]).end;
-  }
-
-  async img() {
-    return await new Img(
-      '../../../../../assets/img/Administration/layout/logo_dark.png'
-    )
-      .fit([30, 30])
-      .build();
   }
 }

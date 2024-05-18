@@ -11,18 +11,12 @@
   cursor: pointer;
 }
 
-/* FUENTES */
-body,
-table,
-label,
+/* Forzar la familia de fuentes en inputs y labels */
 input,
 textarea,
-select {
-  font-family: "IBM Plex Sans", sans-serif !important;
-}
-
-table {
-  color: black !important; /* Cambia el color de texto a negro */
+select,
+label {
+  font-family: "Quicksand", sans-serif !important; /* Usa !important para asegurar que estos estilos prevalezcan */
 }
 
 @media (min-width: 320px) {

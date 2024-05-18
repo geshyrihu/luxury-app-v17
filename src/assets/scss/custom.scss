@@ -123,7 +123,6 @@
 }
 
 // Select2
-// @import "~@ng-select/ng-select/themes/default.theme.css";
 @import "../../../node_modules/@ng-select/ng-select/themes/default.theme.css";
 
 // .multi_default .ng-value-icon {
@@ -170,8 +169,7 @@
 /**
 * Image Upload Dropzone
 */
-// TODO: VALIDAR SI HAY ERRORES EN DROPZONE
-// @import "~dropzone/dist/min/dropzone.min.css";
+@import "../../../node_modules/dropzone/dist/min/dropzone.min.css";
 
 // Custome css
 
@@ -253,7 +251,7 @@ body[data-bs-theme="dark"] {
 body[data-bs-theme="dark"] {
   .app-search .form-control {
     border: none !important;
-    background-color: #fff !important;
+    background-color: #363a38 !important;
   }
 }
 

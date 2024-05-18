@@ -6,23 +6,22 @@ Website: https://themesbrand.com/
 Contact: themesbrand@gmail.com
 File: Main Css File
 */
+
 //Fonts
 @import "fonts/fonts";
 
-//Custom Style Primeng
 @import "custom-primeng.scss";
 @import "styles.scss";
 
 //Core files
-
 @import "../../../node_modules/bootstrap/scss/functions";
 @import "../../../node_modules/bootstrap/scss/variables";
-@import "../../../node_modules/bootstrap/scss/mixins.scss";
 @import "variables";
 @import "variables-dark";
+@import "../../../node_modules/bootstrap/scss/mixins.scss";
 
 // Structure
-// @import "structure/general";
+@import "structure/general";
 @import "structure/topbar";
 @import "structure/page-head";
 @import "structure/footer";

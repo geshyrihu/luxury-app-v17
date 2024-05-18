@@ -1,16 +1,14 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { MessageService } from 'primeng/api';
 import { LocaleSettings } from 'primeng/calendar';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { Observable } from 'rxjs';
 import { IFechasFiltro } from 'src/app/core/interfaces/fechas-filtro.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
+import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import { FiltroCalendarService } from 'src/app/core/services/filtro-calendar.service';
 import CardEmployeeComponent from 'src/app/pages/operaciones/directorios/empleados/card-employee/card-employee.component';
 import FormBitacoraMantenimientoComponent from './form-bitacora-mantenimiento.component';
@@ -21,18 +19,14 @@ import FormBitacoraMantenimientoComponent from './form-bitacora-mantenimiento.co
   standalone: true,
   imports: [LuxuryAppComponentsModule],
 })
-export default class BitacoraMantenimientoComponent
-  implements OnInit, OnDestroy
-{
-  dateService = inject(DateService);
-  customToastService = inject(CustomToastService);
-  dialogService = inject(DialogService);
-  dataService = inject(DataService);
+export default class BitacoraMantenimientoComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  public authServide = inject(AuthService);
-  messageService = inject(MessageService);
+  dialogHandlerService = inject(DialogHandlerService);
+
+  dateService = inject(DateService);
+  authServide = inject(AuthService);
   customerIdService = inject(CustomerIdService);
-  public rangoCalendarioService = inject(FiltroCalendarService);
+  rangoCalendarioService = inject(FiltroCalendarService);
 
   customerList: any[] = [];
 
@@ -45,7 +39,6 @@ export default class BitacoraMantenimientoComponent
   es: LocaleSettings;
   data: any[];
   ref: DynamicDialogRef;
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   customerId$: Observable<number> = this.customerIdService.getCustomerId$();
 
@@ -60,74 +53,48 @@ export default class BitacoraMantenimientoComponent
       this.onLoadData();
     });
   }
+  onLoadData() {
+    const urlApi = `BitacoraMantenimiento/GetAll/${this.customerIdService.customerId}/${this.fechaInicial}/${this.fechaFinal}`;
+    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      this.data = result;
+    });
+  }
 
   onFilter() {
     this.onLoadData();
   }
 
-  onDelte(item: any) {
-    this.dataService
-      .delete(`BitacoraMantenimiento/${item.id}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          this.customToastService.onShowSuccess();
-          this.onLoadData();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+  onDelete(item: any) {
+    this.apiRequestService
+      .onDelete(`BitacoraMantenimiento/${item.id}`)
+      .then((result: boolean) => {
+        this.onLoadData();
       });
   }
 
   onModalFormBiacora(data: any) {
-    this.ref = this.dialogService.open(FormBitacoraMantenimientoComponent, {
-      data: {
-        id: data.id,
-      },
-      header: data.title,
-      styleClass: 'modal-md',
-      closeOnEscape: true,
-      baseZIndex: 10000,
-    });
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        this.customToastService.onShowSuccess();
-        this.onLoadData();
-      }
-    });
+    this.dialogHandlerService
+      .openDialog(
+        FormBitacoraMantenimientoComponent,
+        {
+          id: data.id,
+        },
+        data.title,
+        this.dialogHandlerService.dialogSizeMd
+      )
+      .then((result: boolean) => {
+        if (result) this.onLoadData();
+      });
   }
 
   onCardEmployee(employeeId: number) {
-    this.ref = this.dialogService.open(CardEmployeeComponent, {
-      data: {
-        employeeId,
+    this.dialogHandlerService.openDialog(
+      CardEmployeeComponent,
+      {
+        employeeId: employeeId,
       },
-      header: 'Tarjeta de Usuario',
-      styleClass: 'modal-sm',
-      closeOnEscape: true,
-      baseZIndex: 10000,
-    });
-  }
-
-  onLoadData() {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .get(
-        `BitacoraMantenimiento/GetAll/${this.customerIdService.customerId}/${this.fechaInicial}/${this.fechaFinal}`
-      )
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.data = this.customToastService.onCloseOnGetData(resp.body);
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
-  }
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
+      'Tarjeta de Usuario',
+      this.dialogHandlerService.dialogSizeMd
+    );
   }
 }

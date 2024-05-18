@@ -1,11 +1,11 @@
 <p-toast position="top-left" [baseZIndex]="99999"></p-toast>
 <header id="page-topbar">
-  <div class="navbar-header bg-custom-color">
+  <div class="navbar-header">
     <div class="d-flex">
       <!-- LOGO -->
-      <div class="navbar-brand-box d-none d-lg-block bg-custom-color">
+      <div class="navbar-brand-box d-none d-lg-block">
         <a routerLink="/" class="logo logo-ligth">
-          <span class="logo-sm"> </span>
+          <span class="logo-sm">LA</span>
           <span class="logo-lg">
             <span class="logo-txt">Luxury App</span>
           </span>
@@ -14,7 +14,7 @@
       <!-- App Search-->
       <button
         type="button"
-        class="btn"
+        class="btn w3-text-white"
         id="vertical-menu-btn"
         (click)="toggleMobileMenu($event)"
       >
@@ -40,85 +40,58 @@
       </button>
 
       <!-- App Search-->
-      <div class="app-search me-2 mt-1">
+      <div class="app-search me-2 mt-1" style="width: 400px">
         <app-menu-select-customer></app-menu-select-customer>
       </div>
 
-      <div class="app-search mt-1">
+      <div class="app-search mt-1" style="width: 250">
         <input
           (click)="onModalSearch()"
           type="text"
           class="form-select"
-          placeholder="Buscar..."
+          placeholder="Click para buscar..."
         />
       </div>
     </div>
-    <div class="btn-group d-none d-lg-block mt-1" ngbDropdown>
+    <div class="dropdown d-inline-block" ngbDropdown>
       <button
         type="button"
-        class="btn btn-secondary dropdown-toggle"
+        class="btn header-item topbar-light bg-light-subtle border-start border-end"
+        id="page-header-user-dropdown"
         data-bs-toggle="dropdown"
+        aria-haspopup="true"
         aria-expanded="false"
         ngbDropdownToggle
       >
-        <img class="rounded avatar-sm" [src]="imagenPerfilUrl" alt="user" />
+        <img class="rounded avatar-md" [src]="imagenPerfilUrl" alt="Img" />
         <span class="d-none d-xl-inline-block ms-1 fw-medium"
-          >{{ dataInfo.firstName }} {{ dataInfo.lastName }}</span
-        >
-        <i class="ms-2 fa-regular fa-caret-down"></i>
+          >{{ dataInfo.firstName }} {{ dataInfo.lastName }}
+        </span>
+        <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
       </button>
       <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
         <button disabled class="btn btn-light w-100 waves-effect waves-light">
           {{ dataInfo.profession }}
         </button>
         <div class="dropdown-divider"></div>
-        <a
-          [routerLink]="['/accounts/actualizar-perfil']"
-          class="btn btn-light w-100 waves-effect waves-light dropdown-item"
-        >
-          <!-- <i class="fa-regular fa-key font-size-16 align-middle me-2"></i> -->
+        <a [routerLink]="['/accounts/actualizar-perfil']" class="dropdown-item">
           Cambiar contraseña
         </a>
-        <button
-          (click)="onModalDataAddress()"
-          class="btn btn-light w-100 waves-effect waves-light dropdown-item"
-        >
-          <!-- <i
-            class="fa-duotone fa-location-dot font-size-16 align-middle me-2"
-          ></i> -->
+        <button (click)="onModalDataAddress()" class="dropdown-item">
           Actualizar mi dirección
         </button>
-        <button
-          (click)="onShowModalDatosPersonales()"
-          class="btn btn-light w-100 waves-effect waves-light dropdown-item"
-        >
-          <!-- <i
-            class="fa-duotone fa-memo-circle-info font-size-16 align-middle me-2"
-          ></i> -->
+        <button (click)="onShowModalDatosPersonales()" class="dropdown-item">
           Complementar mi datos
         </button>
-        <a
-          class="btn btn-light w-100 waves-effect waves-light dropdown-item"
-          (click)="logout()"
-        >
-          <!-- <i
-            class="fa-regular fa-arrow-right-from-bracket font-size-16 align-middle me-2"
-          ></i> -->
-          Cerrar Sesión
-        </a>
+        <a class="dropdown-item" (click)="logout()"> Cerrar Sesión </a>
       </div>
     </div>
   </div>
 </header>
 <style>
-  .bg-custom-color {
-    background: linear-gradient(
-      to right,
-      #000000,
-      #505050
-    ); /* Degradado de colores para el primer grupo */
-  }
-  .navbar-header {
-    height: 60px !important;
+  .text-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 </style>

@@ -4,7 +4,6 @@ import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataService } from 'src/app/core/services/data.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 
 @Component({
@@ -17,7 +16,6 @@ export default class ListRecorridoComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
   customerIdService = inject(CustomerIdService);
-  dataService = inject(DataService);
 
   // Declaración e inicialización de variables
   data: any[] = [];

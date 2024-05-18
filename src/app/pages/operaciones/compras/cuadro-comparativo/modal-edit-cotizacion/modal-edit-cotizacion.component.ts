@@ -1,19 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { MessageService } from 'primeng/api';
-import {
-  DialogService,
-  DynamicDialogConfig,
-  DynamicDialogRef,
-} from 'primeng/dynamicdialog';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ToastModule } from 'primeng/toast';
-import { Subject, takeUntil } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
-import { DataService } from 'src/app/core/services/data.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import CreateOrdenCompraComponent from '../../orden-compra/orden-compra/create-orden-compra/create-orden-compra.component';
 
@@ -23,19 +16,13 @@ import CreateOrdenCompraComponent from '../../orden-compra/orden-compra/create-o
   standalone: true,
   imports: [LuxuryAppComponentsModule, FormsModule, CommonModule, ToastModule],
 })
-export default class ModalEditCotizacionComponent implements OnInit, OnDestroy {
+export default class ModalEditCotizacionComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
-
   customToastService = inject(CustomToastService);
   ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);
-  dataService = inject(DataService);
-  dialogService = inject(DialogService);
-  messageService = inject(MessageService);
   router = inject(Router);
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   cotizacionProveedorId = 0;
   cotizacionProveedor: any;
@@ -72,18 +59,11 @@ export default class ModalEditCotizacionComponent implements OnInit, OnDestroy {
     });
   }
   onLoadData() {
-    this.dataService
-      .get<any>(`solicitudcompra/${this.solicitudCompraId}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.solicitudCompra = resp.body;
-          this.solicitudCompraDetalle = resp.body.solicitudCompraDetalle;
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
+    const urlApi = `solicitudcompra/${this.solicitudCompraId}`;
+    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+      this.solicitudCompra = result;
+      this.solicitudCompraDetalle = result.solicitudCompraDetalle;
+    });
   }
 
   onUpdateProvider() {
@@ -92,20 +72,12 @@ export default class ModalEditCotizacionComponent implements OnInit, OnDestroy {
     this.cotizacionProveedor.entrega = this.entrega;
     this.cotizacionProveedor.politicaPago = this.politicaPago;
 
-    this.dataService
-      .put(
+    this.apiRequestService
+      .onPut(
         `CotizacionProveedor/UpdateProvider/${this.cotizacionProveedor.id}`,
         this.cotizacionProveedor
       )
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.customToastService.onShowSuccess();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
+      .then((result: boolean) => {});
   }
 
   onChange(item: any) {
@@ -135,36 +107,21 @@ export default class ModalEditCotizacionComponent implements OnInit, OnDestroy {
       total3: item.total3,
       unidadMedidaId: item.unidadMedidaId,
     };
-    this.dataService
-      .put(`SolicitudCompraDetalle/UpdatePrice/${item.id}`, data)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          this.onLoadData();
-          this.customToastService.onShowSuccess();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+
+    this.apiRequestService
+      .onPut(`SolicitudCompraDetalle/UpdatePrice/${item.id}`, data)
+      .then((result: boolean) => {
+        if (result) this.onLoadData();
       });
   }
 
   onDeleteProvider() {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .delete(
+    this.apiRequestService
+      .onDelete(
         `solicitudCompra/deleteprovider/${this.solicitudCompraId}/${this.cotizacionProveedorId}`
       )
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          this.ref.close(true);
-          this.customToastService.onClose();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+      .then((result: boolean) => {
+        if (result) this.ref.close(true);
       });
   }
   onModalCreateOrdenCompra() {
@@ -182,20 +139,9 @@ export default class ModalEditCotizacionComponent implements OnInit, OnDestroy {
   }
 
   onCotizacionesRelacionadas() {
-    this.dataService
-      .get(`OrdenCompra/CotizacionesRelacionadas/${this.solicitudCompraId}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.cotizacionesRelacionadas = resp.body;
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
-  }
-
-  ngOnDestroy(): void {
-    this.ref.close(true);
+    const urlApi = `OrdenCompra/CotizacionesRelacionadas/${this.solicitudCompraId}`;
+    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      this.cotizacionesRelacionadas = result;
+    });
   }
 }

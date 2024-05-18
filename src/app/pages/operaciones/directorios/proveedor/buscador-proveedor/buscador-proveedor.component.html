@@ -24,6 +24,8 @@
       >
     </div>
   </div>
+  @if (authService.onValidateRoles(['SuperUsuario'])) {
+
   <div class="col-sm-1">
     <custom-button
       ngbTooltip="Agregar  proveedor"
@@ -32,6 +34,7 @@
       (clicked)="showModalAddOrEdit({ id: 0, title: 'Nuevo Registro' })"
     ></custom-button>
   </div>
+  }
 </div>
 <div class="row">
   @for (item of resultados; track item) {

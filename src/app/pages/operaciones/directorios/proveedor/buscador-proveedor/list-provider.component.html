@@ -27,7 +27,7 @@
       <app-table-header
         (add)="showModalAddOrEdit({ id: 0, title: 'Nuevo Registro' })"
         [dt]="dt"
-        [showAdd]="true"
+        [showAdd]="false"
         [rolAuth]="
           validateRole([
             'Asistente',
@@ -171,7 +171,7 @@
                 })
               "
             ></custom-button>
-            } @if (item.activo && validateRole(['SuperUsuario'])) { }
+            } @if (item.activo && validateRole(['SuperUsuario'])) {
             <custom-button
               ngbTooltip="Uso"
               [customClass]="'btn-sm btn-outline-success'"
@@ -183,14 +183,42 @@
                 })
               "
             ></custom-button>
+            }
           </div>
         </td>
       </tr>
+      @if (item.activo && validateRole(['SuperUsuario'])) {
+      <tr>
+        <td colspan="8">
+          <div class="">
+            <p class="small m-0">
+              OrdenesCompra- {{ item.countOrdenesCompra }}
+            </p>
+            <p class="small m-0">
+              CalendarioMaestroProvider-
+              {{ item.countCalendarioMaestroProvider }}
+            </p>
+            <p class="small m-0">ServiceOrder- {{ item.countServiceOrder }}</p>
+            <p class="small m-0">
+              MaintenanceCalendar- {{ item.countMaintenanceCalendar }}
+            </p>
+            <p class="small m-0">
+              PersonProviderSupport- {{ item.countPersonProviderSupport }}
+            </p>
+            <p class="small m-0">
+              CustomerProvider- {{ item.countCustomerProvider }}
+            </p>
+          </div>
+        </td>
+      </tr>
+      }
     </ng-template>
   </p-table>
 </div>
-} @if (data.length === 0) {
+}
+
+<!-- @if (data.length !== undefined || data.length === 0) {
 <div class="alert alert-default-danger">
   <h4 class="h4">Sin resultados</h4>
 </div>
-}
+} -->

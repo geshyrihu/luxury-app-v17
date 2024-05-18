@@ -166,47 +166,26 @@
           </div>
         </div>
       </div>
+
       <!-- Tipo de Mantenimiento, Responsable -->
       <div class="row">
         <div class="col-sm-6">
-          <div class="">
-            <div class="">
-              <label class="form-label">Actividad</label>
-              <!-- <ckeditor
-                [config]="{ toolbar: ['heading', '|', 'bold', 'italic'] }"
-                [editor]="Editor"
-                formControlName="activity"
-              ></ckeditor> -->
-              <p-editor
-                formControlName="activity"
-                [style]="{ height: '320px' }"
-              ></p-editor>
-              @if ( f.activity.invalid && (f.activity.dirty ||
-              f.activity.touched) ) {
-              <div class="text-danger">
-                @if (f.activity.errors.required) {
-                <small> Campo requerido </small>
-                }
-              </div>
-              }
-            </div>
-          </div>
+          <custom-input-text-area
+            [control]="form.get('activity')"
+            formControlName="activity"
+            label="Actividad"
+            placeholder="Actividad"
+            [horizontal]="false"
+          ></custom-input-text-area>
         </div>
         <div class="col-sm-6">
-          <div class="">
-            <div class="">
-              <label class="form-label">Observaciones</label>
-              <!-- <ckeditor
-                [config]="{ toolbar: ['heading', '|', 'bold', 'italic'] }"
-                [editor]="Editor"
-                formControlName="observations"
-              ></ckeditor> -->
-              <p-editor
-                formControlName="observations"
-                [style]="{ height: '320px' }"
-              ></p-editor>
-            </div>
-          </div>
+          <custom-input-text-area
+            [control]="form.get('observations')"
+            formControlName="observations"
+            label="Observaciones"
+            placeholder="Observaciones"
+            [horizontal]="false"
+          ></custom-input-text-area>
         </div>
       </div>
       <custom-button-submit [disabled]="this.form.invalid || submitting" />

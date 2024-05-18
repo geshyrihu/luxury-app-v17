@@ -3,47 +3,46 @@
 //
 
 #page-topbar {
-  position: fixed; /* La barra superior se mantiene fija en la pantalla */
-  top: 0; /* En la parte superior de la pantalla */
-  right: 0; /* Alineado a la derecha de la pantalla */
-  left: 0; /* Alineado a la izquierda de la pantalla */
-  z-index: 1054; /* Nivel de apilamiento, determina la posición en la pila de elementos */
-  background-color: var(--#{$prefix}header-bg); /* Color de fondo */
-  border-bottom: 1px solid var(--#{$prefix}border-color); /* Borde inferior de 1 píxel sólido */
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 1054;
+  // background-color: var(--#{$prefix}header-bg);
+  background-color: var(--#{$prefix}header-bg);
+  border-bottom: 1px solid var(--#{$prefix}border-color);
 }
 
 .navbar-header {
-  display: flex; /* Usa el modelo de caja flexible para el diseño */
-  -ms-flex-pack: justify; /* Para navegadores antiguos de Microsoft */
-  justify-content: space-between; /* Distribución equitativa de espacio entre los elementos hijos */
-  align-items: center; /* Centra verticalmente los elementos hijos */
-  margin: 0 auto; /* Sin margen superior e inferior, centrado horizontalmente */
-  height: $header-height; /* Altura específica definida por la variable $header-height */
-  padding: 0 $grid-gutter-width 0 0; /* Relleno (padding) específico */
+  display: flex;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 auto;
+  height: $header-height;
+  padding: 0 $grid-gutter-width 0 0;
 
   .dropdown .show {
     &.header-item {
-      background-color: var(
-        --#{$prefix}gray-100
-      ); /* Color de fondo para elementos específicos dentro de la clase .dropdown .show.header-item */
+      background-color: var(--#{$prefix}gray-100);
     }
   }
 }
 
 .navbar-brand-box {
-  padding: 0 1.5rem; /* Relleno específico en los lados izquierdo y derecho */
-  width: $navbar-brand-box-width; /* Ancho definido por la variable $navbar-brand-box-width */
-  background: var(--#{$prefix}sidebar-bg); /* Color de fondo */
-  border-right: 1px solid $sidebar-border-color; /* Borde derecho de 1 píxel sólido con color definido por la variable $sidebar-border-color */
-  box-shadow: 0px 2px 2px var(--#{$prefix}sidebar-bg); /* Sombra específica */
+  padding: 0 1.5rem;
+  width: $navbar-brand-box-width;
+  background: var(--#{$prefix}sidebar-bg);
+  border-right: 1px solid $sidebar-border-color;
+  box-shadow: 0px 2px 2px var(--#{$prefix}sidebar-bg);
 }
 
 .logo {
-  line-height: 69px; /* Altura de línea específica */
-  color: inherit !important; /* Color del texto heredado, !important para anular otras reglas */
+  line-height: 69px;
+  color: inherit !important;
 
   .logo-sm {
-    display: none; /* La clase .logo-sm está oculta por defecto */
+    display: none;
   }
 }
 

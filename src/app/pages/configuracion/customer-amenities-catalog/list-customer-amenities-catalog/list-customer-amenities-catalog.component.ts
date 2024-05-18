@@ -43,7 +43,7 @@ export default class ListCustomerAmenitiesCatalogComponent implements OnInit {
       .then((result: any) => {
         if (result) {
           this.dataCustomer.push(result);
-          this.data = this.data.filter((x) => x.id !== item.id);
+          // this.data = this.data.filter((x) => x.id !== item.id);
         }
       });
   }
@@ -52,7 +52,6 @@ export default class ListCustomerAmenitiesCatalogComponent implements OnInit {
     const urlApi = `customeramenitiescatalog/remove/${id}`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       if (result) {
-        console.log('🚀 ~ result:', result);
         // Filtrar los elementos que tienen un id diferente al id que se va a eliminar
         this.dataCustomer = this.dataCustomer.filter((item) => item.id !== id);
         this.data.push(result);
@@ -73,7 +72,6 @@ export default class ListCustomerAmenitiesCatalogComponent implements OnInit {
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.data = result.amenities;
       this.dataCustomer = result.listCustomerAmenities;
-      console.log('🚀 ~ this.dataCustomer:', this.dataCustomer);
     });
   }
 

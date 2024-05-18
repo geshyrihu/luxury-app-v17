@@ -1091,19 +1091,7 @@ export class SidebarService {
         },
       ],
     },
-    {
-      visible: this.authService.onValidateRoles(['SuperUsuario']),
-      label: '5.7 Comunicados',
-      icon: 'fa-thin fa-file-pdf',
-      items: [
-        {
-          visible: this.authService.onValidateRoles(['SuperUsuario']),
-          label: 'Enviar Email',
-          routerLink: '/comunicacion/enviar-comunicado',
-          name: 'Calendario-Enviar comunicado',
-        },
-      ],
-    },
+
     {
       visible: this.authService.onValidateRoles([
         'Asistente',
@@ -1268,6 +1256,7 @@ export class SidebarService {
             'Residente',
             'SuperUsuario',
             'SupervisionOperativa',
+            'Reclutamiento',
           ]),
           label: 'Plantilla',
           routerLink: '/reclutamiento/plantilla-interna',

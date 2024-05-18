@@ -3,7 +3,8 @@
 ===================*/
 
 
-.fc td, .fc th{
+.fc td,
+.fc th {
     border: $table-border-width solid $table-border-color;
 }
 
@@ -122,24 +123,65 @@
 
 
 .fc-day-grid-event.fc-h-event.fc-event.fc-start.fc-end.bg-dark {
-    .fc-content{
+    .fc-content {
         color: var(--#{$prefix}light);
     }
-  }
-  
+}
+
+
+.fc .fc-button-primary {
+    background-color: var(--#{$prefix}primary) !important;
+    border-color: var(--#{$prefix}primary) !important;
+    box-shadow: none !important;
+}
+
+.fc-scrollgrid {
+    border-color: var(--#{$prefix}border-color) !important;
+}
+
+.fc-theme-standard .fc-list-day-cushion {
+    background-color: var(--#{$prefix}tertiary-bg) !important;
+}
+
+.fc-theme-standard .fc-list {
+    border: var(--#{$prefix}border-color) !important;
+}
+
+.fc-daygrid-event-dot {
+    display: none !important;
+}
+
+.fc-event {
+    justify-content: center;
+
+    &.fc-event-draggable {
+        text-align: center;
+        color: $white !important;
+    }
+
+    .fc-event-title {
+        flex-grow: 0 !important;
+    }
+}
+
+
+.fc .fc-daygrid-day.fc-day-today {
+    background-color: $info-bg-subtle !important;
+}
+
 
 // RTL
-[dir="rtl"]{
+[dir="rtl"] {
     .fc-header-toolbar {
         direction: ltr !important;
     }
 
     .fc-toolbar>*>:not(:first-child) {
-        margin-left: .75em;
+        margin-left: 0.75em;
     }
 }
 
-.fc-toolbar{
+.fc-toolbar {
     @media (max-width: 575.98px) {
         flex-direction: column;
     }
@@ -147,8 +189,12 @@
 
 
 // dark
-[data-bs-theme ="dark"]{
-    .fc-event.bg-dark{
-        background-color: $white !important;
+[data-bs-theme="dark"] {
+    .fc-scrollgrid {
+        border-color: #383d3e !important;
+    }
+
+    .fc-event.bg-dark {
+        background-color: #171c1c !important;
     }
 }

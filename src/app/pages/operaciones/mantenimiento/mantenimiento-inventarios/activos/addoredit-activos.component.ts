@@ -1,22 +1,14 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import {
-  DialogService,
-  DynamicDialogConfig,
-  DynamicDialogRef,
-} from 'primeng/dynamicdialog';
-import { Subject, takeUntil } from 'rxjs';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { EInventoryCategory } from 'src/app/core/enums/inventory-category.enum';
 import { EState } from 'src/app/core/enums/state.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import { environment } from 'src/environments/environment';
@@ -27,27 +19,20 @@ import { environment } from 'src/environments/environment';
   standalone: true,
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
-export default class AddOrEditActivosComponent implements OnInit, OnDestroy {
+export default class AddOrEditActivosComponent implements OnInit {
+  apiRequestService = inject(ApiRequestService);
   dateService = inject(DateService);
   authService = inject(AuthService);
-  dataService = inject(DataService);
-  apiRequestService = inject(ApiRequestService);
   formBuilder = inject(FormBuilder);
-  public getdateService = inject(DateService);
+  getdateService = inject(DateService);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
   customerIdService = inject(CustomerIdService);
-  dialogService = inject(DialogService);
-  customToastService = inject(CustomToastService);
-
-  public Editor = ClassicEditor;
 
   submitting: boolean = false;
 
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
-
   urlBaseImg = '';
-  public id: number = 0;
+  id: number = 0;
   user = this.authService.userTokenDto.infoUserAuthDto.applicationUserId;
   customerId: number = this.customerIdService.getCustomerId();
   machineryDTO: any;
@@ -93,16 +78,21 @@ export default class AddOrEditActivosComponent implements OnInit, OnDestroy {
     this.form.patchValue({ photoPath: file });
   }
   onLoadData(id: number) {
-    this.dataService
-      .get(`Machineries/${id}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe((resp: any) => {
-        this.id = resp.body.id;
-        resp.body.dateOfPurchase = this.getdateService.getDateFormat(
-          resp.body.dateOfPurchase
-        );
-        this.form.patchValue(resp.body);
-      });
+    const urlApi = `Machineries/${id}`;
+    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+      this.id = result.id;
+      result.dateOfPurchase = this.getdateService.getDateFormat(
+        result.dateOfPurchase
+      );
+      this.form.patchValue(result);
+      const contenidoHTML = this.form.get('technicalSpecifications').value;
+      const contenidoSinHTML = contenidoHTML.replace(/<[^>]*>|&nbsp;/g, '');
+      this.form.get('technicalSpecifications').patchValue(contenidoSinHTML);
+
+      const contenidoHTML2 = this.form.get('observations').value;
+      const contenidoSinHTML2 = contenidoHTML2.replace(/<[^>]*>|&nbsp;/g, '');
+      this.form.get('observations').patchValue(contenidoSinHTML2);
+    });
   }
   onSubmit() {
     if (!this.apiRequestService.validateForm(this.form)) return;
@@ -110,37 +100,18 @@ export default class AddOrEditActivosComponent implements OnInit, OnDestroy {
     const model = this.createFormData(this.form.value);
 
     this.submitting = true;
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
+
     if (this.id === 0) {
-      this.dataService
-        .post('Machineries', model)
-        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-        .subscribe({
-          next: () => {
-            this.ref.close(true);
-            this.customToastService.onClose();
-          },
-          error: (error) => {
-            // Habilitar el botón nuevamente al finalizar el envío del formulario
-            this.submitting = false;
-            this.customToastService.onCloseToError(error);
-          },
+      this.apiRequestService
+        .onPost(`Machineries`, model)
+        .then((result: boolean) => {
+          result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.dataService
-        .put(`Machineries/${this.id}`, model)
-        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-        .subscribe({
-          next: () => {
-            this.ref.close(true);
-            this.customToastService.onClose();
-          },
-          error: (error) => {
-            // Habilitar el botón nuevamente al finalizar el envío del formulario
-            this.submitting = false;
-            this.customToastService.onCloseToError(error);
-          },
+      this.apiRequestService
+        .onPut(`Machineries/${this.id}`, model)
+        .then((result: boolean) => {
+          result ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }
@@ -180,23 +151,9 @@ export default class AddOrEditActivosComponent implements OnInit, OnDestroy {
   }
 
   onLoadEquipoClasificacion() {
-    this.dataService
-      .get('EquipoClasificacion/SelectItem')
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.cb_equipoClasificacion = resp.body;
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
-  }
-
-  get f() {
-    return this.form.controls;
-  }
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
+    const urlApi = `equipoclasificacion/selectitem`;
+    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      this.cb_equipoClasificacion = result;
+    });
   }
 }

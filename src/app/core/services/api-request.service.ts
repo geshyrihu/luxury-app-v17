@@ -1,5 +1,6 @@
 import { Injectable, OnDestroy, inject } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import saveAs from 'file-saver';
 import { Subject, lastValueFrom, takeUntil } from 'rxjs';
 import { CustomToastService } from './custom-toast.service';
 import { DataService } from './data.service';
@@ -139,6 +140,33 @@ export class ApiRequestService implements OnDestroy {
       this.customToastService.onCloseToError(error);
       return false;
     }
+  }
+  exportToExcel(urlApi: string, nameDocument: string) {
+    // Mostrar un mensaje de carga
+    this.customToastService.onLoading();
+
+    // Llamar a getFile para obtener el archivo Excel
+    this.dataService
+      .getFile(urlApi)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe({
+        next: (resp: Blob) => {
+          // Crea un objeto de tipo Blob a partir de la respuesta
+          const blob = new Blob([resp], {
+            type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+          });
+
+          // Utiliza la función saveAs del paquete 'file-saver' para descargar el archivo
+          saveAs(blob, nameDocument);
+
+          // Cuando se completa la exportación con éxito, mostrar un mensaje de éxito
+          this.customToastService.onCloseToSuccess();
+        },
+        error: (error) => {
+          // En caso de error, mostrar un mensaje de error
+          this.customToastService.onCloseToError(error);
+        },
+      });
   }
 
   // validacion de formulario...

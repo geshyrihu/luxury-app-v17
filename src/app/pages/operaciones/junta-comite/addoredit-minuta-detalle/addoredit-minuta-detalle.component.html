@@ -23,18 +23,13 @@
         placeholder="titulo"
         [horizontal]="false"
       ></custom-input-text>
-      <div class="form-group mb-2">
-        <label class="form-label">Asunto</label>
-        <!-- <ckeditor
-          [config]="{ toolbar: ['heading', '|', 'bold', 'italic'] }"
-          [editor]="Editor"
-          formControlName="requestService"
-        ></ckeditor> -->
-        <p-editor
-          formControlName="requestService"
-          [style]="{ height: '320px' }"
-        ></p-editor>
-      </div>
+      <custom-input-text-area
+        [control]="form.get('requestService')"
+        formControlName="requestService"
+        label="Asunto"
+        placeholder="asunto"
+        [horizontal]="false"
+      ></custom-input-text-area>
 
       <custom-input-select
         [control]="form.get('status')"

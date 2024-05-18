@@ -1,6 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { SelectItem } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -26,8 +25,6 @@ export default class AddoreditMaintenancePreventiveComponent implements OnInit {
   config = inject(DynamicDialogConfig);
   customerIdService = inject(CustomerIdService);
   ref = inject(DynamicDialogRef);
-
-  Editor = ClassicEditor;
 
   cb_machinery: ISelectItem[] = [];
   cb_providers: ISelectItem[] = [];
@@ -184,6 +181,13 @@ export default class AddoreditMaintenancePreventiveComponent implements OnInit {
     this.form.patchValue({
       cuentaName: result.cuenta.label,
     });
+    const contenidoHTML = this.form.get('activity').value;
+    const contenidoSinHTML = contenidoHTML.replace(/<[^>]*>|&nbsp;/g, '');
+    this.form.get('activity').patchValue(contenidoSinHTML);
+
+    const contenidoHTML2 = this.form.get('observations').value;
+    const contenidoSinHTML2 = contenidoHTML2.replace(/<[^>]*>|&nbsp;/g, '');
+    this.form.get('observations').patchValue(contenidoSinHTML2);
   }
   // convenience getter for easy access to form fields
 

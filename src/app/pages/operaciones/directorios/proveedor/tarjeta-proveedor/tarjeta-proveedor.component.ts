@@ -14,18 +14,18 @@ export default class TarjetaProveedorComponent implements OnInit {
   config = inject(DynamicDialogConfig);
 
   model: any;
-  id: number;
+  providerId: number;
   urlLogo = '';
 
   ngOnInit(): void {
-    this.id = this.config.data.id;
-    if (this.id !== null) {
+    this.providerId = this.config.data.providerId;
+    if (this.providerId !== null) {
       this.onLoadItem();
     }
   }
   onLoadItem() {
     this.apiRequestService
-      .onGetItem(`Proveedor/${this.id}`)
+      .onGetItem(`Proveedor/${this.providerId}`)
       .then((result: any) => {
         this.urlLogo = `${environment.base_urlImg}providers/${result.pathPhoto}`;
         this.model = result;

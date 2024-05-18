@@ -1,5 +1,4 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import {
@@ -33,8 +32,6 @@ export default class OrderServiceComponent implements OnInit, OnDestroy {
   public confirmationService = inject(ConfirmationService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
-
-  public Editor = ClassicEditor;
 
   maintenanceCalendars: any[] = [];
   idMachinery: number = 0;

@@ -1,13 +1,10 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subject, takeUntil } from 'rxjs';
 import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataService } from 'src/app/core/services/data.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
@@ -16,18 +13,12 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   standalone: true,
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
-export default class AddoreditInventarioPinturaComponent
-  implements OnInit, OnDestroy
-{
-  formBuilder = inject(FormBuilder);
-  dataService = inject(DataService);
+export default class AddoreditInventarioPinturaComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  ref = inject(DynamicDialogRef);
+  formBuilder = inject(FormBuilder);
   config = inject(DynamicDialogConfig);
+  ref = inject(DynamicDialogRef);
   customerIdService = inject(CustomerIdService);
-  customToastService = inject(CustomToastService);
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   submitting: boolean = false;
 
@@ -63,84 +54,52 @@ export default class AddoreditInventarioPinturaComponent
     });
   }
   onLoadData() {
-    this.dataService
-      .get<any>(`InventarioPintura/${this.id}`)
-      .subscribe((resp: any) => {
-        this.form.patchValue(resp.body);
-
-        this.form.patchValue({
-          productoId: resp.body.productoId,
-        });
-        this.form.patchValue({
-          producto: resp.body.producto,
-        });
-        this.form.patchValue({
-          machineryId: resp.body.machineryId,
-        });
-        this.form.patchValue({
-          machinery: resp.body.machinery,
-        });
+    const urlApi = `InventarioPintura/${this.id}`;
+    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+      this.form.patchValue(result);
+      this.form.patchValue({
+        productoId: result.productoId,
       });
+      this.form.patchValue({
+        producto: result.producto,
+      });
+      this.form.patchValue({
+        machineryId: result.machineryId,
+      });
+      this.form.patchValue({
+        machinery: result.machinery,
+      });
+    });
   }
   onSubmit() {
-    let model = this.form.value;
     if (!this.apiRequestService.validateForm(this.form)) return;
-    this.id = this.config.data.id;
-
     this.submitting = true;
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
 
     if (this.id === 0) {
-      this.dataService
-        .post(`InventarioPintura`, model)
-        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-        .subscribe({
-          next: () => {
-            this.ref.close(true);
-            this.customToastService.onClose();
-          },
-          error: (error) => {
-            // Habilitar el botón nuevamente al finalizar el envío del formulario
-            this.submitting = false;
-            this.customToastService.onCloseToError(error);
-          },
+      this.apiRequestService
+        .onPost(`InventarioPintura`, this.form.value)
+        .then((result: boolean) => {
+          result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.dataService
-        .put(`InventarioPintura/${this.id}`, model)
-        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-        .subscribe({
-          next: () => {
-            this.ref.close(true);
-            this.customToastService.onClose();
-          },
-          error: (error) => {
-            // Habilitar el botón nuevamente al finalizar el envío del formulario
-            this.submitting = false;
-            this.customToastService.onCloseToError(error);
-          },
+      this.apiRequestService
+        .onPut(`InventarioPintura/${this.id}`, this.form.value)
+        .then((result: boolean) => {
+          result ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }
   onLoadMachinery() {
-    this.dataService
-      .get(
-        'Machineries/GetAutocompeteInv/' +
-          this.customerIdService.getCustomerId()
-      )
-      .subscribe((resp: any) => {
-        this.cb_machinery = resp.body;
-      });
+    const urlApi =
+      'Machineries/GetAutocompeteInv/' + this.customerIdService.getCustomerId();
+    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      this.cb_machinery = result;
+    });
   }
   onLoadProducto() {
-    this.dataService
-      .get('Productos/GetAutoCompleteSelectItem/')
-      .subscribe((resp: any) => {
-        this.cb_producto = resp.body;
-      });
-  }
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
+    const urlApi = `productos/getautocompleteselectitem/`;
+    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      this.cb_producto = result;
+    });
   }
 }

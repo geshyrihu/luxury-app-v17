@@ -87,28 +87,24 @@
         </div>
 
         <div class="form-group col-sm-6">
-          <label>Especificaciones Técnicas</label>
-          <!-- <ckeditor
-            [config]="{ toolbar: ['heading', '|', 'bold', 'italic'] }"
-            [editor]="Editor"
+          <custom-input-text-area
+            [control]="form.get('technicalSpecifications')"
             formControlName="technicalSpecifications"
-          ></ckeditor> -->
-          <p-editor
-            formControlName="technicalSpecifications"
-            [style]="{ height: '320px' }"
-          ></p-editor>
+            label="Especificaciones Técnicas"
+            placeholder="Especificaciones Técnicas"
+            [horizontal]="false"
+            rows="10"
+          ></custom-input-text-area>
         </div>
         <div class="form-group col-sm-6">
-          <label>Observaciones</label>
-          <!-- <ckeditor
-            [config]="{ toolbar: ['heading', '|', 'bold', 'italic'] }"
-            [editor]="Editor"
+          <custom-input-text-area
+            [control]="form.get('observations')"
             formControlName="observations"
-          ></ckeditor> -->
-          <p-editor
-            formControlName="observations"
-            [style]="{ height: '320px' }"
-          ></p-editor>
+            label="Observaciones"
+            placeholder="Observaciones"
+            [horizontal]="false"
+            rows="10"
+          ></custom-input-text-area>
         </div>
       </div>
       <custom-button-submit [disabled]="this.form.invalid || submitting" />
@@ -183,28 +179,24 @@ category == 7 ) {
           </div>
         </div>
         <div class="form-group col-sm-6">
-          <label>Especificaciones Técnicas</label>
-          <!-- <ckeditor
-            [config]="{ toolbar: ['heading', '|', 'bold', 'italic'] }"
-            [editor]="Editor"
+          <custom-input-text-area
+            [control]="form.get('technicalSpecifications')"
             formControlName="technicalSpecifications"
-          ></ckeditor> -->
-          <p-editor
-            formControlName="technicalSpecifications"
-            [style]="{ height: '320px' }"
-          ></p-editor>
+            label="Especificaciones Técnicas"
+            placeholder="Especificaciones Técnicas"
+            [horizontal]="false"
+            rows="10"
+          ></custom-input-text-area>
         </div>
         <div class="form-group col-sm-6">
-          <label>Observaciones</label>
-          <!-- <ckeditor
-            [config]="{ toolbar: ['heading', '|', 'bold', 'italic'] }"
-            [editor]="Editor"
+          <custom-input-text-area
+            [control]="form.get('observations')"
             formControlName="observations"
-          ></ckeditor> -->
-          <p-editor
-            formControlName="observations"
-            [style]="{ height: '320px' }"
-          ></p-editor>
+            label="Observaciones"
+            placeholder="Observaciones"
+            [horizontal]="false"
+            rows="10"
+          ></custom-input-text-area>
         </div>
       </div>
       <custom-button-submit [disabled]="this.form.invalid || submitting" />

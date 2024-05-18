@@ -83,7 +83,6 @@
           ></custom-input-datalist>
         </div>
         <div class="col-sm-6">
-          <label>Actividad</label>
           @if ( f.activity.errors && (f.activity.dirty || f.activity.touched) )
           {
           <div class="text-danger animate__fadeIn">
@@ -94,27 +93,24 @@
             }
           </div>
           }
-          <!-- <ckeditor
-            [config]="{ toolbar: ['heading', '|', 'bold', 'italic'] }"
-            [editor]="Editor"
+          <custom-input-text-area
+            [control]="form.get('activity')"
             formControlName="activity"
-          ></ckeditor> -->
-          <p-editor
-            formControlName="activity"
-            [style]="{ height: '320px' }"
-          ></p-editor>
+            label="Actividad"
+            placeholder="Actividad"
+            [horizontal]="false"
+            rows="10"
+          ></custom-input-text-area>
         </div>
         <div class="col-sm-6">
-          <label>Observaciones</label>
-          <!-- <ckeditor
-            [config]="{ toolbar: ['heading', '|', 'bold', 'italic'] }"
-            [editor]="Editor"
+          <custom-input-text-area
+            [control]="form.get('observation')"
             formControlName="observation"
-          ></ckeditor> -->
-          <p-editor
-            formControlName="observation"
-            [style]="{ height: '320px' }"
-          ></p-editor>
+            label="Observaciones"
+            placeholder="Observaciones"
+            [horizontal]="false"
+            rows="10"
+          ></custom-input-text-area>
         </div>
       </div>
       <div class="mb-1"></div>

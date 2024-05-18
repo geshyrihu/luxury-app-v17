@@ -5,11 +5,12 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DataService } from 'src/app/core/services/data.service';
+import CustomSelectImageComponent from 'src/app/custom-components/custom-select-image/custom-select-image.component';
 @Component({
   selector: 'app-menu-select-customer',
   templateUrl: './menu-select-customer.component.html',
   standalone: true,
-  imports: [LuxuryAppComponentsModule, FormsModule],
+  imports: [LuxuryAppComponentsModule, FormsModule, CustomSelectImageComponent],
   providers: [DataService],
 })
 export default class MenuSelectCustomerComponent implements OnInit {
@@ -19,7 +20,7 @@ export default class MenuSelectCustomerComponent implements OnInit {
 
   cb_customer: any[] = [];
   customerId = this.customerIdService.customerId;
-
+  selectedCountry: string | undefined;
   ngOnInit() {
     this.apiRequestService
       .onGetSelectItem(

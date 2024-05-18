@@ -13,38 +13,43 @@
   [tableStyle]="{ 'min-width': '50rem' }"
 >
   <ng-template pTemplate="caption">
-    <app-table-header
-      [title]="'Clientes'"
-      (add)="onModalAddOrEdit({ id: 0, title: 'Nuevo Registro' })"
-      [dt]="dt"
-    ></app-table-header>
-    <div class="btn-group" role="group" aria-label="Basic example">
-      <custom-button-active-desactive
-        (activo)="onSortChange($event)"
-        (inactivo)="onSortChange($event)"
-      ></custom-button-active-desactive>
+    <div class="row">
+      <div class="col-sm-10">
+        <app-table-header
+          [title]="'Clientes'"
+          (add)="onModalAddOrEdit({ id: 0, title: 'Nuevo Registro' })"
+          [dt]="dt"
+        ></app-table-header>
+      </div>
+      <div class="col-sm-2">
+        <div class="btn-group" role="group" aria-label="Basic example">
+          <custom-button-active-desactive
+            (activo)="onSortChange($event)"
+            (inactivo)="onSortChange($event)"
+          ></custom-button-active-desactive>
+        </div>
+      </div>
     </div>
   </ng-template>
   <ng-template pTemplate="header">
     <tr>
-      <th scope="col">#</th>
-      <th scope="col">CLIENTE</th>
+      <th scope="col">ID</th>
+      <th scope="col">NO CLIENTE</th>
       <th scope="col" colspan="2" pSortableColumn="nameCustomer">
         NOMBRE
         <p-sortIcon field="nameCustomer"></p-sortIcon>
       </th>
       <th scope="col">TÉLEFONOS</th>
-      <th scope="col">DIRECCIÓN</th>
       <th scope="col" style="width: 10%">OPCIONES</th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
     <tr>
       <td>{{ rowIndex + 1 }}</td>
-      <td class="p-column-title">
+      <td class="p-column-title text-center">
         {{ item.numeroCliente }}
       </td>
-      <td class="p-column-title">
+      <td class="p-column-title text-center">
         <img
           [src]="urlBaseImg + item.photoPath"
           alt=""
@@ -57,10 +62,6 @@
 
       <td class="p-column-title">
         {{ item.phoneOne }} <br />{{ item.phoneTwo }}
-      </td>
-
-      <td class="p-column-title">
-        {{ item.adreess }}
       </td>
 
       <td class="p-column-title" class="hide-print-mode">

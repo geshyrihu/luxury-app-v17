@@ -1,8 +1,8 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { EditorModule } from 'primeng/editor';
 import { EAreaMinutasDetalles } from 'src/app/core/enums/area-minutas-detalles.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
@@ -14,7 +14,7 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   selector: 'app-addoredit-minuta-detalle',
   templateUrl: './addoredit-minuta-detalle.component.html',
   standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
+  imports: [LuxuryAppComponentsModule, CustomInputModule, EditorModule],
 })
 export default class AddoreditMinutaDetalleComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
@@ -23,7 +23,6 @@ export default class AddoreditMinutaDetalleComponent implements OnInit {
   config = inject(DynamicDialogConfig);
   authService = inject(AuthService);
 
-  public Editor = ClassicEditor;
   submitting: boolean = false;
 
   cb_estatus = [
@@ -68,6 +67,9 @@ export default class AddoreditMinutaDetalleComponent implements OnInit {
       this.form.patchValue({
         employeeId: this.authService.userTokenDto.infoEmployeeDto.employeeId,
       });
+      const contenidoHTML = this.form.get('requestService').value;
+      const contenidoSinHTML = contenidoHTML.replace(/<[^>]*>|&nbsp;/g, '');
+      this.form.get('requestService').patchValue(contenidoSinHTML);
     });
   }
   onSubmit() {

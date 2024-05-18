@@ -221,8 +221,7 @@
           }
           <!-- CONTABLE -->
         </td>
-        <!-- ESTADOS FINANCIEROS -->
-        <!-- ESTADOS FINANCIEROS -->
+
         <td>
           <!-- OPERACIONES -->
           @if ( !item.archivoJunta && authService.onValidateRoles(['Residente'])
@@ -278,6 +277,7 @@
         </td>
         <td>
           <!-- FINAL -->
+
           @if ( !item.archivoFinal &&
           authService.onValidateRoles(['SupervisionOperativa']) &&
           item.archivoPortada && item.archivoContable && item.archivoJunta &&

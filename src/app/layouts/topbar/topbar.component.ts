@@ -33,14 +33,14 @@ import ModalSearchComponent from '../modal-search/modal-search.component';
   ],
 })
 export class TopbarComponent implements OnInit {
-  private location = inject(Location);
-  private router = inject(Router);
+  apiRequestService = inject(ApiRequestService);
   authService = inject(AuthService);
   customToastService = inject(CustomToastService);
-  dialogService = inject(DialogService);
-  public profielServiceService = inject(ProfielServiceService);
   dialogHandlerService = inject(DialogHandlerService);
-  apiRequestService = inject(ApiRequestService);
+  dialogService = inject(DialogService);
+  location = inject(Location);
+  router = inject(Router);
+  profielServiceService = inject(ProfielServiceService);
 
   personId: number = this.authService.userTokenDto.infoEmployeeDto.personId;
 
@@ -113,7 +113,7 @@ export class TopbarComponent implements OnInit {
           personId: this.personId,
         },
         'Datos Principales',
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerService.dialogSizeLg
       )
       .then((result: boolean) => {
         if (result) this.customToastService.onShowSuccess();
@@ -129,7 +129,7 @@ export class TopbarComponent implements OnInit {
           personId: this.personId,
         },
         'Datos Principales',
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerService.dialogSizeLg
       )
       .then((result: boolean) => {
         if (result) this.customToastService.onShowSuccess();

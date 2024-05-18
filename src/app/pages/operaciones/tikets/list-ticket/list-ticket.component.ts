@@ -135,7 +135,6 @@ export default class ListTicketComponent implements OnInit, OnDestroy {
         ),
       },
       header: 'Enviar reporte semanal',
-      styleClass: 'modal-lg',
       baseZIndex: 1000,
       height: '100%',
       width: '100%',

@@ -85,10 +85,7 @@ export default [
     path: 'capacitacion',
     loadChildren: () => import('./capacitacion.routing'),
   },
-  {
-    path: 'comunicacion',
-    loadChildren: () => import('./comunicados.routing'),
-  },
+
   {
     path: 'legal',
     loadChildren: () => import('./legal.routing'),

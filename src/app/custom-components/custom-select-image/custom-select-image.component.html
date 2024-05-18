@@ -1,0 +1,20 @@
+<div class="custom-select-container" (click)="toggleDropdown()">
+  <div class="selected-item">
+    @if (selectedItem) {
+    <img
+      [src]="urlImage + selectedItem.image"
+      alt="IMG"
+      class="selected-image"
+    />
+    }
+    <span style="color: black">{{ selectedItem?.label }}</span>
+  </div>
+  <div class="dropdown-list" [class.show]="dropdownOpen">
+    @for (item of items; track $index) {
+    <div class="dropdown-item" (click)="selectItem(item)">
+      <img [src]="urlImage + item.image" alt="IMG" class="item-image" />
+      <span style="color: black">{{ item.label }}</span>
+    </div>
+    }
+  </div>
+</div>

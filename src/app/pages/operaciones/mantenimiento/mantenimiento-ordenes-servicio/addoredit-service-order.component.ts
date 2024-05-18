@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import LuxuryAppComponentsModule, {
   flatpickrFactory,
 } from 'app/shared/luxuryapp-components.module';
@@ -39,8 +38,6 @@ export default class ServiceOrderAddOrEditComponent
   dataService = inject(DataService);
   dateService = inject(DateService);
   ref = inject(DynamicDialogRef);
-
-  public Editor = ClassicEditor;
 
   submitting: boolean = false;
 
@@ -147,7 +144,15 @@ export default class ServiceOrderAddOrEditComponent
         resp.body.requestDate = this.dateService.getDateFormat(
           resp.body.requestDate
         );
+
         this.form.patchValue(resp.body);
+        const contenidoHTML = this.form.get('activity').value;
+        const contenidoSinHTML = contenidoHTML.replace(/<[^>]*>|&nbsp;/g, '');
+        this.form.get('activity').patchValue(contenidoSinHTML);
+
+        const contenidoHTML2 = this.form.get('observations').value;
+        const contenidoSinHTML2 = contenidoHTML2.replace(/<[^>]*>|&nbsp;/g, '');
+        this.form.get('observations').patchValue(contenidoSinHTML2);
       });
   }
   onSubmit() {

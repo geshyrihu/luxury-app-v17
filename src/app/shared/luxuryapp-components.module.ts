@@ -42,7 +42,6 @@ import HaederCustomerComponent from './haeder-customer/haeder-customer.component
 import InputImgReportComponent from './input-img-report/input-img-report.component';
 import InputImgComponent from './input-img/input-img.component';
 import ListadoCondominosComponent from './listado-condominos/listado-condominos.component';
-import LeafletMapComponent from './mapas/leaflet-map/leaflet-map.component';
 import MesanioComponent from './mesanio/mesanio.component';
 import CalendarRangeComponent from './rango-calendario-mes-anio/calendar-range.component';
 import RangoCalendarioyyyymmddComponent from './rango-calendario-yyyymmdd/rango-calendario-yyyymmdd.component';
@@ -64,7 +63,6 @@ export function flatpickrFactory() {
     HaederCustomerComponent,
     InputImgComponent,
     InputImgReportComponent,
-    LeafletMapComponent,
     ListadoCondominosComponent,
     MesanioComponent,
     PagetitleComponent,
@@ -117,7 +115,6 @@ export function flatpickrFactory() {
     HaederCustomerComponent,
     InputImgComponent,
     InputImgReportComponent,
-    LeafletMapComponent,
     ListadoCondominosComponent,
     MesanioComponent,
     PagetitleComponent,

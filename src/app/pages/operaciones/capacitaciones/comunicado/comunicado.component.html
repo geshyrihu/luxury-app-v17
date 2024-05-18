@@ -64,7 +64,7 @@
           <a
             [href]="filePath + item.comunicadoPath"
             target="_blank"
-            download="item.comunicadoPath"
+            [download]="item.comunicadoPath"
             ngbTooltip="Descargar"
             placement="top"
             class="btn btn-soft-danger btn-sm w-xs waves-effect btn-label waves-light me-1"
@@ -72,7 +72,6 @@
             <i class="fa-regular fa-download label-icon fa-2x pointer"></i>
             Pdf
           </a>
-          <!-- {{ item.comunicadoPath }} -->
         </td>
         <!-- Opciones -->
         @if (authService.onValidateRoles(['SuperUsuario'])) {

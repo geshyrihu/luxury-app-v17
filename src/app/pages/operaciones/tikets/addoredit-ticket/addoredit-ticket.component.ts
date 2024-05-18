@@ -145,6 +145,17 @@ export default class AddoreditTicketComponent implements OnInit, OnDestroy {
         next: (resp: any) => {
           this.model = resp.body;
           this.form.patchValue(resp.body);
+          this.form.patchValue(resp.body);
+          const contenidoHTML = this.form.get('activity').value;
+          const contenidoSinHTML = contenidoHTML.replace(/<[^>]*>|&nbsp;/g, '');
+          this.form.get('activity').patchValue(contenidoSinHTML);
+
+          const contenidoHTML2 = this.form.get('observations').value;
+          const contenidoSinHTML2 = contenidoHTML2.replace(
+            /<[^>]*>|&nbsp;/g,
+            ''
+          );
+          this.form.get('observations').patchValue(contenidoSinHTML2);
         },
         error: (error) => {
           this.customToastService.onCloseToError(error);

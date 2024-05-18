@@ -32,7 +32,7 @@ export default class ListProviderComponent implements OnInit {
     return this.authService.onValidateRoles(value);
   }
   onLoadData() {
-    const urlApi = `Proveedor/ListadoProveedores`;
+    const urlApi = `proveedor/listadoproveedores`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });

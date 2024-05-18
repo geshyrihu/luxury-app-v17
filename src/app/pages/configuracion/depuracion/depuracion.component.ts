@@ -13,25 +13,71 @@ export default class DepuracionComponent {
   apiRequestService = inject(ApiRequestService);
   customToastService = inject(CustomToastService);
 
-  // UpdatePersonToEmployee() {
-  //   this.apiRequestService
-  //     .onGetList('UpdateDataBase/UpdatePersonToEmployee')
-  //     .then(() => {
-  //       this.customToastService.onShowSuccess();
-  //       this.customToastService.onClose();
-  //     });
-  // }
-  // UpdatePhoneCustomer() {
-  //   this.apiRequestService
-  //     .onGetList('UpdateDataBase/UpdatePhoneCustomer')
-  //     .then(() => {
-  //       this.customToastService.onShowSuccess();
-  //       this.customToastService.onClose();
-  //     });
-  // }
-  DeleteQualificationProvider() {
+  OrdenCompraDatosPago() {
     this.apiRequestService
-      .onGetList('UpdateDataBase/DeleteQualificationProvider')
+      .onGetList('UpdateDataBase/OrdenCompraDatosPago')
+      .then(() => {
+        this.customToastService.onShowSuccess();
+        this.customToastService.onClose();
+      });
+  }
+  CalendarioMaestroProvider() {
+    this.apiRequestService
+      .onGetList('UpdateDataBase/CalendarioMaestroProvider')
+      .then(() => {
+        this.customToastService.onShowSuccess();
+        this.customToastService.onClose();
+      });
+  }
+  MaintenanceCalendars() {
+    this.apiRequestService
+      .onGetList('UpdateDataBase/MaintenanceCalendars')
+      .then(() => {
+        this.customToastService.onShowSuccess();
+        this.customToastService.onClose();
+      });
+  }
+  CustomerProvider() {
+    this.apiRequestService
+      .onGetList('UpdateDataBase/CustomerProvider')
+      .then(() => {
+        this.customToastService.onShowSuccess();
+        this.customToastService.onClose();
+      });
+  }
+  PersonProviderSupport() {
+    this.apiRequestService
+      .onGetList('UpdateDataBase/PersonProviderSupport')
+      .then(() => {
+        this.customToastService.onShowSuccess();
+        this.customToastService.onClose();
+      });
+  }
+  ContratoPoliza() {
+    this.apiRequestService
+      .onGetList('UpdateDataBase/ContratoPoliza')
+      .then(() => {
+        this.customToastService.onShowSuccess();
+        this.customToastService.onClose();
+      });
+  }
+  EntradaProducto() {
+    this.apiRequestService
+      .onGetList('UpdateDataBase/EntradaProducto')
+      .then(() => {
+        this.customToastService.onShowSuccess();
+        this.customToastService.onClose();
+      });
+  }
+  ServiceOrder() {
+    this.apiRequestService.onGetList('UpdateDataBase/ServiceOrder').then(() => {
+      this.customToastService.onShowSuccess();
+      this.customToastService.onClose();
+    });
+  }
+  CatalogoGastosFijos() {
+    this.apiRequestService
+      .onGetList('UpdateDataBase/CatalogoGastosFijos')
       .then(() => {
         this.customToastService.onShowSuccess();
         this.customToastService.onClose();
