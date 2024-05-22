@@ -78,7 +78,7 @@ export default class ListMinutasComponent implements OnInit {
           customerId: this.customerIdService.customerId,
         },
         data.title,
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerService.dialogSizeLg
       )
       .then((result: boolean) => {
         if (result) this.onLoadData(this.tipoJunta);

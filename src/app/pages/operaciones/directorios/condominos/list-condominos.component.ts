@@ -60,4 +60,40 @@ export default class ListCondominosComponent implements OnInit {
         if (result) this.onLoadData();
       });
   }
+  customSort(event: any) {
+    console.log('🚀 ~ event:', event);
+    event.data.sort((data1: any, data2: any) => {
+      return this.customCompare(data1.property, data2.property);
+    });
+  }
+
+  private customCompare(x: string, y: string): number {
+    const regex = /(\D+)|(\d+)/g;
+    const xMatches = x.match(regex);
+    const yMatches = y.match(regex);
+
+    const minMatches = Math.min(xMatches.length, yMatches.length);
+
+    for (let i = 0; i < minMatches; i++) {
+      const xPart = xMatches[i];
+      const yPart = yMatches[i];
+
+      let comparisonResult;
+
+      // Si ambos son numéricos, los comparamos como enteros
+      if (!isNaN(parseInt(xPart, 10)) && !isNaN(parseInt(yPart, 10))) {
+        comparisonResult = parseInt(xPart, 10) - parseInt(yPart, 10);
+      } else {
+        // Si no son numéricos, comparamos como cadenas
+        comparisonResult = xPart.localeCompare(yPart);
+      }
+
+      if (comparisonResult !== 0) {
+        return comparisonResult;
+      }
+    }
+
+    // Si todos los elementos hasta ahora son iguales, el más corto es menor
+    return xMatches.length - yMatches.length;
+  }
 }

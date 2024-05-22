@@ -17,7 +17,6 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { DialogModule } from 'primeng/dialog';
 import { DialogService } from 'primeng/dynamicdialog';
-import { EditorModule } from 'primeng/editor';
 import { FileUploadModule } from 'primeng/fileupload';
 import { ImageModule } from 'primeng/image';
 import { InputTextModule } from 'primeng/inputtext';
@@ -96,7 +95,6 @@ export function flatpickrFactory() {
     MenuModule,
     MultiSelectModule,
     InputTextModule,
-    EditorModule,
 
     // Other
     CommonModule,
@@ -151,7 +149,6 @@ export function flatpickrFactory() {
     MenuModule,
     MultiSelectModule,
     InputTextModule,
-    EditorModule,
 
     // Other
     CommonModule,

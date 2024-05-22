@@ -1,35 +1,32 @@
-<div
-  class="p-1 card"
-  (click)="fileInput.click()"
-  [style]="{ cursor: 'pointer' }"
->
-  <!-- <div class="card-header">
-  <span> {{ title }}</span>
-</div> -->
-  @if (imgBase64) {
-  <img
-    class="img-fluid"
-    [src]="imgBase64"
-    alt="imgBase64"
-    [ngStyle]="{
-      width: contentWidth + 'px',
-      height: contentHeight + 'px'
-    }"
-  />
-  } @if (!imgBase64 && urlImgCurrent === null) {
-  <img class="img-fluid" src="assets/images/no-image.jpg" alt="CARGAR IMAGEN" />
-  } @if (!imgBase64 && urlImgCurrent !== null) {
-  <img
-    class="img-fluid"
-    [src]="urlImgCurrent"
-    alt=""
-    [ngStyle]="{
-      width: contentWidth + 'px',
-      height: contentHeight + 'px'
-    }"
-  />
-  }
+<div class="p-1 card" (click)="fileInput.click()" [style.cursor]="'pointer'">
+  <ng-container *ngIf="imgBase64; else noImageTemplate">
+    <img
+      class="img-fluid"
+      [src]="imgBase64"
+      alt="imgBase64"
+      [ngStyle]="{ width: contentWidth, height: contentHeight }"
+    />
+  </ng-container>
+  <ng-template #noImageTemplate>
+    <ng-container *ngIf="urlImgCurrent; else placeholderTemplate">
+      <img
+        class="img-fluid"
+        [src]="urlImgCurrent"
+        alt=""
+        [ngStyle]="{ width: contentWidth, height: contentHeight }"
+      />
+    </ng-container>
+    <ng-template #placeholderTemplate>
+      <img
+        class="img-fluid"
+        [src]="noImg"
+        alt="CARGAR IMAGEN"
+        [ngStyle]="{ width: contentWidth, height: contentHeight }"
+      />
+    </ng-template>
+  </ng-template>
 </div>
+
 <input
   type="file"
   hidden

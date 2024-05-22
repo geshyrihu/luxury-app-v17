@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
@@ -17,7 +18,7 @@ import { environment } from 'src/environments/environment';
   selector: 'app-addoredit-activos',
   templateUrl: './addoredit-activos.component.html',
   standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
+  imports: [LuxuryAppComponentsModule, CustomInputModule, CommonModule],
 })
 export default class AddOrEditActivosComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
@@ -85,13 +86,18 @@ export default class AddOrEditActivosComponent implements OnInit {
         result.dateOfPurchase
       );
       this.form.patchValue(result);
+
       const contenidoHTML = this.form.get('technicalSpecifications').value;
-      const contenidoSinHTML = contenidoHTML.replace(/<[^>]*>|&nbsp;/g, '');
-      this.form.get('technicalSpecifications').patchValue(contenidoSinHTML);
+      if (contenidoHTML) {
+        const contenidoSinHTML = contenidoHTML.replace(/<[^>]*>|&nbsp;/g, '');
+        this.form.get('technicalSpecifications').patchValue(contenidoSinHTML);
+      }
 
       const contenidoHTML2 = this.form.get('observations').value;
-      const contenidoSinHTML2 = contenidoHTML2.replace(/<[^>]*>|&nbsp;/g, '');
-      this.form.get('observations').patchValue(contenidoSinHTML2);
+      if (contenidoHTML2) {
+        const contenidoSinHTML2 = contenidoHTML2.replace(/<[^>]*>|&nbsp;/g, '');
+        this.form.get('observations').patchValue(contenidoSinHTML2);
+      }
     });
   }
   onSubmit() {
@@ -103,13 +109,13 @@ export default class AddOrEditActivosComponent implements OnInit {
 
     if (this.id === 0) {
       this.apiRequestService
-        .onPost(`Machineries`, model)
+        .onPost(`machineries`, model)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
       this.apiRequestService
-        .onPut(`Machineries/${this.id}`, model)
+        .onPut(`machineries/${this.id}`, model)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
         });

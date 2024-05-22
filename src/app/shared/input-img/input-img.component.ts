@@ -1,43 +1,42 @@
-import { NgStyle } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { imageToBase64 } from 'src/app/core/helpers/enumeration';
 import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-input-img',
   templateUrl: './input-img.component.html',
   standalone: true,
-  imports: [NgStyle],
+  imports: [CommonModule],
 })
 export default class InputImgComponent {
+  @Input() urlImgCurrent: string = '';
+  @Input() title: string = '';
+  @Input() contentHeight: string = '150px';
+  @Input() contentWidth: string = '250px';
+
+  @Output() fileSelected = new EventEmitter<File>();
+
   imgBase64: string = '';
+  noImg: string = `${environment.base_urlImg}no-img.png`;
 
-  //Ruta de Imagen por defecto
-  noImg = `${environment.base_urlImg}no-img.png`;
-
-  //Ingresamos la imagen actual
-  @Input()
-  urlImgCurrent: string = '';
-
-  @Input()
-  title: string = '';
-
-  @Input()
-  contentHeight: string = '150px';
-  @Input()
-  contentWidth: string = '250px';
-
-  @Output()
-  fileSelected: EventEmitter<File> = new EventEmitter<File>();
-
-  change(event: any): void {
-    if (event.target.files.length > 0) {
-      const file: File = event.target.files[0];
-      imageToBase64(file)
+  change(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const file: File = input.files[0];
+      this.convertToBase64(file)
         .then((value: string) => {
           this.imgBase64 = value;
         })
-        .catch((error) => console.log(error));
+        .catch((error) => console.error(error));
       this.fileSelected.emit(file);
     }
+  }
+
+  private convertToBase64(file: File): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
   }
 }

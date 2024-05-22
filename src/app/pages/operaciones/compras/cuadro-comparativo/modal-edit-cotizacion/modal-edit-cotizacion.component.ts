@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
@@ -16,7 +16,7 @@ import CreateOrdenCompraComponent from '../../orden-compra/orden-compra/create-o
   standalone: true,
   imports: [LuxuryAppComponentsModule, FormsModule, CommonModule, ToastModule],
 })
-export default class ModalEditCotizacionComponent implements OnInit {
+export default class ModalEditCotizacionComponent implements OnInit, OnDestroy {
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
   customToastService = inject(CustomToastService);
@@ -143,5 +143,8 @@ export default class ModalEditCotizacionComponent implements OnInit {
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.cotizacionesRelacionadas = result;
     });
+  }
+  ngOnDestroy(): void {
+    this.ref.close(true);
   }
 }

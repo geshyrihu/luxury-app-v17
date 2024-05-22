@@ -5,15 +5,16 @@
   [tableStyle]="{ 'min-width': '50rem' }"
   [value]="data"
   [globalFilterFields]="[
-    'cellPhone',
-    'directoryCondominium',
+    'phoneNumber',
+    'property',
     'extencion',
     'fixedPhone',
     'habitant',
-    'mail',
-    'nameDirectoryCondominium'
+    'email',
+    'fullName'
   ]"
   [autoLayout]="true"
+  [showCurrentPageReport]="true"
 >
   <ng-template pTemplate="caption">
     <app-table-header
@@ -30,37 +31,40 @@
   </ng-template>
   <ng-template pTemplate="header">
     <tr>
-      <th scope="col" style="width: 10%" pSortableColumn="directoryCondominium">
-        Depto.
-        <p-sortIcon field="directoryCondominium"></p-sortIcon>
+      <th
+        scope="col"
+        style="width: 10%"
+        pSortableColumn="property"
+        [sortFunction]="customSort.bind(this)"
+      >
+        Propiedad
+        <p-sortIcon field="property"></p-sortIcon>
       </th>
+      <!-- <th scope="col" style="width: 10%" pSortableColumn="property">
+        Propiedad
+        <p-sortIcon field="property"></p-sortIcon>
+      </th> -->
       <th scope="col" style="width: 10%" pSortableColumn="habitant">
         Habitante
         <p-sortIcon field="habitant"></p-sortIcon>
       </th>
-      <th
-        scope="col"
-        style="width: 10%"
-        pSortableColumn="nameDirectoryCondominium"
-      >
+      <th scope="col" style="width: 10%" pSortableColumn="fullName">
         Nombre
-        <p-sortIcon field="nameDirectoryCondominium"></p-sortIcon>
+        <p-sortIcon field="fullName"></p-sortIcon>
+      </th>
+
+      <th scope="col" style="width: 10%" pSortableColumn="fixedPhone">
+        Télefono fijo
+        <p-sortIcon field="fixedPhone"></p-sortIcon>
       </th>
       <th scope="col" style="width: 10%" pSortableColumn="extencion">
         Extensión
         <p-sortIcon field="extencion"></p-sortIcon>
       </th>
-      <th scope="col" style="width: 10%" pSortableColumn="fixedPhone">
-        Télefono fijo
-        <p-sortIcon field="fixedPhone"></p-sortIcon>
-      </th>
-      <th scope="col" style="width: 10%" pSortableColumn="cellPhone">
-        Télefonos
-        <p-sortIcon field="cellPhone"></p-sortIcon>
-      </th>
-      <th scope="col" style="width: 10%" pSortableColumn="mail">
+      <th scope="col" style="width: 10%">Télefono</th>
+      <th scope="col" style="width: 10%" pSortableColumn="email">
         Email
-        <p-sortIcon field="mail"></p-sortIcon>
+        <p-sortIcon field="email"></p-sortIcon>
       </th>
       <th
         scope="col"
@@ -80,25 +84,25 @@
   <ng-template pTemplate="body" let-item>
     <tr>
       <td>
-        {{ item.directoryCondominium }}
+        {{ item.property }}
       </td>
       <td>
         {{ item.habitant }}
       </td>
       <td>
-        {{ item.nameDirectoryCondominium }}
-      </td>
-      <td>
-        {{ item.extencion }}
+        {{ item.fullName }}
       </td>
       <td>
         {{ item.fixedPhone }}
       </td>
       <td>
-        {{ item.cellPhone }}
+        {{ item.extencion }}
       </td>
       <td>
-        {{ item.mail }}
+        {{ item.phoneNumber }}
+      </td>
+      <td>
+        {{ item.email }}
       </td>
       <td class="hide-print-mode">
         @if (item.enviarMails) {
@@ -130,6 +134,12 @@
   </ng-template>
   <ng-template pTemplate="paginatorleft">
     <div class="p-d-flex p-ai-center p-jc-between">
+      En total hay
+      {{ data ? data.length : 0 }} registros.
+    </div>
+  </ng-template>
+  <ng-template pTemplate="summary">
+    <div class="flex align-items-center justify-content-between">
       En total hay
       {{ data ? data.length : 0 }} registros.
     </div>

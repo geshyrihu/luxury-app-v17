@@ -63,6 +63,9 @@ export default class AddOrEditComiteVigilanciaComponent implements OnInit {
       .onGetItem(`comitevigilancia/${this.id}`)
       .then((result: any) => {
         this.form.patchValue(result);
+        this.form.patchValue({
+          nameDirectoryCondominium: result.nameDirectoryCondominium,
+        });
       });
   }
   onSubmit() {

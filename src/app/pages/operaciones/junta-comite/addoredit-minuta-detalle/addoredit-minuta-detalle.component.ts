@@ -2,7 +2,6 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { EditorModule } from 'primeng/editor';
 import { EAreaMinutasDetalles } from 'src/app/core/enums/area-minutas-detalles.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
@@ -14,7 +13,7 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   selector: 'app-addoredit-minuta-detalle',
   templateUrl: './addoredit-minuta-detalle.component.html',
   standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule, EditorModule],
+  imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class AddoreditMinutaDetalleComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);

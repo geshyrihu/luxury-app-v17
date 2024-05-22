@@ -43,14 +43,15 @@ export default class AddOrEditCondominosComponent implements OnInit {
   form: FormGroup = this.formBuilder.group({
     id: { value: this.id, disabled: true },
     customerId: [this.customerId],
-    cellPhone: ['', Validators.required],
+    phoneNumber: ['', Validators.required],
     directoryCondominiumId: ['', Validators.required],
     directoryCondominium: ['', Validators.required],
     extencion: [''],
     fixedPhone: [''],
     habitant: ['', Validators.required],
-    mail: [''],
-    nameDirectoryCondominium: ['', Validators.required],
+    email: [''],
+    firstName: ['', Validators.required],
+    lastName: ['', Validators.required],
     enviarMails: [],
     user: [''],
   });

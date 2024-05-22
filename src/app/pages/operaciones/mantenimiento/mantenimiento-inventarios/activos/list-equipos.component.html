@@ -1,4 +1,78 @@
 <p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+<!--
+<div class="row">
+  @for (item of dataCard; track $index) {
+
+  <h1>{{ item.equipoClasificacion }}</h1>
+
+  @for (machinery of item.machinery; track $index) {
+  <div class="col-sm-3">
+    <div class="card">
+      <div class="card-header text-center">
+        <h4 class="card-title">
+          {{ machinery.nameMachinery }}
+        </h4>
+      </div>
+      <div class="card-body">
+        <img
+          [src]="base_urlImg + machinery.photoPath"
+          alt="."
+          class="shadow-4 img-fluid"
+        />
+      </div>
+      <div class="card-footer">
+        <div class="d-flex justify-content-center">
+          <custom-button
+            ngbTooltip="Documentos"
+            [customClass]="'btn-sm btn-outline-danger'"
+            icon="fa-regular fa-file-pdf"
+            (clicked)="onDocumentos(machinery.id)"
+          ></custom-button>
+
+          <custom-button
+            ngbTooltip="Historico de servicios"
+            [customClass]="'btn-sm btn-outline-primary'"
+            icon="fa-regular fa-swatchbook"
+            (clicked)="onServiceHistory(machinery.id)"
+          ></custom-button>
+          <custom-button
+            ngbTooltip="Bitacora"
+            [customClass]="'btn-sm btn-outline-warning'"
+            icon="fa-regular fa-book-open"
+            (clicked)="onBitacoraIndividual(machinery.id)"
+          ></custom-button>
+
+          <custom-button
+            ngbTooltip="Ficha técnica"
+            [customClass]="'btn-sm btn-outline-primary'"
+            icon="fa-regular fa-book"
+            (clicked)="showModalFichatecnica(machinery)"
+          ></custom-button>
+
+          @if ( authService.onValidateRoles([ 'Mantenimiento', 'Residente',
+          'SuperUsuario' ]) ) {
+          <custom-button-edit
+            (edit)="
+              showModalAddoredit({
+                id: machinery.id,
+                title: 'Editar regitro ' + machinery.id
+              })
+            "
+          ></custom-button-edit>
+          }
+
+          @if ( authService.onValidateRoles([ 'Mantenimiento', 'Residente',
+          'SuperUsuario' ]) ) {
+          <custom-button-delete
+            (OnConfirm)="onDelete(machinery.id)"
+          ></custom-button-delete>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+  } }
+</div> -->
 <!-- equipos -->
 @if (data) {
 

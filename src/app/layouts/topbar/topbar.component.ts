@@ -113,7 +113,7 @@ export class TopbarComponent implements OnInit {
           personId: this.personId,
         },
         'Datos Principales',
-        this.dialogHandlerService.dialogSizeLg
+        this.dialogHandlerService.dialogSizeFull
       )
       .then((result: boolean) => {
         if (result) this.customToastService.onShowSuccess();

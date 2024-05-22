@@ -38,6 +38,7 @@ export default class ListEquiposComponent implements OnInit {
   customerId: number;
   customerId$: Observable<number> = this.customerIdService.getCustomerId$();
   data: any[];
+  // dataCard: any[];
   datadetail: any[];
   paramId: string = '';
   ref: DynamicDialogRef;
@@ -83,6 +84,11 @@ export default class ListEquiposComponent implements OnInit {
       this.data = result;
       this.OnChageTitle();
     });
+    // const urlApiCard = `Machineries/GetAllCard/${this.customerIdService.customerId}/${this.inventoryCategoryId}/${this.state}`;
+    // this.apiRequestService.onGetList(urlApiCard).then((result: any) => {
+    //   this.dataCard = result;
+    //   this.OnChageTitle();
+    // });
   }
   onSelectState(value: number): void {
     this.state = value;
