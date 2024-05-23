@@ -31,7 +31,9 @@ export default class FormControlPrestamoHerramientaComponent implements OnInit {
 
   ngOnInit(): void {
     this.apiRequestService
-      .onGetSelectItem(`Employee/${this.customerIdService.getCustomerId()}`)
+      .onGetSelectItem(
+        `PersonEmployee/${this.customerIdService.getCustomerId()}`
+      )
       .then((response: any) => {
         this.cb_employee = response;
       });
@@ -48,8 +50,8 @@ export default class FormControlPrestamoHerramientaComponent implements OnInit {
       customerId: [this.customerIdService.customerId],
       fechaSalida: [this.today, Validators.required],
       fechaRegreso: [],
-      employeeId: ['', Validators.required],
-      employee: ['', Validators.required],
+      personId: ['', Validators.required],
+      person: ['', Validators.required],
       toolId: ['', Validators.required],
       tool: ['', Validators.required],
       observaciones: [],
@@ -70,7 +72,7 @@ export default class FormControlPrestamoHerramientaComponent implements OnInit {
   public saveEmployeeId(e): void {
     let find = this.cb_employee.find((x) => x?.label === e.target.value);
     this.form.patchValue({
-      employeeId: find?.value,
+      personId: find?.value,
     });
   }
   get f() {
@@ -81,10 +83,10 @@ export default class FormControlPrestamoHerramientaComponent implements OnInit {
     this.apiRequestService.onGetItem(urlApi).then((result: any) => {
       this.form.patchValue(result);
       this.form.patchValue({
-        employee: result.employee,
+        person: result.person,
       });
       this.form.patchValue({
-        employeeId: result.employeeId,
+        personId: result.personId,
       });
       this.form.patchValue({
         tool: result.tool,

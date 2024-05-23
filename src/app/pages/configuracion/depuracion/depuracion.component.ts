@@ -13,24 +13,9 @@ export default class DepuracionComponent {
   apiRequestService = inject(ApiRequestService);
   customToastService = inject(CustomToastService);
 
-  TypePerson() {
-    this.apiRequestService.onGetList('UpdateDataBase/TypePerson').then(() => {
-      this.customToastService.onShowSuccess();
-      this.customToastService.onClose();
-    });
-  }
-
-  CondominoToPerson() {
+  MeetingComite() {
     this.apiRequestService
-      .onGetList('UpdateDataBase/CondominoToPerson')
-      .then(() => {
-        this.customToastService.onShowSuccess();
-        this.customToastService.onClose();
-      });
-  }
-  MeetingComiteToMeetingAdministracion() {
-    this.apiRequestService
-      .onGetList('UpdateDataBase/MeetingComiteToMeetingAdministracion')
+      .onGetList('UpdateDataBase/MeetingComite')
       .then(() => {
         this.customToastService.onShowSuccess();
         this.customToastService.onClose();

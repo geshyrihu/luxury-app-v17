@@ -33,11 +33,11 @@
 
   <custom-input-datalist
     (propagar)="saveEmployeeId($event)"
-    [control]="form.get('employee')"
+    [control]="form.get('person')"
     [data]="cb_employee"
-    formControlName="employee"
+    formControlName="person"
     label="Colaborador"
-    dataListId="employeeDatalistOptions"
+    dataListId="personDatalistOptions"
   ></custom-input-datalist>
 
   <div class="form-group row mb-2">

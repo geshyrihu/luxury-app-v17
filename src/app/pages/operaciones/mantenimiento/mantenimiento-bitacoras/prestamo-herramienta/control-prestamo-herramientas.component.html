@@ -12,7 +12,7 @@
   currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
   [showCurrentPageReport]="true"
   [rowsPerPageOptions]="[10, 20, 30, 40, 50, 75, 100]"
-  [globalFilterFields]="['fechaSalida', 'tool', 'employee', 'fechaEntrega']"
+  [globalFilterFields]="['fechaSalida', 'tool', 'person', 'fechaEntrega']"
   [autoLayout]="true"
 >
   <ng-template pTemplate="caption">
@@ -32,8 +32,8 @@
         Herramienta
         <p-sortIcon field="tool"></p-sortIcon>
       </th>
-      <th scope="col" pSortableColumn="employee">
-        Colaborador<p-sortIcon field="employee"></p-sortIcon>
+      <th scope="col" pSortableColumn="person">
+        Colaborador<p-sortIcon field="person"></p-sortIcon>
       </th>
       <th scope="col" pSortableColumn="fechaEntrega">
         Fecha de Entrega<p-sortIcon field="fechaEntrega"></p-sortIcon>
@@ -60,7 +60,7 @@
       </td>
       <td class="p-column-title">
         <small>
-          {{ item.employee }}
+          {{ item.person }}
         </small>
       </td>
       <td class="p-column-title">
