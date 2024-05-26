@@ -17,20 +17,21 @@ export default class CardEmployeeComponent implements OnInit {
   config = inject(DynamicDialogConfig);
 
   urlImage: string = '';
-  employeeId: number = 0;
-  user: IUserCard;
+  personId: number = 0;
+  person: IUserCard;
 
   ngOnInit(): void {
-    this.employeeId = this.config.data.employeeId;
+    this.personId = this.config.data.personId;
     this.onLoadData();
   }
 
   onLoadData() {
     this.apiRequestService
-      .onGetItem(`Auth/CardUser/${this.employeeId}`)
+      .onGetItem(`Auth/CardUser/${this.personId}`)
       .then((result: any) => {
-        this.user = result;
-        this.urlImage = `${environment.base_urlImg}Administration/accounts/${this.user.photoPath}`;
+        console.log('🚀 ~ result:', result);
+        this.person = result;
+        this.urlImage = `${environment.base_urlImg}Administration/accounts/${this.person.photoPath}`;
       });
   }
 }

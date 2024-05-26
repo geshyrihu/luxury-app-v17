@@ -34,10 +34,7 @@ export default class AddoreditInventarioIluminacionComponent implements OnInit {
     cantidad: ['', Validators.required],
     productoId: ['', Validators.required],
     producto: ['', Validators.required],
-    employeeId: [
-      this.authService.userTokenDto.infoEmployeeDto.employeeId,
-      Validators.required,
-    ],
+    personId: [this.authService.personId, Validators.required],
   });
 
   ngOnInit(): void {

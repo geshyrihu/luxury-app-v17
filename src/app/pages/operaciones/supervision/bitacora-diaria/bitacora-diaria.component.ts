@@ -24,7 +24,7 @@ export default class BitacoraDiariaComponent implements OnInit, OnDestroy {
   dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
   dialogService = inject(DialogService);
-  private rangoCalendarioService = inject(FiltroCalendarService);
+  rangoCalendarioService = inject(FiltroCalendarService);
   customToastService = inject(CustomToastService);
 
   loading: boolean = true;
@@ -39,14 +39,14 @@ export default class BitacoraDiariaComponent implements OnInit, OnDestroy {
   cb_customers: any[] = [];
   cb_estatus: any[] = ['Concluido', 'Pendiente'];
 
-  //TODO: REVISAR SERVICIO FECHASSERVICE
+  //TODO: REVISAR SERVICIO FECHAS SERVICE
   fechaInicial: string = this.dateService.getDateFormat(
     this.rangoCalendarioService.fechaInicioDateFull
   );
   fechaFinal: string = this.dateService.getDateFormat(
     this.rangoCalendarioService.fechaFinalDateFull
   );
-  employeeId = this.authService.infoEmployeeDto.employeeId;
+  personId = this.authService.personId;
   depto: string = 'SUPERVISIÓN DE OPERACIONES';
   nombre: string =
     this.authService.infoEmployeeDto.firstName +
@@ -74,19 +74,10 @@ export default class BitacoraDiariaComponent implements OnInit, OnDestroy {
   }
 
   onLoadData() {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .get(`AgendaSupervision/GetAll/${this.fechaInicial}/${this.fechaFinal}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.data = this.customToastService.onCloseOnGetData(resp.body);
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
+    const urlApi = `AgendaSupervision/GetAll/${this.fechaInicial}/${this.fechaFinal}`;
+    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      this.data = result;
+    });
   }
 
   onLoadUserSupervisor() {

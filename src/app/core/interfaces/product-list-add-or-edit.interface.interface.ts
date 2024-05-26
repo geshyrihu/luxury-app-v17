@@ -7,5 +7,5 @@ export interface IProductoListAdd {
   unidadDeMedidaId: number;
   stockMin: number;
   stockMax: number;
-  employeeId: number;
+  personId: number;
 }

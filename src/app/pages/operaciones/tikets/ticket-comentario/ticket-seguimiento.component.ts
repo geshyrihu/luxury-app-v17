@@ -30,10 +30,7 @@ export default class TicketSeguimientoComponent implements OnInit, OnDestroy {
   form: FormGroup = this.formBuilder.group({
     id: { value: this.id, disabled: true },
     weeklyReportId: [this.weeklyReportId, Validators.required],
-    personId: [
-      this.authService.userTokenDto.infoEmployeeDto.personId,
-      Validators.required,
-    ],
+    personId: [this.authService.personId, Validators.required],
     employeeId: [
       this.authService.userTokenDto.infoEmployeeDto.employeeId,
       Validators.required,

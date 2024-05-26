@@ -1,7 +1,7 @@
-@if (user !== undefined) {
+@if (person !== undefined) {
 <div
   class="card card-outline card-info card-widget widget-user-2 shadow-sm"
-  [ngClass]="{ 'card-danger': !user.active, 'card-success': user.active }"
+  [ngClass]="{ 'card-danger': !person.active, 'card-success': person.active }"
 >
   <div class="row">
     <div class="col-sm-4">
@@ -9,17 +9,17 @@
     </div>
     <div class="col-sm-8">
       <div class="p-1">
-        <h3 class="h4">{{ user.firstName }} {{ user.lastName }}</h3>
-        <h5 class="card-title">{{ user.profession }}</h5>
-        <h5 class="card-title">{{ user.customer }}</h5>
+        <h3 class="h4">{{ person.firstName }} {{ person.lastName }}</h3>
+        <h5 class="card-title">{{ person.profession }}</h5>
+        <h5 class="card-title">{{ person.customer }}</h5>
         <hr />
-        <h5 class="card-title">{{ user.email }}</h5>
+        <h5 class="card-title">{{ person.email }}</h5>
         <h5 class="card-title">
-          {{ user.birth | date : "longDate" }}
+          {{ person.birth | date : "longDate" }}
         </h5>
-        <h5 class="card-title">{{ user.phoneNumber | phoneFormat }}</h5>
-        <h5 class="card-title">{{ user.celularPersonal | phoneFormat }}</h5>
-        <h5 class="card-title">{{ user.correoPersonal }}</h5>
+        <h5 class="card-title">{{ person.phoneNumber | phoneFormat }}</h5>
+        <h5 class="card-title">{{ person.celularPersonal | phoneFormat }}</h5>
+        <h5 class="card-title">{{ person.correoPersonal }}</h5>
       </div>
     </div>
   </div>

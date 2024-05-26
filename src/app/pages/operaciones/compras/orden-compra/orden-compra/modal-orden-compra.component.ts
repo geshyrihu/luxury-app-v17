@@ -33,11 +33,10 @@ export default class ModalOrdenCompraComponent implements OnInit {
     equipoOInstalacion: ['', Validators.required],
     justificacionGasto: ['', Validators.required],
     urlFile: [''],
-    applicationUserId: [''],
     folio: [''],
     folioSolicitudCompra: [''],
     customerId: [0],
-    employeeid: [this.authService.infoEmployeeDto.employeeId],
+    personId: [this.authService.personId],
   });
 
   ngOnInit(): void {

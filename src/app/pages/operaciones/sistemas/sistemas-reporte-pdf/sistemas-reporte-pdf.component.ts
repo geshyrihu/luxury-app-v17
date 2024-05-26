@@ -8,7 +8,6 @@ import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { FiltroCalendarService } from 'src/app/core/services/filtro-calendar.service';
 import { SistemasReporteService } from 'src/app/core/services/sistemas-reporte.service';
-import CardEmployeeComponent from '../../directorios/empleados/card-employee/card-employee.component';
 @Component({
   selector: 'app-sistemas-reporte-pdf',
   templateUrl: './sistemas-reporte-pdf.component.html',
@@ -54,17 +53,6 @@ export default class SistemasReportePdfComponent implements OnInit, OnDestroy {
           this.customToastService.onCloseToError(error);
         },
       });
-  }
-  onCardEmployee(employeeId: number) {
-    this.ref = this.dialogService.open(CardEmployeeComponent, {
-      data: {
-        employeeId,
-      },
-      header: 'Tarjeta de Usuario',
-      styleClass: 'modal-sm',
-      closeOnEscape: true,
-      baseZIndex: 10000,
-    });
   }
   ngOnDestroy(): void {
     this.dataService.ngOnDestroy();

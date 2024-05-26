@@ -19,12 +19,9 @@ export default class AddPartidaCedulaComponent implements OnInit {
 
   data: any[] = [];
   cedulaPresupuestalId: number = 0;
-  applicationUserId: string = '';
   submitting: boolean = false;
 
   ngOnInit(): void {
-    this.applicationUserId =
-      this.authService.userTokenDto.infoUserAuthDto.applicationUserId;
     this.cedulaPresupuestalId = this.config.data.idBudgetCard;
     this.onLoadData();
   }
@@ -51,7 +48,7 @@ export default class AddPartidaCedulaComponent implements OnInit {
     model.cuentaId = item.id;
     model.cedulaPresupuestalId = this.cedulaPresupuestalId;
     model.presupuestoMensual = item.presupuestoMensual;
-    model.applicationUserId = this.applicationUserId;
+    model.personId = this.authService.infoEmployeeDto.personId;
     model.presupuestoEjercido = 0;
 
     this.submitting = true;

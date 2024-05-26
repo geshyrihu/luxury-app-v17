@@ -28,7 +28,7 @@
         <td>
           @if (data.photoPath && data.photoPath !== undefined) {
           <img
-            (click)="onCardEmployee(data.employeeId)"
+            (click)="onCardEmployee(data.personId)"
             [src]="pahtBaseImg + data.photoPath"
             class="rounded avatar-sm pointer me-3"
             alt=""

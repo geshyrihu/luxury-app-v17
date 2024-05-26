@@ -36,8 +36,8 @@ export default class ListTicketComponent implements OnInit, OnDestroy {
   dateService = inject(DateService);
   dialogService = inject(DialogService);
   messageService = inject(MessageService);
-  public ticketFilterService = inject(TicketFilterService);
-  public reportService = inject(ReportService);
+  ticketFilterService = inject(TicketFilterService);
+  reportService = inject(ReportService);
   router = inject(Router);
   customToastService = inject(CustomToastService);
 
@@ -79,6 +79,7 @@ export default class ListTicketComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (resp: any) => {
           this.data = this.customToastService.onCloseOnGetData(resp.body);
+          console.log('🚀 ~ resp.body:', resp.body);
           this.dataCompleta = this.data;
         },
         error: (error) => {
@@ -234,10 +235,10 @@ export default class ListTicketComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl('report/operationPendientesReport');
   }
 
-  onCardEmployee(employeeId: number) {
+  onCardEmployee(personId: number) {
     this.ref = this.dialogService.open(CardEmployeeComponent, {
       data: {
-        employeeId,
+        personId,
       },
       header: 'Tarjeta de Usuario',
       styleClass: 'modal-sm',

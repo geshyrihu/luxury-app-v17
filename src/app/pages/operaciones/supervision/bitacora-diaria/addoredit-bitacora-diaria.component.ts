@@ -48,10 +48,7 @@ export default class AddOrEditBitacoraDiariaComponent
     problema: ['', Validators.required],
     solucion: [''],
     fechaConclusion: [],
-    employeeId: [
-      this.authService.userTokenDto.infoEmployeeDto.employeeId,
-      Validators.required,
-    ],
+    personId: [this.authService.personId, Validators.required],
   });
 
   onLoadSelectItem() {

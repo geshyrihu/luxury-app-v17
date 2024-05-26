@@ -37,10 +37,7 @@ export default class AddOrEditEntradasComponent implements OnInit {
     unidadMedidaId: ['', Validators.required],
     numeroFactura: ['', Validators.required],
     providerName: ['', Validators.required],
-    employeeId: [
-      this.authService.userTokenDto.infoEmployeeDto.employeeId,
-      Validators.required,
-    ],
+    personId: [this.authService.personId, Validators.required],
   });
   id = 0;
   idProducto = 0;
@@ -108,6 +105,9 @@ export default class AddOrEditEntradasComponent implements OnInit {
 
   onSubmit() {
     if (!this.apiRequestService.validateForm(this.form)) return;
+
+    console.log('🚀 ~ this.form:', this.form.value);
+
     this.submitting = true;
 
     if (this.id === 0) {
@@ -118,7 +118,7 @@ export default class AddOrEditEntradasComponent implements OnInit {
         });
     } else {
       this.apiRequestService
-        .onPut(`EntradaProducto/${this.id}`, this.form.value)
+        .onPut(`EntradaProducto/${this.id}/${this.cantidadActual}`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
         });

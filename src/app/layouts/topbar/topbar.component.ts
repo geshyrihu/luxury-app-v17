@@ -42,7 +42,7 @@ export class TopbarComponent implements OnInit {
   router = inject(Router);
   profielServiceService = inject(ProfielServiceService);
 
-  personId: number = this.authService.userTokenDto.infoEmployeeDto.personId;
+  personId: number = this.authService.personId;
 
   @Output() settingsButtonClicked = new EventEmitter();
 

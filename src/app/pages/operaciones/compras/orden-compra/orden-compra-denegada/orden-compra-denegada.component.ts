@@ -29,7 +29,7 @@ export default class OrdenCompraDenegadaComponent implements OnInit {
     fechaAutorizacion: [],
     statusOrdenCompra: [],
     observaciones: [''],
-    applicationUserAuthId: [],
+    personId: [],
   });
 
   ngOnInit(): void {
@@ -41,9 +41,7 @@ export default class OrdenCompraDenegadaComponent implements OnInit {
       fechaAutorizacion: [''],
       statusOrdenCompra: [1],
       observaciones: ['', Validators.required],
-      applicationUserAuthId: [
-        this.authService.userTokenDto.infoUserAuthDto.applicationUserId,
-      ],
+      personId: [this.authService.personId],
     });
   }
 
@@ -51,7 +49,7 @@ export default class OrdenCompraDenegadaComponent implements OnInit {
     this.submitting = true;
     this.apiRequestService
       .onPut(
-        `OrdenCompraAuth/NoAutorizada/${this.ordenCompraAuthId}/${this.authService.userTokenDto.infoEmployeeDto.employeeId}`,
+        `OrdenCompraAuth/NoAutorizada/${this.ordenCompraAuthId}/${this.authService.personId}`,
         this.form.value
       )
       .then((result: boolean) => {

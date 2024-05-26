@@ -13,7 +13,7 @@
       'customerId',
       'bateria',
       'responsibleArea',
-      'employee'
+      'person'
     ]"
     [showCurrentPageReport]="true"
     [value]="data"
@@ -58,8 +58,8 @@
         <th scope="col" pSortableColumn="responsibleArea">
           Area<p-sortIcon field="responsibleArea"></p-sortIcon>
         </th>
-        <th scope="col" pSortableColumn="employee">
-          Responsable<p-sortIcon field="employee"></p-sortIcon>
+        <th scope="col" pSortableColumn="person">
+          Responsable<p-sortIcon field="person"></p-sortIcon>
         </th>
         <th scope="col" style="width: 5%">Opt.</th>
       </tr>
@@ -98,7 +98,7 @@
           {{ item.responsibleAreaName }}
         </td>
         <td class="p-column-title">
-          {{ item.employeeName }}
+          {{ item.personName }}
         </td>
         <!-- Opciones -->
         <td class="p-column-title">

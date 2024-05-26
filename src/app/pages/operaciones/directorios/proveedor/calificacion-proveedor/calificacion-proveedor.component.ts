@@ -20,13 +20,11 @@ export default class CalificacionProveedorComponent implements OnInit {
 
   submitting: boolean = false;
   providerId: number = 0;
+  personId: number = this.authService.personId;
   qualificationProviderId: number = 0;
 
   form: FormGroup = this.formBuilder.group({
-    employeeId: [
-      this.authService.userTokenDto.infoEmployeeDto.employeeId,
-      Validators.required,
-    ],
+    personId: [this.personId, Validators.required],
     providerId: [this.config.data.providerId, Validators.required],
     precio: [0, Validators.required],
     servicio: [0, Validators.required],
@@ -39,7 +37,7 @@ export default class CalificacionProveedorComponent implements OnInit {
   }
 
   onLoadData() {
-    const urlApi = `ProveedorCalificacion/${this.authService.userTokenDto.infoEmployeeDto.employeeId}/${this.providerId}`;
+    const urlApi = `ProveedorCalificacion/${this.personId}/${this.providerId}`;
     this.apiRequestService.onGetItem(urlApi).then((result: any) => {
       if (!result) {
         this.qualificationProviderId = result.id;

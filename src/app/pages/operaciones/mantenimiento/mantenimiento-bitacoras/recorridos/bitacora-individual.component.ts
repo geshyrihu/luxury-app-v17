@@ -53,12 +53,12 @@ export default class BitacoraIndividualComponent implements OnInit {
     this.fechaInicial = event.fechaInicial;
     this.onLoadData();
   }
-  onCardEmployee(employeeId: number) {
+  onCardEmployee(personId: number) {
     this.dialogHandlerService
       .openDialog(
         CardEmployeeComponent,
         {
-          employeeId,
+          personId,
         },
         'Tarjeta de Usuario',
         this.dialogHandlerService.dialogSizeMd

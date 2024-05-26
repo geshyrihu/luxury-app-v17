@@ -131,11 +131,11 @@ export default class ListEmployeeComponent implements OnInit {
       });
   }
 
-  onCardEmployee(employeeId: number) {
+  onCardEmployee(personId: number) {
     this.dialogHandlerService.openDialog(
       CardEmployeeComponent,
       {
-        employeeId,
+        personId,
       },
       'Colaborador',
       this.dialogHandlerService.dialogSizeSm

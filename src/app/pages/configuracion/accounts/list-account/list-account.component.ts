@@ -39,10 +39,10 @@ export default class ListAccountComponent implements OnInit {
       this.data = result;
     });
   }
-  onCardEmployee(employeeId: number) {
+  onCardEmployee(personId: number) {
     this.dialogHandlerService.openDialog(
       CardEmployeeComponent,
-      { employeeId },
+      { personId },
       'Colaborador',
       this.dialogHandlerService.dialogSizeMd
     );

@@ -52,7 +52,7 @@ export default class AddoreditMinutaDetalleComponent implements OnInit {
     title: ['', Validators.required],
     requestService: ['', Validators.required],
     meetingId: [this.config.data.meetingId, Validators.required],
-    employeeId: [this.authService.userTokenDto.infoEmployeeDto.employeeId],
+    personId: [this.authService.personId],
   });
 
   ngOnInit(): void {

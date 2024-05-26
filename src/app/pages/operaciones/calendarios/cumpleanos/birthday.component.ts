@@ -94,7 +94,7 @@ export default class BirthdayComponent implements OnInit {
     this.dialogHandlerService.openDialog(
       CardEmployeeComponent,
       {
-        employeeId: clickInfo.event._def.publicId,
+        personId: clickInfo.event._def.extendedProps.personId,
       },
       'Datos de usuario',
       this.dialogHandlerService.dialogSizeMd

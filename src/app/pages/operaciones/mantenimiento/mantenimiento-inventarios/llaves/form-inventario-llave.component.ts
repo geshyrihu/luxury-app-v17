@@ -42,10 +42,7 @@ export default class FormInventarioLlaveComponent implements OnInit, OnDestroy {
     numeroLlave: ['', [Validators.required]],
     cantidad: ['', [Validators.required]],
     equipoClasificacionId: ['', [Validators.required]],
-    applicationUserId: [
-      this.authService.userTokenDto.infoUserAuthDto.applicationUserId,
-      [Validators.required],
-    ],
+    personId: [this.authService.personId, [Validators.required]],
   });
 
   ngOnInit() {

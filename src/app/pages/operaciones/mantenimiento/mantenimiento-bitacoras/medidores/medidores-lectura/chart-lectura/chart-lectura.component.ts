@@ -114,13 +114,9 @@ export default class ChartLecturaComponent implements OnInit {
       datasets: [
         {
           label: label,
-          // backgroundColor: 'rgba(52, 195, 143, 0.8)',
           backgroundColor: backgroundColor,
-          // borderColor: 'rgba(52, 195, 143, 0.8)',
           borderColor: backgroundColor,
           borderWidth: 1,
-          // hoverBackgroundColor: 'rgba(52, 195, 143, 0.9)',
-          // hoverBorderColor: 'rgba(52, 195, 143, 0.9)',
           hoverBackgroundColor: hoverBackgroundColor,
           hoverBorderColor: hoverBackgroundColor,
           data: data,

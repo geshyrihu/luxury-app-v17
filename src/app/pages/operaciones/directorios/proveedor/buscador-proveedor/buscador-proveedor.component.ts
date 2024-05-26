@@ -52,8 +52,6 @@ export default class BuscadorProvedorComponent implements OnInit {
         CalificacionProveedorComponent,
         {
           providerId: data.providerId,
-          userId:
-            this.authService.userTokenDto.infoUserAuthDto.applicationUserId,
         },
         'Calificar a ' + data.nameProvider,
         this.dialogHandlerService.dialogSizeSm

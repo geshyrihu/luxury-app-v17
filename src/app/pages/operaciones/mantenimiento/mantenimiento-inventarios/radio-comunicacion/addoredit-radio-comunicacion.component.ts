@@ -47,8 +47,7 @@ export default class AddOrEditRadioComunicacionComponent implements OnInit {
   urlBaseImg = '';
   model: IRadioComunicacionAddOrEdit;
   photoFileUpdate: boolean = false;
-  userId = '';
-  cb_employee: ISelectItem[] = [];
+  cb_person: ISelectItem[] = [];
   cb_area_responsable: ISelectItem[] = [];
   form: FormGroup = this.formBuilder.group({
     id: { value: this.id, disabled: true },
@@ -61,8 +60,8 @@ export default class AddOrEditRadioComunicacionComponent implements OnInit {
     bateria: ['', Validators.required],
     responsibleAreaId: [0, Validators.required],
     responsibleAreaName: [''],
-    employeeId: [null],
-    employeeName: [''],
+    personId: [null],
+    personName: [''],
   });
 
   onLoadData() {
@@ -129,10 +128,10 @@ export default class AddOrEditRadioComunicacionComponent implements OnInit {
       responsibleAreaId: find?.value,
     });
   }
-  public saveEmployeeId(e: any): void {
-    let find = this.cb_employee.find((x) => x?.label === e.target.value);
+  public savepersonId(e: any): void {
+    let find = this.cb_person.find((x) => x?.label === e.target.value);
     this.form.patchValue({
-      employeeId: find?.value,
+      personId: find?.value,
     });
   }
 
@@ -154,8 +153,8 @@ export default class AddOrEditRadioComunicacionComponent implements OnInit {
     }
     formData.append('responsibleAreaId', String(dto.responsibleAreaId));
 
-    if (dto.employeeId != null) {
-      formData.append('employeeId', String(dto.employeeId));
+    if (dto.personId != null) {
+      formData.append('personId', String(dto.personId));
     }
 
     // ... Si hay un archivo cargado agrega la prop photoPath con su valor
@@ -168,10 +167,10 @@ export default class AddOrEditRadioComunicacionComponent implements OnInit {
   onLoadSelectItem() {
     this.apiRequestService
       .onGetSelectItem(
-        `EmployeeActivo/${this.customerIdService.getCustomerId()}`
+        `PersonEmployee/${this.customerIdService.getCustomerId()}`
       )
       .then((response: any) => {
-        this.cb_employee = response;
+        this.cb_person = response;
       });
 
     this.apiRequestService

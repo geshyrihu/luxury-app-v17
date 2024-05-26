@@ -44,8 +44,6 @@ export default class SolicitudCompraComponent implements OnInit {
   _cb_Status = [];
   id: number = 0;
   solicitudCompra: any;
-  idAuth: string =
-    this.authService.userTokenDto.infoUserAuthDto.applicationUserId;
   public get cb_Status() {
     return this._cb_Status;
   }
@@ -61,8 +59,6 @@ export default class SolicitudCompraComponent implements OnInit {
     this.routeActive.params.subscribe((resp) => {
       this.id = resp['id'];
     });
-    this.idAuth =
-      this.authService.userTokenDto.infoUserAuthDto.applicationUserId;
     this.createForm();
     if (Number(this.id) !== 0) {
       this.onLoadData();
@@ -83,7 +79,7 @@ export default class SolicitudCompraComponent implements OnInit {
       justificacionGasto: ['', Validators.required],
       estatus: [2],
       folio: [''],
-      employeeId: [this.authService.userTokenDto.infoEmployeeDto.employeeId],
+      personId: [this.authService.personId],
     }));
   }
   onCotizacionesRelacionadas() {
@@ -109,6 +105,7 @@ export default class SolicitudCompraComponent implements OnInit {
     this.apiRequestService
       .onGetItem(`SolicitudCompra/GetSolicitudCompraIndividual/${this.id}`)
       .then((result: any) => {
+        console.log('🚀 ~ result:', result);
         this.solicitudCompra = result;
         this.onSetTipe(result.estatus);
         result.fechaSolicitud = this.dateService.getDateFormat(

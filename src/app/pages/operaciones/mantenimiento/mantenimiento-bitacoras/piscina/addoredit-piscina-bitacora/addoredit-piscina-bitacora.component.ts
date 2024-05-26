@@ -48,7 +48,7 @@ export default class AddoreditPiscinaBitacoraComponent implements OnInit {
       cepillado: [false, Validators.required],
       aspirado: [false, Validators.required],
       cenefas: [false, Validators.required],
-      personId: [this.authService.userTokenDto.infoEmployeeDto.personId],
+      personId: [this.authService.personId],
     });
   }
 

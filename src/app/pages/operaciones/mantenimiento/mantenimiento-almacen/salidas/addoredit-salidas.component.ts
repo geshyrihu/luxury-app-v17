@@ -75,10 +75,7 @@ export default class CrudSalidasComponent implements OnInit {
         `${this.dateTodat.getHours()}:${this.dateTodat.getMinutes()}`,
         Validators.required,
       ],
-      employeeId: [
-        this.authService.userTokenDto.infoEmployeeDto.employeeId,
-        Validators.required,
-      ],
+      personId: [this.authService.personId, Validators.required],
     });
   }
   // convenience getter for easy access to form fields

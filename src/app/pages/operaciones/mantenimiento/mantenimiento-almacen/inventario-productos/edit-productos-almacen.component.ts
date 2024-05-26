@@ -35,7 +35,7 @@ export default class EditProductosAlmacenComponent implements OnInit {
     unidadDeMedidaId: ['', Validators.required],
     stockMin: [0, Validators.required],
     stockMax: [0, Validators.required],
-    employeeId: [this.authService.userTokenDto.infoEmployeeDto.employeeId],
+    personId: [this.authService.personId],
   });
 
   onLoadProducts() {
@@ -47,6 +47,7 @@ export default class EditProductosAlmacenComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log('🚀 ~ this.authService.personId:', this.authService.personId);
     this.onLoadProducts();
     this.id = this.config.data.id;
 
@@ -64,6 +65,7 @@ export default class EditProductosAlmacenComponent implements OnInit {
 
   onSubmit() {
     if (!this.apiRequestService.validateForm(this.form)) return;
+    console.log('🚀 ~ this.form.value:', this.form.value);
 
     this.submitting = true;
 

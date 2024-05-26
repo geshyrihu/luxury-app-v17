@@ -225,7 +225,7 @@
             </em>
           </p>
           <img
-            (click)="onCardEmployee(item.employeeCargoReporteId)"
+            (click)="onCardEmployee(item.personIdCargo)"
             [src]="url + item.employeeCargoReporteImg"
             alt="."
             width="32"
@@ -292,7 +292,7 @@
         <td>
           @if (item.responsableId) {
           <img
-            (click)="onCardEmployee(item.responsableId)"
+            (click)="onCardEmployee(item.personIdResponsable)"
             [src]="url + item.responsablePhoto"
             alt="."
             width="32"

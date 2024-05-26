@@ -137,7 +137,7 @@ export default class AddoreditMaintenancePreventiveComponent implements OnInit {
       recurrence: ['', Validators.required],
       typeMaintance: ['', Validators.required],
       customerId: [this.customerIdService.getCustomerId()],
-      employeeId: [this.authService.userTokenDto.infoEmployeeDto.employeeId],
+      personId: [this.authService.personId],
       cuentaId: ['', Validators.required],
       // temp
       machineryName: ['', Validators.required],

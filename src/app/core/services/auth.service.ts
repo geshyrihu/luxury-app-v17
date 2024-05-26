@@ -14,14 +14,16 @@ import { StorageService } from './storage.service';
   providedIn: 'root',
 })
 export class AuthService {
-  private storageService = inject(StorageService);
+  storageService = inject(StorageService);
   dataService = inject(DataService);
-  private router = inject(Router);
+  router = inject(Router);
 
   userTokenDto: IUserToken;
   infoUserAuthDto: IInfoAccountAuth;
   infoEmployeeDto: IInfoEmployeeAuth;
 
+  personId: number = 0;
+  employeeId: number = 0;
   statusJWT: boolean = false;
   data: IModelToken = { token: '' };
   validateRole: boolean = false;
@@ -47,7 +49,8 @@ export class AuthService {
         this.userTokenDto = resp.body;
         this.infoUserAuthDto = this.userTokenDto.infoUserAuthDto;
         this.infoEmployeeDto = this.userTokenDto.infoEmployeeDto;
-
+        this.personId = this.infoEmployeeDto.personId;
+        this.employeeId = this.infoEmployeeDto.employeeId;
         if (resp.body.token) {
           this.statusJWT = true;
         }

@@ -25,7 +25,7 @@ export default class UpdatePhotoEmployeeComponent implements OnInit {
 
   ngOnInit(): void {
     this.infoEmployeeDto = this.authService.userTokenDto.infoEmployeeDto;
-    this.personId = this.authService.userTokenDto.infoEmployeeDto.personId;
+    this.personId = this.authService.personId;
   }
 
   // Cambio de imagen

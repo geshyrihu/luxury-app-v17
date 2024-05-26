@@ -2,7 +2,6 @@ import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { CedulaPresupuestalDetalleAddOrEdit } from 'src/app/core/class/cedula-presupuestal-detalle-add-or-edit.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
@@ -22,8 +21,8 @@ export default class EditPartidaCedulaComponent implements OnInit {
 
   submitting: boolean = false;
 
-  applicationUserId: string =
-    this.authService.userTokenDto.infoUserAuthDto.applicationUserId;
+  personId: any = this.authService.personId;
+
   id: any = 0;
   form: FormGroup;
 
@@ -33,20 +32,20 @@ export default class EditPartidaCedulaComponent implements OnInit {
   }
 
   onSubmit() {
-    const budgetCardDTO: CedulaPresupuestalDetalleAddOrEdit = this.form.value;
     if (!this.apiRequestService.validateForm(this.form)) return;
+    console.log('🚀 ~ this.form:', this.form.value);
 
     this.submitting = true;
 
     if (this.id === 0) {
       this.apiRequestService
-        .onPost(`CedulaPresupuestalDetalles`, budgetCardDTO)
+        .onPost(`CedulaPresupuestalDetalles`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
       this.apiRequestService
-        .onPut(`CedulaPresupuestalDetalles/${this.id}`, budgetCardDTO)
+        .onPut(`CedulaPresupuestalDetalles/${this.id}`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
         });
@@ -59,9 +58,10 @@ export default class EditPartidaCedulaComponent implements OnInit {
       cedulaPresupuestalId: [''],
       descripcion: [''],
       presupuestoMensual: [0, Validators.required],
-      applicationUserId: [''],
       presupuestoEjercido: [],
+      personId: [this.personId],
     });
+    console.log('🚀 ~ this.form:', this.form.value);
 
     this.apiRequestService
       .onGetItem(`CedulaPresupuestalDetalles/${this.id}`)
@@ -69,6 +69,9 @@ export default class EditPartidaCedulaComponent implements OnInit {
         this.form.patchValue(result);
         this.form.patchValue({
           descripcion: result.cuenta.descripcion,
+        });
+        this.form.patchValue({
+          personId: this.personId,
         });
       });
   }

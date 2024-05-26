@@ -6,6 +6,7 @@ import { ETipoGasto } from 'src/app/core/enums/tipo-gasto.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
@@ -16,6 +17,7 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 })
 export default class OrdenCompraDatosPagoComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
+  authService = inject(AuthService);
   formBuilder = inject(FormBuilder);
   ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);
@@ -37,6 +39,7 @@ export default class OrdenCompraDatosPagoComponent implements OnInit {
     usoCFDIId: [0],
     tipoGasto: [0],
     provider: ['', Validators.required],
+    personId: [this.authService.personId],
   });
 
   public saveProviderId(e: any): void {

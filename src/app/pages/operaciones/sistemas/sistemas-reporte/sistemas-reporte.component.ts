@@ -82,6 +82,7 @@ export default class SistemasReporteComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (resp: any) => {
           this.data = this.customToastService.onCloseOnGetData(resp.body);
+          console.log('🚀 ~           this.data:', this.data);
 
           if (this.data !== null) {
             this.pendientes = this.onFilterItems(resp.body, 0);
@@ -157,10 +158,10 @@ export default class SistemasReporteComponent implements OnInit, OnDestroy {
       });
   }
 
-  onCardEmployee(employeeId: number) {
+  onCardEmployee(personId: number) {
     this.ref = this.dialogService.open(CardEmployeeComponent, {
       data: {
-        employeeId,
+        personId,
       },
       header: 'Tarjeta de Usuario',
       styleClass: 'modal-sm',

@@ -155,10 +155,10 @@ export default class ListPersonComponent implements OnInit, OnDestroy {
 
   // Mostar tarjeta de Persona
 
-  onCardEmployee(employeeId: number) {
+  onCardEmployee(personId: number) {
     this.ref = this.dialogService.open(CardEmployeeComponent, {
       data: {
-        employeeId,
+        personId,
       },
       header: 'Colaborador',
       styleClass: 'modal-sm',

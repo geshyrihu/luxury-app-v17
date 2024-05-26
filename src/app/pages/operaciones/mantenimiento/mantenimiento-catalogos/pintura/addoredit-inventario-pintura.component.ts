@@ -4,6 +4,7 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
@@ -19,6 +20,7 @@ export default class AddoreditInventarioPinturaComponent implements OnInit {
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
   customerIdService = inject(CustomerIdService);
+  authService = inject(AuthService);
 
   submitting: boolean = false;
 
@@ -32,6 +34,7 @@ export default class AddoreditInventarioPinturaComponent implements OnInit {
     area: ['', Validators.required],
     productoId: ['', Validators.required],
     producto: ['', Validators.required],
+    personId: [this.authService.personId],
   });
 
   ngOnInit(): void {

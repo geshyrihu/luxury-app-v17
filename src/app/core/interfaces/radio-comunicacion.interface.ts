@@ -8,5 +8,5 @@ export interface IRadioComunicacion {
   customerId: number;
   bateria: string;
   responsibleArea: string;
-  employee: string;
+  person: string;
 }

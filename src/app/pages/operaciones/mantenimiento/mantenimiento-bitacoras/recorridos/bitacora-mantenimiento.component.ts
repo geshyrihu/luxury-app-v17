@@ -87,11 +87,11 @@ export default class BitacoraMantenimientoComponent implements OnInit {
       });
   }
 
-  onCardEmployee(employeeId: number) {
+  onCardEmployee(personId: number) {
     this.dialogHandlerService.openDialog(
       CardEmployeeComponent,
       {
-        employeeId: employeeId,
+        personId: personId,
       },
       'Tarjeta de Usuario',
       this.dialogHandlerService.dialogSizeMd

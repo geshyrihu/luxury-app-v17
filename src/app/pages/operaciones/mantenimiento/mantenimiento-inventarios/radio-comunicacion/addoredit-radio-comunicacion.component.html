@@ -66,12 +66,12 @@
       ></custom-input-datalist>
 
       <custom-input-datalist
-        (propagar)="saveEmployeeId($event)"
-        [control]="form.get('employeeName')"
-        [data]="cb_employee"
-        formControlName="employeeName"
+        (propagar)="savepersonId($event)"
+        [control]="form.get('personName')"
+        [data]="cb_person"
+        formControlName="personName"
         label="Responsable"
-        dataListId="employeeNameDatalistOptions"
+        dataListId="personNameDatalistOptions"
       ></custom-input-datalist>
 
       <custom-button-submit [disabled]="this.form.invalid || submitting" />

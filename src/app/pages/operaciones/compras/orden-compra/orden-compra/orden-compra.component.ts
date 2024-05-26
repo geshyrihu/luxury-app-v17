@@ -60,7 +60,6 @@ export default class OrdenCompraComponent implements OnInit, OnDestroy {
   ordenCompraDetalle: any[] = [];
   nombreAutorizador = '';
 
-  applicationUserId: string = '';
   ordenCompraEstaAutorizada: boolean = false;
 
   solicitudCompraId: number = 0;
@@ -87,8 +86,7 @@ export default class OrdenCompraComponent implements OnInit, OnDestroy {
     if (this.ordenCompraId == undefined) {
       this.ordenCompraId = this.ordenCompraService.getOrdenCompraId();
     }
-    this.applicationUserId =
-      this.authService.userTokenDto.infoUserAuthDto.applicationUserId;
+
     this.onLoadData();
     this.items = [
       {
@@ -267,7 +265,7 @@ export default class OrdenCompraComponent implements OnInit, OnDestroy {
     // this.onRevisadaPorResidente();
     this.dataService
       .get(
-        `OrdenCompraAuth/Autorizar/${this.ordenCompraId}/${this.authService.userTokenDto.infoEmployeeDto.employeeId}`
+        `OrdenCompraAuth/Autorizar/${this.ordenCompraId}/${this.authService.personId}`
       )
       .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({

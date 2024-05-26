@@ -60,7 +60,7 @@ export default class AddOrEditActivosComponent implements OnInit {
       brand: [''],
       customerId: [this.customerId],
       dateOfPurchase: ['', [Validators.required]],
-      employeeId: [this.authService.userTokenDto.infoEmployeeDto.employeeId],
+      personId: [this.authService.personId],
       equipoClasificacionId: ['', Validators.required],
       inventoryCategory: [this.category, [Validators.required]],
       model: [''],
@@ -124,7 +124,7 @@ export default class AddOrEditActivosComponent implements OnInit {
 
   private createFormData(machineryDTO: any): FormData {
     let formData = new FormData();
-    formData.append('employeeId', machineryDTO.employeeId);
+    formData.append('personId', machineryDTO.personId);
     formData.append('nameMachinery', machineryDTO.nameMachinery);
     formData.append('ubication', machineryDTO.ubication);
     formData.append('brand', machineryDTO.brand);

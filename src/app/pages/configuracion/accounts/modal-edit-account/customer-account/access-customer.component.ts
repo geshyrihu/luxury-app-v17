@@ -24,7 +24,7 @@ export default class AccessCustomerComponent implements OnInit {
   }
   onGetAccesCustomer() {
     this.apiRequestService
-      .onGetList('AccessToClients/GetCustomers/' + this.applicationUserId)
+      .onGetList('AccesoCustomers/GetCustomers/' + this.applicationUserId)
       .then((result: any[]) => {
         this.clientes = result;
         this.ActualizarClientes = this.clientes;
@@ -33,7 +33,7 @@ export default class AccessCustomerComponent implements OnInit {
 
   onUpdateAcceso(roles: any) {
     this.apiRequestService.onPost(
-      `AccessToClients/AddCustomerAccesoToUser/${this.applicationUserId}`,
+      `AccesoCustomers/AddCustomerAccesoToUser/${this.applicationUserId}`,
       roles
     );
   }

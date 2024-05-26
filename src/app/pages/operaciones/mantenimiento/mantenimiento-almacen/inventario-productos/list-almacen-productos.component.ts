@@ -106,7 +106,7 @@ export default class ListAlmacenProductosComponent implements OnInit {
           idProducto: data.idProducto,
         },
         data.title,
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerService.dialogSizeFull
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();

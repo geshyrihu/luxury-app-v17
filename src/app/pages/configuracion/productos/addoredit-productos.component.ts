@@ -7,7 +7,6 @@ import {
 } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subject } from 'rxjs';
 import { EProductClasificacion } from 'src/app/core/enums/product-clasificacion.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
@@ -31,13 +30,11 @@ export default class AddOrEditProductosComponent implements OnInit {
 
   submitting: boolean = false;
 
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
-
   id: any = 0;
   urlBaseImg = '';
   model: any;
   photoFileUpdate: boolean = false;
-  userId = '';
+
   form: FormGroup;
   cb_category: ISelectItem[] = [];
   cb_clasificacion: ISelectItem[] = onGetSelectItemFromEnum(
@@ -58,8 +55,6 @@ export default class AddOrEditProductosComponent implements OnInit {
   }
   ngOnInit(): void {
     this.onloadData();
-    this.userId =
-      this.authService.userTokenDto.infoUserAuthDto.applicationUserId;
     this.id = this.config.data.id;
     if (this.id !== 0) this.onLoadData();
 
@@ -68,7 +63,7 @@ export default class AddOrEditProductosComponent implements OnInit {
       category: ['', Validators.required],
       categoryId: ['', Validators.required],
       clasificacion: ['', Validators.required],
-      employeeId: [this.authService.userTokenDto.infoEmployeeDto.employeeId],
+      personId: [this.authService.personId],
       marca: [''],
       modelo: [''],
       nombreProducto: [
@@ -132,7 +127,7 @@ export default class AddOrEditProductosComponent implements OnInit {
     formData.append('marca', dto.marca);
     formData.append('modelo', dto.modelo);
     formData.append('clasificacion', String(dto.clasificacion));
-    formData.append('employeeId', dto.employeeId);
+    formData.append('personId', dto.personId);
 
     // ... Si hay un archivo cargado agrega la prop photoPath con su valor
     if (dto.urlImagen) {

@@ -145,7 +145,7 @@
       <td class="text-center">
         @if (item.employeeResponsableId) {
         <img
-          (click)="onCardEmployee(item.employeeResponsableId)"
+          (click)="onCardEmployee(item.personIdResponsable)"
           [src]="url + item.employeeResponsable"
           alt="."
           width="32"
@@ -169,7 +169,7 @@
           {{ item.areaSolicitante }}
         </small>
       </td>
-      <td class="pointer" (click)="onCardEmployee(item.employeeCargoReporteId)">
+      <td class="pointer" (click)="onCardEmployee(item.personIdSolicitante)">
         <small>
           {{ item.employeeCargoReporte }}
         </small>

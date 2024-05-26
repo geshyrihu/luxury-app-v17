@@ -53,7 +53,6 @@ export default class AddOrEditCondominosComponent implements OnInit {
     firstName: ['', Validators.required],
     lastName: ['', Validators.required],
     enviarMails: [],
-    user: [''],
   });
 
   ngOnInit(): void {
@@ -79,11 +78,13 @@ export default class AddOrEditCondominosComponent implements OnInit {
     );
     this.form.patchValue({
       directoryCondominiumId: find?.value,
+      directoryCondominium: find?.label,
     });
   }
   onSubmit() {
     if (!this.apiRequestService.validateForm(this.form)) return;
 
+    console.log('🚀 ~ this.form:', this.form.value);
     this.submitting = true;
 
     if (this.id === 0) {

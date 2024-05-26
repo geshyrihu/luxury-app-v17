@@ -196,15 +196,15 @@
         </td>
         <td class="text-center">
           <span
-            class="pi"
+            class="fa-thin"
             [ngClass]="{
-              'true-icon pi-check-circle text-success': item.estatus,
-              'false-icon pi-times-circle text-danger': !item.estatus
+              'fa-check text-success': item.estatus,
+              'fa-circle-xmark text-danger': !item.estatus
             }"
           ></span>
         </td>
         <td class="p-column-title">
-          @if (employeeId == item.employeeId) {
+          @if (personId == item.personId) {
           <div class="d-flex justify-content-center">
             <!-- Componente editar registro -->
             <custom-button-edit

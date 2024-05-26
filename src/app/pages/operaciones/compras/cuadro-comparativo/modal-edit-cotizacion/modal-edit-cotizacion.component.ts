@@ -6,6 +6,7 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ToastModule } from 'primeng/toast';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import CreateOrdenCompraComponent from '../../orden-compra/orden-compra/create-orden-compra/create-orden-compra.component';
@@ -18,6 +19,7 @@ import CreateOrdenCompraComponent from '../../orden-compra/orden-compra/create-o
 })
 export default class ModalEditCotizacionComponent implements OnInit, OnDestroy {
   apiRequestService = inject(ApiRequestService);
+  authService = inject(AuthService);
   dialogHandlerService = inject(DialogHandlerService);
   customToastService = inject(CustomToastService);
   ref = inject(DynamicDialogRef);
@@ -82,7 +84,7 @@ export default class ModalEditCotizacionComponent implements OnInit, OnDestroy {
 
   onChange(item: any) {
     const data = {
-      employeeId: item.employeeId,
+      personId: this.authService.personId,
       cantidad: item.cantidad,
       descuento: item.descuento,
       descuento2: item.descuento2,
