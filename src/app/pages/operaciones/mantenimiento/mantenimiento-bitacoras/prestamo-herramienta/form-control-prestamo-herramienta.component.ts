@@ -57,7 +57,7 @@ export default class FormControlPrestamoHerramientaComponent implements OnInit {
       tool: ['', Validators.required],
       observaciones: [],
       employeeResponsableId: [this.authService.employeeId],
-      personId: [this.authService.personId],
+      // personId: [this.authService.personId],
       applicationUserResponsableId: [this.authService.applicationUserId],
     });
     this.id = this.config.data.id;
@@ -99,7 +99,6 @@ export default class FormControlPrestamoHerramientaComponent implements OnInit {
   }
   onSubmit() {
     if (!this.apiRequestService.validateForm(this.form)) return;
-    console.log('this.form', this.form.value);
     this.submitting = true;
 
     if (this.id === 0) {

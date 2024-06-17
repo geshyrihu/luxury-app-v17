@@ -84,7 +84,7 @@ export default class ModalEditCotizacionComponent implements OnInit, OnDestroy {
 
   onChange(item: any) {
     const data = {
-      personId: this.authService.personId,
+      // personId: this.authService.personId,
       applicationUserId: this.authService.applicationUserId,
       cantidad: item.cantidad,
       descuento: item.descuento,

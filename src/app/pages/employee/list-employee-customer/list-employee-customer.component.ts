@@ -81,8 +81,8 @@ export default class ListEmployeeComponent implements OnInit {
     this.dialogHandlerService
       .openDialog(
         AddAccountCustomerComponent,
-        {},
-        'Agregar cuenta de usuario',
+        { typePerson: 0 },
+        'Registrar Empleado.',
         this.dialogHandlerService.dialogSizeMd
       )
       .then((result: boolean) => {

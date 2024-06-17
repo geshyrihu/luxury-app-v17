@@ -29,6 +29,16 @@
       [label]="'Enviar una nueva contraseña por correo electrónico ' + email"
     />
   </div>
+  <div class="card p-2">
+    <custom-button
+      (clicked)="onGenerateUserNameAndPassword()"
+      customClass="btn-outline-primary w-100"
+      [label]="
+        'Generar y enviar nuevo usuario y contrasenya por correo electrónico ' +
+        email
+      "
+    />
+  </div>
   }
 </div>
 

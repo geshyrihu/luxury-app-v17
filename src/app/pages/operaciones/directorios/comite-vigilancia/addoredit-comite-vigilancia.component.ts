@@ -71,7 +71,6 @@ export default class AddOrEditComiteVigilanciaComponent implements OnInit {
   onSubmit() {
     if (!this.apiRequestService.validateForm(this.form)) return;
     this.submitting = true;
-    console.log('🚀 ~ this.form.value:', this.form.value);
 
     const formValue = this.form.value;
 

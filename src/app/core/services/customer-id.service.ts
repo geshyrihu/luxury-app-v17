@@ -76,7 +76,6 @@ export class CustomerIdService implements OnDestroy {
       .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
-          console.log('🚀 ~ resp.body:', resp.body);
           this.nameCustomer = resp.body.nameCustomer;
           this.logoCustomer = `${environment.base_urlImg}Administration/customer/${resp.body.photoPath}`;
 

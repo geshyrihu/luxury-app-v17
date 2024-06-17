@@ -46,7 +46,6 @@ export default class BirthdayComponent implements OnInit {
     });
   }
   selectMonth() {
-    console.log('Selected Month:', this.selectedMonth);
     // Aquí puedes realizar cualquier acción que necesites con el ID del mes seleccionado
   }
 

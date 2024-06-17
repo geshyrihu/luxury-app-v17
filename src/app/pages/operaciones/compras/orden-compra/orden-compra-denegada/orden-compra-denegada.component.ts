@@ -41,7 +41,7 @@ export default class OrdenCompraDenegadaComponent implements OnInit {
       fechaAutorizacion: [''],
       statusOrdenCompra: [1],
       observaciones: ['', Validators.required],
-      personId: [this.authService.personId],
+      // personId: [this.authService.personId],
     });
   }
 

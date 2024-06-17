@@ -88,7 +88,7 @@ export default class EditSalidasComponent implements OnInit {
         `${this.dateTodat.getHours()}:${this.dateTodat.getMinutes()}`,
         Validators.required,
       ],
-      personId: [this.authService.personId, Validators.required],
+      // personId: [this.authService.personId, Validators.required],
       applicationUserId: [
         this.authService.applicationUserId,
         Validators.required,
@@ -108,7 +108,7 @@ export default class EditSalidasComponent implements OnInit {
   onSubmit() {
     this.id = this.config.data.id;
 
-    this.form.patchValue({ personId: this.authService.personId });
+    // this.form.patchValue({ personId: this.authService.personId });
 
     this.submitting = true;
     if (this.id === 0) {

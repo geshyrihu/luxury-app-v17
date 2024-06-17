@@ -75,7 +75,7 @@ export default class CrudSalidasComponent implements OnInit {
         `${this.dateTodat.getHours()}:${this.dateTodat.getMinutes()}`,
         Validators.required,
       ],
-      personId: [this.authService.personId, Validators.required],
+      // personId: [this.authService.personId, Validators.required],
       applicationUserId: [
         this.authService.applicationUserId,
         Validators.required,

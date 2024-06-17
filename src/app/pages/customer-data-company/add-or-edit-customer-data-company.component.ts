@@ -70,7 +70,6 @@ export default class AddOrEditCustomerDataCompanyComponent implements OnInit {
   onSubmit() {
     if (!this.apiRequestService.validateForm(this.form)) return;
     this.submitting = true;
-    console.log('🚀 ~ this.form.value:', this.form.value);
 
     if (this.id === '') {
       this.apiRequestService

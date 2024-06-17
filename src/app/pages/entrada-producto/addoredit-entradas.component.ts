@@ -37,7 +37,7 @@ export default class AddOrEditEntradasComponent implements OnInit {
     unidadMedidaId: ['', Validators.required],
     numeroFactura: ['', Validators.required],
     providerName: ['', Validators.required],
-    personId: [this.authService.personId, Validators.required],
+    // personId: [this.authService.personId, Validators.required],
     applicationUserId: [
       this.authService.applicationUserId,
       Validators.required,

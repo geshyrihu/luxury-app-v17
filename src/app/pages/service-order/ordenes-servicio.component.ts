@@ -201,7 +201,6 @@ export default class OrdenesServicioComponentComponent
       .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
         next: (resp: any) => {
-          console.log('🚀 ~ resp.body):', resp.body);
           this.data = this.customToastService.onCloseOnGetData(resp.body);
           this.reporteOrdenesServicioService.setData(this.data);
 

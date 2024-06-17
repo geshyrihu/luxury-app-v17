@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subject, takeUntil } from 'rxjs';
 import { IFechasFiltro } from 'src/app/core/interfaces/fechas-filtro.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
@@ -33,20 +32,17 @@ export default class AgendaSupervisionComponent implements OnInit, OnDestroy {
   ref: DynamicDialogRef;
   data: any[] = [];
 
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
-
   cb_user: any[] = [];
   cb_customers: any[] = [];
   cb_estatus: any[] = ['Concluido', 'Pendiente'];
 
-  //TODO: REVISAR SERVICIO FECHAS SERVICE
   fechaInicial: string = this.dateService.getDateFormat(
     this.rangoCalendarioService.fechaInicioDateFull
   );
   fechaFinal: string = this.dateService.getDateFormat(
     this.rangoCalendarioService.fechaFinalDateFull
   );
-  personId = this.authService.personId;
+  applicationUserId = this.authService.applicationUserId;
   depto: string = 'SUPERVISIÓN DE OPERACIONES';
   nombre: string =
     this.authService.infoEmployeeDto.firstName +
@@ -81,17 +77,10 @@ export default class AgendaSupervisionComponent implements OnInit, OnDestroy {
   }
 
   onLoadUserSupervisor() {
-    this.dataService
-      .get('SelectItem/getlistsupervision')
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.cb_user = resp.body;
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
+    const urlApi = `getlistsupervision`;
+    this.apiRequestService.onGetSelectItem(urlApi).then((result: any) => {
+      this.cb_user = result;
+    });
   }
 
   showModalAddOrEdit(data: any) {

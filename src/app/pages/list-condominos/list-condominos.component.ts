@@ -61,7 +61,6 @@ export default class ListCondominosComponent implements OnInit {
       });
   }
   customSort(event: any) {
-    console.log('🚀 ~ event:', event);
     event.data.sort((data1: any, data2: any) => {
       return this.customCompare(data1.property, data2.property);
     });

@@ -13,6 +13,7 @@
   [globalFilterFields]="[
     'firstName',
     'lastName',
+    'fullName',
     'phoneNumber',
     'customer',
     'phoneNumber',
@@ -22,7 +23,7 @@
 >
   <ng-template pTemplate="caption">
     <app-table-header
-      [title]="'Listado General de Personas'"
+      [title]="'Listado General de Empleados'"
       (add)="onModalCreatePerson({ id: 0, title: 'Nuevo Registro' })"
       [dt]="dt"
     />
@@ -89,6 +90,18 @@
       <td class="p-column-title hide-print-mode">
         <div class="d-flex justify-content-center">
           <custom-button
+            [ngbTooltipCustom]="'Opciones'"
+            customClass=" btn-outline-primary"
+            icon="fa-regular fa-ellipsis-vertical"
+            (clicked)="
+              onShowModalEditEmpleado(
+                item.applicationUserId,
+                item.employeeId,
+                item.fullName
+              )
+            "
+          />
+          <!-- <custom-button
             ngbTooltip="Dirección"
             customClass="btn-sm btn-sm btn-outline-primary"
             icon="fa-duotone fa-location-dot text-primary"
@@ -138,7 +151,7 @@
             customClass="btn-sm btn-sm btn-outline-primary"
             icon="fa-duotone fa-camera text-primary"
             (clicked)="onShowModalActualizarImagen(item.id)"
-          />
+          /> -->
 
           <custom-button-delete (OnConfirm)="onDelete(item.id)" />
         </div>

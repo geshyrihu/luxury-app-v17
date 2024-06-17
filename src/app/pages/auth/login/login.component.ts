@@ -73,7 +73,6 @@ export default class LoginComponent implements OnInit {
       )
       .subscribe((resp: any) => {
         if (resp.body.token != null) {
-          console.log('🚀 ~ login:', resp.body);
           this.onRemember(this.form.get('remember').value);
           this.router.navigateByUrl(localStorage.getItem('currentUrl'));
           this.securityService.setAuthData(resp.body.token);

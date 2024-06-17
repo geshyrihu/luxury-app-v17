@@ -61,7 +61,6 @@ export default class AddOrEditMeetingComponent implements OnInit {
 
   onSubmit() {
     if (!this.apiRequestService.validateForm(this.form)) return;
-    console.log('🚀 ~ this.form.value:', this.form.value);
 
     if (this.id === 0) {
       this.apiRequestService

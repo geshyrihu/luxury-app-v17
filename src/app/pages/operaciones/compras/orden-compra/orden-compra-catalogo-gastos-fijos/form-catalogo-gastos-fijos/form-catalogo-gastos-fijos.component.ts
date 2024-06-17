@@ -46,7 +46,7 @@ export default class FormCatalogoGastosFijosComponent implements OnInit {
     formaDePagoId: ['', Validators.required],
     catalogoGastosFijosPresupuesto: this.formBuilder.array([]),
     catalogoGastosFijosDetalles: this.formBuilder.array([]),
-    personId: [this.authService.personId],
+    // personId: [this.authService.personId],
     applicationUserId: [this.authService.applicationUserId],
   });
 

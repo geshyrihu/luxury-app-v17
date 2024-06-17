@@ -64,7 +64,6 @@ export default class AddOrEditElevatorSparePartsChangeComponent
     });
   }
   onSubmit() {
-    console.log('🚀 ~ this.form.value:', this.form.value);
     if (!this.apiRequestService.validateForm(this.form)) return;
 
     this.submitting = true;

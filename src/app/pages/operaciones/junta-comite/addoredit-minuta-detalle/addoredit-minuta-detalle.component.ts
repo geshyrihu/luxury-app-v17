@@ -52,7 +52,7 @@ export default class AddoreditMinutaDetalleComponent implements OnInit {
     title: ['', Validators.required],
     requestService: ['', Validators.required],
     meetingId: [this.config.data.meetingId, Validators.required],
-    personId: [this.authService.personId],
+    // personId: [this.authService.personId],
   });
 
   ngOnInit(): void {
@@ -63,9 +63,9 @@ export default class AddoreditMinutaDetalleComponent implements OnInit {
     const urlApi = `MeetingsDetails/${this.id}`;
     this.apiRequestService.onGetItem(urlApi).then((result: any) => {
       this.form.patchValue(result);
-      this.form.patchValue({
-        personId: this.authService.personId,
-      });
+      // this.form.patchValue({
+      //   personId: this.authService.personId,
+      // });
       const contenidoHTML = this.form.get('requestService').value;
       const contenidoSinHTML = contenidoHTML.replace(/<[^>]*>|&nbsp;/g, '');
       this.form.get('requestService').patchValue(contenidoSinHTML);
@@ -86,7 +86,7 @@ export default class AddoreditMinutaDetalleComponent implements OnInit {
     } else {
       this.apiRequestService
         .onPut(
-          `MeetingsDetails/${this.id}/${this.authService.personId}`,
+          `MeetingsDetails/${this.id}/${this.authService.applicationUserId}`,
           this.form.value
         )
         .then((result: boolean) => {

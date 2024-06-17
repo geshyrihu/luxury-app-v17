@@ -23,9 +23,7 @@ export class AuthGuard {
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     return this.authService.validationToken().pipe(
       tap((JWTisValid) => {
-        console.log('🚀 ~ JWTisValid:');
         if (!JWTisValid) {
-          console.log('🚀 ~ JWTis INValid:');
           // Redirigir al usuario a la página de inicio de sesión si el token no es válido.
           this.route.navigateByUrl('/auth/login');
         }

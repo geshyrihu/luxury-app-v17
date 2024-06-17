@@ -71,7 +71,7 @@ export default class AddOrEditActivosComponent implements OnInit {
       state: ['', [Validators.required]],
       technicalSpecifications: [''],
       ubication: ['', [Validators.required]],
-      personId: [this.authService.personId],
+      // personId: [this.authService.personId],
       applicationUserId: [this.authService.applicationUserId],
     });
   }

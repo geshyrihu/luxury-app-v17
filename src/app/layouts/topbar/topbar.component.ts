@@ -42,7 +42,7 @@ export class TopbarComponent implements OnInit {
   router = inject(Router);
   profielServiceService = inject(ProfielServiceService);
 
-  personId: number = this.authService.personId;
+  // personId: number = this.authService.personId;
 
   @Output() settingsButtonClicked = new EventEmitter();
 
@@ -110,7 +110,7 @@ export class TopbarComponent implements OnInit {
       .openDialog(
         AddoreditPersonDataComponent,
         {
-          personId: this.personId,
+          // personId: this.personId,
         },
         'Datos Principales',
         this.dialogHandlerService.dialogSizeFull
@@ -126,7 +126,7 @@ export class TopbarComponent implements OnInit {
       .openDialog(
         PersonAddoreditAddressComponent,
         {
-          personId: this.personId,
+          // personId: this.personId,
         },
         'Datos Principales',
         this.dialogHandlerService.dialogSizeLg

@@ -39,7 +39,7 @@ export default class OrdenCompraDatosPagoComponent implements OnInit {
     usoCFDIId: [0],
     tipoGasto: [0],
     provider: ['', Validators.required],
-    personId: [this.authService.personId],
+    // personId: [this.authService.personId],
   });
 
   public saveProviderId(e: any): void {

@@ -51,7 +51,7 @@ export default class FormBitacoraMantenimientoComponent implements OnInit {
       machinery: ['', Validators.required],
       descripcion: ['', Validators.required],
       emergencia: [false],
-      personId: [this.authService.personId, Validators.required],
+      // personId: [this.authService.personId, Validators.required],
       applicationUserId: [this.authService.applicationUserId],
     });
 

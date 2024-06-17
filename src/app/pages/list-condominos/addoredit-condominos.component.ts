@@ -84,7 +84,6 @@ export default class AddOrEditCondominosComponent implements OnInit {
   onSubmit() {
     if (!this.apiRequestService.validateForm(this.form)) return;
 
-    console.log('🚀 ~ this.form:', this.form.value);
     this.submitting = true;
 
     if (this.id === 0) {

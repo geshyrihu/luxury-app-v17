@@ -36,7 +36,6 @@ export default class EmployeeEmergencyContactAddOrEditComponent
   });
   ngOnInit(): void {
     this.id = this.config.data.id;
-    console.log('🚀 ~ this.id:', this.id);
 
     if (this.id !== '') this.onLoadData();
   }

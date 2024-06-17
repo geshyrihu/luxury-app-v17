@@ -34,7 +34,7 @@ export default class AddoreditInventarioPinturaComponent implements OnInit {
     area: ['', Validators.required],
     productoId: ['', Validators.required],
     producto: ['', Validators.required],
-    personId: [this.authService.personId],
+    // personId: [this.authService.personId],
     applicationUserId: [this.authService.applicationUserId],
   });
 

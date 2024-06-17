@@ -52,7 +52,9 @@ export default [
   {
     path: 'empleados-general',
     loadComponent: () =>
-      import('src/app/pages/person/person-list/list-persons.component'),
+      import(
+        'src/app/pages/employee/list-general-employee/list-general-employee.component'
+      ),
   },
   {
     path: 'telefonos-emergencia',

@@ -79,7 +79,6 @@ export default class ListTicketComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (resp: any) => {
           this.data = this.customToastService.onCloseOnGetData(resp.body);
-          console.log('🚀 ~ resp.body:', resp.body);
           this.dataCompleta = this.data;
         },
         error: (error) => {

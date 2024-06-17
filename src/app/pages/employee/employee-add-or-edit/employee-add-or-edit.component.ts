@@ -65,7 +65,9 @@ export default class EmployeeAddOrEditComponent implements OnInit {
   onValidarAdminAsis() {
     // ProfessionId Administrador= 5, Asistente = 6
     this.apiRequestService
-      .onGetItem(`employees/validaradminasis/${this.employeeId}`)
+      .onGetItem(
+        `Employees/validaradminasis/${this.authService.applicationUserId}`
+      )
       .then((result: any) => {
         this.tienePermiso = result;
       });

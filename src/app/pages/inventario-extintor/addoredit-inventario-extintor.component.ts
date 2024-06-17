@@ -48,9 +48,6 @@ export default class AddoreditInventarioExtintorComponent implements OnInit {
 
   ngOnInit(): void {
     this.id = this.config.data.id;
-
-    console.log(this.form.value);
-
     if (this.id !== 0) this.onLoadData();
   }
   onLoadData() {

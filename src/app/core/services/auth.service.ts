@@ -47,7 +47,6 @@ export class AuthService {
     return this.dataService.post('Auth/ValidateJwtToken', this.data).pipe(
       map((resp: any) => {
         // Almacenar la información del token y el estado del JWT
-        console.log('🚀 ~ resp.body:', resp.body);
         this.userTokenDto = resp.body;
         this.infoUserAuthDto = this.userTokenDto.infoUserAuthDto;
         this.infoEmployeeDto = this.userTokenDto.infoEmployeeDto;

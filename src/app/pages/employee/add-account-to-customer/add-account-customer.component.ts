@@ -66,6 +66,7 @@ export default class AddAccountCustomerComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(this.form.value);
     this.apiRequestService
       .onGetSelectItem(`Professions`)
       .then((response: any) => {
@@ -111,6 +112,10 @@ export default class AddAccountCustomerComponent implements OnInit {
   }
 
   searchExistingPerson(fullName: any) {
+    if (fullName.target.value.length < 1) {
+      return;
+    }
+    console.log('🚀 ~ fullName.target.value:', fullName.target.value);
     this.existingPerson = [];
     const urlApi = 'Employees/SearchExistingPerson/' + fullName.target.value;
     this.apiRequestService.onGetListNotLoading(urlApi).then((result: any) => {
@@ -120,6 +125,10 @@ export default class AddAccountCustomerComponent implements OnInit {
   existingPerson: any;
   existingPhone: any;
   searchExistingPhone(phone: any) {
+    if (phone.target.value.length < 1) {
+      return;
+    }
+
     this.existingPhone = [];
 
     const urlApi = 'Employees/SearchExistingPhone/' + phone.target.value;

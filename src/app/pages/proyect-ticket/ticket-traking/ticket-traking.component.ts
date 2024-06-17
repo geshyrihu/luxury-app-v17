@@ -29,7 +29,7 @@ export default class TicketTrakingComponent implements OnInit, OnDestroy {
   form: FormGroup = this.formBuilder.group({
     id: { value: this.id, disabled: true },
     ticketId: [this.ticketId, Validators.required],
-    personId: [this.authService.personId, Validators.required],
+    // personId: [this.authService.personId, Validators.required],
     applicationUserId: [
       this.authService.applicationUserId,
       Validators.required,

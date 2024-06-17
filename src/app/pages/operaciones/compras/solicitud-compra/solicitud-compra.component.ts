@@ -79,7 +79,7 @@ export default class SolicitudCompraComponent implements OnInit {
       justificacionGasto: ['', Validators.required],
       estatus: [2],
       folio: [''],
-      personId: [this.authService.personId],
+      // personId: [this.authService.personId],
       applicationUserId: [this.authService.applicationUserId],
     }));
   }
@@ -106,7 +106,6 @@ export default class SolicitudCompraComponent implements OnInit {
     this.apiRequestService
       .onGetItem(`SolicitudCompra/GetSolicitudCompraIndividual/${this.id}`)
       .then((result: any) => {
-        console.log('🚀 ~ result:', result);
         this.solicitudCompra = result;
         this.onSetTipe(result.estatus);
         result.fechaSolicitud = this.dateService.getDateFormat(

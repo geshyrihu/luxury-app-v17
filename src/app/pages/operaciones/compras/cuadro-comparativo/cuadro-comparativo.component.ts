@@ -81,7 +81,6 @@ export default class CuadroComparativoComponent implements OnInit {
     const urlApi = `solicitudcompra/cuadrocomparativo/${this.solicitudCompraId}`;
 
     this.apiRequestService.onGetItem(urlApi).then((result: any) => {
-      console.log('🚀 ~ result:', result);
       this.folio = result.folio;
       this.solicitudCompra = result;
       this.cotizacionProveedor = this.solicitudCompra.cotizacionProveedor;

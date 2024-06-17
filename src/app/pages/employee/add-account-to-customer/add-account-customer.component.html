@@ -12,15 +12,15 @@
     formControlName="firstName"
     label="Nombre"
     placeholder="nombre"
-    (input)="searchExistingPerson($event)"
   />
+  <!-- (input)="searchExistingPerson($event)" -->
   <custom-input-text
     [control]="form.get('lastName')"
     formControlName="lastName"
     label="Apellidos"
     placeholder="apellidos"
-    (input)="searchExistingPerson($event)"
   />
+  <!-- (input)="searchExistingPerson($event)" -->
   <custom-input-date
     [control]="form.get('birth')"
     formControlName="birth"
@@ -33,8 +33,8 @@
     label="Tél. Celular"
     placeholder="(00) 0000-0000"
     customMask="(00) 0000-0000"
-    (input)="searchExistingPhone($event)"
   />
+  <!-- (input)="searchExistingPhone($event)" -->
 
   <custom-input-text
     [control]="form.get('email')"

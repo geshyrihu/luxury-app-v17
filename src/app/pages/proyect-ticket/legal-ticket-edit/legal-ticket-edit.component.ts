@@ -51,7 +51,6 @@ export default class LegalTicketEditComponent implements OnInit {
 
   onSubmit() {
     if (!this.apiRequestService.validateForm(this.form)) return;
-    console.log(this.form.value);
     this.id = this.config.data.id;
     this.submitting = true;
 

@@ -20,11 +20,11 @@ export default class CalificacionProveedorComponent implements OnInit {
 
   submitting: boolean = false;
   providerId: number = 0;
-  personId: number = this.authService.personId;
+  // personId: number = this.authService.personId;
   qualificationProviderId: number = 0;
 
   form: FormGroup = this.formBuilder.group({
-    personId: [this.personId, Validators.required],
+    // personId: [this.personId, Validators.required],
     applicationUserId: [
       this.authService.applicationUserId,
       Validators.required,

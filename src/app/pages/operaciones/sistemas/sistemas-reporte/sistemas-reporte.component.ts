@@ -82,7 +82,6 @@ export default class SistemasReporteComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (resp: any) => {
           this.data = this.customToastService.onCloseOnGetData(resp.body);
-          console.log('🚀 ~           this.data:', this.data);
 
           if (this.data !== null) {
             this.pendientes = this.onFilterItems(resp.body, 0);

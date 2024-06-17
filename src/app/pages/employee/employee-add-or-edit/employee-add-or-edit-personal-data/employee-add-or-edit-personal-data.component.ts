@@ -58,7 +58,6 @@ export default class EmployeeAddOrEditPersonalDataComponent implements OnInit {
   onSubmit() {
     if (!this.apiRequestService.validateForm(this.form)) return;
     this.submitting = true;
-    console.log('🚀 ~ this.employeeId:', this.employeeId);
 
     this.apiRequestService
       .onPut(
