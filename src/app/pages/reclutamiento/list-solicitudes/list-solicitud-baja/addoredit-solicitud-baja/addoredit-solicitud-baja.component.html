@@ -6,19 +6,19 @@
         formControlName="executionDate"
         label="Fecha de ejecución"
         placeholder="fecha de ejecución"
-      ></custom-input-date>
+      />
       <custom-input-select
         [control]="form.get('status')"
         formControlName="status"
         label="Estatus"
         [data]="cb_status"
-      ></custom-input-select>
+      />
       <custom-input-select
         [control]="form.get('tipoBaja')"
         formControlName="tipoBaja"
         label="Tipo de baja"
         [data]="cb_tipo_baja"
-      ></custom-input-select>
+      />
       <custom-input-text-area
         [control]="form.get('reasonForLeaving')"
         formControlName="reasonForLeaving"
@@ -31,14 +31,14 @@
         label="Require abogado"
         [data]="cb_si_no"
         [SelectDefaulOption]="false"
-      ></custom-input-select>
+      />
       <custom-input-select
         [control]="form.get('employeeInformed')"
         formControlName="employeeInformed"
         label="Colaborador enterado de su baja"
         [data]="cb_si_no"
         [SelectDefaulOption]="false"
-      ></custom-input-select>
+      />
       <div formArrayName="discounts">
         <button
           type="button"

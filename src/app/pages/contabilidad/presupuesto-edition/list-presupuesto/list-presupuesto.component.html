@@ -1,4 +1,4 @@
-<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
 
 <p-table
   [(selection)]="data"
@@ -17,7 +17,7 @@
       [rolAuth]="
         authService.onValidateRoles(['Residente', 'SuperUsuario', 'Contador'])
       "
-    ></app-table-header>
+    />
   </ng-template>
   <ng-template pTemplate="header">
     <tr>
@@ -40,7 +40,7 @@
             [customClass]="'btn-outline-info btn-sm'"
             icon="fa-regular fa-pen-field  text-danger"
             (clicked)="onFinished(item.id, !item.finished)"
-          ></custom-button>
+          />
           }
           <!-- End Boton para finalizar presupuesto -->
           <!-- Start Boton para Habilitar presupuesto -->
@@ -50,7 +50,7 @@
             [customClass]="'btn-outline-info btn-sm'"
             icon="fa-regular fa-check-double text-success"
             (clicked)="onFinished(item.id, !item.finished)"
-          ></custom-button>
+          />
           }
           <!-- End Boton para Habilitar presupuesto -->
           @if (authService.onValidateRoles(['SuperUsuario'])) {
@@ -59,7 +59,7 @@
             (clicked)="onModalAddOrEdit(item.id)"
             icon="fa-regular fa-pen-to-square"
             ngbTooltip="Editar periodo"
-          ></custom-button>
+          />
           } @if ( authService.onValidateRoles([ 'Residente', 'SuperUsuario',
           'Contador', 'SupervisorContable', 'SupervisionOperativa' ]) &&
           !item.finished ) {
@@ -68,11 +68,9 @@
             (clicked)="onGetPresupuestoDetalle(item.id)"
             icon="fa-regular fa-money-bill-trend-up"
             ngbTooltip="Editar el presupuesto"
-          ></custom-button>
+          />
           } @if (authService.onValidateRoles(['SuperUsuario'])) {
-          <custom-button-delete
-            (OnConfirm)="onDelete(item.id)"
-          ></custom-button-delete>
+          <custom-button-delete (OnConfirm)="onDelete(item.id)" />
           }
         </div>
       </td>

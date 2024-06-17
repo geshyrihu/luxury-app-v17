@@ -1,0 +1,179 @@
+<div class="card">
+  <div class="card-body">
+    <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
+      <div class="row" hidden>
+        <label class="form-label">Id</label>
+        <input class="form-control" formControlName="id" />
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <custom-input-datalist
+            (propagar)="saveMachineryId($event)"
+            [control]="form.get('machinery')"
+            [data]="cb_machinery"
+            formControlName="machinery"
+            label="Equipo o Instalación"
+            dataListId="machineryDatalistOptions"
+          ></custom-input-datalist>
+        </div>
+        <div class="col-sm-6">
+          <custom-input-datalist
+            (propagar)="saveProviderId($event)"
+            [control]="form.get('provider')"
+            [data]="cb_providers"
+            formControlName="provider"
+            label="Proveedor"
+            dataListId="providerDatalistOptions"
+          ></custom-input-datalist>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <custom-input-date
+            [control]="form.get('requestDate')"
+            formControlName="requestDate"
+            label="Fecha de solicitud"
+            placeholder="fecha de solicitud"
+          />
+        </div>
+        <div class="col-sm-6">
+          <custom-input-date
+            [control]="form.get('executionDate')"
+            formControlName="executionDate"
+            label="Fecha de ejecución"
+            placeholder="fecha de ejecución"
+          />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <custom-input-select
+            [control]="form.get('status')"
+            formControlName="status"
+            label="Estatus"
+            [data]="cb_Status"
+          />
+        </div>
+        <div class="col-sm-6">
+          <custom-input-number
+            [control]="form.get('price')"
+            formControlName="price"
+            label="Precio"
+            placeholder="precio"
+          ></custom-input-number>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <custom-input-select
+            [control]="form.get('typeMaintance')"
+            formControlName="typeMaintance"
+            label="Tipo de Mantenimiento"
+            [data]="cb_TypeMaintance"
+          />
+
+          <app-validation-errors-custom-input
+            [control]="f.typeMaintance"
+            placeholder="tipo de mantenimiento"
+          ></app-validation-errors-custom-input>
+        </div>
+        <div class="col-sm-6">
+          <custom-input-datalist
+            (propagar)="saveResponsibleUserId($event)"
+            [control]="form.get('employeeResponsable')"
+            [data]="cb_applicationUser"
+            formControlName="employeeResponsable"
+            label="Supervisado por"
+            dataListId="employeeResponsableDatalistOptions"
+          ></custom-input-datalist>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-check form-switch mb-3" dir="ltr">
+                <input
+                  type="checkbox"
+                  class="form-check-input"
+                  id="customSwitch1"
+                  formControlName="cumplimientoActividades"
+                />
+                <label class="form-check-label" for="customSwitch1"
+                  >Se cumplio con las actividades correspondientes a la orden de
+                  servicio</label
+                >
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-check form-switch mb-3" dir="ltr">
+                <input
+                  type="checkbox"
+                  class="form-check-input"
+                  id="customSwitch2"
+                  formControlName="equiposOperando"
+                />
+                <label class="form-check-label" for="customSwitch2"
+                  >Equipos/Areas operando sin ningun inconveniente</label
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-check form-switch mb-3" dir="ltr">
+                <input
+                  type="checkbox"
+                  class="form-check-input"
+                  id="customSwitch3"
+                  formControlName="ocacionoDanos"
+                />
+                <label class="form-check-label" for="customSwitch3"
+                  >Afectación en el Area donde se realizo el trabajo</label
+                >
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-check form-switch mb-3" dir="ltr">
+                <input
+                  type="checkbox"
+                  class="form-check-input"
+                  id="customSwitch4"
+                  formControlName="calidadTrabajos"
+                />
+                <label class="form-check-label" for="customSwitch4"
+                  >Se cumplio con la calidad de los trabajos realizados</label
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tipo de Mantenimiento, Responsable -->
+      <div class="row">
+        <div class="col-sm-6">
+          <custom-input-text-area
+            [control]="form.get('activity')"
+            formControlName="activity"
+            label="Actividad"
+            placeholder="Actividad"
+            [horizontal]="false"
+          ></custom-input-text-area>
+        </div>
+        <div class="col-sm-6">
+          <custom-input-text-area
+            [control]="form.get('observations')"
+            formControlName="observations"
+            label="Observaciones"
+            placeholder="Observaciones"
+            [horizontal]="false"
+          ></custom-input-text-area>
+        </div>
+      </div>
+      <custom-button-submit [disabled]="this.form.invalid || submitting" />
+    </form>
+  </div>
+</div>

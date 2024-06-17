@@ -42,7 +42,7 @@ export default class AddFileEstadoFinancieroComponent implements OnInit {
 
     this.apiRequestService
       .onPost(
-        `EstadoFinanciero/UploadFile/${this.id}/${this.authService.infoEmployeeDto.personId}`,
+        `EstadoFinanciero/UploadFile/${this.id}/${this.authService.applicationUserId}`,
         model
       )
       .then((result: boolean) => {

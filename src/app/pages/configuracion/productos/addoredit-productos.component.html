@@ -5,7 +5,7 @@
         [control]="form.get('id')"
         formControlName="id"
         label="Id"
-      ></custom-input-text>
+      />
 
       <!-- Img -->
       <div class="form-group row mb-2">
@@ -26,7 +26,7 @@
         formControlName="nombreProducto"
         label="Nombre"
         placeholder="nombre"
-      ></custom-input-text>
+      />
 
       <custom-input-datalist
         (propagar)="savecategoryId($event)"
@@ -43,20 +43,20 @@
         formControlName="clasificacion"
         label="Clasificación"
         [data]="cb_clasificacion"
-      ></custom-input-select>
+      />
 
       <custom-input-text
         [control]="form.get('marca')"
         formControlName="marca"
         label="Marca"
         placeholder="marca"
-      ></custom-input-text>
+      />
       <custom-input-text
         [control]="form.get('modelo')"
         formControlName="modelo"
         label="Modelo"
         placeholder="modelo"
-      ></custom-input-text>
+      />
 
       <custom-button-submit [disabled]="this.form.invalid || submitting" />
     </form>

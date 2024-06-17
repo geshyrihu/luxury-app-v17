@@ -1,4 +1,4 @@
-<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
 <p-table
   #dt
   [value]="data"
@@ -19,7 +19,7 @@
       (add)="showModalAddOrEdit({ id: 0, title: 'Nuevo Registro' })"
       [dt]="dt"
       [rolAuth]="authService.onValidateRoles(['Mantenimiento', 'SuperUsuario'])"
-    ></app-table-header>
+    />
     <a
       class="mt-1 btn btn-sm btn-outline-danger"
       routerLink="/mantenimiento/inventario/reporte-herramientas"
@@ -68,10 +68,8 @@
             (edit)="
               showModalAddOrEdit({ id: item.id, title: 'Editar Registro' })
             "
-          ></custom-button-edit>
-          <custom-button-delete
-            (OnConfirm)="onDelete(item.id)"
-          ></custom-button-delete>
+          />
+          <custom-button-delete (OnConfirm)="onDelete(item.id)" />
         </div>
       </td>
       }

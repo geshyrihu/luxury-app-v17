@@ -49,7 +49,7 @@ export default class OrdenCompraDenegadaComponent implements OnInit {
     this.submitting = true;
     this.apiRequestService
       .onPut(
-        `OrdenCompraAuth/NoAutorizada/${this.ordenCompraAuthId}/${this.authService.personId}`,
+        `OrdenCompraAuth/NoAutorizada/${this.ordenCompraAuthId}/${this.authService.applicationUserId}`,
         this.form.value
       )
       .then((result: boolean) => {

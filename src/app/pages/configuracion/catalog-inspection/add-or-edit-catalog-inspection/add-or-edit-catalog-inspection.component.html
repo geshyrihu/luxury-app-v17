@@ -5,20 +5,20 @@
         [control]="form.get('id')"
         formControlName="id"
         label="Id"
-      ></custom-input-text>
+      />
       <custom-input-text
         [control]="form.get('description')"
         formControlName="description"
         label="Descripción"
         placeholder="descripción"
-      ></custom-input-text>
+      />
       <custom-input-select
         [control]="form.get('departament')"
         formControlName="departament"
         label="Departamento"
         [data]="cb_departament"
         [SelectDefaulOption]="false"
-      ></custom-input-select>
+      />
 
       <custom-button-submit [disabled]="this.form.invalid || submitting" />
     </form>

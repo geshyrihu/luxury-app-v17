@@ -23,7 +23,6 @@ export default class ListResidentialLocationComponent implements OnInit {
     this.onLoadData();
   }
 
-  // Función para cargar los datos de los bancos
   onLoadData() {
     const urlApi = `residentiallocation`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {

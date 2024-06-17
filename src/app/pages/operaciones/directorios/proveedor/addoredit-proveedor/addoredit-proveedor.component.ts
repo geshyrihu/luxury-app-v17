@@ -97,7 +97,8 @@ export default class AddoreditProveedorComponent implements OnInit {
       rfc: ['', Validators.required],
       bankName: ['', Validators.required],
       sales: [false],
-      personId: [this.authService.infoEmployeeDto.personId],
+      personId: [this.authService.personId],
+      applicationUserId: [this.authService.applicationUserId],
       convenio: [''],
       referencia: [''],
       webPage: [''],
@@ -167,6 +168,10 @@ export default class AddoreditProveedorComponent implements OnInit {
     formData.append('bankId', String(dto.bankId));
     formData.append('paymentAccount', String(dto.paymentAccount));
     formData.append('interbankCode', String(dto.interbankCode));
+    formData.append(
+      'applicationUserId',
+      String(this.authService.applicationUserId)
+    );
 
     if (this.id == 0) {
       formData.append('personId', String(this.authService.personId));

@@ -25,7 +25,6 @@ export default class FormMedidorCategoriaComponent implements OnInit {
   form: FormGroup = this.formBuilder.group({
     id: { value: this.id, disabled: true },
     nombreMedidorCategoria: ['', Validators.required],
-    employeeId: [this.authService.userTokenDto.infoEmployeeDto.employeeId],
   });
 
   ngOnInit(): void {

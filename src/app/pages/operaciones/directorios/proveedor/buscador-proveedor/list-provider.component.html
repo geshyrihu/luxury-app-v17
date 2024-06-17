@@ -1,4 +1,4 @@
-<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
 @if (data !== undefined) {
 <div class="card">
   <p-table
@@ -36,7 +36,7 @@
             'SuperUsuario'
           ])
         "
-      ></app-table-header>
+      />
     </ng-template>
     <ng-template pTemplate="header">
       <tr>
@@ -130,7 +130,7 @@
             <custom-button-download-pdf
               ngbTooltip="Visualizar Pdf"
               [urlFile]="item.constanciaFiscalPath"
-            ></custom-button-download-pdf>
+            />
             @if ( validateRole([ 'Asistente', 'Mantenimiento', 'Residente',
             'SuperUsuario', 'SupervisionOperativa' ]) && item.id != 109 ) {
             <custom-button-edit
@@ -141,12 +141,12 @@
                   title: 'Editar Registro'
                 })
               "
-            ></custom-button-edit>
+            />
             } @if (validateRole(['SuperUsuario'])) {
             <custom-button-delete
               class="bd-highlight"
               (OnConfirm)="onDelete(item.providerId)"
-            ></custom-button-delete>
+            />
             } @if (!item.activo && validateRole(['SuperUsuario'])) {
             <custom-button
               ngbTooltip="Activar"
@@ -158,7 +158,7 @@
                   state: !item.activo
                 })
               "
-            ></custom-button>
+            />
             } @if (item.activo && validateRole(['SuperUsuario'])) {
             <custom-button
               ngbTooltip="Desactivar"
@@ -170,7 +170,7 @@
                   state: !item.activo
                 })
               "
-            ></custom-button>
+            />
             } @if (item.activo && validateRole(['SuperUsuario'])) {
             <custom-button
               ngbTooltip="Uso"
@@ -182,7 +182,7 @@
                   state: !item.activo
                 })
               "
-            ></custom-button>
+            />
             }
           </div>
         </td>

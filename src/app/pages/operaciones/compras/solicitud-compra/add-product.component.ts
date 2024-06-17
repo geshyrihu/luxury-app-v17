@@ -46,6 +46,7 @@ export default class AddProductComponent implements OnInit {
     unidadMedidaId: ['', Validators.required],
     solicitudCompraId: [],
     personId: [this.authService.personId],
+    applicationUserId: [this.authService.applicationUserId],
   });
   onUpdateData() {
     this.updateData.emit();
@@ -78,7 +79,9 @@ export default class AddProductComponent implements OnInit {
     this.form.patchValue({
       solicitudCompraId: this.solicitudCompraId,
     });
-
+    this.form.patchValue({
+      applicationUserId: this.authService.applicationUserId,
+    });
     this.apiRequestService
       .onPost(`SolicitudCompraDetalle`, this.form.value)
       .then((result: boolean) => {

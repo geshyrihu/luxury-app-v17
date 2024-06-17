@@ -34,7 +34,9 @@ export default class AddOrEditListAdministrationComponent implements OnInit {
   }
 
   onSubmit() {
-    const urlApi = `MeetingAdministracion/AgregarParticipantesAdministracion/${this.meetingId}/${this.administrationparticipante}`;
+    const urlApi = `MeetingAdministracion/AgregarParticipantesAdministracion/${
+      this.meetingId
+    }/${this.administrationparticipante}/${1}`;
     this.apiRequestService.onGetItem(urlApi).then((result: any) => {
       this.onLoadData();
       this.onLoadCB();

@@ -64,6 +64,7 @@ export default class AddOrEditProductosComponent implements OnInit {
       categoryId: ['', Validators.required],
       clasificacion: ['', Validators.required],
       personId: [this.authService.personId],
+      applicationUserId: [this.authService.applicationUserId],
       marca: [''],
       modelo: [''],
       nombreProducto: [
@@ -128,12 +129,32 @@ export default class AddOrEditProductosComponent implements OnInit {
     formData.append('modelo', dto.modelo);
     formData.append('clasificacion', String(dto.clasificacion));
     formData.append('personId', dto.personId);
+    formData.append('applicationUserId', dto.applicationUserId);
 
     // ... Si hay un archivo cargado agrega la prop photoPath con su valor
     if (dto.urlImagen) {
       formData.append('urlImagen', dto.urlImagen);
     }
-
+    this.logFormData(formData);
     return formData;
+  }
+  logFormData(formData: FormData): void {
+    // Convertir FormData a un objeto
+    const formDataObj: { [key: string]: any } = {};
+    formData.forEach((value, key) => {
+      // Si ya existe la clave, conviértela en un array
+      if (formDataObj[key]) {
+        // Si no es un array, conviértelo en uno
+        if (!Array.isArray(formDataObj[key])) {
+          formDataObj[key] = [formDataObj[key]];
+        }
+        formDataObj[key].push(value);
+      } else {
+        formDataObj[key] = value;
+      }
+    });
+
+    // Log el objeto en la consola
+    console.log('FormData as object:', formDataObj);
   }
 }

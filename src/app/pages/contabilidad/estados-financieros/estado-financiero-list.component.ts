@@ -61,7 +61,7 @@ export default class EstadoFinancieroListComponent implements OnInit {
   onAuthorize(id: string) {
     this.apiRequestService
       .onGetItem(
-        `EstadoFinanciero/Authorize/${id}/${this.authService.infoEmployeeDto.personId}`
+        `EstadoFinanciero/Authorize/${id}/${this.authService.applicationUserId}`
       )
       .then((_) => {
         this.onLoadData();
@@ -79,7 +79,7 @@ export default class EstadoFinancieroListComponent implements OnInit {
   onSendEstadosFinancieros(data: any) {
     this.apiRequestService
       .onPost(
-        `EstadoFinanciero/Send/${data.id}/${this.authService.infoEmployeeDto.personId}`,
+        `EstadoFinanciero/Send/${data.id}/${this.authService.applicationUserId}`,
         null
       )
       .then((_) => {

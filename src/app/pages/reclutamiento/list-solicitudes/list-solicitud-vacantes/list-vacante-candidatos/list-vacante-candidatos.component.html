@@ -1,4 +1,4 @@
-<!-- <p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+<!-- <p-toast position="top-right"  [baseZIndex]="99999"></p-toast>
 @if (data !== undefined && data.candidates !== undefined) {
 <div class="card">
   <p-table
@@ -24,7 +24,7 @@
             "
             (add)="onModalAddOrEdit({ id: 0, title: 'Nuevo Registro' })"
             [dt]="dt"
-          ></app-table-header>
+          />
         </div>
         <div class="col-1">
           <button
@@ -136,10 +136,10 @@
                   workPositionRequestId: item.workPositionRequestId
                 })
               "
-            ></custom-button-edit>
+           />
             <custom-button-delete
               (OnConfirm)="onDelete(item.id)"
-            ></custom-button-delete>
+            />
           </div>
         </td>
         <!-- Opciones -->

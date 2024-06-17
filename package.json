@@ -54,7 +54,8 @@
     "sweetalert2": "^11.10.8",
     "tslib": "2.6.2",
     "xlsx": "^0.18.5",
-    "zone.js": "0.14.4"
+    "zone.js": "0.14.4",
+    "ngx-ui-switch": "^15.0.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^17.3.5",

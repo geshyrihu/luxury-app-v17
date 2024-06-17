@@ -1,0 +1,46 @@
+<div class="card">
+  <div class="card-body">
+    <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
+      <div class="col mb-2">
+        <custom-input-text
+          [control]="form.get('id')"
+          formControlName="id"
+          label="Id"
+          placeholder="Id"
+          [readonly]="true"
+          [horizontal]="false"
+        />
+      </div>
+      <div class="col mb-2">
+        <custom-input-text
+          [control]="form.get('nameContact')"
+          formControlName="nameContact"
+          label="Nombre Completo"
+          placeholder="Nombre completo"
+          [horizontal]="false"
+        />
+      </div>
+      <div class="col mb-2">
+        <custom-input-mask
+          [control]="form.get('phoneNumber')"
+          formControlName="phoneNumber"
+          label="Tél. Celular"
+          placeholder="(00) 0000-0000"
+          customMask="(00) 0000-0000"
+          [horizontal]="false"
+        />
+      </div>
+      <div class="col mb-2">
+        <custom-input-select
+          [control]="form.get('relation')"
+          formControlName="relation"
+          label="Parentesco"
+          [data]="cb_relacion"
+          [horizontal]="false"
+        />
+      </div>
+
+      <custom-button-submit [disabled]="this.form.invalid || submitting" />
+    </form>
+  </div>
+</div>

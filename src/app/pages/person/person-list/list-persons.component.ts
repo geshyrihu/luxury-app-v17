@@ -7,7 +7,7 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { environment } from 'src/environments/environment';
-import CardEmployeeComponent from '../../operaciones/directorios/empleados/card-employee/card-employee.component';
+import CardEmployeeComponent from '../../employee/card-employee/card-employee.component';
 import AddoreditPersonDataComponent from '../addoredit-person-data/addoredit-person-data.component';
 import AddoreditPersonComponent from '../addoredit-person/addoredit-person.component';
 import PersonAddoreditAddressComponent from '../person-addoredit-address/person-addoredit-address.component';

@@ -4,25 +4,25 @@
     formControlName="firstName"
     label="Nombre"
     placeholder="nombre"
-  ></custom-input-text>
+  />
   <custom-input-text
     [control]="form.get('lastName')"
     formControlName="lastName"
     label="Apellidos"
     placeholder="apellidos"
-  ></custom-input-text>
+  />
   <custom-input-text
     [control]="form.get('email')"
     formControlName="email"
     label="Email"
     placeholder="email"
-  ></custom-input-text>
+  />
   <custom-input-date
     [control]="form.get('birthDate')"
     formControlName="birthDate"
     label="Nacimiento"
     placeholder="nacimiento"
-  ></custom-input-date>
+  />
   <custom-input-select
     [control]="form.get('fuente')"
     formControlName="fuente"
@@ -35,7 +35,7 @@
     label="Tél. Celular"
     placeholder="(00) 0000-0000"
     customMask="(00) 0000-0000"
-  ></custom-input-mask>
+  />
   <div class="form-group row mb-2">
     <label class="col-sm-3">Curriculim:</label>
     <div class="col-sm-9">
@@ -52,7 +52,7 @@
       formControlName="date"
       label="Fecha de cita"
       placeholder="fecha de cita"
-    ></custom-input-date>
+    />
     <custom-input-time
       [control]="form.get('hour')"
       formControlName="hour"

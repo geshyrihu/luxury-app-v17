@@ -66,6 +66,7 @@ export default class AddProductModalComponent implements OnInit, OnDestroy {
     }
 
     item.personId = this.authService.personId;
+    item.applicationUserId = this.authService.applicationUserId;
     this.apiRequestService
       .onPost(`solicitudcompradetalle/`, item)
       .then((result: boolean) => {

@@ -8,4 +8,5 @@ export interface IProductoListAdd {
   stockMin: number;
   stockMax: number;
   personId: number;
+  applicationUserId: string;
 }

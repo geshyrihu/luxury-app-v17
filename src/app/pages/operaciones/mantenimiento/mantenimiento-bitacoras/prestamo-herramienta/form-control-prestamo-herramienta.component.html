@@ -3,7 +3,7 @@
     [control]="form.get('id')"
     formControlName="id"
     label="Id"
-  ></custom-input-text>
+  />
 
   <div class="form-group row mb-2">
     <label class="col-sm-3">Hora/Fecha Salida</label>
@@ -33,11 +33,11 @@
 
   <custom-input-datalist
     (propagar)="saveEmployeeId($event)"
-    [control]="form.get('person')"
-    [data]="cb_employee"
-    formControlName="person"
+    [control]="form.get('applicationUser')"
+    [data]="cb_applicationUser"
+    formControlName="applicationUser"
     label="Colaborador"
-    dataListId="personDatalistOptions"
+    dataListId="applicationUserDatalistOptions"
   ></custom-input-datalist>
 
   <div class="form-group row mb-2">

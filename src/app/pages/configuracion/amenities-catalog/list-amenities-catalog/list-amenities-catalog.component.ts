@@ -23,7 +23,6 @@ export default class ListAmenitiesCatalogComponent implements OnInit {
     this.onLoadData();
   }
 
-  // Función para cargar los datos de los bancos
   onLoadData() {
     const urlApi = `amenitiescatalog`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {

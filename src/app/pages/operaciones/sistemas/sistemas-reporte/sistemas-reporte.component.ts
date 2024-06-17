@@ -11,7 +11,7 @@ import { DateService } from 'src/app/core/services/date.service';
 import { FiltroCalendarService } from 'src/app/core/services/filtro-calendar.service';
 import { SistemasReporteService } from 'src/app/core/services/sistemas-reporte.service';
 import { environment } from 'src/environments/environment';
-import CardEmployeeComponent from '../../directorios/empleados/card-employee/card-employee.component';
+import CardEmployeeComponent from '../../../employee/card-employee/card-employee.component';
 import AddoreditSistemasReporteComponent from '../addoredit-sistemas-reporte/addoredit-sistemas-reporte.component';
 
 @Component({

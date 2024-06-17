@@ -1,64 +1,48 @@
-@if(data){
-<div class="card p-3">
-  <div class="row">
-    <div class="col-md-4">
-      <h5>Titulo:</h5>
+@if(data) {
+<div class="card p-3 mb-4 shadow-sm">
+  <div class="row mb-2">
+    <div class="col-12 col-md-4 font-weight-bold">Titulo:</div>
+    <div class="col-12 col-md-8">
+      {{ data.title }}
     </div>
-    <div class="col-md-8">
-      <h5>
-        {{ data.title }}
-      </h5>
+  </div>
+  <div class="row mb-2">
+    <div class="col-12 col-md-4 font-weight-bold">Cliente:</div>
+    <div class="col-12 col-md-8">
+      {{ data.customer }}
     </div>
-    <div class="col-md-4">
-      <h5>Cliente:</h5>
+  </div>
+  <div class="row mb-2">
+    <div class="col-12 col-md-4 font-weight-bold">Fecha de Solicitud:</div>
+    <div class="col-12 col-md-8">
+      {{ data.requestDate }}
     </div>
-    <div class="col-md-8">
-      <h5>
-        {{ data.customer }}
-      </h5>
+  </div>
+  <div class="row mb-2">
+    <div class="col-12 col-md-4 font-weight-bold">Solicita:</div>
+    <div class="col-12 col-md-8">
+      {{ data.applicationUserRequest }}
     </div>
-    <div class="col-md-4">
-      <h5>Fecha de Solicitud:</h5>
+  </div>
+  <div class="row mb-2">
+    <div class="col-12 col-md-4 font-weight-bold">Asunto:</div>
+    <div class="col-12 col-md-8">
+      {{ data.request }}
     </div>
-    <div class="col-md-8">
-      <h5>
-        {{ data.requestDate }}
-      </h5>
+  </div>
+  <div class="row mb-2">
+    <div class="col-12 col-md-4 font-weight-bold">Documentos en Cloud:</div>
+    <div class="col-12 col-md-8">
+      {{ data.documentCloud }}
     </div>
-    <div class="col-md-4">
-      <h5>Solicita:</h5>
+  </div>
+  <div class="row mb-2">
+    <div class="col-12 col-md-4 font-weight-bold">
+      Documentos enviados por mail:
     </div>
-    <div class="col-md-8">
-      <h5>
-        {{ data.requestPerson }}
-      </h5>
-    </div>
-
-    <div class="col-md-4">
-      <h5>Asunto:</h5>
-    </div>
-    <div class="col-md-8">
-      <h5>
-        {{ data.request }}
-      </h5>
-    </div>
-    <div class="col-md-4">
-      <h5>Documentos en Cloud:</h5>
-    </div>
-    <div class="col-md-8">
-      <h5>
-        {{ data.documentCloud }}
-      </h5>
-    </div>
-    <div class="col-md-4">
-      <h5>Documentos enviados por mail:</h5>
-    </div>
-    <div class="col-md-8">
-      <h5>
-        {{ data.documentEmail }}
-      </h5>
+    <div class="col-12 col-md-8">
+      {{ data.documentEmail }}
     </div>
   </div>
 </div>
-
 }

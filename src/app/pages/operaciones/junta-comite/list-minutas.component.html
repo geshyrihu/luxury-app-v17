@@ -1,4 +1,4 @@
-<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
 @if (data) {
 <p-table
   #dt
@@ -21,7 +21,7 @@
       (add)="showModalAddOrEditMeeting({ id: 0, title: 'Nuevo Registro' })"
       [showSearch]="false"
       [dt]="dt"
-    ></app-table-header>
+    />
     <div class="mt-2">
       <a
         [routerLink]="'/operaciones/junta-comite/minuta-pendientes'"
@@ -154,7 +154,7 @@
             ngbTooltip="Exportar pendientes a excel"
             icon="fa-regular fa-file-excel"
             (clicked)="exportToExcel(item.id)"
-          ></custom-button>
+          />
           <!-- [mostrar]="emailAccount" -->
           <custom-button-confirmation
             title="Confirmar"
@@ -164,7 +164,7 @@
             classButton="btn btn-sm btn-outline-dark me-1"
             confirmButtonText="Sí, enviar"
             (OnConfirm)="onSendEmailMeeting(item.id)"
-          ></custom-button-confirmation>
+          />
           <button
             class="btn btn-sm btn-outline-danger me-1"
             (click)="onGeneretePDF(item.id)"
@@ -188,11 +188,9 @@
                 title: 'Editar Registro'
               })
             "
-          ></custom-button-edit>
+          />
           @if (authService.onValidateRoles(['SupervisionOperativa'])) {
-          <custom-button-delete
-            (OnConfirm)="onDelete(item.id)"
-          ></custom-button-delete>
+          <custom-button-delete (OnConfirm)="onDelete(item.id)" />
           }
         </div>
       </td>
@@ -230,7 +228,7 @@
                     classButton="float-right btn btn-sm btn-outline-secondary me-1"
                     confirmButtonText="Sí, enviar"
                     (OnConfirm)="onSendEmail(item.id, 0)"
-                  ></custom-button-confirmation>
+                  />
                 </th>
               </tr>
               @if (item.contable) {
@@ -280,10 +278,10 @@
                             (edit)="
                               onModalAddOrEditSeguimiento(detalle.id, item.id)
                             "
-                          ></custom-button-edit>
+                          />
                           <custom-button-delete
                             (OnConfirm)="onDeleteSeguimiento(item.id)"
-                          ></custom-button-delete>
+                          />
                         </div>
                       </div>
                     </li>
@@ -337,12 +335,12 @@
                           header: 'Editar Asunto'
                         })
                       "
-                    ></custom-button-edit>
+                    />
                     <!-- Editar  -->
                     <!-- Borrar -->
                     <custom-button-delete
                       (OnConfirm)="onDeleteMeetingDetail(detalle.id)"
-                    ></custom-button-delete>
+                    />
                     <!-- Borrar -->
                   </div>
                 </td>
@@ -435,10 +433,10 @@
                                 item.id
                               )
                             "
-                          ></custom-button-edit>
+                          />
                           <custom-button-delete
                             (OnConfirm)="onDeleteSeguimiento(item.id)"
-                          ></custom-button-delete>
+                          />
                         </div>
                       </div>
                     </li>
@@ -492,12 +490,12 @@
                           header: 'Editar Asunto'
                         })
                       "
-                    ></custom-button-edit>
+                    />
                     <!-- Editar  -->
                     <!-- Borrar -->
                     <custom-button-delete
                       (OnConfirm)="onDeleteMeetingDetail(operaciones.id)"
-                    ></custom-button-delete>
+                    />
                     <!-- Borrar -->
                   </div>
                 </td>
@@ -544,7 +542,7 @@
                     classButton="float-right btn btn-sm btn-outline-secondary me-1"
                     confirmButtonText="Sí, eliminar"
                     (OnConfirm)="onSendEmail(item.id, 2)"
-                  ></custom-button-confirmation>
+                  />
                   }
                 </th>
               </tr>
@@ -595,10 +593,10 @@
                             (edit)="
                               onModalAddOrEditSeguimiento(legal.id, item.id)
                             "
-                          ></custom-button-edit>
+                          />
                           <custom-button-delete
                             (OnConfirm)="onDeleteSeguimiento(item.id)"
-                          ></custom-button-delete>
+                          />
                         </div>
                       </div>
                     </li>
@@ -652,12 +650,12 @@
                           header: 'Editar Asunto'
                         })
                       "
-                    ></custom-button-edit>
+                    />
                     <!-- Editar  -->
                     <!-- Borrar -->
                     <custom-button-delete
                       (OnConfirm)="onDeleteMeetingDetail(legal.id)"
-                    ></custom-button-delete>
+                    />
                     <!-- Borrar -->
                   </div>
                 </td>

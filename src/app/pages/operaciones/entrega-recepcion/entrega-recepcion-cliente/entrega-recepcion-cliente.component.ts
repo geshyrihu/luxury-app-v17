@@ -7,6 +7,7 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
+import { environment } from 'src/environments/environment';
 import CrudEntregaRecepcionClienteComponent from '../addoredit-entrega-recepcion-cliente/addoredit-entrega-recepcion-cliente.component';
 
 @Component({
@@ -84,19 +85,17 @@ export default class EntregaRecepcionClienteComponent implements OnInit {
       });
   }
   navigateToPdf(url: string) {
-    const urlFinal =
-      'customers/' +
-      this.customerIdService.getCustomerId() +
-      '/entregarecepcion/' +
-      url;
-    // this.viewPdfService.setNameDocument(urlFinal);
-    this.route.navigate(['documento/view-documento']);
+    const urlFinal = `${
+      environment.base_urlImg
+    }/customers/${this.customerIdService.getCustomerId()}/entregarecepcion/${url}`;
+
+    window.open(urlFinal, '_blank');
   }
 
   onValidarDocument(id: number) {
     this.apiRequestService
       .onPut(
-        `EntregaRecepcionCliente/ValidarArchivo/${this.authService.userTokenDto.infoEmployeeDto.employeeId}/${id}`,
+        `EntregaRecepcionCliente/ValidarArchivo/${this.authService.applicationUserId}/${id}`,
         null
       )
       .then((result: boolean) => {

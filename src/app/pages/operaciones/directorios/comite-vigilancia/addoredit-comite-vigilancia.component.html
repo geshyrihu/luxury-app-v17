@@ -5,14 +5,14 @@
         [control]="form.get('id')"
         formControlName="id"
         label="Id"
-      ></custom-input-text>
+      />
 
       <custom-input-select
         [control]="form.get('ePosicionComite')"
         formControlName="ePosicionComite"
         label="Posición"
         [data]="cb_position"
-      ></custom-input-select>
+      />
 
       <custom-input-datalist
         (propagar)="saveCondominoId($event)"

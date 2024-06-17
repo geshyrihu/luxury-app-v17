@@ -5,28 +5,28 @@
         [control]="form.get('id')"
         formControlName="id"
         label="Id"
-      ></custom-input-text>
+      />
 
       <custom-input-text
         [control]="form.get('nombreComunicado')"
         formControlName="nombreComunicado"
         label="Nombre Comunicado"
         placeholder="Nombre Comunicado"
-      ></custom-input-text>
+      />
 
       <custom-input-text
         [control]="form.get('folioComunicado')"
         formControlName="folioComunicado"
         label="Folio comunicado"
         placeholder="folio comunicado"
-      ></custom-input-text>
+      />
 
       <custom-input-date
         [control]="form.get('fechaPublicacion')"
         formControlName="fechaPublicacion"
         label="Fecha"
         placeholder="fecha"
-      ></custom-input-date>
+      />
 
       <custom-input-datalist
         (propagar)="saveAreResponsableId($event)"
@@ -55,7 +55,7 @@
         label="Documento Actual"
         [readonly]="true"
         placeholder="documento actual"
-      ></custom-input-text>
+      />
 
       <custom-button-submit [disabled]="this.form.invalid || submitting" />
     </form>

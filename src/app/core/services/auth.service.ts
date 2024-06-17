@@ -24,6 +24,7 @@ export class AuthService {
 
   personId: number = 0;
   employeeId: number = 0;
+  applicationUserId: string = '';
   statusJWT: boolean = false;
   data: IModelToken = { token: '' };
   validateRole: boolean = false;
@@ -46,11 +47,13 @@ export class AuthService {
     return this.dataService.post('Auth/ValidateJwtToken', this.data).pipe(
       map((resp: any) => {
         // Almacenar la información del token y el estado del JWT
+        console.log('🚀 ~ resp.body:', resp.body);
         this.userTokenDto = resp.body;
         this.infoUserAuthDto = this.userTokenDto.infoUserAuthDto;
         this.infoEmployeeDto = this.userTokenDto.infoEmployeeDto;
         this.personId = this.infoEmployeeDto.personId;
         this.employeeId = this.infoEmployeeDto.employeeId;
+        this.applicationUserId = this.infoUserAuthDto.applicationUserId;
         if (resp.body.token) {
           this.statusJWT = true;
         }

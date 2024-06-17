@@ -1,4 +1,4 @@
-<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
 <p-table
   [(selection)]="data"
   #dt
@@ -19,7 +19,7 @@
       [title]="'Cedula Presupuestal'"
       [showAdd]="false"
       [dt]="dt"
-    ></app-table-header>
+    />
     <div class="form-group row">
       <label class="col-sm-2">Selecciona presupuesto</label>
       @if (cedulaId !== 0) {

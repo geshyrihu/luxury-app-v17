@@ -1,4 +1,4 @@
-<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
 @if (data !== undefined && data.candidates !== undefined) {
 <div class="card">
   <p-table
@@ -25,7 +25,7 @@
             (add)="onModalAddOrEdit({ id: 0, title: 'Nuevo Registro' })"
             [dt]="dt"
             [showAdd]="true"
-          ></app-table-header>
+          />
         </div>
         @if (authService.onValidateRoles(['SuperUsuario', 'Reclutamiento'])) {
         <div class="col-1">
@@ -41,7 +41,7 @@
             label="Envíar"
             classButton="w-100"
             [disabled]="submitting"
-          ></custom-button-confirmation>
+          />
         </div>
         } @if (data.requestInProcess) {
         <div class="col-12 mt-2 mb-0">
@@ -141,7 +141,7 @@
               customClass="btn-sm btn-outline-primary"
               icon="fa-regular fa-file-signature "
               (clicked)="onModalSolicitudALta(item.id)"
-            ></custom-button>
+            />
             }
             <custom-button-edit
               (edit)="
@@ -151,12 +151,10 @@
                   workPositionRequestId: item.workPositionRequestId
                 })
               "
-            ></custom-button-edit>
+            />
             <!-- Solo puede eliminar los candidatos que cada usuario registro -->
             @if (applicationUserId == item.applicationUserId) {
-            <custom-button-delete
-              (OnConfirm)="onDelete(item.id)"
-            ></custom-button-delete>
+            <custom-button-delete (OnConfirm)="onDelete(item.id)" />
             }
             <!-- Solo puede eliminar los candidatos que cada usuario registro -->
           </div>

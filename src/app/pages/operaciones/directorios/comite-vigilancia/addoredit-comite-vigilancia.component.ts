@@ -51,7 +51,7 @@ export default class AddOrEditComiteVigilanciaComponent implements OnInit {
     if (this.id !== 0) this.onLoadData();
   }
 
-  public saveCondominoId(e): void {
+  public saveCondominoId(e: any): void {
     let find = this.cb_condomino.find((x) => x?.label === e.target.value);
     this.form.patchValue({
       listCondominoId: find?.value,
@@ -71,16 +71,25 @@ export default class AddOrEditComiteVigilanciaComponent implements OnInit {
   onSubmit() {
     if (!this.apiRequestService.validateForm(this.form)) return;
     this.submitting = true;
+    console.log('🚀 ~ this.form.value:', this.form.value);
+
+    const formValue = this.form.value;
+
+    const filteredFormValue = {
+      customerId: formValue.customerId,
+      listCondominoId: formValue.listCondominoId,
+      ePosicionComite: formValue.ePosicionComite,
+    };
 
     if (this.id === 0) {
       this.apiRequestService
-        .onPost(`ComiteVigilancia`, this.form.value)
+        .onPost(`ComiteVigilancia`, filteredFormValue)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
       this.apiRequestService
-        .onPut(`ComiteVigilancia/${this.id}`, this.form.value)
+        .onPut(`ComiteVigilancia/${this.id}`, filteredFormValue)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
         });

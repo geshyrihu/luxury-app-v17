@@ -9,8 +9,8 @@ import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { environment } from 'src/environments/environment';
-import AddBitacoraComponent from '../mantenimiento-bitacoras/recorridos/add-bitacora.component';
-import BitacoraIndividualComponent from '../mantenimiento-bitacoras/recorridos/bitacora-individual.component';
+import AddBitacoraComponent from '../../../bitacora-mantenimiento/add-bitacora.component';
+import BitacoraIndividualComponent from '../../../bitacora-mantenimiento/bitacora-individual.component';
 import RecorridoTaskAddOrEditComponent from './addoredit-recorrido-task.component';
 import RecorridoAddOrEditComponent from './addoreedit-recorrido.component';
 

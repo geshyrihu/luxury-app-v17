@@ -1,5 +1,5 @@
 export interface IQualificationProviderAddOrEdit {
-  employeeId: string;
+  personId: string;
   providerId: number;
   precio: number;
   servicio: number;

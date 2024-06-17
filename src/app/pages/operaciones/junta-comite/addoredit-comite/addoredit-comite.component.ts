@@ -1,7 +1,6 @@
 import { Component, Input, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
-import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 @Component({
   selector: 'app-addoredit-comite',
@@ -18,9 +17,9 @@ export default class AddOrEditComiteComponent implements OnInit {
   @Input()
   meetingId: number;
   cb_ParticipantComite: any[] = [];
-  cb_Comite: ISelectItem[] = [];
+  // cb_Comite: ISelectItem[] = [];
   comiteparticipante = '';
-  participantsList: any[] = [];
+  // participantsList: any[] = [];
   listaParticipantesComite: any[] = [];
 
   ngOnInit(): void {
@@ -52,7 +51,6 @@ export default class AddOrEditComiteComponent implements OnInit {
 
   onLoadData() {
     this.comiteparticipante = '';
-
     const urlApi = `MeetingComite/ParticipantesComite/${this.meetingId}`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.listaParticipantesComite = result;

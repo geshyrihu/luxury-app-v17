@@ -2,11 +2,9 @@ import { Routes } from '@angular/router';
 
 export default [
   {
-    path: 'bitacora-diaria',
+    path: 'agenda-supervision',
     loadComponent: () =>
-      import(
-        'src/app/pages/operaciones/supervision/bitacora-diaria/bitacora-diaria.component'
-      ),
+      import('src/app/pages/agenda-supervision/agenda-supervision.component'),
   },
   {
     path: 'minutas-resumen',

@@ -25,7 +25,6 @@ export default class LegalTicketUpdateStatusComponent implements OnInit {
     this.onLoadData();
   }
 
-  // Función para cargar los datos de los bancos
   onLoadData() {
     this.apiRequestService
       .onGetList(`TicketLegal/status/${this.id}`)
@@ -35,7 +34,7 @@ export default class LegalTicketUpdateStatusComponent implements OnInit {
   }
   onSubmit() {
     this.apiRequestService
-      .onGetItem(`TicketLegal/updatestatus/${this.id}/${this.status}`)
+      .onGetItem(`TicketLegal/UpdateStatus/${this.id}/${this.status}`)
       .then((result: any) => {
         if (result) {
           this.ref.close(true);

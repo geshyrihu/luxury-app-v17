@@ -1,4 +1,4 @@
-<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
 <div class="row">
   <div class="col-sm-4">
     <input
@@ -32,7 +32,7 @@
       [customClass]="'btn btn-sm btn-info w-100'"
       label="Agregar"
       (clicked)="showModalAddOrEdit({ id: 0, title: 'Nuevo Registro' })"
-    ></custom-button>
+    />
   </div>
   }
 </div>
@@ -113,7 +113,7 @@
           <custom-button-download-pdf
             ngbTooltip="Constancia fiscal"
             [urlFile]="item.constanciaFiscalPath"
-          ></custom-button-download-pdf>
+          />
           <!-- Constancia Fiscal -->
           @if ( item.activo && validateRole([ 'Asistente', 'Mantenimiento',
           'Residente', 'SuperUsuario', 'SupervisionOperativa' ]) ) {
@@ -124,7 +124,7 @@
                 title: 'Editar Registro'
               })
             "
-          ></custom-button-edit>
+          />
           }
           <!-- Editar -->
           <!-- Borrar -->
@@ -132,7 +132,7 @@
           <custom-button-delete
             class="bd-highlight"
             (OnConfirm)="onDelete(item.id)"
-          ></custom-button-delete>
+          />
           }
           <!-- Borrar -->
           @if (item.activo) {

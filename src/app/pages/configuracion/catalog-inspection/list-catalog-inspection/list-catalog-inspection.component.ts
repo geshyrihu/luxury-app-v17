@@ -23,7 +23,6 @@ export default class ListCatalogInspectionComponent implements OnInit {
     this.onLoadData();
   }
 
-  // Función para cargar los datos de los bancos
   onLoadData() {
     const urlApi = `cataloginspection`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {

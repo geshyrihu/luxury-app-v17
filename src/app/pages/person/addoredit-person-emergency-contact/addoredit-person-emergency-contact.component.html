@@ -7,7 +7,7 @@
         label="Id"
         placeholder="Id"
         [readonly]="true"
-      ></custom-input-text>
+      />
       <!--  -->
       @if(cb_persons.length == 0){
       <div class="text-center">
@@ -33,7 +33,7 @@
         formControlName="relacion"
         label="Parentesco"
         [data]="cb_relacion"
-      ></custom-input-select>
+      />
 
       <custom-button-submit [disabled]="this.form.invalid || submitting" />
     </form>

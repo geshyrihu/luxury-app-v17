@@ -1,4 +1,4 @@
-<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
 @if (authService.onValidateRoles(['SupervisionOperativa'])) { @for (item of
 cb_departamento; track item) {
 <custom-button
@@ -9,7 +9,7 @@ cb_departamento; track item) {
     'btn-outline-primary': item.value != this.departamento
   }"
   (clicked)="onChangeDepartamento(item.value)"
-></custom-button>
+/>
 }
 <hr />
 }
@@ -29,7 +29,7 @@ cb_departamento; track item) {
         (add)="onModalAddOrEdit({ id: 0, title: 'Nuevo Registro' })"
         [showAdd]="false"
         [dt]="dt"
-      ></app-table-header>
+      />
     </ng-template>
     <ng-template pTemplate="header">
       <tr>
@@ -106,25 +106,23 @@ cb_departamento; track item) {
               (edit)="
                 onModalAddOrEdit({ id: item.id, title: 'Editar Registro' })
               "
-            ></custom-button-edit>
+            />
             @if (item.archivo && item.superviso === '') {
             <custom-button
               ngbTooltip="Validar Información"
               [customClass]="'btn-sm btn-outline-success'"
               icon="fa-regular fa-check-double text-success"
               (clicked)="onValidarDocument(item.id)"
-            ></custom-button>
+            />
             } @if (item.archivo && item.superviso !== '') {
             <custom-button
               ngbTooltip="Revocar Información"
               [customClass]="'btn-sm btn-outline-danger'"
               icon="fa-regular fa-rotate-left text-danger"
               (clicked)="onInvalidarDocument(item.id)"
-            ></custom-button>
+            />
             } @if (item.archivo !== '') {
-            <custom-button-delete
-              (OnConfirm)="onDeleteFile(item.id)"
-            ></custom-button-delete>
+            <custom-button-delete (OnConfirm)="onDeleteFile(item.id)" />
             }
           </div>
         </td>

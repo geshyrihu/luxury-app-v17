@@ -1,4 +1,4 @@
-<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
 
 <div class="card">
   <p-table
@@ -13,7 +13,7 @@
         [title]="'Documentos'"
         (add)="onModalAddOrEdit({ id: 0, title: 'Nuevo Registro' })"
         [dt]="dt"
-      ></app-table-header>
+      />
     </ng-template>
 
     <ng-template pTemplate="header">
@@ -32,9 +32,7 @@
           {{ item.nameDocument }}
         </td>
         <td class="p-column-title">
-          <custom-button-download-pdf
-            [urlFile]="item.pathDocument"
-          ></custom-button-download-pdf>
+          <custom-button-download-pdf [urlFile]="item.pathDocument" />
         </td>
 
         <!-- Opciones -->
@@ -44,10 +42,8 @@
               (edit)="
                 onModalAddOrEdit({ id: item.id, title: 'Editar Registro' })
               "
-            ></custom-button-edit>
-            <custom-button-delete
-              (OnConfirm)="onDelete(item.id)"
-            ></custom-button-delete>
+            />
+            <custom-button-delete (OnConfirm)="onDelete(item.id)" />
           </div>
         </td>
         <!-- Opciones -->

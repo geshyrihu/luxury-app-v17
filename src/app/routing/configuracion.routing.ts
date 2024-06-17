@@ -101,4 +101,13 @@ export default [
         'src/app/pages/configuracion/list-recorrido/list-recorrido.component'
       ),
   },
+
+  {
+    path: 'customer-data-company',
+    title: 'CustomerDataCompany',
+    loadComponent: () =>
+      import(
+        'src/app/pages/customer-data-company/list-customer-data-company.component'
+      ),
+  },
 ] as Routes;

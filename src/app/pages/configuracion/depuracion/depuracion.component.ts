@@ -12,153 +12,351 @@ import CustomButtonModule from 'src/app/custom-components/custom-buttons/custom-
 export default class DepuracionComponent {
   apiRequestService = inject(ApiRequestService);
   customToastService = inject(CustomToastService);
-
-  HistorialAcceso(path: string) {
+  UpdateStateAppUserEmployee(path: string) {
     this.apiRequestService.onGetList('UpdateDataBase/' + path).then(() => {
       this.customToastService.onShowSuccess();
       this.customToastService.onClose();
     });
   }
-  CedulaPresupuestalDetalle(path: string) {
-    this.apiRequestService.onGetList('UpdateDataBase/' + path).then(() => {
-      this.customToastService.onShowSuccess();
-      this.customToastService.onClose();
-    });
-  }
-  MaintenanceCalendar(path: string) {
+  MigrateDataToCustomerDataCompany(path: string) {
     this.apiRequestService.onGetList('UpdateDataBase/' + path).then(() => {
       this.customToastService.onShowSuccess();
       this.customToastService.onClose();
     });
   }
 
-  Producto(path: string) {
+  MigrateEmailPersonToApplicationUser(path: string) {
     this.apiRequestService.onGetList('UpdateDataBase/' + path).then(() => {
       this.customToastService.onShowSuccess();
       this.customToastService.onClose();
     });
   }
-  Provider(path: string) {
+  CreateApplicationUserDesdePerson(path: string) {
     this.apiRequestService.onGetList('UpdateDataBase/' + path).then(() => {
       this.customToastService.onShowSuccess();
       this.customToastService.onClose();
     });
   }
-  QualificationProvider(path: string) {
+  VerificarPersonasNoMigradas(path: string) {
     this.apiRequestService.onGetList('UpdateDataBase/' + path).then(() => {
       this.customToastService.onShowSuccess();
       this.customToastService.onClose();
     });
   }
-  InventarioExtintor(path: string) {
+  UpdateApplicationIdInEntities(path: string) {
     this.apiRequestService.onGetList('UpdateDataBase/' + path).then(() => {
       this.customToastService.onShowSuccess();
       this.customToastService.onClose();
     });
   }
-  InventarioIluminacion(path: string) {
+  OnUpdateWeeklyReport(path: string) {
     this.apiRequestService.onGetList('UpdateDataBase/' + path).then(() => {
       this.customToastService.onShowSuccess();
       this.customToastService.onClose();
     });
   }
-  InventarioLlave(path: string) {
+  UltimasrelacionUserIdPersonId(path: string) {
     this.apiRequestService.onGetList('UpdateDataBase/' + path).then(() => {
       this.customToastService.onShowSuccess();
       this.customToastService.onClose();
     });
   }
-  InventarioPintura(path: string) {
+  RemoveTicket(path: string) {
     this.apiRequestService.onGetList('UpdateDataBase/' + path).then(() => {
       this.customToastService.onShowSuccess();
       this.customToastService.onClose();
     });
   }
-  InventarioProducto(path: string) {
+  UpdateControlPrestamoHerramienta(path: string) {
     this.apiRequestService.onGetList('UpdateDataBase/' + path).then(() => {
       this.customToastService.onShowSuccess();
       this.customToastService.onClose();
     });
   }
-  RadioComunicacion(path: string) {
+  UpdateTypePerson(path: string) {
     this.apiRequestService.onGetList('UpdateDataBase/' + path).then(() => {
       this.customToastService.onShowSuccess();
       this.customToastService.onClose();
     });
   }
-  EntradaProducto(path: string) {
+
+  UpdateAddress(path: string) {
     this.apiRequestService.onGetList('UpdateDataBase/' + path).then(() => {
       this.customToastService.onShowSuccess();
       this.customToastService.onClose();
     });
   }
-  SalidaProducto(path: string) {
+  UpdateAgendaSupervision(path: string) {
     this.apiRequestService.onGetList('UpdateDataBase/' + path).then(() => {
       this.customToastService.onShowSuccess();
       this.customToastService.onClose();
     });
   }
-  MeetingDetails(path: string) {
+  UpdateBitacoraMantenimiento(path: string) {
     this.apiRequestService.onGetList('UpdateDataBase/' + path).then(() => {
       this.customToastService.onShowSuccess();
       this.customToastService.onClose();
     });
   }
-  BitacoraMantenimiento(path: string) {
+  UpdateCatalogoGastosFijos(path: string) {
     this.apiRequestService.onGetList('UpdateDataBase/' + path).then(() => {
       this.customToastService.onShowSuccess();
       this.customToastService.onClose();
     });
   }
-  Machinery(path: string) {
+  UpdateCedulaPresupuestalDetalle(path: string) {
     this.apiRequestService.onGetList('UpdateDataBase/' + path).then(() => {
       this.customToastService.onShowSuccess();
       this.customToastService.onClose();
     });
   }
-  MedidorLectura(path: string) {
+  UpdateDirectoryCondominium(path: string) {
     this.apiRequestService.onGetList('UpdateDataBase/' + path).then(() => {
       this.customToastService.onShowSuccess();
       this.customToastService.onClose();
     });
   }
-  CatalogoGastosFijos(path: string) {
+  UpdateEmployee(path: string) {
     this.apiRequestService.onGetList('UpdateDataBase/' + path).then(() => {
       this.customToastService.onShowSuccess();
       this.customToastService.onClose();
     });
   }
-  OrdenCompra(path: string) {
+  UpdateEntradaProducto(path: string) {
     this.apiRequestService.onGetList('UpdateDataBase/' + path).then(() => {
       this.customToastService.onShowSuccess();
       this.customToastService.onClose();
     });
   }
-  OrdenCompraAuth(path: string) {
+  UpdateEntregaRecepcionDescripcion(path: string) {
     this.apiRequestService.onGetList('UpdateDataBase/' + path).then(() => {
       this.customToastService.onShowSuccess();
       this.customToastService.onClose();
     });
   }
-  SolicitudCompra(path: string) {
+  UpdateEstadoFinanciero(path: string) {
     this.apiRequestService.onGetList('UpdateDataBase/' + path).then(() => {
       this.customToastService.onShowSuccess();
       this.customToastService.onClose();
     });
   }
-  SolicitudCompraDetalle(path: string) {
+  UpdateHistorialAcceso(path: string) {
     this.apiRequestService.onGetList('UpdateDataBase/' + path).then(() => {
       this.customToastService.onShowSuccess();
       this.customToastService.onClose();
     });
   }
-  AgendaSupervision(path: string) {
+  UpdateInventarioExtintor(path: string) {
     this.apiRequestService.onGetList('UpdateDataBase/' + path).then(() => {
       this.customToastService.onShowSuccess();
       this.customToastService.onClose();
     });
   }
-  BitacoraMantenimientoDelete(path: string) {
+  UpdateInventarioIluminacion(path: string) {
+    this.apiRequestService.onGetList('UpdateDataBase/' + path).then(() => {
+      this.customToastService.onShowSuccess();
+      this.customToastService.onClose();
+    });
+  }
+  UpdateInventarioLlave(path: string) {
+    this.apiRequestService.onGetList('UpdateDataBase/' + path).then(() => {
+      this.customToastService.onShowSuccess();
+      this.customToastService.onClose();
+    });
+  }
+  UpdateInventarioPintura(path: string) {
+    this.apiRequestService.onGetList('UpdateDataBase/' + path).then(() => {
+      this.customToastService.onShowSuccess();
+      this.customToastService.onClose();
+    });
+  }
+  UpdateInventarioProducto(path: string) {
+    this.apiRequestService.onGetList('UpdateDataBase/' + path).then(() => {
+      this.customToastService.onShowSuccess();
+      this.customToastService.onClose();
+    });
+  }
+  UpdateListCondomino(path: string) {
+    this.apiRequestService.onGetList('UpdateDataBase/' + path).then(() => {
+      this.customToastService.onShowSuccess();
+      this.customToastService.onClose();
+    });
+  }
+  UpdateMachinery(path: string) {
+    this.apiRequestService.onGetList('UpdateDataBase/' + path).then(() => {
+      this.customToastService.onShowSuccess();
+      this.customToastService.onClose();
+    });
+  }
+  UpdateMaintenanceCalendar(path: string) {
+    this.apiRequestService.onGetList('UpdateDataBase/' + path).then(() => {
+      this.customToastService.onShowSuccess();
+      this.customToastService.onClose();
+    });
+  }
+  UpdateMedidorLectura(path: string) {
+    this.apiRequestService.onGetList('UpdateDataBase/' + path).then(() => {
+      this.customToastService.onShowSuccess();
+      this.customToastService.onClose();
+    });
+  }
+  UpdateMeeting(path: string) {
+    this.apiRequestService.onGetList('UpdateDataBase/' + path).then(() => {
+      this.customToastService.onShowSuccess();
+      this.customToastService.onClose();
+    });
+  }
+  UpdateMeetingAdministracion(path: string) {
+    this.apiRequestService.onGetList('UpdateDataBase/' + path).then(() => {
+      this.customToastService.onShowSuccess();
+      this.customToastService.onClose();
+    });
+  }
+  UpdateMeetingComite(path: string) {
+    this.apiRequestService.onGetList('UpdateDataBase/' + path).then(() => {
+      this.customToastService.onShowSuccess();
+      this.customToastService.onClose();
+    });
+  }
+  UpdateMeetingDertailsSeguimiento(path: string) {
+    this.apiRequestService.onGetList('UpdateDataBase/' + path).then(() => {
+      this.customToastService.onShowSuccess();
+      this.customToastService.onClose();
+    });
+  }
+  UpdateMeetingDetails(path: string) {
+    this.apiRequestService.onGetList('UpdateDataBase/' + path).then(() => {
+      this.customToastService.onShowSuccess();
+      this.customToastService.onClose();
+    });
+  }
+  UpdateOrdenCompra(path: string) {
+    this.apiRequestService.onGetList('UpdateDataBase/' + path).then(() => {
+      this.customToastService.onShowSuccess();
+      this.customToastService.onClose();
+    });
+  }
+  UpdateOrdenCompraAuth(path: string) {
+    this.apiRequestService.onGetList('UpdateDataBase/' + path).then(() => {
+      this.customToastService.onShowSuccess();
+      this.customToastService.onClose();
+    });
+  }
+  UpdatePersonData(path: string) {
+    this.apiRequestService.onGetList('UpdateDataBase/' + path).then(() => {
+      this.customToastService.onShowSuccess();
+      this.customToastService.onClose();
+    });
+  }
+  UpdatePersonProviderSupport(path: string) {
+    this.apiRequestService.onGetList('UpdateDataBase/' + path).then(() => {
+      this.customToastService.onShowSuccess();
+      this.customToastService.onClose();
+    });
+  }
+  UpdatePiscina(path: string) {
+    this.apiRequestService.onGetList('UpdateDataBase/' + path).then(() => {
+      this.customToastService.onShowSuccess();
+      this.customToastService.onClose();
+    });
+  }
+  UpdatePiscinaBitacora(path: string) {
+    this.apiRequestService.onGetList('UpdateDataBase/' + path).then(() => {
+      this.customToastService.onShowSuccess();
+      this.customToastService.onClose();
+    });
+  }
+  UpdatePresentacionJuntaComite(path: string) {
+    this.apiRequestService.onGetList('UpdateDataBase/' + path).then(() => {
+      this.customToastService.onShowSuccess();
+      this.customToastService.onClose();
+    });
+  }
+  UpdatePresupuestoDetalleEdicion(path: string) {
+    this.apiRequestService.onGetList('UpdateDataBase/' + path).then(() => {
+      this.customToastService.onShowSuccess();
+      this.customToastService.onClose();
+    });
+  }
+  UpdateProducto(path: string) {
+    this.apiRequestService.onGetList('UpdateDataBase/' + path).then(() => {
+      this.customToastService.onShowSuccess();
+      this.customToastService.onClose();
+    });
+  }
+  UpdateProviders(path: string) {
+    this.apiRequestService.onGetList('UpdateDataBase/' + path).then(() => {
+      this.customToastService.onShowSuccess();
+      this.customToastService.onClose();
+    });
+  }
+  UpdateQualificationProvider(path: string) {
+    this.apiRequestService.onGetList('UpdateDataBase/' + path).then(() => {
+      this.customToastService.onShowSuccess();
+      this.customToastService.onClose();
+    });
+  }
+  UpdateRadioComunicacion(path: string) {
+    this.apiRequestService.onGetList('UpdateDataBase/' + path).then(() => {
+      this.customToastService.onShowSuccess();
+      this.customToastService.onClose();
+    });
+  }
+  UpdateRequestEmployeeRegister(path: string) {
+    this.apiRequestService.onGetList('UpdateDataBase/' + path).then(() => {
+      this.customToastService.onShowSuccess();
+      this.customToastService.onClose();
+    });
+  }
+  UpdateSalidaProducto(path: string) {
+    this.apiRequestService.onGetList('UpdateDataBase/' + path).then(() => {
+      this.customToastService.onShowSuccess();
+      this.customToastService.onClose();
+    });
+  }
+  UpdateSolicitudCompra(path: string) {
+    this.apiRequestService.onGetList('UpdateDataBase/' + path).then(() => {
+      this.customToastService.onShowSuccess();
+      this.customToastService.onClose();
+    });
+  }
+  UpdateSolicitudCompraDetalle(path: string) {
+    this.apiRequestService.onGetList('UpdateDataBase/' + path).then(() => {
+      this.customToastService.onShowSuccess();
+      this.customToastService.onClose();
+    });
+  }
+  UpdateTicket(path: string) {
+    this.apiRequestService.onGetList('UpdateDataBase/' + path).then(() => {
+      this.customToastService.onShowSuccess();
+      this.customToastService.onClose();
+    });
+  }
+  UpdateTicketSeguimiento(path: string) {
+    this.apiRequestService.onGetList('UpdateDataBase/' + path).then(() => {
+      this.customToastService.onShowSuccess();
+      this.customToastService.onClose();
+    });
+  }
+  UpdateTicketTracking(path: string) {
+    this.apiRequestService.onGetList('UpdateDataBase/' + path).then(() => {
+      this.customToastService.onShowSuccess();
+      this.customToastService.onClose();
+    });
+  }
+  UpdateTool(path: string) {
+    this.apiRequestService.onGetList('UpdateDataBase/' + path).then(() => {
+      this.customToastService.onShowSuccess();
+      this.customToastService.onClose();
+    });
+  }
+  UpdateWeeklyWorkPlan(path: string) {
+    this.apiRequestService.onGetList('UpdateDataBase/' + path).then(() => {
+      this.customToastService.onShowSuccess();
+      this.customToastService.onClose();
+    });
+  }
+  UpdateWeeklyWorkPlanNew(path: string) {
     this.apiRequestService.onGetList('UpdateDataBase/' + path).then(() => {
       this.customToastService.onShowSuccess();
       this.customToastService.onClose();

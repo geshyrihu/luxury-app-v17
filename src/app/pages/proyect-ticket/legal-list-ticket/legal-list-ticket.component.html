@@ -1,4 +1,5 @@
-<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
+@if(data){
 <div class="card">
   <p-table
     #dt
@@ -27,7 +28,7 @@
             title="TICKETS LEGAL"
             (add)="onModalAddOrEdit({ id: '', title: 'AGREGAR TICKET LEGAL' })"
             [dt]="dt"
-          ></app-table-header>
+          />
         </div>
         <div class="col-sm-2 d-flex align-items-center">
           <input
@@ -70,8 +71,12 @@
         <td class="p-column-title">{{ item.requestDate }}</td>
         <td class="p-column-title">{{ item.customer }}</td>
         <td class="p-column-title">
-          {{ item.requestProfession }}
-          {{ item.requestPerson }}
+          <p class="small">
+            {{ item.requestProfession }}
+          </p>
+          <p class="small">
+            {{ item.requestPerson }}
+          </p>
         </td>
         <td class="p-column-title">{{ item.title }}</td>
         <td class="p-column-title text-center">
@@ -151,7 +156,7 @@
               (edit)="
                 onModalEdit({ id: item.id, title: 'EDITAR TICKET LEGAL' })
               "
-            ></custom-button-edit>
+            />
           </div>
         </td>
       </tr>
@@ -165,6 +170,7 @@
   </p-table>
 </div>
 
+}
 <style>
   .color-gradient-1 {
     background: linear-gradient(

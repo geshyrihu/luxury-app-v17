@@ -1,4 +1,4 @@
-<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
 <div class="row mb-0 mb-sm-2">
   <div class="col-sm-5 mb-2 mb-sm-0">
     <h4 class="h4">Recorrido de Mantenimiento</h4>
@@ -118,7 +118,7 @@
               classButton="dropdown-item pointer"
               confirmButtonText="Sí, eliminar"
               (OnConfirm)="eliminarRecorrido(item.id)"
-            ></custom-button-confirmation>
+            />
           </div>
         </div>
       </div>
@@ -152,13 +152,11 @@
                         title: 'Editar Registro'
                       })
                     "
-                  ></custom-button-edit>
+                  />
                 </div>
                 } @if (authService.onValidateRoles(['Mantenimiento'])) {
                 <div class="float-end">
-                  <custom-button-delete
-                    (OnConfirm)="onDeleteTask(tasks.id)"
-                  ></custom-button-delete>
+                  <custom-button-delete (OnConfirm)="onDeleteTask(tasks.id)" />
                 </div>
                 }
               </div>

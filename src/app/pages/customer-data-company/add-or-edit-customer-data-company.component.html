@@ -1,0 +1,50 @@
+<div class="card">
+  <div class="card-body">
+    <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
+      <custom-input-text
+        [control]="form.get('id')"
+        formControlName="id"
+        label="Id"
+      />
+      <custom-input-text
+        [control]="form.get('email')"
+        formControlName="email"
+        label="Email"
+        placeholder="email"
+      />
+      <custom-input-mask
+        [control]="form.get('phoneNumber')"
+        formControlName="phoneNumber"
+        label="Tél. Celular"
+        placeholder="(00) 0000-0000"
+        customMask="(00) 0000-0000"
+      />
+      <custom-input-datalist
+        (propagar)="saveCustomer($event)"
+        [control]="form.get('customer')"
+        [data]="cb_customer"
+        formControlName="customer"
+        label="Cliente"
+        dataListId="customerDatalistOptions"
+      />
+      <custom-input-datalist
+        (propagar)="saveProfession($event)"
+        [control]="form.get('profession')"
+        [data]="cb_profession"
+        formControlName="profession"
+        label="Profesión"
+        dataListId="professionDatalistOptions"
+      />
+      <custom-input-datalist
+        (propagar)="saveApplicationUser($event)"
+        [control]="form.get('applicationUser')"
+        [data]="cb_applicationUser"
+        formControlName="applicationUser"
+        label="Empleado"
+        dataListId="applicationUserDatalistOptions"
+      />
+
+      <custom-button-submit [disabled]="this.form.invalid || submitting" />
+    </form>
+  </div>
+</div>

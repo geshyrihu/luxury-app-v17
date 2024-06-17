@@ -5,13 +5,13 @@
         [control]="form.get('id')"
         formControlName="id"
         label="Id"
-      ></custom-input-text>
+      />
       <custom-input-text
         [control]="form.get('location')"
         formControlName="location"
         label="Ubicación"
         placeholder="ubicacion"
-      ></custom-input-text>
+      />
 
       <custom-button-submit [disabled]="this.form.invalid || submitting" />
     </form>

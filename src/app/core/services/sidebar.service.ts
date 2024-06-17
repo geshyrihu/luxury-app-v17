@@ -19,6 +19,20 @@ export class SidebarService {
       routerLink: '/configuracion/panel',
       name: 'Configuración',
     },
+    {
+      visible: this.authService.onValidateRoles(['SuperUsuario']),
+      label: 'Configuración',
+      icon: 'fa-thin fa-gear',
+      name: 'Configuración',
+      items: [
+        {
+          visible: this.authService.onValidateRoles(['Legal', 'SuperUsuario']),
+          label: 'Customer Data Company',
+          routerLink: '/configuracion/customer-data-company',
+          name: 'Legal-Minutas',
+        },
+      ],
+    },
 
     {
       visible: this.authService.onValidateRoles([
@@ -138,7 +152,7 @@ export class SidebarService {
             'SupervisionOperativa',
           ]),
           label: 'Bitácora Diaria',
-          routerLink: '//supervision/bitacora-diaria',
+          routerLink: '/supervision/agenda-supervision',
           name: 'Supervisión-Bitacora Diaria',
         },
         {
@@ -182,7 +196,7 @@ export class SidebarService {
             'SupervisionOperativa',
           ]),
           label: 'Reporte Ticket',
-          routerLink: '//supervision/reporte-tickets',
+          routerLink: '/supervision/reporte-tickets',
           name: 'Supervisión-Reporte tickets',
         },
         {
@@ -1168,7 +1182,7 @@ export class SidebarService {
             'SuperUsuario',
           ]),
           label: 'Personal Interno',
-          routerLink: '/directorio/empleados/interno',
+          routerLink: '/directorio/personal-interno',
           name: 'Directorio-Empleados internos',
         },
         {
@@ -1194,7 +1208,7 @@ export class SidebarService {
             'SuperUsuario',
           ]),
           label: 'Personal Externo',
-          routerLink: '/directorio/empleados/externo',
+          routerLink: '/directorio/personal-externo',
           name: 'Directorio-Empleados externos',
         },
         {

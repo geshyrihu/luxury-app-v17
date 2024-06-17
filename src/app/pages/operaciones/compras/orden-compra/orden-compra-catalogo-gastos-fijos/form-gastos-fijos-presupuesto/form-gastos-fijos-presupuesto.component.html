@@ -1,4 +1,4 @@
-<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
 
 @if (presupuestoAgregados) {
 <p-table
@@ -21,7 +21,7 @@
       [title]="'Partidas agregadas'"
       [showAdd]="false"
       [dt]="dtt"
-    ></app-table-header>
+    />
   </ng-template>
   <ng-template pTemplate="header">
     <tr>
@@ -101,7 +101,7 @@
           </button>
           <custom-button-delete
             (OnConfirm)="deletePresupuestoAgregado(item.id)"
-          ></custom-button-delete>
+          />
         </div>
       </td>
     </tr>
@@ -128,7 +128,7 @@
       [title]="'Cedula Presupuestal'"
       [showAdd]="false"
       [dt]="dt"
-    ></app-table-header>
+    />
     <div class="col-sm-12">
       <div class="form-group row">
         <label class="col-sm-3 font-weight-light">Selecciona presupuesto</label>

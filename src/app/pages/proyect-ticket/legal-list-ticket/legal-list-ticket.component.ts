@@ -3,7 +3,6 @@ import { Component, OnInit, inject } from '@angular/core';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
-import { SignalrCustomService } from 'src/app/core/services/signalrcustom.service';
 
 // Imports creados por tu servidor
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
@@ -23,7 +22,6 @@ export default class LegalListTicketComponent implements OnInit {
   private dialogHandlerService = inject(DialogHandlerService);
   private apiRequestService = inject(ApiRequestService);
   private authService = inject(AuthService);
-  private signalrcustomService = inject(SignalrCustomService);
 
   isSuperUser = this.authService.onValidateRoles(['SuperUsuario']);
 
@@ -34,7 +32,6 @@ export default class LegalListTicketComponent implements OnInit {
     this.onLoadData();
   }
 
-  // Función para cargar los datos de los bancos
   onLoadData() {
     this.apiRequestService
       .onGetList('TicketLegal/AllLegal')

@@ -6,7 +6,7 @@
         formControlName="id"
         label="Id"
         [horizontal]="false"
-      ></custom-input-text>
+      />
 
       <custom-input-datalist
         (propagar)="saveProviderId($event)"
@@ -24,7 +24,7 @@
         label="Descripción"
         [placeholder]="'descripción'"
         [horizontal]="false"
-      ></custom-input-text>
+      />
 
       <custom-input-date
         [control]="form.get('startDate')"
@@ -32,7 +32,7 @@
         label="Inicio"
         placeholder="incio"
         [horizontal]="false"
-      ></custom-input-date>
+      />
 
       <custom-input-date
         [control]="form.get('endDate')"
@@ -40,7 +40,7 @@
         label="Fin"
         placeholder="fin"
         [horizontal]="false"
-      ></custom-input-date>
+      />
 
       <div class="mb-2">
         <label class="form-label">Documento</label>

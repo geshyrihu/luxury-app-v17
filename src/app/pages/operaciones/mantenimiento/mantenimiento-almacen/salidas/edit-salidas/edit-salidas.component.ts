@@ -88,8 +88,9 @@ export default class EditSalidasComponent implements OnInit {
         `${this.dateTodat.getHours()}:${this.dateTodat.getMinutes()}`,
         Validators.required,
       ],
-      employeeId: [
-        this.authService.userTokenDto.infoEmployeeDto.employeeId,
+      personId: [this.authService.personId, Validators.required],
+      applicationUserId: [
+        this.authService.applicationUserId,
         Validators.required,
       ],
     });
@@ -107,6 +108,8 @@ export default class EditSalidasComponent implements OnInit {
   onSubmit() {
     this.id = this.config.data.id;
 
+    this.form.patchValue({ personId: this.authService.personId });
+
     this.submitting = true;
     if (this.id === 0) {
       this.apiRequestService
@@ -116,7 +119,10 @@ export default class EditSalidasComponent implements OnInit {
         });
     } else {
       this.apiRequestService
-        .onPut(`SalidaProductos/${this.id}`, this.form.value)
+        .onPut(
+          `SalidaProductos/${this.id}/${this.cantidadActualUsada}`,
+          this.form.value
+        )
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
         });

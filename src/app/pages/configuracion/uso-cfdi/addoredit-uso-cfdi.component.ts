@@ -33,7 +33,6 @@ export default class AddoreditUsoCFDIComponent implements OnInit {
       id: { value: this.id, disabled: true },
       codigo: ['', [Validators.required]],
       descripcion: ['', Validators.required],
-      employeeId: [this.authService.userTokenDto.infoEmployeeDto.employeeId],
     });
   }
 

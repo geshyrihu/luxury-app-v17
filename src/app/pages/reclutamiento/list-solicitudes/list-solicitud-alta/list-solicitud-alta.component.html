@@ -1,4 +1,4 @@
-<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
 <app-filter-requests
   apiUrl="RequestEmployeeRegister/ExportRequestToExcel"
   nameFile="Reporte de altas.xlsx"
@@ -32,7 +32,7 @@
         [title]="'Lista de Solicitudes de altas'"
         [showAdd]="false"
         [dt]="dt"
-      ></app-table-header>
+      />
     </ng-template>
     <ng-template pTemplate="header">
       <tr>
@@ -110,10 +110,8 @@
                   id: item.id,
                 })
               "
-            ></custom-button-edit>
-            <custom-button-delete
-              (OnConfirm)="onDelete(item.id)"
-            ></custom-button-delete>
+            />
+            <custom-button-delete (OnConfirm)="onDelete(item.id)" />
           </div>
           <!-- Opciones -->
         </td>

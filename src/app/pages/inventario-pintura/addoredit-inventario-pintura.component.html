@@ -1,0 +1,38 @@
+<div class="card">
+  <div class="card-body">
+    <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
+      <custom-input-text
+        [control]="form.get('id')"
+        formControlName="id"
+        label="Id"
+      />
+      <custom-input-datalist
+        (propagar)="saveMachineryId($event)"
+        [control]="form.get('machinery')"
+        [data]="cb_machinery"
+        formControlName="machinery"
+        label="Equipo/Instalación"
+        dataListId="machineryDatalistOptions"
+      ></custom-input-datalist>
+
+      <custom-input-datalist
+        (propagar)="saveProductoId($event)"
+        [control]="form.get('producto')"
+        [data]="cb_producto"
+        formControlName="producto"
+        label="Producto"
+        dataListId="productoDatalistOptions"
+      ></custom-input-datalist>
+      <custom-input-text
+        [control]="form.get('area')"
+        formControlName="area"
+        label="Area"
+        placeholder="area"
+      />
+
+      <div class="col-12 text-left">
+        <custom-button-submit [disabled]="this.form.invalid || submitting" />
+      </div>
+    </form>
+  </div>
+</div>

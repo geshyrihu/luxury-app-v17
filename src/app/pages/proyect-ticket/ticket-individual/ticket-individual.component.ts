@@ -25,7 +25,6 @@ export default class TicketIndividualComponent implements OnInit {
     this.onLoadData();
   }
 
-  // Función para cargar los datos de los bancos
   onLoadData() {
     this.apiRequestService
       .onGetItem('TicketLegal/individual/' + this.ticketId)

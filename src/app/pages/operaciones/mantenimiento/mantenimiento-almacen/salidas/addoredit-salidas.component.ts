@@ -76,6 +76,10 @@ export default class CrudSalidasComponent implements OnInit {
         Validators.required,
       ],
       personId: [this.authService.personId, Validators.required],
+      applicationUserId: [
+        this.authService.applicationUserId,
+        Validators.required,
+      ],
     });
   }
   // convenience getter for easy access to form fields

@@ -6,20 +6,20 @@
         formControlName="id"
         label="Id"
         [hidden]="false"
-      ></custom-input-text>
+      />
 
       <custom-input-select
         [control]="form.get('machineryId')"
         formControlName="machineryId"
         label="Elevador"
         [data]="cb_elevators"
-      ></custom-input-select>
+      />
       <custom-input-date
         [control]="form.get('changeDate')"
         formControlName="changeDate"
         label="Fecha"
         placeholder="fecha"
-      ></custom-input-date>
+      />
 
       <custom-input-text-area
         [control]="form.get('failure')"
@@ -32,13 +32,13 @@
         formControlName="partName"
         label="Nombre de pieza"
         placeholder="nombre de pieza"
-      ></custom-input-text>
+      />
       <custom-input-text
         [control]="form.get('partKey')"
         formControlName="partKey"
         label="Clave de pieza"
         placeholder="clave de pieza"
-      ></custom-input-text>
+      />
       <custom-input-number
         [control]="form.get('price')"
         formControlName="price"
@@ -50,7 +50,7 @@
         formControlName="supervised"
         label="Superviso"
         placeholder="superviso"
-      ></custom-input-text>
+      />
 
       <custom-button-submit [disabled]="this.form.invalid || submitting" />
     </form>

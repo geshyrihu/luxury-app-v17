@@ -34,14 +34,14 @@
             label="Responsable"
             [data]="cb_responsableSistemas"
             [horizontal]="false"
-          ></custom-input-select>
+          />
           <custom-input-date
             [control]="form.get('dateRequest')"
             formControlName="dateRequest"
             label="Fecha de solicitud"
             [horizontal]="false"
             placeholder="fecha de solicitud"
-          ></custom-input-date>
+          />
           <div hidden>
             <label>Responsable</label>
             <select formControlName="responsibleAreaId" class="form-select">
@@ -58,7 +58,7 @@
             label="Estatus"
             [data]="cb_status"
             [horizontal]="false"
-          ></custom-input-select>
+          />
           <custom-input-text-area
             [control]="form.get('activity')"
             formControlName="activity"
@@ -74,14 +74,14 @@
             label="Fecha de termino"
             [horizontal]="false"
             placeholder="fecha de termino"
-          ></custom-input-date>
+          />
           <custom-input-select
             [control]="form.get('priority')"
             formControlName="priority"
             label="Prioridad"
             [data]="cb_priority"
             [horizontal]="false"
-          ></custom-input-select>
+          />
           <custom-input-text-area
             [control]="form.get('observations')"
             formControlName="observations"

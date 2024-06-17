@@ -1,4 +1,4 @@
-<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
 <h4 class="mb-sm-0 font-size-18">Calendario General de Mantenimiento</h4>
 <hr />
 <div class="row">
@@ -40,14 +40,10 @@
               ngbDropdownMenu
             >
               <a class="dropdown-item">
-                <custom-button-edit
-                  (edit)="onModalAddOrEdit(evento.id, i)"
-                ></custom-button-edit>
+                <custom-button-edit (edit)="onModalAddOrEdit(evento.id, i)" />
               </a>
               <a class="dropdown-item">
-                <custom-button-delete
-                  (OnConfirm)="onDelete(evento)"
-                ></custom-button-delete>
+                <custom-button-delete (OnConfirm)="onDelete(evento)" />
               </a>
             </div>
           </div>

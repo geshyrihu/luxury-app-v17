@@ -13,11 +13,7 @@
   [autoLayout]="true"
 >
   <ng-template pTemplate="caption">
-    <app-table-header
-      [title]="'Cuentas'"
-      [showAdd]="false"
-      [dt]="dt"
-    ></app-table-header>
+    <app-table-header [title]="'Cuentas'" [showAdd]="false" [dt]="dt" />
   </ng-template>
   <ng-template pTemplate="header">
     <tr>
@@ -56,7 +52,7 @@
             icon="fa-regular fa-floppy-disk text-info"
             (clicked)="onSubmit(item)"
             [disabled]="submitting"
-          ></custom-button>
+          />
         </div>
       </td>
     </tr>

@@ -1,4 +1,4 @@
-<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
 <header id="page-topbar">
   <div class="navbar-header">
     <div class="d-flex">
@@ -39,6 +39,15 @@
         <i class="fa-thin fa-angle-right"></i>
       </button>
 
+      <button
+        type="button"
+        class="btn header-item"
+        ngbTooltip="Recargar"
+        placement="bottom-start"
+        (click)="onRefresh()"
+      >
+        <i class="fa-thin fa-arrows-rotate"></i>
+      </button>
       <!-- App Search-->
       <div class="app-search me-2 mt-1" style="width: 400px">
         <app-menu-select-customer></app-menu-select-customer>

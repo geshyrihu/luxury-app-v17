@@ -8,7 +8,7 @@
         label="Id"
         placeholder="id"
         [hidden]="true"
-      ></custom-input-text>
+      />
 
       <custom-input-text
         [control]="form.get('folio')"
@@ -16,28 +16,28 @@
         label="Folio"
         placeholder="folio"
         [readonly]="true"
-      ></custom-input-text>
+      />
 
       <custom-input-date
         [control]="form.get('executionDate')"
         formControlName="executionDate"
         label="Fecha de ejecuci{on}"
         placeholder="fecha de ejecuci{on}"
-      ></custom-input-date>
+      />
 
       <custom-input-select
         [control]="form.get('status')"
         formControlName="status"
         label="Estatus"
         [data]="cb_status"
-      ></custom-input-select>
+      />
       <custom-input-select
         [control]="form.get('retroactive')"
         formControlName="retroactive"
         label="Aplica retroactivo"
         [data]="cb_si_no"
         [SelectDefaulOption]="false"
-      ></custom-input-select>
+      />
       <custom-button-submit [disabled]="this.form.invalid || submitting" />
     </form>
   </div>

@@ -11,8 +11,14 @@
 
       <div class="form-group mb-2">
         <label>Responsable</label>
-        <select class="form-select" formControlName="personResponsibleId">
-          <option *ngFor="let item of employee" [value]="item.value">
+        <select
+          class="form-select"
+          formControlName="applicationUserResponsibleId"
+        >
+          <option
+            *ngFor="let item of applicationUserResponsible_cb"
+            [value]="item.value"
+          >
             {{ item.label }}
           </option>
         </select>

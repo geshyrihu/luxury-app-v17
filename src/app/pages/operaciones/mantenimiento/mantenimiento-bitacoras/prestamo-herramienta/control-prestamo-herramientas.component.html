@@ -1,4 +1,4 @@
-<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
 @if (data) {
 <p-table
   [(selection)]="data"
@@ -21,7 +21,7 @@
       (add)="onModalAddOrEdit({ id: 0, title: 'Nuevo Registro' })"
       [dt]="dt"
       [rolAuth]="authService.onValidateRoles(['SuperUsuario', 'Mantenimiento'])"
-    ></app-table-header>
+    />
   </ng-template>
   <ng-template pTemplate="header">
     <tr>
@@ -79,10 +79,8 @@
         <div class="d-flex justify-content-center">
           <custom-button-edit
             (edit)="onModalAddOrEdit({ id: item.id, title: 'Editar Registro' })"
-          ></custom-button-edit>
-          <custom-button-delete
-            (OnConfirm)="onDelete(item.id)"
-          ></custom-button-delete>
+          />
+          <custom-button-delete (OnConfirm)="onDelete(item.id)" />
         </div>
       </td>
       }

@@ -1,4 +1,4 @@
-<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
 
 <p-table
   [(selection)]="data"
@@ -19,7 +19,7 @@
           [title]="'Clientes'"
           (add)="onModalAddOrEdit({ id: 0, title: 'Nuevo Registro' })"
           [dt]="dt"
-        ></app-table-header>
+        />
       </div>
       <div class="col-sm-2">
         <div class="btn-group" role="group" aria-label="Basic example">
@@ -68,22 +68,20 @@
         <div class="d-flex justify-content-center">
           <custom-button-edit
             (edit)="onModalAddOrEdit({ id: item.id, title: 'Editar Registro' })"
-          ></custom-button-edit>
-          <custom-button-delete
-            (OnConfirm)="onDelete(item.id)"
-          ></custom-button-delete>
+          />
+          <custom-button-delete (OnConfirm)="onDelete(item.id)" />
           <custom-button
             ngbTooltip="Actualizar imagenes"
             [customClass]="'btn-outline-primary btn-sm '"
             icon="fa-thin fa-images text-dark"
             (clicked)="onUpdateImages(item.id)"
-          ></custom-button>
+          />
           <custom-button
             ngbTooltip="Actualizar direccion"
             [customClass]="'btn-outline-primary btn-sm '"
             icon="fa-thin fa-location-dot text-dark"
             (clicked)="onUpdateAddress(item.id)"
-          ></custom-button>
+          />
         </div>
       </td>
     </tr>

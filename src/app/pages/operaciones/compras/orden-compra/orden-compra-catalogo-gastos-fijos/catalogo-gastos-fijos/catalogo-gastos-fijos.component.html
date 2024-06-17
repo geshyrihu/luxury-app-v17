@@ -1,4 +1,4 @@
-<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
 <div class="p-card p-mb-5">
   <p-table
     #dt
@@ -31,7 +31,7 @@
             'SuperUsuario'
           ])
         "
-      ></app-table-header>
+      />
       @if ( authService.onValidateRoles([ 'Asistente', 'Residente',
       'SuperUsuario' ]) ) {
       <div class="row mt-3">
@@ -123,10 +123,8 @@
           <div class="d-flex justify-content-center">
             <custom-button-edit
               (edit)="onModal({ id: item.id, title: 'Editar Registro' })"
-            ></custom-button-edit>
-            <custom-button-delete
-              (OnConfirm)="onDelete(item.id)"
-            ></custom-button-delete>
+            />
+            <custom-button-delete (OnConfirm)="onDelete(item.id)" />
           </div>
         </td>
         }

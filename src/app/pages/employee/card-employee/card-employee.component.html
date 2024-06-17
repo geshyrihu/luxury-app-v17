@@ -1,0 +1,35 @@
+@if (applicationUser !== undefined) {
+<div
+  class="card card-outline card-info card-widget widget-user-2 shadow-sm"
+  [ngClass]="{
+    'card-danger': !applicationUser.active,
+    'card-success': applicationUser.active
+  }"
+>
+  <div class="row">
+    <div class="col-sm-4">
+      <img class="w-100 h-100 rounded" [src]="urlImage" alt="no-img" />
+    </div>
+    <div class="col-sm-8">
+      <div class="p-1">
+        <h3 class="h4">
+          {{ applicationUser.firstName }} {{ applicationUser.lastName }}
+        </h3>
+        <h5 class="card-title">{{ applicationUser.profession }}</h5>
+        <h5 class="card-title">{{ applicationUser.customer }}</h5>
+        <hr />
+        <h5 class="card-title">{{ applicationUser.email }}</h5>
+        <h5 class="card-title">
+          {{ applicationUser.birth | date : "longDate" }}
+        </h5>
+        <h5 class="card-title">
+          {{ applicationUser.phoneNumber }}
+        </h5>
+        <h5 class="card-title">
+          {{ applicationUser.email }}
+        </h5>
+      </div>
+    </div>
+  </div>
+</div>
+}

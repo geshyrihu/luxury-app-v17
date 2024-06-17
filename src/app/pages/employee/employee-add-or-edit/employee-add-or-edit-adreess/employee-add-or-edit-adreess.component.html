@@ -1,0 +1,73 @@
+<div class="card">
+  <div class="card-body">
+    <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
+      <div class="row">
+        <div class="col-sm-4 mb-2">
+          <custom-input-text
+            [control]="form.get('city')"
+            formControlName="city"
+            label="Ciudad"
+            placeholder="ciudad"
+            [horizontal]="false"
+          />
+        </div>
+        <div class="col-sm-4 mb-2">
+          <custom-input-text
+            [control]="form.get('townHall')"
+            formControlName="townHall"
+            label="Municipio/Alcaldía"
+            placeholder="Alcaldía"
+            [horizontal]="false"
+          />
+        </div>
+        <div class="col-sm-4 mb-2">
+          <custom-input-text
+            [control]="form.get('district')"
+            formControlName="district"
+            label="Colonia"
+            placeholder="colonia"
+            [horizontal]="false"
+          />
+        </div>
+        <div class="col-sm-4 mb-2">
+          <custom-input-text
+            [control]="form.get('street')"
+            formControlName="street"
+            label="Calle"
+            placeholder="Calle"
+            [horizontal]="false"
+          />
+        </div>
+        <div class="col-sm-4 mb-2">
+          <custom-input-text
+            [control]="form.get('number')"
+            formControlName="number"
+            label="Número "
+            placeholder="número "
+            [horizontal]="false"
+          />
+        </div>
+        <div class="col-sm-4 mb-2">
+          <custom-input-text
+            [control]="form.get('unitNumber')"
+            formControlName="unitNumber"
+            label="Número interior"
+            placeholder="número interior"
+            [horizontal]="false"
+          />
+        </div>
+        <div class="col-sm-4 mb-2">
+          <custom-input-text
+            [control]="form.get('zipCode')"
+            formControlName="zipCode"
+            label="Código postal"
+            placeholder="Código postal"
+            [horizontal]="false"
+          />
+        </div>
+      </div>
+
+      <custom-button-submit [disabled]="this.form.invalid || submitting" />
+    </form>
+  </div>
+</div>

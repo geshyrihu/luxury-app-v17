@@ -5,7 +5,7 @@ export default [
     path: 'inventario-productos',
     loadComponent: () =>
       import(
-        'src/app/pages/operaciones/mantenimiento/mantenimiento-almacen/inventario-productos/list-almacen-productos.component'
+        'src/app/pages/inventario-productos/list-almacen-productos.component'
       ),
     title: 'Inventario',
   },
@@ -20,9 +20,7 @@ export default [
   {
     path: 'entrada-productos',
     loadComponent: () =>
-      import(
-        'src/app/pages/operaciones/mantenimiento/mantenimiento-almacen/entradas/list-entradas.component'
-      ),
+      import('src/app/pages/entrada-producto/list-entradas.component'),
     title: 'Entrada de inventario',
   },
 ] as Routes;

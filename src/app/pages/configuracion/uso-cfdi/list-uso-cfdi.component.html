@@ -1,4 +1,4 @@
-<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
 
 <p-table
   [(selection)]="data"
@@ -20,7 +20,7 @@
       [title]="'Usos de CFDI'"
       (add)="showModalAddOrEdit({ id: 0, title: 'Nuevo Registro' })"
       [dt]="dt"
-    ></app-table-header>
+    />
   </ng-template>
 
   <ng-template pTemplate="header">
@@ -52,10 +52,8 @@
             (edit)="
               showModalAddOrEdit({ id: item.id, title: 'Editar Registro' })
             "
-          ></custom-button-edit>
-          <custom-button-delete
-            (OnConfirm)="onDelete(item.id)"
-          ></custom-button-delete>
+          />
+          <custom-button-delete (OnConfirm)="onDelete(item.id)" />
         </div>
       </td>
     </tr>

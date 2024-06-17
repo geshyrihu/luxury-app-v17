@@ -5,14 +5,14 @@
         [control]="form.get('id')"
         formControlName="id"
         label="Id"
-      ></custom-input-text>
+      />
 
       <custom-input-text
         [control]="form.get('nombreMedidorCategoria')"
         formControlName="nombreMedidorCategoria"
         label="Nombre"
         placeholder="nombre de categoria"
-      ></custom-input-text>
+      />
 
       <custom-button-submit [disabled]="this.form.invalid || submitting" />
     </form>

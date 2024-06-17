@@ -1,4 +1,6 @@
 export enum ETypePerson {
-  PersonaFisica = 0,
-  PersonaMoral = 1,
+  Employee,
+  Provider,
+  Client,
+  Directivo,
 }

@@ -8,4 +8,5 @@ export interface IRadioComunicacionAddOrEdit {
   bateria: string;
   responsibleAreaId: number;
   personId: number;
+  applicationUserId: string;
 }

@@ -51,6 +51,7 @@ export default class AddOrEditPiscinaComponent implements OnInit {
       pathImage: [''],
       typePiscina: [0, Validators.required],
       personId: [this.authService.personId],
+      applicationUserId: [this.authService.applicationUserId],
       customerId: [this.customerIdService.getCustomerId()],
     });
   }
@@ -96,6 +97,10 @@ export default class AddOrEditPiscinaComponent implements OnInit {
     formData.append('typePiscina', String(dto.typePiscina));
     formData.append('customerId', String(this.customerIdService.customerId));
     formData.append('personId', String(this.authService.personId));
+    formData.append(
+      'applicationUserId',
+      String(this.authService.applicationUserId)
+    );
     formData.append('customerId', String(dto.customerId));
     if (dto.pathImage) {
       formData.append('pathImage', dto.pathImage);

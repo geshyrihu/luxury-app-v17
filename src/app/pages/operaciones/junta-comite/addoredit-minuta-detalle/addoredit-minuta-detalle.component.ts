@@ -64,7 +64,7 @@ export default class AddoreditMinutaDetalleComponent implements OnInit {
     this.apiRequestService.onGetItem(urlApi).then((result: any) => {
       this.form.patchValue(result);
       this.form.patchValue({
-        employeeId: this.authService.userTokenDto.infoEmployeeDto.employeeId,
+        personId: this.authService.personId,
       });
       const contenidoHTML = this.form.get('requestService').value;
       const contenidoSinHTML = contenidoHTML.replace(/<[^>]*>|&nbsp;/g, '');
@@ -86,7 +86,7 @@ export default class AddoreditMinutaDetalleComponent implements OnInit {
     } else {
       this.apiRequestService
         .onPut(
-          `MeetingsDetails/${this.id}/${this.authService.userTokenDto.infoEmployeeDto.employeeId}`,
+          `MeetingsDetails/${this.id}/${this.authService.personId}`,
           this.form.value
         )
         .then((result: boolean) => {

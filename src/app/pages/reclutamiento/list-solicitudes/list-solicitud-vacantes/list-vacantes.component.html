@@ -1,4 +1,4 @@
-<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
 <app-filter-requests
   apiUrl="RequestPosition/ExportRequestToExcel"
   nameFile="Reporte de vacantes.xlsx"
@@ -14,14 +14,14 @@
     [value]="data"
     currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
     styleClass="custom-table p-datatable-sm"
-    [globalFilterFields]="['profession', 'status', 'numInternal']"
+    [globalFilterFields]="['profession', 'status', 'numInternal', 'customer']"
   >
     <ng-template pTemplate="caption">
       <app-table-header
         [title]="'Lista de Solicitudes de Puestos de Trabajo'"
         [showAdd]="false"
         [dt]="dt"
-      ></app-table-header>
+      />
     </ng-template>
     <ng-template pTemplate="header">
       <tr>
@@ -108,7 +108,7 @@
               customClass="btn-sm btn-outline-primary"
               icon="fa-regular fa-book "
               (clicked)="onModalJobDescription(item.professionId)"
-            ></custom-button>
+            />
 
             <custom-button
               ngbTooltip="Horarios"
@@ -116,7 +116,7 @@
               customClass="btn-sm btn-outline-primary"
               icon="fa-regular fa-clock"
               (clicked)="onModalHoursWorkPosition(item.workPositionId)"
-            ></custom-button>
+            />
             <custom-button-edit
               (edit)="
                 onModalAddOrEdit({
@@ -124,10 +124,8 @@
                   title: 'Vacante ' + item.profession
                 })
               "
-            ></custom-button-edit>
-            <custom-button-delete
-              (OnConfirm)="onDelete(item.id)"
-            ></custom-button-delete>
+            />
+            <custom-button-delete (OnConfirm)="onDelete(item.id)" />
 
             <!-- <custom-button
               ngbTooltip="Ver candidatos"
@@ -135,7 +133,7 @@
               customNgClass="btn-sm btn-outline-primary"
               icon="fa-regular fa-users-viewfinder"
               (clicked)="onRouteEstatusSolicitud(item.id)"
-            ></custom-button> -->
+            /> -->
             <!-- <i class="fa-regular fa-users-viewfinder"></i> -->
           </div>
           <!-- Opciones -->

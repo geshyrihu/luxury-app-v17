@@ -43,6 +43,7 @@ export default class LegalTicketAddComponent implements OnInit {
     id: { value: this.id, disabled: true },
     customerId: [this.customerIdService.customerId],
     requestPersonId: [this.auhtService.infoEmployeeDto.personId],
+    ApplicationUserRequestId: [this.auhtService.applicationUserId],
     title: ['1. ALTA DE PROVEEDOR'],
     fechaAsamblea: [],
     fechaJunta: [],

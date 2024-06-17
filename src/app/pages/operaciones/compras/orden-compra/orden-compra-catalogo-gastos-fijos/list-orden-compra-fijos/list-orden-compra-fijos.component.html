@@ -1,4 +1,4 @@
-<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
 <p-table
   [(selection)]="data"
   #dt
@@ -28,7 +28,7 @@
       [rolAuth]="
         authService.onValidateRoles(['Asistente', 'Residente', 'SuperUsuario'])
       "
-    ></app-table-header>
+    />
     <br />
     <div class="row">
       <div class="col-12 d-flex justify-content-end">
@@ -125,9 +125,7 @@
         <div class="d-flex justify-content-center">
           @if ( authService.onValidateRoles([ 'Asistente', 'Residente',
           'SuperUsuario' ]) ) {
-          <custom-button-edit
-            (edit)="onAddOrEdit(item.id)"
-          ></custom-button-edit>
+          <custom-button-edit (edit)="onAddOrEdit(item.id)" />
           }
           <button
             type="button"
@@ -140,9 +138,7 @@
           </button>
           @if ( statusCompra === 2 &&
           authService.onValidateRoles(['SuperUsuario']) ) {
-          <custom-button-delete
-            (OnConfirm)="onDelete(item.id)"
-          ></custom-button-delete>
+          <custom-button-delete (OnConfirm)="onDelete(item.id)" />
           }
         </div>
       </td>

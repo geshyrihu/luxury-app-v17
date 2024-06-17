@@ -14,7 +14,7 @@ import { DataService } from 'src/app/core/services/data.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-person-edit-data-laboral',
+  selector: 'person-edit-data-laboral',
   templateUrl: './person-edit-data-laboral.component.html',
   standalone: true,
   imports: [LuxuryAppComponentsModule, CustomInputModule],

@@ -5,19 +5,19 @@
         [control]="form.get('id')"
         formControlName="id"
         label="Id"
-      ></custom-input-text>
+      />
       <custom-input-text
         [control]="form.get('identifier')"
         formControlName="identifier"
         label="Id"
         placeholder="Id"
-      ></custom-input-text>
+      />
       <custom-input-text
         [control]="form.get('name')"
         formControlName="name"
         label="Nombre"
         placeholder="Nombre"
-      ></custom-input-text>
+      />
 
       <custom-input-select
         [control]="form.get('typeAmenitiesCatalog')"
@@ -25,7 +25,7 @@
         label="Clasificacion"
         [data]="cb_typeAmenitiesCatalog"
         [SelectDefaulOption]="false"
-      ></custom-input-select>
+      />
 
       <custom-button-submit [disabled]="this.form.invalid || submitting" />
     </form>

@@ -16,7 +16,7 @@
         label="Id"
         placeholder="id"
         [hidden]="true"
-      ></custom-input-text>
+      />
 
       <custom-input-text
         [control]="form.get('folio')"
@@ -24,33 +24,33 @@
         label="Folio"
         placeholder="folio"
         [readonly]="true"
-      ></custom-input-text>
+      />
 
       <custom-input-date
         [control]="form.get('requestDate')"
         formControlName="requestDate"
         label="Fecha de solicitud"
         placeholder="fecha de solicitud"
-      ></custom-input-date>
+      />
       <custom-input-date
         [control]="form.get('executionDate')"
         formControlName="executionDate"
         label="Fecha de ejecución"
         placeholder="fecha de ejecución"
-      ></custom-input-date>
+      />
 
       <custom-input-select
         [control]="form.get('status')"
         formControlName="status"
         label="Estatus"
         [data]="cb_status"
-      ></custom-input-select>
+      />
       <custom-input-select
         [control]="form.get('typeContractRegister')"
         formControlName="typeContractRegister"
         label="Tipo de contrato"
         [data]="cb_typeContractRegister"
-      ></custom-input-select>
+      />
 
       <custom-button-submit [disabled]="this.form.invalid || submitting" />
     </form>

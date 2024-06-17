@@ -4,16 +4,12 @@ export default [
   {
     path: 'equipos/:categoria',
     loadComponent: () =>
-      import(
-        'src/app/pages/operaciones/mantenimiento/mantenimiento-inventarios/activos/list-equipos.component'
-      ),
+      import('src/app/pages/machineries/list-equipos.component'),
   },
   {
     path: 'gimnasio',
     loadComponent: () =>
-      import(
-        'src/app/pages/operaciones/mantenimiento/mantenimiento-inventarios/activos/list-equipos.component'
-      ),
+      import('src/app/pages/machineries/list-equipos.component'),
   },
   {
     path: 'herramienta',
@@ -25,22 +21,18 @@ export default [
   {
     path: 'pintura',
     loadComponent: () =>
-      import(
-        'src/app/pages/operaciones/mantenimiento/mantenimiento-catalogos/pintura/inventario-pintura.component'
-      ),
+      import('src/app/pages/inventario-pintura/inventario-pintura.component'),
   },
   {
     path: 'llaves',
     loadComponent: () =>
-      import(
-        'src/app/pages/operaciones/mantenimiento/mantenimiento-inventarios/llaves/list-llaves.component'
-      ),
+      import('src/app/pages/inventario-llaves/list-llaves.component'),
   },
   {
     path: 'reporte-equipos',
     loadComponent: () =>
       import(
-        'src/app/pages/operaciones/mantenimiento/mantenimiento-inventarios/activos/reporte-completo-activos/reporte-completo-activos.component'
+        'src/app/pages/machineries/reporte-completo-activos/reporte-completo-activos.component'
       ),
   },
 
@@ -54,9 +46,7 @@ export default [
   {
     path: 'radios',
     loadComponent: () =>
-      import(
-        'src/app/pages/operaciones/mantenimiento/mantenimiento-inventarios/radio-comunicacion/radio-comunicacion.component'
-      ),
+      import('src/app/pages/radio-comunicacion/radio-comunicacion.component'),
   },
   {
     path: 'cedula-anual-mantenimientos',

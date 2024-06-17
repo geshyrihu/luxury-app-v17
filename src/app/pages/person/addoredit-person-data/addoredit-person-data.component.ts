@@ -37,7 +37,7 @@ export default class AddoreditPersonDataComponent implements OnInit, OnDestroy {
   config = inject(DynamicDialogConfig);
   customerIdService = inject(CustomerIdService);
   dataService = inject(DataService);
-  public datepipe = inject(DatePipe);
+  datepipe = inject(DatePipe);
   ref = inject(DynamicDialogRef);
 
   personId = 0;

@@ -23,7 +23,6 @@ export default class LegalListTicketComponent implements OnInit {
     this.onLoadData();
   }
 
-  // Función para cargar los datos de los bancos
   onLoadData() {
     this.apiRequestService
       .onGetList(`TicketLegal/All/${this.customerIdService.getCustomerId()}`)

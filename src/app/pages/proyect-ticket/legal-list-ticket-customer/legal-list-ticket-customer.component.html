@@ -1,4 +1,4 @@
-<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
 <div class="card">
   <p-table
     #dt
@@ -17,7 +17,7 @@
         title="TICKETS LEGAL CLIENTE"
         (add)="onModalAddOrEdit({ id: '', title: 'AGREGAR TICKET LEGAL' })"
         [dt]="dt"
-      ></app-table-header>
+      />
     </ng-template>
 
     <ng-template pTemplate="header">

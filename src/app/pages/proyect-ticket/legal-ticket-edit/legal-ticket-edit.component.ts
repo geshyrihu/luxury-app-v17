@@ -22,7 +22,7 @@ export default class LegalTicketEditComponent implements OnInit {
 
   id: string = '';
   submitting: boolean = false;
-  employee: ISelectItem[] = [];
+  applicationUserResponsible_cb: ISelectItem[] = [];
 
   form: FormGroup = this.formBuilder.group({
     id: { value: this.id, disabled: true },
@@ -30,6 +30,7 @@ export default class LegalTicketEditComponent implements OnInit {
     documentCloud: [false],
     documentEmail: [false],
     personResponsibleId: [null],
+    applicationUserResponsibleId: [null],
   });
   ngOnInit() {
     this.id = this.config.data.id;
@@ -37,7 +38,7 @@ export default class LegalTicketEditComponent implements OnInit {
     this.apiRequestService
       .onGetItem(`TicketLegal/EmployeeLegal`)
       .then((result: any) => {
-        this.employee = result;
+        this.applicationUserResponsible_cb = result;
       });
   }
   onLoadData() {

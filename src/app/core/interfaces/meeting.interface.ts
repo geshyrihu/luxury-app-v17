@@ -3,5 +3,5 @@ export interface IMeeting {
   customerId: number;
   date: Date;
   eTypeMeeting: number;
-  user: any;
+  applicationUserId: string;
 }

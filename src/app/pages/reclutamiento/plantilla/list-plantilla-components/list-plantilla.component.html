@@ -1,4 +1,4 @@
-<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
 
 <div class="card">
   <p-table
@@ -16,7 +16,7 @@
             [title]="'Puestos de trabajo'"
             (add)="onModalAddOrEdit({ id: 0, title: 'Nuevo Registro' })"
             [dt]="dt"
-          ></app-table-header>
+          />
         </div>
         <div class="col-sm-2">
           <custom-button-active-desactive
@@ -111,35 +111,45 @@
             @if ( item.positionRequest.status === 0 ||
             item.positionRequest.status === 3 ) {
             <custom-button
-              ngbTooltip="Solicitud de vacante vigente"
+              [ngbTooltip]="
+                'Solicitud de vacante vigente ' + item.positionRequest.status
+              "
               placement="top"
-              customClass="btn-sm btn-outline-secondary"
-              icon="fa-regular fa-tags fa-2x"
-            ></custom-button>
+              customClass="btn-sm btn-outline-danger"
+              icon="fa-duotone fa-ticket fa-2x"
+            />
             }
             <!-- (clicked)="onRouteEstatusSolicitud(item.positionRequest.id)" -->
             <!-- Solicitud de vacante -->
           </div>
+
           }
         </td>
         }
         <td class="text-center">
           <div ngbDropdown container="body" class="d-inline-block">
-            <i
+            <button
               id="options"
               ngbDropdownToggle
-              class="fa-regular fa-ellipsis-vertical pointer"
-            ></i>
+              class="btn btn-outline-primary"
+            >
+              <i
+                id="options"
+                ngbDropdownToggle
+                class="fa-regular fa-ellipsis-vertical pointer"
+              ></i>
+            </button>
             <div ngbDropdownMenu aria-labelledby="options">
               <!-- Solicitar vacante para puesto de trabajo -->
-              @if ( item.positionRequest.status !== 0 &&
+              @if (( item.positionRequest.status !== 0
+              &&item.positionRequest.status !== 3 ) &&
               onValidateRole(item.professionId) && item.state == 0 ) {
               <custom-button
                 (clicked)="onModalSolicitudVacante(item.id)"
                 customClass="btn-outline-secondary  w-100 mt-1 text-start"
                 icon="fa-regular fa-user-magnifying-glass me-2"
                 label="Solicitar vacante"
-              ></custom-button>
+              />
               }
               <br />
 
@@ -149,7 +159,7 @@
                 customClass="btn-outline-dark w-100 mt-1 text-start"
                 icon="fa-regular fa-user-plus me-2"
                 label="Editar colaborador"
-              ></custom-button>
+              />
               }
               <!-- Asignar empleado -->
               <br />
@@ -159,7 +169,7 @@
                 icon="fa-regular fa-book me-2"
                 label="Descripción de puesto"
                 (clicked)="onModalJobDescription(item.professionId)"
-              ></custom-button>
+              />
               <!-- visualizar descripcion de puesto-->
               <br />
               <!-- visualizar horarios de puesto de trabajo -->
@@ -168,7 +178,7 @@
                 icon="fa-regular fa-clock me-2"
                 label="Horarios"
                 (clicked)="onModalHoursWorkPosition(item.id)"
-              ></custom-button>
+              />
               <!-- visualizar horarios de puesto de trabajo -->
               <br />
               <!-- Editar puesto de trabajo -->
@@ -182,7 +192,7 @@
                     title: 'Editar Registro'
                   })
                 "
-              ></custom-button>
+              />
               <!-- Editar puesto de trabajo -->
               <br />
               <!-- Eliminar puesto de trabajo -->
@@ -196,7 +206,7 @@
                 tooltipText="Se va a eliminar el registro"
                 confirmButtonText="Sí, eliminar"
                 (OnConfirm)="onDelete(item.id)"
-              ></custom-button-confirmation>
+              />
               }
               <!-- Eliminar puesto de trabajo -->
               <br />

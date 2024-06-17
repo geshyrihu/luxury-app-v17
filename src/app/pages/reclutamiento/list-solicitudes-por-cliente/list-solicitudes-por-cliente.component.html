@@ -1,4 +1,4 @@
-<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
 <div class="card">
   <p-table
     #dt
@@ -20,11 +20,7 @@
     [tableStyle]="{ 'min-width': '50rem' }"
   >
     <ng-template pTemplate="caption">
-      <app-table-header
-        title="Solicitudes"
-        [showAdd]="false"
-        [dt]="dt"
-      ></app-table-header>
+      <app-table-header title="Solicitudes" [showAdd]="false" [dt]="dt" />
     </ng-template>
     <ng-template pTemplate="header">
       <tr>
@@ -86,7 +82,7 @@
                           id: item.id,
                           })
                           "
-              ></custom-button-edit>
+              />
             </div>
             } @case ('Vacante') {
             <div class="body-card">
@@ -97,7 +93,7 @@
                           id: item.id,
                           })
                           "
-              ></custom-button-edit>
+              />
             </div>
             } @case ('Baja') {
             <div class="body-card">
@@ -108,7 +104,7 @@
                           id: item.id,
                           })
                           "
-              ></custom-button-edit>
+              />
             </div>
             } @case ('Modificacion') {
             <div class="body-card">
@@ -119,7 +115,7 @@
                           id: item.id,
                           })
                           "
-              ></custom-button-edit>
+              />
             </div>
             }
             <!-- Agrega más casos según tus necesidades -->

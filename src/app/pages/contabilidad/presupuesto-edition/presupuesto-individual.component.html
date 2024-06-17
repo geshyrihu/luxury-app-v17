@@ -1,5 +1,5 @@
 @if (data && data.budgetDetailDto) {
-<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
 <div class="card">
   <p-table
     #dt
@@ -13,7 +13,7 @@
         [showAdd]="true"
         (add)="onModalAdd()"
         [dt]="dt"
-      ></app-table-header>
+      />
     </ng-template>
     <ng-template pTemplate="header">
       <tr>
@@ -154,22 +154,20 @@
               [customClass]="'btn-outline-info btn-sm'"
               icon="fa-regular fa-file-circle-plus text-info"
               (clicked)="onModalDocument(item.id)"
-            ></custom-button>
+            />
             <custom-button
               ngbTooltipCustom="Historial"
               [customClass]="'btn-outline-primary btn-sm'"
               icon="fa-regular fa-calendar-users text-primary"
               (clicked)="onGetHistorial(item.id)"
-            ></custom-button>
+            />
             <custom-button
               ngbTooltipCustom="Servicios calendarizados"
               [customClass]="'btn-outline-success btn-sm'"
               icon="fa-regular fa-calendar-lines-pen text-success"
               (clicked)="ServiciosMttoProgramados(item.accountId)"
-            ></custom-button>
-            <custom-button-delete
-              (OnConfirm)="onDelete(item.id)"
-            ></custom-button-delete>
+            />
+            <custom-button-delete (OnConfirm)="onDelete(item.id)" />
           </div>
         </td>
       </tr>

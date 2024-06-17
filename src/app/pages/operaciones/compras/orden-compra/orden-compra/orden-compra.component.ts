@@ -265,7 +265,7 @@ export default class OrdenCompraComponent implements OnInit, OnDestroy {
     // this.onRevisadaPorResidente();
     this.dataService
       .get(
-        `OrdenCompraAuth/Autorizar/${this.ordenCompraId}/${this.authService.personId}`
+        `OrdenCompraAuth/Autorizar/${this.ordenCompraId}/${this.authService.applicationUserId}`
       )
       .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({

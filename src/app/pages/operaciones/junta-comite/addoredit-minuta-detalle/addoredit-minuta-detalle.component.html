@@ -6,7 +6,7 @@
         formControlName="id"
         label="Id"
         [horizontal]="false"
-      ></custom-input-text>
+      />
 
       <custom-input-select
         [control]="form.get('eAreaMinutasDetalles')"
@@ -14,7 +14,7 @@
         label="Area"
         [data]="cb_area"
         [horizontal]="false"
-      ></custom-input-select>
+      />
 
       <custom-input-text
         [control]="form.get('title')"
@@ -22,7 +22,7 @@
         label="Título"
         placeholder="titulo"
         [horizontal]="false"
-      ></custom-input-text>
+      />
       <custom-input-text-area
         [control]="form.get('requestService')"
         formControlName="requestService"
@@ -37,7 +37,7 @@
         label="Estatus"
         [data]="cb_estatus"
         [horizontal]="false"
-      ></custom-input-select>
+      />
 
       <custom-button-submit [disabled]="this.form.invalid || submitting" />
     </form>

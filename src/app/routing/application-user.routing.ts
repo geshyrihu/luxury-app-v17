@@ -5,7 +5,7 @@ export default [
     path: 'cuentas-usuario',
     loadComponent: () =>
       import(
-        'src/app/pages/configuracion/accounts/list-account/list-account.component'
+        'src/app/pages/application-user/list-account/list-account.component'
       ),
     title: 'Cuentas de acceso',
   },
@@ -13,7 +13,7 @@ export default [
     path: 'actualizar-perfil',
     loadComponent: () =>
       import(
-        'src/app/pages/configuracion/accounts/update-profile/update-profile.component'
+        'src/app/pages/application-user/update-profile/update-profile.component'
       ),
     title: 'Acutalizar perfil',
   },
@@ -21,7 +21,7 @@ export default [
     path: 'datos-email',
     loadComponent: () =>
       import(
-        'src/app/pages/configuracion/accounts/email-data/list-email-data.component'
+        'src/app/pages/application-user/email-data/list-email-data.component'
       ),
     title: 'Datos de correo',
   },

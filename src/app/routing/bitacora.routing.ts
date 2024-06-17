@@ -6,7 +6,7 @@ export default [
     path: 'bitacora-equipos',
     loadComponent: () =>
       import(
-        'src/app/pages/operaciones/mantenimiento/mantenimiento-bitacoras/recorridos/bitacora-mantenimiento.component'
+        'src/app/pages/bitacora-mantenimiento/bitacora-mantenimiento.component'
       ),
     title: 'Bitacora de equipos',
   },

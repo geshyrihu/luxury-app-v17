@@ -30,6 +30,10 @@ export default class TicketTrakingComponent implements OnInit, OnDestroy {
     id: { value: this.id, disabled: true },
     ticketId: [this.ticketId, Validators.required],
     personId: [this.authService.personId, Validators.required],
+    applicationUserId: [
+      this.authService.applicationUserId,
+      Validators.required,
+    ],
     description: [
       '',
       [

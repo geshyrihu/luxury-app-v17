@@ -1,4 +1,4 @@
-<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
 <div class="card">
   <p-table
     #dt
@@ -17,7 +17,7 @@
             (add)="showModalAddOrEdit({ id: 0, title: 'Nuevo Registro' })"
             [dt]="dt"
             [rolAuth]="authService.onValidateRoles(['SuperUsuario'])"
-          ></app-table-header>
+          />
         </div>
         <div class="col-2">
           <custom-button-active-desactive
@@ -61,10 +61,8 @@
               (edit)="
                 showModalAddOrEdit({ id: item.id, title: 'Editar Registro' })
               "
-            ></custom-button-edit>
-            <custom-button-delete
-              (OnConfirm)="onDelete(item.id)"
-            ></custom-button-delete>
+            />
+            <custom-button-delete (OnConfirm)="onDelete(item.id)" />
           </div>
         </td>
         }

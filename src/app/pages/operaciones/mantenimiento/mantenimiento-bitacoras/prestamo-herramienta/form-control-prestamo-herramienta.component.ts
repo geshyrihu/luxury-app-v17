@@ -2,6 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
@@ -24,7 +25,7 @@ export default class FormControlPrestamoHerramientaComponent implements OnInit {
   submitting: boolean = false;
 
   id: number = 0;
-  cb_employee: any[] = [];
+  cb_applicationUser: ISelectItem[] = [];
   cb_tool: any[] = [];
   today: string = '';
   form: FormGroup;
@@ -32,10 +33,10 @@ export default class FormControlPrestamoHerramientaComponent implements OnInit {
   ngOnInit(): void {
     this.apiRequestService
       .onGetSelectItem(
-        `PersonEmployee/${this.customerIdService.getCustomerId()}`
+        `ApplicationUser/${this.customerIdService.getCustomerId()}`
       )
       .then((response: any) => {
-        this.cb_employee = response;
+        this.cb_applicationUser = response;
       });
 
     this.apiRequestService
@@ -50,14 +51,14 @@ export default class FormControlPrestamoHerramientaComponent implements OnInit {
       customerId: [this.customerIdService.customerId],
       fechaSalida: [this.today, Validators.required],
       fechaRegreso: [],
-      personId: ['', Validators.required],
-      person: ['', Validators.required],
+      applicationUserId: ['', Validators.required],
+      applicationUser: ['', Validators.required],
       toolId: ['', Validators.required],
       tool: ['', Validators.required],
       observaciones: [],
-      employeeResponsableId: [
-        this.authService.userTokenDto.infoEmployeeDto.employeeId,
-      ],
+      employeeResponsableId: [this.authService.employeeId],
+      personId: [this.authService.personId],
+      applicationUserResponsableId: [this.authService.applicationUserId],
     });
     this.id = this.config.data.id;
     if (this.id !== 0) this.onLoadData();
@@ -70,9 +71,9 @@ export default class FormControlPrestamoHerramientaComponent implements OnInit {
     });
   }
   public saveEmployeeId(e): void {
-    let find = this.cb_employee.find((x) => x?.label === e.target.value);
+    let find = this.cb_applicationUser.find((x) => x?.label === e.target.value);
     this.form.patchValue({
-      personId: find?.value,
+      applicationUserId: find?.value,
     });
   }
   get f() {
@@ -83,10 +84,10 @@ export default class FormControlPrestamoHerramientaComponent implements OnInit {
     this.apiRequestService.onGetItem(urlApi).then((result: any) => {
       this.form.patchValue(result);
       this.form.patchValue({
-        person: result.person,
+        applicationUser: result.applicationUser,
       });
       this.form.patchValue({
-        personId: result.personId,
+        applicationUserId: result.applicationUserId,
       });
       this.form.patchValue({
         tool: result.tool,
@@ -98,7 +99,7 @@ export default class FormControlPrestamoHerramientaComponent implements OnInit {
   }
   onSubmit() {
     if (!this.apiRequestService.validateForm(this.form)) return;
-
+    console.log('this.form', this.form.value);
     this.submitting = true;
 
     if (this.id === 0) {

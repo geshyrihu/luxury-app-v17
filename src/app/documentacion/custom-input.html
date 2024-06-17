@@ -11,7 +11,7 @@
   [horizontal]="false"
   label="Usuario"
   placeholder="Usuario"
-></custom-input-text>
+/>
 
 <custom-input-month
   [control]="form.get('email')"
@@ -32,7 +32,7 @@
   formControlName="email"
   label="email"
   placeholder="email"
-></custom-input-text>
+/>
 <custom-input-time
   [control]="form.get('email')"
   formControlName="email"
@@ -40,11 +40,7 @@
   placeholder="email"
 ></custom-input-time>
 
-<custom-input-text
-  [control]="form.get('id')"
-  formControlName="id"
-  label="Id"
-></custom-input-text>
+<custom-input-text [control]="form.get('id')" formControlName="id" label="Id" />
 
 <custom-input-number
   [horizontal]="false"
@@ -68,7 +64,7 @@
   label="Tél. Celular"
   placeholder="(00) 0000-0000"
   customMask="(00) 0000-0000"
-></custom-input-mask>
+/>
 
 <!-- <custom-input-select
   [control]="form.get('professionId')"
@@ -77,11 +73,7 @@
   [data]="cb_profession"
 ></custom-input-select> -->
 
-<custom-input-text
-  [control]="form.get('id')"
-  formControlName="id"
-  label="Id"
-></custom-input-text>
+<custom-input-text [control]="form.get('id')" formControlName="id" label="Id" />
 
 <custom-input-datalist
   (propagar)="saveCondominoId($event)"
@@ -97,7 +89,7 @@
   formControlName="register"
   label="Fecha de registro"
   placeholder="fecha de registro"
-></custom-input-date>
+/>
 
 <custom-input-text-area
   [control]="form.get('address')"

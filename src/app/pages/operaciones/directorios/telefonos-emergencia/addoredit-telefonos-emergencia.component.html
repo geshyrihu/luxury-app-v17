@@ -5,7 +5,7 @@
         [control]="form.get('id')"
         formControlName="id"
         label="Id"
-      ></custom-input-text>
+      />
 
       <div class="form-group row mb-2">
         <label class="col-sm-3">Imagen</label>
@@ -26,7 +26,7 @@
         formControlName="instancia"
         label="Instancia"
         placeholder="instancia"
-      ></custom-input-text>
+      />
 
       <custom-input-mask
         [control]="form.get('telefonoUno')"
@@ -34,7 +34,7 @@
         label="Teléfono 1"
         placeholder="(00) 0000-0000"
         customMask="(00) 0000-0000"
-      ></custom-input-mask>
+      />
 
       <custom-input-mask
         [control]="form.get('telefonoDos')"
@@ -42,7 +42,7 @@
         label="Teléfono 2"
         placeholder="(00) 0000-0000"
         customMask="(00) 0000-0000"
-      ></custom-input-mask>
+      />
 
       <custom-input-text-area
         [control]="form.get('direccion')"

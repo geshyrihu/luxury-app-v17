@@ -5,14 +5,14 @@
         [control]="form.get('id')"
         formControlName="id"
         label="Id"
-      ></custom-input-text>
+      />
 
       <custom-input-text
         [hidden]="true"
         [control]="form.get('productoId')"
         formControlName="productoId"
         label="ProductoId"
-      ></custom-input-text>
+      />
 
       <custom-input-number
         [control]="form.get('cantidad')"
@@ -26,7 +26,7 @@
         formControlName="unidadMedidaId"
         label="Unidad"
         [data]="cb_unidadMedida"
-      ></custom-input-select>
+      />
 
       <custom-input-number
         [control]="form.get('precio')"

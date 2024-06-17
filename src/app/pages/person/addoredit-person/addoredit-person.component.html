@@ -13,14 +13,14 @@
     label="Nombre"
     placeholder="nombre"
     (input)="searchExistingPerson($event)"
-  ></custom-input-text>
+  />
   <custom-input-text
     [control]="form.get('lastName')"
     formControlName="lastName"
     label="Apellidos"
     placeholder="apellidos"
     (input)="searchExistingPerson($event)"
-  ></custom-input-text>
+  />
   <custom-input-mask
     [control]="form.get('phoneNumber')"
     formControlName="phoneNumber"
@@ -28,14 +28,14 @@
     placeholder="(00) 0000-0000"
     customMask="(00) 0000-0000"
     (input)="searchExistingPhone($event)"
-  ></custom-input-mask>
+  />
 
   <custom-input-text
     [control]="form.get('email')"
     formControlName="email"
     label="Email personal"
     placeholder="email personal"
-  ></custom-input-text>
+  />
 
   <!-- img -->
 

@@ -143,6 +143,7 @@ export default class AddoreditMaintenancePreventiveComponent implements OnInit {
       machineryName: ['', Validators.required],
       providerName: ['', Validators.required],
       cuentaName: ['', Validators.required],
+      applicationUserId: [this.authService.applicationUserId],
     });
   }
   LoadCopy() {

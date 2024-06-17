@@ -21,15 +21,19 @@ export default class AddOrEditProviderSupportComponent {
   submitting: boolean = false;
   id: string = '';
 
-  cb_persons: ISelectItem[] = [];
+  cb_applicationUserProvider: ISelectItem[] = [];
   cb_professions: ISelectItem[] = [];
   cb_providers: ISelectItem[] = [];
   cb_customers: ISelectItem[] = [];
 
+  // TODO: AGREGAR FUNCIONALIDA DE CARGA DE LISTAS
+
   form: FormGroup = this.formBuilder.group({
     id: { value: this.id, disabled: true },
-    personId: ['', [Validators.required]],
-    namePerson: ['', [Validators.required]],
+    personId: [null],
+    // namePerson: ['', [Validators.required]],
+    applicationUserId: ['', [Validators.required]],
+    applicationUser: ['', [Validators.required]],
     providerId: ['', [Validators.required]],
     nameProvider: ['', [Validators.required]],
     professionId: ['', [Validators.required]],
@@ -85,9 +89,11 @@ export default class AddOrEditProviderSupportComponent {
     });
 
     // Carga de listado de personas
-    this.apiRequestService.onGetSelectItem('persons').then((resp: any) => {
-      this.cb_persons = resp;
-    });
+    this.apiRequestService
+      .onGetSelectItem('ApplicationUserProvider')
+      .then((resp: any) => {
+        this.cb_applicationUserProvider = resp;
+      });
 
     // Carga de listado de clientes
     this.apiRequestService.onGetSelectItem('customers').then((resp: any) => {
@@ -110,10 +116,12 @@ export default class AddOrEditProviderSupportComponent {
     });
   }
   savePersonId(e: any) {
-    let find = this.cb_persons.find((x) => x?.label === e.target.value);
+    let find = this.cb_applicationUserProvider.find(
+      (x) => x?.label === e.target.value
+    );
     this.form.patchValue({
-      personId: find?.value,
-      namePerson: find?.label,
+      applicationUserId: find?.value,
+      applicationUser: find?.label,
     });
   }
 

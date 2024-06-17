@@ -1,4 +1,4 @@
-<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
 <p-contextMenu #cm [model]="items"></p-contextMenu>
 <p-contextMenu #cmm [model]="itemsDetalle"></p-contextMenu>
 <p-confirmDialog
@@ -520,12 +520,12 @@
                         <div class="d-flex align-content-center">
                           <custom-button-edit
                             (edit)="onEditOrdenCompraPresupuesto(item)"
-                          ></custom-button-edit>
+                          />
                           <custom-button-delete
                             (OnConfirm)="
                               onDeleteOrdenCompraPresupuesto(item.id)
                             "
-                          ></custom-button-delete>
+                          />
                         </div>
                       </td>
                     </tr>

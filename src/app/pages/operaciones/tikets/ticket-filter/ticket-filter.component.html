@@ -8,9 +8,9 @@
           <select class="form-control" formControlName="status">
             <option value="">Seleccionar opcion...</option>
             @for (item of cb_status; track item) {
-              <option [value]="item.value">
-                {{ item.label }}
-              </option>
+            <option [value]="item.value">
+              {{ item.label }}
+            </option>
             }
           </select>
           <div class="mb-3">
@@ -18,11 +18,9 @@
             <select class="form-control" formControlName="responsible">
               <option value="">Seleccionar opcion...</option>
               @for (item of cb_area_responsable; track item) {
-                <option
-                  [value]="item.value"
-                  >
-                  {{ item.label }}
-                </option>
+              <option [value]="item.value">
+                {{ item.label }}
+              </option>
               }
             </select>
           </div>
@@ -41,9 +39,9 @@
             <select class="form-control" formControlName="request">
               <option value="">Seleccionar opcion...</option>
               @for (item of cb_solicitantes; track item) {
-                <option [value]="item.value">
-                  {{ item.label }}
-                </option>
+              <option [value]="item.value">
+                {{ item.label }}
+              </option>
               }
             </select>
           </div>
@@ -52,9 +50,9 @@
             <select class="form-control" formControlName="priority">
               <option value="">Seleccionar opcion...</option>
               @for (item of cb_priority; track item) {
-                <option [value]="item.value">
-                  {{ item.label }}
-                </option>
+              <option [value]="item.value">
+                {{ item.label }}
+              </option>
               }
             </select>
           </div>
@@ -67,7 +65,7 @@
               label="Fecha de Solicitud desde"
               placeholder="Fecha de solicitud desde"
               [horizontal]="false"
-            ></custom-input-date>
+            />
           </div>
           <div class="mb-3">
             <custom-input-date
@@ -76,7 +74,7 @@
               label="Fecha de Termino desde"
               placeholder="Fecha de termino desde"
               [horizontal]="false"
-            ></custom-input-date>
+            />
           </div>
         </div>
         <div class="col-sm-3">
@@ -87,7 +85,7 @@
               label="Fecha de Solicitud hasta"
               placeholder="Fecha de solicitud hasta"
               [horizontal]="false"
-            ></custom-input-date>
+            />
           </div>
           <div class="mb-3">
             <custom-input-date
@@ -96,7 +94,7 @@
               label="Fecha de Termino hasta"
               placeholder="Fecha de termino hasta"
               [horizontal]="false"
-            ></custom-input-date>
+            />
           </div>
           <div class="mb-3">
             <br />
@@ -108,7 +106,7 @@
               type="button"
               (click)="onResetForm()"
               class="mt-1 float-end btn btn-info me-2"
-              >
+            >
               Reset
             </button>
           </div>

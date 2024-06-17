@@ -1,4 +1,4 @@
-<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
 
 <div class="p-card p-mb-5">
   <p-table
@@ -16,7 +16,7 @@
         [title]="'Polizas'"
         (add)="onModalAddOrEdit({ id: 0, title: 'Nuevo Registro' })"
         [dt]="dt"
-      ></app-table-header>
+      />
     </ng-template>
 
     <ng-template pTemplate="header">
@@ -60,7 +60,7 @@
           <custom-button-download-pdf
             ngbTooltip="Visualizar Pdf"
             [urlFile]="item.pathDocument"
-          ></custom-button-download-pdf>
+          />
         </td>
 
         <!-- Opciones -->
@@ -70,15 +70,13 @@
               (edit)="
                 onModalAddOrEdit({ id: item.id, title: 'Editar Registro' })
               "
-            ></custom-button-edit>
-            <custom-button-delete
-              (OnConfirm)="onDelete(item.id)"
-            ></custom-button-delete>
+            />
+            <custom-button-delete (OnConfirm)="onDelete(item.id)" />
             <custom-button-delete
               (OnConfirm)="onDeleteDocument(item.id)"
               [textHeader]="'Eliminar Documento'"
               [textpTooltip]="'Eliminar Documento!'"
-            ></custom-button-delete>
+            />
           </div>
         </td>
         <!-- Opciones -->

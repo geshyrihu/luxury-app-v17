@@ -46,7 +46,7 @@ export default class ListRecorridoComponent implements OnInit {
     this.departamentId = departamentId;
     this.onLoadData(departamentId, this.customerIdService.customerId);
   }
-  // Función para cargar los datos de los bancos
+
   onLoadData(departamentId: number, customerId: number) {
     const urlApi = `customeramenitiescatalog/inspection/${customerId}/${departamentId}`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {

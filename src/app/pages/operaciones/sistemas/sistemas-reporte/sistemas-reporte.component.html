@@ -1,4 +1,4 @@
-<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
 <p-table
   [(selection)]="data"
   #dt
@@ -29,7 +29,7 @@
       [dt]="dt"
       [showAdd]="true"
       (add)="showModalAddOrEdit(0)"
-    ></app-table-header>
+    />
     <br />
     <div class="row">
       <div class="col-sm-5 p-fluid">
@@ -199,12 +199,8 @@
       <!-- Opciones -->
       <td>
         <div class="d-flex justify-content-center">
-          <custom-button-edit
-            (edit)="showModalAddOrEdit(item.id)"
-          ></custom-button-edit>
-          <custom-button-delete
-            (OnConfirm)="eliminarTiket(item.id)"
-          ></custom-button-delete>
+          <custom-button-edit (edit)="showModalAddOrEdit(item.id)" />
+          <custom-button-delete (OnConfirm)="eliminarTiket(item.id)" />
         </div>
       </td>
     </tr>

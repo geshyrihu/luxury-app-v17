@@ -6,26 +6,26 @@
         formControlName="id"
         label="Id"
         [hidden]="false"
-      ></custom-input-text>
+      />
 
       <custom-input-select
         [control]="form.get('machineryId')"
         formControlName="machineryId"
         label="Elevador"
         [data]="cb_elevators"
-      ></custom-input-select>
+      />
       <custom-input-text
         [control]="form.get('folio')"
         formControlName="folio"
         label="Folio del reporte"
         placeholder="folio del reporte"
-      ></custom-input-text>
+      />
       <custom-input-date
         [control]="form.get('requestDate')"
         formControlName="requestDate"
         label="Fecha"
         placeholder="fecha"
-      ></custom-input-date>
+      />
 
       <custom-input-text-area
         [control]="form.get('report')"
@@ -44,14 +44,14 @@
         formControlName="personWhoReports"
         label="Quien Reporto"
         placeholder="quien reporte"
-      ></custom-input-text>
+      />
 
       <custom-input-text
         [control]="form.get('technicianWhoAttended')"
         formControlName="technicianWhoAttended"
         label="Técnico"
         placeholder="técnico"
-      ></custom-input-text>
+      />
 
       <custom-button-submit [disabled]="this.form.invalid || submitting" />
     </form>

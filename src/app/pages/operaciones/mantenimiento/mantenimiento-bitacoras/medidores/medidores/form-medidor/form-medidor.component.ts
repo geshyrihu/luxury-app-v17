@@ -33,7 +33,6 @@ export default class FormMedidorComponent implements OnInit {
     numeroMedidor: ['', Validators.required],
     descripcion: ['', Validators.required],
     customerId: [this.customerIdService.customerId],
-    employeeId: [this.authService.userTokenDto.infoEmployeeDto.employeeId],
   });
 
   ngOnInit(): void {

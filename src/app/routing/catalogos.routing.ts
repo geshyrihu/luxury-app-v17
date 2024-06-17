@@ -9,22 +9,18 @@ export default [
   {
     path: 'extintores',
     loadComponent: () =>
-      import(
-        'src/app/pages/operaciones/mantenimiento/mantenimiento-catalogos/extintor/inventario-extintor.component'
-      ),
+      import('src/app/pages/inventario-extintor/inventario-extintor.component'),
   },
   {
     path: 'iluminacion',
     loadComponent: () =>
       import(
-        'src/app/pages/operaciones/mantenimiento/mantenimiento-catalogos/iluminacion/inventario-iluminacion.component'
+        'src/app/pages/inventario-iluminacion/inventario-iluminacion.component'
       ),
   },
   {
     path: 'pintura',
     loadComponent: () =>
-      import(
-        'src/app/pages/operaciones/mantenimiento/mantenimiento-catalogos/pintura/inventario-pintura.component'
-      ),
+      import('src/app/pages/inventario-pintura/inventario-pintura.component'),
   },
 ] as Routes;

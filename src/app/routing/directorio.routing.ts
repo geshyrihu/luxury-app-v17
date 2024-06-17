@@ -11,9 +11,7 @@ export default [
   {
     path: 'condominos',
     loadComponent: () =>
-      import(
-        'src/app/pages/operaciones/directorios/condominos/list-condominos.component'
-      ),
+      import('src/app/pages/list-condominos/list-condominos.component'),
   },
   {
     path: 'propiedades',
@@ -30,10 +28,25 @@ export default [
       ),
   },
   {
-    path: 'empleados/:parametro',
+    path: 'personal-interno',
     loadComponent: () =>
       import(
-        'src/app/pages/operaciones/directorios/empleados/list-employee-customer/list-employee-customer.component'
+        'src/app/pages/employee/list-employee-customer/list-employee-customer.component'
+      ),
+  },
+  {
+    path: 'personal-externo',
+    loadComponent: () =>
+      import(
+        'src/app/pages/employee/list-employee-provider-customer/list-employee-provider-customer.component'
+      ),
+  },
+
+  {
+    path: 'empleado',
+    loadComponent: () =>
+      import(
+        'src/app/pages/employee/employee-add-or-edit/employee-add-or-edit.component'
       ),
   },
   {

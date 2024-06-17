@@ -8,7 +8,7 @@ import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { environment } from 'src/environments/environment';
-import FichaTecnicaActivoComponent from '../../operaciones/mantenimiento/mantenimiento-inventarios/activos/ficha-tecnica-activo/ficha-tecnica-activo.component';
+import FichaTecnicaActivoComponent from '../../machineries/ficha-tecnica-activo/ficha-tecnica-activo.component';
 
 @Component({
   selector: 'app-mi-edificio',

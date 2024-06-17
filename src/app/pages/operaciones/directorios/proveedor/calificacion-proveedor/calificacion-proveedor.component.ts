@@ -25,6 +25,10 @@ export default class CalificacionProveedorComponent implements OnInit {
 
   form: FormGroup = this.formBuilder.group({
     personId: [this.personId, Validators.required],
+    applicationUserId: [
+      this.authService.applicationUserId,
+      Validators.required,
+    ],
     providerId: [this.config.data.providerId, Validators.required],
     precio: [0, Validators.required],
     servicio: [0, Validators.required],
@@ -37,9 +41,9 @@ export default class CalificacionProveedorComponent implements OnInit {
   }
 
   onLoadData() {
-    const urlApi = `ProveedorCalificacion/${this.personId}/${this.providerId}`;
+    const urlApi = `QualificationProvider/${this.authService.applicationUserId}/${this.providerId}`;
     this.apiRequestService.onGetItem(urlApi).then((result: any) => {
-      if (!result) {
+      if (result != null) {
         this.qualificationProviderId = result.id;
         this.form.patchValue(result);
       }
@@ -53,14 +57,14 @@ export default class CalificacionProveedorComponent implements OnInit {
 
     if (this.qualificationProviderId === 0) {
       this.apiRequestService
-        .onPost(`ProveedorCalificacion`, this.form.value)
+        .onPost(`QualificationProvider`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
       this.apiRequestService
         .onPut(
-          `ProveedorCalificacion/${this.qualificationProviderId}`,
+          `QualificationProvider/${this.qualificationProviderId}`,
           this.form.value
         )
         .then((result: boolean) => {

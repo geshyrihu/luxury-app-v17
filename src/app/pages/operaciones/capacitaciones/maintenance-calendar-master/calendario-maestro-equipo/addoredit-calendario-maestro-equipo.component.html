@@ -6,7 +6,7 @@
         [control]="form.get('id')"
         formControlName="id"
         label="Id"
-      ></custom-input-text>
+      />
 
       <custom-input-text
         [horizontal]="false"
@@ -14,7 +14,7 @@
         formControlName="nombreEquipo"
         label="Nombre"
         placeholder="nombre"
-      ></custom-input-text>
+      />
 
       <custom-input-select
         [horizontal]="false"
@@ -22,7 +22,7 @@
         formControlName="equipoClasificacionId"
         label="Clasificación"
         [data]="cb_equipoClasificacion"
-      ></custom-input-select>
+      />
 
       <custom-button-submit [disabled]="this.form.invalid || submitting" />
     </form>

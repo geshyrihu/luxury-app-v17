@@ -67,7 +67,7 @@ export default class SendWorkPlanComponent {
     // Realizar una solicitud HTTP para eliminar un banco específico
     this.dataService
       .get(
-        `WeeklyWorkPlan/Create/${numeroSemana}/${year}/${this.customerId}/${this.personId}`
+        `WeeklyWorkPlan/Create/${numeroSemana}/${year}/${this.customerId}/${this.personId}/${this.authService.applicationUserId}`
       )
       .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({

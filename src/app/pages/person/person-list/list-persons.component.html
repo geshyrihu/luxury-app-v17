@@ -1,4 +1,4 @@
-<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
 
 <p-table
   #dt
@@ -25,7 +25,7 @@
       [title]="'Listado General de Personas'"
       (add)="onModalCreatePerson({ id: 0, title: 'Nuevo Registro' })"
       [dt]="dt"
-    ></app-table-header>
+    />
   </ng-template>
 
   <ng-template pTemplate="header">
@@ -98,7 +98,7 @@
                 title: 'Editar Registro'
               })
             "
-          ></custom-button>
+          />
           <custom-button
             ngbTooltip="Datos Laborales"
             customClass="btn-sm btn-sm btn-outline-primary"
@@ -110,7 +110,7 @@
                 title: 'Editar Registro'
               })
             "
-          ></custom-button>
+          />
           <custom-button
             ngbTooltip="Datos Personales"
             customClass="btn-sm btn-sm btn-outline-primary"
@@ -121,7 +121,7 @@
                 title: 'Editar Registro'
               })
             "
-          ></custom-button>
+          />
           <custom-button
             ngbTooltip="Datos Principales"
             customClass="btn-sm btn-sm btn-outline-primary"
@@ -132,17 +132,15 @@
                 title: 'Editar Registro'
               })
             "
-          ></custom-button>
+          />
           <custom-button
             ngbTooltip="Actualizar Foto"
             customClass="btn-sm btn-sm btn-outline-primary"
             icon="fa-duotone fa-camera text-primary"
             (clicked)="onShowModalActualizarImagen(item.id)"
-          ></custom-button>
+          />
 
-          <custom-button-delete
-            (OnConfirm)="onDelete(item.id)"
-          ></custom-button-delete>
+          <custom-button-delete (OnConfirm)="onDelete(item.id)" />
         </div>
       </td>
     </tr>

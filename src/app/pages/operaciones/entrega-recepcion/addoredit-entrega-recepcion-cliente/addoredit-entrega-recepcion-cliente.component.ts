@@ -32,7 +32,6 @@ export default class CrudEntregaRecepcionClienteComponent implements OnInit {
     observaciones: [''],
     archivo: [''],
     estatus: [EState.Activo],
-    employeeId: [this.authService.userTokenDto.infoEmployeeDto.employeeId],
   });
 
   submitting: boolean = false;
@@ -51,7 +50,7 @@ export default class CrudEntregaRecepcionClienteComponent implements OnInit {
     this.apiRequestService
       .onPut(
         `EntregaRecepcionCliente/${this.id}/${
-          this.authService.userTokenDto.infoEmployeeDto.employeeId
+          this.authService.applicationUserId
         }/${this.customerIdService.getCustomerId()}`,
         model
       )

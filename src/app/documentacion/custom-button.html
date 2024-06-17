@@ -4,24 +4,22 @@
     [customClass]="'btn-outline-primary '"
     icon="fa-regular fa-envelope text-primary"
     (clicked)="onModalEmailData(item.id)"
-  ></custom-button>
+  />
   <custom-button
     *ngIf="item.active"
     ngbTooltip="Desbloquear"
     [customClass]="'btn-outline-danger '"
     icon="fa-regular fa-user-lock text-danger"
     (clicked)="onToUnlockAccount(item.id)"
-  ></custom-button>
+  />
   <custom-button
     *ngIf="!item.active"
     ngbTooltip="Bloquear"
     [customClass]="'btn-outline-success '"
     icon="fa-regular fa-user-check text-success"
     (clicked)="onModalAddOrEdit(item.id)"
-  ></custom-button>
+  />
 
-  <custom-button-edit
-    (edit)="onModalEdit(item.id, item.email)"
-  ></custom-button-edit>
-  <custom-button-delete (OnConfirm)="onDelete(item.id)"></custom-button-delete>
+  <custom-button-edit (edit)="onModalEdit(item.id, item.email)" />
+  <custom-button-delete (OnConfirm)="onDelete(item.id)" />
 </div>

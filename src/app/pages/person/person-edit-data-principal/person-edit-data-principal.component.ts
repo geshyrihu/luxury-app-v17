@@ -2,7 +2,6 @@ import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subject, takeUntil } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
@@ -28,9 +27,8 @@ export default class PersonEditDataPrincipalComponent implements OnInit {
 
   submitting: boolean = false;
 
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
-
-  public personId: number = 0;
+  personId: number = 0;
+  applicationUserId: string = '';
 
   imagen: File;
   dataError = '';
@@ -49,54 +47,29 @@ export default class PersonEditDataPrincipalComponent implements OnInit {
     ],
   });
 
-  onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
-
-    this.submitting = true;
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-
-    this.dataService
-      .put('person/' + this.personId, this.form.value)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          this.ref.close(true);
-          this.customToastService.onClose();
-        },
-        error: (error) => {
-          // Habilitar el botón nuevamente al finalizar el envío del formulario
-          this.submitting = false;
-          this.customToastService.onCloseToError(error);
-        },
-      });
-  }
-
   ngOnInit(): void {
     this.personId = this.config.data.personId;
-    if (this.personId !== 0) {
+    this.applicationUserId = this.config.data.applicationUserId;
+    if (this.applicationUserId !== '') {
       this.onLoadData();
     }
   }
 
   onLoadData() {
-    this.dataService
-      .get(`person/${this.personId}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.form.patchValue(resp.body);
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
+    const urlApi = `ApplicationUserEmployee/GetById/${this.applicationUserId}`;
+    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+      this.form.patchValue(result);
+    });
   }
-  get f() {
-    return this.form.controls;
-  }
+  onSubmit() {
+    if (!this.apiRequestService.validateForm(this.form)) return;
 
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
+    this.submitting = true;
+    var urlApi = `ApplicationUserEmployee/UpdatePrincipalData/${this.applicationUserId}`;
+    this.apiRequestService
+      .onPut(urlApi, this.form.value)
+      .then((result: boolean) => {
+        result ? this.ref.close(true) : (this.submitting = false);
+      });
   }
 }

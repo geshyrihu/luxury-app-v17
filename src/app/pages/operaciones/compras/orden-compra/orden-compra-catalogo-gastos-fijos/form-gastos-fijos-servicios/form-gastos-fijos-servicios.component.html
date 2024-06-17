@@ -1,4 +1,4 @@
-<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
 @if (mensajeError == true) {
 <p class="small text-danger text-left font-italic">
   Seleccione producto y unidad
@@ -21,7 +21,7 @@
       [title]="'Productos o Servicios Agregados'"
       [dt]="dc"
       [showAdd]="false"
-    ></app-table-header>
+    />
   </ng-template>
   <ng-template pTemplate="header">
     <tr>
@@ -105,9 +105,7 @@
           >
             <i class="fa-thin fa-floppy-disk"></i>
           </button>
-          <custom-button-delete
-            (OnConfirm)="deleteProductoAgregado(item.id)"
-          ></custom-button-delete>
+          <custom-button-delete (OnConfirm)="deleteProductoAgregado(item.id)" />
         </div>
       </td>
     </tr>
@@ -129,11 +127,7 @@
   [autoLayout]="true"
 >
   <ng-template pTemplate="caption">
-    <app-table-header
-      [title]="'Productos'"
-      [dt]="dt"
-      [showAdd]="false"
-    ></app-table-header>
+    <app-table-header [title]="'Productos'" [dt]="dt" [showAdd]="false" />
   </ng-template>
   <ng-template pTemplate="header">
     <tr>

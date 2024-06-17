@@ -143,4 +143,8 @@ export class TopbarComponent implements OnInit {
   onNext() {
     this.location.forward();
   }
+
+  onRefresh() {
+    window.location.href = window.location.href; // Reasignar la URL actual para recargar la página
+  }
 }

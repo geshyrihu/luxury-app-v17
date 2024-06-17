@@ -80,6 +80,7 @@ export default class SolicitudCompraComponent implements OnInit {
       estatus: [2],
       folio: [''],
       personId: [this.authService.personId],
+      applicationUserId: [this.authService.applicationUserId],
     }));
   }
   onCotizacionesRelacionadas() {
@@ -123,7 +124,7 @@ export default class SolicitudCompraComponent implements OnInit {
     this.submitting = true;
     if (Number(this.id) === 0) {
       this.apiRequestService
-        .onPost(`solicitudcompra`, this.form.value)
+        .onPost(`SolicitudCompra`, this.form.value)
         .then((result: any) => {
           if (result) {
             this.id = Number(result.id);
@@ -133,7 +134,7 @@ export default class SolicitudCompraComponent implements OnInit {
         });
     } else {
       this.apiRequestService
-        .onPut(`solicitudcompra/${this.id}`, this.form.value)
+        .onPut(`SolicitudCompra/${this.id}`, this.form.value)
         .then((result: boolean) => {
           if (result) {
             this.onLoadData();

@@ -11,14 +11,14 @@
                 formControlName="nameProvider"
                 label="Razón Social"
                 placeholder="razón social"
-              ></custom-input-text>
+              />
               <custom-input-text
                 [control]="form.get('nameComercial')"
                 [horizontal]="false"
                 formControlName="nameComercial"
                 label="Nombre Comercial"
                 placeholder="nombre comercial"
-              ></custom-input-text>
+              />
               <custom-input-text
                 (keyup)="onValidarRFC()"
                 [(ngModel)]="valueRfc"
@@ -27,7 +27,7 @@
                 formControlName="rfc"
                 label="RFC"
                 placeholder="rfc"
-              ></custom-input-text>
+              />
               @if (rfcCoincidente.length > 0) {
               <div class="form-group mb-1">
                 @for (item of rfcCoincidente; track item) {
@@ -50,7 +50,7 @@
                     placeholder="(00) 0000-0000"
                     customMask="(00) 0000-0000"
                     [horizontal]="false"
-                  ></custom-input-mask>
+                  />
                 </div>
                 <div class="col-sm-6">
                   <custom-input-mask
@@ -60,7 +60,7 @@
                     placeholder="(00) 0000-0000"
                     customMask="(00) 0000-0000"
                     [horizontal]="false"
-                  ></custom-input-mask>
+                  />
                 </div>
               </div>
               <div class="row">
@@ -71,14 +71,14 @@
                     formControlName="webPage"
                     label="Página Web"
                     placeholder="página web"
-                  ></custom-input-text>
+                  />
                   <custom-input-select
                     [control]="form.get('nivelAcceso')"
                     formControlName="nivelAcceso"
                     label="Nivel de Acceso"
                     [data]="cb_nivel_acceso"
                     [horizontal]="false"
-                  ></custom-input-select>
+                  />
                 </div>
               </div>
             </div>
@@ -130,14 +130,14 @@
             formControlName="contactOne"
             label="Nombre de contacto 1"
             placeholder="nombre de contacto 1"
-          ></custom-input-text>
+          />
           <custom-input-text
             [control]="form.get('positionOne')"
             [horizontal]="false"
             formControlName="positionOne"
             label="Puesto"
             placeholder="puesto"
-          ></custom-input-text>
+          />
           <custom-input-mask
             [control]="form.get('cellPhoneOne')"
             formControlName="cellPhoneOne"
@@ -145,14 +145,14 @@
             placeholder="(00) 0000-0000"
             customMask="(00) 0000-0000"
             [horizontal]="false"
-          ></custom-input-mask>
+          />
           <custom-input-text
             [control]="form.get('emailOne')"
             [horizontal]="false"
             formControlName="emailOne"
             label="Correo Electronico"
             placeholder="correo electronico"
-          ></custom-input-text>
+          />
         </div>
       </div>
     </div>
@@ -165,14 +165,14 @@
             formControlName="contactTwo"
             label="Nombre de contacto 2"
             placeholder="nombre de contacto 2"
-          ></custom-input-text>
+          />
           <custom-input-text
             [control]="form.get('positionTwo')"
             [horizontal]="false"
             formControlName="positionTwo"
             label="Puesto"
             placeholder="puesto"
-          ></custom-input-text>
+          />
           <custom-input-mask
             [control]="form.get('cellPhoneTwo')"
             formControlName="cellPhoneTwo"
@@ -180,14 +180,14 @@
             placeholder="(00) 0000-0000"
             customMask="(00) 0000-0000"
             [horizontal]="false"
-          ></custom-input-mask>
+          />
           <custom-input-text
             [control]="form.get('emailTwo')"
             [horizontal]="false"
             formControlName="emailTwo"
             label="Correo Electronico"
             placeholder="correo electronico"
-          ></custom-input-text>
+          />
         </div>
       </div>
     </div>
@@ -201,7 +201,7 @@
             formControlName="nameCheck"
             label="beneficiario"
             placeholder="beneficiario"
-          ></custom-input-text>
+          />
           <custom-input-datalist
             [horizontal]="false"
             (propagar)="saveBancoId($event)"
@@ -217,14 +217,14 @@
             formControlName="paymentAccount"
             label="Cuenta/Convenio"
             placeholder="cuenta o convenio"
-          ></custom-input-text>
+          />
           <custom-input-text
             [control]="form.get('interbankCode')"
             [horizontal]="false"
             formControlName="interbankCode"
             label="Clabe/Referencia"
             placeholder="clabe o referencia"
-          ></custom-input-text>
+          />
         </div>
       </div>
     </div>

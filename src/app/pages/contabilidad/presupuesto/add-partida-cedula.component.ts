@@ -50,6 +50,7 @@ export default class AddPartidaCedulaComponent implements OnInit {
     model.presupuestoMensual = item.presupuestoMensual;
     model.personId = this.authService.infoEmployeeDto.personId;
     model.presupuestoEjercido = 0;
+    model.applicationUserId = this.authService.applicationUserId;
 
     this.submitting = true;
 

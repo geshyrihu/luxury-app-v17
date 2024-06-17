@@ -1,4 +1,4 @@
-<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
 @if (data) {
 <div class="card">
   <table class="custom-table">
@@ -54,10 +54,8 @@
               (edit)="
                 onModalAddOrEdit({ id: data.id, title: 'Editar Registro' })
               "
-            ></custom-button-edit>
-            <custom-button-delete
-              (OnConfirm)="onDelete(data.id)"
-            ></custom-button-delete>
+            />
+            <custom-button-delete (OnConfirm)="onDelete(data.id)" />
           </div>
         </td>
         }
@@ -88,10 +86,8 @@
                     title: 'Editar Registro'
                   })
                 "
-              ></custom-button-edit>
-              <custom-button-delete
-                (OnConfirm)="onDeleteDiscounts(item.id)"
-              ></custom-button-delete>
+              />
+              <custom-button-delete (OnConfirm)="onDeleteDiscounts(item.id)" />
             </div>
           </div>
           }

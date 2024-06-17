@@ -22,7 +22,6 @@ export default class TicketTrakingRequestDetailComponent implements OnInit {
     this.onLoadData();
   }
 
-  // Función para cargar los datos de los bancos
   onLoadData() {
     this.apiRequestService
       .onGetList(`TicketLegal/requestDetail/${this.id}`)

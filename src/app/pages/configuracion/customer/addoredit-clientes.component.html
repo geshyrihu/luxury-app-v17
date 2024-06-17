@@ -5,7 +5,7 @@
         [control]="form.get('id')"
         formControlName="id"
         label="Id"
-      ></custom-input-text>
+      />
 
       <div class="form-group row mb-1">
         <label class="col-sm-3">Imagen</label>
@@ -24,21 +24,21 @@
         formControlName="nameCustomer"
         label="Nombre"
         placeholder="nombre"
-      ></custom-input-text>
+      />
 
       <custom-input-text
         [control]="form.get('nombreCorto')"
         formControlName="nombreCorto"
         label="Nombre Corto"
         placeholder="nombre Corto"
-      ></custom-input-text>
+      />
 
       <custom-input-text
         [control]="form.get('rfc')"
         formControlName="rfc"
         label="RFC"
         placeholder="rfc"
-      ></custom-input-text>
+      />
       <div class="row">
         <div class="col-sm-6">
           <custom-input-mask
@@ -47,7 +47,7 @@
             label="Tél. 1"
             placeholder="teléfono"
             customMask="(00) 0000-0000"
-          ></custom-input-mask>
+          />
         </div>
         <div class="col-sm-6">
           <custom-input-mask
@@ -56,7 +56,7 @@
             label="Tél. 2"
             placeholder="teléfono"
             customMask="(00) 0000-0000"
-          ></custom-input-mask>
+          />
         </div>
       </div>
 
@@ -65,7 +65,7 @@
         formControlName="register"
         label="Fecha de registro"
         placeholder="fecha de registro"
-      ></custom-input-date>
+      />
 
       <custom-input-number
         [control]="form.get('numeroCliente')"
@@ -78,7 +78,7 @@
         formControlName="active"
         label="Activo"
         [data]="optionActive"
-      ></custom-input-select>
+      />
 
       <custom-button-submit [disabled]="this.form.invalid || submitting" />
     </form>

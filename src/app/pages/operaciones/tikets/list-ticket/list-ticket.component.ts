@@ -13,7 +13,7 @@ import { DataService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
 import { ReportService } from 'src/app/core/services/report.service';
 import { TicketFilterService } from 'src/app/core/services/ticket-filter.service';
-import CardEmployeeComponent from 'src/app/pages/operaciones/directorios/empleados/card-employee/card-employee.component';
+import CardEmployeeComponent from 'src/app/pages/employee/card-employee/card-employee.component';
 import { environment } from 'src/environments/environment';
 import EnviarMailReporteSemanalComponent from '../../enviar-email/enviar-mail-reporte-semanal/enviar-mail-reporte-semanal.component';
 import AddoreditTicketComponent from '../addoredit-ticket/addoredit-ticket.component';

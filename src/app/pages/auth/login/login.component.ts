@@ -73,6 +73,7 @@ export default class LoginComponent implements OnInit {
       )
       .subscribe((resp: any) => {
         if (resp.body.token != null) {
+          console.log('🚀 ~ login:', resp.body);
           this.onRemember(this.form.get('remember').value);
           this.router.navigateByUrl(localStorage.getItem('currentUrl'));
           this.securityService.setAuthData(resp.body.token);
@@ -84,18 +85,18 @@ export default class LoginComponent implements OnInit {
   onRemember(remember: boolean) {
     // Almacena o elimina el email y la contraseña en el localStorage según la opción 'remember'
     if (remember) {
-      localStorage.setItem('email', this.form.controls.email.value);
+      localStorage.setItem('userName', this.form.controls.userName.value);
       localStorage.setItem('password', this.form.controls.password.value);
     } else {
-      localStorage.removeItem('email');
+      localStorage.removeItem('userName');
       localStorage.removeItem('password');
     }
   }
 
   onLoadForm() {
-    // Carga los valores de email y password desde el localStorage al inicializar el formulario
+    // Carga los valores de userName y password desde el localStorage al inicializar el formulario
     this.form = this.formBuilder.group({
-      email: [localStorage.getItem('email') || '', Validators.required],
+      userName: [localStorage.getItem('userName') || '', Validators.required],
       password: [localStorage.getItem('password') || '', Validators.required],
       remember: [true],
     });

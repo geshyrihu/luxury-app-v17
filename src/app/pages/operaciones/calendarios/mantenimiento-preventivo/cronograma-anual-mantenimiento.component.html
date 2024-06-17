@@ -41,7 +41,7 @@
               placement="top"
               icon="fa-regular fa-file-excel font-size-16 align-middle"
               (clicked)="exportExcel()"
-            ></custom-button>
+            />
             @for (item of filtroEquipos; track item) {
             <custom-button
               [customClass]="'btn-soft-secondary waves-effect waves-light '"
@@ -52,7 +52,7 @@
               placement="top"
               icon="fas {{ item.icon }}"
               (clicked)="clickButton(item)"
-            ></custom-button>
+            />
             }
           </div>
           <input

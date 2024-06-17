@@ -18,14 +18,14 @@
         formControlName="recibidoPor"
         label="Recibido Por"
         placeholder="receptor"
-      ></custom-input-text>
+      />
 
       <custom-input-text
         [control]="form.get('factura')"
         formControlName="factura"
         label="Factura"
         placeholder="factura"
-      ></custom-input-text>
+      />
       <custom-button-submit [disabled]="this.form.invalid || submitting" />
     </form>
   </div>

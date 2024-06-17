@@ -22,4 +22,11 @@ export default [
         'src/app/pages/operaciones/tikets/reporte-pendientes/pending-report.component'
       ),
   },
+  {
+    path: 'tickets/:departament',
+    loadComponent: () =>
+      import(
+        'src/app/pages/tickets-v2/list-ticket-for-departament/list-ticket-for-departament.component'
+      ),
+  },
 ] as Routes;

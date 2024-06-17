@@ -1,4 +1,4 @@
-<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
 
 <div class="p-card p-mb-5">
   <p-table
@@ -21,7 +21,7 @@
         [title]="'Descripcion'"
         (add)="onModalAddOrEdit({ id: 0, title: 'Nuevo Registro' })"
         [dt]="dt"
-      ></app-table-header>
+      />
     </ng-template>
 
     <ng-template pTemplate="header">
@@ -73,10 +73,8 @@
               (edit)="
                 onModalAddOrEdit({ id: item.id, title: 'Editar Registro' })
               "
-            ></custom-button-edit>
-            <custom-button-delete
-              (OnConfirm)="onDelete(item.id)"
-            ></custom-button-delete>
+            />
+            <custom-button-delete (OnConfirm)="onDelete(item.id)" />
           </div>
         </td>
         <!-- Opciones -->

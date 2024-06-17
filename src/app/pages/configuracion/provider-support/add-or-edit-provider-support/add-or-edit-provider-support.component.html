@@ -21,7 +21,7 @@
       }
 
       <!--  -->
-      @if(cb_persons.length == 0){
+      @if(cb_applicationUserProvider.length == 0){
       <div class="text-center">
         <p>Cargando listado de personas</p>
         <div class="spinner-border text-info m-1" role="status">
@@ -31,12 +31,12 @@
       }@else {
       <custom-input-datalist
         (propagar)="savePersonId($event)"
-        [control]="form.get('namePerson')"
-        [data]="cb_persons"
-        formControlName="namePerson"
+        [control]="form.get('applicationUser')"
+        [data]="cb_applicationUserProvider"
+        formControlName="applicationUser"
         label="Personas"
         [horizontal]="false"
-        dataListId="namePersonDatalistOptions"
+        dataListId="applicationUserDatalistOptions"
       ></custom-input-datalist>
       }
       <!--  -->

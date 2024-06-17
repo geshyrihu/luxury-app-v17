@@ -9,7 +9,6 @@ import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { IMeeting } from '../../../core/interfaces/meeting.interface';
 import AddOrEditListAdministrationComponent from './addoredit-administration/addoredit-list-administration.component';
 import AddOrEditComiteComponent from './addoredit-comite/addoredit-comite.component';
 import AddOrEditInvitedComponent from './addoredit-invitado/addoredit-invited.component';
@@ -56,22 +55,24 @@ export default class AddOrEditMeetingComponent implements OnInit {
       date: [this.dateNow, Validators.required],
       eTypeMeeting: ['', Validators.required],
       customerId: [this.customerId],
-      user: [null],
+      applicationUserId: [this.authService.applicationUserId],
     });
   }
 
   onSubmit() {
     if (!this.apiRequestService.validateForm(this.form)) return;
-    const model: IMeeting = this.form.value;
+    console.log('🚀 ~ this.form.value:', this.form.value);
 
     if (this.id === 0) {
-      this.apiRequestService.onPost(`Meetings`, model).then((result: any) => {
-        this.id = result.id;
-        this.onLoadData();
-      });
+      this.apiRequestService
+        .onPost(`Meetings`, this.form.value)
+        .then((result: any) => {
+          this.id = result.id;
+          this.onLoadData();
+        });
     } else {
       this.apiRequestService
-        .onPut(`Meetings/${this.id}`, model)
+        .onPut(`Meetings/${this.id}`, this.form.value)
         .then((result: any) => {
           this.onLoadData();
         });

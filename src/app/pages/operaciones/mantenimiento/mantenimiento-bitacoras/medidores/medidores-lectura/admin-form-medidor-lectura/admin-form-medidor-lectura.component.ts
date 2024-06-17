@@ -39,6 +39,7 @@ export default class AdminFormMedidorLecturaComponent implements OnInit {
       fechaRegistro: [this.today, Validators.required],
       lectura: ['', Validators.required],
       personId: [this.authService.personId],
+      applicationUserId: [this.authService.applicationUserId],
     });
   }
   onLoadData() {

@@ -55,7 +55,7 @@
             ])
           "
           [dt]="dt"
-        ></app-table-header>
+        />
       </div>
     </div>
   </ng-template>
@@ -149,7 +149,7 @@
                 header: 'Editar regitro ' + item.id
               })
             "
-          ></custom-button-edit>
+          />
           <custom-button
             [customClass]="'btn-sm btn-outline-dark'"
             ngbTooltip="Duplicar Servicio"
@@ -163,12 +163,10 @@
                 header: 'Duplicar servicio'
               })
             "
-          ></custom-button>
+          />
           <!-- Duplicar Servicio -->
           <!-- Borrar -->
-          <custom-button-delete
-            (OnConfirm)="onDelete(item.id)"
-          ></custom-button-delete>
+          <custom-button-delete (OnConfirm)="onDelete(item.id)" />
           <!-- Borrar -->
         </div>
       </td>

@@ -29,7 +29,6 @@ export default class AddoreditPeriodoCedulaPresupuestalComponent
     id: { value: this.id, disabled: true },
     desde: ['', Validators.required],
     hasta: ['', Validators.required],
-    employeeId: [this.authService.userTokenDto.infoEmployeeDto.employeeId],
     customerId: [],
   });
 

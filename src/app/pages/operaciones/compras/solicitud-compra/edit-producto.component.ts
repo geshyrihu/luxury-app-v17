@@ -61,6 +61,10 @@ export default class EditProductoComponent implements OnInit {
         this.authService.personId,
         { validators: [Validators.required] },
       ],
+      applicationUserId: [
+        this.authService.applicationUserId,
+        { validators: [Validators.required] },
+      ],
     });
   }
 

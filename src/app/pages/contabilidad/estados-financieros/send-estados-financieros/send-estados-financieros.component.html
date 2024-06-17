@@ -1,4 +1,4 @@
-<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
 <div class="card">
   <div class="card-body">
     <div class="row">
@@ -31,7 +31,7 @@
           classButton="col-auto btn btn-outline-success me-1"
           confirmButtonText="Sí, enviar"
           (OnConfirm)="onEnviarEmail()"
-        ></custom-button-confirmation>
+        />
       </div>
     </div>
     @if (mostrarPara || mostrarCo || mostrarCco) {
@@ -124,11 +124,7 @@
     [tableStyle]="{ 'min-width': '50rem' }"
   >
     <ng-template pTemplate="caption">
-      <app-table-header
-        [title]="'Condomino'"
-        [showAdd]="false"
-        [dt]="dt"
-      ></app-table-header>
+      <app-table-header [title]="'Condomino'" [showAdd]="false" [dt]="dt" />
     </ng-template>
     <ng-template pTemplate="header">
       <tr>

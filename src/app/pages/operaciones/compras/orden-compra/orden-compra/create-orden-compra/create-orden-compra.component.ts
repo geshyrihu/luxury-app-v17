@@ -66,13 +66,14 @@ export default class CreateOrdenCompraComponent implements OnInit {
       justificacionGasto: ['', Validators.required],
       revisadoPorResidente: [''],
       personId: [this.authService.personId],
+
+      applicationUserId: [this.authService.applicationUserId],
     });
   }
 
   onLoadSelectItemProvider() {
     const url = 'providers';
     this.apiRequestService.onGetSelectItem(url).then((result: any) => {
-      console.log('🚀 ~ result:', result);
       this.cb_providers = result;
     });
   }

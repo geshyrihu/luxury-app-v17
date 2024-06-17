@@ -10,7 +10,7 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { StatusSolicitudVacanteService } from 'src/app/core/services/status-solicitud-vacante.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
-import CardEmployeeComponent from 'src/app/pages/operaciones/directorios/empleados/card-employee/card-employee.component';
+import CardEmployeeComponent from 'src/app/pages/employee/card-employee/card-employee.component';
 import { environment } from 'src/environments/environment';
 import AddoreditSolicitudBajaComponent from '../../list-solicitudes/list-solicitud-baja/addoredit-solicitud-baja/addoredit-solicitud-baja.component';
 import AddOrEditStatusRequestDismissalDiscountComponent from './addoredit-status-request-dismissal-discount/addoredit-status-request-dismissal-discount.component';

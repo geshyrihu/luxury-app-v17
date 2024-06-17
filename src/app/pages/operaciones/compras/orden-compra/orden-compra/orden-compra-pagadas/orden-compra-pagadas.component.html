@@ -26,7 +26,7 @@
         [title]="'Ordenes de Compra Pagadas'"
         [showAdd]="false"
         [dt]="dt"
-      ></app-table-header>
+      />
 
       <div
         class="btn-group mt-2"
@@ -140,9 +140,7 @@
         </td>
 
         <td class="text-center">
-          <custom-button-edit
-            (edit)="onAddOrEdit(item.id)"
-          ></custom-button-edit>
+          <custom-button-edit (edit)="onAddOrEdit(item.id)" />
         </td>
       </tr>
     </ng-template>

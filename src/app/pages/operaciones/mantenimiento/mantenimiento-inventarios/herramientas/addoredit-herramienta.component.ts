@@ -66,8 +66,9 @@ export default class AddoreditToolsComponent implements OnInit, OnDestroy {
       technicalSpecifications: [''],
       observations: [''],
       categoryId: ['', [Validators.required]],
-      employeeId: [
-        this.authService.userTokenDto.infoEmployeeDto.employeeId,
+      employeeId: [this.authService.employeeId, [Validators.required]],
+      applicationUserId: [
+        this.authService.applicationUserId,
         [Validators.required],
       ],
       customerId: [this.customerIdService.getCustomerId()],
@@ -158,6 +159,10 @@ export default class AddoreditToolsComponent implements OnInit, OnDestroy {
     formData.append(
       'employeeId',
       String(this.authService.userTokenDto.infoEmployeeDto.employeeId)
+    );
+    formData.append(
+      'applicationUserId',
+      String(this.authService.applicationUserId)
     );
     formData.append('customerId', String(dto.customerId));
     if (dto.photoPath) {

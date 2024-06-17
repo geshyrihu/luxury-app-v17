@@ -8,7 +8,7 @@
           formControlName="birth"
           label="Fecha de nacimiento"
           placeholder="fecha de nacimiento"
-        ></custom-input-date>
+        />
       </div>
       <div class="col-sm-3 mb-2">
         <custom-input-select
@@ -17,7 +17,7 @@
           label="Sexo"
           [data]="cb_sex"
           [horizontal]="false"
-        ></custom-input-select>
+        />
       </div>
 
       <div class="col-sm-3 mb-2">
@@ -27,7 +27,7 @@
           label="Curp"
           placeholder="curp"
           [horizontal]="false"
-        ></custom-input-text>
+        />
       </div>
       <div class="col-sm-3 mb-2">
         <custom-input-text
@@ -36,7 +36,7 @@
           label="RFC"
           placeholder="rfc"
           [horizontal]="false"
-        ></custom-input-text>
+        />
       </div>
       <div class="form-group col-sm-3 mb-2">
         <custom-input-text
@@ -45,7 +45,7 @@
           label="NSS"
           placeholder="nss"
           [horizontal]="false"
-        ></custom-input-text>
+        />
       </div>
       <div class="form-group col-sm-3 mb-2">
         <custom-input-select
@@ -54,7 +54,7 @@
           label="Tipo de Sangre"
           [data]="cb_blood_type"
           [horizontal]="false"
-        ></custom-input-select>
+        />
       </div>
       <div class="form-group col-sm-3 mb-2">
         <custom-input-mask
@@ -64,7 +64,7 @@
           placeholder="(00) 0000-0000"
           customMask="(00) 0000-0000"
           [horizontal]="false"
-        ></custom-input-mask>
+        />
       </div>
       <div class="form-group col-sm-3 mb-2">
         <custom-input-select
@@ -73,7 +73,7 @@
           label="Estado civil"
           [data]="cb_marital_status"
           [horizontal]="false"
-        ></custom-input-select>
+        />
       </div>
       <div class="form-group col-sm-3 mb-2">
         <label>Nacionalidad</label>
@@ -98,7 +98,7 @@
           label="Nivel Educativo"
           [data]="cb_education_level"
           [horizontal]="false"
-        ></custom-input-select>
+        />
       </div>
     </div>
     <custom-button-submit [disabled]="this.form.invalid || submitting" />

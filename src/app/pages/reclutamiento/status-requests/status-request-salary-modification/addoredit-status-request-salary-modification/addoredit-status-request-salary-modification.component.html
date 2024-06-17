@@ -5,20 +5,20 @@
       formControlName="id"
       label="Id"
       [hidden]="true"
-    ></custom-input-text>
+    />
 
     <custom-input-text
       [control]="form.get('employeeId')"
       formControlName="employeeId"
       label="employeeId"
       [hidden]="true"
-    ></custom-input-text>
+    />
     <custom-input-text
       [control]="form.get('workPositionId')"
       formControlName="workPositionId"
       label="workPositionId"
       [hidden]="true"
-    ></custom-input-text>
+    />
 
     <custom-input-select
       [control]="form.get('confirmationFinish')"
@@ -26,7 +26,7 @@
       label="confirmationFinish"
       [data]="cb_si_no"
       [hidden]="true"
-    ></custom-input-select>
+    />
 
     <custom-input-date
       [control]="form.get('requestDate')"
@@ -34,13 +34,13 @@
       label="Fecha de solicitud"
       placeholder="fecha de solicitud"
       [disabled]="true"
-    ></custom-input-date>
+    />
     <custom-input-text
       [control]="form.get('folio')"
       formControlName="folio"
       label="Folio"
       [readonly]="true"
-    ></custom-input-text>
+    />
     <custom-input-number
       [control]="form.get('currentSalary')"
       formControlName="currentSalary"
@@ -52,7 +52,7 @@
       formControlName="professionCurrentId"
       label="Puesto actual"
       [data]="cb_profession"
-    ></custom-input-select>
+    />
     <custom-input-number
       [control]="form.get('finalSalary')"
       formControlName="finalSalary"
@@ -64,20 +64,20 @@
       formControlName="professionNewId"
       label="Puesto nuevo"
       [data]="cb_profession"
-    ></custom-input-select>
+    />
     <custom-input-date
       [control]="form.get('executionDate')"
       formControlName="executionDate"
       label="Fecha de ejecución"
       placeholder="fecha de ejecución"
-    ></custom-input-date>
+    />
 
     <custom-input-select
       [control]="form.get('retroactive')"
       formControlName="retroactive"
       label="Retroactivo"
       [data]="cb_si_no"
-    ></custom-input-select>
+    />
 
     <custom-button-submit [disabled]="this.form.invalid || submitting" />
   </form>

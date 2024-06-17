@@ -21,8 +21,6 @@ export default class EditPartidaCedulaComponent implements OnInit {
 
   submitting: boolean = false;
 
-  personId: any = this.authService.personId;
-
   id: any = 0;
   form: FormGroup;
 
@@ -33,10 +31,11 @@ export default class EditPartidaCedulaComponent implements OnInit {
 
   onSubmit() {
     if (!this.apiRequestService.validateForm(this.form)) return;
-    console.log('🚀 ~ this.form:', this.form.value);
 
     this.submitting = true;
-
+    this.form.patchValue({
+      applicationUserId: this.authService.applicationUserId,
+    });
     if (this.id === 0) {
       this.apiRequestService
         .onPost(`CedulaPresupuestalDetalles`, this.form.value)
@@ -59,9 +58,9 @@ export default class EditPartidaCedulaComponent implements OnInit {
       descripcion: [''],
       presupuestoMensual: [0, Validators.required],
       presupuestoEjercido: [],
-      personId: [this.personId],
+      personId: [this.authService.personId],
+      applicationUserId: [this.authService.applicationUserId],
     });
-    console.log('🚀 ~ this.form:', this.form.value);
 
     this.apiRequestService
       .onGetItem(`CedulaPresupuestalDetalles/${this.id}`)
@@ -69,9 +68,6 @@ export default class EditPartidaCedulaComponent implements OnInit {
         this.form.patchValue(result);
         this.form.patchValue({
           descripcion: result.cuenta.descripcion,
-        });
-        this.form.patchValue({
-          personId: this.personId,
         });
       });
   }

@@ -1,4 +1,4 @@
-<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
 
 <div class="auth-bg pt-md-5 p-4 d-flex">
   <div class="container-fluid p-0">
@@ -43,12 +43,12 @@
             </div>
             <form [formGroup]="form" (ngSubmit)="onSubmit()">
               <custom-input-text
-                [control]="form.get('email')"
+                [control]="form.get('userName')"
                 [horizontal]="false"
-                formControlName="email"
+                formControlName="userName"
                 label="Usuario"
                 placeholder="Usuario"
-              ></custom-input-text>
+              />
 
               <custom-input-password
                 [control]="form.get('password')"
@@ -70,7 +70,7 @@
                   customClass="btn-primary  w-100"
                   label="Ingresar"
                   type="submit"
-                ></custom-button>
+                />
               </div>
             </form>
 

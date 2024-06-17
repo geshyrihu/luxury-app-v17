@@ -4,7 +4,7 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
-import BitacoraMantenimientoComponent from 'src/app/pages/operaciones/mantenimiento/mantenimiento-bitacoras/recorridos/bitacora-mantenimiento.component';
+import BitacoraMantenimientoComponent from 'src/app/pages/bitacora-mantenimiento/bitacora-mantenimiento.component';
 import DashboardMinutasComponent from './dashboard-minutas/dashboard-minutas.component';
 import DashboardTicketsComponent from './dashboard-tickets/dashboard-tickets.component';
 import MantenimientosPreventivosComponent from './mttos-preventivos/mttos-preventivos.component';

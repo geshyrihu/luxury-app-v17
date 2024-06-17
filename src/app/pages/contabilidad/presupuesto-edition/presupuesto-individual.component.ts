@@ -30,6 +30,7 @@ export default class PresupuestoIndividualComponent implements OnInit {
   // Declaración e inicialización de variables
   id: number = 0;
   personId: number = this.authService.infoEmployeeDto.personId;
+  applicationUserId: string = this.authService.applicationUserId;
   data: any;
   ref: DynamicDialogRef; // Referencia a un cuadro de diálogo modal
 
@@ -38,7 +39,7 @@ export default class PresupuestoIndividualComponent implements OnInit {
     // Cuando se inicia el componente, cargar los datos de los bancos
     this.onLoadData();
   }
-  // Función para cargar los datos de los bancos
+
   onLoadData() {
     this.apiRequestService
       .onGetItem(`Presupuesto/GetById/${this.id}`)
@@ -143,6 +144,7 @@ export default class PresupuestoIndividualComponent implements OnInit {
     const data = {
       id: item.id,
       personId: this.personId,
+      applicationUserId: this.applicationUserId,
       monthlyBudget: item.monthlyBudget,
     };
 

@@ -9,7 +9,7 @@
         formControlName="id"
         label="Id"
         placeholder="id"
-      ></custom-input-text>
+      />
       <custom-input-datalist
         (propagar)="saveprofessionIdId($event)"
         [control]="form.get('professionName')"
@@ -50,7 +50,7 @@
         formControlName="turnoTrabajo"
         label="Turno de trabajo"
         [data]="cb_turnoTrabajo"
-      ></custom-input-select>
+      />
       <div class="form-group row mb-2">
         <label class="font-weight-lighter col-sm-3">Lunes</label>
         <div class="col-9">
@@ -210,7 +210,7 @@
         formControlName="state"
         label="Vacante activa"
         [data]="cb_state"
-      ></custom-input-select>
+      />
       <custom-button-submit [disabled]="this.form.invalid || submitting" />
     </form>
   </div>

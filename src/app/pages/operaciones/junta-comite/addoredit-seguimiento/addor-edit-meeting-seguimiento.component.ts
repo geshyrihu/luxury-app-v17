@@ -33,6 +33,10 @@ export default class AddorEditMeetingSeguimientoComponent implements OnInit {
     fecha: ['', Validators.required],
     seguimiento: ['', Validators.required],
     personId: [this.authService.personId, Validators.required],
+    applicationUserId: [
+      this.authService.applicationUserId,
+      Validators.required,
+    ],
   });
 
   ngOnInit(): void {

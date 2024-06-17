@@ -31,6 +31,7 @@ export default class AddOrEditPropiedadesComponent implements OnInit {
     customerId: [this.customerId, Validators.required],
     tower: ['', Validators.required],
     user: [''],
+    applicationUserId: [this.authService.applicationUserId],
   });
 
   ngOnInit(): void {

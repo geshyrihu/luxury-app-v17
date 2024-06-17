@@ -45,7 +45,6 @@ export default class ListSolicitudesPorClienteComponent implements OnInit {
 
   // Si es administrador vamos a evitar que traiga todas las solicitudes que sean de administrador y asisntente
 
-  // Función para cargar los datos de los bancos
   onLoadData() {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();

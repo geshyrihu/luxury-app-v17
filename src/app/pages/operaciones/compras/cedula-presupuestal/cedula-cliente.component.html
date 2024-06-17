@@ -1,5 +1,5 @@
 @if (data !== null) {
-<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
 <div class="card">
   <p-table
     #dt
@@ -18,7 +18,7 @@
         [showAdd]="true"
         (add)="onModalAdd()"
         [dt]="dt"
-      ></app-table-header>
+      />
       <br />
       <!-- Selecciona Periodo d ecedula -->
       <div class="form-group row">
@@ -161,10 +161,8 @@
             </button>
             <custom-button-edit
               (edit)="onModalEditar({ id: item.id, title: 'Editar Registro' })"
-            ></custom-button-edit>
-            <custom-button-delete
-              (OnConfirm)="onDelete(item.id)"
-            ></custom-button-delete>
+            />
+            <custom-button-delete (OnConfirm)="onDelete(item.id)" />
           </div>
         </td>
       </tr>

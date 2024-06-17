@@ -1,4 +1,4 @@
-<p-toast position="top-left" [baseZIndex]="99999"></p-toast>
+<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
 <div class="card">
   <p-table
     [value]="data"
@@ -13,7 +13,7 @@
             title="REPORTE ENVIO DE ESTADOS FINANCIEROS"
             [showAdd]="false"
             [showSearch]="false"
-          ></app-table-header>
+          />
         </div>
         <div class="col-3">
           <app-mesanio (periodoEmit)="onFiltrarPeriodo($event)"></app-mesanio>

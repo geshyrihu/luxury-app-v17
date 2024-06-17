@@ -1,0 +1,337 @@
+<p-toast position="top-right" [baseZIndex]="9999999"></p-toast>
+
+@if (data) {
+<div class="card">
+  <p-table
+    [value]="data"
+    [rowHover]="true"
+    styleClass="custom-table"
+    [tableStyle]="{ 'min-width': '50rem' }"
+    #dt
+    [globalFilterFields]="['customer.label', 'concepto.label', 'fecha']"
+  >
+    <ng-template pTemplate="caption">
+      <app-table-header
+        [title]="'Presentaciónes Juntas de comité'"
+        (add)="showModalAdd({ id: 0, titulo: 'Nuevo Registro' })"
+        [dt]="dt"
+      />
+      <button
+        class="btn btn-sm btn-light me-1 mb-sm-1"
+        pSortableColumn="fechaCorrespondienteFiltro"
+      >
+        PERIODO <p-sortIcon field="fechaCorrespondienteFiltro"></p-sortIcon>
+      </button>
+      <button
+        class="btn btn-sm btn-light me-1 mb-sm-1"
+        pSortableColumn="fechaJuntaFiltro"
+      >
+        FECHA DE JUNTA
+        <p-sortIcon field="fechaJuntaFiltro"></p-sortIcon>
+      </button>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th scope="col" style="width: 20%" class="text-uppercase">PORTADA</th>
+        <th scope="col" style="width: 20%" class="text-uppercase">CONTABLE</th>
+        <th scope="col" style="width: 20%" class="text-uppercase">
+          OPERACIONES
+        </th>
+        <th scope="col" style="width: 20%" class="text-uppercase">FINAL</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item>
+      <tr>
+        <td colspan="5">
+          <div class="row">
+            <div class="col-4">
+              PERIODO: {{ item.fechaCorrespondiente | uppercase }}, FECHA DE
+              JUNTA: {{ item.fechaJunta | uppercase }}
+            </div>
+            <div class="col-8">
+              <p class="me-1 mb-sm-1 float-end">
+                Presentación enviada a comité:
+                {{ !item.enviadoComite ? "No" : "Sí" }}
+                <i
+                  class="bx"
+                  [ngClass]="{
+                    'bx-check text-success ': item.enviadoComite,
+                    'bx-x text-danger': !item.enviadoComite
+                  }"
+                ></i>
+              </p>
+            </div>
+            <div class="col-1">
+              @if ( authService.onValidateRoles(['Residente']) &&
+              !item.archivoFinal ) {
+              <div class="d-flex justify-content-end">
+                <custom-button-edit
+                  (edit)="
+                    showModalAdd({ id: item.id, titulo: 'Editar Registro' })
+                  "
+                />
+                <custom-button-delete (OnConfirm)="onDeleteItem(item)" />
+              </div>
+              }
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <!-- PORTADA -->
+          @if ( !item.archivoPortada &&
+          authService.onValidateRoles(['Residente']) ) {
+          <div class="row">
+            <div class="col text-center">
+              <p
+                class="badge bg-info pointer p-2"
+                (click)="
+                  showModalAddOrEdit({
+                    id: item.id,
+                    titulo: 'Portada'
+                  })
+                "
+              >
+                <i class="fa-regular fa-upload"></i> Cargar archivo
+              </p>
+            </div>
+          </div>
+          } @if (item.archivoPortada) {
+          <div class="row">
+            <div class="col-12">
+              <p class="m-0">{{ item.applicationUserPortada }}</p>
+            </div>
+            <div class="col-12">
+              <p class="m-0">
+                {{ item.fechaCargaPortada }}
+              </p>
+            </div>
+            <div class="col-12 mt-1 d-flex align-content-start">
+              @if (item.archivoPortada) {
+              <custom-button-download-pdf
+                [urlFile]="url + item.id + '/' + item.archivoPortada"
+              />
+              } @if ( authService.onValidateRoles(['Residente']) &&
+              !item.archivoFinal ) {
+              <custom-button-edit
+                (edit)="
+                  showModalAddOrEdit({
+                    id: item.id,
+                    titulo: 'Portada'
+                  })
+                "
+              />
+              } @if ( authService.onValidateRoles(['Residente']) &&
+              !item.archivoFinal ) {
+              <custom-button-delete (OnConfirm)="onDelete(item, 'Portada')" />
+              }
+            </div>
+          </div>
+          }
+          <!-- PORTADA -->
+        </td>
+        <td>
+          <!-- CONTABLE -->
+          @if ( !item.archivoContable &&
+          authService.onValidateRoles(['Contador']) ) {
+          <div class="row">
+            <div class="col text-center">
+              <p
+                class="badge bg-info pointer p-2"
+                (click)="
+                  showModalAddOrEdit({
+                    id: item.id,
+                    titulo: 'Contabilidad'
+                  })
+                "
+              >
+                <i class="fa-regular fa-upload"></i> Cargar archivo
+              </p>
+            </div>
+          </div>
+          } @if (item.archivoContable) {
+          <div class="row">
+            <div class="col-12">
+              <p class="m-0">{{ item.applicationUserContable }}</p>
+            </div>
+            <div class="col-12">
+              <p class="m-0">
+                {{ item.fechaCargaContable }}
+              </p>
+            </div>
+            <div class="col-12 mt-1 d-flex align-content-start">
+              @if (item.archivoContable) {
+              <custom-button-download-pdf
+                [urlFile]="url + item.id + '/' + item.archivoContable"
+              />
+              } @if ( authService.onValidateRoles(['Contador']) &&
+              !item.archivoFinal && !item.applicationUserSupervisorContable ) {
+              <custom-button-edit
+                (edit)="
+                  showModalAddOrEdit({
+                    id: item.id,
+                    titulo: 'Contabilidad'
+                  })
+                "
+              />
+              } @if ( authService.onValidateRoles(['Contador']) &&
+              !item.archivoFinal && !item.applicationUserSupervisorContable ) {
+              <custom-button-delete
+                (OnConfirm)="onDelete(item, 'Contabilidad')"
+              />
+              } @if (authService.onValidateRoles(['Residente'])) {
+              <div class="d-flex justify-content-center"></div>
+              }
+            </div>
+            <div class="col-12">
+              <p class="m-0">{{ item.applicationUserSupervisorContable }}</p>
+            </div>
+            <div class="col-12">
+              <p class="m-0">
+                {{ item.fechaCargaSupervisorContable }}
+              </p>
+            </div>
+          </div>
+          } @if ( authService.onValidateRoles(['Contador']) &&
+          item.archivoContable != null && item.archivoFinal == null ) {
+          <button
+            (click)="
+              onValidateContabilidad(
+                item.id,
+                item.applicationUserSupervisorContable
+              )
+            "
+            class="btn btn-sm mt-1"
+            [ngClass]="{
+              'btn-success': item.applicationUserSupervisorContable == null,
+              'btn-danger': item.applicationUserSupervisorContable != null
+            }"
+          >
+            {{
+              item.applicationUserSupervisorContable == null
+                ? "Autorizar"
+                : "Revocar"
+            }}
+          </button>
+          }
+          <!-- CONTABLE -->
+        </td>
+
+        <td>
+          <!-- OPERACIONES -->
+          @if ( !item.archivoJunta && authService.onValidateRoles(['Residente'])
+          ) {
+          <div class="row">
+            <div class="col text-center">
+              <p
+                class="badge bg-info pointer p-2"
+                (click)="
+                  showModalAddOrEdit({
+                    id: item.id,
+                    titulo: 'Operaciones'
+                  })
+                "
+              >
+                <i class="fa-regular fa-upload"></i> Cargar archivo
+              </p>
+            </div>
+          </div>
+          } @if (item.archivoJunta) {
+          <div class="row">
+            <div class="col-12">
+              <p class="m-0">{{ item.applicationUser }}</p>
+            </div>
+            <div class="col-12">
+              <p class="m-0">{{ item.fechaCarga }}</p>
+            </div>
+            <div class="col-12 mt-1 d-flex align-content-end">
+              @if (item.archivoJunta) {
+              <custom-button-download-pdf
+                [urlFile]="url + item.id + '/' + item.archivoJunta"
+              />
+              } @if ( authService.onValidateRoles(['Residente']) &&
+              !item.archivoFinal ) {
+              <custom-button-edit
+                (edit)="
+                  showModalAddOrEdit({
+                    id: item.id,
+                    titulo: 'Operaciones'
+                  })
+                "
+              />
+              } @if ( authService.onValidateRoles(['Residente']) &&
+              !item.archivoFinal ) {
+              <custom-button-delete
+                (OnConfirm)="onDelete(item, 'Operaciones')"
+              />
+              }
+            </div>
+          </div>
+          }
+          <!-- OPERACIONES -->
+        </td>
+        <td>
+          <!-- FINAL -->
+
+          @if ( !item.archivoFinal &&
+          authService.onValidateRoles(['SupervisionOperativa']) &&
+          item.archivoPortada && item.archivoContable && item.archivoJunta &&
+          item.applicationUserSupervisorContable ) {
+          <div class="row">
+            <div class="col text-center">
+              <custom-button-confirmation
+                title="Confirmar"
+                icon=""
+                text="Confirmo que la presentación esta correcta!!"
+                label="Validar presentacion"
+                tooltipText="Validar presentacion"
+                classButton="badge bg-info pointer p-2"
+                confirmButtonText="Sí, confirmar"
+                (OnConfirm)="onValidarPresentacion(item.id)"
+              />
+            </div>
+          </div>
+          } @if (item.archivoFinal) {
+          <div class="row">
+            <div class="col-12">
+              <p class="m-0">{{ item.applicationUserSupervisor }}</p>
+            </div>
+            <div class="col-12">
+              <p class="m-0">
+                {{ item.fechaCargaSupervisor }}
+              </p>
+            </div>
+            <div class="col-12 mt-1 d-flex align-content-start">
+              <custom-button-download-pdf
+                ngbTooltip="Visualizar Pdf"
+                [urlFile]="url + item.id + '/' + item.archivoFinal"
+              />
+              @if (authService.onValidateRoles(['SupervisionOperativa'])) {
+              <custom-button
+                ngbTooltip="Actualizar archivo"
+                customClass="btn-sm btn-outline-primary "
+                icon="fa-regular fa-arrows-rotate"
+                (clicked)="onValidarPresentacion(item.id)"
+              />
+              } @if (authService.onValidateRoles(['SupervisionOperativa'])) {
+              <custom-button-delete (OnConfirm)="onDelete(item, 'Final')" />
+              } @if (authService.onValidateRoles(['Residente'])) {
+              <custom-button-confirmation
+                tooltipText="Enviar presentación a comité"
+                icon="fa-regular fa-paper-plane"
+                classButton="btn-outline-secondary btn-sm me-1 waves-effect waves-light"
+                (OnConfirm)="enviarMailPresentacionComite(item.id)"
+              />
+              }
+            </div>
+          </div>
+          }
+          <!-- FINAL -->
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+  <!-- viewGeneralMinutas -->
+</div>
+}

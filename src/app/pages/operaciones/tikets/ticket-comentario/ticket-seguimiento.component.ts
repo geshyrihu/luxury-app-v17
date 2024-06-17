@@ -31,8 +31,8 @@ export default class TicketSeguimientoComponent implements OnInit, OnDestroy {
     id: { value: this.id, disabled: true },
     weeklyReportId: [this.weeklyReportId, Validators.required],
     personId: [this.authService.personId, Validators.required],
-    employeeId: [
-      this.authService.userTokenDto.infoEmployeeDto.employeeId,
+    applicationUserId: [
+      this.authService.applicationUserId,
       Validators.required,
     ],
     seguimiento: [
