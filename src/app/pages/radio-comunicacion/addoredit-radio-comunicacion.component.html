@@ -63,7 +63,7 @@
         formControlName="responsibleAreaName"
         label="Area"
         dataListId="responsibleAreaNameDatalistOptions"
-      ></custom-input-datalist>
+      />
 
       <custom-input-datalist
         (propagar)="savepersonId($event)"
@@ -72,7 +72,7 @@
         formControlName="applicationUser"
         label="Responsable"
         dataListId="applicationUserDatalistOptions"
-      ></custom-input-datalist>
+      />
 
       <custom-button-submit [disabled]="this.form.invalid || submitting" />
     </form>

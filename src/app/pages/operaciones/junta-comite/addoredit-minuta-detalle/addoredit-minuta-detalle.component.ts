@@ -52,7 +52,7 @@ export default class AddoreditMinutaDetalleComponent implements OnInit {
     title: ['', Validators.required],
     requestService: ['', Validators.required],
     meetingId: [this.config.data.meetingId, Validators.required],
-    // personId: [this.authService.personId],
+    applicationUserId: [this.authService.applicationUserId],
   });
 
   ngOnInit(): void {
@@ -85,10 +85,7 @@ export default class AddoreditMinutaDetalleComponent implements OnInit {
         });
     } else {
       this.apiRequestService
-        .onPut(
-          `MeetingsDetails/${this.id}/${this.authService.applicationUserId}`,
-          this.form.value
-        )
+        .onPut(`MeetingsDetails/${this.id}`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
         });

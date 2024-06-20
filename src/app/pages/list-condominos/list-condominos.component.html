@@ -17,7 +17,7 @@
   [showCurrentPageReport]="true"
 >
   <ng-template pTemplate="caption">
-    <app-table-header
+    <table-header
       [title]="'Condominos...'"
       (add)="showModalAddOrEdit({ id: 0, title: 'Nuevo Registro' })"
       [dt]="dt"
@@ -106,9 +106,9 @@
       </td>
       <td class="hide-print-mode">
         @if (item.enviarMails) {
-        <i class="text-success fa-regular fa-check-double"></i>
+        <i class="text-success fa-light fa-check-double"></i>
         } @if (!item.enviarMails) {
-        <i class="text-danger fa-regular fa-x"></i>
+        <i class="text-danger fa-light fa-x"></i>
         }
       </td>
       @if ( authService.onValidateRoles([ 'Asistente', 'Residente',

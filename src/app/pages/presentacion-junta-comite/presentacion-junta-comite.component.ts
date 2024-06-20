@@ -172,8 +172,8 @@ export interface PresentacionJuntaComiteDto {
   archivoContable: string;
   applicationUserContable: string;
   fechaCargaContable: string;
-  applicationUserSupervisorContable: string;
-  fechaCargaSupervisorContable: string;
+  // applicationUserSupervisorContable: string;
+  // fechaCargaSupervisorContable: string;
   archivoJunta: string;
   applicationUser: string;
   fechaCarga: string;

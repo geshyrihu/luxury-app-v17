@@ -15,12 +15,12 @@
         <!--  -->
         @if (!solicitudBajaStatus && workPosition) {
         <li class="list-group-item pointer" (click)="onModalSolicitudBaja()">
-          <i class="fa-duotone fa-user-minus me-3"></i>
+          <i class="fa-light fa-user-minus me-3"></i>
           Solicitar Baja
         </li>
         } @if (solicitudBajaStatus) {
         <li class="list-group-item">
-          <i class="fa-duotone fa-user-minus me-3 text-danger"></i>
+          <i class="fa-light fa-user-minus me-3 text-danger"></i>
           <span class="text-danger">Solicitar Baja en proceso</span>
         </li>
         }
@@ -30,14 +30,14 @@
           class="list-group-item pointer"
           (click)="onModalSolicitudModificacionSalarion()"
         >
-          <i class="fa-duotone fa-money-bill-1 me-3"></i>
+          <i class="fa-light fa-money-bill-1 me-3"></i>
           Solicitar modificación de salario
         </li>
         }
         <!--  -->
         @if (solicitudModificacionSalarioStatus) {
         <li class="list-group-item text-danger">
-          <i class="fa-duotone fa-money-bill-1 me-3"></i>
+          <i class="fa-light fa-money-bill-1 me-3"></i>
           <span class="text-danger"
             >Solicitar modificación de salario en proceso</span
           >

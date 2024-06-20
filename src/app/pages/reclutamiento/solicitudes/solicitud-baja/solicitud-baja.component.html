@@ -29,7 +29,7 @@
             label="professionId"
             placeholder="professionId"
             hidden
-          ></custom-input-number>
+          />
 
           <custom-input-text
             [control]="form.get('profession')"
@@ -132,7 +132,7 @@
             placeholder="motivo de la baja, con una breve descripcción"
             [horizontal]="false"
             [mostrarLabel]="false"
-          ></custom-input-text-area>
+          />
         </ngb-alert>
       </div>
     </div>
@@ -325,6 +325,6 @@
         submitting ||
         this.filesControl.status === 'INVALID'
       "
-    ></custom-button-send-email>
+    />
   </form>
 </div>

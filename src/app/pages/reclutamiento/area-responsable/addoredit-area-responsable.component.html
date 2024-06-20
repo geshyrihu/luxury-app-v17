@@ -24,13 +24,13 @@
         formControlName="position"
         label="Posición"
         placeholder="posición"
-      ></custom-input-number>
+      />
       <custom-input-number
         [control]="form.get('hierarchy')"
         formControlName="hierarchy"
         label="Jerarquía"
         placeholder="nivel de jerarquía"
-      ></custom-input-number>
+      />
       <custom-button-submit [disabled]="this.form.invalid || submitting" />
     </form>
   </div>

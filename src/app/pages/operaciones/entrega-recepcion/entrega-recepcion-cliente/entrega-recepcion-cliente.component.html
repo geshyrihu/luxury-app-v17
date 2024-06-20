@@ -24,7 +24,7 @@ cb_departamento; track item) {
     [tableStyle]="{ 'min-width': '50rem' }"
   >
     <ng-template pTemplate="caption">
-      <app-table-header
+      <table-header
         [title]="'ENTREGA RECEPCIÓN ' + departamento"
         (add)="onModalAddOrEdit({ id: 0, title: 'Nuevo Registro' })"
         [showAdd]="false"
@@ -66,9 +66,9 @@ cb_departamento; track item) {
             }"
           >
             @if (item.estatus === 0) {
-            <i class="fa-regular fa-xmark"></i>
+            <i class="fa-light fa-xmark"></i>
             } @if (item.estatus === 1) {
-            <i class="fa-regular fa-check-double"></i>
+            <i class="fa-light fa-check-double"></i>
             }
           </span>
         </td>
@@ -111,14 +111,14 @@ cb_departamento; track item) {
             <custom-button
               ngbTooltip="Validar Información"
               [customClass]="'btn-sm btn-outline-success'"
-              icon="fa-regular fa-check-double text-success"
+              icon="fa-light fa-check-double text-success"
               (clicked)="onValidarDocument(item.id)"
             />
             } @if (item.archivo && item.superviso !== '') {
             <custom-button
               ngbTooltip="Revocar Información"
               [customClass]="'btn-sm btn-outline-danger'"
-              icon="fa-regular fa-rotate-left text-danger"
+              icon="fa-light fa-rotate-left text-danger"
               (clicked)="onInvalidarDocument(item.id)"
             />
             } @if (item.archivo !== '') {

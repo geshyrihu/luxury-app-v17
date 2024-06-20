@@ -6,7 +6,7 @@
       label="Salario mensual libre"
       [readonly]="true"
       placeholder="salario mensual actual neto"
-    ></custom-input-number>
+    />
     <custom-input-text
       [control]="form.get('professionCurrent')"
       formControlName="professionCurrent"
@@ -19,7 +19,7 @@
       formControlName="finalSalary"
       label="Salario mensual final neto"
       placeholder="salario mensual final neto"
-    ></custom-input-number>
+    />
     <custom-input-datalist
       (propagar)="onSaveProfessionIdToAccount($event)"
       [control]="form.get('professionNew')"
@@ -27,7 +27,7 @@
       [data]="cb_profession"
       dataListId="professionNewCondominiumDatalistOptions"
       label="Puesto nuevo"
-    ></custom-input-datalist>
+    />
     <custom-input-date
       [control]="form.get('executionDate')"
       formControlName="executionDate"
@@ -46,7 +46,7 @@
       formControlName="additionalInformation"
       label="Comentarios adicionales"
       placeholder="comentarios adicionales"
-    ></custom-input-text-area>
+    />
     <div class="form-group row mb-2">
       <label class="col-sm-3">Adjuntar soporte (máximo 10MB) </label>
       <div class="col-sm-9">
@@ -66,8 +66,6 @@
         </form>
       </div>
     </div>
-    <custom-button-send-email
-      [disabled]="this.form.invalid || submitting"
-    ></custom-button-send-email>
+    <custom-button-send-email [disabled]="this.form.invalid || submitting" />
   </form>
 </div>

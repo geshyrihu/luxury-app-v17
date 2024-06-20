@@ -9,7 +9,7 @@ import { DateService } from 'src/app/core/services/date.service';
 import { PeriodoMonthService } from 'src/app/core/services/periodo-month.service';
 import { environment } from 'src/environments/environment';
 @Component({
-  selector: 'app-pagetitlereport',
+  selector: 'page-title-report',
   templateUrl: './pagetitlereport.component.html',
   standalone: true,
   imports: [CommonModule],

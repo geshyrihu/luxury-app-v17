@@ -10,7 +10,7 @@
   styleClass="p-datatable-striped  p-datatable-sm"
 >
   <ng-template pTemplate="caption">
-    <app-table-header
+    <table-header
       [title]="'Historial de Acceso'"
       (showAdd)="(false)"
       (showSearch)="(false)"
@@ -34,9 +34,7 @@
           [pRowToggler]="item"
           class="p-button-text p-button-rounded p-button-plain"
           [icon]="
-            expanded
-              ? 'fa-regular fa-chevron-down'
-              : 'fa-regular fa-chevron-right'
+            expanded ? 'fa-light fa-chevron-down' : 'fa-light fa-chevron-right'
           "
         ></button>
       </td>

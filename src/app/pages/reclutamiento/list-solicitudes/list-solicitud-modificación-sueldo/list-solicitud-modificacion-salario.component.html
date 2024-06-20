@@ -17,7 +17,7 @@
     [globalFilterFields]="['profession', 'status', 'numInternal']"
   >
     <ng-template pTemplate="caption">
-      <app-table-header
+      <table-header
         [title]="'Lista de Solicitudes de Modificación de salario'"
         [showAdd]="false"
         [dt]="dt"
@@ -106,7 +106,7 @@
             />
             <custom-button-delete (OnConfirm)="onDelete(item.id)" />
 
-            <!-- <i class="fa-regular fa-users-viewfinder"></i> -->
+            <!-- <i class="fa-light fa-users-viewfinder"></i> -->
           </div>
           <!-- Opciones -->
         </td>

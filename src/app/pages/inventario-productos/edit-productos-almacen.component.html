@@ -29,7 +29,7 @@
         [control]="form.get('existencia')"
         formControlName="existencia"
         label="Existencia"
-      ></custom-input-number>
+      />
 
       <custom-input-select
         [control]="form.get('unidadDeMedidaId')"
@@ -43,14 +43,14 @@
         formControlName="stockMax"
         label="Stock Maximo"
         placeholder="stock maximo"
-      ></custom-input-number>
+      />
 
       <custom-input-number
         [control]="form.get('stockMin')"
         formControlName="stockMin"
         label="Stock Minimo"
         placeholder="stock minimo"
-      ></custom-input-number>
+      />
 
       <custom-button-submit [disabled]="this.form.invalid || submitting" />
     </form>

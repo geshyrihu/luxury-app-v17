@@ -188,12 +188,12 @@
               <td class="text-center small">
                 @if (item.presupuestoDisponible < item.dineroUsado) {
                 <span class="badge bg-danger p-2 ms-1">
-                  <i class="fa-regular fa-minus"></i>
+                  <i class="fa-light fa-minus"></i>
                   {{ item.presupuestoDisponible | currency : "MXN" }}
                 </span>
                 } @if (item.presupuestoDisponible >= item.dineroUsado) {
                 <span class="badge bg-success p-2 ms-1">
-                  <i class="fa-regular fa-plus"></i
+                  <i class="fa-light fa-plus"></i
                   >{{ item.presupuestoDisponible | currency : "MXN" }}
                 </span>
                 }
@@ -215,12 +215,12 @@
               <td class="text-center">
                 @if (item.presupuestoDisponible < item.dineroUsado) {
                 <span class="badge rounded-pill bg-danger"
-                  ><i class="fa-regular fa-minus"></i>
+                  ><i class="fa-light fa-minus"></i>
                   {{ item.presupuestoDisponible | currency : "MXN" }}
                 </span>
                 } @if (item.presupuestoDisponible >= item.dineroUsado) {
                 <span class="badge rounded-pill bg-success">
-                  <i class="fa-regular fa-plus"> </i>
+                  <i class="fa-light fa-plus"> </i>
                   {{ item.presupuestoDisponible | currency : "MXN" }}
                 </span>
                 }
@@ -250,7 +250,7 @@
           solicitudCompraId
         ]"
       >
-        <i class="fa-regular fa-hand-holding-dollar me-3"></i>
+        <i class="fa-light fa-hand-holding-dollar me-3"></i>
         Cuadro Comparativo
       </li>
       } @if ( !ordenCompraEstaAutorizada &&
@@ -271,7 +271,7 @@
         placement="top"
         [routerLink]="['/operaciones/compras/orden-compra-pdf/', ordenCompraId]"
       >
-        <i class="fa-regular fa-cart-shopping me-3"></i>
+        <i class="fa-light fa-cart-shopping me-3"></i>
         Orden de Compra
       </li>
       } @if (ordenCompra.ordenCompraAuth.statusOrdenCompra === 'Autorizado') {
@@ -283,7 +283,7 @@
           ordenCompraId
         ]"
       >
-        <i class="fa-regular fa-dollar-sign me-3"></i>
+        <i class="fa-light fa-dollar-sign me-3"></i>
         Solicitud de Pago
       </li>
       }
@@ -499,12 +499,12 @@
                       <td class="text-center">
                         @if (item.presupuestoDisponible < item.dineroUsado) {
                         <span class="badge bg-danger p-2 ms-1">
-                          <i class="fa-regular fa-minus"></i>
+                          <i class="fa-light fa-minus"></i>
                           {{ item.presupuestoDisponible | currency : "MXN" }}
                         </span>
                         } @if (item.presupuestoDisponible >= item.dineroUsado) {
                         <span class="badge bg-success p-2 ms-1">
-                          <i class="fa-regular fa-plus"></i
+                          <i class="fa-light fa-plus"></i
                           >{{ item.presupuestoDisponible | currency : "MXN" }}
                         </span>
                         }

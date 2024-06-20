@@ -18,11 +18,7 @@
     [tableStyle]="{ 'min-width': '50rem' }"
   >
     <ng-template pTemplate="caption">
-      <app-table-header
-        [title]="'Datos de Email'"
-        [showAdd]="false"
-        [dt]="dt"
-      />
+      <table-header [title]="'Datos de Email'" [showAdd]="false" [dt]="dt" />
     </ng-template>
 
     <ng-template pTemplate="header">
@@ -69,7 +65,7 @@
             <custom-button
               [customClass]="'btn-sm btn-outline-dark'"
               ngbTooltip="Enviar mail de prueba"
-              icon="fa-regular fa-envelope text-dark"
+              icon="fa-light fa-envelope text-dark"
               (clicked)="onSendTestEmail(item.applicationUserId)"
             />
 

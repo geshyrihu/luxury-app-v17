@@ -15,7 +15,7 @@
   [autoLayout]="true"
 >
   <ng-template pTemplate="caption">
-    <app-table-header [title]="'Productos'" [showAdd]="false" [dt]="dt" />
+    <table-header [title]="'Productos'" [showAdd]="false" [dt]="dt" />
     @if (mensajeError) {
     <p class="text-danger font-weight-light">
       {{ mensajeError }}

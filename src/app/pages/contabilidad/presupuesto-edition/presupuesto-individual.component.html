@@ -8,7 +8,7 @@
     styleClass="custom-table p-datatable-sm"
   >
     <ng-template pTemplate="caption">
-      <app-table-header
+      <table-header
         [title]="'PRESUPUESTO ' + data.from + ' - ' + data.to"
         [showAdd]="true"
         (add)="onModalAdd()"
@@ -43,7 +43,7 @@
       <tr>
         <td class="p-column-title text-center">
           <i
-            class="fa-regular fa-square-question text-info pointer"
+            class="fa-light fa-square-question text-info pointer"
             ngbTooltip="Información"
             (click)="onModalInfoCuenta(item.accountId)"
           ></i>
@@ -68,7 +68,7 @@
                   item.presupuestoAnteriorId
                 )
               "
-              class="fa-regular fa-folder-open me-2 pointer"
+              class="fa-light fa-folder-open me-2 pointer"
             ></i>
             }
             {{ item.monthlyBudgetFormet }}
@@ -152,19 +152,19 @@
             <custom-button
               ngbTooltipCustom="Agregar documentos"
               [customClass]="'btn-outline-info btn-sm'"
-              icon="fa-regular fa-file-circle-plus text-info"
+              icon="fa-light fa-file-circle-plus text-info"
               (clicked)="onModalDocument(item.id)"
             />
             <custom-button
               ngbTooltipCustom="Historial"
               [customClass]="'btn-outline-primary btn-sm'"
-              icon="fa-regular fa-calendar-users text-primary"
+              icon="fa-light fa-calendar-users text-primary"
               (clicked)="onGetHistorial(item.id)"
             />
             <custom-button
               ngbTooltipCustom="Servicios calendarizados"
               [customClass]="'btn-outline-success btn-sm'"
-              icon="fa-regular fa-calendar-lines-pen text-success"
+              icon="fa-light fa-calendar-lines-pen text-success"
               (clicked)="ServiciosMttoProgramados(item.accountId)"
             />
             <custom-button-delete (OnConfirm)="onDelete(item.id)" />

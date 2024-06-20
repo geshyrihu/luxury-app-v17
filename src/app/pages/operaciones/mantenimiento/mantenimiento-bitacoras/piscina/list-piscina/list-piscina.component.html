@@ -9,7 +9,7 @@
     [tableStyle]="{ 'min-width': '50rem' }"
   >
     <ng-template pTemplate="caption">
-      <app-table-header
+      <table-header
         [title]="'Albercas'"
         (add)="onModalAddOrEdit({ id: 0, title: 'Nuevo Registro' })"
         [dt]="dt"
@@ -75,7 +75,7 @@
                 item.id
               ]"
             >
-              <i class="fa-regular fa-book text-primary"></i>
+              <i class="fa-light fa-book text-primary"></i>
             </a>
           </div>
         </td>

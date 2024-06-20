@@ -24,7 +24,7 @@
     ]"
   >
     <ng-template pTemplate="caption">
-      <app-table-header
+      <table-header
         (add)="showModalAddOrEdit({ id: 0, title: 'Nuevo Registro' })"
         [dt]="dt"
         [showAdd]="false"
@@ -119,10 +119,10 @@
           </div>
           } @if (item.autorizado) {
           <i
-            class="bx-md fa-regular fa-check-double text-success font-size-16"
+            class="bx-md fa-light fa-check-double text-success font-size-16"
           ></i>
           } @if (!item.autorizado) {
-          <i class="bx-md fa-regular fa-x text-danger font-size-16"></i>
+          <i class="bx-md fa-light fa-x text-danger font-size-16"></i>
           }
         </td>
         <td>
@@ -151,7 +151,7 @@
             <custom-button
               ngbTooltip="Activar"
               [customClass]="'btn-sm btn-outline-danger'"
-              icon="fa-regular fa-lock text-danger"
+              icon="fa-light fa-lock text-danger"
               (clicked)="
                 onActivateProvider({
                   providerId: item.providerId,
@@ -163,7 +163,7 @@
             <custom-button
               ngbTooltip="Desactivar"
               [customClass]="'btn-sm btn-outline-success'"
-              icon="fa-regular fa-lock-open text-success"
+              icon="fa-light fa-lock-open text-success"
               (clicked)="
                 onActivateProvider({
                   providerId: item.providerId,
@@ -175,7 +175,7 @@
             <custom-button
               ngbTooltip="Uso"
               [customClass]="'btn-sm btn-outline-success'"
-              icon="fa-regular fa-list text-success"
+              icon="fa-light fa-list text-success"
               (clicked)="
                 onConicidencias({
                   providerId: item.providerId,

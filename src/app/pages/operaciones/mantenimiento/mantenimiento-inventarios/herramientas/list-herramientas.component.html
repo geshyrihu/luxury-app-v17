@@ -14,7 +14,7 @@
   [rowHover]="true"
 >
   <ng-template pTemplate="caption">
-    <app-table-header
+    <table-header
       [title]="'Herramientas'"
       (add)="showModalAddOrEdit({ id: 0, title: 'Nuevo Registro' })"
       [dt]="dt"
@@ -24,7 +24,7 @@
       class="mt-1 btn btn-sm btn-outline-danger"
       routerLink="/mantenimiento/inventario/reporte-herramientas"
       >Informe
-      <i class="fa-regular fa-file-pdf"></i>
+      <i class="fa-light fa-file-pdf"></i>
     </a>
   </ng-template>
   <ng-template pTemplate="header">

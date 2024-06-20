@@ -36,7 +36,13 @@ Extra Large (xl): 1200px o más. -->
     <!-- Esta columna se utiliza para un botón personalizado de agregar y solo se muestra si showAdd es verdadero y rolAuth es verdadero -->
     <div class="col-sm-2 hide-print-mode">
       @if (showAdd && rolAuth) {
-      <custom-button-add (clicked)="onAdd($event)"></custom-button-add>
+      <custom-button
+        ngbTooltip="Agregar"
+        customClass="btn-info w-100"
+        icon="fa-plus me-2"
+        label="Agregar"
+        (clicked)="onAdd($event)"
+      />
       }
     </div>
   </div>
@@ -64,9 +70,12 @@ Extra Large (xl): 1200px o más. -->
   </div>
   @if (showAdd && rolAuth) {
   <div class="col-2">
-    <button class="btn btn-outline-secondary" (click)="onAdd($event)">
-      <i class="fa-solid fa-plus"></i>
-    </button>
+    <custom-button
+      ngbTooltip="Agregar"
+      customClass="btn-outline-secondary"
+      icon="fa-plus"
+      (clicked)="onAdd($event)"
+    />
   </div>
   }
 </div>

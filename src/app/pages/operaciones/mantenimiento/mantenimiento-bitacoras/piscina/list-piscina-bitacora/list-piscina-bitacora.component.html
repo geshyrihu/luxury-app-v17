@@ -17,7 +17,7 @@
     [tableStyle]="{ 'min-width': '50rem' }"
   >
     <ng-template pTemplate="caption">
-      <app-table-header
+      <table-header
         [title]="'Bitacora'"
         (add)="onModalAddOrEdit({ id: 0, title: 'Nuevo Registro' })"
         [dt]="dt"
@@ -57,27 +57,27 @@
         <td class="p-column-title text-center">
           <i
             [ngClass]="{
-              'fa-regular fa-check-double text-success font-size-18':
+              'fa-light fa-check-double text-success font-size-18':
                 item.cepillado,
-              'fa-regular fa-x text-danger font-size-18': !item.cepillado
+              'fa-light fa-x text-danger font-size-18': !item.cepillado
             }"
           ></i>
         </td>
         <td class="p-column-title text-center">
           <i
             [ngClass]="{
-              'fa-regular fa-check-double text-success font-size-18':
+              'fa-light fa-check-double text-success font-size-18':
                 item.aspirado,
-              'fa-regular fa-x text-danger font-size-18': !item.aspirado
+              'fa-light fa-x text-danger font-size-18': !item.aspirado
             }"
           ></i>
         </td>
         <td class="p-column-title text-center">
           <i
             [ngClass]="{
-              'fa-regular fa-check-double text-success font-size-18':
+              'fa-light fa-check-double text-success font-size-18':
                 item.cenefas,
-              'fa-regular fa-x text-danger font-size-18': !item.cenefas
+              'fa-light fa-x text-danger font-size-18': !item.cenefas
             }"
           ></i>
         </td>

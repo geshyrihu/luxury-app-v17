@@ -1,8 +1,8 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-pagetitle',
-  templateUrl: './pagetitle.component.html',
+  selector: 'page-title-report',
+  templateUrl: './page-title-report.component.html',
 })
 
 /**

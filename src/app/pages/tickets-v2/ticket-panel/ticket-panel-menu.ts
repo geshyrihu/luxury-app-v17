@@ -4,27 +4,27 @@ export const MenuTikecket: ITicketPanelMenu[] = [
   // {
   //   routerLink: '/tickets/supervition',
   //   title: 'Supervision',
-  //   icon: 'fa-duotone fa-user-tie',
+  //   icon: 'fa-light fa-user-tie',
   // },
   // {
   //   routerLink: '/tickets/administration',
   //   title: 'Administracion',
-  //   icon: 'fa-duotone fa-screwdriver-wrench',
+  //   icon: 'fa-light fa-screwdriver-wrench',
   // },
   // {
   //   routerLink: '/tickets/sistem',
   //   title: 'Sistemas',
-  //   icon: 'fa-duotone fa-laptop-mobile',
+  //   icon: 'fa-light fa-laptop-mobile',
   // },
   // {
   //   routerLink: '/tickets/jardineria',
   //   title: 'Jardineria',
-  //   icon: 'fa-duotone fa-house-tree',
+  //   icon: 'fa-light fa-house-tree',
   // },
   // {
   //   routerLink: '/tickets/limpieza',
   //   title: 'Limpieza',
-  //   icon: 'fa-duotone fa-broom-wide',
+  //   icon: 'fa-light fa-broom-wide',
   // },
   // {
   //   routerLink: '/tickets/seguridad',
@@ -35,18 +35,18 @@ export const MenuTikecket: ITicketPanelMenu[] = [
   // {
   //   routerLink: '/tickets/constuctora',
   //   title: 'Constuctora',
-  //   icon: 'fa-duotone fa-user-helmet-safety',
+  //   icon: 'fa-light fa-user-helmet-safety',
   // },
 
   // correcto
   {
     routerLink: '/operaciones/reporte/tiket-mantenimiento',
     title: 'Mantenimiento',
-    icon: 'fa-duotone fa-screwdriver-wrench',
+    icon: 'fa-light fa-screwdriver-wrench',
   },
   {
     routerLink: '/legal/list-ticket-customer',
     title: 'Legal',
-    icon: 'fa-duotone fa-gavel',
+    icon: 'fa-light fa-gavel',
   },
 ];

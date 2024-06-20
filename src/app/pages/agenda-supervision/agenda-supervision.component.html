@@ -31,7 +31,7 @@
     [rowsPerPageOptions]="[30, 40, 50, 75, 100, 150, 200]"
   >
     <ng-template pTemplate="caption">
-      <app-table-header
+      <table-header
         class="ocultar"
         [title]="'Bitacora Supervisión'"
         (add)="showModalAddOrEdit({ id: 0, title: 'Nuevo Registro' })"
@@ -48,7 +48,7 @@
             class="btn btn-sm"
             (onClick)="onLoadData()"
           >
-            <i class="fa-regular fa-arrows-rotate"></i>
+            <i class="fa-light fa-arrows-rotate"></i>
           </button>
         </div>
       </div>

@@ -16,7 +16,7 @@
   [autoLayout]="true"
 >
   <ng-template pTemplate="caption">
-    <app-table-header
+    <table-header
       [title]="'Formas de pago'"
       (add)="showModalAddOrEdit({ id: 0, title: 'Nuevo Registro' })"
       [dt]="dt"
@@ -60,6 +60,6 @@
   </ng-template>
 
   <ng-template pTemplate="paginatorleft">
-    <app-table-footer [data]="data"></app-table-footer>
+    <table-footer [data]="data" />
   </ng-template>
 </p-table>

@@ -37,7 +37,7 @@
         </select>
       </div>
       <div class="col-sm-9">
-        <app-table-header
+        <table-header
           [viewNavigateButton]="false"
           (add)="
             showModalAddOrEdit({
@@ -154,7 +154,7 @@
             [customClass]="'btn-sm btn-outline-dark'"
             ngbTooltip="Duplicar Servicio"
             placement="top"
-            icon="fa-regular fa-copy text-dark"
+            icon="fa-light fa-copy text-dark"
             (clicked)="
               showModalAddOrEdit({
                 idnombre: item.id,

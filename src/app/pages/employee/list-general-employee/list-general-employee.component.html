@@ -22,7 +22,7 @@
   [autoLayout]="true"
 >
   <ng-template pTemplate="caption">
-    <app-table-header
+    <table-header
       [title]="'Listado General de Empleados'"
       (add)="onModalCreatePerson({ id: 0, title: 'Nuevo Registro' })"
       [dt]="dt"
@@ -92,7 +92,7 @@
           <custom-button
             [ngbTooltipCustom]="'Opciones'"
             customClass=" btn-outline-primary"
-            icon="fa-regular fa-ellipsis-vertical"
+            icon="fa-light fa-ellipsis-vertical"
             (clicked)="
               onShowModalEditEmpleado(
                 item.applicationUserId,
@@ -104,7 +104,7 @@
           <!-- <custom-button
             ngbTooltip="Dirección"
             customClass="btn-sm btn-sm btn-outline-primary"
-            icon="fa-duotone fa-location-dot text-primary"
+            icon="fa-light fa-location-dot text-primary"
             (clicked)="
               onModalDataAddress({
                 id: item.id,
@@ -115,7 +115,7 @@
           <custom-button
             ngbTooltip="Datos Laborales"
             customClass="btn-sm btn-sm btn-outline-primary"
-            icon="fa-duotone fa-briefcase text-primary"
+            icon="fa-light fa-briefcase text-primary"
             (clicked)="
               onModalDataLaboral({
                 employeeId: item.employeeId,
@@ -127,7 +127,7 @@
           <custom-button
             ngbTooltip="Datos Personales"
             customClass="btn-sm btn-sm btn-outline-primary"
-            icon="fa-duotone fa-memo-circle-info text-primary"
+            icon="fa-light fa-memo-circle-info text-primary"
             (clicked)="
               onModalDataPersonal({
                 id: item.id,
@@ -138,7 +138,7 @@
           <custom-button
             ngbTooltip="Datos Principales"
             customClass="btn-sm btn-sm btn-outline-primary"
-            icon="fa-duotone fa-database text-primary"
+            icon="fa-light fa-database text-primary"
             (clicked)="
               onModalDataPrincipal({
                 id: item.id,
@@ -149,7 +149,7 @@
           <custom-button
             ngbTooltip="Actualizar Foto"
             customClass="btn-sm btn-sm btn-outline-primary"
-            icon="fa-duotone fa-camera text-primary"
+            icon="fa-light fa-camera text-primary"
             (clicked)="onShowModalActualizarImagen(item.id)"
           /> -->
 

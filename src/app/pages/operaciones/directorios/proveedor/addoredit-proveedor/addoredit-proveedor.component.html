@@ -89,7 +89,7 @@
                 label="Dirección"
                 placeholder="dirección"
                 [horizontal]="false"
-              ></custom-input-text-area>
+              />
               <div class="row">
                 <div class="col-sm-9">
                   <custom-input-check
@@ -97,13 +97,13 @@
                     formControlName="sales"
                     label="Ventas"
                     [horizontal]="false"
-                  ></custom-input-check>
+                  />
                   <custom-input-check
                     [control]="form.get('repair')"
                     formControlName="repair"
                     label="Reparación"
                     [horizontal]="false"
-                  ></custom-input-check>
+                  />
                 </div>
                 <!-- Logo de porveedor -->
                 <div class="col-sm-3">
@@ -210,7 +210,7 @@
             formControlName="bankName"
             label="Banco"
             dataListId="bankNameDatalistOptions"
-          ></custom-input-datalist>
+          />
           <custom-input-text
             [control]="form.get('paymentAccount')"
             [horizontal]="false"

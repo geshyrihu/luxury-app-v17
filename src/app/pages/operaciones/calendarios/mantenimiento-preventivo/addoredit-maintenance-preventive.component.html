@@ -24,7 +24,7 @@
             formControlName="machineryName"
             label="Equipo o Instalación"
             dataListId="machineryNameDatalistOptions"
-          ></custom-input-datalist>
+          />
         </div>
         <div class="col-sm-3">
           <custom-input-select
@@ -41,7 +41,7 @@
             [horizontal]="false"
             formControlName="fechaServicio"
             label="Fecha Servicio"
-          ></custom-input-month>
+          />
         </div>
         <div class="col-sm-6">
           <custom-input-select
@@ -58,7 +58,7 @@
             [control]="form.get('price')"
             formControlName="price"
             label="Precio"
-          ></custom-input-number>
+          />
         </div>
         <div class="col-sm-6">
           <custom-input-datalist
@@ -69,7 +69,7 @@
             label="Proveedor"
             [horizontal]="false"
             dataListId="providerNameDatalistOptions"
-          ></custom-input-datalist>
+          />
         </div>
         <div class="col-sm-6">
           <custom-input-datalist
@@ -80,7 +80,7 @@
             label="Cuenta Afectada"
             [horizontal]="false"
             dataListId="cuentaNameDatalistOptions"
-          ></custom-input-datalist>
+          />
         </div>
         <div class="col-sm-6">
           @if ( f.activity.errors && (f.activity.dirty || f.activity.touched) )
@@ -100,7 +100,7 @@
             placeholder="Actividad"
             [horizontal]="false"
             rows="10"
-          ></custom-input-text-area>
+          />
         </div>
         <div class="col-sm-6">
           <custom-input-text-area
@@ -110,7 +110,7 @@
             placeholder="Observaciones"
             [horizontal]="false"
             rows="10"
-          ></custom-input-text-area>
+          />
         </div>
       </div>
       <div class="mb-1"></div>

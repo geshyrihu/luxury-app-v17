@@ -29,7 +29,7 @@
     formControlName="tool"
     label="Herramienta"
     dataListId="toolDatalistOptions"
-  ></custom-input-datalist>
+  />
 
   <custom-input-datalist
     (propagar)="saveEmployeeId($event)"
@@ -38,7 +38,7 @@
     formControlName="applicationUser"
     label="Colaborador"
     dataListId="applicationUserDatalistOptions"
-  ></custom-input-datalist>
+  />
 
   <div class="form-group row mb-2">
     <label class="col-sm-3">Hora/Fecha Regreso</label>
@@ -59,7 +59,7 @@
     formControlName="observaciones"
     label="Observaciones"
     placeholder="observaciones"
-  ></custom-input-text-area>
+  />
 
   <custom-button-submit [disabled]="this.form.invalid || submitting" />
 </form>

@@ -3,10 +3,10 @@ import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import Swal, { SweetAlertIcon } from 'sweetalert2';
 
 @Component({
-  imports: [NgbTooltip],
   selector: 'custom-button-confirmation',
   standalone: true,
   templateUrl: './custom-button-confirmation.component.html',
+  imports: [NgbTooltip],
 })
 export default class CustomButtonConfirmationComponent {
   @Input()
@@ -18,7 +18,7 @@ export default class CustomButtonConfirmationComponent {
   @Input()
   title: string = '¿Estas seguro?';
   @Input()
-  icon: string = 'fa-regular fa-paper-plane';
+  icon: string = 'fa-light fa-paper-plane';
   @Input()
   label: string = '';
   @Input()

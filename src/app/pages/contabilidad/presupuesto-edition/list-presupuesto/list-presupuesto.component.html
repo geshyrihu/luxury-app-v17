@@ -10,7 +10,7 @@
   [autoLayout]="true"
 >
   <ng-template pTemplate="caption">
-    <app-table-header
+    <table-header
       [title]="'Presupuestos'"
       (add)="onAddPresupuesto(0)"
       [dt]="dt"
@@ -38,7 +38,7 @@
           <custom-button
             ngbTooltip="Finalizar presupuesto"
             [customClass]="'btn-outline-info btn-sm'"
-            icon="fa-regular fa-pen-field  text-danger"
+            icon="fa-light fa-pen-field  text-danger"
             (clicked)="onFinished(item.id, !item.finished)"
           />
           }
@@ -48,7 +48,7 @@
           <custom-button
             ngbTooltip="Habilitar edición"
             [customClass]="'btn-outline-info btn-sm'"
-            icon="fa-regular fa-check-double text-success"
+            icon="fa-light fa-check-double text-success"
             (clicked)="onFinished(item.id, !item.finished)"
           />
           }
@@ -57,7 +57,7 @@
           <custom-button
             customClass="btn-sm btn-outline-primary"
             (clicked)="onModalAddOrEdit(item.id)"
-            icon="fa-regular fa-pen-to-square"
+            icon="fa-light fa-pen-to-square"
             ngbTooltip="Editar periodo"
           />
           } @if ( authService.onValidateRoles([ 'Residente', 'SuperUsuario',
@@ -66,7 +66,7 @@
           <custom-button
             customClass="btn-sm btn-outline-success"
             (clicked)="onGetPresupuestoDetalle(item.id)"
-            icon="fa-regular fa-money-bill-trend-up"
+            icon="fa-light fa-money-bill-trend-up"
             ngbTooltip="Editar el presupuesto"
           />
           } @if (authService.onValidateRoles(['SuperUsuario'])) {

@@ -20,34 +20,26 @@
       >
         <i class="fa-thin fa-bars"></i>
       </button>
-      <button
-        type="button"
-        class="btn header-item"
-        ngbTooltip="Anterior"
-        placement="bottom-start"
-        (click)="onBack()"
-      >
-        <i class="fa-thin fa-angle-left"></i>
-      </button>
-      <button
-        type="button"
-        class="btn header-item"
-        ngbTooltip="Siguiente"
-        placement="bottom-start"
-        (click)="onNext()"
-      >
-        <i class="fa-thin fa-angle-right"></i>
-      </button>
 
-      <button
-        type="button"
-        class="btn header-item"
+      <custom-button
+        ngbTooltip="Anterior"
+        customClass="header-item"
+        icon="fa-angle-left"
+        (clicked)="onBack()"
+      />
+      <custom-button
+        ngbTooltip="Siguiente"
+        customClass="header-item"
+        icon="fa-angle-right"
+        (clicked)="onNext()"
+      />
+      <custom-button
         ngbTooltip="Recargar"
-        placement="bottom-start"
-        (click)="onRefresh()"
-      >
-        <i class="fa-thin fa-arrows-rotate"></i>
-      </button>
+        customClass="header-item"
+        icon="fa-arrows-rotate"
+        (clicked)="onRefresh()"
+      />
+
       <!-- App Search-->
       <div class="app-search me-2 mt-1" style="width: 400px">
         <app-menu-select-customer></app-menu-select-customer>
@@ -87,17 +79,17 @@
           <i class="fa-thin fa-key me-2" style="color: #ffd43b"></i> Cambiar
           contraseña
         </a>
-        <button (click)="onModalDataAddress()" class="dropdown-item">
+        <!-- <button (click)="onModalDataAddress()" class="dropdown-item">
           <i class="fa-light fa-location-dot me-2" style="color: #74c0fc"></i>
           Actualizar mi dirección
         </button>
         <button (click)="onShowModalDatosPersonales()" class="dropdown-item">
           <i class="fa-thin fa-database me-2" style="color: #74c0fc"></i>
           Complementar mi datos
-        </button>
+        </button> -->
         <a class="dropdown-item pointer" (click)="logout()">
           <i
-            class="fa-sharp fa-regular fa-arrow-right-from-bracket fa-flip-vertical me-2"
+            class="fa-sharp fa-light fa-arrow-right-from-bracket fa-flip-vertical me-2"
             style="color: #f50000"
           ></i
           >Cerrar Sesión

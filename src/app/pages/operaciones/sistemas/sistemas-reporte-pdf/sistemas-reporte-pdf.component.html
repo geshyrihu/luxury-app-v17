@@ -77,13 +77,11 @@
       <td class="text-center">
         <i
           [ngClass]="{
-            'fa-regular fa-xmark  text-danger': item.status === 0
+            'fa-light fa-xmark  text-danger': item.status === 0
           }"
         >
         </i>
-        <i
-          [ngClass]="{ 'fa-regular fa-check text-success': item.status === 1 }"
-        >
+        <i [ngClass]="{ 'fa-light fa-check text-success': item.status === 1 }">
         </i>
       </td>
     </tr>

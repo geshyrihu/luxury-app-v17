@@ -17,7 +17,7 @@
         formControlName="professionName"
         label="Profesion"
         dataListId="professionNameDatalistOptions"
-      ></custom-input-datalist>
+      />
       @if (authService.onValidateRoles(['SuperUsuario'])) { }
       <!-- Profesion -->
       <!-- Colaborador -->
@@ -28,7 +28,7 @@
         formControlName="employeeName"
         label="Colaborador"
         dataListId="employeeNameDatalistOptions"
-      ></custom-input-datalist>
+      />
       <!-- Colaborador -->
       <!-- Sueldo -->
       <custom-input-number
@@ -36,13 +36,13 @@
         formControlName="sueldoBase"
         label="Sueldo base"
         placeholder="sueldo base"
-      ></custom-input-number>
+      />
       <custom-input-number
         [control]="form.get('sueldo')"
         formControlName="sueldo"
         label="Sueldo actual"
         placeholder="sueldo actual"
-      ></custom-input-number>
+      />
       <!-- Sueldo -->
       <!-- Horarios -->
       <custom-input-select
@@ -204,7 +204,7 @@
         formControlName="observationsWorkShift"
         label="Obr. referentes al horario"
         placeholder="Observaciones referentes al horario"
-      ></custom-input-text-area>
+      />
       <custom-input-select
         [control]="form.get('state')"
         formControlName="state"

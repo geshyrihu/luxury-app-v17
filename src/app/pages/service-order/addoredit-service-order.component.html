@@ -14,7 +14,7 @@
             formControlName="machinery"
             label="Equipo o Instalación"
             dataListId="machineryDatalistOptions"
-          ></custom-input-datalist>
+          />
         </div>
         <div class="col-sm-6">
           <custom-input-datalist
@@ -24,7 +24,7 @@
             formControlName="provider"
             label="Proveedor"
             dataListId="providerDatalistOptions"
-          ></custom-input-datalist>
+          />
         </div>
       </div>
       <div class="row">
@@ -60,7 +60,7 @@
             formControlName="price"
             label="Precio"
             placeholder="precio"
-          ></custom-input-number>
+          />
         </div>
       </div>
       <div class="row">
@@ -75,7 +75,7 @@
           <app-validation-errors-custom-input
             [control]="f.typeMaintance"
             placeholder="tipo de mantenimiento"
-          ></app-validation-errors-custom-input>
+          />
         </div>
         <div class="col-sm-6">
           <custom-input-datalist
@@ -85,7 +85,7 @@
             formControlName="employeeResponsable"
             label="Supervisado por"
             dataListId="employeeResponsableDatalistOptions"
-          ></custom-input-datalist>
+          />
         </div>
       </div>
       <div class="row">
@@ -161,7 +161,7 @@
             label="Actividad"
             placeholder="Actividad"
             [horizontal]="false"
-          ></custom-input-text-area>
+          />
         </div>
         <div class="col-sm-6">
           <custom-input-text-area
@@ -170,7 +170,7 @@
             label="Observaciones"
             placeholder="Observaciones"
             [horizontal]="false"
-          ></custom-input-text-area>
+          />
         </div>
       </div>
       <custom-button-submit [disabled]="this.form.invalid || submitting" />

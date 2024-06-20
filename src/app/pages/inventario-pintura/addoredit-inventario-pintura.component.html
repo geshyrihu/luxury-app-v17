@@ -13,7 +13,7 @@
         formControlName="machinery"
         label="Equipo/Instalación"
         dataListId="machineryDatalistOptions"
-      ></custom-input-datalist>
+      />
 
       <custom-input-datalist
         (propagar)="saveProductoId($event)"
@@ -22,7 +22,7 @@
         formControlName="producto"
         label="Producto"
         dataListId="productoDatalistOptions"
-      ></custom-input-datalist>
+      />
       <custom-input-text
         [control]="form.get('area')"
         formControlName="area"

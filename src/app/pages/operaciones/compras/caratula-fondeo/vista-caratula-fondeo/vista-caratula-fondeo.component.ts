@@ -33,7 +33,7 @@ export default class VistaCaratulaFondeoComponent implements OnInit {
   items: MenuItem[] = [
     {
       label: 'Eliminar',
-      icon: 'fa-regular fa-xmark',
+      icon: 'fa-light fa-xmark',
       command: () => this.viewItem(this.dataSelect),
     },
   ];
@@ -47,7 +47,7 @@ export default class VistaCaratulaFondeoComponent implements OnInit {
       this.items = [
         {
           label: 'Eliminar',
-          icon: 'fa-regular fa-xmark',
+          icon: 'fa-light fa-xmark',
           command: () => this.viewItem(this.dataSelect),
         },
       ];

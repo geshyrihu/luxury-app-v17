@@ -85,7 +85,7 @@
         <ng-template pTemplate="body" let-item let-index="rowIndex">
           <tr (dblclick)="onRemoveItem(item.id)" [pReorderableRow]="index">
             <td class="p-column-title text-center">
-              <i class="fa-duotone fa-bars" pReorderableRowHandle> </i>
+              <i class="fa-light fa-bars" pReorderableRowHandle> </i>
             </td>
             <td class="pointer">
               <p>{{ item.location }} {{ item.number }} - {{ item.name }}</p>

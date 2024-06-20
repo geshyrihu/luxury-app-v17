@@ -20,7 +20,7 @@
   [autoLayout]="true"
 >
   <ng-template pTemplate="caption">
-    <app-table-header [title]="'Productos'" [dt]="dt" [showAdd]="false" />
+    <table-header [title]="'Productos'" [dt]="dt" [showAdd]="false" />
   </ng-template>
   <ng-template pTemplate="header">
     <tr>
@@ -84,7 +84,7 @@
     </tr>
   </ng-template>
   <ng-template pTemplate="paginatorleft">
-    <app-table-footer [data]="data"></app-table-footer>
+    <table-footer [data]="data" />
   </ng-template>
 </p-table>
 }

@@ -20,7 +20,7 @@
     [tableStyle]="{ 'min-width': '50rem' }"
   >
     <ng-template pTemplate="caption">
-      <app-table-header
+      <table-header
         [title]="'Catalogo de gastos fijos'"
         (add)="onModal({ id: 0, title: 'Nuevo Registro' })"
         [dt]="dt"
@@ -131,7 +131,7 @@
       </tr>
     </ng-template>
     <ng-template pTemplate="paginatorleft">
-      <app-table-footer [data]="data"></app-table-footer>
+      <table-footer [data]="data" />
     </ng-template>
   </p-table>
 </div>

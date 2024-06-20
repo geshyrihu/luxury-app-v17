@@ -22,7 +22,7 @@
     [tableStyle]="{ 'min-width': '50rem' }"
   >
     <ng-template pTemplate="caption">
-      <app-table-header
+      <table-header
         [title]="'Ordenes de Compra Pagadas'"
         [showAdd]="false"
         [dt]="dt"
@@ -145,7 +145,7 @@
       </tr>
     </ng-template>
     <ng-template pTemplate="paginatorleft">
-      <app-table-footer [data]="data"></app-table-footer>
+      <table-footer [data]="data" />
     </ng-template>
   </p-table>
 </div>

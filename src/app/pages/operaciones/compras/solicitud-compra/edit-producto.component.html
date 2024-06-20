@@ -13,7 +13,7 @@
         formControlName="cantidad"
         label="Cantidad"
         placeholder="cantidad"
-      ></custom-input-number>
+      />
 
       <div class="form-group row">
         <label class="col-sm-3">Unidad</label>
@@ -37,7 +37,7 @@
           <app-validation-errors-custom-input
             [control]="f.unidadMedidaId"
             [placeholder]="'Unidad'"
-          ></app-validation-errors-custom-input>
+          />
         </div>
       </div>
       <custom-button-submit [disabled]="this.form.invalid || submitting" />

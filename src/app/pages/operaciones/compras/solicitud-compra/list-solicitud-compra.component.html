@@ -21,7 +21,7 @@
   [autoLayout]="true"
 >
   <ng-template pTemplate="caption">
-    <app-table-header
+    <table-header
       [title]="'Solicitudes de Insumos y Servicios'"
       (add)="onSolicitudCompra(0)"
       [dt]="dt"
@@ -159,6 +159,6 @@
     </tr>
   </ng-template>
   <ng-template pTemplate="paginatorleft">
-    <app-table-footer [data]="data"></app-table-footer>
+    <table-footer [data]="data" />
   </ng-template>
 </p-table>

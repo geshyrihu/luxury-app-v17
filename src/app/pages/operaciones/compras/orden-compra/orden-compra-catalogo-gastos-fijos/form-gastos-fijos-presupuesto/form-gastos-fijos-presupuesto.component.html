@@ -17,11 +17,7 @@
   [autoLayout]="true"
 >
   <ng-template pTemplate="caption">
-    <app-table-header
-      [title]="'Partidas agregadas'"
-      [showAdd]="false"
-      [dt]="dtt"
-    />
+    <table-header [title]="'Partidas agregadas'" [showAdd]="false" [dt]="dtt" />
   </ng-template>
   <ng-template pTemplate="header">
     <tr>
@@ -124,11 +120,7 @@
   [autoLayout]="true"
 >
   <ng-template pTemplate="caption">
-    <app-table-header
-      [title]="'Cedula Presupuestal'"
-      [showAdd]="false"
-      [dt]="dt"
-    />
+    <table-header [title]="'Cedula Presupuestal'" [showAdd]="false" [dt]="dt" />
     <div class="col-sm-12">
       <div class="form-group row">
         <label class="col-sm-3 font-weight-light">Selecciona presupuesto</label>
@@ -218,7 +210,7 @@
     </tr>
   </ng-template>
   <ng-template pTemplate="paginatorleft">
-    <app-table-footer [data]="data"></app-table-footer>
+    <table-footer [data]="data" />
   </ng-template>
 </p-table>
 }

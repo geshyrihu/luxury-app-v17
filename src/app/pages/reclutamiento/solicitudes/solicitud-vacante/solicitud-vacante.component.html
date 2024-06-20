@@ -1,53 +1,43 @@
 @if (data !== null || data !== undefined) {
-  <div class="card">
-    <div class="card-body">
-      <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
-        <table class="mb-2">
-          @if (data && data.professionkey) {
-            <tr>
-              <td style="width: 20%">Id Profesión:</td>
-              <td style="width: 80%">{{ data.professionkey }}</td>
-            </tr>
-          }
-          @if (data && data.professionName) {
-            <tr>
-              <td style="width: 20%">Nombre de la vacante:</td>
-              <td style="width: 80%">{{ data.professionName }}</td>
-            </tr>
-          }
-          @if (data && data.professionName) {
-            <tr>
-              <td style="width: 20%">Actividades que estara realizando:</td>
-              <td style="width: 80%">
-                Revisar descripción de puesto en LuxuryApp
-              </td>
-            </tr>
-          }
-          @if (data && data.professionName) {
-            <tr>
-              <td style="width: 20%">
-                Especificar restricciones de edad o sexo:
-              </td>
-              <td style="width: 80%">
-                Revisar descripción de puesto en LuxuryApp
-              </td>
-            </tr>
-          }
-          @if (data) {
-            <tr>
-              <td style="width: 20%">Sueldo mensual neto:</td>
-              <td style="width: 80%">{{ data.sueldoBase }}</td>
-            </tr>
-          }
-          <!-- <tr *ngIf="data && data.sueldo">
+<div class="card">
+  <div class="card-body">
+    <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
+      <table class="mb-2">
+        @if (data && data.professionkey) {
+        <tr>
+          <td style="width: 20%">Id Profesión:</td>
+          <td style="width: 80%">{{ data.professionkey }}</td>
+        </tr>
+        } @if (data && data.professionName) {
+        <tr>
+          <td style="width: 20%">Nombre de la vacante:</td>
+          <td style="width: 80%">{{ data.professionName }}</td>
+        </tr>
+        } @if (data && data.professionName) {
+        <tr>
+          <td style="width: 20%">Actividades que estara realizando:</td>
+          <td style="width: 80%">Revisar descripción de puesto en LuxuryApp</td>
+        </tr>
+        } @if (data && data.professionName) {
+        <tr>
+          <td style="width: 20%">Especificar restricciones de edad o sexo:</td>
+          <td style="width: 80%">Revisar descripción de puesto en LuxuryApp</td>
+        </tr>
+        } @if (data) {
+        <tr>
+          <td style="width: 20%">Sueldo mensual neto:</td>
+          <td style="width: 80%">{{ data.sueldoBase }}</td>
+        </tr>
+        }
+        <!-- <tr *ngIf="data && data.sueldo">
           <td style="width: 20%">Sueldo mensual neto:</td>
           <td style="width: 80%">{{ data.sueldo }}</td>
         </tr> -->
         @if (data && data.turnoTrabajo != undefined) {
-          <tr>
-            <td style="width: 20%">Turno de trabajo:</td>
-            <td style="width: 80%">{{ data.turnoTrabajo }}</td>
-          </tr>
+        <tr>
+          <td style="width: 20%">Turno de trabajo:</td>
+          <td style="width: 80%">{{ data.turnoTrabajo }}</td>
+        </tr>
         }
         <tr>
           <td colspan="2">
@@ -69,51 +59,51 @@
                   <td>ENTRADA</td>
                   <td>
                     @if (data && data.lunesEntrada) {
-                      <p>
-                        {{ data.lunesEntrada }}
-                      </p>
+                    <p>
+                      {{ data.lunesEntrada }}
+                    </p>
                     }
                   </td>
                   <td>
                     @if (data && data.martesEntrada) {
-                      <p>
-                        {{ data.martesEntrada }}
-                      </p>
+                    <p>
+                      {{ data.martesEntrada }}
+                    </p>
                     }
                   </td>
                   <td>
                     @if (data && data.miercolesEntrada) {
-                      <p>
-                        {{ data.miercolesEntrada }}
-                      </p>
+                    <p>
+                      {{ data.miercolesEntrada }}
+                    </p>
                     }
                   </td>
                   <td>
                     @if (data && data.juevesEntrada) {
-                      <p>
-                        {{ data.juevesEntrada }}
-                      </p>
+                    <p>
+                      {{ data.juevesEntrada }}
+                    </p>
                     }
                   </td>
                   <td>
                     @if (data && data.viernesEntrada) {
-                      <p>
-                        {{ data.viernesEntrada }}
-                      </p>
+                    <p>
+                      {{ data.viernesEntrada }}
+                    </p>
                     }
                   </td>
                   <td>
                     @if (data && data.sabadoEntrada) {
-                      <p>
-                        {{ data.sabadoEntrada }}
-                      </p>
+                    <p>
+                      {{ data.sabadoEntrada }}
+                    </p>
                     }
                   </td>
                   <td>
                     @if (data && data.domingoEntrada) {
-                      <p>
-                        {{ data.domingoEntrada }}
-                      </p>
+                    <p>
+                      {{ data.domingoEntrada }}
+                    </p>
                     }
                   </td>
                 </tr>
@@ -121,51 +111,51 @@
                   <td>SALIDA</td>
                   <td>
                     @if (data && data.lunesSalida) {
-                      <p>
-                        {{ data.lunesSalida }}
-                      </p>
+                    <p>
+                      {{ data.lunesSalida }}
+                    </p>
                     }
                   </td>
                   <td>
                     @if (data && data.martesSalida) {
-                      <p>
-                        {{ data.martesSalida }}
-                      </p>
+                    <p>
+                      {{ data.martesSalida }}
+                    </p>
                     }
                   </td>
                   <td>
                     @if (data && data.miercolesSalida) {
-                      <p>
-                        {{ data.miercolesSalida }}
-                      </p>
+                    <p>
+                      {{ data.miercolesSalida }}
+                    </p>
                     }
                   </td>
                   <td>
                     @if (data && data.juevesSalida) {
-                      <p>
-                        {{ data.juevesSalida }}
-                      </p>
+                    <p>
+                      {{ data.juevesSalida }}
+                    </p>
                     }
                   </td>
                   <td>
                     @if (data && data.viernesSalida) {
-                      <p>
-                        {{ data.viernesSalida }}
-                      </p>
+                    <p>
+                      {{ data.viernesSalida }}
+                    </p>
                     }
                   </td>
                   <td>
                     @if (data && data.sabadoSalida) {
-                      <p>
-                        {{ data.sabadoSalida }}
-                      </p>
+                    <p>
+                      {{ data.sabadoSalida }}
+                    </p>
                     }
                   </td>
                   <td>
                     @if (data && data.domingoSalida) {
-                      <p>
-                        {{ data.domingoSalida }}
-                      </p>
+                    <p>
+                      {{ data.domingoSalida }}
+                    </p>
                     }
                   </td>
                 </tr>
@@ -174,10 +164,10 @@
           </td>
         </tr>
         @if (data && data.observationsWorkShift != undefined) {
-          <tr>
-            <td style="width: 20%">Obs. referentes al horario:</td>
-            <td style="width: 80%">{{ data.observationsWorkShift }}</td>
-          </tr>
+        <tr>
+          <td style="width: 20%">Obs. referentes al horario:</td>
+          <td style="width: 80%">{{ data.observationsWorkShift }}</td>
+        </tr>
         }
         <tr>
           <td style="width: 20%">Comentarios adicionales:</td>
@@ -190,28 +180,26 @@
           </td>
         </tr>
       </table>
-      <custom-button-send-email
-        [disabled]="this.form.invalid || submitting"
-      ></custom-button-send-email>
+      <custom-button-send-email [disabled]="this.form.invalid || submitting" />
     </form>
   </div>
 </div>
 }
 <style>
   table {
-  width: 100%;
-  border-collapse: collapse;
-}
-table td {
-padding: 0.5em;
-border: none;
-}
-table td:first-child {
-width: 30%; /* Ajusta el ancho
+    width: 100%;
+    border-collapse: collapse;
+  }
+  table td {
+    padding: 0.5em;
+    border: none;
+  }
+  table td:first-child {
+    width: 30%; /* Ajusta el ancho
 según tus necesidades */
-}
-table td strong {
-display: inline-block;
-width: 100px; /* Ajusta el ancho según tus necesidades */
-}
+  }
+  table td strong {
+    display: inline-block;
+    width: 100px; /* Ajusta el ancho según tus necesidades */
+  }
 </style>

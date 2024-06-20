@@ -21,7 +21,7 @@
   [autoLayout]="true"
 >
   <ng-template pTemplate="caption">
-    <app-table-header
+    <table-header
       [title]="'Ordenes de Compra Gastos Fijos'"
       (add)="onModalAdd()"
       [dt]="dt"
@@ -134,7 +134,7 @@
             placement="top"
             (click)="onOrdenCompraModal(item.id)"
           >
-            <i class="fa-regular fa-pen-to-square text-info"></i>
+            <i class="fa-light fa-pen-to-square text-info"></i>
           </button>
           @if ( statusCompra === 2 &&
           authService.onValidateRoles(['SuperUsuario']) ) {
@@ -146,6 +146,6 @@
     </tr>
   </ng-template>
   <ng-template pTemplate="paginatorleft">
-    <app-table-footer [data]="data"></app-table-footer>
+    <table-footer [data]="data" />
   </ng-template>
 </p-table>

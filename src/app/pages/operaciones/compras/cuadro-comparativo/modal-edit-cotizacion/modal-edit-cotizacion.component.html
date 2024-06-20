@@ -33,7 +33,7 @@
           (click)="onDeleteProvider()"
           class="btn btn-outline-danger me-1 mt-3 float-end"
         >
-          <i class="me-2 font-size-14 fa-regular fa-trash-can"></i>Eliminar
+          <i class="me-2 font-size-14 fa-light fa-trash-can"></i>Eliminar
           cotizacion
         </button>
         @if (cotizacionesRelacionadas.length !== 3) {
@@ -41,12 +41,12 @@
           (click)="onModalCreateOrdenCompra()"
           class="btn btn-outline-info me-1 mt-3 float-end"
         >
-          <i class="me-2 font-size-14 fa-regular fa-cart-arrow-down"></i>Crear
+          <i class="me-2 font-size-14 fa-light fa-cart-arrow-down"></i>Crear
           Orden de compra
         </button>
         } @if (cotizacionesRelacionadas.length === 3) {
         <button disabled class="btn btn-outline-info me-1 mt-3 float-end">
-          <i class="me-2 font-size-14 fa-regular fa-cart-arrow-down"
+          <i class="me-2 font-size-14 fa-light fa-cart-arrow-down"
             >Ya hay 3 Ordenes</i
           >
         </button>

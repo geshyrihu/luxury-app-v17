@@ -22,7 +22,7 @@
   [autoLayout]="true"
 >
   <ng-template pTemplate="caption">
-    <app-table-header
+    <table-header
       [title]="'Ordenes de Compra Variables'"
       (add)="onModalAdd()"
       [dt]="dt"
@@ -40,7 +40,7 @@
         <custom-button
           (clicked)="onModalCaratula()"
           customClass="btn btn-warning float-start"
-          icon="fa-regular fa-book me-2"
+          icon="fa-light fa-book me-2"
           label="Caratula"
         >
         </custom-button>
@@ -169,7 +169,7 @@
             placement="top"
             [routerLink]="['/operaciones/compras/solicitud-pago-pdf/', item.id]"
           >
-            <i class="fa-regular fa-file-pdf"></i>
+            <i class="fa-light fa-file-pdf"></i>
           </a>
           } @if (statusCompra === 0) {
           <a
@@ -179,7 +179,7 @@
             placement="top"
             [routerLink]="['/operaciones/compras/orden-compra-pdf/', item.id]"
           >
-            <i class="fa-regular fa-file-pdf"></i>
+            <i class="fa-light fa-file-pdf"></i>
           </a>
           } @if ( authService.onValidateRoles([ 'Asistente', 'Mantenimiento',
           'Residente' ]) ) {
@@ -192,7 +192,7 @@
             placement="top"
             (click)="onOrdenCompraModal(item.id)"
           >
-            <i class="fa-regular fa-pencil text-info"></i>
+            <i class="fa-light fa-pencil text-info"></i>
           </button>
           @if ( statusCompra === 2 && authService.onValidateRoles(['Residente'])
           ) {
@@ -203,6 +203,6 @@
     </tr>
   </ng-template>
   <ng-template pTemplate="paginatorleft">
-    <app-table-footer [data]="data"></app-table-footer>
+    <table-footer [data]="data" />
   </ng-template>
 </p-table>

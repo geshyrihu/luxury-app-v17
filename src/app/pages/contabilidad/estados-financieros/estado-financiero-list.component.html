@@ -17,7 +17,7 @@
   >
     <!-- styleClass="p-datatable-sm" -->
     <ng-template pTemplate="caption">
-      <app-table-header
+      <table-header
         [title]="'ESTADOS FINANCIEROS'"
         [showAdd]="false"
         [dt]="dt"
@@ -27,22 +27,22 @@
     <ng-template pTemplate="header">
       <tr>
         <th scope="col" style="width: 25%">
-          <i class="fa-duotone fa-square-1 l me-2 my-1"></i>
+          <i class="fa-light fa-square-1 l me-2 my-1"></i>
           <span class="flex-grow-1 my-1 font-size-18">PERIODO</span>
           <i class="fa-solid fa-right l my-1"></i>
         </th>
         <th scope="col" style="width: 25%">
-          <i class="fa-duotone fa-square-2 l me-2 my-1"></i>
+          <i class="fa-light fa-square-2 l me-2 my-1"></i>
           <span class="flex-grow-1 font-size-18 my-1">ARCHIVO</span>
           <i class="fa-solid fa-right l my-1"></i>
         </th>
         <th scope="col" style="width: 25%">
-          <i class="fa-duotone fa-square-3 l me-2 my-1"></i>
+          <i class="fa-light fa-square-3 l me-2 my-1"></i>
           <span class="flex-grow-1 font-size-18 my-1"> AUTORIZACIÓN </span>
           <i class="fa-solid fa-right l my-1"></i>
         </th>
         <th scope="col" style="width: 25%">
-          <i class="fa-duotone fa-square-4 l me-2 my-1"></i>
+          <i class="fa-light fa-square-4 l me-2 my-1"></i>
           <span class="flex-grow-1 font-size-18 my-1">ENVIO</span>
           <i class="fa-sharp fa-solid fa-check l my-1"></i>
         </th>
@@ -68,13 +68,13 @@
             "
             class="btn btn-soft-danger w-100 waves-effect btn-label waves-light me-1 hide-print-mode"
           >
-            <i class="fa-regular fa-file-plus pointer label-icon"></i>
+            <i class="fa-light fa-file-plus pointer label-icon"></i>
             CARGAR INFORME FINANCIERO
           </button>
           }@else{
           <div class="d-flex align-items-center">
             <i
-              class="fa-regular fa-check text-success pointer label-icon me-2"
+              class="fa-light fa-check text-success pointer label-icon me-2"
             ></i>
             <a
               ngbTooltip="Visualizar PDF"
@@ -84,7 +84,7 @@
               href="{{ baseUrlApi }}/{{ item.nameFileEstadoFinanciero }}"
               class="btn btn-soft-danger w-xs waves-effect btn-label waves-light me-1 hide-print-mode"
             >
-              <i class="fa-regular fa-download pointer label-icon"></i>
+              <i class="fa-light fa-download pointer label-icon"></i>
               PDF
             </a>
             <div class="flex-grow-1">
@@ -109,7 +109,7 @@
               "
               class="btn btn-soft-danger waves-effect text-end waves-light pointer p-2"
             >
-              <i class="fa-regular fa-arrow-rotate-left"></i>
+              <i class="fa-light fa-arrow-rotate-left"></i>
             </button>
             }
           </div>
@@ -126,12 +126,12 @@
             (click)="onAuthorize(item.id)"
             class="btn btn-soft-danger w-100 waves-effect btn-label waves-light me-1 hide-print-mode"
           >
-            <i class="fa-regular fa-clipboard-check pointer label-icon"></i>
+            <i class="fa-light fa-clipboard-check pointer label-icon"></i>
             AUTORIZAR INFORME FINANCIERO
           </button>
           } @else{
           <div class="d-flex align-items-center">
-            <i class="fa-regular fa-check text-success me-2"></i>
+            <i class="fa-light fa-check text-success me-2"></i>
             <div class="flex-grow-1">
               <p class="mb-0 card-title font-size-12">
                 {{ item.personWhoAuthorized }}
@@ -149,7 +149,7 @@
               (click)="onDesauthorize(item.id)"
               class="btn btn-soft-danger waves-effect text-end waves-light pointer p-2"
             >
-              <i class="fa-regular fa-arrow-rotate-left"></i>
+              <i class="fa-light fa-arrow-rotate-left"></i>
             </button>
             }
           </div>
@@ -172,13 +172,13 @@
             "
             class="btn btn-soft-danger w-100 waves-effect btn-label waves-light me-1 hide-print-mode"
           >
-            <i class="fa-regular fa-paper-plane pointer label-icon"></i>
+            <i class="fa-light fa-paper-plane pointer label-icon"></i>
             ENVIAR A CONDOMINOS
           </button>
 
           }@else{
           <div class="d-flex align-items-center">
-            <i class="fa-regular fa-check text-success me-2"></i>
+            <i class="fa-light fa-check text-success me-2"></i>
             <div class="flex-grow-1">
               <p class="mb-0 card-title font-size-12">
                 {{ item.personWhoSend }}

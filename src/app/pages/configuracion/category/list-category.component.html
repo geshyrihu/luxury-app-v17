@@ -16,7 +16,7 @@
   [tableStyle]="{ 'min-width': '50rem' }"
 >
   <ng-template pTemplate="caption">
-    <app-table-header
+    <table-header
       [title]="'Categorias'"
       (add)="onModalAddOrEdit({ id: 0, title: 'Nuevo Registro' })"
       [dt]="dt"
@@ -56,6 +56,6 @@
   </ng-template>
 
   <ng-template pTemplate="paginatorleft">
-    <app-table-footer [data]="data"></app-table-footer>
+    <table-footer [data]="data" />
   </ng-template>
 </p-table>

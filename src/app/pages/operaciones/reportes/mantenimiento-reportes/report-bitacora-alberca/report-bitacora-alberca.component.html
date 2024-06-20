@@ -1,16 +1,13 @@
-<app-pagetitlereport
-  class="breakPage"
-  title="ALBERCAS Y JACUZZIS"
-></app-pagetitlereport>
+<page-title-report class="breakPage" title="ALBERCAS Y JACUZZIS" />
 @for (item of medidores; track item) {
+<div>
+  <h6 class="card-title">{{ item.namePiscina }}</h6>
+  @for (data of item.chartLinePrime; track data) {
   <div>
-    <h6 class="card-title">{{ item.namePiscina }}</h6>
-    @for (data of item.chartLinePrime; track data) {
-      <div>
-        <div class="card card-chart">
-          <app-custom-bar-chart [data]="data"></app-custom-bar-chart>
-        </div>
-      </div>
-    }
+    <div class="card card-chart">
+      <app-custom-bar-chart [data]="data"></app-custom-bar-chart>
+    </div>
   </div>
+  }
+</div>
 }

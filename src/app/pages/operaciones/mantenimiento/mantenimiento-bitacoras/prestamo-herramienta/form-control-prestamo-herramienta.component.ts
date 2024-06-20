@@ -56,7 +56,7 @@ export default class FormControlPrestamoHerramientaComponent implements OnInit {
       toolId: ['', Validators.required],
       tool: ['', Validators.required],
       observaciones: [],
-      employeeResponsableId: [this.authService.employeeId],
+      // employeeResponsableId: [this.authService.employeeId],
       // personId: [this.authService.personId],
       applicationUserResponsableId: [this.authService.applicationUserId],
     });

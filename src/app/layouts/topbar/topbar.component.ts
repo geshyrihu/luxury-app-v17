@@ -12,8 +12,6 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import { ProfielServiceService } from 'src/app/core/services/profiel-service.service';
-import AddoreditPersonDataComponent from 'src/app/pages/person/addoredit-person-data/addoredit-person-data.component';
-import PersonAddoreditAddressComponent from 'src/app/pages/person/person-addoredit-address/person-addoredit-address.component';
 import { environment } from 'src/environments/environment';
 import MenuSelectCustomerComponent from '../menu-select-customer/menu-select-customer.component';
 import ModalSearchComponent from '../modal-search/modal-search.component';
@@ -41,8 +39,6 @@ export class TopbarComponent implements OnInit {
   location = inject(Location);
   router = inject(Router);
   profielServiceService = inject(ProfielServiceService);
-
-  // personId: number = this.authService.personId;
 
   @Output() settingsButtonClicked = new EventEmitter();
 
@@ -105,36 +101,10 @@ export class TopbarComponent implements OnInit {
   }
 
   // Datos Personales
-  onShowModalDatosPersonales() {
-    this.dialogHandlerService
-      .openDialog(
-        AddoreditPersonDataComponent,
-        {
-          // personId: this.personId,
-        },
-        'Datos Principales',
-        this.dialogHandlerService.dialogSizeFull
-      )
-      .then((result: boolean) => {
-        if (result) this.customToastService.onShowSuccess();
-      });
-  }
+  onShowModalDatosPersonales() {}
 
   // Modal datos direccion
-  onModalDataAddress() {
-    this.dialogHandlerService
-      .openDialog(
-        PersonAddoreditAddressComponent,
-        {
-          // personId: this.personId,
-        },
-        'Datos Principales',
-        this.dialogHandlerService.dialogSizeLg
-      )
-      .then((result: boolean) => {
-        if (result) this.customToastService.onShowSuccess();
-      });
-  }
+  onModalDataAddress() {}
 
   onBack() {
     this.location.back();
@@ -145,6 +115,11 @@ export class TopbarComponent implements OnInit {
   }
 
   onRefresh() {
-    window.location.href = window.location.href; // Reasignar la URL actual para recargar la página
+    // window.location.href = window.location.href; // Reasignar la URL actual para recargar la página
+
+    const currentUrl = this.router.url;
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate([currentUrl]);
+    });
   }
 }

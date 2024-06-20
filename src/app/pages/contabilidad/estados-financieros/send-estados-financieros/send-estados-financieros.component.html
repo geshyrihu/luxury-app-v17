@@ -100,7 +100,7 @@
               ngbTooltip="Descartar correo"
               placement="top"
               (click)="onDeleteDestinatariosAdicionales(i)"
-              class="fa-regular fa-xmark pointer"
+              class="fa-light fa-xmark pointer"
             ></i
           ></span>
         </span>
@@ -124,7 +124,7 @@
     [tableStyle]="{ 'min-width': '50rem' }"
   >
     <ng-template pTemplate="caption">
-      <app-table-header [title]="'Condomino'" [showAdd]="false" [dt]="dt" />
+      <table-header [title]="'Condomino'" [showAdd]="false" [dt]="dt" />
     </ng-template>
     <ng-template pTemplate="header">
       <tr>

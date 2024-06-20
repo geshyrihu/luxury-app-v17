@@ -16,7 +16,7 @@
         label="Equipo o Instalación"
         dataListId="machineryDatalistOptions"
         [horizontal]="false"
-      ></custom-input-datalist>
+      />
 
       <custom-input-select
         [control]="form.get('routeRecurrence')"
@@ -32,7 +32,7 @@
         formControlName="position"
         label="Posición"
         placeholder="posición"
-      ></custom-input-number>
+      />
 
       <div class="col-12 mb-2 text-left">
         <custom-button-submit [disabled]="this.form.invalid || submitting" />

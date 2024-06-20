@@ -9,19 +9,19 @@
           class="list-group-item pointer"
           (click)="onShowModalDatosPrincipales()"
         >
-          <i class="fa-duotone fa-database me-3"></i>
+          <i class="fa-light fa-database me-3"></i>
           Datos principales
         </li>
         <li
           class="list-group-item pointer"
           (click)="onShowModalDatosPersonales()"
         >
-          <i class="fa-duotone fa-memo-circle-info me-3"></i>
+          <i class="fa-light fa-memo-circle-info me-3"></i>
           Datos personales
         </li>
 
         <li class="list-group-item pointer" (click)="onModalDataAddress()">
-          <i class="fa-duotone fa-location-dot me-3"></i>
+          <i class="fa-light fa-location-dot me-3"></i>
           Dirección
         </li>
         <!-- Inicio contactos de emergencia -->
@@ -29,7 +29,7 @@
           class="list-group-item pointer"
           (click)="onShowModalEmergencyContact()"
         >
-          <i class="fa-duotone fa-family-pants me-3"></i>
+          <i class="fa-light fa-family-pants me-3"></i>
           Contactos de Emergencia
         </li>
         <!-- Final contactos de emergencia -->
@@ -38,7 +38,7 @@
           class="list-group-item pointer"
           (click)="onShowModalActualizarImagen()"
         >
-          <i class="fa-duotone fa-camera me-3"></i>
+          <i class="fa-light fa-camera me-3"></i>
           Cambiar foto
         </li>
         <!-- Final cambiar foto de perfil -->
@@ -49,7 +49,7 @@
       <ul class="list-group">
         <!-- Inicio restablecer contraseña -->
         <li class="list-group-item pointer" (click)="onModalUpdatePassword()">
-          <i class="fa-duotone fa-key me-3"></i>
+          <i class="fa-light fa-key me-3"></i>
           Restablecer contraseña
         </li>
         <!-- Final restablecer contraseña  -->
@@ -57,27 +57,27 @@
           class="list-group-item pointer"
           (click)="onModalAccountToEmployee()"
         >
-          <i class="fa-duotone fa-image-user me-3"></i>
+          <i class="fa-light fa-image-user me-3"></i>
           Asignar cuenta de usuario
         </li>
         @if (!active) {
         <li class="list-group-item pointer" (click)="onBlockEmployee()">
-          <i class="fa-duotone fa-user-xmark me-3"></i>
+          <i class="fa-light fa-user-xmark me-3"></i>
           Activar empleado
         </li>
         } @if (active) {
         <li class="list-group-item pointer" (click)="onBlockEmployee()">
-          <i class="fa-duotone fa-user-xmark me-3"></i>
+          <i class="fa-light fa-user-xmark me-3"></i>
           Desactivar empleado
         </li>
         }
         <li class="list-group-item pointer" (click)="onShowModalDatosLaboral()">
-          <i class="fa-duotone fa-briefcase me-3"></i>
+          <i class="fa-light fa-briefcase me-3"></i>
           Datos laborales
         </li>
 
         <li class="list-group-item pointer" (click)="onDelete()">
-          <i class="fa-duotone fa-trash me-3"></i>
+          <i class="fa-light fa-trash me-3"></i>
           Eliminar
         </li>
       </ul>
@@ -98,26 +98,26 @@
         <!--  -->
         @if (!solicitudBajaStatus && workPosition) {
         <li class="list-group-item pointer" (click)="onModalSolicitudBaja()">
-          <i class="fa-duotone fa-user-minus me-3"></i>
+          <i class="fa-light fa-user-minus me-3"></i>
           Solicitar Baja
         </li>
         }
         <!--  -->
         @if(solicitudAltaStatus){
         <li class="list-group-item pointer">
-          <i class="fa-duotone fa-user-plus me-3 text-danger"></i>
+          <i class="fa-light fa-user-plus me-3 text-danger"></i>
           <span class="text-danger"> Solicitud de alta en proceso </span>
         </li>
         }@else{
         <li class="list-group-item pointer" (click)="onModalSolicitudALta()">
-          <i class="fa-duotone fa-user-plus me-3"></i>
+          <i class="fa-light fa-user-plus me-3"></i>
           Solicitar Alta
         </li>
         }
         <!--  -->
         @if (solicitudBajaStatus) {
         <li class="list-group-item">
-          <i class="fa-duotone fa-user-minus me-3 text-danger"></i>
+          <i class="fa-light fa-user-minus me-3 text-danger"></i>
           <span class="text-danger">Solicitar Baja en proceso</span>
         </li>
         }
@@ -127,14 +127,14 @@
           class="list-group-item pointer"
           (click)="onModalSolicitudModificacionSalarion()"
         >
-          <i class="fa-duotone fa-money-bill-1 me-3"></i>
+          <i class="fa-light fa-money-bill-1 me-3"></i>
           Solicitar modificación de salario
         </li>
         }
         <!--  -->
         @if (solicitudModificacionSalarioStatus) {
         <li class="list-group-item text-danger">
-          <i class="fa-duotone fa-money-bill-1 me-3"></i>
+          <i class="fa-light fa-money-bill-1 me-3"></i>
           <span class="text-danger"
             >Solicitar modificación de salario en proceso</span
           >

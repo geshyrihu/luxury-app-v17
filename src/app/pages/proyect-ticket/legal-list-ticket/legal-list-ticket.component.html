@@ -24,7 +24,7 @@
     <ng-template pTemplate="caption">
       <div class="row">
         <div class="col-sm-10">
-          <app-table-header
+          <table-header
             title="TICKETS LEGAL"
             (add)="onModalAddOrEdit({ id: '', title: 'AGREGAR TICKET LEGAL' })"
             [dt]="dt"
@@ -40,7 +40,7 @@
           <!-- Ajusta el espacio con "me-2" según sea necesario -->
           <button ngbTooltip="Restaurar fecha" class="btn btn-primary">
             <i
-              class="fa-duotone fa-window-restore pointer"
+              class="fa-light fa-window-restore pointer"
               (click)="clearInput()"
             ></i>
           </button>
@@ -84,7 +84,7 @@
           <i
             (click)="onModalViewDetail({ id: item.id })"
             ngbTooltip="Ver detalles"
-            class="fa-duotone fa-book fa-xl pointer"
+            class="fa-light fa-book fa-xl pointer"
           ></i>
           }
         </td>
@@ -92,12 +92,12 @@
           <div class="text-center">
             @if(item.documentCloud){
             <i
-              class="fa-duotone fa-cloud-arrow-up fa-xl me-3"
+              class="fa-light fa-cloud-arrow-up fa-xl me-3"
               ngbTooltip="Subida a LuxuryCloud"
             ></i>
             } @if(item.documentEmail){
             <i
-              class="fa-duotone fa-envelope fa-xl"
+              class="fa-light fa-envelope fa-xl"
               ngbTooltip="Enviada por email"
             ></i>
             }
@@ -140,7 +140,7 @@
                 onModalComentarios({ ticketId: item.id, title: 'Seguimiento' })
               "
             >
-              <i class="fa-regular fa-list text-warning"></i>
+              <i class="fa-light fa-list text-warning"></i>
               <span
                 class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success"
                 >{{ item.tracking }}

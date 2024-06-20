@@ -16,7 +16,7 @@
   (onRowReorder)="onRowReorder($event)"
 >
   <ng-template pTemplate="caption">
-    <app-table-header
+    <table-header
       [title]="'Profesiones'"
       (add)="showModalAddOrEdit({ id: 0, title: 'Nuevo Registro' })"
       [dt]="dt"
@@ -52,7 +52,7 @@
   <ng-template pTemplate="body" let-item let-index="rowIndex">
     <tr [pReorderableRow]="index">
       <td class="p-column-title text-center">
-        <i class="fa-regular fa-bars" pReorderableRowHandle></i>
+        <i class="fa-light fa-bars" pReorderableRowHandle></i>
       </td>
       <td class="p-column-title">
         {{ item.hierarchy }}

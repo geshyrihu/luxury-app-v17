@@ -24,7 +24,7 @@
     <ng-template pTemplate="caption">
       <div class="row">
         <div class="col-sm-10">
-          <app-table-header
+          <table-header
             (add)="onCreateAccount()"
             [title]="'Cuentas de acceso '"
             [dt]="dt"
@@ -117,21 +117,21 @@
             <!-- <custom-button
               ngbTooltip="Datos de correo"
               [customClass]="' btn-sm btn-outline-primary '"
-              icon="fa-regular fa-envelope text-primary"
+              icon="fa-light fa-envelope text-primary"
               (clicked)="onModalEmailData(item.id)"
             /> -->
             @if (item.active) {
             <custom-button
               (clicked)="onToBlockAccount(item.id)"
               [customClass]="' btn-sm btn-outline-success '"
-              icon="fa-regular fa-user-lock text-success"
+              icon="fa-light fa-user-lock text-success"
               ngbTooltip="Bloquear"
             />
             } @if (!item.active) {
             <custom-button
               (clicked)="onToUnlockAccount(item.id)"
               [customClass]="' btn-sm btn-outline-danger '"
-              icon="fa-regular fa-user-check text-danger"
+              icon="fa-light fa-user-check text-danger"
               ngbTooltip="Desbloquear"
             />
             }

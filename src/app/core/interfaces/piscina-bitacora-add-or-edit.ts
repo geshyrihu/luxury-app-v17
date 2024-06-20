@@ -14,5 +14,4 @@ export interface IPiscinaBitacoraAddOrEdit {
   cepillado: boolean;
   aspirado: boolean;
   cenefas: boolean;
-  personId: number;
 }

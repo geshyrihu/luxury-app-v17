@@ -18,7 +18,7 @@
     <ng-template pTemplate="caption">
       <div class="row">
         <div class="col-sm-10">
-          <app-table-header
+          <table-header
             [title]="'DIRECTORIO DE PERSONAL INTERNO'"
             (add)="showModalAddEmployee()"
             [dt]="dt"
@@ -133,7 +133,7 @@
             <custom-button
               [ngbTooltipCustom]="'Opciones'"
               customClass=" btn-outline-primary"
-              icon="fa-regular fa-ellipsis-vertical"
+              icon="fa-light fa-ellipsis-vertical"
               (clicked)="
                 onShowModalEditEmpleado(
                   item.applicationUserId,

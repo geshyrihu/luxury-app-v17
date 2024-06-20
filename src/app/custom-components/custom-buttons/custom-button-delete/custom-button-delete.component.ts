@@ -1,8 +1,9 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
+import CustomButtonComponent from '../custom-button/custom-button.component';
 @Component({
-  imports: [NgbTooltip],
+  imports: [NgbTooltip, CustomButtonComponent],
   selector: 'custom-button-delete',
   standalone: true,
   templateUrl: './custom-button-delete.component.html',

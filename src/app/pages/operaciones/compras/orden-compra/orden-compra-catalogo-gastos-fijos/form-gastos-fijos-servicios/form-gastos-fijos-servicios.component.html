@@ -17,7 +17,7 @@
   [globalFilterFields]="['producto.nombreProducto']"
 >
   <ng-template pTemplate="caption">
-    <app-table-header
+    <table-header
       [title]="'Productos o Servicios Agregados'"
       [dt]="dc"
       [showAdd]="false"
@@ -127,7 +127,7 @@
   [autoLayout]="true"
 >
   <ng-template pTemplate="caption">
-    <app-table-header [title]="'Productos'" [dt]="dt" [showAdd]="false" />
+    <table-header [title]="'Productos'" [dt]="dt" [showAdd]="false" />
   </ng-template>
   <ng-template pTemplate="header">
     <tr>
@@ -201,6 +201,6 @@
     </tr>
   </ng-template>
   <ng-template pTemplate="paginatorleft">
-    <app-table-footer [data]="productos"></app-table-footer>
+    <table-footer [data]="productos" />
   </ng-template>
 </p-table>

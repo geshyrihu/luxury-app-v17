@@ -155,9 +155,6 @@ export default class AddOrEditRadioComunicacionComponent implements OnInit {
     }
     formData.append('responsibleAreaId', String(dto.responsibleAreaId));
 
-    if (dto.personId != null) {
-      formData.append('personId', String(dto.personId));
-    }
     if (dto.applicationUserId != null) {
       formData.append('applicationUserId', String(dto.applicationUserId));
     }

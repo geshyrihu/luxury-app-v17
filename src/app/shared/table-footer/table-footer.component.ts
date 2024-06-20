@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-table-footer',
+  selector: 'table-footer',
   templateUrl: './table-footer.component.html',
   standalone: true,
 })

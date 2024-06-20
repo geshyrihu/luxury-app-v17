@@ -18,10 +18,10 @@ export default class SendWorkPlanComponent {
   apiRequestService = inject(ApiRequestService);
   customToastService = inject(CustomToastService);
   customerIdService = inject(CustomerIdService);
-  private authService = inject(AuthService);
+  authService = inject(AuthService);
 
   ref: DynamicDialogRef; // Referencia a un cuadro de diálogo modal
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+  destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   customerId = this.customerIdService.customerId;
   personId = this.authService.infoEmployeeDto.personId;
@@ -67,7 +67,7 @@ export default class SendWorkPlanComponent {
     // Realizar una solicitud HTTP para eliminar un banco específico
     this.dataService
       .get(
-        `WeeklyWorkPlan/Create/${numeroSemana}/${year}/${this.customerId}/${this.personId}/${this.authService.applicationUserId}`
+        `WeeklyWorkPlan/Create/${numeroSemana}/${year}/${this.customerId}/${this.authService.applicationUserId}`
       )
       .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({

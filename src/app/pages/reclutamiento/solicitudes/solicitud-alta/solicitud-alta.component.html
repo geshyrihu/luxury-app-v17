@@ -23,7 +23,7 @@
           <app-validation-errors-custom-input
             [control]="f.positionRequestId"
             [placeholder]="'vacante'"
-          ></app-validation-errors-custom-input>
+          />
         </div>
       </div>
       <custom-input-text
@@ -68,10 +68,8 @@
         formControlName="additionalInformation"
         label="Comentarios adicionales"
         placeholder="comentarios adicionales"
-      ></custom-input-text-area>
-      <custom-button-send-email
-        [disabled]="this.form.invalid || submitting"
-      ></custom-button-send-email>
+      />
+      <custom-button-send-email [disabled]="this.form.invalid || submitting" />
     </form>
   </div>
 </div>

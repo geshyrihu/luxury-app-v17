@@ -31,7 +31,7 @@ import { ApiRequestService } from '../core/services/api-request.service';
 import { CustomToastService } from '../core/services/custom-toast.service';
 import { DialogHandlerService } from '../core/services/dialog-handler.service';
 import CustomButtonModule from '../custom-components/custom-buttons/custom-button.module';
-import AgregarCorreoElectronicoComponent from './agregar-correo-electronico/agregar-correo-electronico.component';
+// import AgregarCorreoElectronicoComponent from './agregar-correo-electronico/agregar-correo-electronico.component';
 import CabeceraSolicitudPagoPdfComponent from './cabeceras/cabecera-solicitud-pago-pdf/cabecera-solicitud-pago-pdf.component';
 import PagetitleComponent from './cabeceras/pagetitle/pagetitle.component';
 import ReportHeaderComponent from './cabeceras/report-header/report-header.component';
@@ -40,7 +40,7 @@ import PieChartComponent from './graficos/pie-chart/pie-chart.component';
 import HaederCustomerComponent from './haeder-customer/haeder-customer.component';
 import InputImgReportComponent from './input-img-report/input-img-report.component';
 import InputImgComponent from './input-img/input-img.component';
-import ListadoCondominosComponent from './listado-condominos/listado-condominos.component';
+// import ListadoCondominosComponent from './listado-condominos/listado-condominos.component';
 import MesanioComponent from './mesanio/mesanio.component';
 import CalendarRangeComponent from './rango-calendario-mes-anio/calendar-range.component';
 import RangoCalendarioyyyymmddComponent from './rango-calendario-yyyymmdd/rango-calendario-yyyymmdd.component';
@@ -56,13 +56,13 @@ export function flatpickrFactory() {
 @NgModule({
   imports: [
     AdvancedPieChartComponent,
-    AgregarCorreoElectronicoComponent,
+    // AgregarCorreoElectronicoComponent,
     CabeceraSolicitudPagoPdfComponent,
     CalendarRangeComponent,
     HaederCustomerComponent,
     InputImgComponent,
     InputImgReportComponent,
-    ListadoCondominosComponent,
+    // ListadoCondominosComponent,
     MesanioComponent,
     PagetitleComponent,
     PieChartComponent,
@@ -107,13 +107,13 @@ export function flatpickrFactory() {
   ],
   exports: [
     AdvancedPieChartComponent,
-    AgregarCorreoElectronicoComponent,
+    // AgregarCorreoElectronicoComponent,
     CabeceraSolicitudPagoPdfComponent,
     CalendarRangeComponent,
     HaederCustomerComponent,
     InputImgComponent,
     InputImgReportComponent,
-    ListadoCondominosComponent,
+    // ListadoCondominosComponent,
     MesanioComponent,
     PagetitleComponent,
     PieChartComponent,

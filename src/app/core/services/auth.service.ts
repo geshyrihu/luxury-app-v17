@@ -34,7 +34,7 @@ export class AuthService {
    * Si el token no es válido o no existe, redirige a la página de inicio de sesión.
    * @returns Un observable que indica si el token es válido.
    */
-  validationToken() {
+  validateToken() {
     // Obtener el token almacenado en el sistema de almacenamiento
     this.data.token = this.storageService.retrieve('token');
 
@@ -50,7 +50,6 @@ export class AuthService {
         this.userTokenDto = resp.body;
         this.infoUserAuthDto = this.userTokenDto.infoUserAuthDto;
         this.infoEmployeeDto = this.userTokenDto.infoEmployeeDto;
-        this.personId = this.infoEmployeeDto.personId;
         this.employeeId = this.infoEmployeeDto.employeeId;
         this.applicationUserId = this.infoUserAuthDto.applicationUserId;
         if (resp.body.token) {

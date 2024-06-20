@@ -15,11 +15,7 @@
   [autoLayout]="true"
 >
   <ng-template pTemplate="caption">
-    <app-table-header
-      [title]="'Cedula Presupuestal'"
-      [showAdd]="false"
-      [dt]="dt"
-    />
+    <table-header [title]="'Cedula Presupuestal'" [showAdd]="false" [dt]="dt" />
     <div class="form-group row">
       <label class="col-sm-2">Selecciona presupuesto</label>
       @if (cedulaId !== 0) {
@@ -166,6 +162,6 @@
     </tr>
   </ng-template>
   <ng-template pTemplate="paginatorleft">
-    <app-table-footer [data]="data"></app-table-footer>
+    <table-footer [data]="data" />
   </ng-template>
 </p-table>

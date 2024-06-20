@@ -28,7 +28,7 @@
     (onSort)="onSort()"
   >
     <ng-template pTemplate="caption">
-      <app-table-header
+      <table-header
         [title]="'Inventario'"
         (add)="addProductos({ id: 0, title: 'Agregar Registro' })"
         [dt]="dt"
@@ -127,7 +127,7 @@
             <custom-button
               ngbTooltip="Registrar Entrada"
               [customClass]="'btn-sm btn-outline-danger'"
-              icon="fa-regular fa-plus text-danger"
+              icon="fa-light fa-plus text-danger"
               (clicked)="
                 onAddEntrada({
                   id: 0,
@@ -141,7 +141,7 @@
             <custom-button
               ngbTooltip="Registrar Salida"
               [customClass]="'btn-sm btn-outline-success'"
-              icon="fa-regular fa-minus text-success"
+              icon="fa-light fa-minus text-success"
               (clicked)="
                 onAddSalida({
                   id: 0,

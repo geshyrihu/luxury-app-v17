@@ -13,7 +13,7 @@
     styleClass="custom-table"
   >
     <ng-template pTemplate="caption">
-      <app-table-header
+      <table-header
         title="TICKETS LEGAL CLIENTE"
         (add)="onModalAddOrEdit({ id: '', title: 'AGREGAR TICKET LEGAL' })"
         [dt]="dt"
@@ -51,7 +51,7 @@
           <i
             (click)="onModalViewDetail({ id: item.id })"
             ngbTooltip="Ver detalles"
-            class="fa-duotone fa-book fa-xl pointer"
+            class="fa-light fa-book fa-xl pointer"
           ></i>
           }
         </td>
@@ -59,12 +59,12 @@
           <div class="text-center">
             @if(item.documentCloud){
             <i
-              class="fa-duotone fa-cloud-arrow-up fa-xl me-3"
+              class="fa-light fa-cloud-arrow-up fa-xl me-3"
               ngbTooltip="Subida a LuxuryCloud"
             ></i>
             } @if(item.documentEmail){
             <i
-              class="fa-duotone fa-envelope fa-xl"
+              class="fa-light fa-envelope fa-xl"
               ngbTooltip="Enviada por email"
             ></i>
             }
@@ -108,7 +108,7 @@
                 })
               "
             >
-              <i class="fa-regular fa-list text-warning"></i>
+              <i class="fa-light fa-list text-warning"></i>
               <span
                 class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success"
                 >{{ item.tracking }}

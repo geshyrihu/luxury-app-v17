@@ -1,7 +1,7 @@
 import { NgClass } from '@angular/common';
 import { Component, Input } from '@angular/core';
 @Component({
-  selector: 'app-pagetitle',
+  selector: 'page-title-report',
   templateUrl: './pagetitle.component.html',
   standalone: true,
   imports: [NgClass],

@@ -15,7 +15,7 @@
         label="Equipo o Instalación"
         placeholder="equipo o Instalación"
         dataListId="machineryDatalistOptions"
-      ></custom-input-datalist>
+      />
       <custom-input-datalist
         (propagar)="saveProductoId($event)"
         [control]="form.get('producto')"
@@ -24,7 +24,7 @@
         label="Producto"
         placeholder="producto"
         dataListId="productoDatalistOptions"
-      ></custom-input-datalist>
+      />
 
       <custom-input-text
         [control]="form.get('area')"
@@ -38,7 +38,7 @@
         formControlName="cantidad"
         label="Cantidad"
         placeholder="cantidad"
-      ></custom-input-number>
+      />
       <div class="col-12 text-left">
         <custom-button-submit [disabled]="this.form.invalid || submitting" />
       </div>

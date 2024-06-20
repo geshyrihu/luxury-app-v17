@@ -17,7 +17,7 @@
     [globalFilterFields]="['profession', 'status', 'numInternal', 'customer']"
   >
     <ng-template pTemplate="caption">
-      <app-table-header
+      <table-header
         [title]="'Lista de Solicitudes de Puestos de Trabajo'"
         [showAdd]="false"
         [dt]="dt"
@@ -106,7 +106,7 @@
               ngbTooltip="Descripción de puesto"
               placement="top"
               customClass="btn-sm btn-outline-primary"
-              icon="fa-regular fa-book "
+              icon="fa-light fa-book "
               (clicked)="onModalJobDescription(item.professionId)"
             />
 
@@ -114,7 +114,7 @@
               ngbTooltip="Horarios"
               placement="top"
               customClass="btn-sm btn-outline-primary"
-              icon="fa-regular fa-clock"
+              icon="fa-light fa-clock"
               (clicked)="onModalHoursWorkPosition(item.workPositionId)"
             />
             <custom-button-edit
@@ -131,10 +131,10 @@
               ngbTooltip="Ver candidatos"
               placement="top"
               customNgClass="btn-sm btn-outline-primary"
-              icon="fa-regular fa-users-viewfinder"
+              icon="fa-light fa-users-viewfinder"
               (clicked)="onRouteEstatusSolicitud(item.id)"
             /> -->
-            <!-- <i class="fa-regular fa-users-viewfinder"></i> -->
+            <!-- <i class="fa-light fa-users-viewfinder"></i> -->
           </div>
           <!-- Opciones -->
         </td>

@@ -3,15 +3,15 @@
 @if (data) {
 <div class="card">
   <p-table
-    [value]="data"
-    [rowHover]="true"
-    styleClass="custom-table"
-    [tableStyle]="{ 'min-width': '50rem' }"
-    #dt
     [globalFilterFields]="['customer.label', 'concepto.label', 'fecha']"
+    [rowHover]="true"
+    [tableStyle]="{ 'min-width': '50rem' }"
+    [value]="data"
+    #dt
+    styleClass="custom-table"
   >
     <ng-template pTemplate="caption">
-      <app-table-header
+      <table-header
         [title]="'Presentaciónes Juntas de comité'"
         (add)="showModalAdd({ id: 0, titulo: 'Nuevo Registro' })"
         [dt]="dt"
@@ -44,27 +44,11 @@
       <tr>
         <td colspan="5">
           <div class="row">
-            <div class="col-4">
-              PERIODO: {{ item.fechaCorrespondiente | uppercase }}, FECHA DE
-              JUNTA: {{ item.fechaJunta | uppercase }}
-            </div>
-            <div class="col-8">
-              <p class="me-1 mb-sm-1 float-end">
-                Presentación enviada a comité:
-                {{ !item.enviadoComite ? "No" : "Sí" }}
-                <i
-                  class="bx"
-                  [ngClass]="{
-                    'bx-check text-success ': item.enviadoComite,
-                    'bx-x text-danger': !item.enviadoComite
-                  }"
-                ></i>
-              </p>
-            </div>
-            <div class="col-1">
-              @if ( authService.onValidateRoles(['Residente']) &&
-              !item.archivoFinal ) {
-              <div class="d-flex justify-content-end">
+            <div class="col-6 d-flex align-items-center">
+              @if (authService.onValidateRoles(['Residente']) &&
+              !item.archivoFinal) {
+
+              <div class="me-2">
                 <custom-button-edit
                   (edit)="
                     showModalAdd({ id: item.id, titulo: 'Editar Registro' })
@@ -73,6 +57,23 @@
                 <custom-button-delete (OnConfirm)="onDeleteItem(item)" />
               </div>
               }
+              <div>
+                PERIODO: {{ item.fechaCorrespondiente | uppercase }}, FECHA DE
+                JUNTA: {{ item.fechaJunta | uppercase }}
+              </div>
+            </div>
+            <div class="col-6">
+              <p class="me-1 mb-sm-1 float-end">
+                Presentación enviada a comité:
+                {{ !item.enviadoComite ? "No" : "Sí" }}
+                <i
+                  class="bx"
+                  [ngClass]="{
+                    'bx-check text-success': item.enviadoComite,
+                    'bx-x text-danger': !item.enviadoComite
+                  }"
+                ></i>
+              </p>
             </div>
           </div>
         </td>
@@ -82,37 +83,32 @@
           <!-- PORTADA -->
           @if ( !item.archivoPortada &&
           authService.onValidateRoles(['Residente']) ) {
-          <div class="row">
-            <div class="col text-center">
-              <p
-                class="badge bg-info pointer p-2"
-                (click)="
-                  showModalAddOrEdit({
-                    id: item.id,
-                    titulo: 'Portada'
-                  })
-                "
-              >
-                <i class="fa-regular fa-upload"></i> Cargar archivo
-              </p>
-            </div>
+          <div class="text-center">
+            <custom-button
+              ngbTooltip="Cargar archivo"
+              customClass="btn-sm btn-info"
+              icon="fa-light fa-upload me-2"
+              (clicked)="
+                showModalAddOrEdit({
+                  id: item.id,
+                  titulo: 'Portada'
+                })
+              "
+              label="Cargar archivo"
+            />
           </div>
+
           } @if (item.archivoPortada) {
-          <div class="row">
-            <div class="col-12">
-              <p class="m-0">{{ item.applicationUserPortada }}</p>
-            </div>
-            <div class="col-12">
-              <p class="m-0">
-                {{ item.fechaCargaPortada }}
-              </p>
-            </div>
-            <div class="col-12 mt-1 d-flex align-content-start">
+          <div class="mt-1 d-flex justify-content-between">
+            <div class="d-flex align-items-start">
               @if (item.archivoPortada) {
               <custom-button-download-pdf
                 [urlFile]="url + item.id + '/' + item.archivoPortada"
               />
-              } @if ( authService.onValidateRoles(['Residente']) &&
+              }
+            </div>
+            <div class="d-flex align-items-start">
+              @if ( authService.onValidateRoles(['Residente']) &&
               !item.archivoFinal ) {
               <custom-button-edit
                 (edit)="
@@ -128,6 +124,9 @@
               }
             </div>
           </div>
+
+          <p class="m-0">{{ item.applicationUserPortada }}</p>
+          <p class="m-0">{{ item.fechaCargaPortada }}</p>
           }
           <!-- PORTADA -->
         </td>
@@ -135,85 +134,50 @@
           <!-- CONTABLE -->
           @if ( !item.archivoContable &&
           authService.onValidateRoles(['Contador']) ) {
-          <div class="row">
-            <div class="col text-center">
-              <p
-                class="badge bg-info pointer p-2"
-                (click)="
-                  showModalAddOrEdit({
-                    id: item.id,
-                    titulo: 'Contabilidad'
-                  })
-                "
-              >
-                <i class="fa-regular fa-upload"></i> Cargar archivo
-              </p>
-            </div>
+
+          <div class="text-center">
+            <custom-button
+              ngbTooltip="Cargar archivo"
+              customClass="btn-sm btn-info"
+              icon="fa-light fa-upload me-2"
+              (clicked)="
+                showModalAddOrEdit({
+                  id: item.id,
+                  titulo: 'Contabilidad'
+                })
+              "
+              label="Cargar archivo"
+            />
           </div>
+
           } @if (item.archivoContable) {
-          <div class="row">
-            <div class="col-12">
-              <p class="m-0">{{ item.applicationUserContable }}</p>
-            </div>
-            <div class="col-12">
-              <p class="m-0">
-                {{ item.fechaCargaContable }}
-              </p>
-            </div>
-            <div class="col-12 mt-1 d-flex align-content-start">
+          <div class="mt-1 d-flex justify-content-between">
+            <div class="d-flex align-items-start">
               @if (item.archivoContable) {
               <custom-button-download-pdf
                 [urlFile]="url + item.id + '/' + item.archivoContable"
               />
-              } @if ( authService.onValidateRoles(['Contador']) &&
-              !item.archivoFinal && !item.applicationUserSupervisorContable ) {
+              }
+            </div>
+            <div class="d-flex align-items-start">
+              @if (authService.onValidateRoles(['Contador']) &&
+              !item.archivoFinal && !item.applicationUserSupervisorContable) {
               <custom-button-edit
                 (edit)="
-                  showModalAddOrEdit({
-                    id: item.id,
-                    titulo: 'Contabilidad'
-                  })
+                  showModalAddOrEdit({ id: item.id, titulo: 'Contabilidad' })
                 "
               />
-              } @if ( authService.onValidateRoles(['Contador']) &&
-              !item.archivoFinal && !item.applicationUserSupervisorContable ) {
               <custom-button-delete
                 (OnConfirm)="onDelete(item, 'Contabilidad')"
               />
-              } @if (authService.onValidateRoles(['Residente'])) {
-              <div class="d-flex justify-content-center"></div>
               }
             </div>
-            <div class="col-12">
-              <p class="m-0">{{ item.applicationUserSupervisorContable }}</p>
-            </div>
-            <div class="col-12">
-              <p class="m-0">
-                {{ item.fechaCargaSupervisorContable }}
-              </p>
-            </div>
           </div>
-          } @if ( authService.onValidateRoles(['Contador']) &&
-          item.archivoContable != null && item.archivoFinal == null ) {
-          <button
-            (click)="
-              onValidateContabilidad(
-                item.id,
-                item.applicationUserSupervisorContable
-              )
-            "
-            class="btn btn-sm mt-1"
-            [ngClass]="{
-              'btn-success': item.applicationUserSupervisorContable == null,
-              'btn-danger': item.applicationUserSupervisorContable != null
-            }"
-          >
-            {{
-              item.applicationUserSupervisorContable == null
-                ? "Autorizar"
-                : "Revocar"
-            }}
-          </button>
+
+          <p class="m-0">{{ item.applicationUserContable }}</p>
+          <p class="m-0">
+            {{ item.fechaCargaContable }}
+          </p>
           }
           <!-- CONTABLE -->
         </td>
@@ -222,35 +186,32 @@
           <!-- OPERACIONES -->
           @if ( !item.archivoJunta && authService.onValidateRoles(['Residente'])
           ) {
-          <div class="row">
-            <div class="col text-center">
-              <p
-                class="badge bg-info pointer p-2"
-                (click)="
-                  showModalAddOrEdit({
-                    id: item.id,
-                    titulo: 'Operaciones'
-                  })
-                "
-              >
-                <i class="fa-regular fa-upload"></i> Cargar archivo
-              </p>
-            </div>
+          <div class="text-center">
+            <custom-button
+              ngbTooltip="Cargar archivo"
+              customClass="btn-sm btn-info"
+              icon="fa-light fa-upload me-2"
+              (clicked)="
+                showModalAddOrEdit({
+                  id: item.id,
+                  titulo: 'Operaciones'
+                })
+              "
+              label="Cargar archivo"
+            />
           </div>
           } @if (item.archivoJunta) {
-          <div class="row">
-            <div class="col-12">
-              <p class="m-0">{{ item.applicationUser }}</p>
-            </div>
-            <div class="col-12">
-              <p class="m-0">{{ item.fechaCarga }}</p>
-            </div>
-            <div class="col-12 mt-1 d-flex align-content-end">
+
+          <div class="mt-1 d-flex justify-content-between">
+            <div class="d-flex align-items-start">
               @if (item.archivoJunta) {
               <custom-button-download-pdf
                 [urlFile]="url + item.id + '/' + item.archivoJunta"
               />
-              } @if ( authService.onValidateRoles(['Residente']) &&
+              }
+            </div>
+            <div class="d-flex align-items-start">
+              @if ( authService.onValidateRoles(['Residente']) &&
               !item.archivoFinal ) {
               <custom-button-edit
                 (edit)="
@@ -268,6 +229,8 @@
               }
             </div>
           </div>
+          <p class="m-0">{{ item.applicationUser }}</p>
+          <p class="m-0">{{ item.fechaCarga }}</p>
           }
           <!-- OPERACIONES -->
         </td>
@@ -276,56 +239,48 @@
 
           @if ( !item.archivoFinal &&
           authService.onValidateRoles(['SupervisionOperativa']) &&
-          item.archivoPortada && item.archivoContable && item.archivoJunta &&
-          item.applicationUserSupervisorContable ) {
-          <div class="row">
-            <div class="col text-center">
-              <custom-button-confirmation
-                title="Confirmar"
-                icon=""
-                text="Confirmo que la presentación esta correcta!!"
-                label="Validar presentacion"
-                tooltipText="Validar presentacion"
-                classButton="badge bg-info pointer p-2"
-                confirmButtonText="Sí, confirmar"
-                (OnConfirm)="onValidarPresentacion(item.id)"
-              />
-            </div>
+          item.archivoPortada && item.archivoContable && item.archivoJunta ) {
+          <div class="text-center">
+            <custom-button-confirmation
+              title="Confirmar"
+              icon="fa-light fa-check-double me-2"
+              text="Confirmo que la presentación esta correcta!!"
+              label="Validar presentacion"
+              tooltipText="Validar presentacion"
+              classButton="btn-sm btn-info"
+              confirmButtonText="Sí, confirmar"
+              (OnConfirm)="onValidarPresentacion(item.id)"
+            />
           </div>
           } @if (item.archivoFinal) {
-          <div class="row">
-            <div class="col-12">
-              <p class="m-0">{{ item.applicationUserSupervisor }}</p>
-            </div>
-            <div class="col-12">
-              <p class="m-0">
-                {{ item.fechaCargaSupervisor }}
-              </p>
-            </div>
-            <div class="col-12 mt-1 d-flex align-content-start">
-              <custom-button-download-pdf
-                ngbTooltip="Visualizar Pdf"
-                [urlFile]="url + item.id + '/' + item.archivoFinal"
-              />
-              @if (authService.onValidateRoles(['SupervisionOperativa'])) {
-              <custom-button
-                ngbTooltip="Actualizar archivo"
-                customClass="btn-sm btn-outline-primary "
-                icon="fa-regular fa-arrows-rotate"
-                (clicked)="onValidarPresentacion(item.id)"
-              />
-              } @if (authService.onValidateRoles(['SupervisionOperativa'])) {
-              <custom-button-delete (OnConfirm)="onDelete(item, 'Final')" />
-              } @if (authService.onValidateRoles(['Residente'])) {
-              <custom-button-confirmation
-                tooltipText="Enviar presentación a comité"
-                icon="fa-regular fa-paper-plane"
-                classButton="btn-outline-secondary btn-sm me-1 waves-effect waves-light"
-                (OnConfirm)="enviarMailPresentacionComite(item.id)"
-              />
-              }
-            </div>
+
+          <div class="mt-1 d-flex align-content-start">
+            <custom-button-download-pdf
+              ngbTooltip="Visualizar Pdf"
+              [urlFile]="url + item.id + '/' + item.archivoFinal"
+            />
+            @if (authService.onValidateRoles(['SupervisionOperativa'])) {
+            <custom-button
+              ngbTooltip="Actualizar archivo"
+              customClass="btn-sm btn-outline-primary "
+              icon="fa-light fa-arrows-rotate"
+              (clicked)="onValidarPresentacion(item.id)"
+            />
+            } @if (authService.onValidateRoles(['SupervisionOperativa'])) {
+            <custom-button-delete (OnConfirm)="onDelete(item, 'Final')" />
+            } @if (authService.onValidateRoles(['Residente'])) {
+            <custom-button-confirmation
+              tooltipText="Enviar presentación a comité"
+              icon="fa-light fa-paper-plane"
+              classButton="btn-outline-secondary btn-sm me-1 waves-effect waves-light"
+              (OnConfirm)="enviarMailPresentacionComite(item.id)"
+            />
+            }
           </div>
+          <p class="m-0">{{ item.applicationUserSupervisor }}</p>
+          <p class="m-0">
+            {{ item.fechaCargaSupervisor }}
+          </p>
           }
           <!-- FINAL -->
         </td>

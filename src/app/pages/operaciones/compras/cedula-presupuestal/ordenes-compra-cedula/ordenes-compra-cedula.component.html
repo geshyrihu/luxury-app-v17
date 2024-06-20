@@ -10,11 +10,7 @@
     [tableStyle]="{ 'min-width': '50rem' }"
   >
     <ng-template pTemplate="caption">
-      <app-table-header
-        [viewNavigateButton]="false"
-        [showAdd]="false"
-        [dt]="dt"
-      />
+      <table-header [viewNavigateButton]="false" [showAdd]="false" [dt]="dt" />
     </ng-template>
     <ng-template pTemplate="header">
       <tr>
@@ -32,7 +28,7 @@
           <i
             ngbTooltip="Ver"
             placement="top"
-            class="fa-regular fa-hand-point-right pointer"
+            class="fa-light fa-hand-point-right pointer"
             (click)="onOrdenCompraModal(item.ordenCompraId)"
           >
           </i>

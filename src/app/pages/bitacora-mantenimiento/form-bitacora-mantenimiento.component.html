@@ -26,7 +26,7 @@
     label="Descripción"
     placeholder="descripción"
     [horizontal]="false"
-  ></custom-input-text-area>
+  />
   <div class="form-group">
     <label class="font-weight-light"
       >Activar Si nota nota alguna emergencia
@@ -36,7 +36,7 @@
       [control]="form.get('emergencia')"
       formControlName="emergencia"
       label="Emergencia"
-    ></custom-input-check>
+    />
   </div>
   <custom-button-submit [disabled]="form.invalid || submitting" />
 </form>
