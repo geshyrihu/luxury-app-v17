@@ -29,7 +29,6 @@ export default class OrdenCompraDenegadaComponent implements OnInit {
     fechaAutorizacion: [],
     statusOrdenCompra: [],
     observaciones: [''],
-    personId: [],
   });
 
   ngOnInit(): void {
@@ -41,7 +40,6 @@ export default class OrdenCompraDenegadaComponent implements OnInit {
       fechaAutorizacion: [''],
       statusOrdenCompra: [1],
       observaciones: ['', Validators.required],
-      // personId: [this.authService.personId],
     });
   }
 

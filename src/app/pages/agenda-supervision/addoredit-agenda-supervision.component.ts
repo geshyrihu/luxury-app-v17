@@ -42,7 +42,6 @@ export default class AddOrEditAgendaSupervisionComponent implements OnInit {
     problema: ['', Validators.required],
     solucion: [''],
     fechaConclusion: [],
-    // personId: [this.authService.personId, Validators.required],
     applicationUserId: [this.authService.applicationUserId],
   });
 

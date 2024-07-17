@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import UpdatePasswordAccountComponent from './update-password/update-password.component';
-import UpdatePhotoEmployeeComponent from './update-photo-person/update-photo-person.component';
+import UpdatePhotoApplicationUserComponent from './update-photo-application-user/update-photo-application-user.component';
 @Component({
   selector: 'app-update-profile',
   templateUrl: './update-profile.component.html',
@@ -9,7 +9,7 @@ import UpdatePhotoEmployeeComponent from './update-photo-person/update-photo-per
   imports: [
     LuxuryAppComponentsModule,
     UpdatePasswordAccountComponent,
-    UpdatePhotoEmployeeComponent,
+    UpdatePhotoApplicationUserComponent,
   ],
 })
 export default class UpdateProfilComponent {}

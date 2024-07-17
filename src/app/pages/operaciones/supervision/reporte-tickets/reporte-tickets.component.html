@@ -13,15 +13,15 @@
         <div class="col-sm-6">
           <h4 class="mb-sm-0 font-size-18">TICKETS SOLICITADOS</h4>
         </div>
-        <div class="col-sm-3 hide-print-mode">
+        <div class="col-sm-3 no-print">
           <app-mesanio (periodoEmit)="onFiltrarPeriodo($event)"></app-mesanio>
         </div>
-        <div class="col-sm-3 hide-print-mode">
+        <div class="col-sm-3 no-print">
           <input
             type="text"
             (input)="dt.filterGlobal($any($event.target).value, 'contains')"
             placeholder="Ingresa texto para buscar..."
-            class="form-control w-100 hide-print-mode"
+            class="form-control w-100 no-print"
           />
         </div>
       </div>

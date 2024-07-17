@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col hide-print-mode">
+  <div class="col no-print">
     <button
       class="btn btn-outline-secondary w-sm me-1 mb-1"
       type="button"
@@ -11,7 +11,7 @@
 
     <!-- [routerLink]="['/tickets/line-time']" -->
     <a
-      class="btn btn-outline-info w-sm me-1 mb-1"
+      class="btn btn-outline-info w-sm me-1 mb-1 no-print"
       type="button"
       ngbTooltip="Filtrar"
     >
@@ -19,11 +19,11 @@
       Plan de trabajo
     </a>
     <button
-      class="btn btn-outline-info w-sm me-1 mb-1"
+      class="btn btn-outline-info w-sm me-1 mb-1 no-print"
       type="button"
       ngbTooltip="Enviar plan de trabajo"
     >
-      <i class="fa-light fa-list-check"></i>
+      <i class="fa-light fa-list-check no-print"></i>
       Enviar plan de trabajo
     </button>
     <button
@@ -35,7 +35,7 @@
     </button>
 
     <button
-      class="btn btn-outline-danger w-sm me-1 mb-1"
+      class="btn btn-outline-danger w-sm me-1 mb-1 no-print"
       type="button"
       ngbTooltip="Generar Reporte"
       [routerLink]="['/operaciones/reporte/reporte-concluidos']"
@@ -43,7 +43,7 @@
       <i class="fa-light fa-file-pdf"></i> Reporte
     </button>
     <button
-      class="btn btn-outline-danger w-sm me-1 mb-1"
+      class="btn btn-outline-danger w-sm me-1 mb-1 no-print"
       type="button"
       ngbTooltip="Reporte de pendientes"
       [routerLink]="['/operaciones/reporte/reporte-pendientes']"
@@ -53,7 +53,7 @@
     </button>
 
     <a
-      class="btn btn-outline-info w-sm me-1 mb-1"
+      class="btn btn-outline-info w-sm me-1 mb-1 no-print"
       ngbTooltip="Envar Reporte por Mail"
     >
       <i class="fa-light fa-paper-plane"></i>
@@ -79,7 +79,7 @@
     [paginator]="true"
     currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
     [showCurrentPageReport]="true"
-    [rowsPerPageOptions]="[100]"
+    [rowsPerPageOptions]="[100, 200, 300, 500]"
     [globalFilterFields]="[
       'activity',
       'observations',
@@ -155,10 +155,10 @@
           LIMITE
           <p-sortIcon field="fechaLimiteFiltro"></p-sortIcon>
         </th>
-        <th scope="col" class="font-size-12 hide-print-mode" style="width: 5%">
+        <th scope="col" class="font-size-12 no-print" style="width: 5%">
           RELEVANTE
         </th>
-        <th scope="col" class="hide-print-mode" style="width: 5%"></th>
+        <th scope="col" class="no-print" style="width: 5%"></th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-item>
@@ -257,7 +257,7 @@
           </div>
         </td>
         <!-- Opciones -->
-        <td class="text-center hide-print-mode">
+        <td class="text-center no-print">
           <input
             type="checkbox"
             [(ngModel)]="item.folioReporte"
@@ -265,7 +265,7 @@
             (change)="onUpdateStateTicket(item)"
           />
         </td>
-        <td class="hide-print-mode">
+        <td class="no-print">
           <div class="d-flex justify-content-center">
             <custom-button-edit />
             <custom-button-delete />

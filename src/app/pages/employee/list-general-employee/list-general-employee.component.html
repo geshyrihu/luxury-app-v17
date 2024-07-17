@@ -47,7 +47,7 @@
         Email
         <p-sortIcon field="email"></p-sortIcon>
       </th>
-      <th scope="col" style="width: 5%" class="hide-print-mode">Opciones</th>
+      <th scope="col" style="width: 5%" class="no-print">Opciones</th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-item>
@@ -87,7 +87,7 @@
       <td>
         {{ item.email }}
       </td>
-      <td class="p-column-title hide-print-mode">
+      <td class="p-column-title no-print">
         <div class="d-flex justify-content-center">
           <custom-button
             [ngbTooltipCustom]="'Opciones'"
@@ -101,57 +101,6 @@
               )
             "
           />
-          <!-- <custom-button
-            ngbTooltip="Dirección"
-            customClass="btn-sm btn-sm btn-outline-primary"
-            icon="fa-light fa-location-dot text-primary"
-            (clicked)="
-              onModalDataAddress({
-                id: item.id,
-                title: 'Editar Registro'
-              })
-            "
-          />
-          <custom-button
-            ngbTooltip="Datos Laborales"
-            customClass="btn-sm btn-sm btn-outline-primary"
-            icon="fa-light fa-briefcase text-primary"
-            (clicked)="
-              onModalDataLaboral({
-                employeeId: item.employeeId,
-                personId: item.id,
-                title: 'Editar Registro'
-              })
-            "
-          />
-          <custom-button
-            ngbTooltip="Datos Personales"
-            customClass="btn-sm btn-sm btn-outline-primary"
-            icon="fa-light fa-memo-circle-info text-primary"
-            (clicked)="
-              onModalDataPersonal({
-                id: item.id,
-                title: 'Editar Registro'
-              })
-            "
-          />
-          <custom-button
-            ngbTooltip="Datos Principales"
-            customClass="btn-sm btn-sm btn-outline-primary"
-            icon="fa-light fa-database text-primary"
-            (clicked)="
-              onModalDataPrincipal({
-                id: item.id,
-                title: 'Editar Registro'
-              })
-            "
-          />
-          <custom-button
-            ngbTooltip="Actualizar Foto"
-            customClass="btn-sm btn-sm btn-outline-primary"
-            icon="fa-light fa-camera text-primary"
-            (clicked)="onShowModalActualizarImagen(item.id)"
-          /> -->
 
           <custom-button-delete (OnConfirm)="onDelete(item.id)" />
         </div>

@@ -15,7 +15,7 @@ import { environment } from 'src/environments/environment';
 import DescripcionPuestoComponent from '../../professions/descripcion-puesto.component';
 import SolicitudVacanteComponent from '../../solicitudes/solicitud-vacante/solicitud-vacante.component';
 import AddoreditPlantillaComponent from '../addoredit-plantilla.component';
-import EmployeeToWorkPositionComponent from '../employee-to-work-position/employee-to-work-position.component';
+// import EmployeeToWorkPositionComponent from '../employee-to-work-position/employee-to-work-position.component';
 import HoursWorkPositionComponent from '../hours-work-position.component';
 
 @Component({
@@ -119,30 +119,30 @@ export default class ListWorkPlantillaComponent implements OnInit {
   }
   // Solicitar baja
   // Editar empleado
-  onModalAddEmployeeToWorkPosition(id: number) {
-    this.ref = this.dialogService.open(EmployeeToWorkPositionComponent, {
-      data: {
-        workPositionId: id,
-      },
-      header: 'Solicitud de vacante',
-      width: '100%',
-      height: '100%',
-      closeOnEscape: true,
-      baseZIndex: 10000,
-    });
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        this.customToastService.onShowSuccess();
-        this.onLoadData();
-      }
-    });
-  }
+  // onModalAddEmployeeToWorkPosition(id: number) {
+  //   this.ref = this.dialogService.open(EmployeeToWorkPositionComponent, {
+  //     data: {
+  //       workPositionId: id,
+  //     },
+  //     header: 'Solicitud de vacante',
+  //     width: '100%',
+  //     height: '100%',
+  //     closeOnEscape: true,
+  //     baseZIndex: 10000,
+  //   });
+  //   this.ref.onClose.subscribe((resp: boolean) => {
+  //     if (resp) {
+  //       this.customToastService.onShowSuccess();
+  //       this.onLoadData();
+  //     }
+  //   });
+  // }
 
   //Ver tarjeta de Colaborador
-  onCardEmployee(personId: any) {
+  onCardEmployee(applicationUserId: string) {
     this.ref = this.dialogService.open(CardEmployeeComponent, {
       data: {
-        personId,
+        applicationUserId,
       },
       header: 'Tarjeta de Colaborador',
       styleClass: 'modal-md',

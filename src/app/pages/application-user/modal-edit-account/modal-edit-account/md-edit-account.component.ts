@@ -5,7 +5,6 @@ import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import AccessCustomerComponent from '../customer-account/access-customer.component';
-import UpdateAccountComponent from '../update-account/update-account.component';
 import UpdatePasswordAccountComponent from '../update-password/update-password-account.component';
 import UpdateRoleComponent from '../update-role.component';
 @Component({
@@ -17,7 +16,7 @@ import UpdateRoleComponent from '../update-role.component';
     AccessCustomerComponent,
     UpdateRoleComponent,
     UpdatePasswordAccountComponent,
-    UpdateAccountComponent,
+    // UpdateAccountComponent,
   ],
 })
 export default class MdEditAccountComponent implements OnInit, OnDestroy {
@@ -34,14 +33,14 @@ export default class MdEditAccountComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.applicationUserId = this.config.data.applicationUserId;
     this.email = this.config.data.email;
-    this.onLoadData();
+    // this.onLoadData();
   }
 
-  onLoadData() {
-    this.apiRequestService.onGetList(
-      'ApplicationUser/GetApplicationUser/' + this.applicationUserId
-    );
-  }
+  // onLoadData() {
+  //   this.apiRequestService.onGetList(
+  //     'ApplicationUser/GetApplicationUser/' + this.applicationUserId
+  //   );
+  // }
   ngOnDestroy(): void {
     this.ref.close(true);
   }

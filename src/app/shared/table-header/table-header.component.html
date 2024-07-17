@@ -21,7 +21,7 @@ Extra Large (xl): 1200px o más. -->
     </div>
     <!-- Columna Bootstrap: ocupa 3 unidades en pantallas pequeñas (col-sm-3) -->
     <!-- Esta columna se utiliza para el campo de búsqueda y solo se muestra en el modo no imprimible -->
-    <div class="col-sm-3 hide-print-mode">
+    <div class="col-sm-3 no-print">
       <!-- Utiliza *ngIf para condicionalmente renderizar el input -->
       @if (showSearch || isDataView) {
       <input
@@ -34,7 +34,7 @@ Extra Large (xl): 1200px o más. -->
     </div>
     <!-- Columna Bootstrap: ocupa 1 unidad en pantallas pequeñas (col-sm-1) -->
     <!-- Esta columna se utiliza para un botón personalizado de agregar y solo se muestra si showAdd es verdadero y rolAuth es verdadero -->
-    <div class="col-sm-2 hide-print-mode">
+    <div class="col-sm-2 no-print">
       @if (showAdd && rolAuth) {
       <custom-button
         ngbTooltip="Agregar"
@@ -58,7 +58,7 @@ Extra Large (xl): 1200px o más. -->
       </h4>
     </div>
   </div>
-  <div [ngClass]="showAdd && rolAuth ? 'col-10' : 'col-12'">
+  <div class="no-print" [ngClass]="showAdd && rolAuth ? 'col-10' : 'col-12'">
     @if (showSearch || isDataView) {
     <input
       type="text"

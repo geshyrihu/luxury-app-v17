@@ -58,7 +58,6 @@ export default class EditPartidaCedulaComponent implements OnInit {
       descripcion: [''],
       presupuestoMensual: [0, Validators.required],
       presupuestoEjercido: [],
-      // personId: [this.authService.personId],
       applicationUserId: [this.authService.applicationUserId],
     });
 

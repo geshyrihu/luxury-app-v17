@@ -35,7 +35,7 @@
           <custom-button-active-desactive
             (activo)="onSelectActive($event)"
             (inactivo)="onSelectActive($event)"
-          ></custom-button-active-desactive>
+          />
         </div>
         <div class="col">
           <div class="p-d-flex p-ai-center p-jc-between">
@@ -66,7 +66,7 @@
           scope="col"
           style="width: 10%"
           pSortableColumn="userName"
-          class="hide-print-mode"
+          class="no-print"
         >
           USUARIO APP
           <p-sortIcon field="userName"></p-sortIcon>
@@ -76,7 +76,7 @@
           scope="col"
           style="width: 30%"
           pSortableColumn="celularPersonal"
-          class="hide-print-mode"
+          class="no-print"
         >
           TÉLEFONO
           <p-sortIcon field="celularPersonal"></p-sortIcon>
@@ -93,7 +93,7 @@
     </ng-template>
     <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
       <tr>
-        <td class="p-column-title hide-print-mode">
+        <td class="p-column-title no-print">
           {{ rowIndex + 1 }}
         </td>
         <td class="p-column-title text-center">
@@ -126,7 +126,7 @@
         </td>
         @if ( authService.onValidateRoles([ 'Asistente', 'Residente',
         'SuperUsuario' ]) ) {
-        <td class="p-column-title hide-print-mode">
+        <td class="p-column-title no-print">
           <div class="d-flex justify-content-center">
             @if ( authService.onValidateRoles([ 'SuperUsuario', 'Residente',
             'Asistente' ]) ) {

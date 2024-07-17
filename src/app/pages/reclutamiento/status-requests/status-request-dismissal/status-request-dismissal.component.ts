@@ -67,10 +67,10 @@ export default class StatusRequestDismissalComponent
   }
 
   //Ver tarjeta de Colaborador
-  onCardEmployee(personId: any) {
+  onCardEmployee(applicationUserId: string) {
     this.ref = this.dialogService.open(CardEmployeeComponent, {
       data: {
-        personId,
+        applicationUserId,
       },
       header: 'Tarjeta de Colaborador',
       styleClass: 'modal-md',

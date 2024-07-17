@@ -4,9 +4,7 @@ export default [
   {
     path: 'tiket-mantenimiento',
     loadComponent: () =>
-      import(
-        'src/app/pages/operaciones/tikets/list-ticket/list-ticket.component'
-      ),
+      import('src/app/pages/tickets-v2/list-ticket/list-ticket.component'),
   },
   {
     path: 'reporte-concluidos',

@@ -18,4 +18,22 @@ export default class DepuracionComponent {
       this.customToastService.onClose();
     });
   }
+  UpdateCustomerDataCompany(path: string) {
+    this.apiRequestService.onGetList('UpdateDataBase/' + path).then(() => {
+      this.customToastService.onShowSuccess();
+      this.customToastService.onClose();
+    });
+  }
+  UpdateWeeklyReportDepartament(path: string) {
+    this.apiRequestService.onGetList('UpdateDataBase/' + path).then(() => {
+      this.customToastService.onShowSuccess();
+      this.customToastService.onClose();
+    });
+  }
+  GoogleCalendar(path: string) {
+    this.apiRequestService.onGetList('GoogleCalendar/Credentials').then(() => {
+      this.customToastService.onShowSuccess();
+      this.customToastService.onClose();
+    });
+  }
 }

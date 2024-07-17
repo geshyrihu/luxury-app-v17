@@ -57,10 +57,6 @@ export default class EditProductoComponent implements OnInit {
       nombreProducto: [],
       cantidad: [0, { validators: [Validators.required] }],
       unidadMedidaId: ['', Validators.required],
-      // personId: [
-      //   this.authService.personId,
-      //   { validators: [Validators.required] },
-      // ],
       applicationUserId: [
         this.authService.applicationUserId,
         { validators: [Validators.required] },

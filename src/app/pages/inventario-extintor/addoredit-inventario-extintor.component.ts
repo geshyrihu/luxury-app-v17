@@ -86,7 +86,6 @@ export default class AddoreditInventarioExtintorComponent implements OnInit {
       'applicationUserId',
       String(this.authService.applicationUserId)
     );
-    formData.append('personId', String(this.authService.personId));
     // ... Si hay un archivo cargado agrega la prop photoPath con su valor
     if (dto.photo) {
       formData.append('photo', dto.photo);

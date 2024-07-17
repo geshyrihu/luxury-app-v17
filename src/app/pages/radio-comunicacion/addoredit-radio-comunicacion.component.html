@@ -16,7 +16,7 @@
               [urlImgCurrent]="urlBaseImg"
               [contentHeight]="'150'"
               [contentWidth]="'250'"
-            ></app-input-img>
+            />
           </div>
         </div>
       </div>
@@ -66,9 +66,9 @@
       />
 
       <custom-input-datalist
-        (propagar)="savepersonId($event)"
+        (propagar)="saveApplicationUserId($event)"
         [control]="form.get('applicationUser')"
-        [data]="cb_person"
+        [data]="cb_application_user"
         formControlName="applicationUser"
         label="Responsable"
         dataListId="applicationUserDatalistOptions"

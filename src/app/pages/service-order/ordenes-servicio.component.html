@@ -37,7 +37,7 @@
           @for (item of filtroEquipos; track item) {
           <custom-button
             [ngbTooltip]="'Ver ' + item.nombre"
-            [customClass]="'btn-outline-info '"
+            [customClass]="'btn-outline-info me-1'"
             icon="fas  {{ item.icon }}"
             [customNgClassIcon]="
               filtroEquiposValue == item.nombre ? 'text-warning' : ''
@@ -61,19 +61,16 @@
           CL-ID
           <p-sortIcon
             field="maintenanceCalendarId"
-            class="hide-print-mode"
+            class="no-print"
           ></p-sortIcon>
         </th>
         <th style="width: 20%" scope="col" pSortableColumn="machinery">
           Equipo
-          <p-sortIcon field="machinery" class="hide-print-mode"></p-sortIcon>
+          <p-sortIcon field="machinery" class="no-print"></p-sortIcon>
         </th>
         <th style="width: 10%" scope="col" pSortableColumn="typeMaintance">
           Servicio
-          <p-sortIcon
-            field="typeMaintance"
-            class="hide-print-mode"
-          ></p-sortIcon>
+          <p-sortIcon field="typeMaintance" class="no-print"></p-sortIcon>
         </th>
         <th
           style="width: 15%"
@@ -82,11 +79,11 @@
           pSortableColumn="provider"
         >
           Proveedor
-          <p-sortIcon field="provider" class="hide-print-mode"></p-sortIcon>
+          <p-sortIcon field="provider" class="no-print"></p-sortIcon>
         </th>
         <th style="width: 10%" scope="col" pSortableColumn="status">
           Estatus
-          <p-sortIcon field="status" class="hide-print-mode"></p-sortIcon>
+          <p-sortIcon field="status" class="no-print"></p-sortIcon>
         </th>
         <th
           style="width: 10%"
@@ -96,7 +93,7 @@
           Fotos
           <p-sortIcon
             field="serviceOrderImg.length"
-            class="hide-print-mode"
+            class="no-print"
           ></p-sortIcon>
         </th>
         <th
@@ -107,12 +104,12 @@
           Reporte
           <p-sortIcon
             field="serviceOrderDocument.length"
-            class="hide-print-mode"
+            class="no-print"
           ></p-sortIcon>
         </th>
         @if ( authService.onValidateRoles([ 'Mantenimiento', 'SuperUsuario',
         'Residente' ]) ) {
-        <th style="width: 15%" scope="col" class="hide-print-mode">Opciones</th>
+        <th style="width: 15%" scope="col" class="no-print">Opciones</th>
         }
       </tr>
     </ng-template>
@@ -179,7 +176,7 @@
         </td>
         @if ( authService.onValidateRoles([ 'Mantenimiento', 'SuperUsuario',
         'Residente' ]) ) {
-        <td class="hide-print-mode">
+        <td class="no-print">
           <div class="d-flex justify-content-center">
             <a
               ngbTooltip="Imprimir hoja de soporte"
@@ -192,13 +189,13 @@
             </a>
             <custom-button
               ngbTooltip="Cargar Imagen"
-              [customClass]="'btn-sm btn-outline-info'"
+              [customClass]="'btn-sm btn-outline-info me-1'"
               icon="fa-light fa-camera text-info"
               (clicked)="onModalFormUploadImg(item.id)"
             />
             <custom-button
               ngbTooltip="Cargar documentos"
-              [customClass]="'btn-sm btn-outline-secondary'"
+              [customClass]="'btn-sm btn-outline-secondary me-1'"
               icon="fa-light fa-file-alt text-secondary"
               (clicked)="onModalFormUploadDoc(item.id)"
             />

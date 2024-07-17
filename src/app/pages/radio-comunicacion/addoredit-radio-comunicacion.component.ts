@@ -47,7 +47,7 @@ export default class AddOrEditRadioComunicacionComponent implements OnInit {
   urlBaseImg = '';
   model: IRadioComunicacionAddOrEdit;
   photoFileUpdate: boolean = false;
-  cb_person: ISelectItem[] = [];
+  cb_application_user: ISelectItem[] = [];
   cb_area_responsable: ISelectItem[] = [];
   form: FormGroup = this.formBuilder.group({
     id: { value: this.id, disabled: true },
@@ -130,8 +130,10 @@ export default class AddOrEditRadioComunicacionComponent implements OnInit {
       responsibleAreaId: find?.value,
     });
   }
-  public savepersonId(e: any): void {
-    let find = this.cb_person.find((x) => x?.label === e.target.value);
+  public saveApplicationUserId(e: any): void {
+    let find = this.cb_application_user.find(
+      (x) => x?.label === e.target.value
+    );
     this.form.patchValue({
       applicationUserId: find?.value,
     });
@@ -172,7 +174,7 @@ export default class AddOrEditRadioComunicacionComponent implements OnInit {
         `ApplicationUser/${this.customerIdService.getCustomerId()}`
       )
       .then((response: any) => {
-        this.cb_person = response;
+        this.cb_application_user = response;
       });
 
     this.apiRequestService

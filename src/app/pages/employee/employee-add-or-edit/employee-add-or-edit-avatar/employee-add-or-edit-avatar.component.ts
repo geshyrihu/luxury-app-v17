@@ -60,7 +60,7 @@ export default class EmployeeAddOrEditAvatarComponent implements OnInit {
 
     this.apiRequestService
       .onPut(
-        'ApplicationUserEmployee/UpdateImg/' + this.applicationUserId,
+        'ApplicationUserEmployee/UpdateImage/' + this.applicationUserId,
         formData
       )
       .then((result: any) => {

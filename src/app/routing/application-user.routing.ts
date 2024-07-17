@@ -5,7 +5,7 @@ export default [
     path: 'cuentas-usuario',
     loadComponent: () =>
       import(
-        'src/app/pages/application-user/list-account/list-account.component'
+        'src/app/pages/application-user/list-application-user/list-application-user.component'
       ),
     title: 'Cuentas de acceso',
   },
@@ -20,9 +20,7 @@ export default [
   {
     path: 'datos-email',
     loadComponent: () =>
-      import(
-        'src/app/pages/application-user/email-data/list-email-data.component'
-      ),
+      import('src/app/pages/email-data/list-email-data.component'),
     title: 'Datos de correo',
   },
   // {

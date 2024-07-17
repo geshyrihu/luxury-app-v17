@@ -39,7 +39,7 @@ export default class ListadoAnualMantenimientoComponent implements OnInit {
     });
   }
   onLoadData() {
-    const url = `MaintenanceCalendars/${this.customerIdService.getCustomerId()}/${
+    const url = `MaintenanceCalendars/GetAll/${this.customerIdService.getCustomerId()}/${
       this.month
     }`;
     this.apiRequestService.onGetList(url).then((result: any) => {

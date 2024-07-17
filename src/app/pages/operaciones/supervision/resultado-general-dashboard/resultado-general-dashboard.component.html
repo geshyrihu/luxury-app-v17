@@ -17,19 +17,19 @@
             }}
           </h4>
         </div>
-        <div class="col-sm-3 hide-print-mode">
+        <div class="col-sm-3 no-print">
           <app-mesanio (periodoEmit)="onFiltrarPeriodo($event)"></app-mesanio>
         </div>
-        <div class="col-sm-3 hide-print-mode">
+        <div class="col-sm-3 no-print">
           <input
             type="text"
             (input)="dt.filterGlobal($any($event.target).value, 'contains')"
             placeholder="Ingresa texto para buscar..."
-            class="form-control w-100 hide-print-mode"
+            class="form-control w-100 no-print"
           />
         </div>
       </div>
-      <div class="row hide-print-mode">
+      <div class="row no-print">
         <div class="col-auto">
           <button
             [ngClass]="{ 'btn-dark': nivelReporte == 0 }"
@@ -61,7 +61,7 @@
           </button>
         </div>
       </div>
-      <div class="row hide-print-mode">
+      <div class="row no-print">
         <div class="col-auto">
           <button
             class="btn btn-info waves-effect waves-light me-1"

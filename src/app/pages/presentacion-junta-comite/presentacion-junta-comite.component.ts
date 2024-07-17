@@ -102,9 +102,12 @@ export default class PresentacionJuntaComiteComponent implements OnInit {
   }
 
   onValidarPresentacion(id: number) {
-    const urlApi = `presentacionjuntacomite/autorizarpresentacion/${id}/${this.authService.applicationUserId}`;
+    const urlApi = `PresentacionJuntaComite/AutorizarPresentacion/${id}/${this.authService.applicationUserId}`;
     this.apiRequestService.onGetItem(urlApi).then((result: boolean) => {
-      if (result) this.onLoadData();
+      if (result) {
+        this.enviarMailPresentacionComite(id);
+        this.onLoadData();
+      }
     });
   }
 
@@ -172,8 +175,6 @@ export interface PresentacionJuntaComiteDto {
   archivoContable: string;
   applicationUserContable: string;
   fechaCargaContable: string;
-  // applicationUserSupervisorContable: string;
-  // fechaCargaSupervisorContable: string;
   archivoJunta: string;
   applicationUser: string;
   fechaCarga: string;

@@ -20,4 +20,5 @@ export const environment = {
   base_signalr: 'https://luxurybuildingapp.com/',
   base_url: 'https://luxurybuildingapp.com/api/',
   base_urlImg: 'https://luxurybuildingapp.com/img/',
+  url_account: `https://luxurybuildingapp.com/img/Administration/accounts/`,
 };

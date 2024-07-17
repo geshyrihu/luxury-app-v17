@@ -61,7 +61,6 @@ export default class FormMedidorLecturaComponent implements OnInit {
       medidorId: [this.medidorId],
       fechaRegistro: [''],
       lectura: ['', Validators.required],
-      // personId: [this.authService.personId],
       applicationUserId: [this.authService.applicationUserId],
     });
   }

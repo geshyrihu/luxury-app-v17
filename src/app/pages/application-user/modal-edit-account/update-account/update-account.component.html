@@ -1,4 +1,4 @@
-<div class="card p-2">
+<!-- <div class="card p-2">
   <ngb-alert [dismissible]="false" type="primary">Datos principales </ngb-alert>
   <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
     <custom-input-text
@@ -32,7 +32,6 @@
       [data]="cb_profession"
     />
     }
-    <!-- [hidden]="!this.authService.onValidateRoles(['SuperUsuario'])" -->
     <custom-input-mask
       [control]="form.get('phoneNumber')"
       formControlName="phoneNumber"
@@ -42,10 +41,10 @@
     />
     <custom-input-datalist
       (propagar)="onSaveEmployeeToAccount($event)"
-      [control]="form.get('personName')"
+      [control]="form.get('applicationUserName')"
       [data]="cb_employee"
-      dataListId="personNameCondominiumDatalistOptions"
-      formControlName="personName"
+      dataListId="applicationUserCondominiumDatalistOptions"
+      formControlName="applicationUser"
       label="Colaborador"
     />
 
@@ -53,4 +52,4 @@
       <custom-button-submit [disabled]="this.form.invalid || submitting" />
     </div>
   </form>
-</div>
+</div> -->

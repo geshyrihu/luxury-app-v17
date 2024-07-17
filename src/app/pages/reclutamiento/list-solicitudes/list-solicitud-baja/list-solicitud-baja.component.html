@@ -8,14 +8,14 @@
   <p-table
     #dt
     [autoLayout]="true"
-    [globalFilterFields]="['employee', 'phone', 'fuente']"
+    [globalFilterFields]="['employee', 'phone', 'fuente', 'nameCustomer']"
     [rowHover]="true"
     [value]="data"
     styleClass="custom-table p-datatable-sm"
   >
     <ng-template pTemplate="caption">
       <table-header
-        [title]="'Lista d solicitudes de bajas'"
+        [title]="'Lista de solicitudes de bajas'"
         [showAdd]="false"
         [dt]="dt"
       />

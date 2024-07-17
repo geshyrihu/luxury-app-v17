@@ -37,7 +37,6 @@ export default class AddOrEditEntradasComponent implements OnInit {
     unidadMedidaId: ['', Validators.required],
     numeroFactura: ['', Validators.required],
     providerName: ['', Validators.required],
-    // personId: [this.authService.personId, Validators.required],
     applicationUserId: [
       this.authService.applicationUserId,
       Validators.required,
@@ -108,8 +107,6 @@ export default class AddOrEditEntradasComponent implements OnInit {
   // convenience getter for easy access to form fields
 
   onSubmit() {
-    this.form.patchValue({ personId: this.authService.personId });
-
     if (!this.apiRequestService.validateForm(this.form)) return;
 
     this.submitting = true;

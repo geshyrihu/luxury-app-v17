@@ -13,27 +13,27 @@
     formControlName="tipoGasto"
     label="Tipo de Gasto"
     [data]="cb_tipoGasto"
-  ></custom-input-select>
+  />
 
   <custom-input-select
     [control]="form.get('usoCFDIId')"
     formControlName="usoCFDIId"
     label="Uso de CFDI"
     [data]="cb_usoCfdi"
-  ></custom-input-select>
+  />
 
   <custom-input-select
     [control]="form.get('metodoDePagoId')"
     formControlName="metodoDePagoId"
     label="Metodo de Pago"
     [data]="cb_payment_method"
-  ></custom-input-select>
+  />
 
   <custom-input-select
     [control]="form.get('formaDePagoId')"
     formControlName="formaDePagoId"
     label="Forma de Pago"
     [data]="cb_formaPago"
-  ></custom-input-select>
+  />
   <custom-button-submit [disabled]="this.form.invalid || submitting" />
 </form>

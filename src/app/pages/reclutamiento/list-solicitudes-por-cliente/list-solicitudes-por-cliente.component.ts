@@ -55,7 +55,7 @@ export default class ListSolicitudesPorClienteComponent implements OnInit {
         'SolicitudesReclutamiento/solicitudesporcliente/' +
           this.customerIdService.getCustomerId() +
           '/' +
-          this.authService.infoEmployeeDto.employeeId
+          this.authService.infoUserAuthDto.applicationUserId
       )
       .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({

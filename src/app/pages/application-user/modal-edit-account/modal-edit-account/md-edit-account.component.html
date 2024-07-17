@@ -1,17 +1,14 @@
 @if (applicationUserId !== '' && applicationUserId !== undefined) {
 <div class="row">
-  <div class="col-sm-6">
-    <app-update-account [applicationUserId]="applicationUserId" />
-  </div>
-  <div class="col-sm-6">
+  <div class="col-sm-4">
     <app-update-password-account [applicationUserId]="applicationUserId" />
   </div>
   @if (this.authService.onValidateRoles(['SuperUsuario'])) {
-  <div class="col-sm-6">
+  <div class="col-sm-4">
     <app-update-role [applicationUserId]="applicationUserId" />
   </div>
   } @if (this.authService.onValidateRoles(['SuperUsuario'])) {
-  <div class="col-sm-6">
+  <div class="col-sm-4">
     <app-access-customer [applicationUserId]="applicationUserId" />
   </div>
   }

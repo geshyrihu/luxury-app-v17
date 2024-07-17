@@ -46,19 +46,24 @@
         <td class="p-column-title">
           {{ item.descripcion | uppercase }}
         </td>
-        <td class="p-column-title">
+        <td class="p-column-title text-center">
           <a
-            [href]="filePath + item.pathFormato"
-            target="_blank"
-            download="item.pathFormato"
+            href="javascript:void(0)"
+            (click)="onDownloadFile(item.id, item.folio)"
             ngbTooltip="Descargar"
             placement="top"
-            class="btn btn-soft-danger btn-sm w-xs waves-effect btn-label waves-light me-1"
+            class="btn btn-soft-secondary btn-sm w-xs"
           >
-            <i class="fa-light fa-download label-icon fa-2x pointer"></i>
-            Formato
+            <i
+              [ngClass]="
+                getIconAndColor(getFileExtension(item.pathFormato)).icon
+              "
+              [ngStyle]="{
+                color: getIconAndColor(getFileExtension(item.pathFormato)).color
+              }"
+              class="fa-thin fa-2x pointer"
+            ></i>
           </a>
-          <!-- {{ item.comunicadoPath }} -->
         </td>
         <!-- Opciones -->
         @if (authService.onValidateRoles(['SuperUsuario'])) {
@@ -77,7 +82,7 @@
       </tr>
     </ng-template>
     <ng-template pTemplate="paginatorleft">
-      <div class="p-d-flex p-ai-center p-jc-between hide-print-mode">
+      <div class="p-d-flex p-ai-center p-jc-between no-print">
         En total hay
         {{ data ? data.length : 0 }} registros.
       </div>

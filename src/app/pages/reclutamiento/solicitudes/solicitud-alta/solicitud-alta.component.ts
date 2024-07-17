@@ -2,7 +2,6 @@ import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subject } from 'rxjs';
 import { ETypeContractRegister } from 'src/app/core/enums/type-contract-register.enum';
 import { ETypeContract } from 'src/app/core/enums/type-contract.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
@@ -33,8 +32,6 @@ export default class SolicitudAltaComponent implements OnInit {
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
 
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
-
   requestPositionCandidateId: number = 0;
   data: any;
   submitting: boolean = false;
@@ -46,7 +43,7 @@ export default class SolicitudAltaComponent implements OnInit {
   customerId = this.config.data.customerId;
 
   form: FormGroup = this.formBuilder.group({
-    positionRequestId: [null, Validators.required],
+    positionRequestId: ['', Validators.required],
     boss: ['', Validators.required],
     candidateName: ['', Validators.required],
     customerAddress: ['', Validators.required],
@@ -69,8 +66,11 @@ export default class SolicitudAltaComponent implements OnInit {
       this.form.patchValue(result);
       this.form.patchValue({
         employeeId: this.config.data.employeeId,
+        positionRequestId: '',
       });
     });
+
+    console.log(this.form.value);
   }
 
   onLoadDataVacante() {

@@ -54,11 +54,11 @@ export default class ListEmployeeProviderCustomerComponent implements OnInit {
     });
   }
 
-  onModalAddOrEdit() {
+  onModalAddOrEdit(data: any) {
     this.dialogHandlerService
       .openDialog(
         EmployeeProviderAddOrEditComponent,
-        {},
+        { id: data.id, typePerson: 1, title: data.title },
         'Agregar externo',
         this.dialogHandlerService.dialogSizeMd
       )
@@ -66,9 +66,15 @@ export default class ListEmployeeProviderCustomerComponent implements OnInit {
         if (result) this.onLoadData();
       });
   }
-  onDelete(itemId: number) {}
+  onDelete(id: number) {
+    this.apiRequestService
+      .onDelete(`Employees/${id}`)
+      .then((result: boolean) => {
+        if (result) this.data = this.data.filter((item) => item.id !== id);
+      });
+  }
 
-  onCardEmployee(applicationUserId: number) {
+  onCardEmployee(applicationUserId: string) {
     this.dialogHandlerService.openDialog(
       CardEmployeeComponent,
       {

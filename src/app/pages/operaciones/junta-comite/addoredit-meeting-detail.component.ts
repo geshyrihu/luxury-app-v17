@@ -38,7 +38,7 @@ export default class AddOrEditMeetingDetailComponent implements OnInit {
     });
   }
 
-  calculateDetailTotal(name) {
+  calculateDetailTotal(name: string) {
     let total = 0;
 
     if (this.data) {

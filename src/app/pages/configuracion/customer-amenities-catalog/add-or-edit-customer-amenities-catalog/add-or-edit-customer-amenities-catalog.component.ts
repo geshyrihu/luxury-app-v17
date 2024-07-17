@@ -34,7 +34,6 @@ export default class AddOrEditCustomerAmenitiesCatalogComponent
   });
 
   ngOnInit() {
-    console.log('data: ', this.config.data);
     this.onLoadLocations();
   }
 
@@ -49,7 +48,6 @@ export default class AddOrEditCustomerAmenitiesCatalogComponent
   onSubmit() {
     if (!this.apiRequestService.validateForm(this.form)) return;
 
-    console.log('form', this.form.value);
     this.submitting = true;
 
     const urlApi = `customeramenitiescatalog/addamenitiescatalog`;

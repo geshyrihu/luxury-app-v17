@@ -3,9 +3,8 @@ import { Router } from '@angular/router';
 import { catchError, map, of } from 'rxjs';
 import { IModelToken } from '../interfaces/model-token.interface';
 import {
-  IInfoAccountAuth,
-  IInfoEmployeeAuth,
   IUserToken,
+  InfoAccountAuthDto,
 } from '../interfaces/user-token.interface';
 import { DataService } from './data.service';
 import { StorageService } from './storage.service';
@@ -19,10 +18,8 @@ export class AuthService {
   router = inject(Router);
 
   userTokenDto: IUserToken;
-  infoUserAuthDto: IInfoAccountAuth;
-  infoEmployeeDto: IInfoEmployeeAuth;
+  infoUserAuthDto: InfoAccountAuthDto;
 
-  personId: number = 0;
   employeeId: number = 0;
   applicationUserId: string = '';
   statusJWT: boolean = false;
@@ -49,8 +46,8 @@ export class AuthService {
         // Almacenar la información del token y el estado del JWT
         this.userTokenDto = resp.body;
         this.infoUserAuthDto = this.userTokenDto.infoUserAuthDto;
-        this.infoEmployeeDto = this.userTokenDto.infoEmployeeDto;
-        this.employeeId = this.infoEmployeeDto.employeeId;
+        // this.infoEmployeeDto = this.userTokenDto.infoEmployeeDto;
+        // this.employeeId = this.infoEmployeeDto.employeeId;
         this.applicationUserId = this.infoUserAuthDto.applicationUserId;
         if (resp.body.token) {
           this.statusJWT = true;

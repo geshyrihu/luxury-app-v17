@@ -65,7 +65,6 @@ export default class CreateOrdenCompraComponent implements OnInit {
       equipoOInstalacion: ['', Validators.required],
       justificacionGasto: ['', Validators.required],
       revisadoPorResidente: [''],
-      // personId: [this.authService.personId],
 
       applicationUserId: [this.authService.applicationUserId],
     });

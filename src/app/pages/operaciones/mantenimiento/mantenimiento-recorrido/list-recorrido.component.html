@@ -3,11 +3,11 @@
   <div class="col-sm-5 mb-2 mb-sm-0">
     <h4 class="h4">Recorrido de Mantenimiento</h4>
   </div>
-  <div class="col-sm-3 d-flex hide-print-mode">
+  <div class="col-sm-3 d-flex no-print">
     <a
       ngbTooltip="Ver bitacora"
       routerLink="/mantenimiento/bitacora/reporte-bitacora-recorrido"
-      class="btn btn-danger me-1 hide-print-mode"
+      class="btn btn-danger me-1 no-print"
     >
       <i class="fa-light fa-file-pdf"></i>
     </a>
@@ -16,21 +16,21 @@
       (inactivo)="onChange(1)"
       activas="Diario"
       inactivas="Semanal"
-    ></custom-button-active-desactive>
+    />
   </div>
-  <div class="col-sm-3 d-grid mb-2 mb-sm-0 hide-print-mode">
+  <div class="col-sm-3 d-grid mb-2 mb-sm-0 no-print">
     <input
       [(ngModel)]="this.filterValue"
       type="text"
       (input)="filterGlobal()"
       placeholder="Ingresa texto para buscar..."
-      class="form-control hide-print-mode"
+      class="form-control no-print"
     />
   </div>
   <div class="col-sm-1 d-grid mb-2 mb-sm-0">
     <button
       type="button"
-      class="btn btn-info hide-print-mode"
+      class="btn btn-info no-print"
       (click)="onModalAddOrEdit({ id: 0, title: 'Nuevo Registro' })"
     >
       Nuevo
@@ -46,9 +46,9 @@
           {{ item.position }}.- {{ item.nameMachinery }}
         </h3>
       </div>
-      <div class="col-sm-4 text-end d-flex mb-2 hide-print-mode">
+      <div class="col-sm-4 text-end d-flex mb-2 no-print">
         <button
-          class="btn btn-primary pointer me-1 hide-print-mode"
+          class="btn btn-primary pointer me-1 no-print"
           (click)="onModalBitacora(item.machineryId)"
           ngbTooltip="Agregar datos de revisión"
           placement="top"
@@ -59,7 +59,7 @@
         <button
           ngbTooltip="Ver historico de bitacora"
           placement="top"
-          class="btn btn-primary pointer me-1 hide-print-mode"
+          class="btn btn-primary pointer me-1 no-print"
           (click)="
             onModalBitacoraIndividual({
               machineryId: item.machineryId,
@@ -73,7 +73,7 @@
           <button
             ngbTooltip="Editar Recorrido"
             placement="top"
-            class="btn btn-secondary dropdown-toggle hide-print-mode"
+            class="btn btn-secondary dropdown-toggle no-print"
             type="button"
             id="dropdownMenuButton"
             data-bs-toggle="dropdown"

@@ -45,14 +45,16 @@ export default class EmployeeAddOrEditComponent implements OnInit {
 
   ngOnInit() {
     // Validamos si el usuario authentiucado es admin o asistente
-    if (
-      this.authService.infoEmployeeDto.professionId == 5 ||
-      this.authService.infoEmployeeDto.professionId == 57 ||
-      this.authService.infoEmployeeDto.professionId == 58 ||
-      this.authService.infoEmployeeDto.professionId == 6
-    ) {
-      this.onValidarAdminAsis();
-    }
+
+    // TODO: Repararar
+    // if (
+    //   this.authService.infoEmployeeDto.professionId == 5 ||
+    //   this.authService.infoEmployeeDto.professionId == 57 ||
+    //   this.authService.infoEmployeeDto.professionId == 58 ||
+    //   this.authService.infoEmployeeDto.professionId == 6
+    // ) {
+    //   this.onValidarAdminAsis();
+    // }
 
     this.applicationUserId = this.employeeAddOrEditService.onGetId();
     this.employeeId = this.employeeAddOrEditService.onGetEmployeeId();

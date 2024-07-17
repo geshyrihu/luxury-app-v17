@@ -4,22 +4,21 @@
   <label class="col-sm-3">{{ label }}</label>
   <div class="col-sm-9">
     <select
-      [value]="value"
+      [formControl]="control"
       class="form-select"
       [disabled]="disabled"
-      (input)="onChange($event.target.value)"
       (blur)="onTouch()"
       [ngClass]="{
         'is-invalid': control.invalid && (control.dirty || control.touched)
       }"
     >
-      @if(SelectDefaulOption ){
-      <option value="">{{ placeholder }}</option>
-      } @for (item of data; track item) {
-      <option [value]="item.value">
+      <option *ngIf="SelectDefaulOption" value="">{{ placeholder }}</option>
+      <option
+        *ngFor="let item of data; trackBy: trackByFn"
+        [value]="item.value"
+      >
         {{ item.label }}
       </option>
-      }
     </select>
     <app-validation-errors-custom-input
       [control]="control"
@@ -29,22 +28,18 @@
   } @if (!horizontal) {
   <label>{{ label }}</label>
   <select
-    [value]="value"
+    [formControl]="control"
     class="form-select"
     [disabled]="disabled"
-    (input)="onChange($event.target.value)"
     (blur)="onTouch()"
     [ngClass]="{
       'is-invalid': control.invalid && (control.dirty || control.touched)
     }"
   >
-    @if(SelectDefaulOption ){
-    <option>{{ placeholder }}</option>
-    } @for (item of data; track item) {
-    <option [value]="item.value">
+    <option *ngIf="SelectDefaulOption" value="">{{ placeholder }}</option>
+    <option *ngFor="let item of data; trackBy: trackByFn" [value]="item.value">
       {{ item.label }}
     </option>
-    }
   </select>
   <app-validation-errors-custom-input
     [control]="control"

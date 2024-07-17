@@ -115,7 +115,6 @@ export default class AddAccountCustomerComponent implements OnInit {
     if (fullName.target.value.length < 1) {
       return;
     }
-    console.log('🚀 ~ fullName.target.value:', fullName.target.value);
     this.existingPerson = [];
     const urlApi = 'Employees/SearchExistingPerson/' + fullName.target.value;
     this.apiRequestService.onGetListNotLoading(urlApi).then((result: any) => {

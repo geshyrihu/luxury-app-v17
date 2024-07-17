@@ -1,5 +1,5 @@
 import { NgStyle } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { imageToBase64 } from 'src/app/core/helpers/enumeration';
 import { environment } from 'src/environments/environment';
@@ -9,7 +9,7 @@ import { environment } from 'src/environments/environment';
   standalone: true,
   imports: [LuxuryAppComponentsModule, NgStyle],
 })
-export default class CustomInputImgComponent {
+export default class CustomInputImgComponent implements OnInit {
   imgBase64: string = '';
 
   //Ruta de Imagen por defecto
@@ -27,6 +27,8 @@ export default class CustomInputImgComponent {
 
   @Output()
   fileSelected: EventEmitter<File> = new EventEmitter<File>();
+
+  ngOnInit(): void {}
 
   change(event: any): void {
     if (event.target.files.length > 0) {

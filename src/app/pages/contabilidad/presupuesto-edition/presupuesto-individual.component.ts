@@ -29,7 +29,6 @@ export default class PresupuestoIndividualComponent implements OnInit {
 
   // Declaración e inicialización de variables
   id: number = 0;
-  personId: number = this.authService.infoEmployeeDto.personId;
   applicationUserId: string = this.authService.applicationUserId;
   data: any;
   ref: DynamicDialogRef; // Referencia a un cuadro de diálogo modal
@@ -143,7 +142,6 @@ export default class PresupuestoIndividualComponent implements OnInit {
 
     const data = {
       id: item.id,
-      personId: this.personId,
       applicationUserId: this.applicationUserId,
       monthlyBudget: item.monthlyBudget,
     };
@@ -196,7 +194,7 @@ export default class PresupuestoIndividualComponent implements OnInit {
     // Por ejemplo, llenar el objeto que se enviará en el POST
     const data = {
       id: item.id,
-      personId: this.personId,
+      applicationUserId: this.applicationUserId,
       monthlyBudget: newmonthlyBudget,
     };
 
@@ -234,7 +232,7 @@ export default class PresupuestoIndividualComponent implements OnInit {
           cedulaPresupuestalId: presupuestoAnteriorId,
         },
         'Ordenes de Compra',
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerService.dialogSizeFull
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();

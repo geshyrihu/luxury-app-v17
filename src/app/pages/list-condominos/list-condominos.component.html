@@ -70,14 +70,14 @@
         scope="col"
         style="width: 10%"
         pSortableColumn="mail"
-        class="hide-print-mode"
+        class="no-print"
       >
         Enviar Info
         <p-sortIcon field="mail"></p-sortIcon>
       </th>
       @if ( authService.onValidateRoles([ 'Asistente', 'Residente',
       'SuperUsuario' ]) ) {
-      <th scope="col" style="width: 5%" class="hide-print-mode">Opciones</th>
+      <th scope="col" style="width: 5%" class="no-print">Opciones</th>
       }
     </tr>
   </ng-template>
@@ -104,7 +104,7 @@
       <td>
         {{ item.email }}
       </td>
-      <td class="hide-print-mode">
+      <td class="no-print">
         @if (item.enviarMails) {
         <i class="text-success fa-light fa-check-double"></i>
         } @if (!item.enviarMails) {
@@ -113,7 +113,7 @@
       </td>
       @if ( authService.onValidateRoles([ 'Asistente', 'Residente',
       'SuperUsuario' ]) ) {
-      <td class="p-column-title hide-print-mode">
+      <td class="p-column-title no-print">
         <div class="d-flex justify-content-center">
           <!-- Componente editar registro -->
           <custom-button-edit

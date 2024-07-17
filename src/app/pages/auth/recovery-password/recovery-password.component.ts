@@ -34,7 +34,7 @@ export default class RecoveryPasswordComponent implements OnInit {
 
     this.errorMessage = '';
 
-    this.dataService.post(`auth/RecoverPassword`, this.form.value).subscribe(
+    this.dataService.post(`Auth/RecoverPassword`, this.form.value).subscribe(
       () => {
         // Manejar el éxito de la solicitud si es necesario
         this.successMessage =

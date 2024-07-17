@@ -66,27 +66,17 @@
       >
         <img class="rounded avatar-md" [src]="imagenPerfilUrl" alt="Img" />
         <span class="d-none d-xl-inline-block ms-1 fw-medium"
-          >{{ dataInfo.firstName }} {{ dataInfo.lastName }}
+          >{{ infoAccountAuthDto.firstName }} {{ infoAccountAuthDto.lastName }}
         </span>
         <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
       </button>
       <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
-        <button disabled class="btn btn-light w-100 waves-effect waves-light">
-          {{ dataInfo.profession }}
-        </button>
         <div class="dropdown-divider"></div>
         <a [routerLink]="['/accounts/actualizar-perfil']" class="dropdown-item">
           <i class="fa-thin fa-key me-2" style="color: #ffd43b"></i> Cambiar
           contraseña
         </a>
-        <!-- <button (click)="onModalDataAddress()" class="dropdown-item">
-          <i class="fa-light fa-location-dot me-2" style="color: #74c0fc"></i>
-          Actualizar mi dirección
-        </button>
-        <button (click)="onShowModalDatosPersonales()" class="dropdown-item">
-          <i class="fa-thin fa-database me-2" style="color: #74c0fc"></i>
-          Complementar mi datos
-        </button> -->
+
         <a class="dropdown-item pointer" (click)="logout()">
           <i
             class="fa-sharp fa-light fa-arrow-right-from-bracket fa-flip-vertical me-2"

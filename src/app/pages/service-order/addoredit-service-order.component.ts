@@ -57,6 +57,30 @@ export default class ServiceOrderAddOrEditComponent
 
   customerId: any;
 
+  onLoadForm() {
+    this.form = this.formBuilder.group({
+      id: { value: this.id, disabled: true },
+      machineryId: ['', Validators.required],
+      machinery: ['', Validators.required],
+      activity: ['', [Validators.required]],
+      requestDate: ['', Validators.required],
+      status: ['', [Validators.required]],
+      providerId: ['', Validators.required],
+      provider: ['', Validators.required],
+      price: ['', [Validators.required]],
+      employeeResponsableId: ['', Validators.required],
+      employeeResponsable: ['', Validators.required],
+      typeMaintance: ['', Validators.required],
+      executionDate: [''],
+      observations: [''],
+      cumplimientoActividades: [false, Validators.required],
+      equiposOperando: [false, Validators.required],
+      ocacionoDanos: [false, Validators.required],
+      calidadTrabajos: [false, Validators.required],
+      maintenanceCalendarId: [null],
+    });
+  }
+
   ngOnInit(): void {
     flatpickrFactory();
     this.customerId = this.customerIdService.getCustomerId();
@@ -84,7 +108,7 @@ export default class ServiceOrderAddOrEditComponent
       });
 
     this.apiRequestService
-      .onGetSelectItem(`GetUserCustomer/${this.customerId}`)
+      .onGetSelectItem(`UserFromCustomer/${this.customerId}`)
       .then((response: any) => {
         this.cb_applicationUser = response;
       });
@@ -106,30 +130,6 @@ export default class ServiceOrderAddOrEditComponent
     let find = this.cb_applicationUser.find((x) => x?.label === e.target.value);
     this.form.patchValue({
       employeeResponsableId: find?.value,
-    });
-  }
-
-  onLoadForm() {
-    this.form = this.formBuilder.group({
-      id: { value: this.id, disabled: true },
-      machineryId: ['', Validators.required],
-      machinery: ['', Validators.required],
-      activity: ['', [Validators.required]],
-      requestDate: ['', Validators.required],
-      status: ['', [Validators.required]],
-      providerId: ['', Validators.required],
-      provider: ['', Validators.required],
-      price: ['', [Validators.required]],
-      employeeResponsableId: ['', Validators.required],
-      employeeResponsable: ['', Validators.required],
-      typeMaintance: ['', Validators.required],
-      executionDate: [''],
-      observations: [''],
-      cumplimientoActividades: [false, Validators.required],
-      equiposOperando: [false, Validators.required],
-      ocacionoDanos: [false, Validators.required],
-      calidadTrabajos: [false, Validators.required],
-      maintenanceCalendarId: [null],
     });
   }
 

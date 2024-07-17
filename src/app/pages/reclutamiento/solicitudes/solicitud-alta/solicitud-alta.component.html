@@ -1,7 +1,7 @@
 <div class="card">
   <div class="card-body">
     <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
-      <div class="form-group row mb-2">
+      <!-- <div class="form-group row mb-2">
         <label class="col-sm-3">Vacante que cubre</label>
         <div class="col-sm-9">
           <select
@@ -25,8 +25,16 @@
             [placeholder]="'vacante'"
           />
         </div>
-      </div>
+      </div> -->
+      <custom-input-select
+        placeholder="--Selecciona la vacante que cubre--"
+        [control]="form.get('positionRequestId')"
+        formControlName="positionRequestId"
+        label="Vacante que cubre"
+        [data]="cb_vacantes"
+      />
       <custom-input-text
+        [hidden]="true"
         [control]="form.get('candidateName')"
         formControlName="candidateName"
         label="Nombre"
@@ -39,18 +47,12 @@
         placeholder="Empleado Id"
       />
 
-      <div class="form-group row mb-2">
-        <label class="col-sm-3">Tipo de contrato</label>
-        <div class="col-sm-9">
-          <select formControlName="typeContractRegister" class="form-select">
-            @for (item of cb_typeContractRegister; track item) {
-            <option [value]="item.value">
-              {{ item.label }}
-            </option>
-            }
-          </select>
-        </div>
-      </div>
+      <custom-input-select
+        [control]="form.get('typeContractRegister')"
+        formControlName="typeContractRegister"
+        label="Tipo de contrato"
+        [data]="cb_typeContractRegister"
+      />
       <custom-input-text
         [control]="form.get('boss')"
         formControlName="boss"

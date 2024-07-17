@@ -44,9 +44,9 @@ export const MenuTikecket: ITicketPanelMenu[] = [
     title: 'Mantenimiento',
     icon: 'fa-light fa-screwdriver-wrench',
   },
-  {
-    routerLink: '/legal/list-ticket-customer',
-    title: 'Legal',
-    icon: 'fa-light fa-gavel',
-  },
+  // {
+  //   routerLink: '/legal/list-ticket-customer',
+  //   title: 'Legal',
+  //   icon: 'fa-light fa-gavel',
+  // },
 ];

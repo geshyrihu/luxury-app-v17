@@ -66,7 +66,7 @@
                 title: 'CARGAR ARCHIVO DE ESTADOS FINANCIEROS'
               })
             "
-            class="btn btn-soft-danger w-100 waves-effect btn-label waves-light me-1 hide-print-mode"
+            class="btn btn-soft-danger w-100 waves-effect btn-label waves-light me-1 no-print"
           >
             <i class="fa-light fa-file-plus pointer label-icon"></i>
             CARGAR INFORME FINANCIERO
@@ -82,7 +82,7 @@
               type="button"
               target="_blank"
               href="{{ baseUrlApi }}/{{ item.nameFileEstadoFinanciero }}"
-              class="btn btn-soft-danger w-xs waves-effect btn-label waves-light me-1 hide-print-mode"
+              class="btn btn-soft-danger w-xs waves-effect btn-label waves-light me-1 no-print"
             >
               <i class="fa-light fa-download pointer label-icon"></i>
               PDF
@@ -124,7 +124,7 @@
             placement="top"
             type="button"
             (click)="onAuthorize(item.id)"
-            class="btn btn-soft-danger w-100 waves-effect btn-label waves-light me-1 hide-print-mode"
+            class="btn btn-soft-danger w-100 waves-effect btn-label waves-light me-1 no-print"
           >
             <i class="fa-light fa-clipboard-check pointer label-icon"></i>
             AUTORIZAR INFORME FINANCIERO
@@ -157,7 +157,7 @@
           } }
         </td>
         <!-- Opciones -->
-        <td class="p-column-title" class="hide-print-mode">
+        <td class="p-column-title" class="no-print">
           @if (item.nameFileEstadoFinanciero !== null &&
           item.personWhoAuthorized !== '' ) { @if(item.personWhoSend===''){
           <button
@@ -170,7 +170,7 @@
                 title: 'ENVIAR A CONDOMINOS'
               })
             "
-            class="btn btn-soft-danger w-100 waves-effect btn-label waves-light me-1 hide-print-mode"
+            class="btn btn-soft-danger w-100 waves-effect btn-label waves-light me-1 no-print"
           >
             <i class="fa-light fa-paper-plane pointer label-icon"></i>
             ENVIAR A CONDOMINOS
@@ -194,7 +194,7 @@
       </tr>
     </ng-template>
     <ng-template pTemplate="paginatorleft">
-      <div class="p-d-flex p-ai-center p-jc-between hide-print-mode">
+      <div class="p-d-flex p-ai-center p-jc-between no-print">
         En total hay
         {{ data ? data.length : 0 }} registros.
       </div>

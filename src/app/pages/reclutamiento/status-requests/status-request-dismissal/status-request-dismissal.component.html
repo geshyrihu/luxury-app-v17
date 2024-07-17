@@ -26,16 +26,6 @@
         <td>{{ data.profession }}</td>
         <td>{{ data.executionDate }}</td>
         <td>
-          @if (data.photoPath && data.photoPath !== undefined) {
-          <img
-            (click)="onCardEmployee(data.personId)"
-            [src]="pahtBaseImg + data.photoPath"
-            class="rounded avatar-sm pointer me-3"
-            alt=""
-          />
-          } @if (!data.photoPath) {
-          <i class="fa-light fa-user-xmark fa-2x"></i>
-          }
           {{ data.employee }}
         </td>
         <td>{{ data.employeePhone | phoneFormat }}</td>

@@ -63,7 +63,6 @@ export default class AddOrEditProductosComponent implements OnInit {
       category: ['', Validators.required],
       categoryId: ['', Validators.required],
       clasificacion: ['', Validators.required],
-      // personId: [this.authService.personId],
       applicationUserId: [this.authService.applicationUserId],
       marca: [''],
       modelo: [''],
@@ -128,7 +127,6 @@ export default class AddOrEditProductosComponent implements OnInit {
     formData.append('marca', dto.marca);
     formData.append('modelo', dto.modelo);
     formData.append('clasificacion', String(dto.clasificacion));
-    formData.append('personId', dto.personId);
     formData.append('applicationUserId', dto.applicationUserId);
 
     // ... Si hay un archivo cargado agrega la prop photoPath con su valor

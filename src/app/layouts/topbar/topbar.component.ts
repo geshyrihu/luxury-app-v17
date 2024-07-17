@@ -6,7 +6,7 @@ import { NgbDropdownModule, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DialogModule } from 'primeng/dialog';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { IInfoEmployeeAuth } from 'src/app/core/interfaces/user-token.interface';
+import { InfoAccountAuthDto } from 'src/app/core/interfaces/user-token.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
@@ -43,7 +43,7 @@ export class TopbarComponent implements OnInit {
   @Output() settingsButtonClicked = new EventEmitter();
 
   valueset: any;
-  dataInfo: IInfoEmployeeAuth;
+  infoAccountAuthDto: InfoAccountAuthDto;
   imagenPerfilUrl = '';
   ref: DynamicDialogRef | undefined;
 
@@ -63,11 +63,11 @@ export class TopbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.dataInfo = this.authService.userTokenDto.infoEmployeeDto;
+    this.infoAccountAuthDto = this.authService.infoUserAuthDto;
     this.imagenPerfilUrl =
       environment.base_urlImg +
       'Administration/accounts/' +
-      this.dataInfo.photoPath;
+      this.infoAccountAuthDto.photoPath;
     this.profielServiceService.imagenPerfilActualizada$.subscribe(
       (nuevaImagenUrl: any) => {
         this.imagenPerfilUrl = nuevaImagenUrl.imagenUrl;

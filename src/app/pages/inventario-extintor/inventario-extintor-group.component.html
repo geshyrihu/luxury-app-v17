@@ -1,0 +1,33 @@
+<table class="custom-table w-100">
+  <thead>
+    <tr>
+      <th>Tipo</th>
+      <th>Ubicación</th>
+      <th>Extintores</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let tipo of data">
+      <td>{{ tipo.type }}</td>
+      <td colspan="3">
+        <table>
+          <tbody>
+            <tr *ngFor="let ubicacion of tipo.ubicaciones">
+              <td>{{ ubicacion.ubicacion }}</td>
+              <td>{{ ubicacion.cantidad }}</td>
+              <td>
+                <table>
+                  <tbody>
+                    <tr *ngFor="let extintor of ubicacion.extintores">
+                      <td>{{ extintor.ubicacion }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+  </tbody>
+</table>

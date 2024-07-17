@@ -36,7 +36,6 @@ export default class ModalOrdenCompraComponent implements OnInit {
     folio: [''],
     folioSolicitudCompra: [''],
     customerId: [0],
-    // personId: [this.authService.personId],
     applicationUserId: [this.authService.applicationUserId],
   });
 
@@ -59,7 +58,6 @@ export default class ModalOrdenCompraComponent implements OnInit {
   onSubmit() {
     this.submitting = true;
 
-    // this.form.patchValue({ personId: this.authService.personId });
     this.apiRequestService
       .onPut(`OrdenCompra/${this.ordenCompraId}`, this.form.value)
       .then((result: boolean) => {

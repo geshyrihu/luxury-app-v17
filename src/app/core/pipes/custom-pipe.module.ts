@@ -35,5 +35,6 @@ import { ETipoGastoPipe } from './tipo-gasto.pipe';
     StripTagsPipe,
     ETipoGastoPipe,
   ],
+  declarations: [],
 })
 export class CustomPipeModule {}

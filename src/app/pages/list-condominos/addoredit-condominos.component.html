@@ -10,7 +10,7 @@
     formControlName="habitant"
     label="Habitante"
     [data]="cb_Habitant"
-  ></custom-input-select>
+  />
 
   <custom-input-text
     [control]="form.get('firstName')"
@@ -58,7 +58,7 @@
     formControlName="enviarMails"
     label="Enviar correos"
     [data]="cb_enviarMails"
-  ></custom-input-select>
+  />
 
   <custom-input-datalist
     (propagar)="savePropiedadId($event)"

@@ -1,0 +1,70 @@
+<form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
+  <div class="row">
+    <div class="col-sm-6">
+      <custom-input-datalist
+        (propagar)="saveUserId($event)"
+        [control]="form.get('applicationUserCargoReporte')"
+        [data]="cb_user"
+        formControlName="applicationUserCargoReporte"
+        label="Solicita"
+        placeholder="solicita"
+        dataListId="userNameDatalistOptions"
+        [horizontal]="false"
+      />
+      <custom-input-select
+        [control]="form.get('applicationUserResponsableId')"
+        formControlName="applicationUserResponsableId"
+        label="Responsable"
+        [data]="cb_responsableSistemas"
+        placeholder="responsable"
+        [horizontal]="false"
+      />
+      <custom-input-date
+        [control]="form.get('dateRequest')"
+        formControlName="dateRequest"
+        label="Fecha de solicitud"
+        [horizontal]="false"
+        placeholder="fecha de solicitud"
+      />
+
+      <custom-input-select
+        [control]="form.get('status')"
+        formControlName="status"
+        label="Estatus"
+        [data]="cb_status"
+        [horizontal]="false"
+      />
+      <custom-input-text-area
+        [control]="form.get('activity')"
+        formControlName="activity"
+        label="Solicitud"
+        placeholder="solicitud"
+        [horizontal]="false"
+      />
+    </div>
+    <div class="col-sm-6">
+      <custom-input-date
+        [control]="form.get('dateFinished')"
+        formControlName="dateFinished"
+        label="Fecha de termino"
+        [horizontal]="false"
+        placeholder="fecha de termino"
+      />
+      <custom-input-select
+        [control]="form.get('priority')"
+        formControlName="priority"
+        label="Prioridad"
+        [data]="cb_priority"
+        [horizontal]="false"
+      />
+      <custom-input-text-area
+        [control]="form.get('observations')"
+        formControlName="observations"
+        label="Observaciones"
+        placeholder="observaciones"
+        [horizontal]="false"
+      />
+    </div>
+  </div>
+  <custom-button-submit [disabled]="this.form.invalid || submitting" />
+</form>

@@ -75,6 +75,8 @@ export default class SolicitudBajaComponent implements OnInit, OnDestroy {
     discountDescriptions: this.formBuilder.array([]),
     lawyerAssistance: false, // Valor booleano directo
     employeeInformed: false, // Valor booleano directo
+
+    applicationUserRequestId: [this.authService.applicationUserId],
   });
 
   ngOnInit(): void {
@@ -176,10 +178,9 @@ export default class SolicitudBajaComponent implements OnInit, OnDestroy {
     formData.append('lawyerAssistance', form.lawyerAssistance.toString());
     formData.append('employeeInformed', form.employeeInformed.toString());
     formData.append(
-      'requestPersonId',
-      this.authService.infoEmployeeDto.personId.toString()
+      'applicationUserRequestId',
+      this.authService.applicationUserId.toString()
     );
-    // ...
 
     const discountDescriptions = form.discountDescriptions;
     for (let i = 0; i < discountDescriptions.length; i++) {

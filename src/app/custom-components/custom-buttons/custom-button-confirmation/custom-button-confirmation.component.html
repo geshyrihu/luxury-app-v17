@@ -5,10 +5,9 @@
   type="button"
   [class]="classButton"
   [disabled]="disabled"
-  class="hide-print-mode btn pointer me-1"
+  class="no-print btn pointer me-1"
   (click)="confirm($any($event))"
 >
   <i [class]="icon"></i>{{ label }}
 </button>
-
 }

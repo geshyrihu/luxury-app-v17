@@ -27,21 +27,21 @@
     formControlName="usoCFDIId"
     label="Uso de Cfdi"
     [data]="cb_use_cfdi"
-  ></custom-input-select>
+  />
 
   <custom-input-select
     [control]="form.get('formaDePagoId')"
     formControlName="formaDePagoId"
     label="Forma de pago"
     [data]="cb_formaDePago"
-  ></custom-input-select>
+  />
 
   <custom-input-select
     [control]="form.get('metodoDePagoId')"
     formControlName="metodoDePagoId"
     label="Metodo de pago"
     [data]="cb_metodoDePago"
-  ></custom-input-select>
+  />
 
   <custom-button-submit [disabled]="this.form.invalid || submitting" />
 </form>

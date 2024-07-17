@@ -54,13 +54,15 @@ export class ApiRequestService implements OnDestroy {
     }
   }
   // Función para cargar datos de forma genérica
-  async onGetList<T>(urlApi: string): Promise<T | null> {
+  async onGetList<T>(urlApi: string, httpParams?: any): Promise<T | null> {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
 
     try {
       const responseData = await lastValueFrom(
-        this.dataService.get<T>(urlApi).pipe(takeUntil(this.destroy$))
+        this.dataService
+          .get<T>(urlApi, httpParams)
+          .pipe(takeUntil(this.destroy$))
       );
       // Cuando se completa la carga con éxito, mostrar un mensaje de éxito y resolver la promesa con los datos
       this.customToastService.onClose();
@@ -169,6 +171,34 @@ export class ApiRequestService implements OnDestroy {
       });
   }
 
+  onDownloadFile(urlApi: string, nameDocument: string) {
+    // Mostrar un mensaje de carga
+    this.customToastService.onLoading();
+
+    // Llamar a getFile para obtener el archivo Excel
+    this.dataService
+      .getFile(urlApi)
+      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .subscribe({
+        next: (resp: Blob) => {
+          // Obtener el tipo de contenido del archivo (si es posible)
+          const contentType = resp.type || 'application/octet-stream';
+
+          // Crear un objeto Blob a partir de la respuesta
+          const blob = new Blob([resp], { type: contentType });
+
+          // Utilizar la función saveAs del paquete 'file-saver' para descargar el archivo
+          saveAs(blob, nameDocument);
+
+          // Cuando se completa la descarga con éxito, mostrar un mensaje de éxito
+          this.customToastService.onCloseToSuccess();
+        },
+        error: (error) => {
+          // En caso de error, mostrar un mensaje de error
+          this.customToastService.onCloseToError(error);
+        },
+      });
+  }
   // validacion de formulario...
   validateForm(form: FormGroup): boolean {
     if (form.invalid) {

@@ -30,8 +30,6 @@ export default class AddOrEditProviderSupportComponent {
 
   form: FormGroup = this.formBuilder.group({
     id: { value: this.id, disabled: true },
-    personId: [null],
-    // namePerson: ['', [Validators.required]],
     applicationUserId: ['', [Validators.required]],
     applicationUser: ['', [Validators.required]],
     providerId: ['', [Validators.required]],
@@ -88,7 +86,7 @@ export default class AddOrEditProviderSupportComponent {
       this.cb_professions = resp;
     });
 
-    // Carga de listado de personas
+    // Carga de listado de ApplicationUser
     this.apiRequestService
       .onGetSelectItem('ApplicationUserProvider')
       .then((resp: any) => {
@@ -115,7 +113,7 @@ export default class AddOrEditProviderSupportComponent {
       nameProfession: find?.label,
     });
   }
-  savePersonId(e: any) {
+  saveApplicationUserId(e: any) {
     let find = this.cb_applicationUserProvider.find(
       (x) => x?.label === e.target.value
     );

@@ -26,7 +26,7 @@
           <custom-button-active-desactive
             (activo)="onSortChange($event)"
             (inactivo)="onSortChange($event)"
-          ></custom-button-active-desactive>
+          />
         </div>
       </div>
     </div>
@@ -64,7 +64,7 @@
         {{ item.phoneOne }} <br />{{ item.phoneTwo }}
       </td>
 
-      <td class="p-column-title" class="hide-print-mode">
+      <td class="p-column-title" class="no-print">
         <div class="d-flex justify-content-center">
           <custom-button-edit
             (edit)="onModalAddOrEdit({ id: item.id, title: 'Editar Registro' })"
@@ -72,7 +72,7 @@
           <custom-button-delete (OnConfirm)="onDelete(item.id)" />
           <custom-button
             ngbTooltip="Actualizar imagenes"
-            [customClass]="'btn-outline-primary btn-sm '"
+            customClass="btn-outline-primary btn-sm me-1"
             icon="fa-thin fa-images text-dark"
             (clicked)="onUpdateImages(item.id)"
           />

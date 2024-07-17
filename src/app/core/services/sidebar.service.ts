@@ -185,7 +185,7 @@ export class SidebarService {
             'SupervisionOperativa',
           ]),
           label: 'Reporte Minutas',
-          routerLink: '//supervision/minutas-resumen',
+          routerLink: '/supervision/minutas-resumen',
           name: 'Supervisión-Reporte minutas',
         },
         {
@@ -380,7 +380,7 @@ export class SidebarService {
             'SuperUsuario',
           ]),
           label: 'Tickets',
-          routerLink: '/sistemas/reportes',
+          routerLink: '/sistemas/ticket-sistemas',
           name: 'Sistemas-Tickets',
         },
       ],
@@ -837,6 +837,17 @@ export class SidebarService {
           ]),
           label: 'Extintores',
           routerLink: '/mantenimiento/catalogo/extintores',
+          name: 'Inventarios-Extintores',
+        },
+        {
+          visible: this.authService.onValidateRoles([
+            'GerenteMantenimiento',
+            'Mantenimiento',
+            'Residente',
+            'SuperUsuario',
+          ]),
+          label: 'Extintores Grupo',
+          routerLink: '/mantenimiento/catalogo/extintores-group',
           name: 'Inventarios-Extintores',
         },
         {

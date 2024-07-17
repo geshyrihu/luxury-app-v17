@@ -12,6 +12,13 @@ export default [
       import('src/app/pages/inventario-extintor/inventario-extintor.component'),
   },
   {
+    path: 'extintores-group',
+    loadComponent: () =>
+      import(
+        'src/app/pages/inventario-extintor/inventario-extintor-group.component'
+      ),
+  },
+  {
     path: 'iluminacion',
     loadComponent: () =>
       import(

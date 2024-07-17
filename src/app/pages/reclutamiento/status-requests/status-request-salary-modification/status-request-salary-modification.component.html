@@ -14,15 +14,6 @@
       <tr>
         <td>Colaborador</td>
         <td>
-          <img
-            (click)="onCardEmployee(data.personId)"
-            [src]="pahtBaseImg + data.employeePhotoPath"
-            class="rounded avatar-sm pointer me-3"
-            alt=""
-          />
-          @if (!data.employeePhotoPath) {
-          <i class="fa-light fa-user-xmark fa-2x"></i>
-          }
           {{ data.employeeName }}
         </td>
       </tr>

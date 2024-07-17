@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, forwardRef } from '@angular/core';
+import { AfterViewInit, Component, Input, forwardRef } from '@angular/core';
 import {
   ControlValueAccessor,
   FormControl,
@@ -8,6 +8,7 @@ import {
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import ValidationErrorsCustomInputComponent from '../validation-errors-custom-input/validation-errors-custom-input.component';
+
 @Component({
   selector: 'custom-input-select',
   templateUrl: './custom-input-select.component.html',
@@ -26,7 +27,7 @@ import ValidationErrorsCustomInputComponent from '../validation-errors-custom-in
   ],
 })
 export default class CustomInputSelectComponent
-  implements ControlValueAccessor
+  implements ControlValueAccessor, AfterViewInit
 {
   @Input() control: FormControl;
   @Input() data: ISelectItem[];
@@ -37,12 +38,29 @@ export default class CustomInputSelectComponent
   @Input() SelectDefaulOption: boolean = true;
 
   value: any;
-  onChange: any;
-  onTouch: any;
-  disabled: boolean;
+  onChange: any = () => {};
+  onTouch: any = () => {};
+  disabled: boolean = false;
+
+  ngOnInit(): void {
+    if (this.control) {
+      this.value = this.control.value;
+      this.control.valueChanges.subscribe((value) => {
+        this.value = value;
+      });
+    }
+  }
+
+  ngAfterViewInit(): void {
+    if (this.control) {
+      this.value = this.control.value;
+    }
+  }
 
   writeValue(value: any): void {
-    this.value = value;
+    if (value !== undefined) {
+      this.value = value;
+    }
   }
 
   registerOnChange(fn: any): void {
@@ -55,5 +73,9 @@ export default class CustomInputSelectComponent
 
   setDisabledState(isDisabled: boolean): void {
     this.disabled = isDisabled;
+  }
+
+  trackByFn(index: number, item: any): any {
+    return item.value;
   }
 }

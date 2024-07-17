@@ -16,7 +16,7 @@ import { environment } from 'src/environments/environment';
 export default class ReportClientComponent implements OnInit, OnDestroy {
   dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
-  public rutaActiva = inject(ActivatedRoute);
+  rutaActiva = inject(ActivatedRoute);
   customerIdService = inject(CustomerIdService);
   customToastService = inject(CustomToastService);
 
@@ -35,7 +35,7 @@ export default class ReportClientComponent implements OnInit, OnDestroy {
     this.inicio = this.rutaActiva.snapshot.params.inicio;
     this.final = this.rutaActiva.snapshot.params.final;
     this.rutaFinal =
-      'Ticket/GetReportClient/' +
+      'Tickets/GetReportClient/' +
       this.customer +
       '/' +
       this.inicio +

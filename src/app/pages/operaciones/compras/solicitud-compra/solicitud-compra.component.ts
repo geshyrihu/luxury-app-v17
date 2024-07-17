@@ -79,7 +79,6 @@ export default class SolicitudCompraComponent implements OnInit {
       justificacionGasto: ['', Validators.required],
       estatus: [2],
       folio: [''],
-      // personId: [this.authService.personId],
       applicationUserId: [this.authService.applicationUserId],
     }));
   }

@@ -14,7 +14,7 @@
   >
     <ng-template pTemplate="caption">
       <table-header
-        [title]="'Procesos'"
+        title="Manuales y Procesos"
         (add)="onModalAddOrEdit({ id: 0, title: 'Nuevo Registro' })"
         [dt]="dt"
         [showAdd]="authService.onValidateRoles(['SuperUsuario'])"
@@ -43,7 +43,7 @@
           <a
             [href]="filePath + item.pathFormato"
             target="_blank"
-            [download]="item.pathFormato"
+            [download]="item.folio"
             ngbTooltip="Descargar"
             placement="top"
             class="btn btn-soft-danger btn-sm w-xs waves-effect btn-label waves-light me-1"
@@ -69,7 +69,7 @@
       </tr>
     </ng-template>
     <ng-template pTemplate="paginatorleft">
-      <div class="p-d-flex p-ai-center p-jc-between hide-print-mode">
+      <div class="p-d-flex p-ai-center p-jc-between no-print">
         En total hay
         {{ data ? data.length : 0 }} registros.
       </div>

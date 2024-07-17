@@ -110,13 +110,13 @@
           <custom-button-active-desactive
             (activo)="onSelectState(0)"
             (inactivo)="onSelectState(1)"
-          ></custom-button-active-desactive>
+          />
         </div>
       </div>
     </ng-template>
     <ng-template pTemplate="header">
       <tr>
-        <th scope="col" style="width: 5%" class="hide-print-mode"></th>
+        <th scope="col" style="width: 5%" class="no-print"></th>
         <th scope="col" style="width: 5%">IMG</th>
         <th scope="col" style="width: 20%" pSortableColumn="nameMachinery">
           NOMBRE <p-sortIcon field="nameMachinery"></p-sortIcon>
@@ -140,12 +140,12 @@
           SERVICIOS
           <p-sortIcon field="maintenanceCalendars"></p-sortIcon>
         </th>
-        <th scope="col" style="width: 10%" class="hide-print-mode">OPCIONES</th>
+        <th scope="col" style="width: 10%" class="no-print">OPCIONES</th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-item let-expanded="expanded">
       <tr>
-        <td class="hide-print-mode">
+        <td class="no-print">
           <button
             type="button"
             [pRowToggler]="item"
@@ -189,12 +189,12 @@
           <!-- (click)="showModalListOrderService(item.id)" -->
         </td>
         }
-        <td class="p-column-title hide-print-mode">
+        <td class="p-column-title no-print">
           <div class="d-flex justify-content-center">
             <!-- Documentos -->
             <custom-button
               ngbTooltip="Documentos"
-              [customClass]="'btn-sm btn-outline-danger'"
+              customClass="btn-sm btn-outline-danger me-1"
               icon="fa-light fa-file-pdf"
               (clicked)="onDocumentos(item.id)"
             />
@@ -202,13 +202,13 @@
             <!-- Bitacora -->
             <custom-button
               ngbTooltip="Historico de servicios"
-              [customClass]="'btn-sm btn-outline-primary'"
+              customClass="btn-sm btn-outline-primary me-1"
               icon="fa-light fa-swatchbook"
               (clicked)="onServiceHistory(item.id)"
             />
             <custom-button
               ngbTooltip="Bitacora"
-              [customClass]="'btn-sm btn-outline-warning'"
+              customClass="btn-sm btn-outline-warning me-1"
               icon="fa-light fa-book-open"
               (clicked)="onBitacoraIndividual(item.id)"
             />
@@ -216,7 +216,7 @@
             <!-- Ficha tecnica -->
             <custom-button
               ngbTooltip="Ficha técnica"
-              [customClass]="'btn-sm btn-outline-primary'"
+              customClass="btn-sm btn-outline-primary me-1"
               icon="fa-light fa-book"
               (clicked)="showModalFichatecnica(item)"
             />

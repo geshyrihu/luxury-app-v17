@@ -31,7 +31,7 @@
 
 @for (item of cb_departaments; track $index) {
 <button
-  class="btn mb-1 me-1 hide-print-mode"
+  class="btn mb-1 me-1 no-print"
   [ngClass]="{
     'btn-outline-dark': departamentId ===item.value,
     'btn-dark': departamentId !==item.value,

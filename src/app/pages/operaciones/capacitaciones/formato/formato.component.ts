@@ -49,4 +49,33 @@ export default class FormatoComponent implements OnInit {
         if (result) this.onLoadData();
       });
   }
+
+  onDownloadFile(pathFileId: any, nameDocument: string) {
+    const urlApi = `formato/download/${pathFileId}`;
+    this.apiRequestService.onDownloadFile(urlApi, nameDocument);
+  }
+
+  // Function to extract file extension from pathFormato
+  getFileExtension(pathFormato: string): string {
+    return pathFormato.split('.').pop()?.toLowerCase() || '';
+  }
+
+  // Function to get icon and color based on file extension
+  getIconAndColor(extension: string): { icon: string; color: string } {
+    switch (extension) {
+      case 'pdf':
+        return { icon: 'fa-file-pdf', color: 'red' };
+      case 'doc':
+      case 'docx':
+        return { icon: 'fa-file-word', color: 'blue' };
+      case 'xls':
+      case 'xlsx':
+        return { icon: 'fa-file-excel', color: 'green' };
+      case 'ppt':
+      case 'pptx':
+        return { icon: 'fa-file-powerpoint', color: 'orange' };
+      default:
+        return { icon: 'fa-file', color: 'gray' };
+    }
+  }
 }

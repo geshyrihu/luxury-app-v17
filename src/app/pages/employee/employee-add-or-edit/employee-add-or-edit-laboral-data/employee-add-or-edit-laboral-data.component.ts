@@ -51,7 +51,7 @@ export default class EmployeeAddOrEditLaboralDataComponent implements OnInit {
     professionId: [0, Validators.required],
     customerId: [0, Validators.required],
     active: ['', Validators.required],
-    typeContract: ['', Validators.required],
+    typePerson: ['', Validators.required],
     salary: ['', Validators.required],
     educationLevel: ['', Validators.required],
 

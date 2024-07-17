@@ -51,7 +51,7 @@
           Cargo
           <p-sortIcon field="nameProfession"></p-sortIcon>
         </th>
-        <th scope="col" style="width: 5%" class="hide-print-mode">Opciones</th>
+        <th scope="col" style="width: 5%" class="no-print">Opciones</th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-item>
@@ -86,7 +86,7 @@
           {{ item.nameProfession }}
         </td>
         <!-- Opciones -->
-        <td class="hide-print-mode">
+        <td class="no-print">
           <div class="d-flex justify-content-center">
             <custom-button-edit
               (edit)="

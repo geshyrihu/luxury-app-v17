@@ -71,7 +71,6 @@ export default class AddOrEditActivosComponent implements OnInit {
       state: ['', [Validators.required]],
       technicalSpecifications: [''],
       ubication: ['', [Validators.required]],
-      // personId: [this.authService.personId],
       applicationUserId: [this.authService.applicationUserId],
     });
   }
@@ -126,7 +125,6 @@ export default class AddOrEditActivosComponent implements OnInit {
 
   private createFormData(machineryDTO: any): FormData {
     let formData = new FormData();
-    formData.append('personId', machineryDTO.personId);
     formData.append('applicationUserId', machineryDTO.applicationUserId);
     formData.append('nameMachinery', machineryDTO.nameMachinery);
     formData.append('ubication', machineryDTO.ubication);

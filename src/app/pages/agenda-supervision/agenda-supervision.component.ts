@@ -45,9 +45,9 @@ export default class AgendaSupervisionComponent implements OnInit, OnDestroy {
   applicationUserId = this.authService.applicationUserId;
   depto: string = 'SUPERVISIÓN DE OPERACIONES';
   nombre: string =
-    this.authService.infoEmployeeDto.firstName +
+    this.authService.infoUserAuthDto.firstName +
     ' ' +
-    this.authService.infoEmployeeDto.lastName;
+    this.authService.infoUserAuthDto.lastName;
   semana: string = this.fechaInicial + ' a ' + this.fechaFinal;
 
   ngOnInit(): void {

@@ -90,7 +90,7 @@ export default class ListEmployeeComponent implements OnInit {
       });
   }
 
-  onCardEmployee(applicationUserId: number) {
+  onCardEmployee(applicationUserId: string) {
     this.dialogHandlerService.openDialog(
       CardEmployeeComponent,
       {

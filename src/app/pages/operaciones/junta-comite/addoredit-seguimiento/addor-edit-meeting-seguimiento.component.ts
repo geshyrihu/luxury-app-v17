@@ -32,7 +32,6 @@ export default class AddorEditMeetingSeguimientoComponent implements OnInit {
     meetingDetailsId: [this.config.data.meetingDetailsId, Validators.required],
     fecha: ['', Validators.required],
     seguimiento: ['', Validators.required],
-    personId: [this.authService.personId, Validators.required],
     applicationUserId: [
       this.authService.applicationUserId,
       Validators.required,

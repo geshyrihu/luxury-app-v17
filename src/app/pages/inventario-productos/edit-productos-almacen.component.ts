@@ -35,7 +35,6 @@ export default class EditProductosAlmacenComponent implements OnInit {
     unidadDeMedidaId: ['', Validators.required],
     stockMin: [0, Validators.required],
     stockMax: [0, Validators.required],
-    // personId: [this.authService.personId],
     applicationUserId: [this.authService.applicationUserId],
   });
 
@@ -67,7 +66,6 @@ export default class EditProductosAlmacenComponent implements OnInit {
     if (!this.apiRequestService.validateForm(this.form)) return;
 
     this.submitting = true;
-    // this.form.patchValue({ personId: this.authService.personId });
     if (this.id === 0) {
       this.apiRequestService
         .onPost(`InventarioProducto`, this.form.value)

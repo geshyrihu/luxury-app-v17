@@ -23,7 +23,7 @@
         </th>
         <th scope="col">Descargar</th>
 
-        <th scope="col" style="width: 5%" class="hide-print-mode">Opciones</th>
+        <th scope="col" style="width: 5%" class="no-print">Opciones</th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-item>
@@ -36,7 +36,7 @@
         </td>
 
         <!-- Opciones -->
-        <td class="p-column-title" class="hide-print-mode">
+        <td class="p-column-title" class="no-print">
           <div class="d-flex justify-content-center">
             <custom-button-edit
               (edit)="
@@ -50,7 +50,7 @@
       </tr>
     </ng-template>
     <ng-template pTemplate="paginatorleft">
-      <div class="p-d-flex p-ai-center p-jc-between hide-print-mode">
+      <div class="p-d-flex p-ai-center p-jc-between no-print">
         En total hay
         {{ data ? data.length : 0 }} registros.
       </div>

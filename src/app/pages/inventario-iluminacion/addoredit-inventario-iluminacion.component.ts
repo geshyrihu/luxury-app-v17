@@ -34,7 +34,6 @@ export default class AddoreditInventarioIluminacionComponent implements OnInit {
     cantidad: ['', Validators.required],
     productoId: ['', Validators.required],
     producto: ['', Validators.required],
-    // personId: [this.authService.personId, Validators.required],
     applicationUserId: [
       this.authService.applicationUserId,
       Validators.required,

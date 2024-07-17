@@ -12,21 +12,21 @@ export default [
     path: 'list-ticket-legal',
     loadComponent: () =>
       import(
-        'src/app/pages/proyect-ticket/legal-list-ticket/legal-list-ticket.component'
+        'src/app/pages/ticket-legal/legal-list-ticket/legal-list-ticket.component'
       ),
   },
   {
     path: 'list-ticket-customer',
     loadComponent: () =>
       import(
-        'src/app/pages/proyect-ticket/legal-list-ticket-customer/legal-list-ticket-customer.component'
+        'src/app/pages/ticket-legal/legal-list-ticket-customer/legal-list-ticket-customer.component'
       ),
   },
   {
     path: 'ticket/:ticketId',
     loadComponent: () =>
       import(
-        'src/app/pages/proyect-ticket/ticket-individual/ticket-individual.component'
+        'src/app/pages/ticket-legal/ticket-individual/ticket-individual.component'
       ),
   },
 ] as Routes;

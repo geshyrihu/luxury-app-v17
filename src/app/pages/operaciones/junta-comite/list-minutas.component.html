@@ -37,7 +37,7 @@
       >
         SEGUIMIENTO A PENDIENTES
       </a>
-      <!-- badge  bg-success -->
+      <!-- btn  btn-success -->
       <a
         (click)="onLoadData('Asamblea')"
         class="pointer btn btn-sm btn-info me-1"
@@ -107,7 +107,7 @@
       </td>
       <td class="p-column-title text-center">
         <button
-          class="badge bg-info pointer p-2 w-100 border-0"
+          class="btn btn-info pointer p-2 w-100 border-0"
           ngbTooltip="Revisar todos los asuntos"
           (click)="showModalAddOrEditMeetingDetails(item.id, 'Asuntos', 4)"
           [disabled]="item.issues == 0"
@@ -117,7 +117,7 @@
       </td>
       <td class="p-column-title text-center">
         <button
-          class="badge bg-success pointer p-2 w-100 border-0"
+          class="btn btn-success pointer p-2 w-100 border-0"
           ngbTooltip="Revisar Pendientes"
           (click)="showModalAddOrEditMeetingDetails(item.id, 'Concluidos', 1)"
           [disabled]="item.concluidos == 0"
@@ -127,7 +127,7 @@
       </td>
       <td class="p-column-title text-center">
         <button
-          class="badge bg-danger pointer p-2 w-100 border-0"
+          class="btn btn-danger pointer p-2 w-100 border-0"
           ngbTooltip="Revisar Pendientes"
           (click)="showModalAddOrEditMeetingDetails(item.id, 'Pendientes', 0)"
           [disabled]="item.pending == 0"
@@ -137,7 +137,7 @@
       </td>
       <td class="p-column-title text-center">
         <button
-          class="badge bg-secondary pointer p-2 w-100 border-0"
+          class="btn btn-secondary pointer p-2 w-100 border-0"
           ngbTooltip="Revisar Pendientes"
           (click)="
             showModalAddOrEditMeetingDetails(item.id, 'No Autorizado', 2)
@@ -290,11 +290,11 @@
                 </td>
                 <td class="text-center">
                   <span
-                    class="badge p-2"
+                    class="btn p-2"
                     [ngClass]="{
-                      'bg-danger': detalle.status === 0,
-                      'bg-success': detalle.status === 1,
-                      'bg-secondary': detalle.status === 2
+                      'btn-danger': detalle.status === 0,
+                      'btn-success': detalle.status === 1,
+                      'btn-secondary': detalle.status === 2
                     }"
                   >
                     <!-- {{ detalle.status | eStatus | uppercase }} -->
@@ -445,11 +445,11 @@
                 </td>
                 <td class="text-center">
                   <span
-                    class="badge p-2"
+                    class="btn p-2"
                     [ngClass]="{
-                      'bg-danger': operaciones.status == 0,
-                      'bg-success': operaciones.status == 1,
-                      'bg-secondary': operaciones.status == 2
+                      'btn-danger': operaciones.status == 0,
+                      'btn-success': operaciones.status == 1,
+                      'btn-secondary': operaciones.status == 2
                     }"
                   >
                     <!-- {{ operaciones.status | eStatus | uppercase }} -->
@@ -605,11 +605,11 @@
                 </td>
                 <td class="text-center">
                   <span
-                    class="badge p-2"
+                    class="btn p-2"
                     [ngClass]="{
-                      'bg-danger': legal.status === 0,
-                      'bg-success': legal.status === 1,
-                      'bg-secondary': legal.status === 2
+                      'btn-danger': legal.status === 0,
+                      'btn-success': legal.status === 1,
+                      'btn-secondary': legal.status === 2
                     }"
                   >
                     <!-- {{ legal.status | eStatus | uppercase }} -->

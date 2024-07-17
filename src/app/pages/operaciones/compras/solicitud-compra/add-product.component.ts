@@ -45,7 +45,6 @@ export default class AddProductComponent implements OnInit {
     cantidad: [0, Validators.required],
     unidadMedidaId: ['', Validators.required],
     solicitudCompraId: [],
-    // personId: [this.authService.personId],
     applicationUserId: [this.authService.applicationUserId],
   });
   onUpdateData() {

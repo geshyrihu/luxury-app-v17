@@ -8,6 +8,5 @@ export class CedulaPresupuestalDetalleAddOrEdit {
   presupuestoDisponible: number;
   presupuestoAnual: number;
   presupuestoRestanteAnio: number;
-  personId: number;
   applicationUserId: string;
 }

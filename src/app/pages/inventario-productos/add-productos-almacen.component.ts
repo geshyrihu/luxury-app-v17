@@ -61,7 +61,6 @@ export default class AddProductosAlmacenComponent implements OnInit {
     });
   }
   onSubmit(item: IProductoListAdd) {
-    // item.personId = this.authService.personId;
     item.applicationUserId = this.authService.applicationUserId;
     item.customerId = this.customerIdService.customerId;
 

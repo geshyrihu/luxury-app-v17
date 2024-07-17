@@ -4,7 +4,7 @@
   <p-table
     #dt
     [value]="data"
-    [globalFilterFields]="['professionName', 'departament', 'person']"
+    [globalFilterFields]="['professionName', 'departament', 'applicationUser']"
     styleClass="custom-table"
     [tableStyle]="{ 'min-width': '50rem' }"
   >
@@ -22,7 +22,7 @@
           <custom-button-active-desactive
             (activo)="onSelectActive($event)"
             (inactivo)="onSelectActive($event)"
-          ></custom-button-active-desactive>
+          />
         </div>
       </div>
     </ng-template>
@@ -53,9 +53,9 @@
           SUELDO ACTUAL<p-sortIcon field="sueldoFiltro"></p-sortIcon>
         </th>
         }
-        <th style="width: 35%" scope="col" pSortableColumn="person">
+        <th style="width: 35%" scope="col" pSortableColumn="applicationUser">
           COLABORADOR
-          <p-sortIcon field="person"></p-sortIcon>
+          <p-sortIcon field="applicationUser"></p-sortIcon>
         </th>
         @if ( authService.onValidateRoles([ 'Asistente', 'Reclutamiento',
         'Residente', 'SuperUsuario', 'SupervisionOperativa' ]) ) {
@@ -89,17 +89,17 @@
         </td>
         }
         <td>
-          @if (item.personPhoto) {
+          @if (item.applicationUserPhoto) {
           <img
-            (click)="onCardEmployee(item.personId)"
-            [src]="pahtBaseImg + item.personPhoto"
+            (click)="onCardEmployee(item.applicationUserId)"
+            [src]="pahtBaseImg + item.applicationUserPhoto"
             class="rounded avatar-sm pointer me-3"
             alt="img"
           />
-          } @if (!item.personPhoto) {
+          } @if (!item.applicationUserPhoto) {
           <i class="fa-light fa-user-xmark fa-2x"></i>
           }
-          {{ item.person }}
+          {{ item.applicationUser }}
         </td>
         @if ( authService.onValidateRoles([ 'Asistente', 'Reclutamiento',
         'Residente', 'SuperUsuario', 'SupervisionOperativa' ]) ) {
@@ -153,14 +153,14 @@
               }
               <br />
 
-              @if (authService.onValidateRoles(['SuperUsuario'])) {
+              <!-- @if (authService.onValidateRoles(['SuperUsuario'])) {
               <custom-button
                 (clicked)="onModalAddEmployeeToWorkPosition(item.id)"
                 customClass="btn-outline-dark w-100 mt-1 text-start"
                 icon="fa-light fa-user-plus me-2"
                 label="Editar colaborador"
               />
-              }
+              } -->
               <!-- Asignar empleado -->
               <br />
               <!-- visualizar descripcion de puesto-->

@@ -109,7 +109,7 @@ export default class CedulaClienteComponent implements OnInit {
           cedulaPresupuestalId: this.id,
         },
         'Ordenes de Compra',
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerService.dialogSizeFull
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();

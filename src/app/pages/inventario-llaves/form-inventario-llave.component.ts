@@ -42,7 +42,6 @@ export default class FormInventarioLlaveComponent implements OnInit, OnDestroy {
     numeroLlave: ['', [Validators.required]],
     cantidad: ['', [Validators.required]],
     equipoClasificacionId: ['', [Validators.required]],
-    // personId: [this.authService.personId, [Validators.required]],
     applicationUserId: [
       this.authService.applicationUserId,
       [Validators.required],

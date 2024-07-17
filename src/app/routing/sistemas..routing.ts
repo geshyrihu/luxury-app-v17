@@ -2,17 +2,15 @@ import { Routes } from '@angular/router';
 
 export default [
   {
-    path: 'reporte-pdf',
+    path: 'ticket-sistemas',
     loadComponent: () =>
-      import(
-        'src/app/pages/operaciones/sistemas/sistemas-reporte-pdf/sistemas-reporte-pdf.component'
-      ),
+      import('src/app/pages/ticket-sistemas/list-ticket-sistemas.component'),
   },
   {
-    path: 'reportes',
+    path: 'ticket-sistemas-report',
     loadComponent: () =>
       import(
-        'src/app/pages/operaciones/sistemas/sistemas-reporte/sistemas-reporte.component'
+        'src/app/pages/ticket-sistemas/ticket-sistemas-report/ticket-sistemas-report.component'
       ),
   },
 ] as Routes;
