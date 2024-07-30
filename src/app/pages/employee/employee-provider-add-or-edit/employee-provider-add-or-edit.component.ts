@@ -12,12 +12,12 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-add-account-customer',
-  templateUrl: './add-account-customer.component.html',
+  selector: 'app-employee-provider-add-or-edit',
+  templateUrl: './employee-provider-add-or-edit.component.html',
   standalone: true,
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
-export default class AddAccountCustomerComponent implements OnInit {
+export class EmployeeProviderAddOrEditComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   config = inject(DynamicDialogConfig);
   customerIdService = inject(CustomerIdService);
@@ -38,11 +38,11 @@ export default class AddAccountCustomerComponent implements OnInit {
   form: FormGroup = this.formBuilder.group({
     firstName: ['', Validators.required],
     lastName: ['', Validators.required],
-    birth: ['', Validators.required],
     phoneNumber: ['', Validators.required],
     professionId: ['', Validators.required],
     photoPath: ['', Validators.required],
     typePerson: [this.typePerson, Validators.required],
+    birth: ['', Validators.required],
     email: [
       '',
       [
@@ -55,18 +55,22 @@ export default class AddAccountCustomerComponent implements OnInit {
   register() {
     if (!this.apiRequestService.validateForm(this.form)) return;
     const formData = this.createFormData(this.form.value);
+    console.log('🚀 ~ typePerson:', this.typePerson);
 
     this.submitting = true;
-
-    this.apiRequestService
-      .onPost('Employees/CreateEmployee', formData)
-      .then((result: boolean) => {
-        result ? this.ref.close(true) : (this.submitting = false);
-      });
+    var urlApi = '';
+    if (this.typePerson == 0) {
+      urlApi = 'Employees/CreateEmployee';
+    } else {
+      urlApi = 'Employees/CreateEmployeeExternal';
+    }
+    this.apiRequestService.onPost(urlApi, formData).then((result: boolean) => {
+      result ? this.ref.close(true) : (this.submitting = false);
+    });
   }
 
   ngOnInit(): void {
-    console.log(this.form.value);
+    console.log('typePerson', this.typePerson);
     this.apiRequestService
       .onGetSelectItem(`Professions`)
       .then((response: any) => {
@@ -80,17 +84,17 @@ export default class AddAccountCustomerComponent implements OnInit {
   private createFormData(model: any): FormData {
     const formData = new FormData();
 
-    formData.append('birth', this.dateService.getDateFormat(model.birth));
     formData.append('email', model.email);
     formData.append(
       'customerId',
       String(this.customerIdService.getCustomerId())
     );
     formData.append('firstName', model.firstName);
+    formData.append('birth', this.dateService.getDateFormat(model.birth));
     formData.append('lastName', model.lastName);
     formData.append('phoneNumber', model.phoneNumber);
     formData.append('professionId', model.professionId);
-    formData.append('typePerson', model.typePerson);
+    formData.append('typePerson', this.typePerson.toString());
 
     if (this.imagen) {
       formData.append('photoPath', this.imagen);

@@ -5,17 +5,19 @@ import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
+import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import { FilterRequestsService } from 'src/app/core/services/filter-requests.service';
 import { StatusSolicitudVacanteService } from 'src/app/core/services/status-solicitud-vacante.service';
 import HoursWorkPositionComponent from '../../plantilla/hours-work-position.component';
 import DescripcionPuestoComponent from '../../professions/descripcion-puesto.component';
 import FilterRequestsComponent from '../filter-requests.component';
 import AddOrEditVacanteComponent from './addoredit-vacante.component';
+import RegisterEmployeToVacancyComponent from './register-employe-to-vacancy/register-employe-to-vacancy.component';
 
 @Component({
   selector: 'app-list-vacantes',
@@ -30,36 +32,34 @@ import AddOrEditVacanteComponent from './addoredit-vacante.component';
 export default class ListVacantesComponent implements OnInit, OnDestroy {
   dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
-  private filterRequestsService = inject(FilterRequestsService);
+  filterRequestsService = inject(FilterRequestsService);
   authService = inject(AuthService);
   dialogService = inject(DialogService);
   messageService = inject(MessageService);
-  public statusSolicitudVacanteService = inject(StatusSolicitudVacanteService);
+  statusSolicitudVacanteService = inject(StatusSolicitudVacanteService);
   customToastService = inject(CustomToastService);
   router = inject(Router);
+  dialogHandlerService = inject(DialogHandlerService);
 
   data: any[] = [];
   ref: DynamicDialogRef;
 
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
-
   paramsEmit$: Observable<HttpParams> = this.filterRequestsService.getParams$();
   ngOnInit(): void {
+    // this.onModalRegisterEmployeToVacancy({
+    //   workPositionId: 1,
+    //   title: 'Vacante ',
+    // });
     this.onLoadData();
     this.paramsEmit$.subscribe(() => this.onLoadData());
   }
 
   onLoadData() {
-    this.dataService
-      .get(`RequestPosition/`, this.filterRequestsService.getParams())
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.data = this.customToastService.onCloseOnGetData(resp.body);
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+    const urlApi = `RequestPosition/`;
+    this.apiRequestService
+      .onGetList(urlApi, this.filterRequestsService.getParams())
+      .then((result: any) => {
+        this.data = result;
       });
   }
 
@@ -132,5 +132,20 @@ export default class ListVacantesComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy(): void {
     this.dataService.ngOnDestroy();
+  }
+
+  onModalRegisterEmployeToVacancy(data: any) {
+    this.dialogHandlerService
+      .openDialog(
+        RegisterEmployeToVacancyComponent,
+        {
+          workPositionId: data.workPositionId,
+        },
+        data.title,
+        this.dialogHandlerService.dialogSizeFull
+      )
+      .then((result: boolean) => {
+        if (result) this.onLoadData();
+      });
   }
 }

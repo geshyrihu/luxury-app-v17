@@ -19,6 +19,7 @@ export class SidebarService {
       routerLink: '/configuracion/panel',
       name: 'Configuración',
     },
+
     {
       visible: this.authService.onValidateRoles(['SuperUsuario']),
       label: 'Configuración',
@@ -694,7 +695,19 @@ export class SidebarService {
         },
       ],
     },
-
+    {
+      visible: this.authService.onValidateRoles([
+        'Asistente',
+        'GerenteMantenimiento',
+        'Mantenimiento',
+        'Residente',
+        'SuperUsuario',
+      ]),
+      label: 'Inventarios',
+      icon: 'fa-thin fa-boxes-stacked',
+      routerLink: '/mantenimiento/panel-inventories',
+      name: 'inventarios',
+    },
     {
       visible: this.authService.onValidateRoles([
         'Asistente',
@@ -1222,12 +1235,12 @@ export class SidebarService {
           routerLink: '/directorio/personal-externo',
           name: 'Directorio-Empleados externos',
         },
-        {
-          visible: this.authService.onValidateRoles(['SuperUsuario']),
-          label: 'Personal General',
-          routerLink: '/directorio/empleados-general',
-          name: 'Directorio-Todos los empleados',
-        },
+        // {
+        //   visible: this.authService.onValidateRoles(['SuperUsuario']),
+        //   label: 'Personal General',
+        //   routerLink: '/directorio/empleados-general',
+        //   name: 'Directorio-Todos los empleados',
+        // },
         {
           visible: this.authService.onValidateRoles([
             'Asistente',

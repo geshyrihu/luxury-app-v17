@@ -1,0 +1,185 @@
+<div class="card-p1">
+  <div class="row">
+    <div class="col-12 bg-dark text-center">
+      <h2 class="m-2 h2 text-white">FORMATO DE ALTA DE TRABAJADOR</h2>
+    </div>
+    <div class="col-3 border">
+      <img
+        src="assets/images/logo-luxury.jpg"
+        style="width: 80px; height: 120px; max-width: 100%; height: auto"
+        alt="logo"
+        class="img-fluid"
+      />
+    </div>
+    <div class="col-6 border"></div>
+    <div class="col-3 border">
+      <p class="">Folio:</p>
+      <hr />
+      <p class="">Fecha:</p>
+    </div>
+  </div>
+  <br />
+  <div class="col-12 bg-dark text-center">
+    <p class="m-1 text-white">DATOS DEL (A) COLABORADOR (A)</p>
+  </div>
+  <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
+    <div class="row">
+      <div class="col-2">
+        <custom-input-text
+          [control]="form.get('fistrName')"
+          formControlName="fistrName"
+          label="APELLIDO PATERNO"
+          placeholder="APELLIDO PATERNO"
+          [horizontal]="false"
+        />
+      </div>
+      <div class="col-2">
+        <custom-input-text
+          [control]="form.get('lastName')"
+          formControlName="lastName"
+          label="APELLIDO MATERNO"
+          placeholder="APELLIDO MATERNO"
+          [horizontal]="false"
+        />
+      </div>
+      <div class="col-2">
+        <custom-input-text
+          [control]="form.get('name')"
+          formControlName="name"
+          label="NOMBRE"
+          placeholder="NOMBRE"
+          [horizontal]="false"
+        />
+      </div>
+      <div class="col-2">
+        <custom-input-date
+          [control]="form.get('birth')"
+          formControlName="birth"
+          label="FECHA DE NACIMIENTO"
+          placeholder="FECHA DE NACIMIENTO"
+          [horizontal]="false"
+        />
+      </div>
+
+      <div class="form-group col-sm-2 mb-2">
+        <custom-input-text
+          [control]="form.get('nss')"
+          formControlName="nss"
+          label="NSS"
+          placeholder="NSS"
+          [horizontal]="false"
+        />
+      </div>
+      <div class="form-group col-sm-2 mb-2">
+        <custom-input-text
+          [control]="form.get('nss')"
+          formControlName="nss"
+          label="CUENTA CON CREDITO INFONAVIT"
+          placeholder="CUENTA CON CREDITO INFONAVIT"
+          [horizontal]="false"
+        />
+      </div>
+      <div class="form-group col-sm-2 mb-2">
+        <custom-input-text
+          [control]="form.get('nss')"
+          formControlName="nss"
+          label="Nº DE CREDITO"
+          placeholder="Nº DE CREDITO"
+          [horizontal]="false"
+        />
+      </div>
+      <div class="form-group col-sm-2 mb-2">
+        <custom-input-text
+          [control]="form.get('nss')"
+          formControlName="nss"
+          label="FD o % DESCUENTO"
+          placeholder="FD o % DESCUENTO"
+          [horizontal]="false"
+        />
+      </div>
+      <div class="form-group col-sm-2 mb-2">
+        <custom-input-text
+          [control]="form.get('nss')"
+          formControlName="nss"
+          label="RFC"
+          placeholder="RFC"
+          [horizontal]="false"
+        />
+      </div>
+      <div class="form-group col-sm-2 mb-2">
+        <custom-input-text
+          [control]="form.get('nss')"
+          formControlName="nss"
+          label="CODIGO POSTAL DE RFC"
+          placeholder="CODIGO POSTAL DE RFC"
+          [horizontal]="false"
+        />
+      </div>
+      <div class="form-group col-sm-2 mb-2">
+        <custom-input-text
+          [control]="form.get('nss')"
+          formControlName="nss"
+          label="CURP"
+          placeholder="CURP"
+          [horizontal]="false"
+        />
+      </div>
+      <div class="form-group col-sm-2 mb-2">
+        <custom-input-text
+          [control]="form.get('nss')"
+          formControlName="nss"
+          label="CALLE Y NUMERO"
+          placeholder="CALLE Y NUMERO"
+          [horizontal]="false"
+        />
+      </div>
+      <div class="form-group col-sm-2 mb-2">
+        <custom-input-text
+          [control]="form.get('nss')"
+          formControlName="nss"
+          label="COLONIA"
+          placeholder="COLONIA"
+          [horizontal]="false"
+        />
+      </div>
+      <div class="form-group col-sm-2 mb-2">
+        <custom-input-text
+          [control]="form.get('nss')"
+          formControlName="nss"
+          label="DELEGACION O MUNICIPIO"
+          placeholder="DELEGACION O MUNICIPIO"
+          [horizontal]="false"
+        />
+      </div>
+      <div class="form-group col-sm-2 mb-2">
+        <custom-input-text
+          [control]="form.get('nss')"
+          formControlName="nss"
+          label="C.P."
+          placeholder="C.P."
+          [horizontal]="false"
+        />
+      </div>
+      <div class="form-group col-sm-2 mb-2">
+        <custom-input-text
+          [control]="form.get('nss')"
+          formControlName="nss"
+          label="ESTADO CIVIL"
+          placeholder="ESTADO CIVIL"
+          [horizontal]="false"
+        />
+      </div>
+      <div class="form-group col-sm-2 mb-2">
+        <custom-input-text
+          [control]="form.get('nss')"
+          formControlName="nss"
+          label="ENTIDAD FEDERATIVA"
+          placeholder="ENTIDAD FEDERATIVA"
+          [horizontal]="false"
+        />
+      </div>
+    </div>
+
+    <custom-button-submit [disabled]="this.form.invalid || submitting" />
+  </form>
+</div>

@@ -25,7 +25,7 @@ export default class CustomInputCheckComponent implements ControlValueAccessor {
   @Input() label: string;
   @Input() placeholder: string;
   @Input() hidden: boolean = true;
-
+  @Input() customFormlabel: string = '';
   value: any;
   onChange: any;
   onTouch: any;

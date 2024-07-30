@@ -1,20 +1,19 @@
 <!-- temp -->
 <!-- temp -->
 <div class="text-right">
-  <button
-    class="mb-1 btn bg-gradient-primary btn-flat"
-    type="button"
-    (click)="
+  <custom-button
+    ngbTooltip="Agregar Servicio"
+    [customClass]="'btn-primary'"
+    icon="fa-light fa-plus text-primary "
+    label="Nuevo Servicio"
+    (clicked)="
       showModalMaintenanceCalendar({
         id: 0,
         task: 'create',
         idMachinery: idMachinery
       })
     "
-  >
-    <span class="fa-light fa-plus"></span>
-    Nuevo Servicio
-  </button>
+  />
 </div>
 @if (maintenanceCalendars.length === 0) {
 <div class="alert alert-danger">Sin servicios de Mantenimiento</div>

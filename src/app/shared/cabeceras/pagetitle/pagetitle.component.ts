@@ -1,7 +1,7 @@
 import { NgClass } from '@angular/common';
 import { Component, Input } from '@angular/core';
 @Component({
-  selector: 'page-title-report',
+  selector: 'page-title-report-maintenance',
   templateUrl: './pagetitle.component.html',
   standalone: true,
   imports: [NgClass],
@@ -10,7 +10,7 @@ import { Component, Input } from '@angular/core';
 /**
  * Page Title Component
  */
-export default class PagetitleComponent {
+export default class PagetitleReportMaintenanceComponent {
   @Input()
   breadcrumbItems!: Array<{
     active?: boolean;

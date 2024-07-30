@@ -2,6 +2,13 @@ import { Routes } from '@angular/router';
 
 export default [
   {
+    path: 'inventory-engine-system',
+    loadComponent: () =>
+      import(
+        'src/app/pages/inventories/inventory-engine-system/inventory-engine-system.component'
+      ),
+  },
+  {
     path: 'equipos/:categoria',
     loadComponent: () =>
       import('src/app/pages/machineries/list-equipos.component'),

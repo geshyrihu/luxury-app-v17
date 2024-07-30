@@ -1,7 +1,7 @@
 @if(hidden){
 <div class="mb-2" [ngClass]="{ 'form-group row ': horizontal }">
   @if (horizontal) {
-  <label class="col-sm-3">{{ label }}</label>
+  <label class="col-sm-3" [class]="customFormlabel">{{ label }}</label>
   <div class="col-sm-9">
     <input
       type="checkbox"
@@ -16,7 +16,7 @@
     />
   </div>
   } @if (!horizontal) {
-  <label>{{ label }}</label>
+  <label [class]="customFormlabel">{{ label }}</label>
   <input
     type="checkbox"
     class="form-check-input ms-2"

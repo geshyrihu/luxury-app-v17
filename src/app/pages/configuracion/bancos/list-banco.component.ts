@@ -1,7 +1,6 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
-import { IBank } from 'src/app/core/interfaces/bank.interface';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import { ApiRequestService } from '../../../core/services/api-request.service';
 import AddOrEditBancoComponent from './addoredit-banco.component';
@@ -15,26 +14,34 @@ import AddOrEditBancoComponent from './addoredit-banco.component';
 export default class ListBancoComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
+  // googleCalendarService = inject(GoogleCalendarService);
 
   // Declaración e inicialización de variables
-  data: IBank[] = [];
+  dataSignal = signal<any>(null);
   ref: DynamicDialogRef; // Referencia a un cuadro de diálogo modal
 
   ngOnInit(): void {
     this.onLoadData();
+    // this.loadEvents();
   }
+  // events: any[] = [];
+  // loadEvents() {
+  //   this.googleCalendarService.onTestCalendar();
+  // }
 
   onLoadData() {
     const urlApi = `banks`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+      // Actualizamos el valor del signal con los datos recibidos
+      this.dataSignal.set(result);
     });
   }
 
   // Funcion para eliminar un banco y refres
   onDelete(id: number) {
     this.apiRequestService.onDelete(`banks/${id}`).then((result: boolean) => {
-      if (result) this.data = this.data.filter((item) => item.id !== id);
+      // Actualizamos el signal para eliminar el elemento de la lista
+      this.dataSignal.set(this.dataSignal().filter((item) => item.id !== id));
     });
   }
 

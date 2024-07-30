@@ -11,7 +11,7 @@ import { DialogHandlerService } from 'src/app/core/services/dialog-handler.servi
 import AddoreditMaintenancePreventiveComponent from 'src/app/pages/operaciones/calendarios/mantenimiento-preventivo/addoredit-maintenance-preventive.component';
 import { environment } from 'src/environments/environment';
 import BitacoraIndividualComponent from '../bitacora-mantenimiento/bitacora-individual.component';
-import ServiceOrderComponent from '../service-order/service-order.component';
+import ServiceOrderComponent from '../inventories/inventory-engine-system/service-order.component';
 import ActivosDocumentosComponent from './activos-documentos.component';
 import AddOrEditActivosComponent from './addoredit-activos.component';
 import FichaTecnicaActivoComponent from './ficha-tecnica-activo/ficha-tecnica-activo.component';

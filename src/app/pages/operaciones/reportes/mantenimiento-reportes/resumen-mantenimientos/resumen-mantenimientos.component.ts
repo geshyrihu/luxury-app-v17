@@ -6,12 +6,11 @@ import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DateService } from 'src/app/core/services/date.service';
 import { PeriodoMonthService } from 'src/app/core/services/periodo-month.service';
-import PagetitleReportComponent from 'src/app/shared/cabeceras/pagetitlereport/pagetitlereport.component';
 @Component({
   selector: 'app-resumen-mantenimientos',
   templateUrl: './resumen-mantenimientos.component.html',
   standalone: true,
-  imports: [LuxuryAppComponentsModule, PagetitleReportComponent],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class ResumenMantenimientosComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);

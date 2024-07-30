@@ -79,10 +79,20 @@ export default class ListTicketComponent implements OnInit {
   }
 
   onLoadDepartamentList() {
-    const urlApi = `EnumSelect/Departament`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
-      this.cb_departments = result;
-    });
+    // const urlApi = `EnumSelect/Departament`;
+    // this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    //   this.cb_departments = result;
+    // });
+
+    this.cb_departments = [
+      { label: 'Administración', value: 0 },
+      { label: 'Mantenimiento', value: 3 },
+      { label: 'Limpieza', value: 4 },
+      { label: 'Jardineria', value: 6 },
+      { label: 'Sistemas', value: 7 },
+      { label: 'Operaciones', value: 5 },
+      { label: 'Constructora', value: 9 },
+    ];
   }
 
   showModalAddOrEdit(data: any) {

@@ -9,9 +9,9 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import { environment } from 'src/environments/environment';
-import AddAccountCustomerComponent from '../add-account-to-customer/add-account-customer.component';
 import CardEmployeeComponent from '../card-employee/card-employee.component';
 import { EmployeeAddOrEditService } from '../employee-add-or-edit/employee-add-or-edit.service';
+import { EmployeeProviderAddOrEditComponent } from '../employee-provider-add-or-edit/employee-provider-add-or-edit.component';
 
 const base_urlImg = environment.base_urlImg + 'Administration/accounts/';
 @Component({
@@ -80,10 +80,10 @@ export default class ListEmployeeComponent implements OnInit {
   showModalAddEmployee() {
     this.dialogHandlerService
       .openDialog(
-        AddAccountCustomerComponent,
+        EmployeeProviderAddOrEditComponent,
         { typePerson: 0 },
         'Registrar Empleado.',
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerService.dialogSizeLg
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();

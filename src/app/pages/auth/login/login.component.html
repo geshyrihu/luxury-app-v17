@@ -1,9 +1,11 @@
 <p-toast position="top-right" [baseZIndex]="99999"></p-toast>
 
-<div class="auth-bg pt-md-5 p-4 d-flex">
+<div class="pt-md-5 p-4 d-flex">
+  <!-- <div class="auth-bg pt-md-5 p-4 d-flex"> -->
   <div class="container-fluid p-0">
     <div class="row g-0 justify-content-center align-items-center">
-      <div class="bg-overlay bg-primary"></div>
+      <div class="bg-overlay"></div>
+      <!-- <div class="bg-overlay bg-primary"></div> -->
       <ul class="bg-bubbles">
         <li></li>
         <li></li>
@@ -19,70 +21,72 @@
         <li></li>
       </ul>
       <!-- Añade las clases para centrar vertical y horizontalmente -->
-      <div class="col-12 col-md-6 mt-4">
-        <br />
-        <br />
+      <div class="col-12 col-md-8 mt-4">
         <br />
         <br />
         <br />
         <!-- Usa col-12 para ocupar todo el ancho en dispositivos pequeños -->
         <div class="bg-white p-5 rounded shadow">
-          <!-- Aplica el fondo blanco al contenedor del formulario -->
-          <!-- <div class="text-center mb-4">
-            <a
-              href="https://www.luxurybuildingsite.com/"
-              target="_blank"
-              class="d-block auth-logo"
-            >
-              <img src="assets/images/logo-luxury.jpg" alt="Img" height="100" />
-            </a>
-          </div> -->
           <div class="auth-content">
-            <div class="text-center">
-              <h2 class="h2 mb-0">LuxuryApp - Bienvenido</h2>
-            </div>
-            <form [formGroup]="form" (ngSubmit)="onSubmit()">
-              <custom-input-text
-                [control]="form.get('userName')"
-                [horizontal]="false"
-                formControlName="userName"
-                label="Usuario"
-                placeholder="Usuario"
-              />
+            <div class="row rounded shadow">
+              <div class="col-md-none col-lg-6 auth-bg-login"></div>
+              <div class="col-md-12 col-lg-6">
+                <div class="text-center">
+                  <h2 class="h2 mb-0">LuxuryApp - Bienvenido</h2>
+                </div>
+                <br />
+                <br />
+                <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                  <custom-input-text
+                    [control]="form.get('userName')"
+                    [horizontal]="false"
+                    formControlName="userName"
+                    label="Usuario"
+                    placeholder="Usuario"
+                    customClass="form-control-lg"
+                    customFormlabel="font-size-18"
+                  />
 
-              <custom-input-password
-                [control]="form.get('password')"
-                [horizontal]="false"
-                formControlName="password"
-                label="Contraseña"
-                placeholder="Contraseña"
-              />
+                  <custom-input-password
+                    [control]="form.get('password')"
+                    [horizontal]="false"
+                    formControlName="password"
+                    label="Contraseña"
+                    placeholder="Contraseña"
+                    customClass="form-control-lg"
+                    customFormlabel="font-size-18"
+                  />
 
-              <custom-input-check
-                [control]="form.get('remember')"
-                [horizontal]="false"
-                formControlName="remember"
-                label="Recordarme"
-              />
+                  <custom-input-check
+                    [control]="form.get('remember')"
+                    [horizontal]="false"
+                    formControlName="remember"
+                    label="Recordarme"
+                    customClass="form-control-lg"
+                    customFormlabel="font-size-18"
+                  />
 
-              <div class="mt-0 d-grid">
-                <custom-button
-                  customClass="btn-primary  w-100"
-                  label="Ingresar"
-                  type="submit"
-                />
+                  <div class="mt-0 d-grid">
+                    <custom-button
+                      customClass="btn-primary btn-lg w-100"
+                      label="Ingresar"
+                      type="submit"
+                    />
+                  </div>
+                </form>
+
+                <div class="mt-4 text-center">
+                  <p class="mb-0 font-size-18">
+                    ¿Tienes problemas para ingresar?, Solicita ayuda con tu
+                    Administrador.
+                  </p>
+                  <a [routerLink]="['/auth/recuperar-contrasena']">
+                    Recuperar Contraseña
+                  </a>
+                </div>
               </div>
-            </form>
-
-            <div class="mt-4 text-center">
-              <p class="mb-0 font-size-16">
-                ¿Tienes problemas para ingresar?, Solicita ayuda con tu
-                Administrador.
-              </p>
-              <a [routerLink]="['/auth/recuperar-contrasena']">
-                Recuperar Contraseña
-              </a>
             </div>
+
             <!-- Este es tu contenido de inicio de sesión -->
           </div>
         </div>

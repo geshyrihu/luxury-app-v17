@@ -31,7 +31,7 @@ export default class DepuracionComponent {
     });
   }
   GoogleCalendar(path: string) {
-    this.apiRequestService.onGetList('GoogleCalendar/Credentials').then(() => {
+    this.apiRequestService.onGetList('GoogleCalendar/').then(() => {
       this.customToastService.onShowSuccess();
       this.customToastService.onClose();
     });

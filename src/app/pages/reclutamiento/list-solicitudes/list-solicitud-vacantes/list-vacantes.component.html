@@ -117,6 +117,18 @@
               icon="fa-light fa-clock"
               (clicked)="onModalHoursWorkPosition(item.workPositionId)"
             />
+            <!-- <custom-button
+              ngbTooltip="Solicitar alta"
+              placement="top"
+              customClass="btn-sm btn-outline-primary me-1"
+              icon="fa-light fa-id-card"
+              (clicked)="
+                onModalRegisterEmployeToVacancy({
+                  workPositionId: item.workPositionId,
+                  title: 'Vacante ' + item.folio + ' - ' + item.profession
+                })
+              "
+            /> -->
             <custom-button-edit
               (edit)="
                 onModalAddOrEdit({

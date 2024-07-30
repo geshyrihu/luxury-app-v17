@@ -22,11 +22,11 @@ export default class PagetitleReportComponent implements OnDestroy {
   customerIdService = inject(CustomerIdService);
   dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
-  public periodoMonthService = inject(PeriodoMonthService);
+  periodoMonthService = inject(PeriodoMonthService);
   dateService = inject(DateService);
   customToastService = inject(CustomToastService);
 
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+  destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   @Input() title: string | undefined;
   @Input() periodo: string = this.dateService.formatDateTimeToMMMMAAAA(

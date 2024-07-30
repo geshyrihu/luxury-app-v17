@@ -8,8 +8,9 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import { environment } from 'src/environments/environment';
-import CardEmployeeComponent from '../card-employee/card-employee.component';
-import { EmployeeProviderAddOrEditComponent } from './employee-provider-add-or-edit/employee-provider-add-or-edit.component';
+import CardEmployeeComponent from '../employee/card-employee/card-employee.component';
+import { EmployeeAddOrEditService } from '../employee/employee-add-or-edit/employee-add-or-edit.service';
+import { EmployeeProviderAddOrEditComponent } from '../employee/employee-provider-add-or-edit/employee-provider-add-or-edit.component';
 const base_urlImg = environment.base_urlImg + 'Administration/accounts/';
 
 @Component({
@@ -19,6 +20,7 @@ const base_urlImg = environment.base_urlImg + 'Administration/accounts/';
   imports: [LuxuryAppComponentsModule],
 })
 export default class ListEmployeeProviderCustomerComponent implements OnInit {
+  employeeAddOrEditService = inject(EmployeeAddOrEditService);
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
   customerIdService = inject(CustomerIdService);
@@ -60,7 +62,7 @@ export default class ListEmployeeProviderCustomerComponent implements OnInit {
         EmployeeProviderAddOrEditComponent,
         { id: data.id, typePerson: 1, title: data.title },
         'Agregar externo',
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerService.dialogSizeLg
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();
@@ -83,5 +85,15 @@ export default class ListEmployeeProviderCustomerComponent implements OnInit {
       'Colaborador',
       this.dialogHandlerService.dialogSizeSm
     );
+  }
+  onShowModalEditEmpleado(
+    applicationUserId: string,
+    employeeId: number,
+    nameEmployee: string
+  ) {
+    this.employeeAddOrEditService.onSetId(applicationUserId);
+    this.employeeAddOrEditService.onSetEmployeeId(employeeId);
+    this.employeeAddOrEditService.onSetNameEmployee(nameEmployee);
+    this.router.navigateByUrl('directorio/empleado');
   }
 }

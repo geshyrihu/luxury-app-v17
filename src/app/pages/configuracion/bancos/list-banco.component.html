@@ -3,7 +3,7 @@
 <div class="card">
   <p-table
     #dt
-    [value]="data"
+    [value]="dataSignal()"
     [autoLayout]="true"
     [globalFilterFields]="['shortName', 'largeName']"
     [paginator]="true"

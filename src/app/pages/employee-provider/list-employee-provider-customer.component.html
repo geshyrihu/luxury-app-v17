@@ -118,7 +118,11 @@
           <div class="d-flex justify-content-center">
             <custom-button-edit
               (edit)="
-                onModalAddOrEdit({ id: item.id, title: 'Editar Registro' })
+                onShowModalEditEmpleado(
+                  item.applicationUserId,
+                  item.employeeId,
+                  item.fullName
+                )
               "
             />
             <custom-button-delete (OnConfirm)="onDelete(item.id)" />

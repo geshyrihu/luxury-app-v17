@@ -1,11 +1,7 @@
-<page-title-report title="MANTENIMIENTOS" />
+<page-title-report-maintenance title="MANTENIMIENTOS" />
 @if (data) {
 <div class="card">
-  <p-table
-    [value]="data"
-    styleClass="custom-table"
-    [tableStyle]="{ 'min-width': '50rem' }"
-  >
+  <p-table [value]="data" styleClass="custom-table">
     <ng-template pTemplate="header">
       <tr>
         <th scope="col" style="width: 22%">Mantenimiento</th>

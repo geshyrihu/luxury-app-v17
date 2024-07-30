@@ -38,7 +38,7 @@ export default [
     path: 'personal-externo',
     loadComponent: () =>
       import(
-        'src/app/pages/employee/list-employee-provider-customer/list-employee-provider-customer.component'
+        'src/app/pages/employee-provider/list-employee-provider-customer.component'
       ),
   },
 
@@ -49,13 +49,13 @@ export default [
         'src/app/pages/employee/employee-add-or-edit/employee-add-or-edit.component'
       ),
   },
-  {
-    path: 'empleados-general',
-    loadComponent: () =>
-      import(
-        'src/app/pages/employee/list-general-employee/list-general-employee.component'
-      ),
-  },
+  // {
+  //   path: 'empleados-general',
+  //   loadComponent: () =>
+  //     import(
+  //       'src/app/pages/employee/list-general-employee/list-general-employee.component'
+  //     ),
+  // },
   {
     path: 'telefonos-emergencia',
     loadComponent: () =>

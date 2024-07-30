@@ -3,6 +3,13 @@ import { AuthGuard } from 'src/app/core/guards/auth.guard';
 
 export default [
   {
+    path: 'panel-inventories',
+    loadComponent: () =>
+      import(
+        'src/app/pages/inventories/panel-inventories/panel-inventories.component'
+      ),
+  },
+  {
     path: 'calendario-anual',
     loadComponent: () =>
       import(

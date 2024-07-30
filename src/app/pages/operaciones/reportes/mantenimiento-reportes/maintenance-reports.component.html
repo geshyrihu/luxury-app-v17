@@ -1,17 +1,25 @@
 <page-title-report />
 <div class="row no-print">
   <div class="col-sm-4">
-    <app-mesanio (periodoEmit)="onFilterPeriod($event)"></app-mesanio>
+    <div class="row mb-4">
+      <label for="horizontal-firstname-input" class="col-sm-3 col-form-label"
+        >Periodo</label
+      >
+      <div class="col-sm-9">
+        <input
+          type="month"
+          ngbTooltip="SELECCIONA PERIODO"
+          class="form-control"
+          [(ngModel)]="periodo"
+          (change)="onFilterPeriod($event.target.value)"
+        />
+      </div>
+    </div>
   </div>
 </div>
 
 <div class="card">
-  <p-table
-    [value]="menu"
-    currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
-    styleClass="custom-table"
-    [tableStyle]="{ 'min-width': '50rem' }"
-  >
+  <p-table [value]="menu" styleClass="custom-table">
     <ng-template pTemplate="caption">
       <table-header
         [title]="'REPORTES'"
@@ -32,9 +40,9 @@
         <td class="p-column-title">
           {{ item.name }}
         </td>
-        <td class="p-column-title">
+        <td class="p-column-title text-center">
           <a [routerLink]="[item.route]">
-            <i class="fa-light fa-hand-point-right"> </i>
+            <i class="fa-light fa-hand-point-right fa-lg"> </i>
           </a>
         </td>
       </tr>
