@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, EventEmitter, inject, Output } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import * as FileSaver from 'file-saver';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -41,8 +41,18 @@ export default class CronogramaAnualMantenimientoComponent {
 
   meses = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
+  // Definir el @Output
+  @Output() messageEvent = new EventEmitter<string>();
+
   clickButton(event: any) {
     this.filtroEquiposValue = event.nombre;
+    console.log('🚀 ~ event.nombre:', event.nombre);
+
+    if (event.nombre === 'pintura') {
+      this.messageEvent.emit('Pintura');
+    } else {
+      this.messageEvent.emit('preventivo de equipos');
+    }
     this.filtroId = event.id;
     this.onLoadData();
   }

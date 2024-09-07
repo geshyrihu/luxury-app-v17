@@ -6,6 +6,7 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { IDestinatariosMailReporte } from 'src/app/core/interfaces/destinatarios-mail-reporte.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
+import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-enviar-mail-reporte-semanal',
@@ -14,6 +15,7 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
   imports: [LuxuryAppComponentsModule],
 })
 export default class EnviarMailReporteSemanalComponent implements OnInit {
+  authService = inject(AuthService);
   apiRequestService = inject(ApiRequestService);
   formBuilder = inject(FormBuilder);
   config = inject(DynamicDialogConfig);
@@ -64,9 +66,11 @@ export default class EnviarMailReporteSemanalComponent implements OnInit {
   }
 
   onEnviarEmail() {
-    const urlApi = `SendEmail/ReporteSemanal/${this.customerIdService.getCustomerId()}/${
-      this.year
-    }/${this.numeroSemana}`;
+    const urlApi = `SendEmail/ReporteSemanal/${
+      this.authService.applicationUserId
+    }/${this.customerIdService.getCustomerId()}/${this.year}/${
+      this.numeroSemana
+    }`;
     this.apiRequestService
       .onPost(urlApi, this.onFilterDestinatarios())
       .then((result: boolean) => {});

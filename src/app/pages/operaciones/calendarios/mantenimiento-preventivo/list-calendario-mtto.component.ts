@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import CronogramaAnualMantenimientoComponent from './cronograma-anual-mantenimiento.component';
@@ -16,4 +16,11 @@ import ListadoAnualMantenimientoComponent from './listado-anual-mantenimiento/li
     NgbNavModule,
   ],
 })
-export default class ListCalendarioMttoComponent {}
+export default class ListCalendarioMttoComponent {
+  @Input() tipoCalendario: string = 'preventivo de equipos';
+
+  // Función que recibe el mensaje y lo guarda en la variable `message`
+  receiveMessage(message: string) {
+    this.tipoCalendario = message;
+  }
+}

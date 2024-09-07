@@ -1,7 +1,7 @@
 <div class="card">
   <div class="card-header">
     <h3 class="h3 text-secondary">
-      Calendario Anual de Mantenimiento preventivo
+      Calendario Anual de Mantenimiento {{ tipoCalendario }}
     </h3>
   </div>
   <!-- end card header -->
@@ -17,7 +17,9 @@
           <span class="d-none d-sm-block">Cronograma</span>
         </a>
         <ng-template ngbNavContent>
-          <app-cronograma-anual-mantenimiento></app-cronograma-anual-mantenimiento>
+          <app-cronograma-anual-mantenimiento
+            (messageEvent)="receiveMessage($event)"
+          />
         </ng-template>
       </li>
       <li [ngbNavItem]="2" class="no-print">
