@@ -81,7 +81,6 @@ export default class LegalTicketAddComponent implements OnInit {
     this.id = this.config.data.id;
     this.submitting = true;
 
-    console.log('🚀 ~ this.form.value:', this.form.value);
     this.apiRequestService
       .onPost(`TicketLegal`, this.form.value)
       .then((result: boolean) => {

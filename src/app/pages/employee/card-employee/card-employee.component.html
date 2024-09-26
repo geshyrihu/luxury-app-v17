@@ -13,20 +13,17 @@
     <div class="col-sm-8">
       <div class="p-1">
         <h3 class="h4">
-          {{ applicationUser.firstName }} {{ applicationUser.lastName }}
+          {{ applicationUser.fullName }}
         </h3>
         <h5 class="card-title">{{ applicationUser.profession }}</h5>
         <h5 class="card-title">{{ applicationUser.customer }}</h5>
         <hr />
         <h5 class="card-title">{{ applicationUser.email }}</h5>
         <h5 class="card-title">
-          {{ applicationUser.birth | date : "longDate" }}
+          {{ applicationUser.birth }}
         </h5>
         <h5 class="card-title">
           {{ applicationUser.phoneNumber }}
-        </h5>
-        <h5 class="card-title">
-          {{ applicationUser.email }}
         </h5>
       </div>
     </div>

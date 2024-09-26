@@ -95,4 +95,9 @@ export default [
     loadChildren: () => import('src/app/routing/tickets.routing'),
     canActivate: [AuthGuard],
   },
+  {
+    path: 'luxury-chat',
+    loadChildren: () => import('src/app/routing/luxury-chat.routing'),
+    canActivate: [AuthGuard],
+  },
 ] as Routes;

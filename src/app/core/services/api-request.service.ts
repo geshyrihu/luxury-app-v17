@@ -118,7 +118,7 @@ export class ApiRequestService implements OnDestroy {
       console.log(`resp: ${urlApi}`, responseData.body);
       return responseData.body; // Devuelve los datos recibidos
     } catch (error) {
-      console.log('🚀 ~ error:', error);
+      console.log('error:', error);
       this.customToastService.onCloseToError(error);
       return false;
     }

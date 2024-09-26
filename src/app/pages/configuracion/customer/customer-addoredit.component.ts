@@ -12,12 +12,12 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-addoredit-clientes',
-  templateUrl: './addoredit-clientes.component.html',
+  selector: 'app-customer-addoredit',
+  templateUrl: './customer-addoredit.component.html',
   standalone: true,
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
-export default class AddOrEditClienteComponent implements OnInit {
+export default class CustomerAddOrEditComponent implements OnInit {
   formBuilder = inject(FormBuilder);
   apiRequestService = inject(ApiRequestService);
   config = inject(DynamicDialogConfig);
@@ -47,6 +47,7 @@ export default class AddOrEditClienteComponent implements OnInit {
     photoPath: [''],
     register: [new Date(), Validators.required],
     rfc: ['', Validators.required],
+    folioPrefix: ['', Validators.maxLength(5)],
   });
 
   ngOnInit(): void {
@@ -99,6 +100,7 @@ export default class AddOrEditClienteComponent implements OnInit {
     const formData = new FormData();
     formData.append('active', String(customerAdCustomerAddOrEdit.active));
     formData.append('adreess', customerAdCustomerAddOrEdit.adreess);
+    formData.append('folioPrefix', customerAdCustomerAddOrEdit.folioPrefix);
     formData.append('nameCustomer', customerAdCustomerAddOrEdit.nameCustomer);
     formData.append('nombreCorto', customerAdCustomerAddOrEdit.nombreCorto);
     formData.append('phoneOne', customerAdCustomerAddOrEdit.phoneOne);

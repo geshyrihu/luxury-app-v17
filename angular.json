@@ -48,6 +48,7 @@
               "src/assets/scss/bootstrap.scss",
               "src/assets/scss/app.scss"
             ],
+
             "scripts": [
               "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
             ]

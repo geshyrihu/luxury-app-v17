@@ -6,7 +6,7 @@ import { ICustomer } from 'src/app/core/interfaces/customer.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import { environment } from 'src/environments/environment';
-import AddOrEditClienteComponent from './addoredit-clientes.component';
+import CustomerAddOrEditComponent from './customer-addoredit.component';
 import CustomerAddressComponent from './customer-address/customer-address.component';
 import CustomerImagesComponent from './customer-images/customer-images.component';
 
@@ -52,7 +52,7 @@ export default class ListCustomerComponent implements OnInit {
   onModalAddOrEdit(data: any) {
     this.dialogHandlerService
       .openDialog(
-        AddOrEditClienteComponent,
+        CustomerAddOrEditComponent,
         data,
         data.title,
         this.dialogHandlerService.dialogSizeMd

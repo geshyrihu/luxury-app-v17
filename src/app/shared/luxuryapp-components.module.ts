@@ -22,7 +22,10 @@ import { ImageModule } from 'primeng/image';
 import { InputTextModule } from 'primeng/inputtext';
 import { MenuModule } from 'primeng/menu';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { PanelMenuModule } from 'primeng/panelmenu';
+import { SplitButtonModule } from 'primeng/splitbutton';
 import { TableModule } from 'primeng/table';
+import { TagModule } from 'primeng/tag';
 import { ToastModule } from 'primeng/toast';
 import { ToolbarModule } from 'primeng/toolbar';
 import { TooltipModule } from 'primeng/tooltip';
@@ -45,7 +48,6 @@ import RangoCalendarioyyyymmddComponent from './rango-calendario-yyyymmdd/rango-
 import SubirPdfComponent from './subir-pdf/subir-pdf.component';
 import TableFooterComponent from './table-footer/table-footer.component';
 import TableHeaderComponent from './table-header/table-header.component';
-
 export function flatpickrFactory() {
   flatpickr.localize(Spanish);
   return flatpickr;
@@ -91,7 +93,9 @@ export function flatpickrFactory() {
     MenuModule,
     MultiSelectModule,
     InputTextModule,
-
+    PanelMenuModule,
+    SplitButtonModule,
+    TagModule,
     // Other
     CommonModule,
 
@@ -133,6 +137,7 @@ export function flatpickrFactory() {
     ToastModule,
     ToolbarModule,
     TooltipModule,
+    TagModule,
 
     // PrimeNgModule
     TableModule,
@@ -143,6 +148,8 @@ export function flatpickrFactory() {
     MenuModule,
     MultiSelectModule,
     InputTextModule,
+    PanelMenuModule,
+    SplitButtonModule,
 
     // Other
     CommonModule,

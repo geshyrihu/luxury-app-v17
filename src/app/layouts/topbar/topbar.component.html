@@ -1,4 +1,5 @@
 <p-toast position="top-right" [baseZIndex]="99999"></p-toast>
+
 <header id="page-topbar">
   <div class="navbar-header">
     <div class="d-flex">
@@ -11,15 +12,25 @@
           </span>
         </a>
       </div>
-      <!-- App Search-->
+
       <button
         type="button"
-        class="btn w3-text-white"
+        class="btn btn-sm px-3 font-size-16 header-item"
+        id="vertical-menu-btn"
+        (click)="toggleMobileMenu($event)"
+      >
+        <i class="fa fa-fw fa-bars"></i>
+      </button>
+
+      <!-- App Search-->
+      <!-- <button
+        type="button"
+        class="btn"
         id="vertical-menu-btn"
         (click)="toggleMobileMenu($event)"
       >
         <i class="fa-thin fa-bars"></i>
-      </button>
+      </button> -->
 
       <custom-button
         ngbTooltip="Anterior"

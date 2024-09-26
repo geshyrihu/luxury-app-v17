@@ -55,7 +55,6 @@ export class EmployeeProviderAddOrEditComponent implements OnInit {
   register() {
     if (!this.apiRequestService.validateForm(this.form)) return;
     const formData = this.createFormData(this.form.value);
-    console.log('🚀 ~ typePerson:', this.typePerson);
 
     this.submitting = true;
     var urlApi = '';

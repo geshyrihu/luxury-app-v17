@@ -153,7 +153,6 @@ export default class ServiceOrderAddOrEditComponent
         const contenidoHTML2 = this.form.get('observations').value;
         const contenidoSinHTML2 = contenidoHTML2.replace(/<[^>]*>|&nbsp;/g, '');
         this.form.get('observations').patchValue(contenidoSinHTML2);
-        console.log('🚀 ~ resp.body:', resp.body);
       });
   }
   onSubmit() {

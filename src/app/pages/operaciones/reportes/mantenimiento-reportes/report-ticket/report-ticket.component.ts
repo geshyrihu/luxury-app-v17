@@ -53,7 +53,6 @@ export default class ReportTicketComponent implements OnInit {
     const periodo = this.dateService.getDateFormat(
       this.periodoMonthService.getPeriodoInicio
     );
-    console.log('🚀 ~ periodo:', periodo);
     const urlApi = `MaintenanceReport/ticket/${this.customerIdService.customerId}/${periodo}`;
 
     this.apiRequestService.onGetList(urlApi).then((result: any) => {

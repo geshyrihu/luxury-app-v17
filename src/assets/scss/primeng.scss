@@ -1,0 +1,91 @@
+/* Estilos para la tabla personalizada */
+.custom-table table {
+  border-collapse: collapse !important; /* Elimina los espacios entre las celdas de la tabla */
+  width: 100% !important; /* La tabla ocupa el 100% del ancho disponible */
+}
+
+/* Estilos para las celdas de la tabla */
+.custom-table td {
+  border: 1px solid #808080 !important; /* Borde gris oscuro para las celdas */
+  color: black !important; /* El texto de las celdas será negro */
+  font-family: "Segoe UI Variable Static Text", sans-serif !important; /* Tipografía sans-serif de Segoe UI Variable Static Text */
+  padding: 8px !important; /* Espaciado interno de las celdas */
+}
+
+/* Estilos para las celdas de encabezado de la tabla */
+.custom-table th {
+  border: 1px solid #fff !important; /* Borde blanco para las celdas del encabezado */
+  background: linear-gradient(
+    to right,
+    #000000,
+    #2e2e2e
+  ); /* Fondo degradado del encabezado de negro a gris oscuro */
+  color: #fff !important; /* El texto del encabezado será blanco */
+  text-transform: uppercase; /* Convierte el texto del encabezado en mayúsculas */
+}
+
+/* Estilos para subgrupos de tablas anidadas dentro de la tabla principal */
+.custom-table .subgroup table {
+  margin-top: 8px !important; /* Espacio superior entre la tabla principal y la tabla anidada */
+  width: 100% !important; /* La tabla anidada también ocupa el 100% del ancho */
+}
+
+/* Estilos para las celdas de las tablas anidadas */
+.custom-table .subgroup td {
+  border: none !important; /* Sin bordes para las celdas de la tabla anidada */
+  padding: 4px !important; /* Menor espaciado interno en las celdas de la tabla anidada */
+}
+
+/* Estilos para resúmenes personalizados */
+.custom-summary {
+  border: 1px solid rgb(60, 60, 60) !important; /* Borde gris oscuro alrededor del resumen */
+  padding: 8px !important; /* Espaciado interno del resumen */
+}
+
+/* Estilos para tablas pequeñas personalizadas */
+.custom-small-table {
+  font-size: 14px; /* Tamaño de fuente reducido */
+  font-family: "Segoe UI Variable Static Text", sans-serif !important; /* Tipografía sans-serif de Segoe UI Variable Static Text */
+}
+
+/* Estilos para los encabezados de la tabla pequeña */
+.custom-small-table .p-datatable-thead > tr > th {
+  padding: 7px; /* Espaciado reducido en las celdas del encabezado */
+}
+
+/* Estilos para las celdas de contenido de la tabla pequeña */
+.custom-small-table .p-datatable-tbody > tr > td {
+  padding: 7px; /* Espaciado reducido en las celdas de contenido */
+}
+
+/* Estilos globales para todas las tablas */
+table {
+  font-size: 14px; /* Tamaño de fuente global para todas las tablas */
+  font-family: "Segoe UI Variable Static Text", sans-serif !important; /* Tipografía sans-serif de Segoe UI Variable Static Text */
+}
+/* Estilos globales para celdas de encabezado */
+th {
+  text-align: center; /* El texto del encabezado estará centrado */
+  font-weight: normal; /* Peso de la fuente normal */
+  padding: 10px; /* Espaciado interno alrededor del texto del encabezado */
+}
+
+/* Estilos para el primer grupo de colores con degradado */
+.color-gradient-1 {
+  background: linear-gradient(
+    to right,
+    #414141,
+    #548235
+  ); /* Degradado de gris oscuro a verde */
+  color: #fff; /* El texto será blanco */
+}
+
+/* Estilos para el segundo grupo de colores con degradado */
+.color-gradient-2 {
+  background: linear-gradient(
+    to right,
+    #0f0c29,
+    #302b63
+  ); /* Degradado de azul oscuro a púrpura */
+  color: #fff; /* El texto será blanco */
+}

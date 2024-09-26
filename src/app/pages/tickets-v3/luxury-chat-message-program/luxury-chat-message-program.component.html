@@ -1,0 +1,29 @@
+<div class="card">
+  <div class="card-body">
+    <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
+      <custom-input-date
+        [control]="form.get('scheduledDate')"
+        formControlName="scheduledDate"
+        label="Fecha"
+        placeholder="fecha"
+      />
+      <custom-input-datalist
+        (propagar)="saveUserId($event)"
+        [control]="form.get('assignee')"
+        [data]="cb_user"
+        formControlName="assignee"
+        label="Asignar"
+        placeholder="Asignar"
+        dataListId="assigneeDatalistOptions"
+      />
+      <custom-input-text-area
+        [control]="form.get('description')"
+        formControlName="description"
+        label="Comentario"
+        placeholder="Comentario"
+      />
+
+      <custom-button-submit [disabled]="this.form.invalid || submitting" />
+    </form>
+  </div>
+</div>

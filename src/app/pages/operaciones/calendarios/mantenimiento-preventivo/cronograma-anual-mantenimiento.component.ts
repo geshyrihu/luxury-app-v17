@@ -46,7 +46,6 @@ export default class CronogramaAnualMantenimientoComponent {
 
   clickButton(event: any) {
     this.filtroEquiposValue = event.nombre;
-    console.log('🚀 ~ event.nombre:', event.nombre);
 
     if (event.nombre === 'pintura') {
       this.messageEvent.emit('Pintura');

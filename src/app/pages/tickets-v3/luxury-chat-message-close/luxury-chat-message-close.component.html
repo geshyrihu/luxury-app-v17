@@ -1,0 +1,62 @@
+<div class="card">
+  <div class="card-body">
+    <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
+      <custom-input-text
+        [control]="form.get('id')"
+        formControlName="id"
+        [readonly]="true"
+        label="Id"
+        [hidden]="false"
+      />
+      <custom-input-date
+        [control]="form.get('closedDate')"
+        formControlName="closedDate"
+        label="Fecha de término"
+        placeholder="fecha de término"
+      />
+
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label for="beforeWork">Foto de antes</label>
+            <input
+              type="file"
+              accept=".jpg,.jpeg,.png"
+              class="form-control"
+              (change)="onFileChange($event, 'beforeWork')"
+            />
+            <div *ngIf="form.get('beforeWorkPreview')?.value" class="mt-3">
+              <img
+                [src]="form.get('beforeWorkPreview')?.value"
+                class="img-thumbnail"
+                alt="Before Work Image Preview"
+                style="max-width: 200px"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label for="afterWork">Foto de antes</label>
+            <input
+              type="file"
+              accept=".jpg,.jpeg,.png"
+              class="form-control"
+              (change)="onFileChange($event, 'afterWork')"
+            />
+            <div *ngIf="form.get('afterWorkPreview')?.value" class="mt-3">
+              <img
+                [src]="form.get('afterWorkPreview')?.value"
+                class="img-thumbnail"
+                alt="After Work Image Preview"
+                style="max-width: 200px"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <custom-button-submit [disabled]="this.form.invalid || submitting" />
+    </form>
+  </div>
+</div>

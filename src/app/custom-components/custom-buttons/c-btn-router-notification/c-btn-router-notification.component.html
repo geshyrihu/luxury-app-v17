@@ -1,0 +1,14 @@
+<button
+  [placement]="placement"
+  [ngbTooltip]="ngbTooltip"
+  [ngClass]="customNgClass"
+  class="btn"
+  (click)="onClick($event)"
+  [disabled]="disabled"
+  class="btn pointer no-print"
+>
+  <i [class]="icon"> </i>
+  <span class="badge bg-light ms-1" [ngClass]="customNgClassBadge">{{
+    labelNotification
+  }}</span>
+</button>

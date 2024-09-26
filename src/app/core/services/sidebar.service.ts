@@ -386,7 +386,13 @@ export class SidebarService {
         },
       ],
     },
-
+    {
+      visible: this.authService.onValidateRoles(['SuperUsuario']),
+      label: 'Tickets LuxuryChat',
+      icon: 'fa-thin fa-ticket',
+      routerLink: '/luxury-chat/list',
+      name: 'Tickets',
+    },
     {
       visible: this.authService.onValidateRoles([
         'SuperUsuario',

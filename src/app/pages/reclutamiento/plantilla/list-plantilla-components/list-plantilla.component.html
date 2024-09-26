@@ -133,11 +133,7 @@
               ngbDropdownToggle
               class="btn btn-outline-primary"
             >
-              <i
-                id="options"
-                ngbDropdownToggle
-                class="fa-light fa-ellipsis-vertical pointer"
-              ></i>
+              <i class="fa-light fa-ellipsis-vertical"></i>
             </button>
             <div ngbDropdownMenu aria-labelledby="options">
               <!-- Solicitar vacante para puesto de trabajo -->
@@ -153,16 +149,8 @@
               }
               <br />
 
-              <!-- @if (authService.onValidateRoles(['SuperUsuario'])) {
-              <custom-button
-                (clicked)="onModalAddEmployeeToWorkPosition(item.id)"
-                customClass="btn-outline-dark w-100 mt-1 text-start"
-                icon="fa-light fa-user-plus me-2"
-                label="Editar colaborador"
-              />
-              } -->
               <!-- Asignar empleado -->
-              <br />
+
               <!-- visualizar descripcion de puesto-->
               <custom-button
                 customClass="btn-outline-primary   w-100 mt-1 text-start"
@@ -189,7 +177,7 @@
                 (clicked)="
                   onModalAddOrEdit({
                     id: item.id,
-                    title: 'Editar Registro'
+                    title: 'Editar'
                   })
                 "
               />

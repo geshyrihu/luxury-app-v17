@@ -79,11 +79,6 @@ export default class ListTicketComponent implements OnInit {
   }
 
   onLoadDepartamentList() {
-    // const urlApi = `EnumSelect/Departament`;
-    // this.apiRequestService.onGetList(urlApi).then((result: any) => {
-    //   this.cb_departments = result;
-    // });
-
     this.cb_departments = [
       { label: 'Administración', value: 0 },
       { label: 'Mantenimiento', value: 3 },
@@ -238,7 +233,10 @@ export default class ListTicketComponent implements OnInit {
     this.apiRequestService
       .onDelete(`Tickets/${item.id}`)
       .then((result: boolean) => {
-        if (result) this.data = this.data.filter((item) => item.id !== item.id);
+        if (result) {
+          // Filtrar eliminando el item que coincide con el id
+          this.data = this.data.filter((i) => i.id !== item.id);
+        }
       });
   }
 }

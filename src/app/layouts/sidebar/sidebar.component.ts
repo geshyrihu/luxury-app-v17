@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import {
+  ChangeDetectionStrategy,
   Component,
   ElementRef,
   OnInit,
@@ -24,6 +25,7 @@ import { IMenuItem } from '../../core/interfaces/menu.model';
     RouterModule,
     CommonModule,
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
 /**

@@ -51,9 +51,7 @@
         <td>
           <div class="d-flex justify-content-end">
             <custom-button-edit
-              (edit)="
-                onModalAddOrEdit({ id: data.id, title: 'Editar Registro' })
-              "
+              (edit)="onModalAddOrEdit({ id: data.id, title: 'Editar' })"
             />
             <custom-button-delete (OnConfirm)="onDelete(data.id)" />
           </div>

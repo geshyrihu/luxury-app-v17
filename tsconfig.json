@@ -27,8 +27,6 @@
     "sourceMap": true,
     // Si se establece en false, no genera archivos de declaración .d.ts.
     "declaration": false,
-    // Si se establece en true, habilita la iteración descendente para for...of.
-    "downlevelIteration": true,
     // Si se establece en true, permite el uso de decoradores experimentales.
     "experimentalDecorators": true,
     // Especifica cómo se resuelven los módulos (por ejemplo, "node" para Node.js)
@@ -44,11 +42,9 @@
     // Especifica las bibliotecas de definición de TypeScript que se incluirán en el proyecto.
     "lib": ["ES2022", "dom"],
     // Si se establece en false, deshabilita la interoperabilidad de ES6.
-    "esModuleInterop": false,
+    "esModuleInterop": true,
     // Especifica la carpeta de salida para los archivos compilados.
-    "outDir": "./dist/out-tsc",
-    // Si se establece en true, permite importaciones sintéticas por defecto.
-    "allowSyntheticDefaultImports": true
+    "outDir": "./dist/out-tsc"
   },
   "angularCompilerOptions": {
     // Si se establece en false, desactiva el formato de identificación de mensajes heredado.

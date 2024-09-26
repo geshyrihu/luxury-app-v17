@@ -5,7 +5,6 @@ import {
 } from '@angular/common';
 import {
   HTTP_INTERCEPTORS,
-  HttpClientModule,
   provideHttpClient,
   withInterceptorsFromDi,
 } from '@angular/common/http';
@@ -52,7 +51,7 @@ export const appConfig: ApplicationConfig = {
       // Módulo que configura Flatpickr, una librería de selección de fechas y horas
       FlatpickrModule.forRoot(),
       // Módulo para realizar peticiones HTTP
-      HttpClientModule,
+      // HttpClientModule,
       // Módulo para aplicar máscaras a los campos de entrada
       NgxMaskModule.forRoot()
     ),
@@ -80,9 +79,18 @@ export const appConfig: ApplicationConfig = {
     provideAnimations(),
     // Proveedor para configurar el enrutador con las rutas definidas
     provideRouter(routes),
+
+    // providerClientHydration(withEventReplay()),
+
+    provideHttpClient(),
     provideServiceWorker('ngsw-worker.js', {
       enabled: !isDevMode(),
       registrationStrategy: 'registerWhenStable:30000',
     }),
   ],
 };
+function providerClientHydration():
+  | import('@angular/core').Provider
+  | import('@angular/core').EnvironmentProviders {
+  throw new Error('Function not implemented.');
+}

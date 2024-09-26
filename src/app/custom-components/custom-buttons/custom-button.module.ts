@@ -1,4 +1,6 @@
 import { NgModule } from '@angular/core';
+import { CBtnRouterEventComponent } from './c-btn-router-event/c-btn-router-event.component';
+import CBtnNotificationComponent from './c-btn-router-notification/c-btn-router-notification.component';
 import CustomButtonActiveDesactiveComponent from './custom-button-active-desactive/custom-button-active-desactive.component';
 import CustomButtonConfirmationComponent from './custom-button-confirmation/custom-button-confirmation.component';
 import CustomButtonDeleteSpanComponent from './custom-button-delete-span/custom-button-delete-span.component';
@@ -28,6 +30,8 @@ import CustomButtonComponent from './custom-button/custom-button.component';
     CustomButtonLinkComponent,
     CustomButtonSendEmailComponent,
     CustomButtonSubmitComponent,
+    CBtnNotificationComponent,
+    CBtnRouterEventComponent,
   ],
   exports: [
     CustomButtomDropdownItemComponent,
@@ -43,6 +47,8 @@ import CustomButtonComponent from './custom-button/custom-button.component';
     CustomButtonLinkComponent,
     CustomButtonSendEmailComponent,
     CustomButtonSubmitComponent,
+    CBtnNotificationComponent,
+    CBtnRouterEventComponent,
   ],
 })
 export default class CustomButtonModule {}

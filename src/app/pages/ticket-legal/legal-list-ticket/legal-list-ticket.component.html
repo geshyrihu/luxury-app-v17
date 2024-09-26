@@ -11,7 +11,8 @@
       'requestPerson',
       'title',
       'statusFilter',
-      'requestDate'
+      'requestDate',
+      'status'
     ]"
     [paginator]="true"
     [rowHover]="true"
@@ -58,7 +59,10 @@
         <th scope="col" class="color-gradient-1">ASUNTO</th>
         <th scope="col" class="color-gradient-1">DESCRIPCIÓN</th>
         <th scope="col" class="color-gradient-2">DOCTOS ENVIADOS</th>
-        <th scope="col" class="color-gradient-2">ESTATUS</th>
+        <th scope="col" class="color-gradient-2" pSortableColumn="status">
+          ESTATUS
+          <p-sortIcon field="status"></p-sortIcon>
+        </th>
         <th scope="col" class="color-gradient-2">FECHA DE CONCLUSIÓN</th>
         <th scope="col" class="color-gradient-2">DÍAS</th>
         <th scope="col" class="color-gradient-2">RESPONSABLE</th>

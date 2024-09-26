@@ -11,4 +11,5 @@ export interface ICustomerAddOrEdit {
   numeroCliente: string;
   latitud: string;
   longitud: string;
+  folioPrefix: string;
 }

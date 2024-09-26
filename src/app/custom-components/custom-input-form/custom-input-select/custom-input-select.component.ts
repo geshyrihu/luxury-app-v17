@@ -35,7 +35,7 @@ export default class CustomInputSelectComponent
   @Input() horizontal: boolean = true;
   @Input() label: string;
   @Input() placeholder: string = '--Selecciona una opción--';
-  @Input() SelectDefaulOption: boolean = true;
+  @Input() selectDefaulOption: boolean = true;
 
   value: any;
   onChange: any = () => {};

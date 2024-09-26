@@ -103,9 +103,7 @@ cb_departamento; track item) {
         <td class="p-column-title">
           <div class="d-flex justify-content-center">
             <custom-button-edit
-              (edit)="
-                onModalAddOrEdit({ id: item.id, title: 'Editar Registro' })
-              "
+              (edit)="onModalAddOrEdit({ id: item.id, title: 'Editar' })"
             />
             @if (item.archivo && item.superviso === '') {
             <custom-button

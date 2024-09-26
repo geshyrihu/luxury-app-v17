@@ -1,79 +1,77 @@
-.custom-table table {
-  border-collapse: collapse !important;
-  width: 100% !important;
-}
-
-.custom-table td {
-  border: 1px solid rgb(60, 60, 60) !important;
-  color: black !important;
-  font-family: "IBM Plex Sans", sans-serif !important;
-  padding: 8px !important;
-}
-
-.custom-table th {
-  border: 1px solid #fff !important;
-  background: linear-gradient(
-    to right,
-    #000000,
-    #2e2e2e
-  ); /* Degradado de colores para el primer grupo */
-  color: #fff !important; /* Color de texto */
-  text-transform: uppercase;
-}
-
-.custom-table .subgroup table {
-  margin-top: 8px !important;
-  width: 100% !important;
-}
-
-.custom-table .subgroup td {
-  border: none !important;
-  padding: 4px !important;
-}
-
-.custom-summary {
-  border: 1px solid rgb(60, 60, 60) !important;
-  padding: 8px !important;
-}
-
-.custom-small-table {
-  font-size: 14px; /* Ajusta el tamaño de letra según tus necesidades */
-  font-family: "IBM Plex Sans", sans-serif !important;
-}
-
-.custom-small-table .p-datatable-thead > tr > th {
-  padding: 7px; /* Ajusta el espaciado de las celdas del encabezado */
-}
-
-.custom-small-table .p-datatable-tbody > tr > td {
-  padding: 7px; /* Ajusta el espaciado de las celdas de contenido */
-}
-
+/* Estilos globales para todas las tablas */
 table {
-  font-size: 14px; /* Ajusta el tamaño de letra según tus necesidades */
-  font-family: "IBM Plex Sans", sans-serif !important;
+  width: 100%; /* La tabla ocupará todo el ancho disponible */
+  border-collapse: collapse; /* Elimina los espacios entre las celdas */
+  font-size: 14px; /* Tamaño de fuente global */
+  font-family: "Segoe UI Variable Static Text", sans-serif; /* Fuente Segoe UI Variable Static Text */
 }
 
+/* Estilos para las celdas del encabezado (th) */
+th {
+  text-align: center; /* Centra el texto */
+  font-weight: normal; /* Peso de la fuente normal */
+  padding: 10px; /* Espaciado interno */
+  border: 1px solid #fff; /* Borde blanco */
+  background: linear-gradient(to right, #000000, #2e2e2e); /* Fondo degradado */
+  color: #fff; /* Texto en blanco */
+  text-transform: uppercase; /* Convierte el texto a mayúsculas */
+}
+
+/* Estilos para las celdas del cuerpo de la tabla (td) */
+td {
+  padding: 8px; /* Espaciado interno */
+  border: 1px solid #808080; /* Borde gris oscuro */
+  color: black; /* Texto negro */
+  font-family: "Segoe UI Variable Static Text", sans-serif; /* Fuente Segoe UI Variable Static Text */
+}
+/* Estilos para subgrupos de tablas anidadas dentro de la tabla principal */
+.subgroup table {
+  margin-top: 8px; /* Espaciado superior */
+  width: 100%; /* Ancho completo */
+}
+
+.subgroup td {
+  border: none; /* Sin bordes en celdas de tablas anidadas */
+  padding: 4px; /* Espaciado reducido */
+}
+/* Estilos para tablas pequeñas personalizadas */
+.custom-small-table {
+  font-size: 14px; /* Tamaño de fuente reducido */
+  font-family: "Segoe UI Variable Static Text", sans-serif; /* Fuente Segoe UI Variable Static Text */
+}
+
+/* Estilos para los encabezados de la tabla pequeña */
+.custom-small-table .p-datatable-thead > tr > th {
+  padding: 7px; /* Espaciado reducido en encabezados */
+}
+
+/* Estilos para las celdas del cuerpo de la tabla pequeña */
+.custom-small-table .p-datatable-tbody > tr > td {
+  padding: 7px; /* Espaciado reducido en celdas de contenido */
+}
+
+/* Estilos para resúmenes personalizados */
+.custom-summary {
+  border: 1px solid rgb(60, 60, 60); /* Borde gris oscuro */
+  padding: 8px; /* Espaciado interno */
+}
+
+/* Estilos para el primer grupo de colores con degradado */
 .color-gradient-1 {
   background: linear-gradient(
     to right,
     #414141,
     #548235
-  ); /* Degradado de colores para el primer grupo */
-  color: #fff; /* Color de texto */
+  ); /* Degradado de gris oscuro a verde */
+  color: #fff; /* El texto será blanco */
 }
 
+/* Estilos para el segundo grupo de colores con degradado */
 .color-gradient-2 {
   background: linear-gradient(
     to right,
     #0f0c29,
     #302b63
-  ); /* Degradado de colores para el segundo grupo */
-  color: #fff; /* Color de texto */
-}
-
-th {
-  text-align: center; /* Para centrar el texto */
-  font-weight: normal; /* Para la fuente delgada, puedes usar 'normal' o 'lighter' dependiendo de la familia de fuentes */
-  padding: 10px; /* Añadimos un poco de espacio alrededor del texto */
+  ); /* Degradado de azul oscuro a púrpura */
+  color: #fff; /* El texto será blanco */
 }
