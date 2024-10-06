@@ -257,7 +257,7 @@
 
         <td class="no-print">
           <div class="d-flex justify-content-center">
-            <custom-button-edit
+            <btn-edit
               (edit)="
                 showModalAddOrEdit({
                   id: item.id,
@@ -266,9 +266,7 @@
               "
             />
             @if (authService.onValidateRoles(['SupervisionOperativa'])) {
-            <custom-button-delete>
-              (OnConfirm)="onDelete(item.id)" ></custom-button-delete
-            >
+            <btn-delete> (OnConfirm)="onDelete(item.id)" ></btn-delete>
             }
             <button
               type="button"

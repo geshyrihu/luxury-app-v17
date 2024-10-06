@@ -4,12 +4,12 @@
   <div class="col-md-3">
     <div class="card">
       <div class="card-header">
-        <custom-button-delete-span
+        <btn-delete-span
           (OnConfirm)="deleteImg(item.id)"
           [nameItem]="item.img"
           [textHeader]="'Eliminar Imagen'"
           [textpTooltip]="'Eliminar Imagen!'"
-        ></custom-button-delete-span>
+        ></btn-delete-span>
         <p-image
           [src]="urlImg + item.img"
           alt="Image"

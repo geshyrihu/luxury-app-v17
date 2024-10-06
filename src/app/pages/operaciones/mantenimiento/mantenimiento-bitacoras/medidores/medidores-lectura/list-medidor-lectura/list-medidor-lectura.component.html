@@ -22,9 +22,7 @@
       [dt]="dt"
     />
     <div class="mt-1">
-      <custom-button-export-excel
-        (clicked)="exportExcel()"
-      ></custom-button-export-excel>
+      <btn-export-excel (clicked)="exportExcel()"></btn-export-excel>
     </div>
   </ng-template>
 
@@ -56,10 +54,8 @@
       <!-- Opciones -->
       <td class="p-column-title">
         <div class="d-flex justify-content-center">
-          <custom-button-edit
-            (edit)="modalAddEdit({ id: item.id, title: 'Editar' })"
-          />
-          <custom-button-delete (OnConfirm)="onDelete(item.id)" />
+          <btn-edit (edit)="modalAddEdit({ id: item.id, title: 'Editar' })" />
+          <btn-delete (OnConfirm)="onDelete(item.id)" />
         </div>
       </td>
       <!-- Opciones -->

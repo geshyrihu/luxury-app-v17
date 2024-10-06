@@ -51,7 +51,7 @@
 
           @if ( authService.onValidateRoles([ 'Mantenimiento', 'Residente',
           'SuperUsuario' ]) ) {
-          <custom-button-edit
+          <btn-edit
             (edit)="
               showModalAddoredit({
                 id: machinery.id,
@@ -63,7 +63,7 @@
 
           @if ( authService.onValidateRoles([ 'Mantenimiento', 'Residente',
           'SuperUsuario' ]) ) {
-          <custom-button-delete
+          <btn-delete
             (OnConfirm)="onDelete(machinery.id)"
           />
           }
@@ -107,7 +107,7 @@
           />
         </div>
         <div class="col-sm-2">
-          <custom-button-active-desactive
+          <btn-active-desactive
             (activo)="onSelectState(0)"
             (inactivo)="onSelectState(1)"
           />
@@ -224,7 +224,7 @@
             <!-- Editar Role -->
             @if ( authService.onValidateRoles([ 'Mantenimiento', 'Residente',
             'SuperUsuario' ]) ) {
-            <custom-button-edit
+            <btn-edit
               (edit)="
                 showModalAddoredit({
                   id: item.id,
@@ -237,7 +237,7 @@
             <!-- Borrar -->
             @if ( authService.onValidateRoles([ 'Mantenimiento', 'Residente',
             'SuperUsuario' ]) ) {
-            <custom-button-delete (OnConfirm)="onDelete(item.id)" />
+            <btn-delete (OnConfirm)="onDelete(item.id)" />
             }
             <!-- Borrar -->
           </div>
@@ -341,7 +341,7 @@
                       />
                       <!-- Duplicar Servicio -->
                       <!-- Editar  -->
-                      <custom-button-edit
+                      <btn-edit
                         (edit)="
                           showModalMaintenanceCalendar({
                             id: order.id,
@@ -353,9 +353,7 @@
                       />
                       <!-- Duplicar Servicio -->
                       <!-- Borrar -->
-                      <custom-button-delete
-                        (OnConfirm)="onDeleteOrder(order.id)"
-                      />
+                      <btn-delete (OnConfirm)="onDeleteOrder(order.id)" />
                       <!-- Borrar -->
                     </div>
                   </td>

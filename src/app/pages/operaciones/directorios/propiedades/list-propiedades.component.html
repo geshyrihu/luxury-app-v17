@@ -67,12 +67,12 @@
       <td class="p-column-title">
         <div class="d-flex justify-content-center">
           <!-- Componente editar registro -->
-          <custom-button-edit
+          <btn-edit
             (edit)="showModalAddOrEdit({ id: item.id, title: 'Editar' })"
           />
           <!-- Componente editar registro -->
           <!-- Componente eliminar registro -->
-          <custom-button-delete (OnConfirm)="onDelete(item.id)" />
+          <btn-delete (OnConfirm)="onDelete(item.id)" />
           <!-- Componente eliminar registro -->
         </div>
       </td>

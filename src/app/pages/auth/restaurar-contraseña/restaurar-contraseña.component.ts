@@ -13,19 +13,14 @@ import { Subscription } from 'rxjs';
 import { IResetPassword } from 'src/app/core/interfaces/reset-password.interface';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
-import CustomButtonModule from 'src/app/custom-components/custom-buttons/custom-button.module';
+import CBtnModule from 'src/app/custom-components/custom-buttons/btn.module';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
   selector: 'app-restaurar-contraseña',
   templateUrl: './restaurar-contraseña.component.html',
   standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    CustomInputModule,
-    CustomButtonModule,
-  ],
+  imports: [CommonModule, ReactiveFormsModule, CustomInputModule, CBtnModule],
   providers: [MessageService, CustomToastService],
 })
 export default class RestaurarContraseñaComponent implements OnInit, OnDestroy {

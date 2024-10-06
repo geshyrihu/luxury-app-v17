@@ -19,7 +19,7 @@
         <td>{{ item.unidadMedida }}</td>
         <td>
           <div class="d-flex justify-content-center">
-            <custom-button-edit
+            <btn-edit
               (click)="
                 editProduct({
                   purchasesolicitaId: solicitudCompraId,
@@ -28,7 +28,7 @@
               "
             />
 
-            <custom-button-delete (OnConfirm)="onDeleteProduct(item.id)" />
+            <btn-delete (OnConfirm)="onDeleteProduct(item.id)" />
           </div>
         </td>
       </tr>

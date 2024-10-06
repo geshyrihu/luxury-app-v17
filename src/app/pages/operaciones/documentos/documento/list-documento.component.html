@@ -32,16 +32,16 @@
           {{ item.nameDocument }}
         </td>
         <td class="p-column-title">
-          <custom-button-download-pdf [urlFile]="item.pathDocument" />
+          <btn-download-file [urlFile]="item.pathDocument" />
         </td>
 
         <!-- Opciones -->
         <td class="p-column-title" class="no-print">
           <div class="d-flex justify-content-center">
-            <custom-button-edit
+            <btn-edit
               (edit)="onModalAddOrEdit({ id: item.id, title: 'Editar' })"
             />
-            <custom-button-delete (OnConfirm)="onDelete(item.id)" />
+            <btn-delete (OnConfirm)="onDelete(item.id)" />
           </div>
         </td>
         <!-- Opciones -->

@@ -96,7 +96,7 @@
         <td>
           <!-- Opciones -->
           <div class="d-flex justify-content-center">
-            <custom-button-edit
+            <btn-edit
               (edit)="
                 onModalAddOrEdit({
                   id: item.id,
@@ -104,7 +104,7 @@
                 })
               "
             />
-            <custom-button-delete (OnConfirm)="onDelete(item.id)" />
+            <btn-delete (OnConfirm)="onDelete(item.id)" />
 
             <!-- <i class="fa-light fa-users-viewfinder"></i> -->
           </div>

@@ -49,12 +49,12 @@
               !item.archivoFinal) {
 
               <div class="me-2">
-                <custom-button-edit
+                <btn-edit
                   (edit)="
                     showModalAdd({ id: item.id, titulo: 'Editar Registro' })
                   "
                 />
-                <custom-button-delete (OnConfirm)="onDeleteItem(item)" />
+                <btn-delete (OnConfirm)="onDeleteItem(item)" />
               </div>
               }
               <div>
@@ -102,7 +102,7 @@
           <div class="mt-1 d-flex justify-content-between">
             <div class="d-flex align-items-start">
               @if (item.archivoPortada) {
-              <custom-button-download-pdf
+              <btn-download-file
                 [urlFile]="url + item.id + '/' + item.archivoPortada"
               />
               }
@@ -110,7 +110,7 @@
             <div class="d-flex align-items-start">
               @if ( authService.onValidateRoles(['Residente']) &&
               !item.archivoFinal ) {
-              <custom-button-edit
+              <btn-edit
                 (edit)="
                   showModalAddOrEdit({
                     id: item.id,
@@ -120,7 +120,7 @@
               />
               } @if ( authService.onValidateRoles(['Residente']) &&
               !item.archivoFinal ) {
-              <custom-button-delete (OnConfirm)="onDelete(item, 'Portada')" />
+              <btn-delete (OnConfirm)="onDelete(item, 'Portada')" />
               }
             </div>
           </div>
@@ -154,7 +154,7 @@
           <div class="mt-1 d-flex justify-content-between">
             <div class="d-flex align-items-start">
               @if (item.archivoContable) {
-              <custom-button-download-pdf
+              <btn-download-file
                 [urlFile]="url + item.id + '/' + item.archivoContable"
               />
               }
@@ -162,14 +162,12 @@
             <div class="d-flex align-items-start">
               @if (authService.onValidateRoles(['Contador']) &&
               !item.archivoFinal && !item.applicationUserSupervisorContable) {
-              <custom-button-edit
+              <btn-edit
                 (edit)="
                   showModalAddOrEdit({ id: item.id, titulo: 'Contabilidad' })
                 "
               />
-              <custom-button-delete
-                (OnConfirm)="onDelete(item, 'Contabilidad')"
-              />
+              <btn-delete (OnConfirm)="onDelete(item, 'Contabilidad')" />
               }
             </div>
           </div>
@@ -205,7 +203,7 @@
           <div class="mt-1 d-flex justify-content-between">
             <div class="d-flex align-items-start">
               @if (item.archivoJunta) {
-              <custom-button-download-pdf
+              <btn-download-file
                 [urlFile]="url + item.id + '/' + item.archivoJunta"
               />
               }
@@ -213,7 +211,7 @@
             <div class="d-flex align-items-start">
               @if ( authService.onValidateRoles(['Residente']) &&
               !item.archivoFinal ) {
-              <custom-button-edit
+              <btn-edit
                 (edit)="
                   showModalAddOrEdit({
                     id: item.id,
@@ -223,9 +221,7 @@
               />
               } @if ( authService.onValidateRoles(['Residente']) &&
               !item.archivoFinal ) {
-              <custom-button-delete
-                (OnConfirm)="onDelete(item, 'Operaciones')"
-              />
+              <btn-delete (OnConfirm)="onDelete(item, 'Operaciones')" />
               }
             </div>
           </div>
@@ -241,7 +237,7 @@
           authService.onValidateRoles(['SupervisionOperativa']) &&
           item.archivoPortada && item.archivoContable && item.archivoJunta ) {
           <div class="text-center">
-            <custom-button-confirmation
+            <btn-confirmation
               title="Confirmar"
               icon="fa-light fa-check-double me-2"
               text="Confirmo que la presentación es correcta y será enviada al comité."
@@ -255,7 +251,7 @@
           } @if (item.archivoFinal) {
 
           <div class="mt-1 d-flex align-content-start">
-            <custom-button-download-pdf
+            <btn-download-file
               ngbTooltip="Visualizar Pdf"
               [urlFile]="url + item.id + '/' + item.archivoFinal"
             />
@@ -268,10 +264,10 @@
             />
             } -->
             @if (authService.onValidateRoles(['SuperUsuario'])) {
-            <custom-button-delete (OnConfirm)="onDelete(item, 'Final')" />
+            <btn-delete (OnConfirm)="onDelete(item, 'Final')" />
             }
             <!-- @if (authService.onValidateRoles(['Residente'])) {
-            <custom-button-confirmation
+            <btn-confirmation
               tooltipText="Enviar presentación a comité"
               icon="fa-light fa-paper-plane"
               classButton="btn-outline-secondary btn-sm me-1 waves-effect waves-light"

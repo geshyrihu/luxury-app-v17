@@ -93,11 +93,11 @@
         <div class="d-flex justify-content-center">
           @if ( authService.onValidateRoles([ 'SupervisionOperativa',
           'SuperUsuario', 'Residente' ]) || item.userid === account_id ) {
-          <custom-button-edit
+          <btn-edit
             (edit)="showModalAddOrEdit({ id: item.id, title: 'Editar' })"
           />
           } @if (authService.onValidateRoles(['SuperUsuario'])) {
-          <custom-button-delete (OnConfirm)="onDelete(item.id)" />
+          <btn-delete (OnConfirm)="onDelete(item.id)" />
           }
         </div>
       </td>

@@ -1,12 +1,12 @@
 import { Component, inject } from '@angular/core';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
-import CustomButtonModule from 'src/app/custom-components/custom-buttons/custom-button.module';
+import CBtnModule from 'src/app/custom-components/custom-buttons/btn.module';
 
 @Component({
   selector: 'app-depuracion',
   templateUrl: './depuracion.component.html',
-  imports: [CustomButtonModule],
+  imports: [CBtnModule],
   standalone: true,
 })
 export default class DepuracionComponent {

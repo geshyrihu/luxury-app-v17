@@ -50,10 +50,10 @@
         <td>Opciones</td>
         <td>
           <div class="d-flex justify-content-end">
-            <custom-button-edit
+            <btn-edit
               (edit)="onModalAddOrEdit({ id: data.id, title: 'Editar' })"
             />
-            <custom-button-delete (OnConfirm)="onDelete(data.id)" />
+            <btn-delete (OnConfirm)="onDelete(data.id)" />
           </div>
         </td>
       </tr>

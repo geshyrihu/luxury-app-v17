@@ -30,7 +30,7 @@
         @if (authService.onValidateRoles(['SuperUsuario', 'Reclutamiento'])) {
         <div class="col-1">
           <!-- Enviar por correo solo puede si es reclutamiento -->
-          <custom-button-confirmation
+          <btn-confirmation
             [disabled]="noCandidates"
             title="Confirmar"
             icon="warning"
@@ -143,7 +143,7 @@
               (clicked)="onModalSolicitudALta(item.id)"
             />
             }
-            <custom-button-edit
+            <btn-edit
               (edit)="
                 onModalAddOrEdit({
                   id: item.id,
@@ -154,7 +154,7 @@
             />
             <!-- Solo puede eliminar los candidatos que cada usuario registro -->
             @if (applicationUserId == item.applicationUserId) {
-            <custom-button-delete (OnConfirm)="onDelete(item.id)" />
+            <btn-delete (OnConfirm)="onDelete(item.id)" />
             }
             <!-- Solo puede eliminar los candidatos que cada usuario registro -->
           </div>

@@ -24,10 +24,10 @@
           <div class="col-sm-5">
             <p class="text-justify">{{ item.direccion }}</p>
             <div class="d-flex justify-content-center">
-              <custom-button-edit
+              <btn-edit
                 (edit)="onModalAddOrEdit({ id: item.id, title: 'Editar' })"
               />
-              <custom-button-delete (OnConfirm)="onDelete(item.id)" />
+              <btn-delete (OnConfirm)="onDelete(item.id)" />
             </div>
           </div>
         </div>

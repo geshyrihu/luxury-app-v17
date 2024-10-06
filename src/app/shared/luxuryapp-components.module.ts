@@ -33,7 +33,7 @@ import { CustomPipeModule } from '../core/pipes/custom-pipe.module';
 import { ApiRequestService } from '../core/services/api-request.service';
 import { CustomToastService } from '../core/services/custom-toast.service';
 import { DialogHandlerService } from '../core/services/dialog-handler.service';
-import CustomButtonModule from '../custom-components/custom-buttons/custom-button.module';
+import CBtnModule from '../custom-components/custom-buttons/btn.module';
 import CabeceraSolicitudPagoPdfComponent from './cabeceras/cabecera-solicitud-pago-pdf/cabecera-solicitud-pago-pdf.component';
 import PagetitleReportMaintenanceComponent from './cabeceras/pagetitle/pagetitle.component';
 import ReportHeaderComponent from './cabeceras/report-header/report-header.component';
@@ -100,7 +100,7 @@ export function flatpickrFactory() {
     CommonModule,
 
     // Custom Modules
-    CustomButtonModule,
+    CBtnModule,
 
     // Custom Pipes
     CustomPipeModule,
@@ -122,7 +122,7 @@ export function flatpickrFactory() {
     TableHeaderComponent,
 
     ConfirmPopupModule,
-    CustomButtonModule,
+    CBtnModule,
     FileUploadModule,
     FormsModule,
     LeafletModule,

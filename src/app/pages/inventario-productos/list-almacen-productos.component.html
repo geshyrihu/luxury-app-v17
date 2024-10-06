@@ -153,11 +153,11 @@
             />
             } @if ( authService.onValidateRoles([ 'Asistente', 'Mantenimiento',
             'Residente', 'SuperUsuario' ]) ) {
-            <custom-button-edit
+            <btn-edit
               (edit)="editProductos({ id: item.id, title: 'Editar' })"
             />
             } @if (authService.onValidateRoles(['Mantenimiento'])) {
-            <custom-button-delete (OnConfirm)="onDelete(item.id)" />
+            <btn-delete (OnConfirm)="onDelete(item.id)" />
             }
           </div>
         </td>

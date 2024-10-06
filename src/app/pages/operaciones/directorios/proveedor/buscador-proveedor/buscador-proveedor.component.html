@@ -110,14 +110,14 @@
         <hr />
         <div class="d-flex bd-highlight">
           <!-- Constancia Fiscal -->
-          <custom-button-download-pdf
+          <btn-download-file
             ngbTooltip="Constancia fiscal"
             [urlFile]="item.constanciaFiscalPath"
           />
           <!-- Constancia Fiscal -->
           @if ( item.activo && validateRole([ 'Asistente', 'Mantenimiento',
           'Residente', 'SuperUsuario', 'SupervisionOperativa' ]) ) {
-          <custom-button-edit
+          <btn-edit
             (edit)="
               showModalAddOrEdit({
                 id: item.providerId,
@@ -129,10 +129,7 @@
           <!-- Editar -->
           <!-- Borrar -->
           @if (item.activo) {
-          <custom-button-delete
-            class="bd-highlight"
-            (OnConfirm)="onDelete(item.id)"
-          />
+          <btn-delete class="bd-highlight" (OnConfirm)="onDelete(item.id)" />
           }
           <!-- Borrar -->
           @if (item.activo) {

@@ -85,10 +85,8 @@ cb_departamento; track item) {
         <td class="p-column-title">
           <div class="d-flex justify-content-center">
             @if (item.archivo) {
-            <custom-button-download-file
-              (clicked)="navigateToPdf(item.archivo)"
-            >
-            </custom-button-download-file>
+            <btn-download-file (clicked)="navigateToPdf(item.archivo)">
+            </btn-download-file>
             }
           </div>
         </td>
@@ -102,7 +100,7 @@ cb_departamento; track item) {
         </td>
         <td class="p-column-title">
           <div class="d-flex justify-content-center">
-            <custom-button-edit
+            <btn-edit
               (edit)="onModalAddOrEdit({ id: item.id, title: 'Editar' })"
             />
             @if (item.archivo && item.superviso === '') {
@@ -120,7 +118,7 @@ cb_departamento; track item) {
               (clicked)="onInvalidarDocument(item.id)"
             />
             } @if (item.archivo !== '') {
-            <custom-button-delete (OnConfirm)="onDeleteFile(item.id)" />
+            <btn-delete (OnConfirm)="onDeleteFile(item.id)" />
             }
           </div>
         </td>

@@ -66,7 +66,7 @@ sdfghdfgydsfg
         </td>
         <td class="p-column-title">
           @if (item.typeFile === 'pdf') {
-          <custom-button-download-pdf [urlFile]="item.pathFile" />
+          <btn-download-file [urlFile]="item.pathFile" />
           } @if (item.typeFile === 'img') {
           <p-image
             [src]="this.urlimg + item.pathFile"
@@ -79,7 +79,7 @@ sdfghdfgydsfg
         <!-- Opciones -->
         <td class="p-column-title" class="no-print">
           <div class="d-flex justify-content-center">
-            <custom-button-delete (OnConfirm)="onDeleteFile(item.id)" />
+            <btn-delete (OnConfirm)="onDeleteFile(item.id)" />
           </div>
         </td>
         <!-- Opciones -->

@@ -8,12 +8,12 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { FilterRequestsService } from 'src/app/core/services/filter-requests.service';
-import CustomButtonModule from 'src/app/custom-components/custom-buttons/custom-button.module';
+import CBtnModule from 'src/app/custom-components/custom-buttons/btn.module';
 @Component({
   selector: 'app-filter-requests',
   templateUrl: './filter-requests.component.html',
   standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomButtonModule],
+  imports: [LuxuryAppComponentsModule, CBtnModule],
 })
 export default class FilterRequestsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {}

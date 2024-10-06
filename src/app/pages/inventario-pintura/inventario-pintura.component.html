@@ -56,7 +56,7 @@
         </td>
         <td>
           <div class="d-flex justify-content-center">
-            <custom-button-edit
+            <btn-edit
               (edit)="
                 onModalAddOrEdit({
                   id: itm.id,
@@ -64,7 +64,7 @@
                 })
               "
             />
-            <custom-button-delete (OnConfirm)="onDelete(item.id)" />
+            <btn-delete (OnConfirm)="onDelete(item.id)" />
           </div>
         </td>
       </tr>

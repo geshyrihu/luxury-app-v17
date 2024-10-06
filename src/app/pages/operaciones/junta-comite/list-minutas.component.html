@@ -156,7 +156,7 @@
             (clicked)="exportToExcel(item.id)"
           />
           <!-- [mostrar]="emailAccount" -->
-          <custom-button-confirmation
+          <btn-confirmation
             title="Confirmar"
             icon="fa-light fa-paper-plane"
             text="Enviar minuta a comite"
@@ -181,7 +181,7 @@
           >
             <i class="fa-light fa-file-pdf"></i>
           </button>
-          <custom-button-edit
+          <btn-edit
             (edit)="
               showModalAddOrEditMeeting({
                 id: item.id,
@@ -190,7 +190,7 @@
             "
           />
           @if (authService.onValidateRoles(['SupervisionOperativa'])) {
-          <custom-button-delete (OnConfirm)="onDelete(item.id)" />
+          <btn-delete (OnConfirm)="onDelete(item.id)" />
           }
         </div>
       </td>
@@ -219,7 +219,7 @@
                   >
                     <i class="fa-light fa-plus me-1"> CONTABLE</i>
                   </button>
-                  <custom-button-confirmation
+                  <btn-confirmation
                     title="Confirmar"
                     icon=""
                     text="Enviar Emial a Contable"
@@ -274,12 +274,12 @@
                           {{ item.fecha }}, {{ item.seguimiento }}
                         </div>
                         <div class="col-sm-3 d-flex align-content-center">
-                          <custom-button-edit
+                          <btn-edit
                             (edit)="
                               onModalAddOrEditSeguimiento(detalle.id, item.id)
                             "
                           />
-                          <custom-button-delete
+                          <btn-delete
                             (OnConfirm)="onDeleteSeguimiento(item.id)"
                           />
                         </div>
@@ -327,7 +327,7 @@
                     </button>
                     <!-- Agregar Seguimiento -->
                     <!-- Editar  -->
-                    <custom-button-edit
+                    <btn-edit
                       (edit)="
                         onModalAddOrEditMinutaDetalle({
                           meetingId: item.id,
@@ -338,7 +338,7 @@
                     />
                     <!-- Editar  -->
                     <!-- Borrar -->
-                    <custom-button-delete
+                    <btn-delete
                       (OnConfirm)="onDeleteMeetingDetail(detalle.id)"
                     />
                     <!-- Borrar -->
@@ -426,7 +426,7 @@
                           {{ item.fecha }}, {{ item.seguimiento }}
                         </div>
                         <div class="col-sm-3 d-flex align-content-center">
-                          <custom-button-edit
+                          <btn-edit
                             (edit)="
                               onModalAddOrEditSeguimiento(
                                 operaciones.id,
@@ -434,7 +434,7 @@
                               )
                             "
                           />
-                          <custom-button-delete
+                          <btn-delete
                             (OnConfirm)="onDeleteSeguimiento(item.id)"
                           />
                         </div>
@@ -482,7 +482,7 @@
                     </button>
                     <!-- Agregar Seguimiento -->
                     <!-- Editar  -->
-                    <custom-button-edit
+                    <btn-edit
                       (edit)="
                         onModalAddOrEditMinutaDetalle({
                           meetingId: item.id,
@@ -493,7 +493,7 @@
                     />
                     <!-- Editar  -->
                     <!-- Borrar -->
-                    <custom-button-delete
+                    <btn-delete
                       (OnConfirm)="onDeleteMeetingDetail(operaciones.id)"
                     />
                     <!-- Borrar -->
@@ -533,7 +533,7 @@
                     <i class="fa-light fa-plus me-1">LEGAL</i>
                   </button>
                   @if (item.legal.length > 0) {
-                  <custom-button-confirmation
+                  <btn-confirmation
                     title="Confirmar"
                     icon=""
                     text="Enviar Emial a Legal"
@@ -589,12 +589,12 @@
                           {{ item.fecha }}, {{ item.seguimiento }}
                         </div>
                         <div class="col-sm-3 d-flex align-content-center">
-                          <custom-button-edit
+                          <btn-edit
                             (edit)="
                               onModalAddOrEditSeguimiento(legal.id, item.id)
                             "
                           />
-                          <custom-button-delete
+                          <btn-delete
                             (OnConfirm)="onDeleteSeguimiento(item.id)"
                           />
                         </div>
@@ -642,7 +642,7 @@
                     </button>
                     <!-- Agregar Seguimiento -->
                     <!-- Editar  -->
-                    <custom-button-edit
+                    <btn-edit
                       (edit)="
                         onModalAddOrEditMinutaDetalle({
                           meetingId: item.id,
@@ -653,9 +653,7 @@
                     />
                     <!-- Editar  -->
                     <!-- Borrar -->
-                    <custom-button-delete
-                      (OnConfirm)="onDeleteMeetingDetail(legal.id)"
-                    />
+                    <btn-delete (OnConfirm)="onDeleteMeetingDetail(legal.id)" />
                     <!-- Borrar -->
                   </div>
                 </td>

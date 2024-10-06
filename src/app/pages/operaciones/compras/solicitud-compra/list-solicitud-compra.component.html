@@ -150,9 +150,9 @@
         <div class="d-flex justify-content-center">
           @if ( authService.onValidateRoles([ 'Asistente', 'Mantenimiento',
           'Residente', 'SuperUsuario' ]) ) {
-          <custom-button-edit (edit)="onSolicitudCompra(item.id)" />
+          <btn-edit (edit)="onSolicitudCompra(item.id)" />
           } @if (authService.onValidateRoles(['SuperUsuario'])) {
-          <custom-button-delete (OnConfirm)="onDelete(item.id)" />
+          <btn-delete (OnConfirm)="onDelete(item.id)" />
           }
         </div>
       </td>

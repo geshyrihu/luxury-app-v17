@@ -40,10 +40,10 @@
         @if ( authService.onValidateRoles(['SuperUsuario', 'Reclutamiento']) ) {
         <td>
           <div class="d-flex justify-content-end">
-            <custom-button-edit
+            <btn-edit
               (edit)="onModalAddOrEdit({ id: data.id, title: 'Editar' })"
             />
-            <custom-button-delete (OnConfirm)="onDelete(data.id)" />
+            <btn-delete (OnConfirm)="onDelete(data.id)" />
           </div>
         </td>
         }
@@ -67,7 +67,7 @@
           {
           <div class="col-3">
             <div class="d-flex justify-content-end">
-              <custom-button-edit
+              <btn-edit
                 (edit)="
                   onModalAddOrEditDiscounts({
                     id: item.id,
@@ -75,7 +75,7 @@
                   })
                 "
               />
-              <custom-button-delete (OnConfirm)="onDeleteDiscounts(item.id)" />
+              <btn-delete (OnConfirm)="onDeleteDiscounts(item.id)" />
             </div>
           </div>
           }

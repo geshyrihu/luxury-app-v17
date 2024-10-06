@@ -183,7 +183,7 @@
           </a>
           } @if ( authService.onValidateRoles([ 'Asistente', 'Mantenimiento',
           'Residente' ]) ) {
-          <custom-button-edit (edit)="onAddOrEdit(item.id)" />
+          <btn-edit (edit)="onAddOrEdit(item.id)" />
           }
           <button
             type="button"
@@ -196,7 +196,7 @@
           </button>
           @if ( statusCompra === 2 && authService.onValidateRoles(['Residente'])
           ) {
-          <custom-button-delete (OnConfirm)="onDelete(item.id)" />
+          <btn-delete (OnConfirm)="onDelete(item.id)" />
           }
         </div>
       </td>

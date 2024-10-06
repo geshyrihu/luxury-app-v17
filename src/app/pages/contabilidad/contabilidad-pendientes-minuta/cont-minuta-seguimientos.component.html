@@ -13,12 +13,8 @@
       </td>
       <td>
         <div class="col-sm-3 d-flex align-content-center">
-          <custom-button-edit
-            (edit)="onModalAddOrEditSeguimiento(seguimiento.id)"
-          />
-          <custom-button-delete
-            (OnConfirm)="onDeleteSeguimiento(seguimiento.id)"
-          />
+          <btn-edit (edit)="onModalAddOrEditSeguimiento(seguimiento.id)" />
+          <btn-delete (OnConfirm)="onDeleteSeguimiento(seguimiento.id)" />
         </div>
       </td>
     </tr>

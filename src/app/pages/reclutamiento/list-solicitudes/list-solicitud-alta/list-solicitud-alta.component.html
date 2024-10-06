@@ -104,14 +104,14 @@
         <td class="p-column-title">
           <!-- Opciones -->
           <div class="d-flex justify-content-center">
-            <custom-button-edit
+            <btn-edit
               (edit)="
                 showModalAddOrEdit({
                   id: item.id,
                 })
               "
             />
-            <custom-button-delete (OnConfirm)="onDelete(item.id)" />
+            <btn-delete (OnConfirm)="onDelete(item.id)" />
           </div>
           <!-- Opciones -->
         </td>

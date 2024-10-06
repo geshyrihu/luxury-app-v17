@@ -57,7 +57,7 @@
           {{ item.endDate }}
         </td>
         <td class="p-column-title text-center">
-          <custom-button-download-pdf
+          <btn-download-file
             ngbTooltip="Visualizar Pdf"
             [urlFile]="item.pathDocument"
           />
@@ -66,11 +66,11 @@
         <!-- Opciones -->
         <td class="p-column-title">
           <div class="d-flex justify-content-center">
-            <custom-button-edit
+            <btn-edit
               (edit)="onModalAddOrEdit({ id: item.id, title: 'Editar' })"
             />
-            <custom-button-delete (OnConfirm)="onDelete(item.id)" />
-            <custom-button-delete
+            <btn-delete (OnConfirm)="onDelete(item.id)" />
+            <btn-delete
               (OnConfirm)="onDeleteDocument(item.id)"
               [textHeader]="'Eliminar Documento'"
               [textpTooltip]="'Eliminar Documento!'"

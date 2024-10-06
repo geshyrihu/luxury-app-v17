@@ -30,7 +30,7 @@
           />
         </div>
         <div class="col-2">
-          <custom-button-submit [disabled]="this.form.invalid || submitting" />
+          <btn-submit [disabled]="this.form.invalid || submitting" />
         </div>
       </div>
     </form>
@@ -93,8 +93,8 @@
         <!-- Opciones -->
         <td class="p-column-title" class="no-print">
           <div class="d-flex justify-content-center">
-            <custom-button-edit (edit)="onEditParticipant(item)" />
-            <custom-button-delete (OnConfirm)="onDelete(item.id)" />
+            <btn-edit (edit)="onEditParticipant(item)" />
+            <btn-delete (OnConfirm)="onDelete(item.id)" />
           </div>
         </td>
         <!-- Opciones -->

@@ -127,13 +127,13 @@
         </td>
         <td>
           <div class="d-flex bd-highlight">
-            <custom-button-download-pdf
+            <btn-download-file
               ngbTooltip="Visualizar Pdf"
               [urlFile]="item.constanciaFiscalPath"
             />
             @if ( validateRole([ 'Asistente', 'Mantenimiento', 'Residente',
             'SuperUsuario', 'SupervisionOperativa' ]) && item.id != 109 ) {
-            <custom-button-edit
+            <btn-edit
               class="bd-highlight"
               (edit)="
                 showModalAddOrEdit({
@@ -143,7 +143,7 @@
               "
             />
             } @if (validateRole(['SuperUsuario'])) {
-            <custom-button-delete
+            <btn-delete
               class="bd-highlight"
               (OnConfirm)="onDelete(item.providerId)"
             />

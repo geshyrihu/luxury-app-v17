@@ -48,7 +48,7 @@
         <!-- Opciones -->
         <td class="p-column-title" class="no-print">
           <div class="d-flex justify-content-center">
-            <custom-button-edit
+            <btn-edit
               (edit)="
                 onModalAddOrEdit({
                   id: item.id,
@@ -58,7 +58,7 @@
                 })
               "
             />
-            <custom-button-delete (OnConfirm)="onDelete(item.id, 0)" />
+            <btn-delete (OnConfirm)="onDelete(item.id, 0)" />
           </div>
         </td>
         <!-- Opciones -->
@@ -127,7 +127,7 @@
         <!-- Opciones -->
         <td class="p-column-title" class="no-print">
           <div class="d-flex justify-content-center">
-            <custom-button-edit
+            <btn-edit
               (edit)="
                 onModalAddOrEdit({
                   id: item.id,
@@ -137,7 +137,7 @@
                 })
               "
             />
-            <custom-button-delete (OnConfirm)="onDelete(item.id, 1)" />
+            <btn-delete (OnConfirm)="onDelete(item.id, 1)" />
           </div>
         </td>
         <!-- Opciones -->

@@ -76,7 +76,7 @@
             @switch (item.tipoSolicitud) { @case ('Alta') {
             <div class="body-card">
               <!-- Contenido específico para el caso 'pesificacion' -->
-              <custom-button-edit
+              <btn-edit
                 (edit)="
                           onModalEditSolicitudAlta({
                           id: item.id,
@@ -87,7 +87,7 @@
             } @case ('Vacante') {
             <div class="body-card">
               <!-- Contenido específico para otro caso -->
-              <custom-button-edit
+              <btn-edit
                 (edit)="
                           onModalEditVacante({
                           id: item.id,
@@ -98,7 +98,7 @@
             } @case ('Baja') {
             <div class="body-card">
               <!-- Contenido específico para otro caso -->
-              <custom-button-edit
+              <btn-edit
                 (edit)="
                           onModalEditSolicitudBaja({
                           id: item.id,
@@ -109,7 +109,7 @@
             } @case ('Modificacion') {
             <div class="body-card">
               <!-- Contenido específico para otro caso -->
-              <custom-button-edit
+              <btn-edit
                 (edit)="
                           onModalEditModificacionSalario({
                           id: item.id,

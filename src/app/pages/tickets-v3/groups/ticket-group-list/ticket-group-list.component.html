@@ -61,7 +61,7 @@
       </td>
 
       <td class="text-center">
-        <app-c-btn-bagges
+        <btn-bagges
           icon="fa-thin fa-thin fa-clock"
           ngbTooltipCustom="Pendientes"
           customClass="btn-sm btn-outline-danger gb-gradient me-1"
@@ -70,7 +70,7 @@
         />
       </td>
       <td class="text-center">
-        <app-c-btn-bagges
+        <btn-bagges
           icon="fa-thin fa-spinner fa-spin"
           ngbTooltipCustom="En Proceso"
           customClass="btn-sm btn-outline-warning gb-gradient me-1"
@@ -79,7 +79,7 @@
         />
       </td>
       <td class="text-center">
-        <app-c-btn-bagges
+        <btn-bagges
           icon="fa-thin fa-folder-open"
           ngbTooltipCustom="Reabierto"
           customClass="btn-sm btn-outline-secondary gb-gradient me-1"
@@ -88,7 +88,7 @@
         />
       </td>
       <td class="text-center">
-        <app-c-btn-bagges
+        <btn-bagges
           icon="fa-thin fa-check-circle"
           ngbTooltipCustom="Cerrado"
           customClass="btn-sm btn-outline-success gb-gradient me-1"
@@ -98,7 +98,7 @@
       </td>
       <td>
         <div class="d-flex justify-content-center">
-          <app-c-btn-bagges
+          <btn-bagges
             icon="fa-thin fa-users"
             ngbTooltipCustom="Participantes"
             customClass="btn-sm btn-outline-primary gb-gradient me-1"
@@ -106,7 +106,7 @@
             [count]="item.ticketGroupParticipant"
           />
 
-          <custom-button-edit
+          <btn-edit
             *ngIf="item.active"
             (edit)="onModalAddOrEdit({ id: item.id, title: 'Editar' })"
           />
@@ -124,7 +124,7 @@
             icon="fa-thin fa-lock"
             (clicked)="onToggleStatus(item.id)"
           />
-          <custom-button-delete (OnConfirm)="onDelete(item.id)" />
+          <btn-delete (OnConfirm)="onDelete(item.id)" />
         </div>
       </td>
     </tr>

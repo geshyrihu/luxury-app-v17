@@ -19,7 +19,7 @@
           />
         </div>
         <div class="col-sm-2">
-          <custom-button-active-desactive
+          <btn-active-desactive
             (activo)="onSelectActive($event)"
             (inactivo)="onSelectActive($event)"
           />
@@ -185,7 +185,7 @@
               <br />
               <!-- Eliminar puesto de trabajo -->
               @if (authService.onValidateRoles(['SuperUsuario'])) {
-              <custom-button-confirmation
+              <btn-confirmation
                 title="Confirmar"
                 text="Se va a eliminar el registro"
                 classButton="btn-outline-danger   w-100 mt-1 text-start"
