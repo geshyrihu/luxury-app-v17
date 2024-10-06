@@ -44,4 +44,11 @@ export default [
         'src/app/pages/operaciones/capacitaciones/maintenance-calendar-master/calendario-maestro-equipo/calendario-maestro-equipo.component'
       ),
   },
+  {
+    path: 'custom-calendar-events',
+    loadComponent: () =>
+      import(
+        'src/app/pages/custom-calendar/custom-calendar-events/custom-calendar-events.component'
+      ),
+  },
 ] as Routes;

@@ -3,7 +3,6 @@ export interface IUserToken {
   expiration: string;
   roles: string[];
   infoUserAuthDto: InfoAccountAuthDto;
-  // infoEmployeeDto?: IInfoEmployeeAuth;
 }
 
 export interface InfoAccountAuthDto {
@@ -17,16 +16,3 @@ export interface InfoAccountAuthDto {
   photoPath: string;
   fullName: string;
 }
-
-// export interface IInfoEmployeeAuth {
-//   employeeId: number | null;
-//   firstName: string;
-//   lastName: string;
-//   birth: string;
-//   photoPath: string;
-//   fullName: string;
-//   profession: string;
-//   customer: string;
-//   professionId: number;
-//   customerId: number;
-// }

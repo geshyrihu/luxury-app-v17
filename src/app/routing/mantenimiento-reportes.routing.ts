@@ -73,4 +73,11 @@ export default [
         'src/app/pages/operaciones/reportes/mantenimiento-reportes/report-ticket/report-ticket.component'
       ),
   },
+  {
+    path: 'elevadores',
+    loadComponent: () =>
+      import(
+        'src/app/pages/operaciones/mantenimiento/mantenimiento-bitacoras/elevator/list-elevators-emergency-call/list-elevators-emergency-call.component'
+      ),
+  },
 ] as Routes;

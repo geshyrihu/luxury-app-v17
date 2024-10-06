@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
-import CustomButtonComponent from '../custom-button/custom-button.component';
+import BtnComponent from '../custom-button/custom-button.component';
 @Component({
-  imports: [NgbTooltip, CustomButtonComponent],
+  imports: [NgbTooltip, BtnComponent],
   selector: 'custom-button-delete',
   standalone: true,
   templateUrl: './custom-button-delete.component.html',
@@ -25,8 +25,8 @@ export default class CustomButtonDeleteComponent {
       text: 'Se va a eliminar el registro',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: '#34c38f',
-      cancelButtonColor: '#f46a6a',
+      confirmButtonColor: '#50C878',
+      cancelButtonColor: '#9B1B30',
       confirmButtonText: 'Sí, eliminar',
       cancelButtonText: 'Cancelar',
     }).then((result) => {

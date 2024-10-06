@@ -66,4 +66,11 @@ export class AuthService {
   onValidateRoles(roles: string[]): boolean {
     return this.userTokenDto.roles.some((item) => roles.includes(item));
   }
+
+  redirectUrl: string | null = null; // URL a la que se redirigirá después de logear
+
+  // isLoggedIn(): boolean {
+  //   // Lógica para verificar si el usuario está autenticado
+  //   return !!localStorage.getItem('token'); // ejemplo simple, se puede mejorar
+  // }
 }

@@ -10,24 +10,29 @@ import {
 } from '@angular/common/http';
 import {
   ApplicationConfig,
-  LOCALE_ID,
   importProvidersFrom,
   isDevMode,
+  LOCALE_ID,
 } from '@angular/core';
+
 import { BrowserModule } from '@angular/platform-browser';
 import {
   BrowserAnimationsModule,
   provideAnimations,
 } from '@angular/platform-browser/animations';
 import { provideRouter } from '@angular/router';
-import { provideServiceWorker } from '@angular/service-worker';
+import {
+  provideServiceWorker,
+  ServiceWorkerModule,
+} from '@angular/service-worker';
 import { TranslateModule } from '@ngx-translate/core';
 import { FlatpickrModule } from 'angularx-flatpickr';
 import { NgxMaskModule } from 'ngx-mask';
+import { environment } from 'src/environments/environment';
 import { routes } from './app.routes';
 import { AutosizeDirective } from './core/directives/autosize-text-area.diective';
 import { JwtInterceptor } from './core/services/jwt-interceptor.service';
-
+// Import the functions you need from the SDKs you need
 export const appConfig: ApplicationConfig = {
   providers: [
     {
@@ -48,6 +53,15 @@ export const appConfig: ApplicationConfig = {
       BrowserAnimationsModule,
       // Módulo que contiene funcionalidades básicas de Angular para el navegador
       BrowserModule,
+
+      ServiceWorkerModule.register('custom-sw.js', {
+        enabled: environment.production,
+      }),
+      // AngularFireModule.initializeApp(environment.firebaseConfig),
+
+      // provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
+      // provideFirestore(() => getFirestore()),
+
       // Módulo que configura Flatpickr, una librería de selección de fechas y horas
       FlatpickrModule.forRoot(),
       // Módulo para realizar peticiones HTTP

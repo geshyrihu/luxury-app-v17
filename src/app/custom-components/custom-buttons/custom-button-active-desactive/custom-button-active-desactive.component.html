@@ -11,23 +11,37 @@
         id="btncheck1"
         autocomplete="off"
         (click)="onPropagarActivo()"
-        [disabled]="state == true"
+        [disabled]="state === true"
       />
-      <label class="btn btn-success bg-gradient w-50" for="btncheck1">{{
-        activas
-      }}</label>
+      <label
+        class="btn bg-gradient w-50"
+        [ngClass]="{
+          'btn-primary': state === true,
+          'btn-outline-primary': state !== true
+        }"
+        for="btncheck1"
+      >
+        {{ activas }}
+      </label>
 
       <input
         type="checkbox"
         class="btn-check"
         id="btncheck2"
         autocomplete="off"
-        [disabled]="state == false"
+        [disabled]="state === false"
         (click)="onPropagarInactivo()"
       />
-      <label class="btn btn-danger bg-gradient w-50" for="btncheck2">{{
-        inactivas
-      }}</label>
+      <label
+        class="btn bg-gradient w-50"
+        [ngClass]="{
+          'btn-primary': state === false,
+          'btn-outline-primary': state !== false
+        }"
+        for="btncheck2"
+      >
+        {{ inactivas }}
+      </label>
     </div>
   </div>
 </div>

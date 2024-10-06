@@ -1,0 +1,30 @@
+<div class="card">
+  <div class="card-body">
+    <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
+      <custom-input-text
+        [control]="form.get('id')"
+        formControlName="id"
+        label="Id"
+        placeholder="Id"
+        [readonly]="true"
+      />
+      <custom-input-select
+        [control]="form.get('ticketGroupCategoryId')"
+        formControlName="ticketGroupCategoryId"
+        label="Categoria"
+        [selectDefaulOption]="false"
+        [data]="cb_ticketGroupCategory"
+      />
+
+      <custom-input-select
+        [control]="form.get('isPublic')"
+        formControlName="isPublic"
+        label="Privacidad"
+        [selectDefaulOption]="false"
+        [data]="cb_isPublic"
+      />
+
+      <custom-button-submit [disabled]="this.form.invalid || submitting" />
+    </form>
+  </div>
+</div>

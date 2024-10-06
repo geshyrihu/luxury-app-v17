@@ -1,0 +1,32 @@
+<div class="dropdown d-inline-block" ngbDropdown>
+  <button
+    type="button"
+    class="btn header-item topbar-light bg-light-subtle border-start border-end"
+    id="page-header-user-dropdown"
+    data-bs-toggle="dropdown"
+    aria-haspopup="true"
+    aria-expanded="false"
+    ngbDropdownToggle
+  >
+    <img class="rounded avatar-md" [src]="profileImageUrl" alt="Img" />
+    <span class="d-none d-xl-inline-block ms-1 fw-medium"
+      >{{ infoAccountAuthDto.firstName }} {{ infoAccountAuthDto.lastName }}
+    </span>
+    <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
+  </button>
+  <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
+    <div class="dropdown-divider"></div>
+    <a [routerLink]="['/accounts/actualizar-perfil']" class="dropdown-item">
+      <i class="fa-thin fa-key me-2" style="color: #ffd43b"></i> Cambiar
+      contraseña
+    </a>
+
+    <a class="dropdown-item pointer" (click)="logout()">
+      <i
+        class="fa-sharp fa-light fa-arrow-right-from-bracket fa-flip-vertical me-2"
+        style="color: #f50000"
+      ></i
+      >Cerrar Sesión
+    </a>
+  </div>
+</div>

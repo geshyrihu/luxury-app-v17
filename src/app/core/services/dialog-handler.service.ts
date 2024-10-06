@@ -16,7 +16,8 @@ export class DialogHandlerService {
     const ref = this.dialogService.open(component, {
       data,
       header: title,
-      styleClass: size,
+      styleClass: this.getResponsiveDialogSize(size),
+      // styleClass: size,
       closeOnEscape: true,
       baseZIndex: 10000,
     });
@@ -24,22 +25,22 @@ export class DialogHandlerService {
     return this.subscribeToDialogClose(ref);
   }
 
-  justOpenDialog(
-    component: any,
-    data: any,
-    title: string,
-    size: DialogSize
-  ): void {
-    const ref = this.dialogService.open(component, {
-      data,
-      header: title,
-      styleClass: size,
-      closeOnEscape: true,
-      baseZIndex: 10000,
-    });
+  // justOpenDialog(
+  //   component: any,
+  //   data: any,
+  //   title: string,
+  //   size: DialogSize
+  // ): void {
+  //   const ref = this.dialogService.open(component, {
+  //     data,
+  //     header: title,
+  //     styleClass: size,
+  //     closeOnEscape: true,
+  //     baseZIndex: 10000,
+  //   });
 
-    this.subscribeToDialogClose(ref);
-  }
+  //   this.subscribeToDialogClose(ref);
+  // }
 
   private subscribeToDialogClose(ref: any): Promise<boolean> {
     return new Promise<boolean>((resolve) => {
@@ -47,6 +48,18 @@ export class DialogHandlerService {
         if (resp) resolve(resp);
       });
     });
+  }
+
+  // Mantiene el tamaño inicial, pero ajusta si la pantalla es pequeña
+  private getResponsiveDialogSize(initialSize: DialogSize): DialogSize {
+    const width = window.innerWidth;
+
+    if (width < 576) {
+      return DialogSize.full; // Pantallas pequeñas, modal ocupa el 100%
+    }
+
+    // Retorna el tamaño inicial si la pantalla es más grande
+    return initialSize;
   }
 
   dialogSizeSm: DialogSize = DialogSize.sm;

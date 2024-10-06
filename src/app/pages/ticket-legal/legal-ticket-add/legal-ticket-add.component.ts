@@ -11,7 +11,6 @@ import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { SignalrCustomService } from 'src/app/core/services/signalrcustom.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
@@ -23,7 +22,6 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 export default class LegalTicketAddComponent implements OnInit {
   customerIdService = inject(CustomerIdService);
   formBuilder = inject(FormBuilder);
-  signalrCustomService = inject(SignalrCustomService);
   apiRequestService = inject(ApiRequestService);
   auhtService = inject(AuthService);
   config = inject(DynamicDialogConfig);
@@ -85,12 +83,6 @@ export default class LegalTicketAddComponent implements OnInit {
       .onPost(`TicketLegal`, this.form.value)
       .then((result: boolean) => {
         result ? this.ref.close(true) : (this.submitting = false);
-        this.signalrCustomService.hubConnection.on(
-          'Nueva solicitud TicketLegal',
-          (respuesta) => {
-            console.log('Respuesta hubConnection: ', respuesta);
-          }
-        );
       });
   }
 

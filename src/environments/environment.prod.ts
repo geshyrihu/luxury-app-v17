@@ -21,4 +21,14 @@ export const environment = {
   base_url: 'https://luxurybuildingapp.com/api/',
   base_urlImg: 'https://luxurybuildingapp.com/img/',
   url_account: `https://luxurybuildingapp.com/img/Administration/accounts/`,
+
+  firebaseConfig: {
+    apiKey: 'AIzaSyAcFWeeLSQhwHProwEhOI75cgh8xL6aXU0',
+    authDomain: 'luxurychatapp.firebaseapp.com',
+    projectId: 'luxurychatapp',
+    storageBucket: 'luxurychatapp.appspot.com',
+    messagingSenderId: '618505270499',
+    appId: '1:618505270499:web:9d9dcf2077b0995a36c1d6',
+    measurementId: 'G-FRY3VDNN0K',
+  },
 };

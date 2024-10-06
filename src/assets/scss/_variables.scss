@@ -112,8 +112,8 @@ $gray-400: #ced4da; // Gris claro 400
 $gray-500: #adb5bd; // Gris medio 500
 $gray-600: #74788d; // Gris medio 600
 $gray-700: #313533; // Gris oscuro 700
-$gray-800: #2c302e; // Gris oscuro 800
-// $gray-800: #012e4a; // Gris oscuro 800
+// $gray-800: #2c302e; // Gris oscuro 800
+$gray-800: #2e2e2e; // Gris oscuro 800
 $gray-900: #212529; // Gris oscuro 900
 $black: #000; // Negro
 // scss-docs-end gray-color-variables
@@ -137,16 +137,17 @@ $grays: (
 
 // scss-docs-start color-variables
 // Colores básicos
-$blue: #5156be; // Azul
+$blue: #9ab7d3; // Azul
 $indigo: #564ab1; // Índigo
 $purple: #6f42c1; // Púrpura
 $pink: #e83e8c; // Rosa
+// $red: #c00000; // Rojo
 $red: #fd625e; // Rojo
 $orange: #f1734f; // Naranja
 $yellow: #ffbf53; // Amarillo
 $green: #2ab57d; // Verde
 $teal: #050505; // Verde azulado
-$cyan: #4ba6ef; // Cian
+$cyan: #82ccdd; // Cian
 // scss-docs-end color-variables
 
 // scss-docs-start colors-map
@@ -703,11 +704,11 @@ $aspect-ratios: (
 
 // scss-docs-start font-variables
 // stylelint-disable value-keyword-case
-// $font-family-sans-serif: "IBM Plex Sans", sans-serif;
-$font-family-sans-serif: "Segoe UI Variable Static Text", sans-serif;
+$font-family-sans-serif: "Segoe UI Variable Static Text", serif;
+// $font-family-sans-serif: "Segoe UI Variable Static Text", sans-serif;
 $font-family-quicksand: "Quicksand", sans-serif;
-$font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
-  "Liberation Mono", "Courier New", monospace;
+$font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Roboto",
+  "Courier New", monospace;
 // stylelint-enable value-keyword-case
 $font-family-base: var(--#{$prefix}font-sans-serif);
 $font-family-code: var(--#{$prefix}font-monospace);

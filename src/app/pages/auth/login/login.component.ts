@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { catchError, throwError } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { SecurityService } from 'src/app/core/services/security.service';
@@ -24,6 +25,7 @@ export default class LoginComponent implements OnInit {
   formBuilder = inject(FormBuilder);
   router = inject(Router);
   securityService = inject(SecurityService);
+  authService = inject(AuthService);
 
   fieldTextType!: boolean;
   form: FormGroup;
@@ -74,10 +76,17 @@ export default class LoginComponent implements OnInit {
       .subscribe((resp: any) => {
         if (resp.body.token != null) {
           this.onRemember(this.form.get('remember').value);
-          var route = localStorage.getItem('currentUrl');
-          this.router.navigateByUrl(localStorage.getItem('currentUrl'));
+          // var route = localStorage.getItem('currentUrl');
+          // this.router.navigateByUrl(localStorage.getItem('currentUrl'));
           this.securityService.setAuthData(resp.body.token);
           this.customToastService.onCloseToSuccess();
+
+          // Redirigir a la URL original o a una predeterminada si no hay una
+          const redirectUrl = this.authService.redirectUrl || '/dashboard';
+          this.router.navigateByUrl(redirectUrl);
+
+          // Limpiar la URL de redirección
+          this.authService.redirectUrl = null;
         }
       });
   }

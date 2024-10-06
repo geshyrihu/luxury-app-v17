@@ -11,7 +11,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
   providedIn: 'root',
 })
 export class AuthGuard {
-  authService = inject(AuthService);
+  private authService = inject(AuthService);
   private route = inject(Router);
 
   /**
@@ -24,6 +24,8 @@ export class AuthGuard {
     return this.authService.validateToken().pipe(
       tap((JWTisValid) => {
         if (!JWTisValid) {
+          // Guardar la URL a la que el usuario intentaba acceder
+          this.authService.redirectUrl = state.url;
           // Redirigir al usuario a la página de inicio de sesión si el token no es válido.
           this.route.navigateByUrl('/auth/login');
         }

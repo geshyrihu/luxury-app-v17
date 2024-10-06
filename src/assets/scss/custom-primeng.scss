@@ -12,7 +12,9 @@ th {
   font-weight: normal; /* Peso de la fuente normal */
   padding: 10px; /* Espaciado interno */
   border: 1px solid #fff; /* Borde blanco */
-  background: linear-gradient(to right, #000000, #2e2e2e); /* Fondo degradado */
+  // background: linear-gradient(to right, #000000, #2e2e2e); /* Fondo degradado */
+
+  background: #2e2e2e;
   color: #fff; /* Texto en blanco */
   text-transform: uppercase; /* Convierte el texto a mayúsculas */
 }
@@ -56,6 +58,7 @@ td {
   padding: 8px; /* Espaciado interno */
 }
 
+// Tablas de TICKETS LEGAL
 /* Estilos para el primer grupo de colores con degradado */
 .color-gradient-1 {
   background: linear-gradient(

@@ -125,8 +125,8 @@ export default class PresentacionJuntaComiteComponent implements OnInit {
       text: confirmacion,
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: '#34c38f',
-      cancelButtonColor: '#f46a6a',
+      confirmButtonColor: '#50C878',
+      cancelButtonColor: '#9B1B30',
       confirmButtonText: 'Sí, confirmo!',
       cancelButtonText: 'Cancelar',
     }).then((result) => {

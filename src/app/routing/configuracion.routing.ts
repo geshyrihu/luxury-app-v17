@@ -110,4 +110,11 @@ export default [
         'src/app/pages/customer-data-company/list-customer-data-company.component'
       ),
   },
+  {
+    path: 'company-departaments',
+    loadComponent: () =>
+      import(
+        'src/app/pages/company-departments/company-departments-list/company-departments-list.component'
+      ),
+  },
 ] as Routes;

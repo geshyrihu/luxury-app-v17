@@ -1,0 +1,51 @@
+<app-ticket-date-range-selector (selectedDates)="onDateRangeSelected($event)" />
+<hr />
+<!-- src/app/components/ticket-report/ticket-report.component.html -->
+<div class="p-fluid">
+  <p-table
+    *ngIf="data"
+    [value]="data?.GroupedTicketReport"
+    [paginator]="true"
+    [rows]="10"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Ticket Group Name</th>
+        <th>Total Tickets Created</th>
+        <th>Total Tickets Closed</th>
+        <th>Total Tickets Pending</th>
+        <th>Tickets</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-group>
+      <tr>
+        <td>{{ group.TicketGroupName }}</td>
+        <td>{{ group.TotalTicketsCreated }}</td>
+        <td>{{ group.TotalTicketsClosed }}</td>
+        <td>{{ group.TotalTicketsPending }}</td>
+        <td>
+          <p-table [value]="group.Tickets">
+            <ng-template pTemplate="header">
+              <tr>
+                <th>Folio</th>
+                <th>Title</th>
+                <th>Created At</th>
+                <th>Closed At</th>
+                <th>Status</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-ticket>
+              <tr>
+                <td>{{ ticket.Folio }}</td>
+                <td>{{ ticket.Title }}</td>
+                <td>{{ ticket.CreatedAt | date : "short" }}</td>
+                <td>{{ ticket.ClosedAt | date : "short" }}</td>
+                <td>{{ ticket.Status }}</td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

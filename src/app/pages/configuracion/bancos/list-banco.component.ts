@@ -14,7 +14,6 @@ import AddOrEditBancoComponent from './addoredit-banco.component';
 export default class ListBancoComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
-  // googleCalendarService = inject(GoogleCalendarService);
 
   // Declaración e inicialización de variables
   dataSignal = signal<any>(null);
@@ -22,12 +21,7 @@ export default class ListBancoComponent implements OnInit {
 
   ngOnInit(): void {
     this.onLoadData();
-    // this.loadEvents();
   }
-  // events: any[] = [];
-  // loadEvents() {
-  //   this.googleCalendarService.onTestCalendar();
-  // }
 
   onLoadData() {
     const urlApi = `banks`;

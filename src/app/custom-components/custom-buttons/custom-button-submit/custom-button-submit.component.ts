@@ -7,7 +7,7 @@ import { ButtonModule } from 'primeng/button';
   templateUrl: './custom-button-submit.component.html',
   imports: [NgClass, ButtonModule],
 })
-export default class CustomButtonSubmitComponent {
+export default class BtnSubmitComponent {
   @Input()
   disabled: boolean = false;
   @Input()

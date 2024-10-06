@@ -1,0 +1,13 @@
+<button
+  (click)="onClick($event)"
+  [class]="customClass"
+  [ngbTooltip]="ngbTooltipCustom"
+  [placement]="placement"
+  [ngClass]="customNgClass"
+  [disabled]="disabled"
+  type="button"
+  class="btn"
+>
+  <i [class]="icon" [ngClass]="customNgClassIcon"></i> {{ label }}
+  <span class="badge bg-light ms-1">{{ count }}</span>
+</button>

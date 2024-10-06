@@ -25,8 +25,8 @@ export default class CustomButtonDeleteSpanComponent {
       text: 'Se va a elimnar el registro',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: '#34c38f',
-      cancelButtonColor: '#f46a6a',
+      confirmButtonColor: '#50C878',
+      cancelButtonColor: '#9B1B30',
       confirmButtonText: 'Sí, eliminar',
       cancelButtonText: 'Cancelar',
     }).then((result) => {

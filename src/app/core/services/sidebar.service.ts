@@ -30,7 +30,13 @@ export class SidebarService {
           visible: this.authService.onValidateRoles(['Legal', 'SuperUsuario']),
           label: 'Customer Data Company',
           routerLink: '/configuracion/customer-data-company',
-          name: 'Legal-Minutas',
+          name: 'customer-data-company',
+        },
+        {
+          visible: this.authService.onValidateRoles(['SuperUsuario']),
+          label: 'Departamentos de la empresa',
+          routerLink: '/configuracion/company-departaments',
+          name: 'company-departaments',
         },
       ],
     },
@@ -387,11 +393,60 @@ export class SidebarService {
       ],
     },
     {
-      visible: this.authService.onValidateRoles(['SuperUsuario']),
-      label: 'Tickets LuxuryChat',
+      visible: this.authService.onValidateRoles([
+        'SuperUsuario',
+        'Reclutamiento',
+      ]),
+      label: 'Tickets V3',
       icon: 'fa-thin fa-ticket',
-      routerLink: '/luxury-chat/list',
       name: 'Tickets',
+      items: [
+        {
+          visible: this.authService.onValidateRoles([
+            'SuperUsuario',
+            'Reclutamiento',
+          ]),
+          label: 'Categorias',
+          routerLink: '/luxury-chat/ticket-group-category',
+          name: 'ticket group category',
+        },
+        {
+          visible: this.authService.onValidateRoles([
+            'SuperUsuario',
+            'Reclutamiento',
+          ]),
+          label: 'Grupos',
+          routerLink: '/luxury-chat/list',
+          name: 'groups',
+        },
+        {
+          visible: this.authService.onValidateRoles([
+            'SuperUsuario',
+            'Reclutamiento',
+          ]),
+          label: 'Asignados a mi',
+          routerLink: '/luxury-chat/my-tickets',
+          name: 'my assignments',
+        },
+        {
+          visible: this.authService.onValidateRoles([
+            'SuperUsuario',
+            'Reclutamiento',
+          ]),
+          label: 'Mis solicitudes',
+          routerLink: '/luxury-chat/my-requests',
+          name: 'my request',
+        },
+        {
+          visible: this.authService.onValidateRoles([
+            'SuperUsuario',
+            'Reclutamiento',
+          ]),
+          label: 'Reportes',
+          routerLink: '/luxury-chat/reports',
+          name: 'message report',
+        },
+      ],
     },
     {
       visible: this.authService.onValidateRoles([
@@ -1055,6 +1110,12 @@ export class SidebarService {
           label: 'Calendario Maestro Equipo',
           routerLink: '/operaciones/calendario/calendario-maestro-equipo',
           name: 'Capacitación-Guia calendario general de mtto',
+        },
+        {
+          visible: this.authService.onValidateRoles(['SuperUsuario']),
+          label: 'Calendario',
+          routerLink: '/operaciones/calendario/custom-calendar-events',
+          name: 'custom-calendar-events',
         },
       ],
     },

@@ -1,0 +1,77 @@
+<div class="container mt-4">
+  <div class="card shadow-sm">
+    <div
+      class="card-header bg-primary text-white d-flex align-items-center justify-content-between"
+    >
+      <h5 class="card-title mb-0">{{ data.title }}</h5>
+      <span class="badge bg-info p-2"> {{ data.folio }}</span>
+    </div>
+    <div class="card-body">
+      <div class="row mb-3">
+        <div class="col-sm-6">
+          <strong>Solicitud:</strong> {{ data.createdAtDate }} -
+          {{ data.createdAtHour }}
+        </div>
+        <div class="col-sm-6">
+          <strong>Programado:</strong>
+          {{ data.scheduledAt || "No programado" }}
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-sm-12">
+          <strong>Description:</strong>
+          <p>{{ data.description }}</p>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-sm-6">
+          <strong>Prioridad:</strong>
+          <span class="badge bg-warning">{{ data.priority }}</span>
+        </div>
+        <div class="col-sm-6">
+          <strong>Status:</strong>
+          <span class="badge bg-secondary">{{ data.status }}</span>
+        </div>
+      </div>
+
+      <div class="row mb-3 align-items-center">
+        <div class="col-sm-6 d-flex align-items-center">
+          <div><strong>Solicito:</strong> {{ data.creator || "Unknown" }}</div>
+        </div>
+        <div class="col-sm-6">
+          <strong>Cerrado:</strong> {{ data.closedBy || "No cerrado" }}
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-6">
+          <strong>Foto antes:</strong>
+          <br />
+          <p-image
+            *ngIf="data.beforeWork"
+            [src]="this.urlImage + data.beforeWork"
+            alt="."
+            width="200"
+            class="me-2 border border-danger"
+            [preview]="true"
+          ></p-image>
+        </div>
+        <div class="col-sm-6">
+          <strong>Foto despues:</strong>
+          <br />
+
+          <p-image
+            *ngIf="data.afterWork"
+            [src]="this.urlImage + data.afterWork"
+            alt="."
+            width="200"
+            class="me-2 border border-success"
+            [preview]="true"
+          ></p-image>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

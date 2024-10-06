@@ -1,0 +1,64 @@
+// ICONS
+/* FontAwesome */
+@import url("https://site-assets.fontawesome.com/releases/v6.4.0/css/all.css");
+@import url("https://site-assets.fontawesome.com/releases/v6.4.0/css/sharp-solid.css");
+@import url("https://site-assets.fontawesome.com/releases/v6.4.0/css/sharp-regular.css");
+@import url("https://site-assets.fontawesome.com/releases/v6.4.0/css/sharp-light.css");
+@import url("https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/7.4.47/css/materialdesignicons.min.css");
+
+/* Definir variables CSS para tipos de íconos */
+:root {
+  --icon-edit: "\f5ad"; /* FontAwesome edit icon */
+  --icon-delete: "\f1f8"; /* FontAwesome delete icon */
+  --icon-update: "\f021"; /* FontAwesome update icon */
+  --icon-user: "\f007"; /* FontAwesome user icon */
+  --icon-list: "\f03a"; /* FontAwesome list icon */
+  --icon-document: "\f15c"; /* FontAwesome document icon */
+  --icon-lock: "\f023"; /* FontAwesome lock icon */
+  --icon-unlock: "\f09c"; /* FontAwesome unlock icon */
+
+  --mdi-user: "\F1016"; /* MaterialDesign user icon */
+}
+/* Aplicar iconos a elementos usando variables */
+.icon {
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900; /* Asegura el uso del estilo sólido */
+}
+
+.icon-edit::before {
+  content: var(--icon-edit);
+}
+
+.icon-delete::before {
+  content: var(--icon-delete);
+}
+
+.icon-update::before {
+  content: var(--icon-update);
+}
+
+.icon-user::before {
+  content: var(--icon-user);
+}
+
+.icon-list::before {
+  content: var(--icon-list);
+}
+
+.icon-document::before {
+  content: var(--icon-document);
+}
+
+.icon-lock::before {
+  content: var(--icon-lock);
+}
+
+.icon-unlock::before {
+  content: var(--icon-unlock);
+}
+
+/* Aplicar iconos de Material Design usando variables */
+.icon-mdi-user::before {
+  content: var(--mdi-user);
+  font-family: "Material Design Icons";
+}

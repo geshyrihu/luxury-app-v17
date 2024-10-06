@@ -1,0 +1,15 @@
+<div class="app-search mt-1 me-2" style="width: 300px">
+  <select
+    class="form-select"
+    [(ngModel)]="customerId"
+    (change)="selectCustomer($event.target['value'])"
+  >
+    @for (item of cb_customer; track item) {
+    <option [value]="item.value">
+      <span>
+        {{ item.label }}
+      </span>
+    </option>
+    }
+  </select>
+</div>

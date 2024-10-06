@@ -17,13 +17,13 @@
         [dt]="dt"
       />
       <button
-        class="btn btn-sm btn-light me-1 mb-sm-1"
+        class="btn btn-primary me-1 mb-sm-1"
         pSortableColumn="fechaCorrespondienteFiltro"
       >
         PERIODO <p-sortIcon field="fechaCorrespondienteFiltro"></p-sortIcon>
       </button>
       <button
-        class="btn btn-sm btn-light me-1 mb-sm-1"
+        class="btn btn-primary me-1 mb-sm-1"
         pSortableColumn="fechaJuntaFiltro"
       >
         FECHA DE JUNTA
@@ -67,10 +67,10 @@
                 Presentación enviada a comité:
                 {{ !item.enviadoComite ? "No" : "Sí" }}
                 <i
-                  class="bx"
+                  class="fa-solid"
                   [ngClass]="{
-                    'bx-check text-success': item.enviadoComite,
-                    'bx-x text-danger': !item.enviadoComite
+                    'fa-check-double text-success': item.enviadoComite,
+                    'fa-xmark text-danger': !item.enviadoComite
                   }"
                 ></i>
               </p>

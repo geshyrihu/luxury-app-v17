@@ -1,0 +1,110 @@
+<div class="card">
+  <div class="card-body">
+    <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
+      <div class="row">
+        <h5 class="h5">Agregar</h5>
+        <div class="col-sm-6">
+          <custom-input-text
+            [control]="form.get('id')"
+            formControlName="id"
+            label="Id"
+            placeholder="Id"
+            [hidden]="false"
+          />
+          <custom-input-datalist
+            (propagar)="onSelectUser($event)"
+            [control]="form.get('applicationUser')"
+            [data]="cb_application_user"
+            formControlName="applicationUser"
+            label="Usuario"
+            dataListId="applicationUserDatalistOptions"
+          />
+        </div>
+        <div class="col-4">
+          <custom-input-select
+            [control]="form.get('isAdmin')"
+            formControlName="isAdmin"
+            label="Rol"
+            [selectDefaulOption]="false"
+            [data]="cb_eLuxury_group_rol"
+          />
+        </div>
+        <div class="col-2">
+          <custom-button-submit [disabled]="this.form.invalid || submitting" />
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<p
+  class="card-text text-center text-danger"
+  *ngIf="cb_existing_Participant && cb_existing_Participant.length === 0"
+>
+  No hay integrantes
+</p>
+<app-loading-spinner *ngIf="loading_existing_participant" />
+
+<div
+  class="card"
+  *ngIf="cb_existing_Participant && cb_existing_Participant.length > 0"
+>
+  <p-table
+    #dt
+    [value]="cb_existing_Participant"
+    [autoLayout]="true"
+    [globalFilterFields]="['applicationUser']"
+    styleClass="custom-table"
+  >
+    <!-- styleClass="p-datatable-sm" -->
+    <ng-template pTemplate="caption">
+      <table-header title="" [showAdd]="false" [dt]="dt" />
+    </ng-template>
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th scope="col" style="width: 20%" pSortableColumn="isAdmin">
+          Rol<p-sortIcon field="isAdmin"></p-sortIcon>
+        </th>
+        <th scope="col" style="width: 70%" pSortableColumn="applicationUser">
+          Nombre
+          <p-sortIcon field="applicationUser"></p-sortIcon>
+        </th>
+        <th scope="col" style="width: 10%" class="no-print">Opciones</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item>
+      <tr>
+        <td class="p-column-title text-center">
+          <!-- <span class="badge bg-danger bg-gradient p-2"> Administrador</span> -->
+          <span
+            class="badge bg-danger-subtle text-dark p-2"
+            *ngIf="item.isAdmin"
+            ><i class="fa-solid fa-user-tie fa-lg me-2"></i> Administrador</span
+          >
+          <span
+            class="badge bg-success-subtle text-dark p-2"
+            *ngIf="!item.isAdmin"
+            ><i class="fa-solid fa-user fa-lg me-2"></i> Participante</span
+          >
+        </td>
+        <td class="p-column-title">
+          {{ item.applicationUser }}
+        </td>
+        <!-- Opciones -->
+        <td class="p-column-title" class="no-print">
+          <div class="d-flex justify-content-center">
+            <custom-button-edit (edit)="onEditParticipant(item)" />
+            <custom-button-delete (OnConfirm)="onDelete(item.id)" />
+          </div>
+        </td>
+        <!-- Opciones -->
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="paginatorleft">
+      <div class="p-d-flex p-ai-center p-jc-between no-print">
+        En total hay
+        {{ data ? data.length : 0 }} registros.
+      </div>
+    </ng-template>
+  </p-table>
+</div>

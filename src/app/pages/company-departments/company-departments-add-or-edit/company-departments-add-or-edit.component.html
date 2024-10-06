@@ -1,0 +1,27 @@
+<div class="card">
+  <div class="card-body">
+    <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
+      <custom-input-text
+        [control]="form.get('id')"
+        formControlName="id"
+        label="Id"
+        [readonly]="true"
+      />
+      <custom-input-select
+        [control]="form.get('companyArea')"
+        formControlName="companyArea"
+        label="Área"
+        [data]="cb_area_empresa"
+        [hidden]="false"
+      />
+      <custom-input-text
+        [control]="form.get('nameArea')"
+        formControlName="nameArea"
+        label="Nombre Departamento"
+        placeholder="nombre Departamento"
+      />
+
+      <custom-button-submit [disabled]="this.form.invalid || submitting" />
+    </form>
+  </div>
+</div>

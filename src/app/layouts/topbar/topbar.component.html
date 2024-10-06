@@ -3,7 +3,7 @@
 <header id="page-topbar">
   <div class="navbar-header">
     <div class="d-flex">
-      <!-- LOGO -->
+      <!-- START LOGO -->
       <div class="navbar-brand-box d-none d-lg-block">
         <a routerLink="/" class="logo logo-ligth">
           <span class="logo-sm">LA</span>
@@ -12,6 +12,7 @@
           </span>
         </a>
       </div>
+      <!-- END LOGO -->
 
       <button
         type="button"
@@ -22,83 +23,21 @@
         <i class="fa fa-fw fa-bars"></i>
       </button>
 
-      <!-- App Search-->
-      <!-- <button
-        type="button"
-        class="btn"
-        id="vertical-menu-btn"
-        (click)="toggleMobileMenu($event)"
-      >
-        <i class="fa-thin fa-bars"></i>
-      </button> -->
+      <app-navigation-icon />
 
-      <custom-button
-        ngbTooltip="Anterior"
-        customClass="header-item"
-        icon="fa-angle-left"
-        (clicked)="onBack()"
-      />
-      <custom-button
-        ngbTooltip="Siguiente"
-        customClass="header-item"
-        icon="fa-angle-right"
-        (clicked)="onNext()"
-      />
-      <custom-button
-        ngbTooltip="Recargar"
-        customClass="header-item"
-        icon="fa-arrows-rotate"
-        (clicked)="onRefresh()"
-      />
+      <app-customer-selection />
+      <!-- Start App Search-->
 
-      <!-- App Search-->
-      <div class="app-search me-2 mt-1" style="width: 400px">
-        <app-menu-select-customer></app-menu-select-customer>
-      </div>
-
-      <div class="app-search mt-1" style="width: 250">
-        <input
-          (click)="onModalSearch()"
-          type="text"
-          class="form-select"
-          placeholder="Click para buscar..."
-        />
-      </div>
+      <app-search />
+      <!-- End App Search-->
     </div>
-    <div class="dropdown d-inline-block" ngbDropdown>
-      <button
-        type="button"
-        class="btn header-item topbar-light bg-light-subtle border-start border-end"
-        id="page-header-user-dropdown"
-        data-bs-toggle="dropdown"
-        aria-haspopup="true"
-        aria-expanded="false"
-        ngbDropdownToggle
-      >
-        <img class="rounded avatar-md" [src]="imagenPerfilUrl" alt="Img" />
-        <span class="d-none d-xl-inline-block ms-1 fw-medium"
-          >{{ infoAccountAuthDto.firstName }} {{ infoAccountAuthDto.lastName }}
-        </span>
-        <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
-      </button>
-      <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
-        <div class="dropdown-divider"></div>
-        <a [routerLink]="['/accounts/actualizar-perfil']" class="dropdown-item">
-          <i class="fa-thin fa-key me-2" style="color: #ffd43b"></i> Cambiar
-          contraseña
-        </a>
-
-        <a class="dropdown-item pointer" (click)="logout()">
-          <i
-            class="fa-sharp fa-light fa-arrow-right-from-bracket fa-flip-vertical me-2"
-            style="color: #f50000"
-          ></i
-          >Cerrar Sesión
-        </a>
-      </div>
+    <div class="d-flex">
+      <app-notifications />
+      <app-user-profile />
     </div>
   </div>
 </header>
+
 <style>
   .text-center {
     display: flex;

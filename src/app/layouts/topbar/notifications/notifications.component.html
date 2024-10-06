@@ -1,0 +1,45 @@
+<div class="dropdown me-2" ngbDropdown>
+  <button
+    type="button"
+    class="btn header-item noti-icon position-relative"
+    id="page-header-notifications-dropdown"
+    data-bs-toggle="dropdown"
+    aria-haspopup="true"
+    aria-expanded="false"
+    ngbDropdownToggle
+  >
+    <i class="fa-solid fa-bell fa-lg"></i>
+    <span class="badge bg-danger rounded-pill">{{ messageInNotRead }}</span>
+  </button>
+  <div
+    class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
+    aria-labelledby="page-header-notifications-dropdown"
+    ngbDropdownMenu
+  >
+    <div class="p-3" *ngIf="messageInNotRead === 0">
+      <div class="row align-items-center">
+        <div class="col">
+          <h6 class="m-0">Sin tickets nuevos</h6>
+        </div>
+      </div>
+    </div>
+    <ngx-simplebar style="max-height: 230px" *ngIf="messageInNotRead !== 0">
+      <a
+        [routerLink]="['/luxury-chat/my-tickets']"
+        class="text-reset notification-item"
+      >
+        <div class="d-flex">
+          <div class="flex-grow-1">
+            <h6 class="mb-1">Nuevos tickets asignados</h6>
+            <div class="font-size-13 text-muted">
+              <p class="mb-0">
+                <i class="fa-solid fa-eye"></i>
+                <span>Click para visualizar </span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </a>
+    </ngx-simplebar>
+  </div>
+</div>

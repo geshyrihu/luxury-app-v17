@@ -18,7 +18,7 @@ export default class CustomButtonConfirmationComponent {
   @Input()
   title: string = '¿Estas seguro?';
   @Input()
-  icon: string = 'fa-light fa-paper-plane';
+  icon: string = 'fa-solid fa-paper-plane';
   @Input()
   label: string = '';
   @Input()
@@ -44,8 +44,8 @@ export default class CustomButtonConfirmationComponent {
       text: this.text,
       icon: this.iconSwal,
       showCancelButton: true,
-      confirmButtonColor: '#34c38f',
-      cancelButtonColor: '#f46a6a',
+      confirmButtonColor: '#50C878',
+      cancelButtonColor: '#9B1B30',
       confirmButtonText: this.confirmButtonText,
       cancelButtonText: 'Cancelar',
     }).then((result) => {

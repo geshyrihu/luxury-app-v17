@@ -1,12 +1,12 @@
 import { CommonModule, Location } from '@angular/common';
 import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
-import CustomButtonComponent from 'src/app/custom-components/custom-buttons/custom-button/custom-button.component';
+import BtnComponent from 'src/app/custom-components/custom-buttons/custom-button/custom-button.component';
 @Component({
   selector: 'table-header',
   templateUrl: './table-header.component.html',
   standalone: true,
-  imports: [CommonModule, NgbTooltip, CustomButtonComponent],
+  imports: [CommonModule, NgbTooltip, BtnComponent],
 })
 export default class TableHeaderComponent {
   private location = inject(Location);

@@ -8,7 +8,7 @@ import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
   templateUrl: './custom-button.component.html',
   imports: [CommonModule, NgbTooltip],
 })
-export default class CustomButtonComponent {
+export default class BtnComponent {
   @Input() disabled: boolean = false;
   @Input() customClass: string = '';
   @Input() customNgClassIcon: string = '';

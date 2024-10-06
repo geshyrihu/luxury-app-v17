@@ -2,8 +2,8 @@ import { CommonModule, Location } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import MenuSelectCustomerComponent from '../menu-select-customer/menu-select-customer.component';
 import SidebarComponent from '../sidebar/sidebar.component';
+import CustomerSelectionComponent from '../topbar/customer-selection/customer-selection.component';
 import { TopbarComponent } from '../topbar/topbar.component';
 @Component({
   selector: 'app-vertical',
@@ -12,7 +12,7 @@ import { TopbarComponent } from '../topbar/topbar.component';
   imports: [
     LuxuryAppComponentsModule,
     CommonModule,
-    MenuSelectCustomerComponent,
+    CustomerSelectionComponent,
     RouterModule,
     SidebarComponent,
     TopbarComponent,
