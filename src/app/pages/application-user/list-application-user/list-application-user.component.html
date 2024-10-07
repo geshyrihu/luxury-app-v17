@@ -115,9 +115,14 @@
             />
             }
             <custom-button
-              customClass="btn-sm btn-outline-success me-1"
-              icon="fa-light fa-key text-danger"
+              customClass="btn-sm btn-soft-primary waves-effect waves-light me-1"
+              icon="fa-light fa-key "
               (clicked)="onModalEditAccount(item.id, item.email)"
+            />
+            <custom-button
+              customClass="btn-sm btn-soft-primary waves-effect waves-light me-1"
+              icon="fa-key"
+              (clicked)="onModalPermission(item.id)"
             />
             <btn-edit (edit)="onAddOrEdit(item.id)" />
             <btn-delete (OnConfirm)="onDelete(item.id)" />

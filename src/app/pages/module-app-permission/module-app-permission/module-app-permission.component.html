@@ -1,1 +1,118 @@
-<p>module-app-permission works!</p>
+<div class="row">
+  <div class="col-md-2" *ngFor="let permission of data">
+    <div class="card mb-3">
+      <div class="card-body">
+        <ul class="list-group">
+          <li class="list-group-item active text-center">
+            {{ permission.moduleName }}
+          </li>
+          <li
+            class="list-group-item pointer"
+            (click)="
+              onCheckboxChange(permission, 'canRead', !permission.canRead)
+            "
+          >
+            <div class="form-check">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                [checked]="permission.canRead"
+                (change)="
+                  onCheckboxChange(permission, 'canRead', $event.target.checked)
+                "
+                id="canRead-{{ permission.id }}"
+              />
+              <label class="form-check-label" for="canRead-{{ permission.id }}">
+                Leer
+              </label>
+            </div>
+          </li>
+          <li
+            class="list-group-item pointer"
+            (click)="
+              onCheckboxChange(permission, 'canCreate', !permission.canCreate)
+            "
+          >
+            <div class="form-check">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                [checked]="permission.canCreate"
+                (change)="
+                  onCheckboxChange(
+                    permission,
+                    'canCreate',
+                    $event.target.checked
+                  )
+                "
+                id="canCreate-{{ permission.id }}"
+              />
+              <label
+                class="form-check-label"
+                for="canCreate-{{ permission.id }}"
+              >
+                Crear
+              </label>
+            </div>
+          </li>
+          <li
+            class="list-group-item pointer"
+            (click)="
+              onCheckboxChange(permission, 'canUpdate', !permission.canUpdate)
+            "
+          >
+            <div class="form-check">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                [checked]="permission.canUpdate"
+                (change)="
+                  onCheckboxChange(
+                    permission,
+                    'canUpdate',
+                    $event.target.checked
+                  )
+                "
+                id="canUpdate-{{ permission.id }}"
+              />
+              <label
+                class="form-check-label"
+                for="canUpdate-{{ permission.id }}"
+              >
+                Actualizar
+              </label>
+            </div>
+          </li>
+          <li
+            class="list-group-item pointer"
+            (click)="
+              onCheckboxChange(permission, 'canDelete', !permission.canDelete)
+            "
+          >
+            <div class="form-check">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                [checked]="permission.canDelete"
+                (change)="
+                  onCheckboxChange(
+                    permission,
+                    'canDelete',
+                    $event.target.checked
+                  )
+                "
+                id="canDelete-{{ permission.id }}"
+              />
+              <label
+                class="form-check-label"
+                for="canDelete-{{ permission.id }}"
+              >
+                Eliminar
+              </label>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

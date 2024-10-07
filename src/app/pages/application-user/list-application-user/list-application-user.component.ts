@@ -10,6 +10,7 @@ import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import { environment } from 'src/environments/environment';
+import ModuleAppPermissionComponent from '../../module-app-permission/module-app-permission/module-app-permission.component';
 import AddOrEditApplicationUserComponent from '../add-or-edit-application-user/add-or-edit-application-user.component';
 import MdEditAccountComponent from '../modal-edit-account/modal-edit-account/md-edit-account.component';
 @Component({
@@ -114,5 +115,16 @@ export default class ListApplicationUserComponent implements OnInit {
         if (result)
           this.data = this.data.filter((item) => item.id !== applicationUserId);
       });
+  }
+
+  onModalPermission(applicationUserId: string) {
+    this.dialogHandlerService.openDialog(
+      ModuleAppPermissionComponent,
+      {
+        applicationUserId,
+      },
+      'Actualizar permisos de Usuario',
+      this.dialogHandlerService.dialogSizeFull
+    );
   }
 }

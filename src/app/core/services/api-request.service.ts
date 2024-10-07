@@ -2,6 +2,7 @@ import { Injectable, OnDestroy, inject } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import saveAs from 'file-saver';
 import { Subject, lastValueFrom, takeUntil } from 'rxjs';
+import Swal from 'sweetalert2';
 import { CustomToastService } from './custom-toast.service';
 import { DataService } from './data.service';
 @Injectable({
@@ -125,7 +126,11 @@ export class ApiRequestService implements OnDestroy {
   }
 
   // Metodo Put
-  async onPut<T>(urlApi: string, data: any): Promise<boolean | T> {
+  async onPut<T>(
+    urlApi: string,
+    data: any,
+    showsuccess?: boolean
+  ): Promise<boolean | T> {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
     try {
@@ -133,7 +138,10 @@ export class ApiRequestService implements OnDestroy {
         this.dataService.put<T>(urlApi, data).pipe(takeUntil(this.destroy$))
       );
       // Cuando se completa la carga con éxito, mostrar un mensaje de éxito y resolver la promesa con los datos
-      this.customToastService.onCloseToSuccess();
+      if (showsuccess !== false) {
+        this.customToastService.onCloseToSuccess();
+      }
+      Swal.close();
       console.log(`resp: ${urlApi}`, responseData.body);
       return responseData.body; // Devuelve los datos recibidos;
       // return true;

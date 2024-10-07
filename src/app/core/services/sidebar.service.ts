@@ -1,5 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { IMenuItem } from '../interfaces/menu.model';
+import { EPermission } from '../interfaces/user-token.interface';
 import { AuthService } from './auth.service';
 
 @Injectable({
@@ -8,12 +9,23 @@ import { AuthService } from './auth.service';
 export class SidebarService {
   private authS = inject(AuthService);
 
+  /**
+   *
+   */
+  constructor() {
+    const canRead = this.authS.permmission(
+      'CONFIGURACION',
+      EPermission.CanRead
+    );
+    console.log('Can read permission:', canRead);
+  }
   get onLoadMenu() {
     return this.menu;
   }
   menu: IMenuItem[] = [
     {
-      visible: this.authS.onValidateRoles(['SuperUsuario']),
+      visible: this.authS.permmission('CONFIGURACION', EPermission.CanRead),
+      // visible: this.authS.onValidateRoles(['SuperUsuario']),
       label: 'Configuración',
       icon: 'fa-thin fa-gear',
       routerLink: '/configuracion/panel',
@@ -21,25 +33,25 @@ export class SidebarService {
     },
 
     {
-      visible: this.authS.onValidateRoles(['SuperUsuario']),
+      visible: this.authS.permmission('CONFIGURACION', EPermission.CanRead),
       label: 'Configuración',
       icon: 'fa-thin fa-gear',
       name: 'Configuración',
       items: [
         {
-          visible: this.authS.onValidateRoles(['Legal', 'SuperUsuario']),
+          visible: this.authS.permmission('CONFIGURACION', EPermission.CanRead),
           label: 'Customer Data Company',
           routerLink: '/configuracion/customer-data-company',
           name: 'customer-data-company',
         },
         {
-          visible: this.authS.onValidateRoles(['SuperUsuario']),
+          visible: this.authS.permmission('CONFIGURACION', EPermission.CanRead),
           label: 'Departamentos de la empresa',
           routerLink: '/configuracion/company-departaments',
           name: 'company-departaments',
         },
         {
-          visible: this.authS.onValidateRoles(['SuperUsuario']),
+          visible: this.authS.permmission('CONFIGURACION', EPermission.CanRead),
           label: 'Modulos',
           routerLink: '/configuracion/module-app',
           name: 'module-app',

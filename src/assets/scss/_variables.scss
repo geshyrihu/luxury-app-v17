@@ -112,8 +112,12 @@ $gray-400: #ced4da; // Gris claro 400
 $gray-500: #adb5bd; // Gris medio 500
 $gray-600: #74788d; // Gris medio 600
 $gray-700: #313533; // Gris oscuro 700
+
+// OPCION 1
+
 // $gray-800: #2c302e; // Gris oscuro 800
 $gray-800: #2e2e2e; // Gris oscuro 800
+
 $gray-900: #212529; // Gris oscuro 900
 $black: #000; // Negro
 // scss-docs-end gray-color-variables
@@ -136,8 +140,19 @@ $grays: (
 // fusv-enable
 
 // scss-docs-start color-variables
-// Colores básicos
+
+// Opcion 1
+
 $blue: #9ab7d3; // Azul
+
+// Opcion 2
+
+// Colores básicos
+// $blue: #b0c4de; // Azul
+// $blue: #e9c46a; // Azul
+// $blue: #82ccdd; // Azul
+// $blue: #48c9b0; // Azul
+// $blue: #5156be;
 $indigo: #564ab1; // Índigo
 $purple: #6f42c1; // Púrpura
 $pink: #e83e8c; // Rosa

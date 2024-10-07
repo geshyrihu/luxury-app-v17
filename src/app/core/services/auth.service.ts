@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { catchError, map, of } from 'rxjs';
 import { IModelToken } from '../interfaces/model-token.interface';
 import {
+  EPermission,
   IUserToken,
   InfoAccountAuthDto,
 } from '../interfaces/user-token.interface';
@@ -46,8 +47,8 @@ export class AuthService {
         // Almacenar la información del token y el estado del JWT
         this.userTokenDto = resp.body;
         this.infoUserAuthDto = this.userTokenDto.infoUserAuthDto;
-        // this.infoEmployeeDto = this.userTokenDto.infoEmployeeDto;
-        // this.employeeId = this.infoEmployeeDto.employeeId;
+        this.userTokenDto.permission = resp.body.permission;
+        console.log('🚀 ~ permissions:', resp.body.permission);
         this.applicationUserId = this.infoUserAuthDto.applicationUserId;
         if (resp.body.token) {
           this.statusJWT = true;
@@ -65,6 +66,25 @@ export class AuthService {
    */
   onValidateRoles(roles: string[]): boolean {
     return this.userTokenDto.roles.some((item) => roles.includes(item));
+  }
+
+  permmission(moduleName: string, permission: EPermission): boolean {
+    if (this.userTokenDto && this.userTokenDto.permission) {
+      // Verificar el contenido de userTokenDto
+      console.log('🚀 ~ userTokenDto:', this.userTokenDto);
+
+      const modulePermission = this.userTokenDto.permission.find(
+        (p) => p.moduleName === moduleName
+      );
+
+      if (modulePermission) {
+        const permissionKey = permission as keyof typeof modulePermission; // No necesitas convertir si el enum es de tipo string
+        console.log('🚀 ~ permissionKey:', permissionKey);
+        return Boolean(modulePermission[permissionKey]); // Asegúrate de que modulePermission[permissionKey] sea booleano
+      }
+    }
+
+    return false;
   }
 
   redirectUrl: string | null = null; // URL a la que se redirigirá después de logear
