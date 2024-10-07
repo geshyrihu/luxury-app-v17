@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
-import BtnComponent from '../btn-button/btn.component';
+import BtnComponent from '../a-master-btn-button/a-master-btn.component';
 
 @Component({
   selector: 'btn-edit',

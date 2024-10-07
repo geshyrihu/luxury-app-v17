@@ -1,0 +1,38 @@
+.custom-table-report {
+  width: 100% !important;
+  border-collapse: collapse !important;
+  border: 1px solid #ddd !important;
+  font-family: "Open Sans", sans-serif !important;
+}
+
+/* Encabezados de la tabla */
+.custom-table-report th {
+  background-color: #e5e5e5 !important;
+  color: #333 !important;
+  text-align: left !important;
+  padding: 8px !important;
+  border: 1px solid #ddd !important;
+  font-weight: bold !important;
+}
+
+/* Filas del cuerpo de la tabla */
+.custom-table-report td {
+  padding: 8px !important;
+  border: 1px solid #f0f0f0 !important; /* Bordes más claros */
+  text-align: left !important;
+}
+
+/* Alternar colores de las filas */
+.custom-table-report tr:nth-child(even) {
+  background-color: #f9f9f9 !important;
+}
+
+/* Estilos para las celdas centradas */
+.custom-table-report .text-center {
+  text-align: center !important;
+}
+
+/* Estilo para cuando pasas el mouse sobre una fila */
+.custom-table-report tr:hover {
+  background-color: #f1f1f1 !important;
+}

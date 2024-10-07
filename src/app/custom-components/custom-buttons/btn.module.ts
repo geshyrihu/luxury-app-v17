@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 
+import BtnComponent from './a-master-btn-button/a-master-btn.component';
 import BtnActiveDesactiveComponent from './btn-active-desactive/btn-active-desactive.component';
 import BtnBaggesComponent from './btn-bagges/btn-bagges.component';
-import BtnComponent from './btn-button/btn.component';
 import BtnConfirmationComponent from './btn-confirmation/btn-confirmation.component';
 import BtnDeleteSpanComponent from './btn-delete-span/btn-delete-span.component';
 import BtnDeleteComponent from './btn-delete/btn-delete.component';

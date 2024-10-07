@@ -12,16 +12,16 @@
         [control]="form.get('ticketGroupCategoryId')"
         formControlName="ticketGroupCategoryId"
         label="Categoria"
-        [selectDefaulOption]="false"
+        [selectDefaulOption]="true"
         [data]="cb_ticketGroupCategory"
       />
 
       <custom-input-select
-        [control]="form.get('isPublic')"
-        formControlName="isPublic"
+        [control]="form.get('visibility')"
+        formControlName="visibility"
         label="Privacidad"
         [selectDefaulOption]="false"
-        [data]="cb_isPublic"
+        [data]="cb_visibility"
       />
 
       <btn-submit [disabled]="this.form.invalid || submitting" />

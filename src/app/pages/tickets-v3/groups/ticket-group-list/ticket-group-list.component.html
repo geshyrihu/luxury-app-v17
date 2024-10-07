@@ -10,6 +10,7 @@
       [dt]="dt"
     />
   </ng-template>
+
   <ng-template pTemplate="header">
     <tr>
       <th scope="col" pSortableColumn="isPublic">
@@ -45,15 +46,21 @@
       <td>
         <span
           class="badge p-2 bg-success-subtle text-dark"
-          *ngIf="item.isPublic"
+          *ngIf="item.visibility === 'Public'"
         >
           Público
         </span>
         <span
           class="badge p-2 bg-secondary-subtle text-dark"
-          *ngIf="!item.isPublic"
+          *ngIf="item.visibility === 'Internal'"
         >
-          Privado
+          Interno
+        </span>
+        <span
+          class="badge p-2 bg-secondary-subtle text-dark"
+          *ngIf="item.visibility === 'Condominiums'"
+        >
+          Cliente
         </span>
       </td>
       <td>

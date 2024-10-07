@@ -3,7 +3,7 @@ table {
   width: 100%; /* La tabla ocupará todo el ancho disponible */
   border-collapse: collapse; /* Elimina los espacios entre las celdas */
   font-size: 14px; /* Tamaño de fuente global */
-  font-family: "Segoe UI Variable Static Text", sans-serif; /* Fuente Segoe UI Variable Static Text */
+  font-family: "Open Sans", system-ui; /* Fuente Segoe UI Variable Static Text */
 }
 
 /* Estilos para las celdas del encabezado (th) */
@@ -24,7 +24,7 @@ td {
   padding: 8px; /* Espaciado interno */
   border: 1px solid #808080; /* Borde gris oscuro */
   color: black; /* Texto negro */
-  font-family: "Segoe UI Variable Static Text", sans-serif; /* Fuente Segoe UI Variable Static Text */
+  font-family: "Open Sans", system-ui; /* Fuente Segoe UI Variable Static Text */
 }
 /* Estilos para subgrupos de tablas anidadas dentro de la tabla principal */
 .subgroup table {
@@ -39,7 +39,7 @@ td {
 /* Estilos para tablas pequeñas personalizadas */
 .custom-small-table {
   font-size: 14px; /* Tamaño de fuente reducido */
-  font-family: "Segoe UI Variable Static Text", sans-serif; /* Fuente Segoe UI Variable Static Text */
+  font-family: "Open Sans", system-ui; /* Fuente Segoe UI Variable Static Text */
 }
 
 /* Estilos para los encabezados de la tabla pequeña */

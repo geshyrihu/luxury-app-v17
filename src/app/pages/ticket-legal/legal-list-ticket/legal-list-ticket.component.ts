@@ -30,6 +30,7 @@ export default class LegalListTicketComponent implements OnInit {
 
   ngOnInit() {
     this.onLoadData();
+    // this.onModalAddOrEdit({ id: '', title: 'AGREGAR TICKET LEGAL' });
   }
 
   onLoadData() {
@@ -73,7 +74,7 @@ export default class LegalListTicketComponent implements OnInit {
         LegalTicketAddComponent,
         data,
         '',
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerService.dialogSizeLg
       )
       .then((result: boolean) => {
         if (result) {
@@ -128,5 +129,10 @@ export default class LegalListTicketComponent implements OnInit {
       .then((result: boolean) => {
         if (result) this.onLoadData();
       });
+  }
+
+  PendingEmail() {
+    const urlApi = `TicketLegal/PendingEmail`;
+    this.apiRequestService.onGetItem(urlApi);
   }
 }

@@ -4,7 +4,7 @@ import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'custom-button',
-  templateUrl: './btn.component.html',
+  templateUrl: './a-master-btn.component.html',
   standalone: true,
   imports: [CommonModule, NgbTooltip],
 })

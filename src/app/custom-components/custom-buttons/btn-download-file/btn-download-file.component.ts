@@ -3,10 +3,10 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  imports: [CommonModule, NgbTooltip],
   selector: 'btn-download-file',
-  standalone: true,
   templateUrl: './btn-download-file.component.html',
+  standalone: true,
+  imports: [CommonModule, NgbTooltip],
 })
 export default class BtnDownloadFileComponent {
   @Input() disabled: boolean = false;

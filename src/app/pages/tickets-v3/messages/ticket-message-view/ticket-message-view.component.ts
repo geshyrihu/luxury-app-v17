@@ -38,7 +38,7 @@ export default class TicketMessageViewComponent implements OnInit {
   }
 
   onUpdateReader() {
-    // const urlApi = `TicketMessage/UpdateReader/${this.ticketMessageId}/${this.authService.applicationUserId}`;
-    // this.apiRequestService.onGetList(urlApi);
+    const urlApi = `TicketMessage/UpdateReader/${this.ticketMessageId}/${this.authService.applicationUserId}`;
+    this.apiRequestService.onGetList(urlApi);
   }
 }

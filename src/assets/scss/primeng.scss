@@ -8,7 +8,7 @@
 .custom-table td {
   border: 1px solid #808080 !important; /* Borde gris oscuro para las celdas */
   color: black !important; /* El texto de las celdas será negro */
-  font-family: "Segoe UI Variable Static Text", sans-serif !important; /* Tipografía sans-serif de Segoe UI Variable Static Text */
+  font-family: "Open Sans", system-ui !important; /* Tipografía sans-serif de Segoe UI Variable Static Text */
   padding: 8px !important; /* Espaciado interno de las celdas */
 }
 
@@ -45,7 +45,7 @@
 /* Estilos para tablas pequeñas personalizadas */
 .custom-small-table {
   font-size: 14px; /* Tamaño de fuente reducido */
-  font-family: "Segoe UI Variable Static Text", sans-serif !important; /* Tipografía sans-serif de Segoe UI Variable Static Text */
+  font-family: "Open Sans", system-ui !important; /* Tipografía sans-serif de Segoe UI Variable Static Text */
 }
 
 /* Estilos para los encabezados de la tabla pequeña */
@@ -61,7 +61,7 @@
 /* Estilos globales para todas las tablas */
 table {
   font-size: 14px; /* Tamaño de fuente global para todas las tablas */
-  font-family: "Segoe UI Variable Static Text", sans-serif !important; /* Tipografía sans-serif de Segoe UI Variable Static Text */
+  font-family: "Open Sans", system-ui !important; /* Tipografía sans-serif de Segoe UI Variable Static Text */
 }
 /* Estilos globales para celdas de encabezado */
 th {

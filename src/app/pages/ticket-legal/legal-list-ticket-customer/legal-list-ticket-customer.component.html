@@ -22,18 +22,90 @@
 
     <ng-template pTemplate="header">
       <tr>
-        <th scope="col" class="color-gradient-1">FOLIO</th>
-        <th scope="col" class="color-gradient-1">FECHA SOLICITUD</th>
-        <th scope="col" class="color-gradient-1">CLIENTE</th>
-        <th scope="col" class="color-gradient-1">SOLICITA</th>
-        <th scope="col" class="color-gradient-1">ASUNTO</th>
-        <th scope="col" class="color-gradient-1">DESCRIPCIÓN</th>
-        <th scope="col" class="color-gradient-2">DOCTOS ENVIADOS</th>
-        <th scope="col" class="color-gradient-2">ESTATUS</th>
-        <th scope="col" class="color-gradient-2">FECHA DE CONCLUSIÓN</th>
-        <th scope="col" class="color-gradient-2">DÍAS</th>
-        <th scope="col" class="color-gradient-2">RESPONSABLE</th>
-        <th scope="col" class="color-gradient-2">SEGUIMIENTO</th>
+        <th
+          scope="col"
+          style="width: 10%"
+          class="color-gradient-1 font-size-12"
+        >
+          FOLIO
+        </th>
+        <th
+          scope="col"
+          style="width: 10%"
+          class="color-gradient-1 font-size-12"
+        >
+          FECHA SOLICITUD
+        </th>
+        <th
+          scope="col"
+          style="width: 10%"
+          class="color-gradient-1 font-size-12"
+        >
+          CLIENTE
+        </th>
+        <th
+          scope="col"
+          style="width: 10%"
+          class="color-gradient-1 font-size-12"
+        >
+          SOLICITA
+        </th>
+        <th
+          scope="col"
+          style="width: 10%"
+          class="color-gradient-1 font-size-12"
+        >
+          ASUNTO
+        </th>
+        <th
+          scope="col"
+          style="width: 10%"
+          class="color-gradient-1 font-size-12"
+        >
+          DESCRIPCIÓN
+        </th>
+        <th
+          scope="col"
+          style="width: 10%"
+          class="color-gradient-2 font-size-12"
+        >
+          DOCTOS ENVIADOS
+        </th>
+        <th
+          scope="col"
+          style="width: 10%"
+          class="color-gradient-2 font-size-12"
+        >
+          ESTATUS
+        </th>
+        <th
+          scope="col"
+          style="width: 10%"
+          class="color-gradient-2 font-size-12"
+        >
+          FECHA DE CONCLUSIÓN
+        </th>
+        <th
+          scope="col"
+          style="width: 10%"
+          class="color-gradient-2 font-size-12"
+        >
+          DÍAS
+        </th>
+        <th
+          scope="col"
+          style="width: 10%"
+          class="color-gradient-2 font-size-12"
+        >
+          RESPONSABLE
+        </th>
+        <th
+          scope="col"
+          style="width: 10%"
+          class="color-gradient-2 font-size-12"
+        >
+          SEGUIMIENTO
+        </th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-item>
@@ -76,7 +148,6 @@
             [ngClass]="{
               'bg-danger': item.status === 0,
               'bg-success': item.status === 1,
-              'bg-warning': item.status === 3,
               'bg-secondary': item.status === 4,
             }"
           >
@@ -84,8 +155,6 @@
             <span> PENDIENTE </span>
             } @if (item.status === 1) {
             <span> TERMINADO </span>
-            } @if (item.status === 3) {
-            <span> PROCESO </span>
             } @if (item.status === 4) {
             <span> CANCELADO </span>
             }
@@ -138,7 +207,7 @@
     color: #fff; /* Color de texto */
   }
 
-  .color-gradient-2 {
+  .color-gradient-2 font-size-12 {
     background: linear-gradient(
       to right,
       #0f0c29,

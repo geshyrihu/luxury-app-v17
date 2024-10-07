@@ -10,4 +10,10 @@
 >
   <i [class]="icon"></i>{{ label }}
 </button>
+<custom-button
+  ngbTooltip="Editar"
+  customClass="btn-sm btn-outline-primary me-1"
+  icon="icon-edit"
+  (clicked)="onClick($event)"
+/>
 }

@@ -29,4 +29,18 @@ export default [
         'src/app/pages/ticket-legal/ticket-individual/ticket-individual.component'
       ),
   },
+  {
+    path: 'pendings',
+    loadComponent: () =>
+      import(
+        'src/app/pages/ticket-legal/legal-reports-pending/legal-reports-pending.component'
+      ),
+  },
+  {
+    path: 'reports',
+    loadComponent: () =>
+      import(
+        'src/app/pages/ticket-legal/legal-reports/legal-reports.component'
+      ),
+  },
 ] as Routes;

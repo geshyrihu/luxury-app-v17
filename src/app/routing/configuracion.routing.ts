@@ -117,4 +117,11 @@ export default [
         'src/app/pages/company-departments/company-departments-list/company-departments-list.component'
       ),
   },
+  {
+    path: 'module-app',
+    loadComponent: () =>
+      import(
+        'src/app/pages/module-app-permission/module-app-list/module-app-list.component'
+      ),
+  },
 ] as Routes;

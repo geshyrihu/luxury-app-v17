@@ -42,14 +42,12 @@
           <app-rango-calendario-yyyymmdd></app-rango-calendario-yyyymmdd>
         </div>
         <div class="col text-right">
-          <button
+          <custom-button
             ngbTooltip="Actualizar Información"
-            placement="top"
-            class="btn btn-sm"
-            (onClick)="onLoadData()"
-          >
-            <i class="fa-light fa-arrows-rotate"></i>
-          </button>
+            [customClass]="'btn-outline-info btn-sm'"
+            icon="fa-arrows-rotate  text-primary"
+            (clicked)="onLoadData()"
+          />
         </div>
       </div>
     </ng-template>

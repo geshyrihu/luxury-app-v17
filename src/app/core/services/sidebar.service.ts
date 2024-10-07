@@ -6,14 +6,14 @@ import { AuthService } from './auth.service';
   providedIn: 'root',
 })
 export class SidebarService {
-  private authService = inject(AuthService);
+  private authS = inject(AuthService);
 
   get onLoadMenu() {
     return this.menu;
   }
   menu: IMenuItem[] = [
     {
-      visible: this.authService.onValidateRoles(['SuperUsuario']),
+      visible: this.authS.onValidateRoles(['SuperUsuario']),
       label: 'Configuración',
       icon: 'fa-thin fa-gear',
       routerLink: '/configuracion/panel',
@@ -21,28 +21,34 @@ export class SidebarService {
     },
 
     {
-      visible: this.authService.onValidateRoles(['SuperUsuario']),
+      visible: this.authS.onValidateRoles(['SuperUsuario']),
       label: 'Configuración',
       icon: 'fa-thin fa-gear',
       name: 'Configuración',
       items: [
         {
-          visible: this.authService.onValidateRoles(['Legal', 'SuperUsuario']),
+          visible: this.authS.onValidateRoles(['Legal', 'SuperUsuario']),
           label: 'Customer Data Company',
           routerLink: '/configuracion/customer-data-company',
           name: 'customer-data-company',
         },
         {
-          visible: this.authService.onValidateRoles(['SuperUsuario']),
+          visible: this.authS.onValidateRoles(['SuperUsuario']),
           label: 'Departamentos de la empresa',
           routerLink: '/configuracion/company-departaments',
           name: 'company-departaments',
+        },
+        {
+          visible: this.authS.onValidateRoles(['SuperUsuario']),
+          label: 'Modulos',
+          routerLink: '/configuracion/module-app',
+          name: 'module-app',
         },
       ],
     },
 
     {
-      visible: this.authService.onValidateRoles([
+      visible: this.authS.onValidateRoles([
         'Asistente',
         'GerenteMantenimiento',
         'Mantenimiento',
@@ -57,26 +63,38 @@ export class SidebarService {
       name: 'Mi edificio',
     },
     {
-      visible: this.authService.onValidateRoles(['Legal', 'SuperUsuario']),
+      visible: this.authS.onValidateRoles(['Legal', 'SuperUsuario']),
       label: '1.-Legal',
       icon: 'fa-thin fa-gavel',
       items: [
         {
-          visible: this.authService.onValidateRoles(['Legal', 'SuperUsuario']),
+          visible: this.authS.onValidateRoles(['Legal', 'SuperUsuario']),
           label: 'Minutas',
           routerLink: '/contabilidad/pendientes-minutas-legal',
           name: 'Legal-Minutas',
         },
         {
-          visible: this.authService.onValidateRoles(['Legal', 'SuperUsuario']),
+          visible: this.authS.onValidateRoles(['Legal', 'SuperUsuario']),
           label: 'Legal Tickets',
           routerLink: '/legal/list-ticket-legal',
           name: 'Tickets',
         },
+        {
+          visible: this.authS.onValidateRoles(['Legal', 'SuperUsuario']),
+          label: 'Pendientes',
+          routerLink: '/legal/pendings',
+          name: 'pendientes legal',
+        },
+        {
+          visible: this.authS.onValidateRoles(['Legal', 'SuperUsuario']),
+          label: 'Reportes',
+          routerLink: '/legal/reports',
+          name: 'reportes legal',
+        },
       ],
     },
     {
-      visible: this.authService.onValidateRoles([
+      visible: this.authS.onValidateRoles([
         'Contador',
         'SuperUsuario',
         'SupervisorContable',
@@ -85,7 +103,7 @@ export class SidebarService {
       icon: 'fa-thin fa-hand-holding-dollar',
       items: [
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'Contador',
             'SuperUsuario',
             'SupervisorContable',
@@ -95,46 +113,31 @@ export class SidebarService {
           name: 'Contabilidad-Presentaciones',
         },
         {
-          visible: this.authService.onValidateRoles([
-            'Contador',
-            'SuperUsuario',
-          ]),
+          visible: this.authS.onValidateRoles(['Contador', 'SuperUsuario']),
           label: 'Minutas',
           routerLink: '/contabilidad/pendientes-minutas',
           name: 'Contabilidad-Pendientes-Minutas',
         },
         {
-          visible: this.authService.onValidateRoles([
-            'Contador',
-            'SuperUsuario',
-          ]),
+          visible: this.authS.onValidateRoles(['Contador', 'SuperUsuario']),
           label: 'Estados Financieros',
           routerLink: '/contabilidad/estados-financieros',
           name: 'Estados financieros',
         },
         {
-          visible: this.authService.onValidateRoles([
-            'Contador',
-            'SuperUsuario',
-          ]),
+          visible: this.authS.onValidateRoles(['Contador', 'SuperUsuario']),
           label: 'Presupuesto',
           routerLink: '/operaciones/compras/cedula-cliente',
           name: 'Contabilidad-Presupuesto',
         },
         {
-          visible: this.authService.onValidateRoles([
-            'Contador',
-            'SuperUsuario',
-          ]),
+          visible: this.authS.onValidateRoles(['Contador', 'SuperUsuario']),
           label: 'Reporte Envio Financieros',
           routerLink: '/contabilidad/reporte-envio-financieros',
           name: 'Reporte-Envio-Financieros',
         },
         {
-          visible: this.authService.onValidateRoles([
-            'Contador',
-            'SuperUsuario',
-          ]),
+          visible: this.authS.onValidateRoles(['Contador', 'SuperUsuario']),
           label: 'Catalogo de cuentas',
           routerLink: '/contabilidad/catalogo-cuentas',
           name: 'Cuentas',
@@ -142,7 +145,7 @@ export class SidebarService {
       ],
     },
     {
-      visible: this.authService.onValidateRoles([
+      visible: this.authS.onValidateRoles([
         'Direccion',
         'GerenteMantenimiento',
         'SuperUsuario',
@@ -152,7 +155,7 @@ export class SidebarService {
       icon: 'fa-thin fa-user-tie',
       items: [
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'Direccion',
             'GerenteMantenimiento',
             'SuperUsuario',
@@ -163,7 +166,7 @@ export class SidebarService {
           name: 'Supervisión-Bitacora Diaria',
         },
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'Direccion',
             'GerenteMantenimiento',
             'SuperUsuario',
@@ -174,7 +177,7 @@ export class SidebarService {
           name: 'Supervisión-Resultado General',
         },
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'Direccion',
             'GerenteMantenimiento',
             'SuperUsuario',
@@ -185,7 +188,7 @@ export class SidebarService {
           name: 'Supervisión-Reporte presentaciónes juntas de comité',
         },
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'Direccion',
             'GerenteMantenimiento',
             'SuperUsuario',
@@ -196,7 +199,7 @@ export class SidebarService {
           name: 'Supervisión-Reporte minutas',
         },
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'Direccion',
             'GerenteMantenimiento',
             'SuperUsuario',
@@ -207,14 +210,14 @@ export class SidebarService {
           name: 'Supervisión-Reporte tickets',
         },
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'GerenteMantenimiento',
             'SupervisionOperativa',
           ]),
           label: 'Recorridos',
           items: [
             {
-              visible: this.authService.onValidateRoles([
+              visible: this.authS.onValidateRoles([
                 'GerenteMantenimiento',
                 'SuperUsuario',
                 'SupervisionOperativa',
@@ -224,7 +227,7 @@ export class SidebarService {
               name: 'Catalogo de amenidades',
             },
             {
-              visible: this.authService.onValidateRoles([
+              visible: this.authS.onValidateRoles([
                 'GerenteMantenimiento',
                 'SuperUsuario',
                 'SupervisionOperativa',
@@ -234,7 +237,7 @@ export class SidebarService {
               name: 'Catalogo de Inspecciones',
             },
             {
-              visible: this.authService.onValidateRoles([
+              visible: this.authS.onValidateRoles([
                 'GerenteMantenimiento',
                 'SuperUsuario',
                 'SupervisionOperativa',
@@ -244,7 +247,7 @@ export class SidebarService {
               name: 'Catalogo de localizaciones',
             },
             {
-              visible: this.authService.onValidateRoles([
+              visible: this.authS.onValidateRoles([
                 'GerenteMantenimiento',
                 'SuperUsuario',
                 'SupervisionOperativa',
@@ -254,7 +257,7 @@ export class SidebarService {
               name: 'Clientes Amenidades',
             },
             {
-              visible: this.authService.onValidateRoles([
+              visible: this.authS.onValidateRoles([
                 'GerenteMantenimiento',
                 'SuperUsuario',
                 'SupervisionOperativa',
@@ -266,14 +269,14 @@ export class SidebarService {
           ],
         },
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'GerenteMantenimiento',
             'SuperUsuario',
           ]),
           label: 'Entrega Recepción',
           items: [
             {
-              visible: this.authService.onValidateRoles([
+              visible: this.authS.onValidateRoles([
                 'GerenteMantenimiento',
                 'SuperUsuario',
               ]),
@@ -282,7 +285,7 @@ export class SidebarService {
               name: 'Supervisión-Entrega recepción',
             },
             {
-              visible: this.authService.onValidateRoles([
+              visible: this.authS.onValidateRoles([
                 'GerenteMantenimiento',
                 'SuperUsuario',
               ]),
@@ -291,7 +294,7 @@ export class SidebarService {
               name: 'Supervisión-Entrega recepción-Equipos',
             },
             {
-              visible: this.authService.onValidateRoles([
+              visible: this.authS.onValidateRoles([
                 'GerenteMantenimiento',
                 'SuperUsuario',
               ]),
@@ -300,7 +303,7 @@ export class SidebarService {
               name: 'Supervisión-Entrega recepción-Instalaciones',
             },
             {
-              visible: this.authService.onValidateRoles([
+              visible: this.authS.onValidateRoles([
                 'GerenteMantenimiento',
                 'SuperUsuario',
               ]),
@@ -309,7 +312,7 @@ export class SidebarService {
               name: 'Supervisión-Entrega recepción-Hidrantes',
             },
             {
-              visible: this.authService.onValidateRoles([
+              visible: this.authS.onValidateRoles([
                 'GerenteMantenimiento',
                 'SuperUsuario',
               ]),
@@ -318,7 +321,7 @@ export class SidebarService {
               name: 'Supervisión-Entrega recepción-Llaves',
             },
             {
-              visible: this.authService.onValidateRoles([
+              visible: this.authS.onValidateRoles([
                 'GerenteMantenimiento',
                 'SuperUsuario',
               ]),
@@ -327,7 +330,7 @@ export class SidebarService {
               name: 'Supervisión-Entrega recepción-Herramientas',
             },
             {
-              visible: this.authService.onValidateRoles([
+              visible: this.authS.onValidateRoles([
                 'GerenteMantenimiento',
                 'SuperUsuario',
               ]),
@@ -336,7 +339,7 @@ export class SidebarService {
               name: 'Supervisión-Entrega recepción-Mantenimientos',
             },
             {
-              visible: this.authService.onValidateRoles([
+              visible: this.authS.onValidateRoles([
                 'GerenteMantenimiento',
                 'SuperUsuario',
               ]),
@@ -346,7 +349,7 @@ export class SidebarService {
               name: 'Supervisión-Entrega recepción-Pendientes',
             },
             {
-              visible: this.authService.onValidateRoles([
+              visible: this.authS.onValidateRoles([
                 'GerenteMantenimiento',
                 'SuperUsuario',
               ]),
@@ -355,7 +358,7 @@ export class SidebarService {
               name: 'Supervisión-Entrega recepción-Organigrama',
             },
             {
-              visible: this.authService.onValidateRoles([
+              visible: this.authS.onValidateRoles([
                 'GerenteMantenimiento',
                 'SuperUsuario',
               ]),
@@ -364,7 +367,7 @@ export class SidebarService {
               name: 'Supervisión-Entrega recepción-Planos',
             },
             {
-              visible: this.authService.onValidateRoles([
+              visible: this.authS.onValidateRoles([
                 'GerenteMantenimiento',
                 'SuperUsuario',
               ]),
@@ -377,15 +380,12 @@ export class SidebarService {
       ],
     },
     {
-      visible: this.authService.onValidateRoles(['Sistemas', 'SuperUsuario']),
+      visible: this.authS.onValidateRoles(['Sistemas', 'SuperUsuario']),
       label: '4.-Sistemas',
       icon: 'fa-thin fa-laptop-code',
       items: [
         {
-          visible: this.authService.onValidateRoles([
-            'Sistemas',
-            'SuperUsuario',
-          ]),
+          visible: this.authS.onValidateRoles(['Sistemas', 'SuperUsuario']),
           label: 'Tickets',
           routerLink: '/sistemas/ticket-sistemas',
           name: 'Sistemas-Tickets',
@@ -393,16 +393,13 @@ export class SidebarService {
       ],
     },
     {
-      visible: this.authService.onValidateRoles([
-        'SuperUsuario',
-        'Reclutamiento',
-      ]),
+      visible: this.authS.onValidateRoles(['SuperUsuario', 'Reclutamiento']),
       label: 'Tickets V3',
       icon: 'fa-thin fa-ticket',
       name: 'Tickets',
       items: [
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'SuperUsuario',
             'Reclutamiento',
           ]),
@@ -411,7 +408,7 @@ export class SidebarService {
           name: 'ticket group category',
         },
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'SuperUsuario',
             'Reclutamiento',
           ]),
@@ -420,7 +417,7 @@ export class SidebarService {
           name: 'groups',
         },
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'SuperUsuario',
             'Reclutamiento',
           ]),
@@ -429,7 +426,7 @@ export class SidebarService {
           name: 'my assignments',
         },
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'SuperUsuario',
             'Reclutamiento',
           ]),
@@ -438,7 +435,7 @@ export class SidebarService {
           name: 'my request',
         },
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'SuperUsuario',
             'Reclutamiento',
           ]),
@@ -449,7 +446,7 @@ export class SidebarService {
       ],
     },
     {
-      visible: this.authService.onValidateRoles([
+      visible: this.authS.onValidateRoles([
         'SuperUsuario',
         'Residente',
         'Contador',
@@ -461,7 +458,7 @@ export class SidebarService {
       name: 'Tickets',
     },
     {
-      visible: this.authService.onValidateRoles([
+      visible: this.authS.onValidateRoles([
         'Asistente',
         'Colaborador',
         'Direccion',
@@ -475,7 +472,7 @@ export class SidebarService {
       icon: 'fa-thin fa-person-chalkboard',
       items: [
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'Asistente',
             'Direccion',
             'GerenteMantenimiento',
@@ -489,7 +486,7 @@ export class SidebarService {
           name: 'Operaciones-Pendientes',
         },
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'Asistente',
             'GerenteMantenimiento',
             'Residente',
@@ -501,7 +498,7 @@ export class SidebarService {
           name: 'Operaciones-Presentaciones juntas de comité',
         },
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'Asistente',
             'GerenteMantenimiento',
             'Residente',
@@ -513,7 +510,7 @@ export class SidebarService {
           name: 'Operaciones-Minuta',
         },
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'GerenteMantenimiento',
             'Mantenimiento',
             'Mantenimiento',
@@ -525,7 +522,7 @@ export class SidebarService {
           name: 'Operaciones-Mantenimientos preventivos',
         },
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'Asistente',
             'Colaborador',
             'GerenteMantenimiento',
@@ -541,7 +538,7 @@ export class SidebarService {
         },
 
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'Asistente',
             'GerenteMantenimiento',
             'Mantenimiento',
@@ -555,7 +552,7 @@ export class SidebarService {
           name: 'Operaciones-Reporte general mensual de manteniento',
         },
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'Asistente',
             'GerenteMantenimiento',
             'Residente',
@@ -569,7 +566,7 @@ export class SidebarService {
       ],
     },
     {
-      visible: this.authService.onValidateRoles([
+      visible: this.authS.onValidateRoles([
         'SuperUsuario',
         'Mantenimiento',
         'Asistente',
@@ -580,7 +577,7 @@ export class SidebarService {
       icon: 'fa-thin fa-bag-shopping',
       items: [
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'SuperUsuario',
             'Asistente',
             'Mantenimiento',
@@ -593,7 +590,7 @@ export class SidebarService {
           name: 'Compras-Cedula presupuestal',
         },
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'SuperUsuario',
             'Asistente',
             'Mantenimiento',
@@ -606,7 +603,7 @@ export class SidebarService {
           name: 'Compras-Cedula presupuestal',
         },
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'SuperUsuario',
             'Asistente',
             'Residente',
@@ -617,7 +614,7 @@ export class SidebarService {
           name: 'Compras-Cuentas Mtto',
         },
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'SuperUsuario',
             'Asistente',
             'Mantenimiento',
@@ -629,7 +626,7 @@ export class SidebarService {
           name: 'Compras-Productos y servicios',
         },
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'SuperUsuario',
             'Asistente',
             'Mantenimiento',
@@ -640,7 +637,7 @@ export class SidebarService {
           name: 'Compras-Solicitudes de compra',
         },
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'Asistente',
             'Residente',
             'SuperUsuario',
@@ -651,7 +648,7 @@ export class SidebarService {
           name: 'Compras-ordenes de compra gastos fijos',
         },
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'Asistente',
             'Residente',
             'SuperUsuario',
@@ -662,7 +659,7 @@ export class SidebarService {
           name: 'Compras-ordenes de compra gastos variables',
         },
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'Asistente',
             'Residente',
             'SuperUsuario',
@@ -672,7 +669,7 @@ export class SidebarService {
           name: 'Compras-catalogo ordenes de compra gastos fijos',
         },
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'Asistente',
             'Residente',
             'SuperUsuario',
@@ -684,7 +681,7 @@ export class SidebarService {
       ],
     },
     {
-      visible: this.authService.onValidateRoles([
+      visible: this.authS.onValidateRoles([
         'SuperUsuario',
         'Colaborador',
         'GerenteMantenimiento',
@@ -695,7 +692,7 @@ export class SidebarService {
       icon: 'fa-thin fa-book',
       items: [
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'SuperUsuario',
             'Colaborador',
             'GerenteMantenimiento',
@@ -707,7 +704,7 @@ export class SidebarService {
           name: 'Bitacoras-mantenimiento recorrido diario',
         },
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'Colaborador',
             'GerenteMantenimiento',
             'Mantenimiento',
@@ -719,7 +716,7 @@ export class SidebarService {
           name: 'Bitacoras-medidores gas, agua y luz',
         },
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'Colaborador',
             'GerenteMantenimiento',
             'Mantenimiento',
@@ -731,7 +728,7 @@ export class SidebarService {
           name: 'Bitacoras-alberca',
         },
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'GerenteMantenimiento',
             'Mantenimiento',
             'Residente',
@@ -743,7 +740,7 @@ export class SidebarService {
           name: 'Reporte de elevadores',
         },
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'GerenteMantenimiento',
             'Mantenimiento',
             'Residente',
@@ -757,7 +754,7 @@ export class SidebarService {
       ],
     },
     {
-      visible: this.authService.onValidateRoles([
+      visible: this.authS.onValidateRoles([
         'Asistente',
         'GerenteMantenimiento',
         'Mantenimiento',
@@ -770,7 +767,7 @@ export class SidebarService {
       name: 'inventarios',
     },
     {
-      visible: this.authService.onValidateRoles([
+      visible: this.authS.onValidateRoles([
         'Asistente',
         'Colaborador',
         'GerenteMantenimiento',
@@ -783,7 +780,7 @@ export class SidebarService {
       icon: 'fa-thin fa-boxes-stacked',
       items: [
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'Asistente',
             'GerenteMantenimiento',
             'Mantenimiento',
@@ -796,7 +793,7 @@ export class SidebarService {
         },
 
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'Asistente',
             'GerenteMantenimiento',
             'Mantenimiento',
@@ -808,7 +805,7 @@ export class SidebarService {
           name: 'Inventarios-Areas comunes',
         },
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'GerenteMantenimiento',
             'Mantenimiento',
             'Residente',
@@ -819,7 +816,7 @@ export class SidebarService {
           name: 'Inventarios-Cuartos de maquinas',
         },
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'Asistente',
             'GerenteMantenimiento',
             'Mantenimiento',
@@ -831,7 +828,7 @@ export class SidebarService {
           name: 'Inventarios-Mobiliarios',
         },
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'Asistente',
             'GerenteMantenimiento',
             'Mantenimiento',
@@ -843,7 +840,7 @@ export class SidebarService {
           name: 'Inventarios-Llaves',
         },
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'GerenteMantenimiento',
             'Mantenimiento',
             'Residente',
@@ -854,7 +851,7 @@ export class SidebarService {
           name: 'Inventarios-Herramienta',
         },
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'Asistente',
             'GerenteMantenimiento',
             'Mantenimiento',
@@ -866,7 +863,7 @@ export class SidebarService {
           name: 'Inventarios-Radios',
         },
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'Asistente',
             'GerenteMantenimiento',
             'Mantenimiento',
@@ -880,7 +877,7 @@ export class SidebarService {
         },
 
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'GerenteMantenimiento',
             'Mantenimiento',
             'Residente',
@@ -891,7 +888,7 @@ export class SidebarService {
           name: 'Inventarios-Equipos electromecanicos',
         },
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'Asistente',
             'GerenteMantenimiento',
             'Mantenimiento',
@@ -903,7 +900,7 @@ export class SidebarService {
           name: 'Inventarios-Equipos de gimnasio',
         },
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'GerenteMantenimiento',
             'Mantenimiento',
             'Residente',
@@ -914,7 +911,7 @@ export class SidebarService {
           name: 'Inventarios-Extintores',
         },
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'GerenteMantenimiento',
             'Mantenimiento',
             'Residente',
@@ -925,7 +922,7 @@ export class SidebarService {
           name: 'Inventarios-Extintores',
         },
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'GerenteMantenimiento',
             'Mantenimiento',
             'Residente',
@@ -936,7 +933,7 @@ export class SidebarService {
           name: 'Inventarios-Catalogo de iluminación',
         },
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'GerenteMantenimiento',
             'Mantenimiento',
             'Residente',
@@ -947,7 +944,7 @@ export class SidebarService {
           name: 'Inventarios-Catalogo de pintura',
         },
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'GerenteMantenimiento',
             'Mantenimiento',
             'Residente',
@@ -958,7 +955,7 @@ export class SidebarService {
           name: 'Inventarios-Almacen',
         },
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'Asistente',
             'GerenteMantenimiento',
             'Mantenimiento',
@@ -968,7 +965,7 @@ export class SidebarService {
           label: '5.4.1-Mov. al almacén',
           items: [
             {
-              visible: this.authService.onValidateRoles([
+              visible: this.authS.onValidateRoles([
                 'Asistente',
                 'GerenteMantenimiento',
                 'Mantenimiento',
@@ -980,7 +977,7 @@ export class SidebarService {
               name: 'Inventarios-Entradas de insumos',
             },
             {
-              visible: this.authService.onValidateRoles([
+              visible: this.authS.onValidateRoles([
                 'Asistente',
                 'GerenteMantenimiento',
                 'Mantenimiento',
@@ -992,7 +989,7 @@ export class SidebarService {
               name: 'Inventarios-Salida de insumos',
             },
             {
-              visible: this.authService.onValidateRoles([
+              visible: this.authS.onValidateRoles([
                 'GerenteMantenimiento',
                 'Mantenimiento',
                 'Residente',
@@ -1005,7 +1002,7 @@ export class SidebarService {
           ],
         },
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'Asistente',
             'GerenteMantenimiento',
             'Mantenimiento',
@@ -1017,7 +1014,7 @@ export class SidebarService {
           name: 'Inventarios-Polizas de mantenimiento',
         },
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'Asistente',
             'GerenteMantenimiento',
             'Mantenimiento',
@@ -1031,7 +1028,7 @@ export class SidebarService {
       ],
     },
     {
-      visible: this.authService.onValidateRoles([
+      visible: this.authS.onValidateRoles([
         'Asistente',
         'GerenteMantenimiento',
         'Mantenimiento',
@@ -1043,7 +1040,7 @@ export class SidebarService {
       icon: 'fa-thin fa-book-open-reader',
       items: [
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'GerenteMantenimiento',
             'Mantenimiento',
             'Residente',
@@ -1054,7 +1051,7 @@ export class SidebarService {
           name: 'Capacitación-Nomenclatura',
         },
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'Asistente',
             'GerenteMantenimiento',
             'Mantenimiento',
@@ -1067,7 +1064,7 @@ export class SidebarService {
           name: 'Capacitación-Manuales y procesos',
         },
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'Asistente',
             'GerenteMantenimiento',
             'Mantenimiento',
@@ -1080,7 +1077,7 @@ export class SidebarService {
           name: 'Capacitación-Formatos',
         },
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'Asistente',
             'GerenteMantenimiento',
             'Mantenimiento',
@@ -1093,7 +1090,7 @@ export class SidebarService {
           name: 'Capacitación-Comunicados internos',
         },
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'Asistente',
             'GerenteMantenimiento',
             'Mantenimiento',
@@ -1106,13 +1103,13 @@ export class SidebarService {
           name: 'Calendario-Mantenimientos preventivos',
         },
         {
-          visible: this.authService.onValidateRoles(['SuperUsuario']),
+          visible: this.authS.onValidateRoles(['SuperUsuario']),
           label: 'Calendario Maestro Equipo',
           routerLink: '/operaciones/calendario/calendario-maestro-equipo',
           name: 'Capacitación-Guia calendario general de mtto',
         },
         {
-          visible: this.authService.onValidateRoles(['SuperUsuario']),
+          visible: this.authS.onValidateRoles(['SuperUsuario']),
           label: 'Calendario',
           routerLink: '/operaciones/calendario/custom-calendar-events',
           name: 'custom-calendar-events',
@@ -1120,7 +1117,7 @@ export class SidebarService {
       ],
     },
     {
-      visible: this.authService.onValidateRoles([
+      visible: this.authS.onValidateRoles([
         'Asistente',
         'GerenteMantenimiento',
         'Mantenimiento',
@@ -1132,7 +1129,7 @@ export class SidebarService {
       icon: 'fa-thin fa-calendar-days',
       items: [
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'Asistente',
             'Contador',
             'Residente',
@@ -1144,7 +1141,7 @@ export class SidebarService {
           name: 'Calendario-Fondeos',
         },
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'GerenteMantenimiento',
             'Mantenimiento',
             'Residente',
@@ -1155,7 +1152,7 @@ export class SidebarService {
           name: 'Calendario-Mantenimiento preventivo',
         },
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'Asistente',
             'GerenteMantenimiento',
             'Mantenimiento',
@@ -1168,7 +1165,7 @@ export class SidebarService {
           name: 'Calendario-Fiestaws judias',
         },
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'Asistente',
             'GerenteMantenimiento',
             'Mantenimiento',
@@ -1181,7 +1178,7 @@ export class SidebarService {
           name: 'Calendario-Fiestaws catolicas',
         },
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'Asistente',
             'Contador',
             'GerenteMantenimiento',
@@ -1198,7 +1195,7 @@ export class SidebarService {
     },
 
     {
-      visible: this.authService.onValidateRoles([
+      visible: this.authS.onValidateRoles([
         'Asistente',
         'GerenteMantenimiento',
         'Mantenimiento',
@@ -1210,22 +1207,19 @@ export class SidebarService {
       icon: 'fa-thin fa-address-book',
       items: [
         {
-          visible: this.authService.onValidateRoles([
-            'Residente',
-            'SuperUsuario',
-          ]),
+          visible: this.authS.onValidateRoles(['Residente', 'SuperUsuario']),
           label: 'Organigrama',
           routerLink: '/directorio/organigrama-interno',
           name: 'Directorio-Organigrama interno',
         },
         {
-          visible: this.authService.onValidateRoles(['SuperUsuario']),
+          visible: this.authS.onValidateRoles(['SuperUsuario']),
           label: 'Clientes',
           routerLink: '/configuracion/clientes',
           name: 'Directorio-Clientes',
         },
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'Asistente',
             'GerenteMantenimiento',
             'Mantenimiento',
@@ -1238,7 +1232,7 @@ export class SidebarService {
           name: 'Directorio-Propiedades',
         },
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'Asistente',
             'GerenteMantenimiento',
             'Mantenimiento',
@@ -1251,7 +1245,7 @@ export class SidebarService {
           name: 'Directorio-Condominos',
         },
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'Asistente',
             'GerenteMantenimiento',
             'Mantenimiento',
@@ -1265,7 +1259,7 @@ export class SidebarService {
         },
 
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'Asistente',
             'GerenteMantenimiento',
             'Mantenimiento',
@@ -1277,7 +1271,7 @@ export class SidebarService {
           name: 'Directorio-Empleados internos',
         },
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'Asistente',
             'GerenteMantenimiento',
             'Mantenimiento',
@@ -1291,7 +1285,7 @@ export class SidebarService {
         },
 
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'Asistente',
             'GerenteMantenimiento',
             'Mantenimiento',
@@ -1309,7 +1303,7 @@ export class SidebarService {
         //   name: 'Directorio-Todos los empleados',
         // },
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'Asistente',
             'GerenteMantenimiento',
             'Mantenimiento',
@@ -1323,7 +1317,7 @@ export class SidebarService {
       ],
     },
     {
-      visible: this.authService.onValidateRoles([
+      visible: this.authS.onValidateRoles([
         'Asistente',
         'Mantenimiento',
         'Residente',
@@ -1333,7 +1327,7 @@ export class SidebarService {
       icon: 'fa-thin fa-screwdriver-wrench',
       items: [
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'Asistente',
             'Mantenimiento',
             'Residente',
@@ -1346,7 +1340,7 @@ export class SidebarService {
       ],
     },
     {
-      visible: this.authService.onValidateRoles([
+      visible: this.authS.onValidateRoles([
         'Asistente',
         'Residente',
         'SuperUsuario',
@@ -1356,7 +1350,7 @@ export class SidebarService {
       icon: 'fa-thin fa-arrows-down-to-people',
       items: [
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'Asistente',
             'Residente',
             'SuperUsuario',
@@ -1368,7 +1362,7 @@ export class SidebarService {
           name: 'Reclutamiento-Plantilla',
         },
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'SuperUsuario',
             'Residente',
             'Asistente',
@@ -1378,7 +1372,7 @@ export class SidebarService {
           name: 'Reclutamiento-Solicitudes por cliente',
         },
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'SuperUsuario',
             'Reclutamiento',
           ]),
@@ -1388,7 +1382,7 @@ export class SidebarService {
         },
 
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'SuperUsuario',
             'Reclutamiento',
           ]),
@@ -1397,7 +1391,7 @@ export class SidebarService {
           name: 'Reclutamiento-Departamentos de la empresa',
         },
         {
-          visible: this.authService.onValidateRoles([
+          visible: this.authS.onValidateRoles([
             'SuperUsuario',
             'Reclutamiento',
           ]),

@@ -10,7 +10,7 @@ import Swal, { SweetAlertIcon } from 'sweetalert2';
 })
 export default class BtnConfirmationComponent {
   @Input()
-  tooltipText: string = 'Enviar Email';
+  ngbTooltip: string = 'Enviar Email';
   @Input()
   mostrar: boolean = true;
   @Input()

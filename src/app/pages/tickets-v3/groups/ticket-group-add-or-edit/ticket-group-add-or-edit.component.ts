@@ -8,12 +8,14 @@ import {
 } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { NotificationService } from 'src/app/core/services/notification.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
+import { VisibilityLevel } from '../../interfaces/visibility-level.enum';
 
 @Component({
   selector: 'app-ticket-group-add-or-edit',
@@ -33,10 +35,7 @@ export default class TicketGroupAddOrEditComponent implements OnInit {
   id: string = this.config.data.id;
   submitting: boolean = false;
 
-  cb_isPublic = [
-    { label: 'Publico', value: true },
-    { label: 'Privado', value: false },
-  ];
+  cb_visibility: ISelectItem[] = onGetSelectItemFromEnum(VisibilityLevel);
   cb_ticketGroupCategory: ISelectItem[] = [];
 
   form: FormGroup = this.formBuilder.group({
@@ -45,7 +44,7 @@ export default class TicketGroupAddOrEditComponent implements OnInit {
       this.customerIdService.customerId,
       Validators.required
     ),
-    isPublic: [false, Validators.required],
+    visibility: [false, Validators.required],
     ticketGroupCategoryId: new FormControl('', Validators.required),
     userCreateId: [this.authService.applicationUserId, Validators.required],
   });

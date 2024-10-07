@@ -1,8 +1,10 @@
-<button
-  [disabled]="disabled"
-  type="submit"
-  class="btn bg-gradient btn-primary float-end mt-1"
->
-  <i class="font-size-16 align-middle me-2 no-print" [ngClass]="icon"></i>
-  Guardar
-</button>
+<div class="float-end">
+  <custom-button
+    type="submit"
+    customClass="bg-gradient btn-primary float-end mt-1"
+    icon="font-size-16 align-middle me-2 "
+    [customNgClassIcon]="icon"
+    label="Guardar"
+    [disabled]="disabled"
+  />
+</div>
