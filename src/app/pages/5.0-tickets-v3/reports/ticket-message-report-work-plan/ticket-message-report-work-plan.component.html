@@ -1,0 +1,237 @@
+<div class="card">
+  <p-table
+    *ngIf="data && data !== undefined"
+    #dt
+    [value]="data"
+    styleClass="custom-table"
+    [tableStyle]="{ 'min-width': '50rem' }"
+    [rows]="100"
+    [paginator]="true"
+    currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+    [showCurrentPageReport]="true"
+    [rowsPerPageOptions]="[100, 200, 300, 500]"
+    [globalFilterFields]="[
+      'userCreate',
+      'createdAtFilter',
+      'scheduledAtFilter',
+      'creatorImg',
+      'title',
+      'description'
+    ]"
+    [autoLayout]="true"
+    [tableStyle]="{ 'min-width': '50rem' }"
+  >
+    <ng-template pTemplate="caption">
+      <custom-table-caption
+        title="PENDIENTES"
+        (add)="
+          onModalAddOrEdit({
+            id: '',
+            title: 'Nuevo Registro'
+          })
+        "
+        [dt]="dt"
+      />
+      <div class="row">
+        <div class="col-lg-3">
+          <select
+            class="form-select"
+            [(ngModel)]="assignee"
+            (change)="onResponsibleChange($event)"
+          >
+            <option *ngFor="let item of cb_assignee" [value]="item.value">
+              {{ item.label }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <!-- end col -->
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th scope="col" style="width: 6%" class="font-size-12">FOLIO</th>
+
+        <th
+          scope="col"
+          style="width: 30%"
+          class="font-size-12"
+          pSortableColumn="responsibleArea"
+        >
+          SOLICITUD
+          <p-sortIcon field="responsibleArea"></p-sortIcon>
+        </th>
+        <th scope="col" class="font-size-12">EVIDENCIA</th>
+        <th
+          scope="col"
+          style="width: 8%"
+          class="font-size-12"
+          pSortableColumn="priority"
+        >
+          PRIORIDAD
+          <p-sortIcon
+            field="priority"
+            icon="fa-solid fa-user-tag "
+          ></p-sortIcon>
+        </th>
+        <th
+          scope="col"
+          style="width: 8%"
+          class="font-size-12"
+          pSortableColumn="responsableNombre"
+        >
+          ASIGNADO A
+          <p-sortIcon field="responsableNombre"></p-sortIcon>
+        </th>
+
+        <th
+          scope="col"
+          style="width: 10%"
+          class="font-size-12"
+          pSortableColumn="scheduledAtFilter"
+        >
+          PROGRAMADO
+          <p-sortIcon field="scheduledAtFilter"></p-sortIcon>
+        </th>
+
+        <th
+          scope="col"
+          style="width: 10%"
+          class="font-size-12"
+          pSortableColumn="daysDifference"
+        >
+          DIAS
+          <p-sortIcon field="daysDifference"></p-sortIcon>
+        </th>
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item>
+      <tr>
+        <td>
+          {{ item.folio }}
+        </td>
+        <td>
+          <strong class="mb-0">{{ item.title }}</strong>
+          <p class="">
+            {{ item.description }}
+          </p>
+        </td>
+        <td class="text-center">
+          <div class="d-flex justify-content-center align-items-center">
+            <p-image
+              *ngIf="item.beforeWork"
+              [src]="this.urlImage + item.beforeWork"
+              alt="."
+              width="40"
+              class="me-2 border border-danger"
+              [preview]="true"
+            ></p-image>
+          </div>
+        </td>
+        <td class="text-center">
+          <i
+            (click)="onUpdatePriority(item.id)"
+            *ngIf="item.priority === 'Alta'"
+            class="fa-sharp fa-solid fa-star fa-xl pointer text-primary"
+          ></i>
+          <i
+            (click)="onUpdatePriority(item.id)"
+            *ngIf="item.priority === 'Baja'"
+            class="fa-sharp fa-thin fa-star fa-xl pointer text-primary"
+          ></i>
+        </td>
+
+        <!-- <td class="text-center"></td> -->
+
+        <td class="text-center">
+          @if (item.assigneeId) {
+          <img
+            (click)="onCardEmployee(item.assigneeId)"
+            [src]="urlAccount + item.assigneeImg"
+            alt="."
+            width="32"
+            style="cursor: pointer"
+            class="rounded avatar-md"
+          />
+          }
+        </td>
+        <td>
+          {{ item.scheduledAt }}
+        </td>
+        <td class="text-center">
+          <p>
+            <strong>
+              {{ item.daysDifference }}
+            </strong>
+          </p>
+        </td>
+
+        <!-- Opciones -->
+
+        <td class="text-center">
+          <div class="d-flex justify-content-center">
+            <app-ticket-follow-up-button
+              [id]="item.id"
+              [followUpCount]="item.ticketMessageFollowUp"
+              (followUpCompleted)="onLoadData()"
+            />
+
+            <div ngbDropdown container="body" class="d-inline-block">
+              <button
+                id="options"
+                ngbDropdownToggle
+                class="btn btn-soft-primary bg-gradient"
+                ngbTooltip="Opciones"
+              >
+                <i class="fa-light fa-ellipsis-vertical"></i>
+              </button>
+              <div ngbDropdownMenu aria-labelledby="options">
+                <app-ticket-program-button
+                  [item]="item"
+                  (programCompleted)="onLoadData()"
+                />
+
+                <br *ngIf="item.status !== 'Closed'" />
+                <app-ticket-close-button
+                  *ngIf="item.status !== 'Closed'"
+                  [item]="item"
+                  (closedCompleted)="onLoadData()"
+                />
+
+                <br *ngIf="item.status !== 'InProgress'" />
+                <app-ticket-progress-button
+                  [item]="item"
+                  (progressCompleted)="onLoadData()"
+                />
+
+                <br *ngIf="item.status === 'Closed'" />
+                <custom-button
+                  label="Editar"
+                  customClass="btn-soft-primary w-100 mt-1 text-start"
+                  icon="fa-pen-to-square me-2"
+                  (clicked)="
+                    onModalAddOrEdit({
+                      id: item.id,
+                      title: 'Editar'
+                    })
+                  "
+                />
+                <br />
+
+                <br />
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+<style>
+  .form-check {
+    display: flex;
+    align-items: center; /* Alinea verticalmente el checkbox y su etiqueta */
+    justify-content: center; /* Centra horizontalmente el contenido */
+  }
+</style>

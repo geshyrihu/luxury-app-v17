@@ -1,0 +1,89 @@
+<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
+
+<div class="card">
+  <p-table
+    #dt
+    [value]="data"
+    [autoLayout]="true"
+    [globalFilterFields]="[
+      'machinery',
+      'report',
+      'request',
+      'personWhoReports',
+      'requestDate'
+    ]"
+    [paginator]="true"
+    [rowHover]="true"
+    [rows]="50"
+    [rowsPerPageOptions]="[50, 75, 100, 200]"
+    [showCurrentPageReport]="true"
+    currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+    styleClass="custom-table"
+  >
+    <!-- styleClass="p-datatable-sm" -->
+    <ng-template pTemplate="caption">
+      <custom-table-caption
+        [title]="'REPORTES DE EMERGENCIA ELEVADORES'"
+        (add)="onModalAddOrEdit({ id: '', title: 'Nuevo Registro' })"
+        [dt]="dt"
+      />
+    </ng-template>
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th scope="col" pSortableColumn="requestDateFilter">
+          FECHA
+          <p-sortIcon field="requestDateFilter"></p-sortIcon>
+        </th>
+        <th scope="col" pSortableColumn="machinery">
+          EQUIPO<p-sortIcon field="machinery"></p-sortIcon>
+        </th>
+        <th scope="col" pSortableColumn="folio">
+          FOLIO
+          <p-sortIcon field="folio"></p-sortIcon>
+        </th>
+        <th scope="col" pSortableColumn="report">
+          REPORTE<p-sortIcon field="report"></p-sortIcon>
+        </th>
+        <th scope="col" pSortableColumn="request">
+          RESPUESTA<p-sortIcon field="request"></p-sortIcon>
+        </th>
+        <th scope="col" pSortableColumn="personWhoReports">
+          REPORTO<p-sortIcon field="personWhoReports"></p-sortIcon>
+        </th>
+        <th scope="col" pSortableColumn="technicianWhoAttended">
+          ATENDIO<p-sortIcon field="technicianWhoAttended"></p-sortIcon>
+        </th>
+
+        <th scope="col" style="width: 5%" class="no-print"></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item>
+      <tr>
+        <td class="p-column-title">{{ item.requestDate }}</td>
+        <td class="p-column-title">{{ item.machinery }}</td>
+        <td class="p-column-title">{{ item.folio }}</td>
+        <td class="p-column-title">{{ item.report }}</td>
+        <td class="p-column-title">{{ item.request }}</td>
+        <td class="p-column-title">{{ item.personWhoReports }}</td>
+        <td class="p-column-title">{{ item.technicianWhoAttended }}</td>
+        <!-- Opciones -->
+        <td class="p-column-title" class="no-print">
+          <div class="d-flex justify-content-center">
+            <btn-edit
+              (edit)="onModalAddOrEdit({ id: item.id, title: 'Editar' })"
+            />
+            <btn-delete (OnConfirm)="onDelete(item.id)" />
+          </div>
+        </td>
+        <!-- Opciones -->
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="paginatorleft">
+      <div class="p-d-flex p-ai-center p-jc-between no-print">
+        En total hay
+        {{ data ? data.length : 0 }} registros.
+      </div>
+    </ng-template>
+  </p-table>
+</div>

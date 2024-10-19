@@ -1,0 +1,154 @@
+<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
+<app-filter-requests
+  apiUrl="RequestPosition/ExportRequestToExcel"
+  nameFile="Reporte de vacantes.xlsx"
+></app-filter-requests>
+<div class="card">
+  <p-table
+    #dt
+    [paginator]="true"
+    [rowHover]="true"
+    [rows]="50"
+    [rowsPerPageOptions]="[50, 75, 100, 200]"
+    [showCurrentPageReport]="true"
+    [value]="data"
+    currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+    styleClass="custom-table p-datatable-sm"
+    [globalFilterFields]="['profession', 'status', 'numInternal', 'customer']"
+  >
+    <ng-template pTemplate="caption">
+      <custom-table-caption
+        [title]="'Lista de Solicitudes de Puestos de Trabajo'"
+        [showAdd]="false"
+        [dt]="dt"
+      />
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th scope="col" pSortableColumn="folio">
+          FOLIO <p-sortIcon field="folio"></p-sortIcon>
+        </th>
+        <th scope="col" pSortableColumn="requestDateFilter">
+          FECHA DE SOLICITUD
+          <p-sortIcon field="requestDateFilter"></p-sortIcon>
+        </th>
+
+        <th scope="col">CLIENTE</th>
+        <th scope="col" pSortableColumn="profession">
+          PUESTO
+          <p-sortIcon field="profession"></p-sortIcon>
+        </th>
+        <th scope="col">SUELDO MENSUAL LIBRE</th>
+        <th scope="col">DIAS TRANSCURRIDOS</th>
+        <th scope="col" pSortableColumn="status">
+          ESTATUS
+          <p-sortIcon field="status"></p-sortIcon>
+        </th>
+        <th scope="col">FECHA DE SELECCION</th>
+        <th scope="col">CANDIDATO</th>
+        <th scope="col">FUENTE</th>
+        <th scope="col">FECHA DE INGRESO</th>
+        <th scope="col">OBSERVACIONES</th>
+        <th scope="col"></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item>
+      <tr>
+        <td class="p-column-title text-center">
+          {{ item.folio }}
+        </td>
+        <td class="p-column-title">
+          {{ item.requestDate }}
+        </td>
+
+        <td class="p-column-title">
+          {{ item.customer }}
+        </td>
+        <td class="p-column-title">
+          {{ item.profession }}
+        </td>
+        <td class="p-column-title">
+          {{ item.sueldoMensualLibre }}
+        </td>
+        <td class="p-column-title text-center">{{ item.daysPassed }}</td>
+        <td class="p-column-title text-center">
+          <span
+            [ngClass]="{
+              'bg-danger': item.status === 'Pendiente',
+              'bg-warning': item.status === 'Proceso',
+              'bg-success': item.status === 'Concluido',
+              'bg-dark': item.status === 'Cancelado'
+            }"
+            class="badge m-3 p-2 font-size-12"
+          >
+            {{
+              item.status === "Pendiente"
+                ? "Pendiente"
+                : item.status === "Proceso"
+                ? "En Proceso"
+                : item.status === "Concluido"
+                ? "Cubierta"
+                : "Cancelada"
+            }}
+          </span>
+        </td>
+        <td class="p-column-title">{{ item.selectionDate }}</td>
+        <td class="p-column-title">{{ item.nameCandidate }}</td>
+        <td class="p-column-title">{{ item.fuente }}</td>
+        <td class="p-column-title">{{ item.entryDate }}</td>
+        <td class="p-column-title">{{ item.observations }}</td>
+
+        <!-- Opciones -->
+        <td class="p-column-title">
+          <!-- Opciones -->
+          <div class="d-flex justify-content-center">
+            <custom-button
+              ngbTooltip="Descripción de puesto"
+              placement="top"
+              customClass="btn-sm btn-soft-primary me-1"
+              icon="fa-light fa-book "
+              (clicked)="onModalJobDescription(item.professionId)"
+            />
+
+            <custom-button
+              ngbTooltip="Horarios"
+              placement="top"
+              customClass="btn-sm btn-soft-primary me-1"
+              icon="fa-light fa-clock"
+              (clicked)="onModalHoursWorkPosition(item.workPositionId)"
+            />
+            <!-- <custom-button
+              ngbTooltip="Solicitar alta"
+              placement="top"
+              customClass="btn-sm btn-soft-primary me-1"
+              icon="fa-light fa-id-card"
+              (clicked)="
+                onModalRegisterEmployeToVacancy({
+                  workPositionId: item.workPositionId,
+                  title: 'Vacante ' + item.folio + ' - ' + item.profession
+                })
+              "
+            /> -->
+            <btn-edit
+              (edit)="
+                onModalAddOrEdit({
+                  id: item.id,
+                  title: 'Vacante ' + item.profession
+                })
+              "
+            />
+            <btn-delete (OnConfirm)="onDelete(item.id)" />
+          </div>
+          <!-- Opciones -->
+        </td>
+        <!-- Opciones -->
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="paginatorleft">
+      <div class="p-d-flex p-ai-center p-jc-between no-print">
+        En total hay
+        {{ data ? data.length : 0 }} registros.
+      </div>
+    </ng-template>
+  </p-table>
+</div>

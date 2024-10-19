@@ -1,6 +1,5 @@
 import { Injectable, inject } from '@angular/core';
 import { IMenuItem } from '../interfaces/menu.model';
-import { EPermission } from '../interfaces/user-token.interface';
 import { AuthService } from './auth.service';
 
 @Injectable({
@@ -9,147 +8,234 @@ import { AuthService } from './auth.service';
 export class SidebarService {
   private authS = inject(AuthService);
 
-  /**
-   *
-   */
-  constructor() {
-    const canRead = this.authS.permmission(
-      'CONFIGURACION',
-      EPermission.CanRead
-    );
-    console.log('Can read permission:', canRead);
-  }
   get onLoadMenu() {
     return this.menu;
   }
   menu: IMenuItem[] = [
     {
-      visible: this.authS.permmission('CONFIGURACION', EPermission.CanRead),
-      // visible: this.authS.onValidateRoles(['SuperUsuario']),
-      label: 'Configuración',
-      icon: 'fa-thin fa-gear',
-      routerLink: '/configuracion/panel',
-      name: 'Configuración',
+      visible: this.authS.onValidateRoles(['SuperUsuario']),
+      label: 'Catalgogos',
+      icon: 'fa-thin fa-album-collection',
+      name: 'catalog',
+      items: [
+        {
+          visible: this.authS.onValidateRoles(['SuperUsuario']),
+          label: 'Administradoras',
+          routerLink: '/catalog/administrators',
+          name: 'module-app',
+        },
+        {
+          visible: this.authS.onValidateRoles(['SuperUsuario']),
+          label: 'Bancos',
+          routerLink: '/catalog/banks',
+          name: 'bancos',
+        },
+        {
+          visible: this.authS.onValidateRoles(['SuperUsuario']),
+          label: 'Entrega Recepción',
+          routerLink: '/catalog/entrega-recepcion-cliente',
+          name: 'entrega recepcion',
+        },
+        {
+          visible: this.authS.onValidateRoles(['SuperUsuario']),
+          label: 'Forma de pago',
+          routerLink: '/catalog/forma-pago',
+          name: 'forma de pago',
+        },
+        {
+          visible: this.authS.onValidateRoles(['SuperUsuario']),
+          label: 'Metodo de pago',
+          routerLink: '/catalog/metodo-pago',
+          name: 'metodo de pago',
+        },
+        {
+          visible: this.authS.onValidateRoles(['SuperUsuario']),
+          label: 'Modulos',
+          routerLink: '/catalog/module-app',
+          name: 'module-app',
+        },
+        {
+          visible: this.authS.onValidateRoles(['SuperUsuario']),
+          label: 'Uso de cfdi',
+          routerLink: '/catalog/uso-cfdi',
+          name: 'uso de cfdi',
+        },
+        {
+          visible: this.authS.onValidateRoles(['SuperUsuario']),
+          label: 'Puestos de trabajo',
+          routerLink: '/catalog/jobs',
+          name: 'jobs',
+        },
+        {
+          visible: this.authS.onValidateRoles(['SuperUsuario']),
+          label: 'Categoria Medidor',
+          routerLink: '/catalog/meter-category',
+          name: 'meter category',
+        },
+        {
+          visible: this.authS.onValidateRoles(['SuperUsuario']),
+          label: 'Categoria productos',
+          routerLink: '/catalog/product-category',
+          name: 'product category',
+        },
+        {
+          visible: this.authS.onValidateRoles(['SuperUsuario']),
+          label: 'Productos y servicios',
+          routerLink: '/catalog/products-services',
+          name: 'products-services',
+        },
+        {
+          visible: this.authS.onValidateRoles(['SuperUsuario']),
+          label: 'Clasificacion equipos',
+          routerLink: '/catalog/machinery-classification',
+          name: 'machinery-classification',
+        },
+        {
+          visible: this.authS.onValidateRoles(['SuperUsuario']),
+          label: 'Departamentos',
+          routerLink: '/catalog/company-departaments',
+          name: 'company-departaments',
+        },
+        {
+          visible: this.authS.onValidateRoles(['SuperUsuario']),
+          label: 'Unidades de medida',
+          routerLink: '/catalog/units-of-measurement',
+          name: 'units-of-measurement',
+        },
+      ],
     },
-
     {
-      visible: this.authS.permmission('CONFIGURACION', EPermission.CanRead),
+      visible: this.authS.onValidateRoles(['SuperUsuario']),
       label: 'Configuración',
       icon: 'fa-thin fa-gear',
       name: 'Configuración',
       items: [
         {
-          visible: this.authS.permmission('CONFIGURACION', EPermission.CanRead),
-          label: 'Customer Data Company',
-          routerLink: '/configuracion/customer-data-company',
+          visible: this.authS.onValidateRoles(['SuperUsuario']),
+          label: 'Depuración',
+          routerLink: '/settings/depuration',
+          name: 'depuration',
+        },
+        {
+          visible: this.authS.onValidateRoles(['SuperUsuario']),
+          label: 'Historial de acceso',
+          routerLink: '/settings/access-history',
+          name: 'access-history',
+        },
+        {
+          visible: this.authS.onValidateRoles(['SuperUsuario']),
+          label: 'Supervisores de proveedores',
+          routerLink: '/settings/supplier-supervisors',
+          name: 'supplier-supervisors',
+        },
+        {
+          visible: this.authS.onValidateRoles(['SuperUsuario']),
+          label: 'Emails corporativos',
+          routerLink: '/settings/customer-data-company',
           name: 'customer-data-company',
         },
         {
-          visible: this.authS.permmission('CONFIGURACION', EPermission.CanRead),
-          label: 'Departamentos de la empresa',
-          routerLink: '/configuracion/company-departaments',
-          name: 'company-departaments',
+          visible: this.authS.onValidateRoles(['SuperUsuario']),
+          label: 'Datos de email',
+          routerLink: '/accounts/datos-email',
+          name: 'datos de correos',
         },
         {
-          visible: this.authS.permmission('CONFIGURACION', EPermission.CanRead),
-          label: 'Modulos',
-          routerLink: '/configuracion/module-app',
-          name: 'module-app',
+          visible: this.authS.onValidateRoles(['SuperUsuario']),
+          label: 'Configuración',
+          routerLink: '/settings/panel',
+          name: 'Configuración',
         },
       ],
     },
+    {
+      visible: this.authS.onValidateRoles(['Sistemas', 'SuperUsuario']),
+      label: 'Usuarios',
+      icon: 'fa-thin fa-user-tie',
+      routerLink: '/application-user',
+    },
 
     {
-      visible: this.authS.onValidateRoles([
-        'Asistente',
-        'GerenteMantenimiento',
-        'Mantenimiento',
-        'Residente',
-        'Sistemas',
-        'SuperUsuario',
-        'SupervisionOperativa',
-      ]),
+      visible: this.authS.canRead('MIEDIFICIO'),
       label: 'Mi Edificio',
       icon: 'fa-thin fa-building',
       routerLink: '/operaciones/mi-edificio',
       name: 'Mi edificio',
     },
     {
-      visible: this.authS.onValidateRoles(['Legal', 'SuperUsuario']),
+      visible: this.authS.canRead('LEGAL'),
       label: '1.-Legal',
       icon: 'fa-thin fa-gavel',
       items: [
         {
-          visible: this.authS.onValidateRoles(['Legal', 'SuperUsuario']),
+          visible: this.authS.canRead('LEGAL'),
           label: 'Minutas',
           routerLink: '/contabilidad/pendientes-minutas-legal',
           name: 'Legal-Minutas',
         },
         {
-          visible: this.authS.onValidateRoles(['Legal', 'SuperUsuario']),
+          visible: this.authS.canRead('LEGAL'),
           label: 'Legal Tickets',
           routerLink: '/legal/list-ticket-legal',
           name: 'Tickets',
         },
         {
-          visible: this.authS.onValidateRoles(['Legal', 'SuperUsuario']),
+          visible: this.authS.canRead('LEGAL'),
           label: 'Pendientes',
           routerLink: '/legal/pendings',
           name: 'pendientes legal',
         },
         {
-          visible: this.authS.onValidateRoles(['Legal', 'SuperUsuario']),
+          visible: this.authS.canRead('LEGAL'),
           label: 'Reportes',
           routerLink: '/legal/reports',
+          name: 'reportes legal',
+        },
+        {
+          visible: this.authS.canRead('LEGAL'),
+          label: 'Categorias y asuntos',
+          routerLink: '/legal/legal-matter',
           name: 'reportes legal',
         },
       ],
     },
     {
-      visible: this.authS.onValidateRoles([
-        'Contador',
-        'SuperUsuario',
-        'SupervisorContable',
-      ]),
+      visible: this.authS.canRead('CONTABILIDAD'),
       label: '2.-Contabilidad',
       icon: 'fa-thin fa-hand-holding-dollar',
       items: [
         {
-          visible: this.authS.onValidateRoles([
-            'Contador',
-            'SuperUsuario',
-            'SupervisorContable',
-          ]),
+          visible: this.authS.canRead('CONTABILIDAD'),
           label: 'Presentaciones',
           routerLink: '/operaciones/presentacion-junta-comite/presentaciones',
           name: 'Contabilidad-Presentaciones',
         },
         {
-          visible: this.authS.onValidateRoles(['Contador', 'SuperUsuario']),
+          visible: this.authS.canRead('CONTABILIDAD'),
           label: 'Minutas',
           routerLink: '/contabilidad/pendientes-minutas',
           name: 'Contabilidad-Pendientes-Minutas',
         },
         {
-          visible: this.authS.onValidateRoles(['Contador', 'SuperUsuario']),
+          visible: this.authS.canRead('CONTABILIDAD'),
           label: 'Estados Financieros',
           routerLink: '/contabilidad/estados-financieros',
           name: 'Estados financieros',
         },
         {
-          visible: this.authS.onValidateRoles(['Contador', 'SuperUsuario']),
+          visible: this.authS.canRead('CONTABILIDAD'),
           label: 'Presupuesto',
           routerLink: '/operaciones/compras/cedula-cliente',
           name: 'Contabilidad-Presupuesto',
         },
         {
-          visible: this.authS.onValidateRoles(['Contador', 'SuperUsuario']),
+          visible: this.authS.canRead('CONTABILIDAD'),
           label: 'Reporte Envio Financieros',
           routerLink: '/contabilidad/reporte-envio-financieros',
           name: 'Reporte-Envio-Financieros',
         },
         {
-          visible: this.authS.onValidateRoles(['Contador', 'SuperUsuario']),
+          visible: this.authS.canRead('CONTABILIDAD'),
           label: 'Catalogo de cuentas',
           routerLink: '/contabilidad/catalogo-cuentas',
           name: 'Cuentas',
@@ -157,129 +243,41 @@ export class SidebarService {
       ],
     },
     {
-      visible: this.authS.onValidateRoles([
-        'Direccion',
-        'GerenteMantenimiento',
-        'SuperUsuario',
-        'SupervisionOperativa',
-      ]),
+      visible: this.authS.canRead('SUPERVISION'),
       label: '3.-Op-Supervisión',
       icon: 'fa-thin fa-user-tie',
       items: [
         {
-          visible: this.authS.onValidateRoles([
-            'Direccion',
-            'GerenteMantenimiento',
-            'SuperUsuario',
-            'SupervisionOperativa',
-          ]),
+          visible: this.authS.canRead('SUPERVISION'),
           label: 'Bitácora Diaria',
           routerLink: '/supervision/agenda-supervision',
           name: 'Supervisión-Bitacora Diaria',
         },
         {
-          visible: this.authS.onValidateRoles([
-            'Direccion',
-            'GerenteMantenimiento',
-            'SuperUsuario',
-            'SupervisionOperativa',
-          ]),
+          visible: this.authS.canRead('SUPERVISION'),
           label: 'Resultado General',
           routerLink: '//supervision/resultado-general-dashboard',
           name: 'Supervisión-Resultado General',
         },
         {
-          visible: this.authS.onValidateRoles([
-            'Direccion',
-            'GerenteMantenimiento',
-            'SuperUsuario',
-            'SupervisionOperativa',
-          ]),
+          visible: this.authS.canRead('SUPERVISION'),
           label: 'Reporte Presentaciones',
           routerLink: '//supervision/presentaciones-juntas-comite',
           name: 'Supervisión-Reporte presentaciónes juntas de comité',
         },
         {
-          visible: this.authS.onValidateRoles([
-            'Direccion',
-            'GerenteMantenimiento',
-            'SuperUsuario',
-            'SupervisionOperativa',
-          ]),
+          visible: this.authS.canRead('SUPERVISION'),
           label: 'Reporte Minutas',
           routerLink: '/supervision/minutas-resumen',
           name: 'Supervisión-Reporte minutas',
         },
         {
-          visible: this.authS.onValidateRoles([
-            'Direccion',
-            'GerenteMantenimiento',
-            'SuperUsuario',
-            'SupervisionOperativa',
-          ]),
+          visible: this.authS.canRead('SUPERVISION'),
           label: 'Reporte Ticket',
           routerLink: '/supervision/reporte-tickets',
           name: 'Supervisión-Reporte tickets',
         },
-        {
-          visible: this.authS.onValidateRoles([
-            'GerenteMantenimiento',
-            'SupervisionOperativa',
-          ]),
-          label: 'Recorridos',
-          items: [
-            {
-              visible: this.authS.onValidateRoles([
-                'GerenteMantenimiento',
-                'SuperUsuario',
-                'SupervisionOperativa',
-              ]),
-              label: 'Catalogo de amenidades',
-              routerLink: '/configuracion/catalogo-amenidades',
-              name: 'Catalogo de amenidades',
-            },
-            {
-              visible: this.authS.onValidateRoles([
-                'GerenteMantenimiento',
-                'SuperUsuario',
-                'SupervisionOperativa',
-              ]),
-              label: 'Catalogo de Inspecciones',
-              routerLink: '/configuracion/catalog-inspection',
-              name: 'Catalogo de Inspecciones',
-            },
-            {
-              visible: this.authS.onValidateRoles([
-                'GerenteMantenimiento',
-                'SuperUsuario',
-                'SupervisionOperativa',
-              ]),
-              label: 'Catalogo de localizaciones',
-              routerLink: '/configuracion/residential-location',
-              name: 'Catalogo de localizaciones',
-            },
-            {
-              visible: this.authS.onValidateRoles([
-                'GerenteMantenimiento',
-                'SuperUsuario',
-                'SupervisionOperativa',
-              ]),
-              label: 'Clientes Amenidades',
-              routerLink: '/configuracion/customer-amenities-catalog',
-              name: 'Clientes Amenidades',
-            },
-            {
-              visible: this.authS.onValidateRoles([
-                'GerenteMantenimiento',
-                'SuperUsuario',
-                'SupervisionOperativa',
-              ]),
-              label: 'Recorrido',
-              routerLink: '/configuracion/list-recorrido',
-              name: 'Recorrido',
-            },
-          ],
-        },
+
         {
           visible: this.authS.onValidateRoles([
             'GerenteMantenimiento',
@@ -406,7 +404,7 @@ export class SidebarService {
     },
     {
       visible: this.authS.onValidateRoles(['SuperUsuario', 'Reclutamiento']),
-      label: 'Tickets V3',
+      label: '5.-Tickets V3',
       icon: 'fa-thin fa-ticket',
       name: 'Tickets',
       items: [
@@ -464,7 +462,7 @@ export class SidebarService {
         'Contador',
         'Asistente',
       ]),
-      label: 'Tickets',
+      label: '5.-Tickets',
       icon: 'fa-thin fa-ticket',
       routerLink: '/tickets/panel',
       name: 'Tickets',
@@ -634,7 +632,7 @@ export class SidebarService {
           ]),
 
           label: 'Productos y servicios',
-          routerLink: '/mantenimiento/catalogo/productos-servicios',
+          routerLink: '/catalog/products-services',
           name: 'Compras-Productos y servicios',
         },
         {
@@ -1227,7 +1225,7 @@ export class SidebarService {
         {
           visible: this.authS.onValidateRoles(['SuperUsuario']),
           label: 'Clientes',
-          routerLink: '/configuracion/clientes',
+          routerLink: '/settings/clientes',
           name: 'Directorio-Clientes',
         },
         {
@@ -1408,7 +1406,7 @@ export class SidebarService {
             'Reclutamiento',
           ]),
           label: 'Profesiones',
-          routerLink: '/reclutamiento/profesiones',
+          routerLink: '/catalog/jobs',
           name: 'Reclutamiento-Profesiones',
         },
       ],

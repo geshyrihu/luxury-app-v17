@@ -103,8 +103,3 @@ export const appConfig: ApplicationConfig = {
     }),
   ],
 };
-function providerClientHydration():
-  | import('@angular/core').Provider
-  | import('@angular/core').EnvironmentProviders {
-  throw new Error('Function not implemented.');
-}

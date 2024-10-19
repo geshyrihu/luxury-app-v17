@@ -1,0 +1,42 @@
+<hr />
+<div>
+  <li
+    class="list-group-item d-flex align-items-center justify-content-between pointer"
+  >
+    <div class="d-flex align-items-center">
+      <p class="card-title">
+        {{ title }}
+      </p>
+    </div>
+  </li>
+  <ul class="list-group">
+    @for (item of subMenuItems; track item) {
+    <li
+      class="list-group-item d-flex align-items-center justify-content-between pointer"
+      *ngIf="item.visible"
+      (click)="navigate(item)"
+    >
+      <div class="d-flex align-items-center">
+        <i [class]="item.icon + ' fa-lg me-3 text-primary'"></i>
+        <span>{{ item.label }}</span>
+      </div>
+      <i class="fa fa-chevron-right text-secondary"></i>
+    </li>
+    }
+  </ul>
+</div>
+
+<!-- <div class="container mt-3">
+  <div class="list-group">
+    <a class="list-group-item active">
+      {{ title }}
+    </a>
+    <a
+      *ngFor="let subItem of subMenuItems"
+      class="list-group-item list-group-item-action"
+      (click)="navigate(subItem)"
+    >
+      {{ subItem.label }}
+    </a>
+  </div>
+</div> -->

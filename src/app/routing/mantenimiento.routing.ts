@@ -6,14 +6,14 @@ export default [
     path: 'panel-inventories',
     loadComponent: () =>
       import(
-        'src/app/pages/inventories/panel-inventories/panel-inventories.component'
+        'src/app/pages/5.4-inventarios/panel-inventories/panel-inventories.component'
       ),
   },
   {
     path: 'calendario-anual',
     loadComponent: () =>
       import(
-        'src/app/pages/operaciones/calendarios/mantenimiento-preventivo/list-calendario-mtto.component'
+        'src/app/pages/5.6-calendar/mantenimiento-preventivo/list-calendario-mtto.component'
       ),
     canActivate: [AuthGuard],
   },

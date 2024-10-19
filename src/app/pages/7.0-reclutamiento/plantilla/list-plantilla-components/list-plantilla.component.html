@@ -1,0 +1,209 @@
+<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
+
+<div class="card">
+  <p-table
+    #dt
+    [value]="data"
+    [globalFilterFields]="['professionName', 'departament', 'applicationUser']"
+    styleClass="custom-table"
+    [tableStyle]="{ 'min-width': '50rem' }"
+  >
+    <!-- styleClass="p-datatable-sm p-datatable-gridlines" -->
+    <ng-template pTemplate="caption">
+      <div class="row">
+        <div class="col-sm-10">
+          <custom-table-caption
+            [title]="'Puestos de trabajo'"
+            (add)="onModalAddOrEdit({ id: 0, title: 'Nuevo Registro' })"
+            [dt]="dt"
+          />
+        </div>
+        <div class="col-sm-2">
+          <btn-active-desactive
+            (activo)="onSelectActive($event)"
+            (inactivo)="onSelectActive($event)"
+          />
+        </div>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width: 19%" scope="col" pSortableColumn="folio">
+          CODIGO <p-sortIcon field="folio"></p-sortIcon>
+        </th>
+        <th
+          style="width: 18%"
+          scope="col"
+          pSortableColumn="professionHierarchy"
+        >
+          PUESTO <p-sortIcon field="professionHierarchy"></p-sortIcon>
+        </th>
+        <th style="width: 10%" scope="col" pSortableColumn="turnoTrabajo">
+          TURNO
+          <p-sortIcon field="turnoTrabajo"></p-sortIcon>
+        </th>
+        @if ( authService.onValidateRoles([ 'Asistente', 'Reclutamiento',
+        'Residente', 'SuperUsuario', 'SupervisionOperativa' ]) ) {
+        <th style="width: 10%" scope="col" pSortableColumn="sueldoBaseFiltro">
+          SUELDO PRESUPUESTADO<p-sortIcon field="sueldoBaseFiltro"></p-sortIcon>
+        </th>
+        } @if ( authService.onValidateRoles([ 'Asistente', 'Reclutamiento',
+        'Residente', 'SuperUsuario', 'SupervisionOperativa' ]) ) {
+        <th style="width: 10%" scope="col" pSortableColumn="sueldoFiltro">
+          SUELDO ACTUAL<p-sortIcon field="sueldoFiltro"></p-sortIcon>
+        </th>
+        }
+        <th style="width: 35%" scope="col" pSortableColumn="applicationUser">
+          COLABORADOR
+          <p-sortIcon field="applicationUser"></p-sortIcon>
+        </th>
+        @if ( authService.onValidateRoles([ 'Asistente', 'Reclutamiento',
+        'Residente', 'SuperUsuario', 'SupervisionOperativa' ]) ) {
+        <th style="width: 10%" scope="col">SOLICITUD</th>
+        }
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item>
+      <!-- Si no hay empleado, entonces la vacangte no esta cubierta y se pone en rojo -->
+      @if (onValidateCustomerId(item.professionId)) {
+      <tr>
+        <td>
+          {{ item.folio }}
+        </td>
+        <td>
+          {{ item.professionName }}
+        </td>
+        <td>
+          {{ item.turno }}
+        </td>
+        @if ( authService.onValidateRoles([ 'Asistente', 'Reclutamiento',
+        'Residente', 'SuperUsuario', 'SupervisionOperativa' ]) ) {
+        <td>
+          {{ item.sueldoBase }}
+        </td>
+        } @if ( authService.onValidateRoles([ 'Asistente', 'Reclutamiento',
+        'Residente', 'SuperUsuario', 'SupervisionOperativa' ]) ) {
+        <td>
+          {{ item.sueldo }}
+        </td>
+        }
+        <td>
+          @if (item.applicationUserPhoto) {
+          <img
+            (click)="onCardEmployee(item.applicationUserId)"
+            [src]="pahtBaseImg + item.applicationUserPhoto"
+            class="rounded avatar-sm pointer me-3"
+            alt="img"
+          />
+          } @if (!item.applicationUserPhoto) {
+          <i class="fa-light fa-user-xmark fa-2x"></i>
+          }
+          {{ item.applicationUser }}
+        </td>
+        @if ( authService.onValidateRoles([ 'Asistente', 'Reclutamiento',
+        'Residente', 'SuperUsuario', 'SupervisionOperativa' ]) ) {
+        <td>
+          <!-- Si hay una ultima solicitud en estatus de pendiente -->
+          @if (onValidateShowTIcket(item.professionId)) {
+          <div class="d-flex justify-content-center">
+            <!-- Solicitud de vacante -->
+            @if ( item.positionRequest.status === 0 ||
+            item.positionRequest.status === 3 ) {
+            <custom-button
+              [ngbTooltip]="
+                'Solicitud de vacante vigente ' + item.positionRequest.status
+              "
+              placement="top"
+              customClass="btn-sm btn-outline-danger"
+              icon="fa-light fa-ticket fa-2x"
+            />
+            }
+            <!-- (clicked)="onRouteEstatusSolicitud(item.positionRequest.id)" -->
+            <!-- Solicitud de vacante -->
+          </div>
+
+          }
+        </td>
+        }
+        <td class="text-center">
+          <div ngbDropdown container="body" class="d-inline-block">
+            <button id="options" ngbDropdownToggle class="btn btn-soft-primary">
+              <i class="fa-light fa-ellipsis-vertical"></i>
+            </button>
+            <div ngbDropdownMenu aria-labelledby="options">
+              <!-- Solicitar vacante para puesto de trabajo -->
+              @if (( item.positionRequest.status !== 0
+              &&item.positionRequest.status !== 3 ) &&
+              onValidateRole(item.professionId) && item.state == 0 ) {
+              <custom-button
+                (clicked)="onModalSolicitudVacante(item.id)"
+                customClass="btn-outline-secondary  w-100 mt-1 text-start"
+                icon="fa-light fa-user-magnifying-glass me-2"
+                label="Solicitar vacante"
+              />
+              }
+              <br />
+
+              <!-- Asignar empleado -->
+
+              <!-- visualizar descripcion de puesto-->
+              <custom-button
+                customClass="btn-soft-primary   w-100 mt-1 text-start"
+                icon="fa-light fa-book me-2"
+                label="Descripción de puesto"
+                (clicked)="onModalJobDescription(item.professionId)"
+              />
+              <!-- visualizar descripcion de puesto-->
+              <br />
+              <!-- visualizar horarios de puesto de trabajo -->
+              <custom-button
+                customClass="btn-soft-primary   w-100 mt-1 text-start"
+                icon="fa-light fa-clock me-2"
+                label="Horarios"
+                (clicked)="onModalHoursWorkPosition(item.id)"
+              />
+              <!-- visualizar horarios de puesto de trabajo -->
+              <br />
+              <!-- Editar puesto de trabajo -->
+              <custom-button
+                customClass="btn-outline-info   w-100 mt-1 text-start"
+                icon="fa-light fa-clock me-2"
+                label="Editar"
+                (clicked)="
+                  onModalAddOrEdit({
+                    id: item.id,
+                    title: 'Editar'
+                  })
+                "
+              />
+              <!-- Editar puesto de trabajo -->
+              <br />
+              <!-- Eliminar puesto de trabajo -->
+              @if (authService.onValidateRoles(['SuperUsuario'])) {
+              <btn-confirmation
+                title="Confirmar"
+                text="Se va a eliminar el registro"
+                classButton="btn-outline-danger   w-100 mt-1 text-start"
+                label="Eliminar"
+                icon="fa-light fa-clock me-2"
+                tooltipText="Se va a eliminar el registro"
+                confirmButtonText="Sí, eliminar"
+                (OnConfirm)="onDelete(item.id)"
+              />
+              }
+              <!-- Eliminar puesto de trabajo -->
+              <br />
+            </div>
+          </div>
+        </td>
+      </tr>
+      }
+    </ng-template>
+    <ng-template pTemplate="summary">
+      <div class="flex align-items-center justify-content-end">
+        Total {{ data ? data.length : 0 }} puestos de trabajo.
+      </div>
+    </ng-template>
+  </p-table>
+</div>

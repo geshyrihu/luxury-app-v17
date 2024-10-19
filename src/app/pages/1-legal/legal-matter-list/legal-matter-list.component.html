@@ -1,0 +1,98 @@
+<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
+
+<div class="card">
+  <p-table
+    #dt
+    [value]="data"
+    sortField="id"
+    sortMode="single"
+    [scrollable]="true"
+    scrollHeight="400px"
+    rowGroupMode="subheader"
+    groupRowsBy="id"
+    [tableStyle]="{ 'min-width': '60rem' }"
+  >
+    <!-- styleClass="p-datatable-sm" -->
+    <ng-template pTemplate="caption">
+      <div class="row">
+        <div class="col-10">
+          <custom-table-caption
+            title="ASUNTOS LEGAL"
+            (add)="onModalAddOrEdit({ id: '', title: 'Nuevo Registro' })"
+            [dt]="dt"
+            label="Agregar asunto"
+          />
+        </div>
+
+        <div class="col-2">
+          <custom-button
+            ngbTooltip="Agregar categoria"
+            customClass="btn-soft-primary waves-effect waves-light bg-gradient
+          w-100"
+            icon="fa-plus me-2"
+            label="Agregar categoria"
+            (clicked)="
+              onModalEditCategorie({ id: '', title: 'Agregar categoria' })
+            "
+          />
+        </div>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width: 5%">#</th>
+        <th style="width: 60%">Asunto</th>
+        <th style="width: 20%">Responsable</th>
+        <th style="width: 15%"></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="groupheader" let-category>
+      <tr pRowGroupHeader>
+        <td colspan="3">
+          <span class="font-bold ml-2 font-size-18">{{ category.name }}</span>
+        </td>
+        <td>
+          <div class="d-flex justify-content-center">
+            <btn-edit
+              (edit)="
+                onModalEditCategorie({ id: category.id, title: 'Editar' })
+              "
+            />
+            <btn-delete (OnConfirm)="onDeleteCategorie(category.id)" />
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-category let-rowIndex="rowIndex">
+      <ng-container
+        *ngFor="let legalMatter of category.legalMatters; let i = index"
+      >
+        <tr>
+          <!-- Índice -->
+          <td>{{ rowIndex + 1 }}.{{ i + 1 }}</td>
+
+          <td>
+            {{ legalMatter.title }}
+          </td>
+          <td>
+            {{ legalMatter.isInternal ? "Interno" : "Externo" }}
+          </td>
+
+          <!-- Opciones -->
+          <td class="p-column-title no-print">
+            <div class="d-flex justify-content-center">
+              <btn-edit
+                (edit)="
+                  onModalAddOrEdit({ id: legalMatter.id, title: 'Editar' })
+                "
+              ></btn-edit>
+              <btn-delete (OnConfirm)="onDelete(legalMatter.id)"></btn-delete>
+            </div>
+          </td>
+          <!-- Opciones -->
+        </tr>
+      </ng-container>
+    </ng-template>
+  </p-table>
+</div>

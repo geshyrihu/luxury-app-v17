@@ -1,0 +1,120 @@
+<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
+
+<div class="row">
+  <div class="col-3">
+    <div class="form-group">
+      <label for="">Sistema</label>
+      <select
+        class="form-select"
+        (change)="onFilterForSystem($event.target.value)"
+      >
+        <option value="">Mostrar todos</option>
+        <option *ngFor="let item of data" [value]="item.system">
+          {{ item.system }}
+        </option>
+      </select>
+    </div>
+  </div>
+</div>
+<hr />
+<div *ngFor="let system of filteredData">
+  <ngb-alert [dismissible]="false" type="info">
+    {{ system.system }}
+  </ngb-alert>
+  <div class="row">
+    <div class="col-12" *ngFor="let itemUbication of system.ubications">
+      <div class="card p-2">
+        <div class="card-title">
+          <div class="h4">{{ itemUbication.ubication }}</div>
+        </div>
+        <div class="col-12">
+          <div class="row">
+            <div
+              class="col-md-6 col-xl-2"
+              *ngFor="let item of itemUbication.items"
+            >
+              <!-- Simple card -->
+              <div class="card h-100">
+                <div class="card-img-container">
+                  <img
+                    class="card-img-top"
+                    [src]="pathImgBase + item.photoPath"
+                    alt="image"
+                  />
+                </div>
+                <div class="card-body text-center">
+                  <h4 class="card-title">{{ item.nameMachinery }}</h4>
+                  <!-- Start opciones -->
+                  <div class="d-flex justify-content-center">
+                    <custom-button
+                      ngbTooltip="Servicios calendarizados"
+                      [customClass]="'btn-soft-primary btn-sm me-1 '"
+                      icon="fa-light fa-calendar text-primary "
+                      (clicked)="showModalListOrderService(item.id)"
+                    />
+
+                    <!-- Start Services -->
+                    <custom-button
+                      ngbTooltip="Historico de servicios"
+                      customClass="btn-soft-primary btn-sm me-1"
+                      icon="fa-light fa-swatchbook"
+                      (clicked)="onServiceHistory(item.id)"
+                    />
+                    <!-- End Services -->
+
+                    <!-- Start Bitacora -->
+                    <custom-button
+                      ngbTooltip="Bitacora"
+                      customClass="btn-outline-warning btn-sm me-1"
+                      icon="fa-light fa-book-open"
+                      (clicked)="onBitacoraIndividual(item.id)"
+                    />
+                    <!-- End Bitacora -->
+
+                    <!-- Ficha tecnica -->
+                    <custom-button
+                      ngbTooltip="Ficha técnica"
+                      customClass="btn-soft-primary btn-sm me-1"
+                      icon="fa-light fa-book"
+                      (clicked)="showModalFichatecnica(item)"
+                    />
+                    <!-- Ficha Tecnica -->
+                    <btn-edit
+                      (edit)="
+                        showModalAddoredit({
+                          id: item.id,
+                          title: 'Editar regitro ' + item.id,
+                          inventoryCategoryId: 1
+                        })
+                      "
+                    />
+                  </div>
+                  <!-- End opciones -->
+                </div>
+              </div>
+            </div>
+            <!-- end col -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <style>
+    .card-img-container {
+      width: 100%;
+      height: 0;
+      padding-bottom: 75%; /* 75% de altura respecto al ancho */
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-img-container img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* Asegura que la imagen cubra el área */
+    }
+  </style>
+</div>

@@ -3,33 +3,33 @@
   <div class="card-body">
     <div class="row">
       <button
-        class="col-auto btn btn-outline-primary me-1"
+        class="col-auto btn btn-soft-primary me-1"
         (click)="onSelectAll()"
       >
         Seleccionar Todos
       </button>
       <button
-        class="col-auto btn btn-outline-primary me-1"
+        class="col-auto btn btn-soft-primary me-1"
         (click)="onDeselecteAll()"
       >
         Desmarcar Todos
       </button>
       <button
-        class="col-auto btn btn-outline-primary me-1"
+        class="col-auto btn btn-soft-primary me-1"
         (click)="onMostrarInput(true, false, false, 'PARA')"
         [ngClass]="{ active: mostrarPara }"
       >
         Agregar PARA
       </button>
       <button
-        class="col-auto btn btn-outline-primary me-1"
+        class="col-auto btn btn-soft-primary me-1"
         (click)="onMostrarInput(false, true, false, 'CC')"
         [ngClass]="{ active: mostrarCo }"
       >
         Agregar CC
       </button>
       <button
-        class="col-auto btn btn-outline-primary me-1"
+        class="col-auto btn btn-soft-primary me-1"
         (click)="onMostrarInput(false, false, true, 'CCO')"
         [ngClass]="{ active: mostrarCco }"
       >
@@ -39,7 +39,7 @@
         <btn-confirmation
           title="Confirmar"
           text="Enviar Reporte"
-          classButton="btn-outline-primary "
+          classButton="btn-soft-primary "
           label="Enviar Reporte"
           icon=""
           tooltipText="Enviar Reporte"
@@ -136,7 +136,11 @@
         [tableStyle]="{ 'min-width': '50rem' }"
       >
         <ng-template pTemplate="caption">
-          <table-header [title]="'Condomino'" [showAdd]="false" [dt]="dt" />
+          <custom-table-caption
+            [title]="'Condomino'"
+            [showAdd]="false"
+            [dt]="dt"
+          />
         </ng-template>
         <ng-template pTemplate="header">
           <tr>

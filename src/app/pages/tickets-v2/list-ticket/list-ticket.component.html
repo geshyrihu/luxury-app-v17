@@ -189,7 +189,7 @@
     [autoLayout]="true"
   >
     <ng-template pTemplate="caption">
-      <table-header
+      <custom-table-caption
         [title]="'Tickets areas comunes'"
         [dt]="dt"
         [showAdd]="false"
@@ -349,7 +349,7 @@
               class="btn btn-sm btn-outline-warning position-relative me-1 pointer"
               ngbTooltip="Seguimiento"
               placement="top"
-              (click)="onModalComentarios(item.id)"
+              (click)="onModalSeguimiento(item.id)"
             >
               <i class="fa-light fa-list text-warning"></i>
               <span

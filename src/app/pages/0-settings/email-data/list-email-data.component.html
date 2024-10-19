@@ -1,0 +1,93 @@
+<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
+
+<div class="card">
+  <p-table
+    #dt
+    [(selection)]="data"
+    [autoLayout]="true"
+    [globalFilterFields]="[
+      'applicationUserId',
+      'email',
+      'password',
+      'port',
+      'smtp',
+      'applicationUser'
+    ]"
+    [value]="data"
+    styleClass="custom-table"
+    [tableStyle]="{ 'min-width': '50rem' }"
+  >
+    <ng-template pTemplate="caption">
+      <custom-table-caption
+        [title]="'Datos de Email'"
+        [showAdd]="false"
+        [dt]="dt"
+      />
+    </ng-template>
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th scope="col" pSortableColumn="applicationUser">
+          Usuario <p-sortIcon field="applicationUser"></p-sortIcon>
+        </th>
+        <th scope="col" pSortableColumn="email">
+          Email
+          <p-sortIcon field="email"></p-sortIcon>
+        </th>
+        <th scope="col" pSortableColumn="smtp">
+          Smtp<p-sortIcon field="smtp"></p-sortIcon>
+        </th>
+        <th scope="col" pSortableColumn="port">
+          Port<p-sortIcon field="port"></p-sortIcon>
+        </th>
+
+        <th scope="col" style="width: 5%">Opciones</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item>
+      <tr>
+        <td class="p-column-title">
+          {{ item.applicationUser }}
+        </td>
+        <td class="p-column-title">
+          {{ item.email }}
+        </td>
+        <td class="p-column-title">
+          {{ item.smtp }}
+        </td>
+        <td class="p-column-title">
+          {{ item.port }}
+        </td>
+
+        <!-- Opciones -->
+        <td class="p-column-title">
+          <div class="d-flex justify-content-center">
+            <custom-button
+              [customClass]="'btn-sm btn-outline-dark me-1'"
+              ngbTooltip="Enviar mail de prueba"
+              icon="fa-light fa-envelope text-dark"
+              (clicked)="onSendTestEmail(item.id)"
+            />
+
+            <btn-edit
+              (edit)="
+                onModalAddOrEdit({
+                  id: item.id,
+                  title: 'Editar'
+                })
+              "
+            />
+            <btn-delete (OnConfirm)="onDelete(item.id)" />
+          </div>
+        </td>
+        <!-- Opciones -->
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="paginatorleft">
+      <div class="p-d-flex p-ai-center p-jc-between no-print">
+        En total hay
+        {{ data ? data.length : 0 }} registros.
+      </div>
+    </ng-template>
+  </p-table>
+</div>

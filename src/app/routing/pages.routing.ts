@@ -3,13 +3,26 @@ import { AuthGuard } from '../core/guards/auth.guard';
 
 export default [
   {
+    path: '',
+    loadChildren: () => import('./dashboard.routing'),
+    canActivate: [AuthGuard],
+  },
+  {
     path: 'pages',
     loadChildren: () => import('./extrapages.routing'),
     canActivate: [AuthGuard],
   },
   {
-    path: '',
-    loadChildren: () => import('./dashboard.routing'),
+    path: 'catalog',
+    loadChildren: () => import('./catalog.routing'),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'application-user',
+    loadComponent: () =>
+      import(
+        'src/app/pages/0-settings/user-administration/list-application-user/list-application-user.component'
+      ),
     canActivate: [AuthGuard],
   },
   {
@@ -23,8 +36,8 @@ export default [
     canActivate: [AuthGuard],
   },
   {
-    path: 'configuracion',
-    loadChildren: () => import('./configuracion.routing'),
+    path: 'settings',
+    loadChildren: () => import('./settings.routing'),
     canActivate: [AuthGuard],
   },
   {

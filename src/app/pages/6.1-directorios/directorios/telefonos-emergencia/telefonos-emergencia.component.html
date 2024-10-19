@@ -1,0 +1,39 @@
+<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
+<custom-table-caption
+  [title]="'Télefonos de Emergencia'"
+  [showSearch]="false"
+  [rolAuth]="authService.onValidateRoles(['superUsuario'])"
+  (add)="onModalAddOrEdit({ id: 0, title: 'Nuevo Registro' })"
+/>
+<div class="row mt-2">
+  <div class="col">
+    @for (item of data; track item) {
+    <div class="card">
+      <div class="card-body p-2">
+        <div class="row">
+          <div class="col-sm-1">
+            <img [src]="urlImg + item.logo" alt="" class="rounded avatar-lg" />
+          </div>
+          <div class="col-sm-6">
+            <div class="card-text">
+              {{ item.telefonoUno }} - {{ item.telefonoDos }}
+            </div>
+            <hr />
+            <p>{{ item.instancia }}</p>
+          </div>
+          <div class="col-sm-5">
+            <p class="text-justify">{{ item.direccion }}</p>
+            <div class="d-flex justify-content-center">
+              <btn-edit
+                (edit)="onModalAddOrEdit({ id: item.id, title: 'Editar' })"
+              />
+              <btn-delete (OnConfirm)="onDelete(item.id)" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    }
+    <!-- end card -->
+  </div>
+</div>

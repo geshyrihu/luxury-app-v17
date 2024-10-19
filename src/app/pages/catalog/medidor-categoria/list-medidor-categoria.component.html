@@ -1,0 +1,57 @@
+<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
+
+<p-table
+  [(selection)]="data"
+  #dt
+  styleClass="custom-table"
+  [tableStyle]="{ 'min-width': '50rem' }"
+  [value]="data"
+  [rows]="15"
+  [paginator]="true"
+  [rowHover]="true"
+  currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+  [showCurrentPageReport]="true"
+  [rowsPerPageOptions]="[10, 20, 30, 40, 50, 75, 100]"
+  [globalFilterFields]="['nombreCategoriaMedidor']"
+  [autoLayout]="true"
+>
+  <ng-template pTemplate="caption">
+    <custom-table-caption
+      [title]="'Categoria de Medidores'"
+      (add)="showModalAddOrEdit({ id: 0, title: 'Nuevo Registro' })"
+      [dt]="dt"
+    />
+  </ng-template>
+
+  <ng-template pTemplate="header">
+    <tr>
+      <th scope="col" pSortableColumn="code">
+        CATEGORÍA<p-sortIcon field="code"></p-sortIcon>
+      </th>
+      <th scope="col" style="width: 5%"></th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-item>
+    <tr>
+      <td class="p-column-title">
+        {{ item.nombreMedidorCategoria }}
+      </td>
+
+      <!-- Opciones -->
+      <td class="p-column-title">
+        <div class="d-flex justify-content-center">
+          <btn-edit
+            (edit)="showModalAddOrEdit({ id: item.id, title: 'Editar' })"
+          />
+          <btn-delete (OnConfirm)="onDelete(item.id)" />
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="paginatorleft">
+    <div class="p-d-flex p-ai-center p-jc-between">
+      En total hay
+      {{ data ? data.length : 0 }} registros.
+    </div>
+  </ng-template>
+</p-table>

@@ -6,13 +6,7 @@ export default [
     loadComponent: () =>
       import('src/app/pages/tickets-v2/ticket-panel/ticket-panel.component'),
   },
-  {
-    path: 'line-time/:year/:week',
-    loadComponent: () =>
-      import(
-        'src/app/pages/operaciones/tikets/line-time-operation-report/line-time-operation-report.component'
-      ),
-  },
+
   {
     path: ':departament',
     loadComponent: () =>

@@ -1,0 +1,76 @@
+<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
+<div class="card">
+  <p-table
+    #dt
+    [(selection)]="data"
+    [autoLayout]="true"
+    [globalFilterFields]="['descripcion', 'folioo', 'pathFormato']"
+    [rowHover]="true"
+    [showCurrentPageReport]="true"
+    [value]="data"
+    currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+    styleClass="custom-table"
+    [tableStyle]="{ 'min-width': '50rem' }"
+  >
+    <ng-template pTemplate="caption">
+      <custom-table-caption
+        title="Manuales y Procesos"
+        (add)="onModalAddOrEdit({ id: 0, title: 'Nuevo Registro' })"
+        [dt]="dt"
+        [showAdd]="authService.onValidateRoles(['SuperUsuario'])"
+      />
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th scope="col" style="width: 30%" pSortableColumn="descripcion">
+          Descripción <p-sortIcon field="descripcion"></p-sortIcon>
+        </th>
+        <th scope="col" style="width: 30%" pSortableColumn="pathFormato">
+          Archivo
+          <p-sortIcon field="pathFormato"></p-sortIcon>
+        </th>
+        @if (authService.onValidateRoles(['SuperUsuario'])) {
+        <th scope="col" style="width: 10%">Opciones</th>
+        }
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item>
+      <tr>
+        <td class="p-column-title">
+          {{ item.descripcion | uppercase }}
+        </td>
+        <td class="p-column-title">
+          <a
+            [href]="filePath + item.pathFormato"
+            target="_blank"
+            [download]="item.folio"
+            ngbTooltip="Descargar"
+            placement="top"
+            class="btn btn-soft-danger btn-sm w-xs waves-effect btn-label waves-light me-1"
+          >
+            <i class="fa-light fa-download label-icon fa-2x pointer"></i>
+            Formato
+          </a>
+        </td>
+        <!-- Opciones -->
+        @if (authService.onValidateRoles(['SuperUsuario'])) {
+        <td class="p-column-title">
+          <div class="d-flex justify-content-center">
+            <btn-edit
+              (edit)="onModalAddOrEdit({ id: item.id, title: 'Editar' })"
+            />
+            <btn-delete (OnConfirm)="onDelete(item.id)" />
+          </div>
+        </td>
+        }
+        <!-- Opciones -->
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="paginatorleft">
+      <div class="p-d-flex p-ai-center p-jc-between no-print">
+        En total hay
+        {{ data ? data.length : 0 }} registros.
+      </div>
+    </ng-template>
+  </p-table>
+</div>

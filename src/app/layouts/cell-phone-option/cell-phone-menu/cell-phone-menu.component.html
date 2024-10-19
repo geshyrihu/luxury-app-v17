@@ -1,0 +1,29 @@
+<div class="m-0">
+  <ul class="list-group">
+    @for (item of menu; track item) {
+    <li
+      class="list-group-item d-flex align-items-center justify-content-between pointer"
+      *ngIf="item.visible"
+      (click)="navigate(item)"
+    >
+      <div class="d-flex align-items-center">
+        <i [class]="item.icon + ' fa-lg me-3 text-primary'"></i>
+        <span>{{ item.label }}</span>
+      </div>
+      <i class="fa fa-chevron-right text-secondary"></i>
+    </li>
+    }
+  </ul>
+</div>
+<div class="row m-1">
+  @for (item of menu; track item) {
+  <div class="col-6 mb-4" *ngIf="item.visible">
+    <div class="card shadow-sm pointer" (click)="navigate(item)">
+      <div class="card-body text-center">
+        <i [class]="item.icon + ' fa-2xl text-primary my-3'"></i>
+        <h5 class="card-title">{{ item.label }}</h5>
+      </div>
+    </div>
+  </div>
+  }
+</div>

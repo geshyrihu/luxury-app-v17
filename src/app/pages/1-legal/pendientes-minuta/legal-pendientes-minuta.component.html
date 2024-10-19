@@ -1,0 +1,173 @@
+<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
+<div class="d-flex justify-content-start">
+  <custom-button
+    [customClass]="' mb-1'"
+    label="Pendientes"
+    [customNgClass]="{
+      'btn-soft-primary': statusFiltro == 0,
+      'btn-soft-info': statusFiltro != 0
+    }"
+    (clicked)="onFiltrarData(0)"
+  />
+  <custom-button
+    [customClass]="' mb-1'"
+    label="Concluidos"
+    [customNgClass]="{
+      'btn-soft-primary': statusFiltro == 1,
+      'btn-soft-info': statusFiltro != 1
+    }"
+    (clicked)="onFiltrarData(1)"
+  />
+  <custom-button
+    [customClass]="' mb-1'"
+    label="No Autorizados"
+    [customNgClass]="{
+      'btn-soft-primary': statusFiltro == 2,
+      'btn-soft-info': statusFiltro != 2
+    }"
+    (clicked)="onFiltrarData(2)"
+  />
+  <custom-button
+    [customClass]="' mb-1'"
+    label="Todos"
+    [customNgClass]="{
+      'btn-soft-primary': statusFiltro == 4,
+      'btn-soft-info': statusFiltro != 4
+    }"
+    (clicked)="onFiltrarData(4)"
+  />
+</div>
+<div class="p-card p-mb-5">
+  <p-table
+    #dt
+    [(selection)]="data"
+    [autoLayout]="true"
+    [globalFilterFields]="[
+      'cliente',
+      'solicitud',
+      'fechaSolicitudFiltro',
+      'status',
+      'pendiente'
+    ]"
+    [paginator]="true"
+    [rowHover]="true"
+    [rows]="50"
+    [rowsPerPageOptions]="[50, 75, 100, 200]"
+    [showCurrentPageReport]="true"
+    [value]="data"
+    currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+    styleClass="custom-table"
+    [tableStyle]="{ 'min-width': '50rem' }"
+  >
+    <ng-template pTemplate="caption">
+      <custom-table-caption [title]="'Legal'" [showAdd]="false" [dt]="dt" />
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th scope="col" style="width: 8%" pSortableColumn="code">
+          FOLIO <p-sortIcon field="code"></p-sortIcon>
+        </th>
+        <th scope="col" style="width: 11%" pSortableColumn="cliente">
+          CLIENTE
+          <p-sortIcon field="cliente"></p-sortIcon>
+        </th>
+        <th
+          scope="col"
+          style="width: 30%"
+          pSortableColumn="fechaSolicitudFiltro"
+        >
+          SOLICITUD<p-sortIcon field="fechaSolicitudFiltro"></p-sortIcon>
+        </th>
+        <th scope="col" style="width: 35%" pSortableColumn="pendiente">
+          SEGUIMIENTO<p-sortIcon field="pendiente"></p-sortIcon>
+        </th>
+        <th scope="col" style="width: 8%" pSortableColumn="status">
+          ESTATUS<p-sortIcon field="status"></p-sortIcon>
+        </th>
+        <th scope="col" style="width: 8%" style="width: 5%">OP</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item>
+      <tr>
+        <td class="p-column-title">
+          {{ item.folio }}
+        </td>
+        <td class="p-column-title">
+          {{ item.cliente }}
+        </td>
+        <td class="p-column-title">
+          <div class="h6">
+            {{ item.fechaSolicitud }} {{ item.titulo | titlecase }}
+          </div>
+          <div
+            class="text-justify"
+            [innerHTML]="item.pendiente | sanitizeHtml"
+          ></div>
+        </td>
+        <td class="p-column-title">
+          @if (item.seguimientos.length > 0) {
+          <li>
+            {{ item.seguimientos[0].fecha }},
+            {{ item.seguimientos[0].seguimiento }}
+          </li>
+          }
+        </td>
+        <td class="p-column-title text-center">
+          <p
+            class="badge border-0 p-2"
+            [ngClass]="{
+              'bg-danger': item.status == 0,
+              'bg-success': item.status == 1,
+              'bg-secondary': item.status == 2
+            }"
+          >
+            @if (item.status === 0) {
+            <span>
+              <i class="fa-light fa-xmark"></i>
+            </span>
+            } @if (item.status === 1) {
+            <span>
+              <i class="fa-light fa-check-double"></i>
+            </span>
+            } @if (item.status === 2) {
+            <span>
+              <i class="fa-light fa-ban"></i>
+            </span>
+            }
+          </p>
+        </td>
+        <!-- Opciones -->
+        <td class="p-column-title">
+          <div class="d-flex align-content-center">
+            <custom-button
+              [customClass]="'btn-sm btn-soft-primary'"
+              ngbTooltip="Ver todos los seguimientos"
+              icon="fa-light fa-list text-primary"
+              (clicked)="onModalTodosSeguimientos(item.id)"
+            />
+            <custom-button
+              [customClass]="'btn-sm btn-outline-info'"
+              ngbTooltip="Agregar Seguimiento"
+              icon="fa-light fa-plus text-info"
+              (clicked)="onModalAddOrEditSeguimiento(item.id, 0)"
+            />
+            <btn-edit
+              (edit)="
+                onModalAddOrEditMinutaDetalle({
+                  id: item.id,
+                  header: 'Editar Asunto'
+                })
+              "
+            />
+          </div>
+        </td>
+        <!-- Opciones -->
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="paginatorleft">
+      <div class="p-d-flex p-ai-center p-jc-between">
+        En total hay {{ data ? data.length : 0 }} registros.
+      </div>
+    </ng-template>
+  </p-table>
+</div>

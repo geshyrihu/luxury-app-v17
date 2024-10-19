@@ -1,0 +1,97 @@
+<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
+<div class="card">
+  <p-table
+    #dt
+    [(selection)]="data"
+    [autoLayout]="true"
+    [globalFilterFields]="[
+      'comunicadoPath',
+      'folioComunicado',
+      'responsibleArea'
+    ]"
+    [rowHover]="true"
+    [showCurrentPageReport]="true"
+    [value]="data"
+    currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+    styleClass="custom-table"
+    [tableStyle]="{ 'min-width': '50rem' }"
+  >
+    <ng-template pTemplate="caption">
+      <custom-table-caption
+        [title]="'Comunicados'"
+        (add)="onModalAddOrEdit({ id: 0, title: 'Nuevo Registro' })"
+        [dt]="dt"
+        [showAdd]="authService.onValidateRoles(['SuperUsuario'])"
+      />
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th scope="col" style="width: 20%" pSortableColumn="fechaPublicacion">
+          Publicación <p-sortIcon field="fechaPublicacion"></p-sortIcon>
+        </th>
+        <th scope="col" style="width: 20%" pSortableColumn="responsibleArea">
+          Area
+          <p-sortIcon field="responsibleArea"></p-sortIcon>
+        </th>
+        <th scope="col" style="width: 20%" pSortableColumn="folioComunicado">
+          Folio
+          <p-sortIcon field="folioComunicado"></p-sortIcon>
+        </th>
+        <th scope="col" style="width: 20%" pSortableColumn="nombreComunicado">
+          Comunicado<p-sortIcon field="nombreComunicado"></p-sortIcon>
+        </th>
+        <th scope="col" style="width: 20%">Archivo</th>
+        @if (authService.onValidateRoles(['SuperUsuario'])) {
+        <th scope="col" style="width: 20%" style="width: 5%">Opciones</th>
+        }
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item>
+      <tr>
+        <td class="p-column-title">
+          {{ item.fechaPublicacion | date }}
+        </td>
+        <td class="p-column-title">
+          {{ item.responsibleArea | uppercase }}
+        </td>
+        <td class="p-column-title">
+          {{ item.folioComunicado }}
+        </td>
+        <td class="p-column-title">
+          {{ item.nombreComunicado }}
+        </td>
+        <td class="p-column-title">
+          <a
+            [href]="filePath + item.comunicadoPath"
+            target="_blank"
+            [download]="item.comunicadoPath"
+            ngbTooltip="Descargar"
+            placement="top"
+            class="btn btn-soft-danger btn-sm w-xs waves-effect btn-label waves-light me-1"
+          >
+            <i class="fa-light fa-download label-icon fa-2x pointer"></i>
+            Pdf
+          </a>
+        </td>
+        <!-- Opciones -->
+        @if (authService.onValidateRoles(['SuperUsuario'])) {
+        <td class="p-column-title">
+          <div class="d-flex justify-content-center">
+            <btn-edit
+              (edit)="onModalAddOrEdit({ id: item.id, title: 'Editar' })"
+            />
+            <btn-delete (OnConfirm)="onDelete(item.id)" />
+          </div>
+        </td>
+        }
+        <!-- Opciones -->
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="paginatorleft">
+      <div class="p-d-flex p-ai-center p-jc-between no-print">
+        En total hay
+        {{ data ? data.length : 0 }} registros.
+      </div>
+    </ng-template>
+  </p-table>
+</div>

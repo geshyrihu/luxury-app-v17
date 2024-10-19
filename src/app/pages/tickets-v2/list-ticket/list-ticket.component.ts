@@ -12,11 +12,11 @@ import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DateService } from 'src/app/core/services/date.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
-import CardEmployeeComponent from 'src/app/pages/employee/card-employee/card-employee.component';
+import CardEmployeeComponent from 'src/app/pages/6.1-directorios/employee/card-employee/card-employee.component';
 import { environment } from 'src/environments/environment';
 import AddoreditTicketComponent from '../addoredit-ticket/addoredit-ticket.component';
 import EnviarMailReporteSemanalComponent from '../enviar-mail-reporte-semanal/enviar-mail-reporte-semanal.component';
-import TicketSeguimientoComponent from '../ticket-comentario/ticket-seguimiento.component';
+import TicketSeguimientoComponent from '../ticket-seguimiento/ticket-seguimiento.component';
 
 @Component({
   selector: 'app-list-ticket',
@@ -102,7 +102,7 @@ export default class ListTicketComponent implements OnInit {
         if (result) this.onLoadData();
       });
   }
-  onModalComentarios(id: number) {
+  onModalSeguimiento(id: number) {
     this.dialogHandlerService
       .openDialog(
         TicketSeguimientoComponent,

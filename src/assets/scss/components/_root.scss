@@ -46,6 +46,7 @@
 
   // Vertical Sidebar - Dark
   [data-sidebar="dark"] {
+    // --#{$prefix}sidebar-dark-bg: #1c1c1c;
     --#{$prefix}sidebar-dark-bg: #2c302e;
     // --#{$prefix}sidebar-dark-bg: #012e4a;
     --#{$prefix}sidebar-dark-menu-item-color: #99a4b1;
@@ -140,6 +141,7 @@
 
     // Vertical Sidebar - Dark
     --#{$prefix}sidebar-dark-bg: #2c302e;
+    // --#{$prefix}sidebar-dark-bg: #1c1c1c;
     --#{$prefix}sidebar-dark-menu-item-color: #99a4b1;
     --#{$prefix}sidebar-dark-menu-sub-item-color: #858d98;
     --#{$prefix}sidebar-dark-menu-item-icon-color: #858d98;
@@ -152,6 +154,7 @@
 
     &[data-sidebar="dark"] {
       --#{$prefix}sidebar-dark-bg: #2c302e;
+      // --#{$prefix}sidebar-dark-bg: #1c1c1c;
       --#{$prefix}sidebar-dark-menu-item-color: #99a4b1;
       --#{$prefix}sidebar-dark-menu-sub-item-color: #858d98;
       --#{$prefix}sidebar-dark-menu-item-icon-color: #858d98;

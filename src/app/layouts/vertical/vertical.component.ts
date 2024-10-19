@@ -1,7 +1,11 @@
 import { CommonModule, Location } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
+import FooterComponent from '../footer/footer.component';
 import SidebarComponent from '../sidebar/sidebar.component';
 import CustomerSelectionComponent from '../topbar/customer-selection/customer-selection.component';
 import { TopbarComponent } from '../topbar/topbar.component';
@@ -16,20 +20,63 @@ import { TopbarComponent } from '../topbar/topbar.component';
     RouterModule,
     SidebarComponent,
     TopbarComponent,
+    FooterComponent,
   ],
 })
 /**
  * Vertical Component
  */
 export default class VerticalComponent implements OnInit {
-  private location = inject(Location);
+  apiRequestService = inject(ApiRequestService);
+  authService = inject(AuthService);
+  location = inject(Location);
+  router = inject(Router);
+  customerIdService = inject(CustomerIdService);
 
+  cb_customer: any[] = [];
+  customerId = this.customerIdService.customerId;
+
+  selectCustomer(customerId: number) {
+    this.customerIdService.setCustomerId(customerId);
+  }
+
+  /**
+   *
+   */
+  constructor() {
+    this.apiRequestService
+      .onGetSelectItem(
+        `CustomersAcceso/${this.authService.infoUserAuthDto.applicationUserId}`
+      )
+      .then((resp: any) => {
+        this.cb_customer = resp;
+      });
+  }
   onBack() {
     this.location.back();
   }
 
   onNext() {
     this.location.forward();
+  }
+  onRefresh() {
+    // window.location.href = window.location.href; // Reasignar la URL actual para recargar la página
+
+    const currentUrl = this.router.url;
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate([currentUrl]);
+    });
+  }
+  logout() {
+    const currentUrl = this.router.url;
+    localStorage.setItem('currentUrl', currentUrl);
+    this.router.navigate(['/auth/login']);
+
+    this.apiRequestService
+      .onGetItem(
+        `Auth/Logout/${this.authService.infoUserAuthDto.applicationUserId}`
+      )
+      .then(() => {});
   }
   // @HostListener('window:resize', ['$event'])
   isCondensed = false; // Variable para controlar si la interfaz está condensada o no

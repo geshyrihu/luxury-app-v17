@@ -1,0 +1,144 @@
+<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
+
+<div class="row">
+  <div class="col-xl-12">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">Datos de empleado {{ nameEmployee }}</h4>
+      </div>
+      <!-- end card header -->
+
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-3">
+            <ul
+              ngbNav
+              #verticalNav="ngbNav"
+              [activeId]="1"
+              class="nav-pills flex-column"
+            >
+              <li [ngbNavItem]="1">
+                <a ngbNavLink class="mb-2">
+                  <span class="d-block d-sm-none">
+                    <i class="fa-light fa-memo-circle-secondary me-3"></i>
+                  </span>
+                  <span class="d-none d-sm-block"> DATOS PRINCIPALES</span>
+                </a>
+                <ng-template ngbNavContent>
+                  <employee-add-or-edit-principal-data
+                    [applicationUserId]="applicationUserId"
+                  />
+                </ng-template>
+              </li>
+              <li [ngbNavItem]="2">
+                <a ngbNavLink class="mb-2">
+                  <span class="d-block d-sm-none"
+                    ><i class="far fa-user"></i
+                  ></span>
+                  <span class="d-none d-sm-block">FOTO DE PERFIL</span>
+                </a>
+                <ng-template ngbNavContent>
+                  <employee-add-or-edit-avatar
+                    [applicationUserId]="applicationUserId"
+                  />
+                </ng-template>
+              </li>
+              <li [ngbNavItem]="3">
+                <a ngbNavLink class="mb-2">
+                  <span class="d-block d-sm-none"
+                    ><i class="far fa-envelope"></i
+                  ></span>
+                  <span class="d-none d-sm-block">DATOS PERSONALES</span>
+                </a>
+                <ng-template ngbNavContent>
+                  <employee-add-or-edit-personal-data
+                    [employeeId]="employeeId"
+                  />
+                </ng-template>
+              </li>
+              <li [ngbNavItem]="4">
+                <a ngbNavLink class="mb-2">
+                  <span class="d-block d-sm-none"
+                    ><i class="fas fa-cog"></i
+                  ></span>
+                  <span class="d-none d-sm-block">DATOS LABORALES</span>
+                </a>
+                <ng-template ngbNavContent>
+                  <employee-add-or-edit-laboral-data
+                    [applicationUserId]="applicationUserId"
+                  />
+                </ng-template>
+              </li>
+              <li [ngbNavItem]="5">
+                <a ngbNavLink class="mb-2">
+                  <span class="d-block d-sm-none"
+                    ><i class="fas fa-cog"></i
+                  ></span>
+                  <span class="d-none d-sm-block">DIRECCIÒN</span>
+                </a>
+                <ng-template ngbNavContent>
+                  <employee-add-or-edit-adreess [employeeId]="employeeId" />
+                </ng-template>
+              </li>
+              <li [ngbNavItem]="6">
+                <a ngbNavLink class="mb-2">
+                  <span class="d-block d-sm-none"
+                    ><i class="fas fa-cog"></i
+                  ></span>
+                  <span class="d-none d-sm-block">CONTACTOS</span>
+                </a>
+                <ng-template ngbNavContent>
+                  <employee-emergency-contact-list [employeeId]="employeeId" />
+                </ng-template>
+              </li>
+              <li [ngbNavItem]="7">
+                <a ngbNavLink class="mb-2">
+                  <span class="d-block d-sm-none"
+                    ><i class="fas fa-cog"></i
+                  ></span>
+                  <span class="d-none d-sm-block">USUARIO APP</span>
+                </a>
+                <ng-template ngbNavContent>
+                  <employee-generate-user-name-app
+                    [applicationUserId]="applicationUserId"
+                  />
+                </ng-template>
+              </li>
+              <li [ngbNavItem]="8">
+                <a ngbNavLink class="mb-2">
+                  <span class="d-block d-sm-none"
+                    ><i class="fas fa-cog"></i
+                  ></span>
+                  <span class="d-none d-sm-block">PERMISOS APP</span>
+                </a>
+                <ng-template ngbNavContent>
+                  <employee-permission-app
+                    [applicationUserId]="applicationUserId"
+                  />
+                </ng-template>
+              </li>
+              <li [ngbNavItem]="9">
+                <a ngbNavLink class="mb-2">
+                  <span class="d-block d-sm-none"
+                    ><i class="fas fa-cog"></i
+                  ></span>
+                  <span class="d-none d-sm-block">RECLUTAMIENTO</span>
+                </a>
+                <ng-template ngbNavContent>
+                  <employee-reclutamiento [employeeId]="employeeId" />
+                </ng-template>
+              </li>
+            </ul>
+          </div>
+          <div class="col-md-9">
+            <div [ngbNavOutlet]="verticalNav" class="text-muted"></div>
+          </div>
+        </div>
+        <!-- end row -->
+      </div>
+      <!-- end card-body -->
+    </div>
+    <!-- end card -->
+  </div>
+</div>
+<!-- end row -->

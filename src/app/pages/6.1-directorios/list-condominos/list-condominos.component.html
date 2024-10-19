@@ -1,0 +1,143 @@
+<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
+<p-table
+  #dt
+  styleClass="custom-table"
+  [tableStyle]="{ 'min-width': '50rem' }"
+  [value]="data"
+  [globalFilterFields]="[
+    'phoneNumber',
+    'property',
+    'extencion',
+    'fixedPhone',
+    'habitant',
+    'email',
+    'fullName'
+  ]"
+  [autoLayout]="true"
+  [showCurrentPageReport]="true"
+>
+  <ng-template pTemplate="caption">
+    <custom-table-caption
+      [title]="'Condominos...'"
+      (add)="showModalAddOrEdit({ id: 0, title: 'Nuevo Registro' })"
+      [dt]="dt"
+      [rolAuth]="
+        authService.onValidateRoles(['Asistente', 'Residente', 'SuperUsuario'])
+      "
+    />
+    <div class="row">
+      <div class="col-sm-4"></div>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="header">
+    <tr>
+      <th
+        scope="col"
+        style="width: 10%"
+        pSortableColumn="property"
+        [sortFunction]="customSort.bind(this)"
+      >
+        Propiedad
+        <p-sortIcon field="property"></p-sortIcon>
+      </th>
+      <!-- <th scope="col" style="width: 10%" pSortableColumn="property">
+        Propiedad
+        <p-sortIcon field="property"></p-sortIcon>
+      </th> -->
+      <th scope="col" style="width: 10%" pSortableColumn="habitant">
+        Habitante
+        <p-sortIcon field="habitant"></p-sortIcon>
+      </th>
+      <th scope="col" style="width: 10%" pSortableColumn="fullName">
+        Nombre
+        <p-sortIcon field="fullName"></p-sortIcon>
+      </th>
+
+      <th scope="col" style="width: 10%" pSortableColumn="fixedPhone">
+        Télefono fijo
+        <p-sortIcon field="fixedPhone"></p-sortIcon>
+      </th>
+      <th scope="col" style="width: 10%" pSortableColumn="extencion">
+        Extensión
+        <p-sortIcon field="extencion"></p-sortIcon>
+      </th>
+      <th scope="col" style="width: 10%">Télefono</th>
+      <th scope="col" style="width: 10%" pSortableColumn="email">
+        Email
+        <p-sortIcon field="email"></p-sortIcon>
+      </th>
+      <th
+        scope="col"
+        style="width: 10%"
+        pSortableColumn="mail"
+        class="no-print"
+      >
+        Enviar Info
+        <p-sortIcon field="mail"></p-sortIcon>
+      </th>
+      @if ( authService.onValidateRoles([ 'Asistente', 'Residente',
+      'SuperUsuario' ]) ) {
+      <th scope="col" style="width: 5%" class="no-print">Opciones</th>
+      }
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-item>
+    <tr>
+      <td>
+        {{ item.property }}
+      </td>
+      <td>
+        {{ item.habitant }}
+      </td>
+      <td>
+        {{ item.fullName }}
+      </td>
+      <td>
+        {{ item.fixedPhone }}
+      </td>
+      <td>
+        {{ item.extencion }}
+      </td>
+      <td>
+        {{ item.phoneNumber }}
+      </td>
+      <td>
+        {{ item.email }}
+      </td>
+      <td class="no-print">
+        @if (item.enviarMails) {
+        <i class="text-success fa-light fa-check-double"></i>
+        } @if (!item.enviarMails) {
+        <i class="text-danger fa-light fa-x"></i>
+        }
+      </td>
+      @if ( authService.onValidateRoles([ 'Asistente', 'Residente',
+      'SuperUsuario' ]) ) {
+      <td class="p-column-title no-print">
+        <div class="d-flex justify-content-center">
+          <!-- Componente editar registro -->
+          <btn-edit
+            (edit)="showModalAddOrEdit({ id: item.id, title: 'Editar' })"
+          />
+          <!-- Componente editar registro -->
+          <!-- Componente eliminar registro -->
+          <btn-delete (OnConfirm)="onDelete(item.id)" />
+          <!-- Componente eliminar registro -->
+        </div>
+      </td>
+      }
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="paginatorleft">
+    <div class="p-d-flex p-ai-center p-jc-between">
+      En total hay
+      {{ data ? data.length : 0 }} registros.
+    </div>
+  </ng-template>
+  <ng-template pTemplate="summary">
+    <div class="flex align-items-center justify-content-between">
+      En total hay
+      {{ data ? data.length : 0 }} registros.
+    </div>
+  </ng-template>
+</p-table>

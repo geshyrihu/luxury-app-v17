@@ -1,0 +1,203 @@
+<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
+
+<div class="card">
+  <p-table
+    #dt
+    [value]="data"
+    [autoLayout]="true"
+    [globalFilterFields]="['periodoExistente']"
+    [paginator]="true"
+    [rowHover]="true"
+    [rows]="50"
+    [rowsPerPageOptions]="[50, 75, 100, 200]"
+    [showCurrentPageReport]="true"
+    currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+    styleClass="custom-table"
+    [tableStyle]="{ 'min-width': '50rem' }"
+  >
+    <!-- styleClass="p-datatable-sm" -->
+    <ng-template pTemplate="caption">
+      <custom-table-caption
+        [title]="'ESTADOS FINANCIEROS'"
+        [showAdd]="false"
+        [dt]="dt"
+      />
+    </ng-template>
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th scope="col" style="width: 25%">
+          <i class="fa-light fa-square-1 l me-2 my-1"></i>
+          <span class="flex-grow-1 my-1 font-size-18">PERIODO</span>
+          <i class="fa-solid fa-right l my-1"></i>
+        </th>
+        <th scope="col" style="width: 25%">
+          <i class="fa-light fa-square-2 l me-2 my-1"></i>
+          <span class="flex-grow-1 font-size-18 my-1">ARCHIVO</span>
+          <i class="fa-solid fa-right l my-1"></i>
+        </th>
+        <th scope="col" style="width: 25%">
+          <i class="fa-light fa-square-3 l me-2 my-1"></i>
+          <span class="flex-grow-1 font-size-18 my-1"> AUTORIZACIÓN </span>
+          <i class="fa-solid fa-right l my-1"></i>
+        </th>
+        <th scope="col" style="width: 25%">
+          <i class="fa-light fa-square-4 l me-2 my-1"></i>
+          <span class="flex-grow-1 font-size-18 my-1">ENVIO</span>
+          <i class="fa-sharp fa-solid fa-check l my-1"></i>
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item>
+      <tr>
+        <td class="p-column-title">
+          <div class="card-title font-size-16">{{ item.periodoExistente }}</div>
+        </td>
+        <td class="p-column-title">
+          @if (item.nameFileEstadoFinanciero ===null) {
+
+          <button
+            ngbTooltip="Cargar archivo"
+            placement="top"
+            type="button"
+            (click)="
+              onUploadFile({
+                id: item.id,
+                title: 'CARGAR ARCHIVO DE ESTADOS FINANCIEROS'
+              })
+            "
+            class="btn btn-soft-danger w-100 waves-effect btn-label waves-light me-1 no-print"
+          >
+            <i class="fa-light fa-file-plus pointer label-icon"></i>
+            CARGAR INFORME FINANCIERO
+          </button>
+          }@else{
+          <div class="d-flex align-items-center">
+            <i
+              class="fa-light fa-check text-success pointer label-icon me-2"
+            ></i>
+            <a
+              ngbTooltip="Visualizar PDF"
+              placement="top"
+              type="button"
+              target="_blank"
+              href="{{ baseUrlApi }}/{{ item.nameFileEstadoFinanciero }}"
+              class="btn btn-soft-danger w-xs waves-effect btn-label waves-light me-1 no-print"
+            >
+              <i class="fa-light fa-download pointer label-icon"></i>
+              PDF
+            </a>
+            <div class="flex-grow-1">
+              <p class="mb-0 card-title font-size-12">
+                {{ item.personWhoCharge }}
+              </p>
+              <p class="mt-0 card-title font-size-12">
+                {{ item.uploadDate }}
+              </p>
+            </div>
+            @if (item.personWhoAuthorized === ''&& item.personWhoSend === '' ) {
+
+            <button
+              ngbTooltip="Actualizar Informe"
+              placement="top"
+              type="button"
+              (click)="
+                onUploadFile({
+                  id: item.id,
+                  title: 'CARGAR ARCHIVO DE ESTADOS FINANCIEROS'
+                })
+              "
+              class="btn btn-soft-danger waves-effect text-end waves-light pointer p-2"
+            >
+              <i class="fa-light fa-arrow-rotate-left"></i>
+            </button>
+            }
+          </div>
+          }
+        </td>
+        <td class="p-column-title">
+          @if (item.nameFileEstadoFinanciero !== null ) { @if
+          (item.personWhoAuthorized === '' ) {
+
+          <button
+            ngbTooltip="Autorizar"
+            placement="top"
+            type="button"
+            (click)="onAuthorize(item.id)"
+            class="btn btn-soft-danger w-100 waves-effect btn-label waves-light me-1 no-print"
+          >
+            <i class="fa-light fa-clipboard-check pointer label-icon"></i>
+            AUTORIZAR INFORME FINANCIERO
+          </button>
+          } @else{
+          <div class="d-flex align-items-center">
+            <i class="fa-light fa-check text-success me-2"></i>
+            <div class="flex-grow-1">
+              <p class="mb-0 card-title font-size-12">
+                {{ item.personWhoAuthorized }}
+              </p>
+              <p class="mt-0 card-title font-size-12">
+                {{ item.authorizationDate }}
+              </p>
+            </div>
+            @if (item.personWhoSend==='') {
+
+            <button
+              ngbTooltip="Eliminar"
+              placement="top"
+              type="button"
+              (click)="onDesauthorize(item.id)"
+              class="btn btn-soft-danger waves-effect text-end waves-light pointer p-2"
+            >
+              <i class="fa-light fa-arrow-rotate-left"></i>
+            </button>
+            }
+          </div>
+
+          } }
+        </td>
+        <!-- Opciones -->
+        <td class="p-column-title" class="no-print">
+          @if (item.nameFileEstadoFinanciero !== null &&
+          item.personWhoAuthorized !== '' ) { @if(item.personWhoSend===''){
+          <button
+            ngbTooltip="Enviar a condominos"
+            placement="top"
+            type="button"
+            (click)="
+              onSendEstadosFinancieros({
+                id: item.id,
+                title: 'ENVIAR A CONDOMINOS'
+              })
+            "
+            class="btn btn-soft-danger w-100 waves-effect btn-label waves-light me-1 no-print"
+          >
+            <i class="fa-light fa-paper-plane pointer label-icon"></i>
+            ENVIAR A CONDOMINOS
+          </button>
+
+          }@else{
+          <div class="d-flex align-items-center">
+            <i class="fa-light fa-check text-success me-2"></i>
+            <div class="flex-grow-1">
+              <p class="mb-0 card-title font-size-12">
+                {{ item.personWhoSend }}
+              </p>
+              <p class="mt-0 card-title font-size-12">
+                {{ item.sendDate }}
+              </p>
+            </div>
+          </div>
+          } }
+        </td>
+        <!-- Opciones -->
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="paginatorleft">
+      <div class="p-d-flex p-ai-center p-jc-between no-print">
+        En total hay
+        {{ data ? data.length : 0 }} registros.
+      </div>
+    </ng-template>
+  </p-table>
+</div>

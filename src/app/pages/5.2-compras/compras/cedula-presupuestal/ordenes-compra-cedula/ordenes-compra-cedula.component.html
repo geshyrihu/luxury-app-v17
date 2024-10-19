@@ -1,0 +1,72 @@
+<div class="card">
+  <p-table
+    #dt
+    [autoLayout]="true"
+    [globalFilterFields]="['folio', 'largeName']"
+    [showCurrentPageReport]="true"
+    [value]="data"
+    currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+    styleClass="custom-table"
+    [tableStyle]="{ 'min-width': '50rem' }"
+  >
+    <ng-template pTemplate="caption">
+      <custom-table-caption
+        [viewNavigateButton]="false"
+        [showAdd]="false"
+        [dt]="dt"
+      />
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th scope="col">Folio</th>
+        <th scope="col">Justificación del gasto</th>
+        <th scope="col">Proveedor</th>
+        <th scope="col">Estatus</th>
+        <th scope="col">Total</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item>
+      <tr>
+        <td class="p-column-title">
+          {{ item.folio }}
+          <i
+            ngbTooltip="Ver"
+            placement="top"
+            class="fa-light fa-hand-point-right pointer"
+            (click)="onOrdenCompraModal(item.ordenCompraId)"
+          >
+          </i>
+          <!-- {{ item.folio }} -->
+        </td>
+        <td class="p-column-title">{{ item.justificacion }}</td>
+        <td class="p-column-title">{{ item.provider }}</td>
+        <td class="p-column-title">
+          <span
+            class="badge p-2"
+            [ngClass]="{
+              'bg-danger': item.statuspago == 'No Pagada',
+              'bg-success': item.statuspago == 'Pagada'
+            }"
+            >{{ item.statuspago }}</span
+          >
+        </td>
+        <td class="p-column-title">{{ item.total }}</td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="paginatorleft">
+      <div class="p-d-flex p-ai-center p-jc-between no-print">
+        En total hay
+        {{ data ? data.length : 0 }} registros.
+      </div>
+    </ng-template>
+  </p-table>
+  @if (data) {
+  <div class="row">
+    <div class="col">
+      <h2>Pagos registrados:{{ pagadas() }}</h2>
+      <h2>Pagos no registrados:{{ noPagadas() }}</h2>
+      <h2></h2>
+    </div>
+  </div>
+  }
+</div>

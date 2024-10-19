@@ -2,12 +2,20 @@
 // Page-title
 //
 
+// .page-title-box {
+//   padding-bottom: $grid-gutter-width;
+//   font-family: "Lato", sans-serif;
+//   font-weight: 400;
+//   font-style: normal;
+//   font-style: normal;
+//   .breadcrumb {
+//     background-color: transparent;
+//     padding: 0;
+//   }
+// }
 .page-title-box {
   padding-bottom: $grid-gutter-width;
-  font-family: "Lato", sans-serif;
-  font-weight: 400;
-  font-style: normal;
-  font-style: normal;
+
   .breadcrumb {
     background-color: transparent;
     padding: 0;

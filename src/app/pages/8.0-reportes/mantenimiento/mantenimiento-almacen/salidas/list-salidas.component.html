@@ -1,0 +1,114 @@
+<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
+<p-table
+  [(selection)]="data"
+  #dt
+  styleClass="custom-table"
+  [tableStyle]="{ 'min-width': '50rem' }"
+  [value]="data"
+  [rows]="15"
+  [paginator]="true"
+  [rowHover]="true"
+  currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+  [showCurrentPageReport]="true"
+  [rowsPerPageOptions]="[10, 20, 30, 40, 50, 75, 100]"
+  [globalFilterFields]="[
+    'id',
+    'fechaSalida',
+    'producto',
+    'quienUso',
+    'usoPrducto'
+  ]"
+  [autoLayout]="true"
+>
+  <ng-template pTemplate="caption">
+    <custom-table-caption
+      [title]="'Salida de inventarios'"
+      [showAdd]="false"
+      [dt]="dt"
+    />
+  </ng-template>
+  <ng-template pTemplate="header">
+    <tr>
+      <th scope="col" pSortableColumn="fechaSalida">
+        Fecha Salida <p-sortIcon field="fechaSalida"></p-sortIcon>
+      </th>
+      <th scope="col" pSortableColumn="producto">
+        Producto
+        <p-sortIcon field="producto"></p-sortIcon>
+      </th>
+      <th scope="col" pSortableColumn="cantidad">
+        Cantidad<p-sortIcon field="cantidad"></p-sortIcon>
+      </th>
+      <th scope="col" pSortableColumn="unidadMedida">
+        Unidad<p-sortIcon field="unidadMedida"></p-sortIcon>
+      </th>
+      <th scope="col" pSortableColumn="quienUso">
+        Recibio<p-sortIcon field="quienUso"></p-sortIcon>
+      </th>
+      <th scope="col" pSortableColumn="usoPrducto">
+        Uso<p-sortIcon field="usoPrducto"></p-sortIcon>
+      </th>
+      @if (authService.onValidateRoles(['SuperUsuario'])) {
+      <th scope="col" style="width: 5%">Opciones</th>
+      }
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-item>
+    <tr>
+      <td class="p-column-title">
+        <small>
+          {{ item.fechaSalida | date }}
+        </small>
+      </td>
+      <td class="p-column-title">
+        <small>
+          {{ item.producto }}
+        </small>
+      </td>
+      <td class="p-column-title">
+        <small>
+          {{ item.cantidad }}
+        </small>
+      </td>
+      <td class="p-column-title">
+        <small>
+          {{ item.unidadMedida }}
+        </small>
+      </td>
+      <td class="p-column-title">
+        <small>
+          {{ item.quienUso }}
+        </small>
+      </td>
+      <td class="p-column-title">
+        <small>
+          {{ item.usoPrducto }}
+        </small>
+      </td>
+      <!-- Opciones -->
+      @if (authService.onValidateRoles(['SuperUsuario'])) {
+      <td class="p-column-title">
+        <div class="d-flex justify-content-center">
+          <btn-edit
+            (edit)="
+              onEditSalida({
+                id: item.id,
+                idInventarioProducto: item.idInventarioProducto,
+                idProducto: item.productoId,
+                nombreProducto: item.producto
+              })
+            "
+          />
+          <btn-delete (OnConfirm)="onDelete(item.id)" />
+        </div>
+      </td>
+      }
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="paginatorleft">
+    <div class="p-d-flex p-ai-center p-jc-between">
+      En total hay
+      {{ data ? data.length : 0 }} registros.
+    </div>
+  </ng-template>
+</p-table>

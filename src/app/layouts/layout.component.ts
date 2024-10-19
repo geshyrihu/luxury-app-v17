@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
+import CellPhoneMenuComponent from './cell-phone-option/cell-phone-menu/cell-phone-menu.component';
 import {
   LAYOUT_HORIZONTAL,
   LAYOUT_MODE,
@@ -12,7 +13,6 @@ import {
   SIDEBAR_SIZE,
   TOPBAR,
 } from './layouts.model';
-import MenuCelularComponent from './menu-celular/menu-celular.component';
 import VerticalComponent from './vertical/vertical.component';
 @Component({
   selector: 'app-layout',
@@ -23,7 +23,7 @@ import VerticalComponent from './vertical/vertical.component';
     CommonModule,
     RouterModule,
     VerticalComponent,
-    MenuCelularComponent,
+    CellPhoneMenuComponent,
   ],
 })
 

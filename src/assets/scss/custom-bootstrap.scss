@@ -1,17 +1,21 @@
 // // Sobreescribir los estilos de form-control
 // .form-control {
-//   border-radius: 0 !important; // Elimina el borde redondeado
+//   border-radius: 2px !important; // Elimina el borde redondeado
+//   // border: 1px solid #ccc; // Borde leve de 1px con color gris claro
 // }
 
 // // También puedes aplicarlo a otros controles como textarea, select, etc.
 // textarea.form-control,
 // select.form-control {
-//   border-radius: 0 !important; // Elimina el borde redondeado en textareas y selects
+//   border-radius: 2px !important; // Elimina el borde redondeado en textareas y selects
+//   // border: 1px solid #ccc; // Borde leve de 1px con color gris claro
 // }
 // select.form-select {
-//   border-radius: 0 !important; // Elimina el borde redondeado en textareas y selects
+//   border-radius: 2px !important; // Elimina el borde redondeado en textareas y selects
+//   // border: 1px solid #ccc; // Borde leve de 1px con color gris claro
 // }
 
 // .btn {
-//   border-radius: 0 !important; // Elimina el borde redondeado en botón
+//   border-radius: 2px !important; /* Elimina el borde redondeado */
+//   // border: 1px solid #ccc; /* Borde leve de 1px con color gris claro */
 // }

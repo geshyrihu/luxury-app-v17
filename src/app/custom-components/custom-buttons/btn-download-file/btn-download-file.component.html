@@ -1,4 +1,4 @@
-<button
+<!-- <button
   [ngbTooltip]="ngbTooltip"
   [ngClass]="customNgClass"
   [placement]="placement"
@@ -9,4 +9,18 @@
 >
   <i class="fa-solid fa-download label-icon"></i>
   Pdf
-</button>
+</button> -->
+<a
+  [href]="urlFile"
+  [attr.download]="getFileName(urlFile)"
+  [ngbTooltip]="ngbTooltip"
+  [ngClass]="customNgClass"
+  [placement]="placement"
+  [class.disabled]="disabled"
+  [download]="download"
+  rel="noopener noreferrer"
+  class="btn btn-sm btn-soft-danger w-xs pointer btn-label me-1 no-print"
+>
+  <i class="fa-solid fa-download label-icon"></i>
+  Pdf
+</a>

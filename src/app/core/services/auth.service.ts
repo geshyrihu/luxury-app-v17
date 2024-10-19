@@ -48,7 +48,6 @@ export class AuthService {
         this.userTokenDto = resp.body;
         this.infoUserAuthDto = this.userTokenDto.infoUserAuthDto;
         this.userTokenDto.permission = resp.body.permission;
-        console.log('🚀 ~ permissions:', resp.body.permission);
         this.applicationUserId = this.infoUserAuthDto.applicationUserId;
         if (resp.body.token) {
           this.statusJWT = true;
@@ -68,29 +67,39 @@ export class AuthService {
     return this.userTokenDto.roles.some((item) => roles.includes(item));
   }
 
-  permmission(moduleName: string, permission: EPermission): boolean {
+  canCreate(moduleName: string): boolean {
+    return this.checkPermission(moduleName, EPermission.CanCreate);
+  }
+
+  canRead(moduleName: string): boolean {
+    return this.checkPermission(moduleName, EPermission.CanRead);
+  }
+
+  canUpdate(moduleName: string): boolean {
+    return this.checkPermission(moduleName, EPermission.CanUpdate);
+  }
+
+  canDelete(moduleName: string): boolean {
+    return this.checkPermission(moduleName, EPermission.CanDelete);
+  }
+  // Método genérico que verifica el permiso basado en el valor de EPermission
+  private checkPermission(
+    moduleName: string,
+    permission: EPermission
+  ): boolean {
     if (this.userTokenDto && this.userTokenDto.permission) {
       // Verificar el contenido de userTokenDto
-      console.log('🚀 ~ userTokenDto:', this.userTokenDto);
-
       const modulePermission = this.userTokenDto.permission.find(
-        (p) => p.moduleName === moduleName
+        (p: any) => p.moduleName === moduleName
       );
 
       if (modulePermission) {
-        const permissionKey = permission as keyof typeof modulePermission; // No necesitas convertir si el enum es de tipo string
-        console.log('🚀 ~ permissionKey:', permissionKey);
-        return Boolean(modulePermission[permissionKey]); // Asegúrate de que modulePermission[permissionKey] sea booleano
+        const permissionKey = permission as keyof typeof modulePermission;
+        return Boolean(modulePermission[permissionKey]);
       }
     }
-
     return false;
   }
 
   redirectUrl: string | null = null; // URL a la que se redirigirá después de logear
-
-  // isLoggedIn(): boolean {
-  //   // Lógica para verificar si el usuario está autenticado
-  //   return !!localStorage.getItem('token'); // ejemplo simple, se puede mejorar
-  // }
 }

@@ -37,6 +37,7 @@ import CBtnModule from '../custom-components/custom-buttons/btn.module';
 import CabeceraSolicitudPagoPdfComponent from './cabeceras/cabecera-solicitud-pago-pdf/cabecera-solicitud-pago-pdf.component';
 import PagetitleReportMaintenanceComponent from './cabeceras/pagetitle/pagetitle.component';
 import ReportHeaderComponent from './cabeceras/report-header/report-header.component';
+
 import AdvancedPieChartComponent from './graficos/advanced-pie-chart/advanced-pie-chart.component';
 import PieChartComponent from './graficos/pie-chart/pie-chart.component';
 import HaederCustomerComponent from './haeder-customer/haeder-customer.component';
@@ -46,8 +47,7 @@ import MesanioComponent from './mesanio/mesanio.component';
 import CalendarRangeComponent from './rango-calendario-mes-anio/calendar-range.component';
 import RangoCalendarioyyyymmddComponent from './rango-calendario-yyyymmdd/rango-calendario-yyyymmdd.component';
 import SubirPdfComponent from './subir-pdf/subir-pdf.component';
-import TableFooterComponent from './table-footer/table-footer.component';
-import TableHeaderComponent from './table-header/table-header.component';
+import TablePrimeNgModule from './table-primeng.module';
 export function flatpickrFactory() {
   flatpickr.localize(Spanish);
   return flatpickr;
@@ -55,6 +55,8 @@ export function flatpickrFactory() {
 
 @NgModule({
   imports: [
+    TablePrimeNgModule,
+
     AdvancedPieChartComponent,
     CabeceraSolicitudPagoPdfComponent,
     CalendarRangeComponent,
@@ -67,8 +69,6 @@ export function flatpickrFactory() {
     RangoCalendarioyyyymmddComponent,
     ReportHeaderComponent,
     SubirPdfComponent,
-    TableFooterComponent,
-    TableHeaderComponent,
 
     ConfirmPopupModule,
     FileUploadModule,
@@ -85,7 +85,7 @@ export function flatpickrFactory() {
     TooltipModule,
 
     // PrimeNgModule
-    TableModule,
+
     ToastModule,
     CheckboxModule,
     DialogModule,
@@ -106,6 +106,8 @@ export function flatpickrFactory() {
     CustomPipeModule,
   ],
   exports: [
+    TablePrimeNgModule,
+
     AdvancedPieChartComponent,
     CabeceraSolicitudPagoPdfComponent,
     CalendarRangeComponent,
@@ -118,8 +120,6 @@ export function flatpickrFactory() {
     RangoCalendarioyyyymmddComponent,
     ReportHeaderComponent,
     SubirPdfComponent,
-    TableFooterComponent,
-    TableHeaderComponent,
 
     ConfirmPopupModule,
     CBtnModule,

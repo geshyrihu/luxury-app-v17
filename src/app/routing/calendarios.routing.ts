@@ -5,7 +5,7 @@ export default [
     path: 'fiestas-judias',
     loadComponent: () =>
       import(
-        'src/app/pages/operaciones/calendarios/fiestas-judias/fiestas-judias.component'
+        'src/app/pages/5.6-calendar/fiestas-judias/fiestas-judias.component'
       ),
     title: 'Fiestas judias',
   },
@@ -13,42 +13,40 @@ export default [
     path: 'fiestas-cristianas',
     loadComponent: () =>
       import(
-        'src/app/pages/operaciones/calendarios/fiestas-cristianas/fiestas-cristianas.component'
+        'src/app/pages/5.6-calendar/fiestas-cristianas/fiestas-cristianas.component'
       ),
     title: 'Fiestas cristianas',
   },
   {
     path: 'cumpleanos',
     loadComponent: () =>
-      import(
-        'src/app/pages/operaciones/calendarios/cumpleanos/birthday.component'
-      ),
+      import('src/app/pages/5.6-calendar/cumpleanos/birthday.component'),
     title: 'Fiestas Cumpleaños',
   },
   {
     path: 'mantenimiento-master',
     loadComponent: () =>
       import(
-        'src/app/pages/operaciones/capacitaciones/maintenance-calendar-master/calendario-maestro.component'
+        'src/app/pages/5.5-capacitacion/maintenance-calendar-master/calendario-maestro.component'
       ),
   },
   {
     path: 'fondeos',
     loadComponent: () =>
-      import('src/app/pages/operaciones/calendarios/fondeos/fondeos.component'),
+      import('src/app/pages/5.6-calendar/fondeos/fondeos.component'),
   },
   {
     path: 'calendario-maestro-equipo',
     loadComponent: () =>
       import(
-        'src/app/pages/operaciones/capacitaciones/maintenance-calendar-master/calendario-maestro-equipo/calendario-maestro-equipo.component'
+        'src/app/pages/5.5-capacitacion/maintenance-calendar-master/calendario-maestro-equipo/calendario-maestro-equipo.component'
       ),
   },
   {
     path: 'custom-calendar-events',
     loadComponent: () =>
       import(
-        'src/app/pages/custom-calendar/custom-calendar-events/custom-calendar-events.component'
+        'src/app/pages/5.6-calendar/custom-calendar/custom-calendar-events/custom-calendar-events.component'
       ),
   },
 ] as Routes;

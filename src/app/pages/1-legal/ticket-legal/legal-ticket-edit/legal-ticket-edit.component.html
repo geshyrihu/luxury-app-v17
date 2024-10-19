@@ -1,0 +1,51 @@
+<div class="card">
+  <div class="card-body">
+    <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
+      <custom-input-text-area
+        [control]="form.get('request')"
+        formControlName="request"
+        label="Asunto:"
+        placeholder="Asunto:"
+        [horizontal]="false"
+      />
+
+      <div class="form-group mb-2">
+        <label>Responsable</label>
+        <select
+          class="form-select"
+          formControlName="applicationUserResponsibleId"
+        >
+          <option
+            *ngFor="let item of applicationUserResponsible_cb"
+            [value]="item.value"
+          >
+            {{ item.label }}
+          </option>
+        </select>
+      </div>
+
+      <!-- <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group mb-2">
+            <label>Información subida a LuxuryCloud</label>
+            <select class="form-select" formControlName="documentEmail">
+              <option [value]="true">Sí</option>
+              <option [value]="false">No</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group mb-2">
+            <label>Información enviada por mail</label>
+            <select class="form-select" formControlName="documentCloud">
+              <option [value]="true">Sí</option>
+              <option [value]="false">No</option>
+            </select>
+          </div>
+        </div>
+      </div> -->
+
+      <btn-submit [disabled]="this.form.invalid || submitting" />
+    </form>
+  </div>
+</div>

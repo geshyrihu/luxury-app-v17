@@ -35,7 +35,7 @@ export default [
   {
     path: 'mi-edificio',
     loadComponent: () =>
-      import('src/app/pages/operaciones/mi-edificio/mi-edificio.component'),
+      import('src/app/pages/1.0-mi-edificio/mi-edificio.component'),
     canActivate: [AuthGuard],
   },
   {
@@ -47,7 +47,7 @@ export default [
     path: 'mis-proveedores',
     loadComponent: () =>
       import(
-        'src/app/pages/operaciones/directorios/proveedor/mis-proveedores/mis-proveedores.component'
+        'src/app/pages/6.1-directorios/directorios/proveedor/mis-proveedores/mis-proveedores.component'
       ),
   },
 ] as Routes;

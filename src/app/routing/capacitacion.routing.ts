@@ -5,28 +5,22 @@ export default [
     path: 'nomenclatura',
     loadComponent: () =>
       import(
-        'src/app/pages/operaciones/capacitaciones/nomenclatura/nomenclatura.component'
+        'src/app/pages/5.5-capacitacion/nomenclatura/nomenclatura.component'
       ),
   },
   {
     path: 'comunicado',
     loadComponent: () =>
-      import(
-        'src/app/pages/operaciones/capacitaciones/comunicado/comunicado.component'
-      ),
+      import('src/app/pages/5.5-capacitacion/comunicado/comunicado.component'),
   },
   {
     path: 'formatos',
     loadComponent: () =>
-      import(
-        'src/app/pages/operaciones/capacitaciones/formato/formato.component'
-      ),
+      import('src/app/pages/5.5-capacitacion/formato/formato.component'),
   },
   {
     path: 'procesos',
     loadComponent: () =>
-      import(
-        'src/app/pages/operaciones/capacitaciones/proceso/proceso.component'
-      ),
+      import('src/app/pages/5.5-capacitacion/proceso/proceso.component'),
   },
 ] as Routes;

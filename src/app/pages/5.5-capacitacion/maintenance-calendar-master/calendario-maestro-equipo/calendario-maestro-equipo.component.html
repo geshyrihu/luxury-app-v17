@@ -1,0 +1,66 @@
+<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
+
+<div class="card p-2">
+  <p-table
+    #dt
+    [(selection)]="data"
+    [autoLayout]="true"
+    [globalFilterFields]="['nombreEquipo', 'equipoClasificacion']"
+    [paginator]="true"
+    [rowHover]="true"
+    [rows]="15"
+    [rowsPerPageOptions]="[10, 20, 30, 40, 50, 75, 100, 200]"
+    [showCurrentPageReport]="true"
+    [value]="data"
+    currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+    styleClass="custom-table"
+    [tableStyle]="{ 'min-width': '50rem' }"
+  >
+    <ng-template pTemplate="caption">
+      <custom-table-caption
+        [title]="'Equipos Calendario Maestro'"
+        (add)="onModalAddOrEdit({ id: 0, title: 'Nuevo Registro' })"
+        [dt]="dt"
+      />
+    </ng-template>
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th scope="col" pSortableColumn="nombreEquipo">
+          Nombre Equipo
+          <p-sortIcon field="nombreEquipo"></p-sortIcon>
+        </th>
+        <th scope="col" pSortableColumn="equipoClasificacion">
+          Clasificación<p-sortIcon field="equipoClasificacion"></p-sortIcon>
+        </th>
+        <th scope="col" style="width: 5%">Opciones</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item>
+      <tr>
+        <td class="p-column-title">
+          {{ item.nombreEquipo }}
+        </td>
+        <td class="p-column-title">
+          {{ item.equipoClasificacion }}
+        </td>
+        <!-- Opciones -->
+        <td class="p-column-title">
+          <div class="d-flex justify-content-center">
+            <btn-edit
+              (edit)="onModalAddOrEdit({ id: item.id, title: 'Editar' })"
+            />
+            <btn-delete (OnConfirm)="onDelete(item.id)" />
+          </div>
+        </td>
+        <!-- Opciones -->
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="paginatorleft">
+      <div class="p-d-flex p-ai-center p-jc-between no-print">
+        En total hay
+        {{ data ? data.length : 0 }} registros.
+      </div>
+    </ng-template>
+  </p-table>
+</div>

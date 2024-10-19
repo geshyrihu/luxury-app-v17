@@ -2,10 +2,10 @@ import { Routes } from '@angular/router';
 
 export default [
   {
-    path: 'cuentas-usuario',
+    path: 'accounts',
     loadComponent: () =>
       import(
-        'src/app/pages/application-user/list-application-user/list-application-user.component'
+        'src/app/pages/0-settings/user-administration/list-application-user/list-application-user.component'
       ),
     title: 'Cuentas de acceso',
   },
@@ -13,22 +13,14 @@ export default [
     path: 'actualizar-perfil',
     loadComponent: () =>
       import(
-        'src/app/pages/application-user/update-profile/update-profile.component'
+        'src/app/pages/0-settings/user-administration/update-profile/update-profile.component'
       ),
     title: 'Acutalizar perfil',
   },
   {
     path: 'datos-email',
     loadComponent: () =>
-      import('src/app/pages/email-data/list-email-data.component'),
+      import('src/app/pages/0-settings/email-data/list-email-data.component'),
     title: 'Datos de correo',
   },
-  // {
-  //   path: 'cliente',
-  //   loadComponent: () =>
-  //     import(
-  //       'src/app/pages/configuracion/accounts/account-customer/account-customer.component'
-  //     ),
-  //   title: 'Cliente',
-  // },
 ] as Routes;

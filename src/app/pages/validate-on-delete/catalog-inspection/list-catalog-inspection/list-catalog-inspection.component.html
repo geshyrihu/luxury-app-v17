@@ -1,0 +1,61 @@
+<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
+
+<div class="card">
+  <p-table
+    #dt
+    [value]="data"
+    [autoLayout]="true"
+    [globalFilterFields]="['description', 'departament']"
+    [showCurrentPageReport]="true"
+    styleClass="custom-table"
+    [tableStyle]="{ 'min-width': '50rem' }"
+  >
+    <!-- styleClass="p-datatable-sm" -->
+    <ng-template pTemplate="caption">
+      <custom-table-caption
+        [title]="'LISTADO DE INSPECCIONES'"
+        (add)="onModalAddOrEdit({ id: 0, title: 'Nuevo Registro' })"
+        [dt]="dt"
+      />
+    </ng-template>
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th scope="col" style="width: 25%" pSortableColumn="departament">
+          Departamento
+          <p-sortIcon field="departament"></p-sortIcon>
+        </th>
+        <th scope="col" style="width: 70%" pSortableColumn="description">
+          Descripcción<p-sortIcon field="description"></p-sortIcon>
+        </th>
+        <th scope="col" style="width: 5%" class="no-print">Opciones</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item>
+      <tr>
+        <td class="p-column-title">
+          {{ item.departament | uppercase }}
+        </td>
+        <td class="p-column-title">
+          {{ item.description }}
+        </td>
+        <!-- Opciones -->
+        <td class="p-column-title" class="no-print">
+          <div class="d-flex justify-content-center">
+            <btn-edit
+              (edit)="onModalAddOrEdit({ id: item.id, title: 'Editar' })"
+            />
+            <btn-delete (OnConfirm)="onDelete(item.id)" />
+          </div>
+        </td>
+        <!-- Opciones -->
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="paginatorleft">
+      <div class="p-d-flex p-ai-center p-jc-between no-print">
+        En total hay
+        {{ data ? data.length : 0 }} registros.
+      </div>
+    </ng-template>
+  </p-table>
+</div>

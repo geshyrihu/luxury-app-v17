@@ -1,0 +1,55 @@
+<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
+
+<div class="card">
+  <p-table
+    #dt
+    [value]="dataSignal()"
+    [autoLayout]="true"
+    [globalFilterFields]="['nameModule']"
+    styleClass="custom-table"
+  >
+    <!-- styleClass="p-datatable-sm" -->
+    <ng-template pTemplate="caption">
+      <custom-table-caption
+        title="MODULOS"
+        (add)="onModalAddOrEdit({ id: '', title: 'Nuevo Registro' })"
+        [dt]="dt"
+      />
+    </ng-template>
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th scope="col" pSortableColumn="nameModule">
+          Nombre
+          <p-sortIcon field="nameModule"></p-sortIcon>
+        </th>
+        <th scope="col" pSortableColumn="rolLevel">
+          Nivel
+          <p-sortIcon field="rolLevel"></p-sortIcon>
+        </th>
+
+        <th scope="col" style="width: 5%" class="no-print">Opciones</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item>
+      <tr>
+        <td class="p-column-title">
+          {{ item.nameModule }}
+        </td>
+        <td class="p-column-title">
+          {{ item.rolLevel }}
+        </td>
+        <!-- Opciones -->
+        <td class="p-column-title" class="no-print">
+          <div class="d-flex justify-content-center">
+            <btn-edit
+              (edit)="onModalAddOrEdit({ id: item.id, title: 'Editar' })"
+            />
+            <btn-delete (OnConfirm)="onDelete(item.id)" />
+          </div>
+        </td>
+        <!-- Opciones -->
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

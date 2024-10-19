@@ -1,22 +1,96 @@
 <!-- Vertical layout -->
 @if (isMobileView) {
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-1">
-  <div class="container-fluid">
-    <a class="btn btn-sm btn-primary" [routerLink]="['/menu/menu-movil']">
-      <i class="fas fa-house me-2"></i>
-      Inicio
-    </a>
+<nav class="navbar bg-dark mb-1 fixed-top">
+  <div
+    class="container-fluid d-flex justify-content-between align-items-center"
+  >
+    <div class="d-flex align-items-center">
+      <button
+        type="button"
+        aria-label="Anterior"
+        (click)="onBack()"
+        class="btn btn-soft-link waves-effect"
+      >
+        <i class="fa-regular fa-arrow-left-to-line text-light fa-2x1"></i>
+      </button>
 
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <app-menu-select-customer class="mb-1"></app-menu-select-customer>
-      <app-navigation-icon></app-navigation-icon>
+      <select
+        class="form-select form-select-sm"
+        [(ngModel)]="customerId"
+        (change)="selectCustomer($event.target['value'])"
+      >
+        @for (item of cb_customer; track item) {
+        <option [value]="item.value">
+          <span>
+            {{ item.label }}
+          </span>
+        </option>
+        }
+      </select>
     </div>
   </div>
 </nav>
 
-<div class="card p-1 m-1">
+<div class="m-0 mt-5">
   <router-outlet></router-outlet>
 </div>
+
+<footer
+  class="footer bg-light fixed-bottom text-center text-white py-2 shadow-sm"
+>
+  <div class="row">
+    <div class="col-4"></div>
+    <div class="col-4">
+      <a
+        type="button"
+        [routerLink]="['/menu/menu-movil']"
+        class="btn btn-soft-primary waves-effect"
+      >
+        <i class="fa-duotone fa-house-blank fa-lg text-primary"></i>
+      </a>
+    </div>
+    <div class="col-4">
+      <button
+        type="button"
+        aria-label="Cerrar sesión"
+        (click)="logout()"
+        class="btn btn-soft-primary waves-effect float-end"
+      >
+        <i class="fa-duotone fa-right-from-bracket text-primary fa-lg"></i>
+      </button>
+      <a
+        type="button"
+        [routerLink]="['/accounts/actualizar-perfil']"
+        class="btn btn-soft-primary waves-effect float-end me-1"
+      >
+        <i class="fa-duotone fa-user fa-lg text-primary"></i>
+      </a>
+    </div>
+  </div>
+</footer>
+
+<style>
+  html,
+  body {
+    height: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  .container-fluid,
+  .content {
+    flex: 1 !important;
+  }
+
+  /* Asegura que el footer se quede en la parte inferior */
+  .footer {
+    width: 100% !important;
+    position: fixed !important;
+    bottom: 0 !important;
+  }
+</style>
 
 }@else {
 

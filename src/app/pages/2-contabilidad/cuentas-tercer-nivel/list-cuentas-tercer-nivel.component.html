@@ -1,0 +1,76 @@
+<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
+<div class="card">
+  <p-table
+    #dt
+    responsiveLayout="scroll"
+    styleClass="custom-table"
+    [tableStyle]="{ 'min-width': '50rem' }"
+    [value]="data"
+    [rowHover]="true"
+    [globalFilterFields]="['numeroCuenta', 'descripcion']"
+  >
+    <ng-template pTemplate="caption">
+      <div class="row">
+        <div class="col-10">
+          <custom-table-caption
+            [title]="'Catalogo de cuentas'"
+            (add)="showModalAddOrEdit({ id: 0, title: 'Nuevo Registro' })"
+            [dt]="dt"
+            [rolAuth]="authService.onValidateRoles(['SuperUsuario'])"
+          />
+        </div>
+        <div class="col-2">
+          <btn-active-desactive
+            (activo)="onLoadData($event)"
+            (inactivo)="onLoadData($event)"
+          />
+        </div>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th>Id</th>
+        <th scope="col" style="width: 30%" pSortableColumn="numeroCuenta">
+          CUENTA
+          <p-sortIcon field="numeroCuenta"></p-sortIcon>
+        </th>
+        <th scope="col" style="width: 65%" pSortableColumn="descripcion">
+          DESCRIPCIÓN DE LA CUENTA
+          <p-sortIcon field="descripcion"></p-sortIcon>
+        </th>
+        @if (authService.onValidateRoles(['SuperUsuario'])) {
+        <th scope="col" style="width: 5%"></th>
+        }
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item let-columns="columns">
+      <tr>
+        <td class="p-column-title">
+          {{ item.id }}
+        </td>
+        <td class="p-column-title">
+          {{ item.numeroCuenta }}
+        </td>
+        <td class="p-column-title">
+          {{ item.descripcion }}
+        </td>
+        @if (authService.onValidateRoles(['SuperUsuario'])) {
+        <td class="p-column-title">
+          <div class="d-flex justify-content-center">
+            <btn-edit
+              (edit)="showModalAddOrEdit({ id: item.id, title: 'Editar' })"
+            />
+            <btn-delete (OnConfirm)="onDelete(item.id)" />
+          </div>
+        </td>
+        }
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="paginatorleft">
+      <div class="p-d-flex p-ai-center p-jc-between no-print">
+        En total hay
+        {{ data ? data.length : 0 }} registros.
+      </div>
+    </ng-template>
+  </p-table>
+</div>

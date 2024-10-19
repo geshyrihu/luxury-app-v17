@@ -26,14 +26,11 @@ export class SignalRService {
       .catch((err) => console.error('Error while starting connection: ' + err));
 
     this.hubConnection.on('ReceiveNotification', (data: any) => {
-      console.log('🚀 ~ ReceiveNotification:', data);
-
       if (data.clave === 'Nuevo') {
         this.showNotification(data);
         this.notificationSubject.next(data); // Emitimos el evento
       }
       if (data.clave === 'Reader') {
-        console.log('🚀 ~ data.clave:', data.clave);
         this.notificationSubject.next(data); // Emitimos el evento
       }
 

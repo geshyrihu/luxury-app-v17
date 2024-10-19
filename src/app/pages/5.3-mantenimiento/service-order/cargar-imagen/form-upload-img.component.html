@@ -1,0 +1,29 @@
+<div class="card">
+  <p-fileUpload
+    name="dto"
+    [url]="url"
+    (onUpload)="onUpload($event)"
+    [multiple]="true"
+    accept="image/*"
+    [maxFileSize]="maxFileSize"
+    [headers]="uploadedFiles"
+    cancelLabel="Cancelar"
+    chooseLabel="Seleccionar Imagenes"
+    uploadLabel="Cargar Imagenes"
+    styleClass="font-size-16"
+    chooseStyleClass="btn btn-soft-primary waves-effect waves-light"
+    cancelStyleClass="btn btn-soft-primary waves-effect waves-light"
+    uploadStyleClass="btn btn-soft-primary wsaves-effect waves-light"
+    removeStyleClass="btn btn-sm btn-outline-danger waves-effect waves-light"
+  >
+    <ng-template pTemplate="content">
+      @if (uploadedFiles.length) {
+      <ul>
+        @for (file of uploadedFiles; track file) {
+        <li>{{ file.name }} - {{ file.size }} bytes</li>
+        }
+      </ul>
+      }
+    </ng-template>
+  </p-fileUpload>
+</div>

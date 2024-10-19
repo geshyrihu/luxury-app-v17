@@ -6,7 +6,7 @@ export default [
     path: 'bitacora-equipos',
     loadComponent: () =>
       import(
-        'src/app/pages/bitacora-mantenimiento/bitacora-mantenimiento.component'
+        'src/app/pages/5.3-bitacoras/bitacora-mantenimiento/bitacora-mantenimiento.component'
       ),
     title: 'Bitacora de equipos',
   },
@@ -15,7 +15,7 @@ export default [
     path: 'recorrido',
     loadComponent: () =>
       import(
-        'src/app/pages/operaciones/mantenimiento/mantenimiento-recorrido/list-recorrido.component'
+        'src/app/pages/8.0-reportes/mantenimiento/mantenimiento-recorrido/list-recorrido.component'
       ),
     title: 'Recorrido',
   },
@@ -24,7 +24,7 @@ export default [
     path: 'piscina',
     loadComponent: () =>
       import(
-        'src/app/pages/operaciones/mantenimiento/mantenimiento-bitacoras/piscina/list-piscina/list-piscina.component'
+        'src/app/pages/8.0-reportes/mantenimiento/mantenimiento-bitacoras/piscina/list-piscina/list-piscina.component'
       ),
     title: 'Bitacora Alberca',
   },
@@ -32,14 +32,14 @@ export default [
     path: 'piscina-bitacora/:piscinaId',
     loadComponent: () =>
       import(
-        'src/app/pages/operaciones/mantenimiento/mantenimiento-bitacoras/piscina/list-piscina-bitacora/list-piscina-bitacora.component'
+        'src/app/pages/8.0-reportes/mantenimiento/mantenimiento-bitacoras/piscina/list-piscina-bitacora/list-piscina-bitacora.component'
       ),
   },
   {
     path: 'reporte-bitacora-recorrido',
     loadComponent: () =>
       import(
-        'src/app/pages/operaciones/mantenimiento/mantenimiento-recorrido/reporte-bitacora-recorrido.component'
+        'src/app/pages/8.0-reportes/mantenimiento/mantenimiento-recorrido/reporte-bitacora-recorrido.component'
       ),
     title: 'Reporte Bitacora Recorrido',
   },
@@ -47,7 +47,7 @@ export default [
     path: 'lista-medidor',
     loadComponent: () =>
       import(
-        'src/app/pages/operaciones/mantenimiento/mantenimiento-bitacoras/medidores/medidores/lista-medidores/lista-medidores.component'
+        'src/app/pages/8.0-reportes/mantenimiento/mantenimiento-bitacoras/medidores/medidores/lista-medidores/lista-medidores.component'
       ),
     title: 'Lista de medidores',
   },
@@ -55,21 +55,21 @@ export default [
     path: 'lista-medidar-lectura/:id',
     loadComponent: () =>
       import(
-        'src/app/pages/operaciones/mantenimiento/mantenimiento-bitacoras/medidores/medidores-lectura/list-medidor-lectura/list-medidor-lectura.component'
+        'src/app/pages/8.0-reportes/mantenimiento/mantenimiento-bitacoras/medidores/medidores-lectura/list-medidor-lectura/list-medidor-lectura.component'
       ),
   },
   {
     path: 'grafico/:id',
     loadComponent: () =>
       import(
-        'src/app/pages/operaciones/mantenimiento/mantenimiento-bitacoras/medidores/medidores-lectura/chart-lectura/chart-lectura.component'
+        'src/app/pages/8.0-reportes/mantenimiento/mantenimiento-bitacoras/medidores/medidores-lectura/chart-lectura/chart-lectura.component'
       ),
   },
   {
     path: 'prestamo-herramienta',
     loadComponent: () =>
       import(
-        'src/app/pages/operaciones/mantenimiento/mantenimiento-bitacoras/prestamo-herramienta/control-prestamo-herramientas.component'
+        'src/app/pages/8.0-reportes/mantenimiento/mantenimiento-bitacoras/prestamo-herramienta/control-prestamo-herramientas.component'
       ),
     title: 'Prestamo de herramientas',
   },
@@ -77,7 +77,7 @@ export default [
     path: 'elevator-spare-parts-change',
     loadComponent: () =>
       import(
-        'src/app/pages/operaciones/mantenimiento/mantenimiento-bitacoras/elevator/list-elevator-spare-parts-change/list-elevator-spare-parts-change.component'
+        'src/app/pages/8.0-reportes/mantenimiento/mantenimiento-bitacoras/elevator/list-elevator-spare-parts-change/list-elevator-spare-parts-change.component'
       ),
     title: 'Cambio de refaccion',
   },
@@ -85,7 +85,7 @@ export default [
     path: 'elevators-emergency-call',
     loadComponent: () =>
       import(
-        'src/app/pages/operaciones/mantenimiento/mantenimiento-bitacoras/elevator/list-elevators-emergency-call/list-elevators-emergency-call.component'
+        'src/app/pages/8.0-reportes/mantenimiento/mantenimiento-bitacoras/elevator/list-elevators-emergency-call/list-elevators-emergency-call.component'
       ),
     title: 'Reporte de Emergencia',
   },

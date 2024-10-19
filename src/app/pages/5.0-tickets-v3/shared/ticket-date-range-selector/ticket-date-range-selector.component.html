@@ -1,0 +1,18 @@
+<div class="form-group">
+  <label class="form-label">Seleccione el rango de fechas a reisar:</label>
+  <div class="input-group">
+    <input
+      class="form-control flatpickr-input"
+      type="text"
+      mwlFlatpickr
+      [altInput]="true"
+      [convertModelValue]="true"
+      mode="range"
+      [(ngModel)]="dateRange"
+      (ngModelChange)="onDateChange($event)"
+    />
+    <button class="btn btn-soft-primary" (click)="emitSelectedDates()">
+      Aplicar
+    </button>
+  </div>
+</div>

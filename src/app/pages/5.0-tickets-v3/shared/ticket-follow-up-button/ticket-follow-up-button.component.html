@@ -1,0 +1,16 @@
+<button
+  type="button"
+  class="btn btn-soft-primary position-relative me-3 text-start"
+  ngbTooltip="Seguimiento"
+  placement="top"
+  (click)="onFollowUp()"
+>
+  <i class="fa-thin fa-list"></i>
+  <span
+    *ngIf="followUpCount !== undefined"
+    class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-light"
+  >
+    {{ followUpCount }}
+    <span class="visually-hidden">unread messages</span>
+  </span>
+</button>

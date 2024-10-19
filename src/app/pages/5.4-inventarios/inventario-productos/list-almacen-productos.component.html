@@ -1,0 +1,169 @@
+<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
+<div class="card">
+  @if (data) {
+  <p-table
+    [(selection)]="data"
+    #dt
+    styleClass="custom-table"
+    [tableStyle]="{ 'min-width': '50rem' }"
+    [value]="data"
+    [rows]="15"
+    [paginator]="true"
+    [rowHover]="true"
+    currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+    [showCurrentPageReport]="true"
+    [rowsPerPageOptions]="[10, 20, 30, 40, 50, 75, 100]"
+    [globalFilterFields]="[
+      'producto',
+      'unidadDeMedida',
+      'existencia',
+      'stockMin',
+      'stockMax',
+      'compraRequerida'
+    ]"
+    [autoLayout]="true"
+    [value]="data"
+    sortField="category"
+    sortMode="single"
+    (onSort)="onSort()"
+  >
+    <ng-template pTemplate="caption">
+      <custom-table-caption
+        [title]="'Inventario'"
+        (add)="addProductos({ id: 0, title: 'Agregar Registro' })"
+        [dt]="dt"
+        [rolAuth]="
+          authService.onValidateRoles([
+            'Asistente',
+            'Mantenimiento',
+            'Residente',
+            'SuperUsuario'
+          ])
+        "
+      />
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th scope="col" pSortableColumn="producto.nombreProducto">
+          Producto
+          <p-sortIcon field="producto.nombreProducto"></p-sortIcon>
+        </th>
+        <th scope="col" pSortableColumn="existencia">
+          Existencia
+          <p-sortIcon field="existencia"></p-sortIcon>
+        </th>
+        <th scope="col" pSortableColumn="unidadDeMedida.descripcion">
+          Unidad
+          <p-sortIcon field="unidadDeMedida.descripcion"></p-sortIcon>
+        </th>
+        <th scope="col" pSortableColumn="stockMin">
+          Stock Min
+          <p-sortIcon field="stockMin"></p-sortIcon>
+        </th>
+        <th scope="col" pSortableColumn="stockMax">
+          Stock Max
+          <p-sortIcon field="stockMax"></p-sortIcon>
+        </th>
+        <th scope="col" pSortableColumn="compraRequerida">
+          Compra Sugerida
+          <p-sortIcon field="compraRequerida"></p-sortIcon>
+        </th>
+        @if ( authService.onValidateRoles([ 'Asistente', 'Mantenimiento',
+        'Residente', 'SuperUsuario' ]) ) {
+        <th scope="col">Opciones</th>
+        }
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+      @if (rowGroupMetadata[item.category].index === rowIndex) {
+      <tr>
+        <td colspan="7">
+          <span class="p-text-bold p-ml-2"> {{ item.category }}</span>
+        </td>
+      </tr>
+      }
+      <tr>
+        <td>
+          <small
+            (click)="onModalTarjetaProducto(item.productoId)"
+            class="pointer"
+          >
+            <img
+              [src]="urlImgBase + item.urlImagen"
+              alt="..."
+              class="rounded avatar-lg"
+            />
+            {{ item.producto }}</small
+          >
+        </td>
+        <td class="text-center">
+          <span
+            class="p-2 badge ms-1"
+            [ngClass]="{
+              'bg-success': item.existencia > item.stockMin,
+              'bg-danger': item.stockMin >= item.existencia
+            }"
+            >{{ item.existencia }}</span
+          >
+        </td>
+        <td>
+          {{ item.unidadDeMedida }}
+        </td>
+        <td class="text-center">
+          {{ item.stockMin }}
+        </td>
+        <td class="text-center">
+          {{ item.stockMax }}
+        </td>
+        <td class="text-center">
+          {{ item.compraRequerida }}
+        </td>
+        @if ( authService.onValidateRoles([ 'Asistente', 'Mantenimiento',
+        'Residente', 'SuperUsuario' ]) ) {
+        <td>
+          <div class="d-flex justify-content-center">
+            @if ( authService.onValidateRoles([ 'Asistente', 'Mantenimiento',
+            'Residente', 'SuperUsuario' ]) ) {
+            <custom-button
+              ngbTooltip="Registrar Entrada"
+              [customClass]="'btn-sm btn-outline-danger'"
+              icon="fa-light fa-plus text-danger"
+              (clicked)="
+                onAddEntrada({
+                  id: 0,
+                  idProducto: item.productoId,
+                  nombreProducto: item.producto
+                })
+              "
+            />
+            } @if ( authService.onValidateRoles([ 'Asistente', 'Mantenimiento',
+            'Residente', 'SuperUsuario' ]) ) {
+            <custom-button
+              ngbTooltip="Registrar Salida"
+              [customClass]="'btn-sm btn-outline-success'"
+              icon="fa-light fa-minus text-success"
+              (clicked)="
+                onAddSalida({
+                  id: 0,
+                  idInventarioProducto: item.id,
+                  idProducto: item.productoId,
+                  nombreProducto: item.producto
+                })
+              "
+            />
+            } @if ( authService.onValidateRoles([ 'Asistente', 'Mantenimiento',
+            'Residente', 'SuperUsuario' ]) ) {
+            <btn-edit
+              (edit)="editProductos({ id: item.id, title: 'Editar' })"
+            />
+            } @if (authService.onValidateRoles(['Mantenimiento'])) {
+            <btn-delete (OnConfirm)="onDelete(item.id)" />
+            }
+          </div>
+        </td>
+        }
+      </tr>
+    </ng-template>
+  </p-table>
+  }
+</div>

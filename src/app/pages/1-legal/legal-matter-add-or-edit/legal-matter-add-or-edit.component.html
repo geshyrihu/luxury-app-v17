@@ -1,0 +1,30 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <!-- Título del Asunto -->
+  <custom-input-datalist
+    (propagar)="saveCategorie($event)"
+    [control]="form.get('legalMatterCategory')"
+    [data]="cb_categories"
+    formControlName="legalMatterCategory"
+    label="Categoria"
+    placeholder="Categoria"
+    dataListId="userNameDatalistOptions"
+    [horizontal]="false"
+  >
+  </custom-input-datalist>
+  <custom-input-text
+    [control]="form.get('title')"
+    [horizontal]="false"
+    formControlName="title"
+    label="Asunto"
+    placeholder="Asunto"
+  />
+  <custom-input-select
+    [control]="form.get('isInternal')"
+    [data]="cb_resposanbles"
+    [horizontal]="false"
+    formControlName="isInternal"
+    label="Responsable:"
+  />
+
+  <btn-submit [disabled]="this.form.invalid || submitting" />
+</form>

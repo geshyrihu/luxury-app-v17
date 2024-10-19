@@ -10,14 +10,14 @@ export default [
     path: 'reporte-concluidos',
     loadComponent: () =>
       import(
-        'src/app/pages/operaciones/tikets/reporte-terminados/reporte-operacion.component'
+        'src/app/pages/8.0-reportes/reporte-ticekt-terminados/reporte-operacion.component'
       ),
   },
   {
     path: 'reporte-pendientes',
     loadComponent: () =>
       import(
-        'src/app/pages/operaciones/tikets/reporte-pendientes/pending-report.component'
+        'src/app/pages/8.0-reportes/reporte-ticket-pendientes/pending-report.component'
       ),
   },
   {
