@@ -26,7 +26,6 @@ export default class TicketProgramButtonComponent {
       )
       .then((result: boolean) => {
         if (result) {
-          console.log('se Cerro el dialogo de programación');
           // Emitir el evento cuando se completa la programación
           this.programCompleted.emit();
         }

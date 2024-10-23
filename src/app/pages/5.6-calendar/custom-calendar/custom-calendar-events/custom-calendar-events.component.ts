@@ -22,7 +22,6 @@ export default class CustomCalendarEventsComponent implements OnInit {
     const urlApi = `calendars/events`; // Endpoint para obtener todos los calendarios
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.events = result; // Asigna los datos recibidos
-      console.log('Calendarios:', result);
       this.isLoading = false; // Ocultar el indicador de carga
       // Aquí puedes manejar los datos, como mostrarlos en tu componente
     });
@@ -31,7 +30,6 @@ export default class CustomCalendarEventsComponent implements OnInit {
   onLoadCalendarById(calendarId: string) {
     const urlApi = `calendars/${calendarId}`; // Endpoint para obtener un calendario por ID
     this.apiRequestService.onGetItem(urlApi).then((calendar: any) => {
-      console.log('Calendario:', calendar);
       // Maneja los datos del calendario
     });
   }
@@ -39,7 +37,6 @@ export default class CustomCalendarEventsComponent implements OnInit {
   onCreateEvent(calendarId: string, eventData: any) {
     const urlApi = `calendars/${calendarId}/events`; // Endpoint para crear un evento en un calendario
     this.apiRequestService.onPost(urlApi, eventData).then((response: any) => {
-      console.log('Evento creado:', response);
       // Aquí puedes manejar la respuesta, como actualizar la vista de eventos
     });
   }
@@ -49,7 +46,6 @@ export default class CustomCalendarEventsComponent implements OnInit {
     this.apiRequestService
       .onPut(urlApi, updatedEventData)
       .then((response: any) => {
-        console.log('Evento actualizado:', response);
         // Maneja la actualización de los datos en la vista
       });
   }
@@ -57,7 +53,6 @@ export default class CustomCalendarEventsComponent implements OnInit {
     const urlApi = `calendars/${calendarId}/events/${eventId}`; // Endpoint para eliminar un evento
     this.apiRequestService.onDelete(urlApi).then((deleted: boolean) => {
       if (deleted) {
-        console.log('Evento eliminado');
         // Actualiza la lista de eventos después de la eliminación
       }
     });
@@ -67,7 +62,6 @@ export default class CustomCalendarEventsComponent implements OnInit {
     this.apiRequestService
       .onPost(urlApi, reminderData)
       .then((response: any) => {
-        console.log('Recordatorio agregado:', response);
         // Actualiza los recordatorios del evento
       });
   }

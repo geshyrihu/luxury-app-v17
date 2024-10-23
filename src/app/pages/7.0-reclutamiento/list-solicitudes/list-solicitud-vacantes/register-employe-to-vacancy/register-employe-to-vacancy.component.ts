@@ -28,9 +28,7 @@ export default class RegisterEmployeToVacancyComponent implements OnInit {
     birth: [''],
     nss: [''],
   });
-  ngOnInit() {
-    console.log(this.config.data);
-  }
+  ngOnInit() {}
 
   onSubmit() {
     if (!this.apiRequestService.validateForm(this.form)) return;

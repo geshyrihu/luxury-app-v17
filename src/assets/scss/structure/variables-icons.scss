@@ -16,7 +16,7 @@
   --icon-document: "\f15c"; /* FontAwesome document icon */
   --icon-lock: "\f023"; /* FontAwesome lock icon */
   --icon-unlock: "\f09c"; /* FontAwesome unlock icon */
-
+  --icon-check-double: "\f00c"; /* FontAwesome check-double icon */
   --mdi-user: "\F1016"; /* MaterialDesign user icon */
 }
 /* Aplicar iconos a elementos usando variables */
@@ -55,6 +55,9 @@
 
 .icon-unlock::before {
   content: var(--icon-unlock);
+}
+.icon-check-double::before {
+  content: var(--icon-check-double);
 }
 
 /* Aplicar iconos de Material Design usando variables */

@@ -10,15 +10,17 @@
   background-color: #e5e5e5 !important;
   color: #333 !important;
   text-align: left !important;
-  padding: 8px !important;
-  border: 1px solid #ddd !important;
+  padding: 10px !important;
+  border: 1px solid #adadad !important;
   font-weight: bold !important;
+  font-family: "Open Sans SemiBold", sans-serif !important;
+  font-size: large !important;
 }
 
 /* Filas del cuerpo de la tabla */
 .custom-table-report td {
   padding: 8px !important;
-  border: 1px solid #f0f0f0 !important; /* Bordes más claros */
+  border: 1px solid #adadad !important; /* Bordes más claros */
   text-align: left !important;
 }
 

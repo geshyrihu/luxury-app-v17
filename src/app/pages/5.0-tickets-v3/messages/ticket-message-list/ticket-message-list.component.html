@@ -76,10 +76,10 @@
           scope="col"
           style="width: 30%"
           class="font-size-12"
-          pSortableColumn="responsibleArea"
+          pSortableColumn="description"
         >
           SOLICITUD
-          <p-sortIcon field="responsibleArea"></p-sortIcon>
+          <p-sortIcon field="description"></p-sortIcon>
         </th>
         <th scope="col" class="font-size-12">EVIDENCIA</th>
         <th
@@ -320,16 +320,14 @@
                 />
                 <br />
 
-                <custom-button
-                  label="Eliminar"
-                  customClass="btn-soft-primary w-100 mt-1 text-start"
-                  icon="fa-trash text-primary me-2"
-                  (clicked)="onDelete(item)"
-                />
-
                 <br />
               </div>
             </div>
+            <btn-delete
+              *ngIf="isSuperUser"
+              class="ms-1"
+              (OnConfirm)="onDelete(item.id)"
+            />
           </div>
         </td>
       </tr>

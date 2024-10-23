@@ -8,6 +8,13 @@
         label="Id"
         [hidden]="false"
       />
+      <custom-input-select
+        [control]="form.get('ticketGroupId')"
+        formControlName="ticketGroupId"
+        label="Grupo"
+        [data]="cb_ticket_group"
+        [selectDefaulOption]="false"
+      />
       <custom-input-text
         [control]="form.get('title')"
         formControlName="title"
@@ -51,7 +58,7 @@
         </div>
         <div class="col-sm-6">
           <div class="form-group">
-            <label for="afterWork">Foto de antes</label>
+            <label for="afterWork">Foto de después</label>
             <input
               type="file"
               accept=".jpg,.jpeg,.png"

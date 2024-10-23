@@ -7,15 +7,17 @@
         <div class="auth-full-page-content d-flex p-sm-5 p-4">
           <div class="w-100">
             <div class="d-flex flex-column h-100">
-              <div class="mb-4 mb-md-5 text-center">
+              <div class="mb-4 mb-md-5 text-center logo-container">
                 <a routerLink="/" class="d-block auth-logo">
-                  <!-- <img src="assets/images/logo-sm.svg" alt="" height="28" /> -->
                   <span class="logo-txt">LuxuryApp</span>
                 </a>
               </div>
+              <img src="assets/images/logo-sm.svg" alt="" height="56" />
+
               <div class="auth-content my-auto">
                 <div class="text-center">
-                  <h5 class="mb-0">Bienvenido!</h5>
+                  <h5 class="mb-0">¡Bienvenido!</h5>
+                  <p class="text-muted mt-2">Inicia sesión para continuar.</p>
                 </div>
                 <form [formGroup]="form" (ngSubmit)="onSubmit()">
                   <custom-input-text
@@ -46,7 +48,7 @@
 
                   <div class="mt-0 d-grid">
                     <custom-button
-                      customClass="btn-soft-primary bg-gradient btn-lg w-100"
+                      customClass="btn-outline-primary border-primary btn-lg w-100"
                       label="Ingresar"
                       type="submit"
                     />
@@ -55,11 +57,9 @@
 
                 <div class="mt-5 text-center">
                   <p class="text-muted mb-0">
-                    ¿Tienes problemas para ingresar? Solicita ayuda con tu
-                    Administrador.
                     <a
                       [routerLink]="['/auth/recuperar-contrasena']"
-                      class="text-primary fw-semibold"
+                      class="text-dark fw-semibold"
                     >
                       Recuperar Contraseña
                     </a>
@@ -111,106 +111,3 @@
   </div>
   <!-- end container fluid -->
 </div>
-
-<!-- <div
-  class="pt-md-5 p-4 d-flex justify-content-center align-items-center vh-100 auth-bg"
->
-  <div class="p-0">
-    <div class="row g-0 justify-content-center align-items-center">
-      <div class="bg-overlay bg-primary"></div>
-      <ul class="bg-bubbles">
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-      </ul>
-      <div class="col-12 col-md-8 col-lg-6 mt-4">
-        <div class="bg-white p-5 rounded shadow">
-          <div class="auth-content">
-            <div class="text-center">
-              <h2 class="h2 mb-0">Bienvenido</h2>
-            </div>
-            <br />
-            <form [formGroup]="form" (ngSubmit)="onSubmit()">
-              <custom-input-text
-                [control]="form.get('userName')"
-                [horizontal]="false"
-                formControlName="userName"
-                label="Usuario"
-                placeholder="Usuario"
-                customClass="form-control-lg"
-              />
-
-              <custom-input-password
-                [control]="form.get('password')"
-                [horizontal]="false"
-                formControlName="password"
-                label="Contraseña"
-                placeholder="Contraseña"
-                customClass="form-control-lg"
-              />
-
-              <custom-input-check
-                [control]="form.get('remember')"
-                [horizontal]="false"
-                formControlName="remember"
-                label="Recordarme"
-                customClass="form-control-lg"
-              />
-
-              <div class="mt-0 d-grid">
-                <custom-button
-                  customClass="btn-soft-primary bg-gradient btn-lg w-100"
-                  label="Ingresar"
-                  type="submit"
-                />
-              </div>
-            </form>
-
-            <div class="mt-4 text-center">
-              <p class="mb-0 font-size-18">
-                ¿Tienes problemas para ingresar? Solicita ayuda con tu
-                Administrador.
-              </p>
-              <a [routerLink]="['/auth/recuperar-contrasena']">
-                Recuperar Contraseña
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div> -->
-
-<style>
-  /* Fondo de la tarjeta con transparencia */
-  .card-custom {
-    background-color: rgba(
-      255,
-      255,
-      255,
-      0.85
-    ) !important ; /* Fondo blanco con 85% de opacidad */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-  }
-
-  /* Fondo azul con transparencia */
-  .auth-bg {
-    background-color: rgba(
-      30,
-      58,
-      138,
-      0.8
-    ) !important; /* Azul con 80% de opacidad */
-  }
-</style>

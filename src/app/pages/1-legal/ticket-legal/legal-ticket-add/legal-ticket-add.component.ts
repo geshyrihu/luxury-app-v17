@@ -97,8 +97,6 @@ export default class LegalTicketAddComponent implements OnInit {
   onSubmit() {
     this.form.removeControl('typeService');
 
-    console.log('form....', this.form.value);
-
     if (!this.apiRequestService.validateForm(this.form)) return;
     this.id = this.config.data.id;
     this.submitting = true;
@@ -146,9 +144,7 @@ export default class LegalTicketAddComponent implements OnInit {
     );
   }
   saveLegalMatter(e: any): void {
-    console.log('🚀 ~ event.target.value:', e.target.value);
     this.form.patchValue({ title: e.target.value });
-    console.log('🚀 ~ this.form:', this.form.value);
   }
 }
 

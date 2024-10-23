@@ -34,6 +34,7 @@ export default class TicketMessageListComponent implements OnInit {
   customToastService = inject(CustomToastService);
   activatedRoute = inject(ActivatedRoute);
 
+  isSuperUser = this.authService.onValidateRoles(['SuperUsuario']);
   data: TicketResult = {
     nameGroup: '',
     items: [],
@@ -208,10 +209,6 @@ export default class TicketMessageListComponent implements OnInit {
   }
 
   onUpdatePriority(id: string) {
-    console.log(
-      '🚀 ~ this.authService.applicationUserId:',
-      this.authService.applicationUserId
-    );
     const urlApi = `TicketMessage/UpdatePriority/${id}/${this.authService.applicationUserId}`;
     this.apiRequestService.onGetItem(urlApi).then((result: any) => {
       if (result) {
@@ -247,5 +244,23 @@ export default class TicketMessageListComponent implements OnInit {
     const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
 
     return diffInDays;
+  }
+
+  // Funcion para eliminar un banco y refres
+  onDelete(id: any) {
+    this.apiRequestService
+      .onDelete(`TicketMessage/${id}/${this.customerIdService.getCustomerId()}`)
+      .then((result: boolean) => {
+        // Actualizamos el signal para eliminar el elemento de la lista
+        if (result) {
+          // Filtrar y actualizar los datos actuales
+          this.data.items = this.data.items.filter((item) => item.id !== id);
+
+          // También filtramos la lista original si es necesario
+          this.originalData.items = this.originalData.items.filter(
+            (item) => item.id !== id
+          );
+        }
+      });
   }
 }

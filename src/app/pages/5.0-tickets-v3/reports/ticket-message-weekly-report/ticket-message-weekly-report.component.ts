@@ -56,8 +56,6 @@ export default class TicketMessageWeeklyReportComponent {
   }
 
   onDateRangeSelected(event: { startDate: Date; endDate: Date }) {
-    console.log('Fechas seleccionadas:', event.startDate, event.endDate);
-
     // Convierte las fechas a formato ISO
     const startDateFormatted = event.startDate.toISOString(); // Formato: '2024-09-30T00:00:00.000Z'
     const endDateFormatted = event.endDate.toISOString(); // Formato: '2024-10-17T00:00:00.000Z'

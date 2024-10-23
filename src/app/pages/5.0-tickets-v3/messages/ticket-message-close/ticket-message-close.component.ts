@@ -66,7 +66,6 @@ export default class TicketMessageCloseComponent implements OnInit {
         const afterWorkUrl = `${this.urlImage}/${result.afterWorkPreview}`;
         this.form.get('afterWorkPreview')?.setValue(afterWorkUrl);
       }
-      console.log('formulario: ', this.form.value);
     });
   }
 

@@ -38,8 +38,6 @@ export default class TicketMessageProgramComponent implements OnInit {
   });
 
   ngOnInit() {
-    console.log('this.config.data', this.config.data);
-
     this.onLoadUsers();
     this.onLoadData();
   }

@@ -17,12 +17,4 @@ export default [
       ),
     title: 'Inventario',
   },
-  {
-    path: 'sub-menu-sub/:label',
-    loadComponent: () =>
-      import(
-        'src/app/layouts/cell-phone-option/cell-phone-sub-menu-sub-menu/sub-menu-sub-menu.component'
-      ),
-    title: 'Inventario',
-  },
 ] as Routes;

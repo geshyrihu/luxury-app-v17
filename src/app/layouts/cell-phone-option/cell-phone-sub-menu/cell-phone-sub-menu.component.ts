@@ -27,11 +27,6 @@ export default class CellPhoneSubMenuComponent implements OnInit {
   }
 
   navigate(item: ISubMenuItem) {
-    // Verifica si hay subelementos
-    if (item.items && item.items.length > 0) {
-      this.router.navigate(['menu/sub-menu-sub/', item.label]);
-    } else {
-      this.router.navigate([item.routerLink]);
-    }
+    this.router.navigate([item.routerLink]);
   }
 }

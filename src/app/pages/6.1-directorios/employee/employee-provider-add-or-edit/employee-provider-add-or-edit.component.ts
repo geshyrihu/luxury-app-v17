@@ -69,7 +69,6 @@ export class EmployeeProviderAddOrEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('typePerson', this.typePerson);
     this.apiRequestService
       .onGetSelectItem(`Professions`)
       .then((response: any) => {

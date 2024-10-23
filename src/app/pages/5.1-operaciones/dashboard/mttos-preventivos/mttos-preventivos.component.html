@@ -1,68 +1,75 @@
 @if (ordenesServicio) {
-<div>
-  <div class="row">
-    <div class="col-md-8">
-      <div
-        class="page-title-box d-sm-flex align-items-center justify-content-between"
-      >
-        <h4 class="mb-sm-0 font-size-18">MANTENIMIENTOS PREVENTIVOS</h4>
-      </div>
+<div class="row mt-2">
+  <div class="col-md-8">
+    <div
+      class="page-title-box d-sm-flex align-items-center justify-content-between"
+    >
+      <h4 class="mb-sm-0 font-size-18">MANTENIMIENTOS PREVENTIVOS</h4>
     </div>
-    <div class="col-md-4">
-      <app-mesanio (periodoEmit)="onChangePeriodo($event)"></app-mesanio>
+  </div>
+  <div class="col-md-4">
+    <app-mesanio (periodoEmit)="onChangePeriodo($event)"></app-mesanio>
+  </div>
+  <div class="col-xl-3 col-md-6 mb-2">
+    <div
+      class="card border-primary p-2 pointer"
+      [ngClass]="{
+        'border-info': ordenesServicio.total > 0,
+        'border-dark': ordenesServicio.total === 0
+      }"
+      (click)="onClick(4)"
+    >
+      <h5 class="my-0 text-info text-center">
+        <i class="fa-solid fa-circle-info me-2"></i>
+        {{ ordenesServicio.total }} - TOTALES
+      </h5>
     </div>
-    <div class="col-xl-3 col-md-6 mb-2">
-      <ngb-alert
-        (click)="onClick(4)"
-        type="info"
-        [dismissible]="false"
-        class="alert-dismissible fade show px-4 mb-0 text-center custom-alert pointer"
-      >
-        <div class="h1 text-info d-block mt-2 mb-3">
-          {{ ordenesServicio.total }}
-        </div>
-        <h5 class="text-info">TOTALES</h5>
-      </ngb-alert>
+  </div>
+  <div class="col-xl-3 col-md-6 mb-2">
+    <div
+      class="card border-primary p-2 pointer"
+      [ngClass]="{
+        'border-success': ordenesServicio.concluido > 0,
+        'border-dark': ordenesServicio.concluido === 0
+      }"
+      (click)="onClick(1)"
+    >
+      <h5 class="my-0 text-success text-center">
+        <i class="fa-solid fa-check me-2"></i>
+        {{ ordenesServicio.concluido }} - TERMINADO
+      </h5>
     </div>
-    <div class="col-xl-3 col-md-6 mb-2">
-      <ngb-alert
-        (click)="onClick(1)"
-        type="success"
-        [dismissible]="false"
-        class="alert-dismissible fade show px-4 mb-0 text-center custom-alert pointer"
-      >
-        <div class="h1 text-success d-block mt-2 mb-3">
-          {{ ordenesServicio.concluido }}
-        </div>
-        <h5 class="text-success">TERMINADO</h5>
-      </ngb-alert>
+  </div>
+  <div class="col-xl-3 col-md-6 mb-2">
+    <div
+      class="card border-primary p-2 pointer"
+      [ngClass]="{
+        'border-danger': ordenesServicio.pendiente > 0,
+        'border-dark': ordenesServicio.pendiente === 0
+      }"
+      (click)="onClick(0)"
+    >
+      <h5 class="my-0 text-danger text-center">
+        <i class="fa-solid fa-triangle-exclamation me-2"></i>
+        {{ ordenesServicio.pendiente }} - PENDIENTES
+      </h5>
     </div>
-    <div class="col-xl-3 col-md-6 mb-2">
-      <ngb-alert
-        (click)="onClick(0)"
-        type="danger"
-        [dismissible]="false"
-        class="alert-dismissible fade show px-4 mb-0 text-center custom-alert pointer"
-      >
-        <div class="h1 text-danger d-block mt-2 mb-3">
-          {{ ordenesServicio.pendiente }}
-        </div>
-        <h5 class="text-danger">PENDIENTES</h5>
-      </ngb-alert>
-    </div>
-    <div class="col-xl-3 col-md-6 mb-2">
-      <ngb-alert
-        (click)="onClick(2)"
-        type="dark"
-        [dismissible]="false"
-        class="alert-dismissible fade show px-4 mb-0 text-center custom-alert pointer"
-      >
-        <div class="h1 text-dark d-block mt-2 mb-3">
-          {{ ordenesServicio.denegado }}
-        </div>
-        <h5 class="text-dark">NO AUTORIZADO</h5>
-      </ngb-alert>
+  </div>
+  <div class="col-xl-3 col-md-6 mb-2">
+    <div
+      class="card border-primary p-2 pointer"
+      [ngClass]="{
+        'border-dark': ordenesServicio.denegado > 0,
+        'border-secondary': ordenesServicio.denegado === 0
+      }"
+      (click)="onClick(2)"
+    >
+      <h5 class="my-0 text-dark text-center">
+        <i class="fa-solid fa-ban me-2"></i>
+        {{ ordenesServicio.denegado }} - NO AUTORIZADO
+      </h5>
     </div>
   </div>
 </div>
+
 }

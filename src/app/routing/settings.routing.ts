@@ -50,4 +50,10 @@ export default [
         'src/app/pages/6.1-directorios/customer-data-company/list-customer-data-company.component'
       ),
   },
+  {
+    path: 'menu-item',
+    title: 'menu-item',
+    loadComponent: () =>
+      import('src/app/pages/0-settings/menu-item/menu-item.component'),
+  },
 ] as Routes;

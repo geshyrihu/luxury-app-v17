@@ -78,4 +78,11 @@ export default [
         'src/app/pages/catalog/unidad-medida/list-unidad-medida.component'
       ),
   },
+  {
+    path: 'ticket-group-category',
+    loadComponent: () =>
+      import(
+        'src/app/pages/catalog/ticket-group-category/ticket-group-category-list/ticket-group-category-list.component'
+      ),
+  },
 ] as Routes;

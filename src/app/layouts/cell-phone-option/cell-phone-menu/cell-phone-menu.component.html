@@ -1,4 +1,4 @@
-<div class="m-0">
+<!-- <div class="m-0">
   <ul class="list-group">
     @for (item of menu; track item) {
     <li
@@ -14,16 +14,24 @@
     </li>
     }
   </ul>
-</div>
-<div class="row m-1">
-  @for (item of menu; track item) {
-  <div class="col-6 mb-4" *ngIf="item.visible">
-    <div class="card shadow-sm pointer" (click)="navigate(item)">
-      <div class="card-body text-center">
-        <i [class]="item.icon + ' fa-2xl text-primary my-3'"></i>
-        <h5 class="card-title">{{ item.label }}</h5>
+</div> -->
+<div class="row m-1 mt-2">
+  <ng-container *ngFor="let item of menu">
+    <div class="col-6 col-md-4 mb-4" *ngIf="item.visible">
+      <div
+        class="card shadow-sm pointer h-100 d-flex flex-column"
+        (click)="navigate(item)"
+      >
+        <div
+          class="card-body text-center d-flex flex-column justify-content-between"
+        >
+          <i [class]="item.icon + ' fa-2xl text-primary my-0'"></i>
+          <p class="small label-text mb-0">{{ item.label }}</p>
+        </div>
       </div>
     </div>
-  </div>
-  }
+  </ng-container>
 </div>
+<br />
+<br />
+<br />

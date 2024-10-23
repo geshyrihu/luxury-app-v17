@@ -22,17 +22,29 @@
     [tableStyle]="{ 'min-width': '50rem' }"
   >
     <ng-template pTemplate="caption">
-      <custom-table-caption
-        title="PENDIENTES"
-        (add)="
-          onModalAddOrEdit({
-            id: '',
-            title: 'Nuevo Registro'
-          })
-        "
-        [dt]="dt"
-      />
       <div class="row">
+        <div class="col-lg-10">
+          <custom-table-caption
+            title="PENDIENTES- PLAN DE TRABAJO SEMANAL"
+            (add)="
+              onModalAddOrEdit({
+                id: '',
+                title: 'Nuevo Registro'
+              })
+            "
+            [dt]="dt"
+          />
+        </div>
+        <div class="col-lg-2">
+          <button
+            type="button"
+            class="btn btn-soft-primary w-100"
+            (click)="onPreviewClicked()"
+          >
+            Vista Previa
+          </button>
+        </div>
+
         <div class="col-lg-3">
           <select
             class="form-select"

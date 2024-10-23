@@ -20,7 +20,6 @@ export default class ModuleAppPermissionComponent implements OnInit {
   ngOnInit(): void {
     this.applicationUserId = this.config.data.applicationUserId;
     this.onLoadData();
-    console.log(this.config.data);
   }
 
   onLoadData() {

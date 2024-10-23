@@ -40,7 +40,6 @@ export default class PresentacionJuntaComiteComponent implements OnInit {
     const pathCutomer = `${this.customerIdService.getCustomerId()}/presentacion/`;
     this.onLoadData();
     this.urlBase = this.urlBase + pathCutomer;
-    console.log('🚀 ~ this.urlBase:', this.urlBase);
 
     this.customerId$.subscribe(() => {
       this.onLoadData();

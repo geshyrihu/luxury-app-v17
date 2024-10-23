@@ -15,11 +15,8 @@ export default class TicketCloseButtonComponent {
   @Input() item: any;
   @Output() closedCompleted = new EventEmitter<void>();
 
-  constructor() {
-    console.log('ctor.... estamos intentando cerrar el ticket');
-  }
+
   openCloseDialog() {
-    console.log('estamos intentando cerrar el ticket');
     this.dialogHandlerService
       .openDialog(
         TicketMessageCloseComponent,

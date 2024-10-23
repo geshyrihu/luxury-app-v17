@@ -16,6 +16,9 @@ export default class LegalReportsComponent implements OnInit {
   datePipe = inject(DatePipe);
   // Declaración e inicialización de variables
   data: any;
+  reportData: any;
+  requestsAttended: any;
+  requestsPending: any;
   summaryIndividual: any;
   summaryCustomer: any;
   totalRequests: {
@@ -46,11 +49,33 @@ export default class LegalReportsComponent implements OnInit {
 
     // Call onLoadData with the formatted dates
     await Promise.all([
+      this.onLoadReport(formattedStartDate, formattedEndDate),
+      this.onRequestsAttended(formattedStartDate, formattedEndDate),
+      this.onRequestsPending(),
       this.onLoadData(formattedStartDate, formattedEndDate),
       this.onLoadSummaryCustomer(formattedStartDate, formattedEndDate),
       this.onLoadDataSummaryIndividual(formattedStartDate, formattedEndDate),
       this.onLoadDataTotalRequests(formattedStartDate, formattedEndDate),
     ]);
+  }
+
+  onLoadReport(startDate: string, endDate: string) {
+    const urlApi = `LegalReport/Results/${startDate}/${endDate}`;
+    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      this.reportData = result;
+    });
+  }
+  onRequestsAttended(startDate: string, endDate: string) {
+    const urlApi = `LegalReport/RequestsAttended/${startDate}/${endDate}`;
+    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      this.requestsAttended = result;
+    });
+  }
+  onRequestsPending() {
+    const urlApi = `LegalReport/RequestsPending`;
+    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      this.requestsPending = result;
+    });
   }
 
   onLoadData(startDate: string, endDate: string) {

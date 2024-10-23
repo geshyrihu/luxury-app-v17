@@ -1,15 +1,9 @@
 <hr />
 <div>
-  <li
-    class="list-group-item d-flex align-items-center justify-content-between pointer"
-  >
-    <div class="d-flex align-items-center">
-      <p class="card-title">
-        {{ title }}
-      </p>
-    </div>
-  </li>
   <ul class="list-group">
+    <li class="list-group-item active text-center">
+      <span> {{ title }}</span>
+    </li>
     @for (item of optionMenu; track item) {
     <li
       class="list-group-item d-flex align-items-center justify-content-between pointer"
@@ -25,24 +19,3 @@
     }
   </ul>
 </div>
-
-<!-- <div class="container mt-3">
-  <div class="list-group">
-    <a class="list-group-item active">
-      {{ title }}
-    </a>
-    <a
-      *ngFor="let subItem of optionMenu"
-      class="list-group-item list-group-item-action"
-      (click)="navigate(subItem)"
-    >
-      {{ subItem.label }}
-    </a>
-  </div>
-</div>
-
-<style>
-  .list-group-item {
-    padding: 0.5rem 1rem;
-  }
-</style> -->

@@ -163,27 +163,27 @@
           <div class="d-flex justify-content-center">
             <custom-button
               [routerLink]="['/luxury-chat/message', item.id]"
-              customClass="btn-outline-info me-1"
+              customClass="btn-outline-primary me-1"
               icon="fa-duotone fa-solid fa-info "
               ngbTooltip="Ver detalles"
             />
 
             <button
               type="button"
-              class="btn btn-outline-warning position-relative me-1 text-start"
+              class="btn btn-outline-primary position-relative me-1 text-start"
               ngbTooltip="Seguimiento"
               placement="top"
               (click)="onFollowUp(item.id)"
             >
               <i class="fa-light fa-list"></i>
               <span
-                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success"
+                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-info"
                 >{{ item.ticketMessageFollowUp }}
                 <span class="visually-hidden">unread messages</span></span
               >
             </button>
             <custom-button
-              customClass="btn-outline-secondary  text-start"
+              customClass="btn-outline-primary  text-start"
               icon="fa-pen-to-square"
               (clicked)="
                 onModalAddOrEdit({

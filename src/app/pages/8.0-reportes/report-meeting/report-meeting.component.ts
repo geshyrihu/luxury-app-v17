@@ -48,7 +48,6 @@ export default class ReportMeetingComponent implements OnInit, OnDestroy {
         next: (resp: any) => {
           this.data = this.customToastService.onCloseOnGetData(resp.body);
           this.detalles = resp.body.asuntos;
-          console.log('🚀 ~ resp.body:', resp.body);
           this.onLoadCustomer();
         },
         error: (error) => {
@@ -62,7 +61,6 @@ export default class ReportMeetingComponent implements OnInit, OnDestroy {
       .get(`Customers/${this.customer}`)
       .subscribe((resp: any) => {
         this.nameCustomer = resp.body.nameCustomer;
-        console.log('🚀 ~ resp.body:', resp.body);
         this.logoCustomer = `${environment.base_urlImg}Administration/customer/${resp.body.photoPath}`;
       });
   }

@@ -58,6 +58,13 @@ export default [
       ),
   },
   {
+    path: 'work-plan-preview',
+    loadComponent: () =>
+      import(
+        'src/app/pages/5.0-tickets-v3/reports/ticket-message-report-work-plan-preview/ticket-message-report-work-plan-preview.component'
+      ),
+  },
+  {
     path: 'weekly-report',
     loadComponent: () =>
       import(
@@ -69,13 +76,6 @@ export default [
     loadComponent: () =>
       import(
         'src/app/pages/5.0-tickets-v3/reports/ticket-message-weekly-report-preview/ticket-message-weekly-report-preview.component'
-      ),
-  },
-  {
-    path: 'ticket-group-category',
-    loadComponent: () =>
-      import(
-        'src/app/pages/5.0-tickets-v3/ticket-group-category/ticket-group-category-list/ticket-group-category-list.component'
       ),
   },
 ] as Routes;

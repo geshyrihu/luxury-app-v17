@@ -14,9 +14,7 @@ export default class TicketFollowUpButtonComponent {
   @Input() followUpCount!: number; // Cantidad de seguimientos (opcional, para mostrar en el botón)
   @Output() followUpCompleted = new EventEmitter<void>(); // EventEmitter para notificar al padre
 
-  constructor(private dialogHandlerService: DialogHandlerService) {
-    console.log('followUpCount', this.followUpCount);
-  }
+  constructor(private dialogHandlerService: DialogHandlerService) {}
 
   onFollowUp() {
     this.dialogHandlerService

@@ -4,7 +4,6 @@ export interface IMenuItem {
   icon?: string;
   routerLink?: string;
   name?: string;
-  badge?: any;
   items?: ISubMenuItem[];
 }
 
@@ -13,13 +12,4 @@ export interface ISubMenuItem {
   label: string;
   routerLink?: string;
   name?: string;
-  items?: ISubMenuItems[];
-}
-
-export interface ISubMenuItems {
-  visible: boolean;
-  label: string;
-  routerLink: string;
-  name: string;
-  parentId?: number;
 }

@@ -57,10 +57,11 @@ export default class LegalMatterCategoryComponent {
     });
   }
   onSubmit() {
+    console.log('🚀 ~ this.form.value:', this.form.value);
+
     if (!this.appService.apiRequestService.validateForm(this.form)) return;
     this.submitting = true;
 
-    console.log('Form...', this.form.value);
     if (this.id === '') {
       this.appService.apiRequestService
         .onPost(`LegalMatter`, this.form.value)
@@ -79,7 +80,6 @@ export default class LegalMatterCategoryComponent {
   // Método para validar si la categoría seleccionada ya existe o es nueva
   saveCategorie(event: any) {
     const inputCategory = event.target.value;
-    console.log('🚀 ~ inputCategory:', inputCategory);
 
     // Verificar si la categoría ingresada ya existe en la lista
     const existingCategory = this.cb_categories.find(
@@ -95,7 +95,5 @@ export default class LegalMatterCategoryComponent {
       this.form.get('legalMatterCategory')?.setValue(inputCategory);
       this.form.get('legalMatterCategoryId')?.setValue(null); // Dejar en blanco para indicar que es nueva
     }
-
-    console.log(this.form.value);
   }
 }

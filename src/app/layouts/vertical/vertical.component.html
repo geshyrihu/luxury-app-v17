@@ -13,25 +13,26 @@
       >
         <i class="fa-regular fa-arrow-left-to-line text-light fa-2x1"></i>
       </button>
-
-      <select
-        class="form-select form-select-sm"
-        [(ngModel)]="customerId"
-        (change)="selectCustomer($event.target['value'])"
-      >
-        @for (item of cb_customer; track item) {
-        <option [value]="item.value">
-          <span>
-            {{ item.label }}
-          </span>
-        </option>
-        }
-      </select>
     </div>
   </div>
 </nav>
 
-<div class="m-0 mt-5">
+<div class="m-0">
+  <br />
+  <br />
+  <select
+    class="form-select w-100 mt-3"
+    [(ngModel)]="customerId"
+    (change)="selectCustomer($event.target['value'])"
+  >
+    @for (item of cb_customer; track item) {
+    <option [value]="item.value">
+      <span>
+        {{ item.label }}
+      </span>
+    </option>
+    }
+  </select>
   <router-outlet></router-outlet>
 </div>
 
@@ -46,7 +47,7 @@
         [routerLink]="['/menu/menu-movil']"
         class="btn btn-soft-primary waves-effect"
       >
-        <i class="fa-duotone fa-house-blank fa-lg text-primary"></i>
+        <i class="fa-thin fa-house-blank fa-lg text-primary"></i>
       </a>
     </div>
     <div class="col-4">
@@ -56,14 +57,14 @@
         (click)="logout()"
         class="btn btn-soft-primary waves-effect float-end"
       >
-        <i class="fa-duotone fa-right-from-bracket text-primary fa-lg"></i>
+        <i class="fa-thin fa-right-from-bracket text-primary fa-lg"></i>
       </button>
       <a
         type="button"
         [routerLink]="['/accounts/actualizar-perfil']"
         class="btn btn-soft-primary waves-effect float-end me-1"
       >
-        <i class="fa-duotone fa-user fa-lg text-primary"></i>
+        <i class="fa-thin fa-user fa-lg text-primary"></i>
       </a>
     </div>
   </div>

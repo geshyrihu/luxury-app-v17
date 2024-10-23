@@ -69,8 +69,6 @@ export default class SolicitudAltaComponent implements OnInit {
         positionRequestId: '',
       });
     });
-
-    console.log(this.form.value);
   }
 
   onLoadDataVacante() {

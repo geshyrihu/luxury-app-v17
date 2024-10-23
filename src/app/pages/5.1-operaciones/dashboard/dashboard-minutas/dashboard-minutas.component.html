@@ -23,43 +23,86 @@
 </div>
 <div class="row mt-2">
   <div class="col-xl-4 col-md-6 mb-2">
-    <ngb-alert
+    <div
+      class="card border-primary p-2 pointer"
+      [ngClass]="{
+        'border-success': data.contable?.pendiente === 0,
+        'border-danger': data.contable?.pendiente > 0
+      }"
       (click)="onModalAddOrEditMinutaDetalle(0)"
-      type="success"
-      [dismissible]="false"
-      class="alert-dismissible fade show px-4 mb-0 text-center custom-alert pointer"
     >
-      <div class="h1 text-success d-block mt-2 mb-3">
-        {{ data.contable?.pendiente }}
-      </div>
-      <h5 class="text-success">CONTABLE</h5>
-    </ngb-alert>
+      <h5
+        class="my-0 text-center"
+        [ngClass]="{
+          'text-success': data.contable?.pendiente === 0,
+          'text-danger': data.contable?.pendiente > 0
+        }"
+      >
+        <i
+          [ngClass]="{
+            'fa-solid fa-check me-2': data.contable?.pendiente === 0,
+            'fa-solid fa-triangle-exclamation me-2':
+              data.contable?.pendiente > 0
+          }"
+        ></i>
+        {{ data.contable?.pendiente }} - CONTABLE
+      </h5>
+    </div>
   </div>
-  <div class="col-xl-4 col-md-6 mb-2">
-    <ngb-alert
+  <div class="col-xl-4 col-md-6 mb-2 pointer">
+    <div
+      class="card border-primary p-2"
+      [ngClass]="{
+        'border-success': data.operaciones?.pendiente === 0,
+        'border-danger': data.operaciones?.pendiente > 0
+      }"
       (click)="onModalAddOrEditMinutaDetalle(1)"
-      type="info"
-      [dismissible]="false"
-      class="alert-dismissible fade show px-4 mb-0 text-center custom-alert pointer"
     >
-      <div class="h1 text-info d-block mt-2 mb-3">
-        {{ data.operaciones?.pendiente }}
-      </div>
-      <h5 class="text-info">OPERACIONES</h5>
-    </ngb-alert>
+      <h5
+        class="my-0 text-center"
+        [ngClass]="{
+          'text-success': data.operaciones?.pendiente === 0,
+          'text-danger': data.operaciones?.pendiente > 0
+        }"
+      >
+        <i
+          [ngClass]="{
+            'fa-solid fa-check me-2': data.operaciones?.pendiente === 0,
+            'fa-solid fa-triangle-exclamation me-2':
+              data.operaciones?.pendiente > 0
+          }"
+        ></i>
+        <span class="me-3"> </span>
+        {{ data.operaciones?.pendiente }} - OPERACIONES
+      </h5>
+    </div>
   </div>
-  <div class="col-xl-4 col-md-6 mb-2">
-    <ngb-alert
+  <div class="col-xl-4 col-md-6 mb-2 pointer">
+    <div
+      class="card border-primary p-2"
+      [ngClass]="{
+        'border-success': data.legal?.pendiente === 0,
+        'border-danger': data.legal?.pendiente > 0
+      }"
       (click)="onModalAddOrEditMinutaDetalle(2)"
-      type="warning"
-      [dismissible]="false"
-      class="alert-dismissible fade show px-4 mb-0 text-center custom-alert pointer"
     >
-      <div class="h1 text-warning d-block mt-2 mb-3">
-        {{ data.legal?.pendiente }}
-      </div>
-      <h5 class="text-warning">LEGAL</h5>
-    </ngb-alert>
+      <h5
+        class="my-0 text-center"
+        [ngClass]="{
+          'text-success': data.legal?.pendiente === 0,
+          'text-danger': data.legal?.pendiente > 0
+        }"
+      >
+        <i
+          [ngClass]="{
+            'fa-solid fa-check me-2': data.legal?.pendiente === 0,
+            'fa-solid fa-triangle-exclamation me-2': data.legal?.pendiente > 0
+          }"
+        ></i>
+        <span class="me-3"> </span>
+        {{ data.legal?.pendiente }} - LEGAL
+      </h5>
+    </div>
   </div>
 </div>
 }

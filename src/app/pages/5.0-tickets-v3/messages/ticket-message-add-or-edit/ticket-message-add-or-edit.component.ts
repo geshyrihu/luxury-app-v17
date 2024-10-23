@@ -10,6 +10,7 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { EPriorityLevel } from 'src/app/core/enums/priority-level.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
+import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
@@ -36,6 +37,7 @@ export default class TicketMessageAddOrEditComponent implements OnInit {
   submitting: boolean = false;
 
   cb_priority = onGetSelectItemFromEnum(EPriorityLevel);
+  cb_ticket_group: ISelectItem[] = [];
 
   urlImage = this.ticketGroupService.onGetPathUrlImage(
     this.customerIdService.customerId.toString()
@@ -60,9 +62,18 @@ export default class TicketMessageAddOrEditComponent implements OnInit {
   });
 
   ngOnInit() {
+    this.onLoadTicketGroup();
     this.id = this.config.data.id;
     if (this.id !== '') this.onLoadData();
   }
+
+  onLoadTicketGroup() {
+    const urlApi = `TicketGroup/SelectItem/${this.customerIdService.getCustomerId()}`;
+    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+      this.cb_ticket_group = result;
+    });
+  }
+
   // Para manejar las imágenes 'BeforeWork' y 'AfterWork'
   onFileChange(event: any, fieldName: string) {
     const file = event.target.files[0];

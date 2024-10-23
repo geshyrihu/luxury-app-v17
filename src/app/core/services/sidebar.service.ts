@@ -14,7 +14,7 @@ export class SidebarService {
   menu: IMenuItem[] = [
     {
       visible: this.authS.onValidateRoles(['SuperUsuario']),
-      label: 'Catalgogos',
+      label: 'Catalogos',
       icon: 'fa-thin fa-album-collection',
       name: 'catalog',
       items: [
@@ -102,6 +102,12 @@ export class SidebarService {
           routerLink: '/catalog/units-of-measurement',
           name: 'units-of-measurement',
         },
+        {
+          visible: this.authS.onValidateRoles(['SuperUsuario']),
+          label: 'Categorias ticket',
+          routerLink: '/catalog/ticket-group-category',
+          name: 'ticket group category',
+        },
       ],
     },
     {
@@ -142,9 +148,9 @@ export class SidebarService {
         },
         {
           visible: this.authS.onValidateRoles(['SuperUsuario']),
-          label: 'Configuración',
-          routerLink: '/settings/panel',
-          name: 'Configuración',
+          label: 'Menu Item',
+          routerLink: '/settings/menu-item',
+          name: 'menu-item',
         },
       ],
     },
@@ -154,7 +160,115 @@ export class SidebarService {
       icon: 'fa-thin fa-user-tie',
       routerLink: '/application-user',
     },
-
+    {
+      visible: this.authS.onValidateRoles([
+        'GerenteMantenimiento',
+        'SuperUsuario',
+      ]),
+      icon: 'fa-thin fa-truck',
+      label: 'Entrega Recepción',
+      items: [
+        {
+          visible: this.authS.onValidateRoles([
+            'GerenteMantenimiento',
+            'SuperUsuario',
+          ]),
+          label: 'General',
+          routerLink: '/entrega-recepcion/general',
+          name: 'Supervisión-Entrega recepción',
+        },
+        {
+          visible: this.authS.onValidateRoles([
+            'GerenteMantenimiento',
+            'SuperUsuario',
+          ]),
+          label: 'Equipos',
+          routerLink: '/operaciones/entrega-recepcion/equipos',
+          name: 'Supervisión-Entrega recepción-Equipos',
+        },
+        {
+          visible: this.authS.onValidateRoles([
+            'GerenteMantenimiento',
+            'SuperUsuario',
+          ]),
+          label: 'Instalaciones',
+          routerLink: '/operaciones/entrega-recepcion/instalaciones',
+          name: 'Supervisión-Entrega recepción-Instalaciones',
+        },
+        {
+          visible: this.authS.onValidateRoles([
+            'GerenteMantenimiento',
+            'SuperUsuario',
+          ]),
+          label: 'Extintores',
+          routerLink: '/operaciones/entrega-recepcion/hidrantes',
+          name: 'Supervisión-Entrega recepción-Hidrantes',
+        },
+        {
+          visible: this.authS.onValidateRoles([
+            'GerenteMantenimiento',
+            'SuperUsuario',
+          ]),
+          label: 'Llaves',
+          routerLink: '/operaciones/entrega-recepcion/llaves',
+          name: 'Supervisión-Entrega recepción-Llaves',
+        },
+        {
+          visible: this.authS.onValidateRoles([
+            'GerenteMantenimiento',
+            'SuperUsuario',
+          ]),
+          label: 'Herramientas',
+          routerLink: '/operaciones/entrega-recepcion/herramientas',
+          name: 'Supervisión-Entrega recepción-Herramientas',
+        },
+        {
+          visible: this.authS.onValidateRoles([
+            'GerenteMantenimiento',
+            'SuperUsuario',
+          ]),
+          label: 'Mantenimientos',
+          routerLink: '/operaciones/entrega-recepcion/mantenimientos',
+          name: 'Supervisión-Entrega recepción-Mantenimientos',
+        },
+        {
+          visible: this.authS.onValidateRoles([
+            'GerenteMantenimiento',
+            'SuperUsuario',
+          ]),
+          label: 'Pendientes',
+          routerLink: 'operaciones/entrega-recepcion/mantenimientos-pendientes',
+          name: 'Supervisión-Entrega recepción-Pendientes',
+        },
+        {
+          visible: this.authS.onValidateRoles([
+            'GerenteMantenimiento',
+            'SuperUsuario',
+          ]),
+          label: 'Organigrama',
+          routerLink: '/operaciones/entrega-recepcion/organigrama',
+          name: 'Supervisión-Entrega recepción-Organigrama',
+        },
+        {
+          visible: this.authS.onValidateRoles([
+            'GerenteMantenimiento',
+            'SuperUsuario',
+          ]),
+          label: 'Planos',
+          routerLink: '/operaciones/entrega-recepcion/planos',
+          name: 'Supervisión-Entrega recepción-Planos',
+        },
+        {
+          visible: this.authS.onValidateRoles([
+            'GerenteMantenimiento',
+            'SuperUsuario',
+          ]),
+          label: 'Insumos',
+          routerLink: '/operaciones/entrega-recepcion/insumos',
+          name: 'Supervisión-Entrega recepción-Insumos',
+        },
+      ],
+    },
     {
       visible: this.authS.canRead('MIEDIFICIO'),
       label: 'Mi Edificio',
@@ -164,7 +278,7 @@ export class SidebarService {
     },
     {
       visible: this.authS.canRead('LEGAL'),
-      label: '1.-Legal',
+      label: 'Legal',
       icon: 'fa-thin fa-gavel',
       items: [
         {
@@ -201,7 +315,7 @@ export class SidebarService {
     },
     {
       visible: this.authS.canRead('CONTABILIDAD'),
-      label: '2.-Contabilidad',
+      label: 'Contabilidad',
       icon: 'fa-thin fa-hand-holding-dollar',
       items: [
         {
@@ -244,7 +358,7 @@ export class SidebarService {
     },
     {
       visible: this.authS.canRead('SUPERVISION'),
-      label: '3.-Op-Supervisión',
+      label: 'Op-Supervisión',
       icon: 'fa-thin fa-user-tie',
       items: [
         {
@@ -277,116 +391,6 @@ export class SidebarService {
           routerLink: '/supervision/reporte-tickets',
           name: 'Supervisión-Reporte tickets',
         },
-
-        {
-          visible: this.authS.onValidateRoles([
-            'GerenteMantenimiento',
-            'SuperUsuario',
-          ]),
-          label: 'Entrega Recepción',
-          items: [
-            {
-              visible: this.authS.onValidateRoles([
-                'GerenteMantenimiento',
-                'SuperUsuario',
-              ]),
-              label: 'General',
-              routerLink: '/entrega-recepcion/general',
-              name: 'Supervisión-Entrega recepción',
-            },
-            {
-              visible: this.authS.onValidateRoles([
-                'GerenteMantenimiento',
-                'SuperUsuario',
-              ]),
-              label: 'Equipos',
-              routerLink: '/operaciones/entrega-recepcion/equipos',
-              name: 'Supervisión-Entrega recepción-Equipos',
-            },
-            {
-              visible: this.authS.onValidateRoles([
-                'GerenteMantenimiento',
-                'SuperUsuario',
-              ]),
-              label: 'Instalaciones',
-              routerLink: '/operaciones/entrega-recepcion/instalaciones',
-              name: 'Supervisión-Entrega recepción-Instalaciones',
-            },
-            {
-              visible: this.authS.onValidateRoles([
-                'GerenteMantenimiento',
-                'SuperUsuario',
-              ]),
-              label: 'Extintores',
-              routerLink: '/operaciones/entrega-recepcion/hidrantes',
-              name: 'Supervisión-Entrega recepción-Hidrantes',
-            },
-            {
-              visible: this.authS.onValidateRoles([
-                'GerenteMantenimiento',
-                'SuperUsuario',
-              ]),
-              label: 'Llaves',
-              routerLink: '/operaciones/entrega-recepcion/llaves',
-              name: 'Supervisión-Entrega recepción-Llaves',
-            },
-            {
-              visible: this.authS.onValidateRoles([
-                'GerenteMantenimiento',
-                'SuperUsuario',
-              ]),
-              label: 'Herramientas',
-              routerLink: '/operaciones/entrega-recepcion/herramientas',
-              name: 'Supervisión-Entrega recepción-Herramientas',
-            },
-            {
-              visible: this.authS.onValidateRoles([
-                'GerenteMantenimiento',
-                'SuperUsuario',
-              ]),
-              label: 'Mantenimientos',
-              routerLink: '/operaciones/entrega-recepcion/mantenimientos',
-              name: 'Supervisión-Entrega recepción-Mantenimientos',
-            },
-            {
-              visible: this.authS.onValidateRoles([
-                'GerenteMantenimiento',
-                'SuperUsuario',
-              ]),
-              label: 'Pendientes',
-              routerLink:
-                'operaciones/entrega-recepcion/mantenimientos-pendientes',
-              name: 'Supervisión-Entrega recepción-Pendientes',
-            },
-            {
-              visible: this.authS.onValidateRoles([
-                'GerenteMantenimiento',
-                'SuperUsuario',
-              ]),
-              label: 'Organigrama',
-              routerLink: '/operaciones/entrega-recepcion/organigrama',
-              name: 'Supervisión-Entrega recepción-Organigrama',
-            },
-            {
-              visible: this.authS.onValidateRoles([
-                'GerenteMantenimiento',
-                'SuperUsuario',
-              ]),
-              label: 'Planos',
-              routerLink: '/operaciones/entrega-recepcion/planos',
-              name: 'Supervisión-Entrega recepción-Planos',
-            },
-            {
-              visible: this.authS.onValidateRoles([
-                'GerenteMantenimiento',
-                'SuperUsuario',
-              ]),
-              label: 'Insumos',
-              routerLink: '/operaciones/entrega-recepcion/insumos',
-              name: 'Supervisión-Entrega recepción-Insumos',
-            },
-          ],
-        },
       ],
     },
     {
@@ -403,52 +407,43 @@ export class SidebarService {
       ],
     },
     {
-      visible: this.authS.onValidateRoles(['SuperUsuario', 'Reclutamiento']),
-      label: '5.-Tickets V3',
+      visible: this.authS.canRead('TICKET'),
+      label: 'Tickets',
       icon: 'fa-thin fa-ticket',
       name: 'Tickets',
       items: [
         {
-          visible: this.authS.onValidateRoles([
-            'SuperUsuario',
-            'Reclutamiento',
-          ]),
-          label: 'Categorias',
-          routerLink: '/luxury-chat/ticket-group-category',
-          name: 'ticket group category',
-        },
-        {
-          visible: this.authS.onValidateRoles([
-            'SuperUsuario',
-            'Reclutamiento',
-          ]),
+          visible: this.authS.canRead('TICKET'),
           label: 'Grupos',
           routerLink: '/luxury-chat/list',
           name: 'groups',
         },
         {
-          visible: this.authS.onValidateRoles([
-            'SuperUsuario',
-            'Reclutamiento',
-          ]),
+          visible: this.authS.canRead('TICKET'),
           label: 'Asignados a mi',
           routerLink: '/luxury-chat/my-tickets',
           name: 'my assignments',
         },
         {
-          visible: this.authS.onValidateRoles([
-            'SuperUsuario',
-            'Reclutamiento',
-          ]),
+          visible: this.authS.canRead('TICKET'),
           label: 'Mis solicitudes',
           routerLink: '/luxury-chat/my-requests',
           name: 'my request',
         },
         {
-          visible: this.authS.onValidateRoles([
-            'SuperUsuario',
-            'Reclutamiento',
-          ]),
+          visible: this.authS.canRead('TICKET'),
+          label: 'Plan de trabajo',
+          routerLink: '/luxury-chat/work-plan',
+          name: 'pending',
+        },
+        {
+          visible: this.authS.canRead('TICKET'),
+          label: 'Reporte semanal',
+          routerLink: '/luxury-chat/weekly-report',
+          name: 'weekly-report',
+        },
+        {
+          visible: this.authS.onValidateRoles(['SuperUsuario']),
           label: 'Reportes',
           routerLink: '/luxury-chat/reports',
           name: 'message report',
@@ -456,12 +451,7 @@ export class SidebarService {
       ],
     },
     {
-      visible: this.authS.onValidateRoles([
-        'SuperUsuario',
-        'Residente',
-        'Contador',
-        'Asistente',
-      ]),
+      visible: this.authS.onValidateRoles(['SuperUsuario']),
       label: '5.-Tickets',
       icon: 'fa-thin fa-ticket',
       routerLink: '/tickets/panel',
@@ -531,21 +521,21 @@ export class SidebarService {
           routerLink: '/reporte/mantenimiento-preventivo',
           name: 'Operaciones-Mantenimientos preventivos',
         },
-        {
-          visible: this.authS.onValidateRoles([
-            'Asistente',
-            'Colaborador',
-            'GerenteMantenimiento',
-            'Mantenimiento',
-            'Residente',
-            'SuperUsuario',
-            'SupervisionOperativa',
-          ]),
+        // {
+        //   visible: this.authS.onValidateRoles([
+        //     'Asistente',
+        //     'Colaborador',
+        //     'GerenteMantenimiento',
+        //     'Mantenimiento',
+        //     'Residente',
+        //     'SuperUsuario',
+        //     'SupervisionOperativa',
+        //   ]),
 
-          label: 'Tickets',
-          routerLink: '/operaciones/reporte/tiket-mantenimiento',
-          name: 'Operaciones-Tickets',
-        },
+        //   label: 'Tickets',
+        //   routerLink: '/operaciones/reporte/tiket-mantenimiento',
+        //   name: 'Operaciones-Tickets',
+        // },
 
         {
           visible: this.authS.onValidateRoles([
@@ -964,53 +954,7 @@ export class SidebarService {
           routerLink: '/mantenimiento/almacen/inventario-productos',
           name: 'Inventarios-Almacen',
         },
-        {
-          visible: this.authS.onValidateRoles([
-            'Asistente',
-            'GerenteMantenimiento',
-            'Mantenimiento',
-            'Residente',
-            'SuperUsuario',
-          ]),
-          label: '5.4.1-Mov. al almacén',
-          items: [
-            {
-              visible: this.authS.onValidateRoles([
-                'Asistente',
-                'GerenteMantenimiento',
-                'Mantenimiento',
-                'Residente',
-                'SuperUsuario',
-              ]),
-              label: 'Entradas de insumos',
-              routerLink: '/mantenimiento/almacen/entrada-productos',
-              name: 'Inventarios-Entradas de insumos',
-            },
-            {
-              visible: this.authS.onValidateRoles([
-                'Asistente',
-                'GerenteMantenimiento',
-                'Mantenimiento',
-                'Residente',
-                'SuperUsuario',
-              ]),
-              label: 'Salidas de insumos',
-              routerLink: '/mantenimiento/almacen/salida-productos',
-              name: 'Inventarios-Salida de insumos',
-            },
-            {
-              visible: this.authS.onValidateRoles([
-                'GerenteMantenimiento',
-                'Mantenimiento',
-                'Residente',
-                'SuperUsuario',
-              ]),
-              label: 'Préstamo de herramientas',
-              routerLink: '/mantenimiento/bitacora/prestamo-herramienta',
-              name: 'Inventarios-Préstamo de herramientas',
-            },
-          ],
-        },
+
         {
           visible: this.authS.onValidateRoles([
             'Asistente',
@@ -1034,6 +978,54 @@ export class SidebarService {
           label: 'Documentos',
           routerLink: '/documento/documento',
           name: 'Inventarios-Documentos',
+        },
+      ],
+    },
+    {
+      visible: this.authS.onValidateRoles([
+        'Asistente',
+        'GerenteMantenimiento',
+        'Mantenimiento',
+        'Residente',
+        'SuperUsuario',
+      ]),
+      icon: 'fa-thin fa-boxes-stacked',
+      label: 'Almacén',
+      items: [
+        {
+          visible: this.authS.onValidateRoles([
+            'Asistente',
+            'GerenteMantenimiento',
+            'Mantenimiento',
+            'Residente',
+            'SuperUsuario',
+          ]),
+          label: 'Entradas de insumos',
+          routerLink: '/mantenimiento/almacen/entrada-productos',
+          name: 'Inventarios-Entradas de insumos',
+        },
+        {
+          visible: this.authS.onValidateRoles([
+            'Asistente',
+            'GerenteMantenimiento',
+            'Mantenimiento',
+            'Residente',
+            'SuperUsuario',
+          ]),
+          label: 'Salidas de insumos',
+          routerLink: '/mantenimiento/almacen/salida-productos',
+          name: 'Inventarios-Salida de insumos',
+        },
+        {
+          visible: this.authS.onValidateRoles([
+            'GerenteMantenimiento',
+            'Mantenimiento',
+            'Residente',
+            'SuperUsuario',
+          ]),
+          label: 'Préstamo de herramientas',
+          routerLink: '/mantenimiento/bitacora/prestamo-herramienta',
+          name: 'Inventarios-Préstamo de herramientas',
         },
       ],
     },

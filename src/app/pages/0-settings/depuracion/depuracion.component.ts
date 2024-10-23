@@ -24,6 +24,16 @@ export default class DepuracionComponent {
         this.customToastService.onClose();
       });
   }
+  DeleteDuplicate(path: string) {
+    this.apiRequestService
+      .onGetList(
+        'UpdateDataBase/' + path + '/' + this.customerIdService.customerId
+      )
+      .then(() => {
+        this.customToastService.onShowSuccess();
+        this.customToastService.onClose();
+      });
+  }
   GenerateFolio(path: string) {
     this.apiRequestService
       .onGetList(
