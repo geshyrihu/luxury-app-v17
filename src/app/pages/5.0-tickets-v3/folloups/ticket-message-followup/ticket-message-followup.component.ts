@@ -28,7 +28,7 @@ export default class TicketMessageFollowupComponent
     id: { value: this.id, disabled: true },
     ticketMessageId: [this.ticketMessageId, Validators.required],
     applicationUserId: [
-      this.appService.authService.applicationUserId,
+      this.appService.authS.applicationUserId,
       Validators.required,
     ],
     description: [

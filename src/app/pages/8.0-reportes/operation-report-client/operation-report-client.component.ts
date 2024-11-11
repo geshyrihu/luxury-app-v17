@@ -15,7 +15,7 @@ export default class OperationReportClientComponent implements OnInit {
   rutaActiva = inject(ActivatedRoute);
 
   data: any = [];
-  urlLogoCustomer = `${environment.base_urlImg}/Administration/customer/`;
+  urlLogoCustomer = `${environment.base_urlImg}Administration/customer/`;
   urlImage = environment.base_urlImg;
   customer: string = '';
   inicio: string = '';
@@ -32,7 +32,7 @@ export default class OperationReportClientComponent implements OnInit {
   }
 
   onLoadData() {
-    const urlApi = `TicketReport/WeeklyReportPreview/${this.customer}/${this.inicio}/${this.final}`;
+    const urlApi = `TicketReport/GetReportClient/${this.customer}/${this.inicio}/${this.final}`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       // Actualizamos el valor del signal con los datos recibidos
       this.data = result;

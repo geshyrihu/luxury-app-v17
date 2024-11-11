@@ -6,6 +6,7 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import FooterComponent from '../footer/footer.component';
+import MobileMainViewComponent from '../mobile-main-view/mobile-main-view.component';
 import SidebarComponent from '../sidebar/sidebar.component';
 import CustomerSelectionComponent from '../topbar/customer-selection/customer-selection.component';
 import { TopbarComponent } from '../topbar/topbar.component';
@@ -21,6 +22,7 @@ import { TopbarComponent } from '../topbar/topbar.component';
     SidebarComponent,
     TopbarComponent,
     FooterComponent,
+    MobileMainViewComponent,
   ],
 })
 /**
@@ -28,7 +30,7 @@ import { TopbarComponent } from '../topbar/topbar.component';
  */
 export default class VerticalComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   location = inject(Location);
   router = inject(Router);
   customerIdService = inject(CustomerIdService);
@@ -40,13 +42,10 @@ export default class VerticalComponent implements OnInit {
     this.customerIdService.setCustomerId(customerId);
   }
 
-  /**
-   *
-   */
   constructor() {
     this.apiRequestService
       .onGetSelectItem(
-        `CustomersAcceso/${this.authService.infoUserAuthDto.applicationUserId}`
+        `CustomersAcceso/${this.authS.infoUserAuthDto.applicationUserId}`
       )
       .then((resp: any) => {
         this.cb_customer = resp;
@@ -67,17 +66,7 @@ export default class VerticalComponent implements OnInit {
       this.router.navigate([currentUrl]);
     });
   }
-  logout() {
-    const currentUrl = this.router.url;
-    localStorage.setItem('currentUrl', currentUrl);
-    this.router.navigate(['/auth/login']);
 
-    this.apiRequestService
-      .onGetItem(
-        `Auth/Logout/${this.authService.infoUserAuthDto.applicationUserId}`
-      )
-      .then(() => {});
-  }
   // @HostListener('window:resize', ['$event'])
   isCondensed = false; // Variable para controlar si la interfaz está condensada o no
 

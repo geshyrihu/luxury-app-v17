@@ -94,6 +94,6 @@ export default class ListEmployeeProviderCustomerComponent implements OnInit {
     this.employeeAddOrEditService.onSetId(applicationUserId);
     this.employeeAddOrEditService.onSetEmployeeId(employeeId);
     this.employeeAddOrEditService.onSetNameEmployee(nameEmployee);
-    this.router.navigateByUrl('directorio/empleado');
+    this.router.navigateByUrl('directory/empleado');
   }
 }

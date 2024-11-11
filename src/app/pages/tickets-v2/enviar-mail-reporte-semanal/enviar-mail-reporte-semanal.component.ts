@@ -15,7 +15,7 @@ import { AuthService } from '../../../core/services/auth.service';
   imports: [LuxuryAppComponentsModule],
 })
 export default class EnviarMailReporteSemanalComponent implements OnInit {
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   apiRequestService = inject(ApiRequestService);
   formBuilder = inject(FormBuilder);
   config = inject(DynamicDialogConfig);
@@ -67,7 +67,7 @@ export default class EnviarMailReporteSemanalComponent implements OnInit {
 
   onEnviarEmail() {
     const urlApi = `SendEmail/ReporteSemanal/${
-      this.authService.applicationUserId
+      this.authS.applicationUserId
     }/${this.customerIdService.getCustomerId()}/${this.year}/${
       this.numeroSemana
     }`;

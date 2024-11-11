@@ -14,7 +14,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
 export default class AddPartidaCedulaComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   config = inject(DynamicDialogConfig);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   ref = inject(DynamicDialogRef);
 
   data: any[] = [];
@@ -49,7 +49,7 @@ export default class AddPartidaCedulaComponent implements OnInit {
     model.cedulaPresupuestalId = this.cedulaPresupuestalId;
     model.presupuestoMensual = item.presupuestoMensual;
     model.presupuestoEjercido = 0;
-    model.applicationUserId = this.authService.applicationUserId;
+    model.applicationUserId = this.authS.applicationUserId;
 
     this.submitting = true;
 

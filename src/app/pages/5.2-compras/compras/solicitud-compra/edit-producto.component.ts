@@ -22,7 +22,7 @@ export default class EditProductoComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
 
   submitting: boolean = false;
 
@@ -58,7 +58,7 @@ export default class EditProductoComponent implements OnInit {
       cantidad: [0, { validators: [Validators.required] }],
       unidadMedidaId: ['', Validators.required],
       applicationUserId: [
-        this.authService.applicationUserId,
+        this.authS.applicationUserId,
         { validators: [Validators.required] },
       ],
     });

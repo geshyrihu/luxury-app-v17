@@ -14,7 +14,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
 export default class AddFileEstadoFinancieroComponent implements OnInit {
   formBuilder = inject(FormBuilder);
   apiRequestService = inject(ApiRequestService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
 
@@ -42,7 +42,7 @@ export default class AddFileEstadoFinancieroComponent implements OnInit {
 
     this.apiRequestService
       .onPost(
-        `EstadoFinanciero/UploadFile/${this.id}/${this.authService.applicationUserId}`,
+        `EstadoFinanciero/UploadFile/${this.id}/${this.authS.applicationUserId}`,
         model
       )
       .then((result: boolean) => {

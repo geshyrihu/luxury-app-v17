@@ -17,7 +17,7 @@ import FormControlPrestamoHerramientaComponent from './form-control-prestamo-her
 export default class ControlPrestamoHerramientasComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   customerIdService = inject(CustomerIdService);
 
   data: any[] = [];

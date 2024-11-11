@@ -19,7 +19,7 @@ export default class FormControlPrestamoHerramientaComponent implements OnInit {
   formBuilder = inject(FormBuilder);
   ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   customerIdService = inject(CustomerIdService);
 
   submitting: boolean = false;
@@ -56,7 +56,7 @@ export default class FormControlPrestamoHerramientaComponent implements OnInit {
       toolId: ['', Validators.required],
       tool: ['', Validators.required],
       observaciones: [],
-      applicationUserResponsableId: [this.authService.applicationUserId],
+      applicationUserResponsableId: [this.authS.applicationUserId],
     });
     this.id = this.config.data.id;
     if (this.id !== 0) this.onLoadData();

@@ -19,7 +19,7 @@ import FormInventarioLlaveComponent from './form-inventario-llave.component';
 })
 export default class ListLlavesComponent implements OnInit, OnDestroy {
   customToastService = inject(CustomToastService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
   dialogService = inject(DialogService);

@@ -17,7 +17,7 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class AddOrEditAgendaSupervisionComponent implements OnInit {
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   apiRequestService = inject(ApiRequestService);
 
   formBuilder = inject(FormBuilder);
@@ -36,13 +36,13 @@ export default class AddOrEditAgendaSupervisionComponent implements OnInit {
     id: { value: this.id, disabled: true },
     fechaSolicitud: [this.dateService.getDateNow(), Validators.required],
     customerId: [
-      this.authService.userTokenDto.infoUserAuthDto.customerId,
+      this.authS.userTokenDto.infoUserAuthDto.customerId,
       Validators.required,
     ],
     problema: ['', Validators.required],
     solucion: [''],
     fechaConclusion: [],
-    applicationUserId: [this.authService.applicationUserId],
+    applicationUserId: [this.authS.applicationUserId],
   });
 
   onLoadSelectItem() {

@@ -3,20 +3,6 @@
     <div class="row">
       <div class="col-lg-12">
         <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
-          <!-- <div class="form-group mb-2">
-            <label>Area:</label>
-            <select
-              class="form-select"
-              formControlName="typeService"
-              [(ngModel)]="typeServiceMonitor"
-              (ngModelChange)="onTypeServiceMonitorChange($event)"
-            >
-              <option *ngFor="let item of cb_type_Service" [value]="item.value">
-                {{ item.label }}
-              </option>
-            </select>
-          </div> -->
-
           <custom-input-select
             [control]="form.get('customerId')"
             formControlName="customerId"
@@ -24,19 +10,7 @@
             [horizontal]="false"
             [data]="cb_customer"
           />
-          <!-- <div class="form-group mb-2">
-            <label>Asunto:</label>
-            <select
-              class="form-select"
-              formControlName="title"
-              (change)="onChangeTitle($event.target.value)"
-            >
-              <option [value]="null">--Seleccionar solicitud--</option>
-              <option *ngFor="let item of list" [value]="item.label">
-                {{ item.label }}
-              </option>
-            </select>
-          </div> -->
+
           <custom-input-datalist
             (propagar)="saveLegalMatter($event)"
             [control]="form.get('title')"

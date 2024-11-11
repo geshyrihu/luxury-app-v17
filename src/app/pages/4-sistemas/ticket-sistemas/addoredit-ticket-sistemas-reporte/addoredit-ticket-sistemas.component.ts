@@ -19,7 +19,7 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 export default class AddoreditTicketSistemasComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
 
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   formBuilder = inject(FormBuilder);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
@@ -42,7 +42,7 @@ export default class AddoreditTicketSistemasComponent implements OnInit {
     priority: [0, Validators.required],
     status: [this.config.data.status, Validators.required],
     applicationUserResponsableId: [
-      this.authService.applicationUserId,
+      this.authS.applicationUserId,
       Validators.required,
     ],
     applicationUserCargoReporteId: ['', Validators.required],

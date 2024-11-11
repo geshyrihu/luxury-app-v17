@@ -14,7 +14,7 @@ import CustomSelectImageComponent from 'src/app/custom-components/custom-select-
   providers: [DataService],
 })
 export default class CustomerSelectionComponent implements OnInit {
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   customerIdService = inject(CustomerIdService);
   apiRequestService = inject(ApiRequestService);
 
@@ -24,7 +24,7 @@ export default class CustomerSelectionComponent implements OnInit {
   ngOnInit() {
     this.apiRequestService
       .onGetSelectItem(
-        `CustomersAcceso/${this.authService.infoUserAuthDto.applicationUserId}`
+        `CustomersAcceso/${this.authS.infoUserAuthDto.applicationUserId}`
       )
       .then((resp: any) => {
         this.cb_customer = resp;

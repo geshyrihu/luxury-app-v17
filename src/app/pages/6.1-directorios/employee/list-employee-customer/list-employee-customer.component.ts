@@ -21,7 +21,7 @@ const base_urlImg = environment.base_urlImg + 'Administration/accounts/';
   imports: [LuxuryAppComponentsModule],
 })
 export default class ListEmployeeComponent implements OnInit {
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
   employeeAddOrEditService = inject(EmployeeAddOrEditService);
@@ -61,18 +61,18 @@ export default class ListEmployeeComponent implements OnInit {
   onValidateShowTIcket(professionId: number): boolean {
     let permission = true;
     if (professionId == 5) {
-      permission = this.authService.onValidateRoles([
+      permission = this.authS.onValidateRoles([
         'SupervisionOperativa',
         'SuperUsuario',
         'Reclutamiento',
       ]);
     }
     if (professionId == 6) {
-      permission = this.authService.onValidateRoles([
+      permission = this.authS.onValidateRoles([
         'SupervisionOperativa',
         'SuperUsuario',
         'Reclutamiento',
-        'Residente',
+        'Administrador',
       ]);
     }
     return permission;
@@ -109,6 +109,6 @@ export default class ListEmployeeComponent implements OnInit {
     this.employeeAddOrEditService.onSetId(applicationUserId);
     this.employeeAddOrEditService.onSetEmployeeId(employeeId);
     this.employeeAddOrEditService.onSetNameEmployee(nameEmployee);
-    this.router.navigateByUrl('directorio/empleado');
+    this.router.navigateByUrl('directory/empleado');
   }
 }

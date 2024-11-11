@@ -3,7 +3,7 @@
   <div class="card-body">
     <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
       <!-- Id -->
-      @if (authService.onValidateRoles(['SuperUsuario'])) { }
+      @if (authS.onValidateRoles(['SuperUsuario'])) { }
       <custom-input-text
         [control]="form.get('id')"
         formControlName="id"
@@ -18,7 +18,7 @@
         label="Profesion"
         dataListId="professionNameDatalistOptions"
       />
-      @if (authService.onValidateRoles(['SuperUsuario'])) { }
+      @if (authS.onValidateRoles(['SuperUsuario'])) { }
       <!-- Profesion -->
       <!-- Colaborador -->
       <custom-input-datalist

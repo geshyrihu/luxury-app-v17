@@ -40,9 +40,9 @@ import OrdenCompraEditPresupustoUtilizadoComponent from './orden-compra-edit-pre
 })
 export default class OrdenCompraComponent implements OnInit, OnDestroy {
   customToastService = inject(CustomToastService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   dataService = inject(DataService);
-  apiRequestService = inject(ApiRequestService);
+  apiRequestService= inject(ApiRequestService);
   routeActive = inject(ActivatedRoute);
   router = inject(Router);
   dialogService = inject(DialogService);
@@ -265,7 +265,7 @@ export default class OrdenCompraComponent implements OnInit, OnDestroy {
     // this.onRevisadaPorResidente();
     this.dataService
       .get(
-        `OrdenCompraAuth/Autorizar/${this.ordenCompraId}/${this.authService.applicationUserId}`
+        `OrdenCompraAuth/Autorizar/${this.ordenCompraId}/${this.authS.applicationUserId}`
       )
       .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({

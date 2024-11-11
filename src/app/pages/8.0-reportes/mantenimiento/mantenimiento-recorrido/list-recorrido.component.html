@@ -6,7 +6,7 @@
   <div class="col-sm-3 d-flex no-print">
     <a
       ngbTooltip="Ver bitacora"
-      routerLink="/mantenimiento/bitacora/reporte-bitacora-recorrido"
+      routerLink="/logbook/reporte-bitacora-recorrido"
       class="btn btn-danger me-1 no-print"
     >
       <i class="fa-light fa-file-pdf"></i>
@@ -142,7 +142,7 @@
                 <div class="float-start">{{ tasks.task }}</div>
               </div>
               <div class="col-2">
-                @if (authService.onValidateRoles(['Mantenimiento'])) {
+                @if (authS.onValidateRoles(['JefeMantenimiento'])) {
                 <div class="float-end">
                   <btn-edit
                     (edit)="
@@ -154,7 +154,7 @@
                     "
                   />
                 </div>
-                } @if (authService.onValidateRoles(['Mantenimiento'])) {
+                } @if (authS.onValidateRoles(['JefeMantenimiento'])) {
                 <div class="float-end">
                   <btn-delete (OnConfirm)="onDeleteTask(tasks.id)" />
                 </div>

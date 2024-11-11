@@ -17,7 +17,7 @@ import FormMedidorLecturaComponent from '../form-medidor-lectura/form-medidor-le
 export default class ListMedidorLecturaComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   route = inject(ActivatedRoute);
 
   data: any[] = [];

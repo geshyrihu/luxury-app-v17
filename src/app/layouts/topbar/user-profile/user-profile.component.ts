@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
+import { SimplebarAngularModule } from 'simplebar-angular';
 import { InfoAccountAuthDto } from 'src/app/core/interfaces/user-token.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
@@ -11,11 +12,11 @@ import { environment } from 'src/environments/environment';
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, SimplebarAngularModule],
 })
 export default class UserProfileComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   profielServiceService = inject(ProfielServiceService);
   router = inject(Router);
 
@@ -24,7 +25,7 @@ export default class UserProfileComponent implements OnInit {
   profileImageUrl: string = '';
 
   ngOnInit() {
-    this.infoAccountAuthDto = this.authService.infoUserAuthDto;
+    this.infoAccountAuthDto = this.authS.infoUserAuthDto;
     this.profileImageUrl =
       environment.base_urlImg +
       'Administration/Accounts/' +
@@ -45,9 +46,7 @@ export default class UserProfileComponent implements OnInit {
     this.router.navigate(['/auth/login']);
 
     this.apiRequestService
-      .onGetItem(
-        `Auth/Logout/${this.authService.infoUserAuthDto.applicationUserId}`
-      )
+      .onGetItem(`Auth/Logout/${this.authS.infoUserAuthDto.applicationUserId}`)
       .then(() => {});
   }
 }

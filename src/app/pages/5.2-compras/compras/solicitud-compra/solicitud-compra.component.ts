@@ -31,7 +31,7 @@ import SolicitudCompraDetalleComponent from './solicitud-compra-detalle/solicitu
 export default class SolicitudCompraComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   dateService = inject(DateService);
   formBuilder = inject(FormBuilder);
   routeActive = inject(ActivatedRoute);
@@ -79,7 +79,7 @@ export default class SolicitudCompraComponent implements OnInit {
       justificacionGasto: ['', Validators.required],
       estatus: [2],
       folio: [''],
-      applicationUserId: [this.authService.applicationUserId],
+      applicationUserId: [this.authS.applicationUserId],
     }));
   }
   onCotizacionesRelacionadas() {

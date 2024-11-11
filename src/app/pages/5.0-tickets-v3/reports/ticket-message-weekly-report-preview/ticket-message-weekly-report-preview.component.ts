@@ -23,7 +23,8 @@ export default class TicketMessageWeeklyReportPreviewComponent
   // Declaración e inicialización de variables
   data: any;
   // Modificamos la declaración de dateRange para que use un objeto con from y to
-  dateRange: { from: Date | null; to: Date | null } = { from: null, to: null };
+  year: any = this.ticketGroupService.year || 0;
+  numeroSemana: any = this.ticketGroupService.numeroSemana || 0;
 
   urlImage = this.ticketGroupService.onGetPathUrlImage(
     this.customerIdService.customerId.toString()
@@ -31,23 +32,11 @@ export default class TicketMessageWeeklyReportPreviewComponent
   urlLogoCustomer = `${environment.base_urlImg}/Administration/customer/`;
 
   ngOnInit(): void {
-    // Recuperar las fechas guardadas cuando el componente se inicializa
-    const savedDateRange = this.dateRangeStorageService.getDateRange();
-    if (savedDateRange && savedDateRange.from && savedDateRange.to) {
-      this.dateRange = savedDateRange;
-    }
-
-    // Asegurar que haya fechas antes de cargar los datos
-    if (this.dateRange.from && this.dateRange.to) {
-      this.onLoadData();
-    }
+    this.onLoadData();
   }
 
   onLoadData() {
-    const startDate = this.dateRange.from?.toISOString().split('T')[0]; // Convertir la fecha a string en formato 'YYYY-MM-DD'
-    const endDate = this.dateRange.to?.toISOString().split('T')[0];
-
-    const urlApi = `TicketReport/WeeklyReportPreview/${this.customerIdService.customerId}/${startDate}/${endDate}`;
+    const urlApi = `TicketReport/WeeklyReportPreview/${this.customerIdService.customerId}/${this.year}/${this.numeroSemana}`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });

@@ -16,11 +16,11 @@ import { environment } from 'src/environments/environment';
   imports: [LuxuryAppComponentsModule],
 })
 export default class AddProductModalComponent implements OnInit, OnDestroy {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestService= inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
 
   isInRole: boolean;
   id: any = 0;
@@ -65,7 +65,7 @@ export default class AddProductModalComponent implements OnInit, OnDestroy {
       return;
     }
 
-    item.applicationUserId = this.authService.applicationUserId;
+    item.applicationUserId = this.authS.applicationUserId;
     this.apiRequestService
       .onPost(`solicitudcompradetalle/`, item)
       .then((result: boolean) => {

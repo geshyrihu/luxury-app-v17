@@ -1,0 +1,291 @@
+<!-- <button (click)="GenerateWeeklyReport()" class="btn btn-danger">
+  Reporte PDF
+</button> -->
+
+<div class="row">
+  <div class="col-sm-2"></div>
+  <div class="col-lg-8">
+    <app-ticket-date-range-selector
+      (selectedDates)="onDateRangeSelected($event)"
+    />
+  </div>
+  <div class="col-sm-2"></div>
+</div>
+<hr />
+<div class="text-center mt2-2 mb-2">
+  <h4 class="mb-sm-0">
+    LEGAL INTERNO CIERRE DEL {{ startDate | uppercase }} HASTA
+    {{ endDate | uppercase }}
+  </h4>
+</div>
+<div class="card" *ngIf="reportData">
+  <table class="custom-table-report">
+    <thead>
+      <tr>
+        <th class="text-center" colspan="3">RESULTADO</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="text-center"></td>
+        <td class="text-center">
+          {{ reportData.ticketsAlInicio }}
+        </td>
+        <td>TICKET INICIAL</td>
+      </tr>
+      <tr>
+        <td class="text-center"></td>
+        <td class="text-center">
+          {{ reportData.ticketsAlFinal }}
+        </td>
+        <td>TICKET FINAL</td>
+      </tr>
+      <tr>
+        <td class="text-center">
+          <i class="fa-sharp fa-solid fa-plus fa-lg"></i>
+        </td>
+        <td class="text-center">
+          {{ reportData.ticketsEnRango }}
+        </td>
+        <td>SOLICITUDES NUEVAS</td>
+      </tr>
+      <tr>
+        <td class="text-center">
+          <i class="fa-sharp fa-solid fa-minus fa-lg"></i>
+        </td>
+        <td class="text-center">
+          {{ reportData.solicitudesAtendidas }}
+        </td>
+        <td>SOLICITUDES ATENDIDAS</td>
+      </tr>
+      <tr>
+        <td class="text-center">
+          <i class="fa-sharp fa-solid fa-equals fa-lg"></i>
+        </td>
+        <td class="text-center">
+          {{ reportData.pendientesSoloDelPeriodo }}
+        </td>
+        <td>SOLICITUDES PENDIENTES DEL PERIODO</td>
+      </tr>
+      <tr>
+        <td class="text-center">
+          <i class="fa-sharp fa-solid fa-equals fa-lg"></i>
+        </td>
+        <td class="text-center">
+          {{ reportData.pendientesAlFinal }}
+        </td>
+        <td>SOLICITUDES PENDIENTES ACUMULADAS</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="card">
+  <p-table
+    *ngIf="requestsAttended"
+    [value]="requestsAttended"
+    styleClass="custom-table-report"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th scope="col" colspan="3" class="text-center">
+          <i class="fa-solid fa-check fa-lg text-success me-2"></i>
+          SOLICITUDES ATENDIDAS
+        </th>
+      </tr>
+      <tr>
+        <th scope="col" class="text-center" style="width: 15%">N°</th>
+        <th scope="col" class="text-center" style="width: 15%">SOLICITUDES</th>
+        <th scope="col" style="width: 55%">CONCEPTO</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-ticket let-rowIndex="rowIndex">
+      <tr>
+        <td class="text-center">{{ rowIndex + 1 }}</td>
+        <td class="text-center">{{ ticket.solicitudes }}</td>
+        <td>{{ ticket.concepto }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+<div class="card">
+  <p-table
+    *ngIf="requestsPending"
+    [value]="requestsPending"
+    styleClass="custom-table-report"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th scope="col" colspan="7" class="text-center">
+          <i class="fa-solid fa-x fa-lg text-danger me-2"></i>
+          SOLICITUDES PENDIENTES
+        </th>
+      </tr>
+      <tr>
+        <th scope="col" class="text-center" style="width: 5%">N°</th>
+        <th scope="col" class="text-center" style="width: 10%">FOLIO</th>
+        <th scope="col" class="text-center" style="width: 10%">FECHA SOL.</th>
+        <th scope="col" class="text-center" style="width: 10%">CLIENTE</th>
+        <th scope="col" class="text-center" style="width: 40%">SOLICITUD</th>
+        <th scope="col" class="text-center" style="width: 5%">DIAS</th>
+        <th scope="col" class="text-center" style="width: 40%">SEGUIMIENTO</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-ticket let-rowIndex="rowIndex">
+      <tr>
+        <!-- Índice de la fila -->
+        <td class="text-center">{{ rowIndex + 1 }}</td>
+        <td class="text-center">{{ ticket.folio }}</td>
+        <td class="text-center">{{ ticket.fecha }}</td>
+        <td class="text-center">{{ ticket.cliente }}</td>
+        <td>{{ ticket.asunto }} <br />{{ ticket.descripcion }}</td>
+        <!-- <td class="text-center">
+
+          </td> -->
+        <td class="text-center">{{ ticket.dias }}</td>
+        <td>{{ ticket.ultimoSeguimiento }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+<!--
+<div class="card">
+  <div class="card-body">
+    <p-table
+      *ngIf="totalRequests"
+      [value]="[totalRequests]"
+      styleClass="custom-table-report"
+    >
+      <ng-template pTemplate="caption">
+        <div class="page-title-box text-center">
+          <h4 class="mb-sm-0">REPORTE SOLICITUDES TOTALES</h4>
+        </div>
+      </ng-template>
+
+      <ng-template pTemplate="header">
+        <tr>
+          <th scope="col" class="text-center" style="width: 20%">
+            SOLICITUDES
+          </th>
+          <th scope="col" class="text-center" style="width: 20%">CONCLUIDOS</th>
+          <th scope="col" class="text-center" style="width: 20%">PENDIENTES</th>
+          <th scope="col" class="text-center" style="width: 20%">
+            NO ASIGNADOS
+          </th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-ticket>
+        <tr>
+          <td class="text-center">{{ ticket.totalTickets }}</td>
+          <td class="text-center">{{ ticket.completedTickets }}</td>
+          <td class="text-center">{{ ticket.pendingTickets }}</td>
+          <td class="text-center">{{ ticket.unassigned }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div> -->
+<!--
+
+<br />
+<div class="card">
+  <div class="card-body">
+    <p-table [value]="data" styleClass="custom-table-report">
+      <ng-template pTemplate="caption">
+        <div class="page-title-box text-center">
+          <h4 class="mb-sm-0">REPORTE SOLICITUDES POR AREA</h4>
+        </div>
+      </ng-template>
+
+      <ng-template pTemplate="header">
+        <tr>
+          <th scope="col" class="text-center" style="width: 20%">AREA</th>
+          <th scope="col" class="text-center" style="width: 20%">
+            SOLICITUDES
+          </th>
+          <th scope="col" class="text-center" style="width: 20%">CONCLUIDOS</th>
+          <th scope="col" class="text-center" style="width: 20%">PENDIENTES</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-ticket>
+        <tr>
+          <td>
+            {{
+              ticket.typePerson === "Interno"
+                ? "LEGAL INTERNO"
+                : "DESPACHO EXTERNO"
+            }}
+          </td>
+          <td class="text-center">{{ ticket.totalTickets }}</td>
+          <td class="text-center">{{ ticket.completedTickets }}</td>
+          <td class="text-center">{{ ticket.pendingTickets }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+<br />
+<div class="card">
+  <div class="card-body">
+    <p-table [value]="summaryIndividual" styleClass="custom-table-report">
+      <ng-template pTemplate="caption">
+        <div class="page-title-box text-center">
+          <h4 class="mb-sm-0">REPORTE SOLICITUDES POR COLABORADOR</h4>
+        </div>
+      </ng-template>
+
+      <ng-template pTemplate="header">
+        <tr>
+          <th scope="col" class="text-center" style="width: 20%">AREA</th>
+          <th scope="col" class="text-center" style="width: 20%">
+            SOLICITUDES
+          </th>
+          <th scope="col" class="text-center" style="width: 20%">CONCLUIDOS</th>
+          <th scope="col" class="text-center" style="width: 20%">PENDIENTES</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-ticket>
+        <tr>
+          <td>{{ ticket.responsibleName }}</td>
+          <td class="text-center">{{ ticket.totalTickets }}</td>
+          <td class="text-center">{{ ticket.completedTickets }}</td>
+          <td class="text-center">{{ ticket.pendingTickets }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+<br />
+<div class="card">
+  <div class="card-body">
+    <p-table [value]="summaryCustomer" styleClass="custom-table-report">
+      <ng-template pTemplate="caption">
+        <div class="page-title-box text-center">
+          <h4 class="mb-sm-0">REPORTE SOLICITUDES POR CLIENTE</h4>
+        </div>
+      </ng-template>
+
+      <ng-template pTemplate="header">
+        <tr>
+          <th scope="col" class="text-center" style="width: 20%">AREA</th>
+          <th scope="col" class="text-center" style="width: 20%">
+            SOLICITUDES
+          </th>
+          <th scope="col" class="text-center" style="width: 20%">CONCLUIDOS</th>
+          <th scope="col" class="text-center" style="width: 20%">PENDIENTES</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-ticket>
+        <tr>
+          <td>{{ ticket.customerName }}</td>
+          <td class="text-center">{{ ticket.totalTickets }}</td>
+          <td class="text-center">{{ ticket.completedTickets }}</td>
+          <td class="text-center">{{ ticket.pendingTickets }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div> -->

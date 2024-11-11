@@ -42,7 +42,7 @@
       <th scope="col" pSortableColumn="numeroFactura">
         Factura<p-sortIcon field="numeroFactura"></p-sortIcon>
       </th>
-      @if (authService.onValidateRoles(['SuperUsuario'])) {
+      @if (authS.onValidateRoles(['SuperUsuario'])) {
       <th scope="col" style="width: 5%">Opciones</th>
       }
     </tr>
@@ -80,7 +80,7 @@
         </small>
       </td>
       <!-- Opciones -->
-      @if (authService.onValidateRoles(['SuperUsuario'])) {
+      @if (authS.onValidateRoles(['SuperUsuario'])) {
       <td class="p-column-title">
         <div class="d-flex justify-content-center">
           <btn-edit

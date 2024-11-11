@@ -26,7 +26,7 @@ export default class ServiceOrderComponent implements OnInit, OnDestroy {
   apiRequestService = inject(ApiRequestService);
   messageService = inject(MessageService);
   dialogService = inject(DialogService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
   public confirmationService = inject(ConfirmationService);

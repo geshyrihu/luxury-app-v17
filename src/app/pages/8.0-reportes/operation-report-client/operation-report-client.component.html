@@ -2,7 +2,7 @@
   <div class="text-center mb-5">
     <!-- Encabezado con el logo del cliente y nombre -->
     <img
-      [src]="urlLogoCustomer + data.customerLogo"
+      [src]="urlLogoCustomer + data.logoCustomer"
       alt="Logo del cliente"
       class="img-fluid mb-3"
       style="max-width: 150px; height: auto"
@@ -12,9 +12,10 @@
     <hr class="my-4" />
   </div>
 
-  <div *ngFor="let ticket of data.tickets" class="mb-4">
+  <div *ngFor="let ticket of data.reportes" class="mb-4">
     <div class="card shadow-sm mb-4">
       <div class="card-body">
+        <strong>{{ ticket.title }}</strong>
         <p class="h6 text-justify mb-4">{{ ticket.description }}</p>
         <div class="row">
           <div class="col-md-6 col-12 mb-3 mb-md-0">

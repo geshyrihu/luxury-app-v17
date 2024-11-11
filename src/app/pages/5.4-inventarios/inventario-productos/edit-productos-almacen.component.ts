@@ -16,7 +16,7 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 export default class EditProductosAlmacenComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   formBuilder = inject(FormBuilder);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   config = inject(DynamicDialogConfig);
   customerIdService = inject(CustomerIdService);
   ref = inject(DynamicDialogRef);
@@ -35,7 +35,7 @@ export default class EditProductosAlmacenComponent implements OnInit {
     unidadDeMedidaId: ['', Validators.required],
     stockMin: [0, Validators.required],
     stockMax: [0, Validators.required],
-    applicationUserId: [this.authService.applicationUserId],
+    applicationUserId: [this.authS.applicationUserId],
   });
 
   onLoadProducts() {

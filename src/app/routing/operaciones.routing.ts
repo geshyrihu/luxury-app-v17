@@ -2,20 +2,18 @@ import { Routes } from '@angular/router';
 import { AuthGuard } from 'src/app/core/guards/auth.guard';
 
 export default [
+  // {
+  //   path: 'reporte',
+  //   loadChildren: () => import('./ticketV1.routing'),
+  //   canActivate: [AuthGuard],
+  // },
   {
-    path: 'entrega-recepcion',
-    loadChildren: () => import('./entrega-recepcion.routing'),
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'calendario',
-    loadChildren: () => import('./calendarios.routing'),
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'reporte',
-    loadChildren: () => import('./ticket.routing'),
-    canActivate: [AuthGuard],
+    path: 'mantenimiento-preventivo',
+    loadComponent: () =>
+      import(
+        'src/app/pages/5.3-mantenimiento/service-order/ordenes-servicio.component'
+      ),
+    data: { title: 'Mantenimiento Preventivo' },
   },
   {
     path: 'junta-comite',
@@ -29,7 +27,7 @@ export default [
   },
   {
     path: 'compras',
-    loadChildren: () => import('./compras.routing'),
+    loadChildren: () => import('./finales/compras.routing'),
     canActivate: [AuthGuard],
   },
   {
@@ -37,17 +35,6 @@ export default [
     loadComponent: () =>
       import('src/app/pages/1.0-mi-edificio/mi-edificio.component'),
     canActivate: [AuthGuard],
-  },
-  {
-    path: 'reportes-mantenimiento',
-    loadChildren: () => import('./mantenimiento-reportes.routing'),
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'mis-proveedores',
-    loadComponent: () =>
-      import(
-        'src/app/pages/6.1-directorios/directorios/proveedor/mis-proveedores/mis-proveedores.component'
-      ),
+    data: { title: 'Mi Edificio' },
   },
 ] as Routes;

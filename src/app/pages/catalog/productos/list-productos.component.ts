@@ -14,7 +14,7 @@ import AddOrEditProductosComponent from './addoredit-productos.component';
   imports: [LuxuryAppComponentsModule],
 })
 export default class ListProductosComponent implements OnInit {
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   dialogHandlerService = inject(DialogHandlerService);
   apiRequestService = inject(ApiRequestService);
 
@@ -25,7 +25,7 @@ export default class ListProductosComponent implements OnInit {
   ref: DynamicDialogRef;
 
   account_id: string =
-    this.authService.userTokenDto.infoUserAuthDto.applicationUserId;
+    this.authS.userTokenDto.infoUserAuthDto.applicationUserId;
 
   ngOnInit(): void {
     this.onLoadData();

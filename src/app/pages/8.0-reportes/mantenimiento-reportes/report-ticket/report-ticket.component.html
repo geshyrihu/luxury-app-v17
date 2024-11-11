@@ -17,7 +17,6 @@
         <th scope="col" style="width: 15%">SOLICITUDES</th>
         <th scope="col" style="width: 15%">ATENDIDAS</th>
         <th scope="col" style="width: 15%">PENDIENTES</th>
-        <th scope="col" style="width: 15%">NO AUTORIZADO</th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-item let-i="rowIndex">
@@ -27,7 +26,6 @@
         <td class="p-column-title text-center">{{ item.solicitudes }}</td>
         <td class="p-column-title text-center">{{ item.atendidas }}</td>
         <td class="p-column-title text-center">{{ item.pendientes }}</td>
-        <td class="p-column-title text-center">{{ item.noAutorizado }}</td>
       </tr>
     </ng-template>
     <ng-template pTemplate="footer">
@@ -46,11 +44,6 @@
         <td class="text-center">
           <span class="h4 card-title text-dark">
             {{ onSumaTotales(data).pendientes }}
-          </span>
-        </td>
-        <td class="text-center">
-          <span class="h4 card-title text-dark">
-            {{ onSumaTotales(data).noAutorizado }}
           </span>
         </td>
       </tr>

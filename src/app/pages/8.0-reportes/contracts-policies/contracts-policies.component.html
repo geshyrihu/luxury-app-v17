@@ -1,0 +1,81 @@
+<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
+
+<div class="p-card p-mb-5">
+  <p-table
+    #dt
+    [(selection)]="data"
+    [autoLayout]="true"
+    [globalFilterFields]="['provider', 'description']"
+    [rowHover]="true"
+    [value]="data"
+    styleClass="custom-table"
+    [tableStyle]="{ 'min-width': '50rem' }"
+  >
+    <ng-template pTemplate="caption">
+      <custom-table-caption title="Contratos yPolizas" [showAdd]="false" />
+    </ng-template>
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col" pSortableColumn="provider">
+          Proveedor
+          <p-sortIcon field="provider"></p-sortIcon>
+        </th>
+        <th scope="col" pSortableColumn="description">
+          Descripción<p-sortIcon field="description"></p-sortIcon>
+        </th>
+        <th scope="col" pSortableColumn="startDateFilter">
+          Fecha Contratación<p-sortIcon field="startDateFilter"></p-sortIcon>
+        </th>
+        <th scope="col" pSortableColumn="endDateFilter">
+          Fecha de Término<p-sortIcon field="endDateFilter"></p-sortIcon>
+        </th>
+        <th scope="col">Documento</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item let-i="rowIndex">
+      <tr>
+        <td class="p-column-title">
+          {{ i + 1 }}
+        </td>
+        <td class="p-column-title">
+          {{ item.provider }}
+        </td>
+        <td class="p-column-title">
+          {{ item.description }}
+        </td>
+        <td class="p-column-title">
+          {{ item.startDate }}
+        </td>
+        <td class="p-column-title text-center">
+          <span
+            class="badge p-2 w-75"
+            [ngClass]="{
+              'bg-danger-subtle text-danger': isCloseToEndDate(
+                item.endDateFilter
+              ),
+              'bg-success-subtle text-success': !isCloseToEndDate(
+                item.endDateFilter
+              )
+            }"
+          >
+            {{ item.endDate }}
+          </span>
+        </td>
+        <td class="p-column-title text-center">
+          <btn-download-file
+            ngbTooltip="Visualizar Pdf"
+            [urlFile]="item.pathDocument"
+          />
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="paginatorleft">
+      <div class="p-d-flex p-ai-center p-jc-between no-print">
+        En total hay
+        {{ data ? data.length : 0 }} registros.
+      </div>
+    </ng-template>
+  </p-table>
+</div>

@@ -15,7 +15,7 @@ import AddoreditPiscinaBitacoraComponent from '../addoredit-piscina-bitacora/add
 export default class ListPiscinaBitacoraComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   rutaActiva = inject(ActivatedRoute);
 
   data: any[] = [];

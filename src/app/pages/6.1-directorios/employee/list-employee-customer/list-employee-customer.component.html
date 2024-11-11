@@ -26,9 +26,9 @@
             (add)="showModalAddEmployee()"
             [dt]="dt"
             [rolAuth]="
-              authService.onValidateRoles([
+              authS.onValidateRoles([
                 'Asistente',
-                'Residente',
+                'Administrador',
                 'SuperUsuario'
               ])
             "
@@ -88,7 +88,7 @@
           EMAIL
           <p-sortIcon field="email"></p-sortIcon>
         </th>
-        @if ( authService.onValidateRoles([ 'Asistente', 'Residente',
+        @if ( authS.onValidateRoles([ 'Asistente', 'Administrador',
         'SuperUsuario' ]) ) {
         <th scope="col" style="width: 5%"></th>
         }
@@ -127,11 +127,11 @@
         <td>
           {{ item.correoPersonal }}
         </td>
-        @if ( authService.onValidateRoles([ 'Asistente', 'Residente',
+        @if ( authS.onValidateRoles([ 'Asistente', 'Administrador',
         'SuperUsuario' ]) ) {
         <td class="p-column-title no-print">
           <div class="d-flex justify-content-center">
-            @if ( authService.onValidateRoles([ 'SuperUsuario', 'Residente',
+            @if ( authS.onValidateRoles([ 'SuperUsuario', 'Administrador',
             'Asistente' ]) ) {
             <custom-button
               [ngbTooltipCustom]="'Opciones'"

@@ -1,55 +1,54 @@
 import { Injectable, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { HubConnection, HubConnectionBuilder } from '@aspnet/signalr';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SignalRService {
   route = inject(Router);
+  authService = inject(AuthService);
 
   private hubConnection: HubConnection;
 
-  private notificationSubject = new Subject<any>(); // Usamos un Subject para emitir los datos
+  private notificationSubject = new Subject<any>(); // Subject para recibir notificaciones
+  private notificationUpdateSubject = new Subject<void>(); // Subject para emitir actualizaciones de lectura
 
   constructor() {
     this.hubConnection = new HubConnectionBuilder()
       .withUrl(environment.base_signalr)
       .build();
-    console.log('Conectando...');
 
     this.hubConnection
       .start()
-      .then(() => console.log('Connection started'))
+      .then(() => console.log('hubConnection started'))
       .catch((err) => console.error('Error while starting connection: ' + err));
 
     this.hubConnection.on('ReceiveNotification', (data: any) => {
-      if (data.clave === 'Nuevo') {
-        this.showNotification(data);
-        this.notificationSubject.next(data); // Emitimos el evento
-      }
-      if (data.clave === 'Reader') {
-        this.notificationSubject.next(data); // Emitimos el evento
-      }
+      console.log('Notification received:', data);
 
-      // crear logica para mostrar notificación
+      if (
+        data &&
+        this.authService.applicationUserId === data.applicationUserId
+      ) {
+        this.showNotification(data); // Mostrar la notificación
+        this.notificationSubject.next(data); // Emitimos el evento de notificación
+      }
     });
   }
 
   private showNotification(data: any) {
-    // Mostrar la notificación con los datos recibidos
-
     if (Notification.permission === 'granted') {
       const notification = new Notification(data.title, {
         body: data.Message,
-        icon: 'assets/images/icon.png', // Especifica el ícono aquí
+        icon: 'assets/images/icon.png',
       });
 
       notification.onclick = () => {
-        // Crear accion para ver la nmotificación
-        this.route.navigate(['/luxury-chat/message/' + data.ticketMessageId]);
+        this.route.navigate(['/tickets/message/' + data.ticketMessageId]);
       };
 
       const audio = new Audio('assets/audio/notification-sound.mp3');
@@ -63,8 +62,19 @@ export class SignalRService {
     }
   }
 
-  // Método para exponer el observable
-  getNotificationObservable() {
+  // Observable para las notificaciones recibidas
+  getNotificationObservable(): Observable<any> {
     return this.notificationSubject.asObservable();
+  }
+
+  // Emitir actualización de lectura
+  emitNotificationUpdate() {
+    console.log('Emitir actualización de notificación leída');
+    this.notificationUpdateSubject.next();
+  }
+
+  // Observable para las actualizaciones de lectura
+  getNotificationUpdateObservable(): Observable<void> {
+    return this.notificationUpdateSubject.asObservable();
   }
 }

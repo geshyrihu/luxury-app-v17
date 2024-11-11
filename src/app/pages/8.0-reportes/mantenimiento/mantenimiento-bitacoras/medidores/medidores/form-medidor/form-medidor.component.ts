@@ -17,7 +17,7 @@ export default class FormMedidorComponent implements OnInit {
   formBuilder = inject(FormBuilder);
   ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   customerIdService = inject(CustomerIdService);
 
   submitting: boolean = false;

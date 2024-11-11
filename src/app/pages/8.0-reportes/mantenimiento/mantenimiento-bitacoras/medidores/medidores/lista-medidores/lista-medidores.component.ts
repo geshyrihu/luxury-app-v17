@@ -19,7 +19,7 @@ import FormMedidorComponent from '../form-medidor/form-medidor.component';
 export default class ListMedidorComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   customerIdService = inject(CustomerIdService);
 
   data: IMedidor[] = [];

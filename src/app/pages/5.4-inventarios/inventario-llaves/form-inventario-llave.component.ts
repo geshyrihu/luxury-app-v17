@@ -25,7 +25,7 @@ export default class FormInventarioLlaveComponent implements OnInit, OnDestroy {
   ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);
   customerIdService = inject(CustomerIdService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   customToastService = inject(CustomToastService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
@@ -42,10 +42,7 @@ export default class FormInventarioLlaveComponent implements OnInit, OnDestroy {
     numeroLlave: ['', [Validators.required]],
     cantidad: ['', [Validators.required]],
     equipoClasificacionId: ['', [Validators.required]],
-    applicationUserId: [
-      this.authService.applicationUserId,
-      [Validators.required],
-    ],
+    applicationUserId: [this.authS.applicationUserId, [Validators.required]],
   });
 
   ngOnInit() {

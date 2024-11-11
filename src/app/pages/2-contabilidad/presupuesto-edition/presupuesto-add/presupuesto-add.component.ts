@@ -30,7 +30,7 @@ export default class PresupuestoAddComponent implements OnInit {
   messageService = inject(MessageService);
   public rangoCalendarioService = inject(FiltroCalendarService);
   ref = inject(DynamicDialogRef);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
 
   periodo: IPresupuestoAdd;
   id: number = 0;

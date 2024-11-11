@@ -25,15 +25,11 @@
         (add)="onModal({ id: 0, title: 'Nuevo Registro' })"
         [dt]="dt"
         [rolAuth]="
-          authService.onValidateRoles([
-            'Asistente',
-            'Residente',
-            'SuperUsuario'
-          ])
+          authS.onValidateRoles(['Asistente', 'Administrador', 'SuperUsuario'])
         "
       />
-      @if ( authService.onValidateRoles([ 'Asistente', 'Residente',
-      'SuperUsuario' ]) ) {
+      @if ( authS.onValidateRoles([ 'Asistente', 'Administrador', 'SuperUsuario'
+      ]) ) {
       <div class="row mt-3">
         <div class="col-6">
           <div class="form-group w-50">
@@ -117,7 +113,7 @@
           </div>
           }
         </td>
-        @if ( authService.onValidateRoles([ 'Asistente', 'Residente',
+        @if ( authS.onValidateRoles([ 'Asistente', 'Administrador',
         'SuperUsuario' ]) ) {
         <td class="p-column-title">
           <div class="d-flex justify-content-center">

@@ -13,9 +13,9 @@
     <div
       class="card"
       [ngClass]="{
-        'bg-primary': item.medidorCategoria.id === 3,
-        'bg-success': item.medidorCategoria.id === 2,
-        'bg-warning': item.medidorCategoria.id === 1
+        'border-primary': item.medidorCategoria.id === 3,
+        'border-success': item.medidorCategoria.id === 2,
+        'border-warning': item.medidorCategoria.id === 1
       }"
     >
       <div
@@ -26,14 +26,17 @@
           {{ item.medidorCategoria.nombreMedidorCategoria }}
         </h5>
         @if (item.medidorCategoria.id === 1) {
-        <i class="fa-light fa-fire-burner fa-3x" aria-hidden="true"></i>
+        <i
+          class="fa-solid fa-fire-burner text-warning fa-3x"
+          aria-hidden="true"
+        ></i>
         } @if (item.medidorCategoria.id === 3) {
         <i
-          class="fa-light fa-hand-holding-droplet fa-3x"
+          class="fa-solid fa-hand-holding-droplet text-primary fa-3x"
           aria-hidden="true"
         ></i>
         } @if (item.medidorCategoria.id === 2) {
-        <i class="fa-light fa-bolt fa-3x" aria-hidden="true"></i>
+        <i class="fa-solid fa-bolt text-success fa-3x" aria-hidden="true"></i>
         }
         <hr />
         <h6 class="card-subtitle mb-2 text-muted">
@@ -46,34 +49,27 @@
           {{ item.consumoDiarioMaximo }}
         </p>
       </div>
-      @if ( authService.onValidateRoles([ 'Mantenimiento', 'Residente',
+      @if ( authS.onValidateRoles([ 'JefeMantenimiento', 'Administrador',
       'SuperUsuario' ]) ) {
       <div class="card-footer">
         <div class="d-flex justify-content-center">
           <btn-edit (edit)="modalAddEdit({ id: item.id, title: 'Editar' })" />
           <btn-delete (OnConfirm)="onDelete(item.id)" />
-          <a
-            [routerLink]="[
-              '/mantenimiento/bitacora/lista-medidar-lectura',
-              item.id
-            ]"
-            routerLinkActive="router-link-active"
+          <custom-button
+            customClass="btn-soft-primary waves-effect waves-light  bg-gradient me-1"
             ngbTooltip="Lecturas"
-            placement="top"
-            class="btn btn-sm me-1 btn-outline-success"
-          >
-            <i class="fa-light fa-database"></i>
-          </a>
-          <a
-            [routerLink]="['/mantenimiento/bitacora/grafico', item.id]"
-            routerLinkActive="router-link-active"
+            icon="icon-database"
+            [routerLink]="['/logbook/lista-medidar-lectura', item.id]"
+          />
+
+          <custom-button
+            customClass="btn-soft-primary waves-effect waves-light  bg-gradient me-1"
             ngbTooltip="Grafica"
-            placement="top"
-            class="btn btn-sm me-1 btn-outline-secondary"
-          >
-            <i class="fa-light fa-chart-line"> </i>
-          </a>
-          <btn-export-excel (clicked)="exportExcel(item.id)"></btn-export-excel>
+            icon="icon-chart-line"
+            [routerLink]="['/logbook/grafico', item.id]"
+          />
+
+          <btn-export-excel (clicked)="exportExcel(item.id)" />
         </div>
       </div>
       }

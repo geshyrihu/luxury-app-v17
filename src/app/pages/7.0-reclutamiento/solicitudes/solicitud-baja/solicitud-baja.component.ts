@@ -34,7 +34,7 @@ export default class SolicitudBajaComponent implements OnInit, OnDestroy {
   apiRequestService = inject(ApiRequestService);
   dataService = inject(DataService);
   formBuilder = inject(FormBuilder);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   config = inject(DynamicDialogConfig);
   customerIdService = inject(CustomerIdService);
   dateService = inject(DateService);
@@ -76,7 +76,7 @@ export default class SolicitudBajaComponent implements OnInit, OnDestroy {
     lawyerAssistance: false, // Valor booleano directo
     employeeInformed: false, // Valor booleano directo
 
-    applicationUserRequestId: [this.authService.applicationUserId],
+    applicationUserRequestId: [this.authS.applicationUserId],
   });
 
   ngOnInit(): void {
@@ -132,7 +132,7 @@ export default class SolicitudBajaComponent implements OnInit, OnDestroy {
       .post(
         `solicitudesreclutamiento/solicitudbaja/
           ${this.customerIdService.getCustomerId()}/${this.employeeId}/${
-          this.authService.infoUserAuthDto.applicationUserId
+          this.authS.infoUserAuthDto.applicationUserId
         }`,
         model
       )
@@ -179,7 +179,7 @@ export default class SolicitudBajaComponent implements OnInit, OnDestroy {
     formData.append('employeeInformed', form.employeeInformed.toString());
     formData.append(
       'applicationUserRequestId',
-      this.authService.applicationUserId.toString()
+      this.authS.applicationUserId.toString()
     );
 
     const discountDescriptions = form.discountDescriptions;

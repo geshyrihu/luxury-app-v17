@@ -59,7 +59,7 @@
             placeholder="sueldo mensual neto"
           />
         </div>
-        @if (this.authService.onValidateRoles(['SuperUsuario'])) {
+        @if (this.authS.onValidateRoles(['SuperUsuario'])) {
         <div class="col-sm-4 mb-2">
           <custom-input-select
             [control]="form.get('customerId')"

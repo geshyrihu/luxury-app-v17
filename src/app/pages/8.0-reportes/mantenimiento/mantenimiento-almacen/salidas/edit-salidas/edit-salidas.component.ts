@@ -22,7 +22,7 @@ export default class EditSalidasComponent implements OnInit {
   dateService = inject(DateService);
   ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   customerIdService = inject(CustomerIdService);
 
   submitting: boolean = false;
@@ -88,10 +88,7 @@ export default class EditSalidasComponent implements OnInit {
         `${this.dateTodat.getHours()}:${this.dateTodat.getMinutes()}`,
         Validators.required,
       ],
-      applicationUserId: [
-        this.authService.applicationUserId,
-        Validators.required,
-      ],
+      applicationUserId: [this.authS.applicationUserId, Validators.required],
     });
   }
 

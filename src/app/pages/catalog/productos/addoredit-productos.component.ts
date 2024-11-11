@@ -22,7 +22,7 @@ import { environment } from 'src/environments/environment';
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class AddOrEditProductosComponent implements OnInit {
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   apiRequestService = inject(ApiRequestService);
   formBuilder = inject(FormBuilder);
   config = inject(DynamicDialogConfig);
@@ -63,7 +63,7 @@ export default class AddOrEditProductosComponent implements OnInit {
       category: ['', Validators.required],
       categoryId: ['', Validators.required],
       clasificacion: ['', Validators.required],
-      applicationUserId: [this.authService.applicationUserId],
+      applicationUserId: [this.authS.applicationUserId],
       marca: [''],
       modelo: [''],
       nombreProducto: [

@@ -19,7 +19,7 @@ import AddorEditMeetingSeguimientoComponent from 'src/app/pages/5.1-operaciones/
 export default class SeguimientoMinutaComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   customerIdService = inject(CustomerIdService);
 
   data: any[] = [];

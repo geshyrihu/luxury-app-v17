@@ -13,7 +13,7 @@ import Swal from 'sweetalert2';
 })
 export default class TicketProgressButtonComponent {
   private apiRequestService = inject(ApiRequestService);
-  private authService = inject(AuthService);
+  private authS = inject(AuthService);
 
   @Input() item: any;
   @Output() progressCompleted = new EventEmitter<void>();
@@ -30,7 +30,7 @@ export default class TicketProgressButtonComponent {
       cancelButtonText: 'Cancelar',
     }).then((result) => {
       if (result.isConfirmed) {
-        const urlApi = `TicketMessage/InProgress/${this.item.id}/${this.authService.applicationUserId}`;
+        const urlApi = `TicketMessage/InProgress/${this.item.id}/${this.authS.applicationUserId}`;
 
         this.apiRequestService.onGetItem(urlApi).then(() => {
           this.progressCompleted.emit(); // Emitir el evento de finalización

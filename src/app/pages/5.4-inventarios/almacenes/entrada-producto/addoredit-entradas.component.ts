@@ -21,7 +21,7 @@ export default class AddOrEditEntradasComponent implements OnInit {
   formBuilder = inject(FormBuilder);
   customerIdService = inject(CustomerIdService);
   dateService = inject(DateService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   config = inject(DynamicDialogConfig);
 
   ref = inject(DynamicDialogRef);
@@ -37,10 +37,7 @@ export default class AddOrEditEntradasComponent implements OnInit {
     unidadMedidaId: ['', Validators.required],
     numeroFactura: ['', Validators.required],
     providerName: ['', Validators.required],
-    applicationUserId: [
-      this.authService.applicationUserId,
-      Validators.required,
-    ],
+    applicationUserId: [this.authS.applicationUserId, Validators.required],
   });
   id = 0;
   idProducto = 0;

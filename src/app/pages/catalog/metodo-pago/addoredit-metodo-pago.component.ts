@@ -14,7 +14,7 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class AddoreditMetodoPagoComponent implements OnInit {
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   apiRequestService = inject(ApiRequestService);
   formBuilder = inject(FormBuilder);
   config = inject(DynamicDialogConfig);
@@ -36,7 +36,7 @@ export default class AddoreditMetodoPagoComponent implements OnInit {
       codigo: ['', [Validators.required]],
       descripcion: ['', Validators.required],
       applicationUserId: [
-        this.authService.userTokenDto.infoUserAuthDto.applicationUserId,
+        this.authS.userTokenDto.infoUserAuthDto.applicationUserId,
       ],
     });
   }

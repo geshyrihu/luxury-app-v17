@@ -26,7 +26,7 @@ export default class SolicitudVacanteComponent implements OnInit, OnDestroy {
   customToastService = inject(CustomToastService);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
 
   workPositionId: number = this.config.data.workPositionId;
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
@@ -87,7 +87,7 @@ export default class SolicitudVacanteComponent implements OnInit, OnDestroy {
 
     this.dataService
       .post(
-        `SolicitudesReclutamiento/SolicitudVacante/${this.authService.infoUserAuthDto.applicationUserId}`,
+        `SolicitudesReclutamiento/SolicitudVacante/${this.authS.infoUserAuthDto.applicationUserId}`,
         this.form.value
       )
       .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye

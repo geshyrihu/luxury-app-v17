@@ -16,7 +16,7 @@ export default class TicketSeguimientoComponent implements OnInit, OnDestroy {
   formBuilder = inject(FormBuilder);
   ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
 
   seguimientos: ITicketseguimiento[] = [];
   submitting: boolean = false;
@@ -30,10 +30,7 @@ export default class TicketSeguimientoComponent implements OnInit, OnDestroy {
   form: FormGroup = this.formBuilder.group({
     id: { value: this.id, disabled: true },
     weeklyReportId: [this.weeklyReportId, Validators.required],
-    applicationUserId: [
-      this.authService.applicationUserId,
-      Validators.required,
-    ],
+    applicationUserId: [this.authS.applicationUserId, Validators.required],
     seguimiento: [
       '',
       [

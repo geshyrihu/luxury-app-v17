@@ -21,7 +21,7 @@ export default class CreateOrdenCompraComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   router = inject(Router);
 
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   config = inject(DynamicDialogConfig);
   customerIdService = inject(CustomerIdService);
   dateService = inject(DateService);
@@ -66,7 +66,7 @@ export default class CreateOrdenCompraComponent implements OnInit {
       justificacionGasto: ['', Validators.required],
       revisadoPorResidente: [''],
 
-      applicationUserId: [this.authService.applicationUserId],
+      applicationUserId: [this.authS.applicationUserId],
     });
   }
 

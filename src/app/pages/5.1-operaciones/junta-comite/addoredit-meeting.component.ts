@@ -27,7 +27,7 @@ const date = new Date();
 })
 export default class AddOrEditMeetingComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
   formBuilder = inject(FormBuilder);
@@ -55,7 +55,7 @@ export default class AddOrEditMeetingComponent implements OnInit {
       date: [this.dateNow, Validators.required],
       eTypeMeeting: ['', Validators.required],
       customerId: [this.customerId],
-      applicationUserId: [this.authService.applicationUserId],
+      applicationUserId: [this.authS.applicationUserId],
     });
   }
 

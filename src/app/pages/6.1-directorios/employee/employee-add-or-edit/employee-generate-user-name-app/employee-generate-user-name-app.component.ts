@@ -17,7 +17,7 @@ import { EmployeeAddOrEditService } from '../employee-add-or-edit.service';
 export default class EmployeeGenerateUserNameAppComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   employeeAddOrEditService = inject(EmployeeAddOrEditService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   customToastService = inject(CustomToastService);
 
   @Input()
@@ -96,7 +96,7 @@ export default class EmployeeGenerateUserNameAppComponent implements OnInit {
     },
     {
       roleId: '844ee9d7-5837-42db-8561-f8e5e12eaa52',
-      roleName: 'Residente',
+      roleName: 'Administrador',
       isSelected: false,
     },
     {
@@ -154,7 +154,7 @@ export default class EmployeeGenerateUserNameAppComponent implements OnInit {
     },
     {
       roleId: '844ee9d7-5837-42db-8561-f8e5e12eaa52',
-      roleName: 'Residente',
+      roleName: 'Administrador',
       isSelected: false,
     },
   ];

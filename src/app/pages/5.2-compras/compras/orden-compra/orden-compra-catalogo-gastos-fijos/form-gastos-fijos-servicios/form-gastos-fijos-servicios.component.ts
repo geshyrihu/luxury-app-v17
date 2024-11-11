@@ -13,7 +13,7 @@ import { environment } from 'src/environments/environment';
 })
 export default class FormGastosFijosServiciosComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   catalogoGastosFijosService = inject(CatalogoGastosFijosService);
 
   catalogoGastosFijosId: number = 0;

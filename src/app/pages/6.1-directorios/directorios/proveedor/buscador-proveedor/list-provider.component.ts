@@ -18,7 +18,7 @@ import ProviderUseComponent from '../uso-proveedores/provider-use.component';
 export default class ListProviderComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
 
   data: IBusquedaProveedor[] = [];
   ref: DynamicDialogRef;
@@ -29,7 +29,7 @@ export default class ListProviderComponent implements OnInit {
     this.onLoadData();
   }
   validateRole(value: string[]): boolean {
-    return this.authService.onValidateRoles(value);
+    return this.authS.onValidateRoles(value);
   }
   onLoadData() {
     const urlApi = `proveedor/listadoproveedores`;

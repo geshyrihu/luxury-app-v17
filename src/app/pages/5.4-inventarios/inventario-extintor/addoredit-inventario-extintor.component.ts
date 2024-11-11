@@ -19,7 +19,7 @@ import { environment } from 'src/environments/environment';
 })
 export default class AddoreditInventarioExtintorComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   config = inject(DynamicDialogConfig);
   customerIdService = inject(CustomerIdService);
   formBuilder = inject(FormBuilder);
@@ -38,7 +38,7 @@ export default class AddoreditInventarioExtintorComponent implements OnInit {
     eExtintor: ['', Validators.required],
     ubicacion: ['', Validators.required],
     photo: [''],
-    applicationUserId: [this.authService.applicationUserId],
+    applicationUserId: [this.authS.applicationUserId],
   });
 
   uploadFile(file: any) {
@@ -82,10 +82,7 @@ export default class AddoreditInventarioExtintorComponent implements OnInit {
     formData.append('customerId', String(dto.customerId));
     formData.append('eExtintor', String(dto.eExtintor));
     formData.append('ubicacion', String(dto.ubicacion));
-    formData.append(
-      'applicationUserId',
-      String(this.authService.applicationUserId)
-    );
+    formData.append('applicationUserId', String(this.authS.applicationUserId));
     // ... Si hay un archivo cargado agrega la prop photoPath con su valor
     if (dto.photo) {
       formData.append('photo', dto.photo);

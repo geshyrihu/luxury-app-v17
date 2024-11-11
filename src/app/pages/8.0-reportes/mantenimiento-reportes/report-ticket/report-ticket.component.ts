@@ -59,12 +59,12 @@ export default class ReportTicketComponent implements OnInit {
       this.data = result;
     });
 
-    const urlApi2 = `MaintenanceReport/ticketresponsable/${this.customerIdService.customerId}/${periodo}`;
+    const urlApi2 = `MaintenanceReport/TicketResponsable/${this.customerIdService.customerId}/${periodo}`;
     this.apiRequestService.onGetList(urlApi2).then((result: any) => {
       this.dataResponsable = result;
     });
 
-    const urlApi3 = `MaintenanceReport/cargaticket/${this.customerIdService.customerId}/${periodo}`;
+    const urlApi3 = `MaintenanceReport/CargaTicket/${this.customerIdService.customerId}/${periodo}`;
     this.apiRequestService.onGetList(urlApi3).then((result: any) => {
       this.dataCargaTicket = result;
     });

@@ -24,7 +24,7 @@ import AddorEditMeetingSeguimientoComponent from './addoredit-seguimiento/addor-
 export default class ListMinutasComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   confirmationService = inject(ConfirmationService);
   customerIdService = inject(CustomerIdService);
   reportService = inject(ReportService);
@@ -129,7 +129,7 @@ export default class ListMinutasComponent implements OnInit {
   }
   onSendEmailResponsible(id: number, eAreaMinutasDetalles: number) {
     const urlApi = `Meetings/SendEmailResponsible/${id}/${this.customerIdService.getCustomerId()}/${eAreaMinutasDetalles}/${
-      this.authService.infoUserAuthDto.applicationUserId
+      this.authS.infoUserAuthDto.applicationUserId
     }`;
     this.apiRequestService.onGetItem(urlApi).then((_) => {});
   }

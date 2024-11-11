@@ -23,7 +23,7 @@ import { environment } from 'src/environments/environment';
 export default class AddOrEditActivosComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   dateService = inject(DateService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   formBuilder = inject(FormBuilder);
   getdateService = inject(DateService);
   config = inject(DynamicDialogConfig);
@@ -34,8 +34,7 @@ export default class AddOrEditActivosComponent implements OnInit {
 
   urlBaseImg = '';
   id: number = 0;
-  applicationUserId =
-    this.authService.userTokenDto.infoUserAuthDto.applicationUserId;
+  applicationUserId = this.authS.userTokenDto.infoUserAuthDto.applicationUserId;
   customerId: number = this.customerIdService.getCustomerId();
   machineryDTO: any;
   photoFileUpdate: boolean = false;
@@ -71,7 +70,7 @@ export default class AddOrEditActivosComponent implements OnInit {
       state: ['', [Validators.required]],
       technicalSpecifications: [''],
       ubication: ['', [Validators.required]],
-      applicationUserId: [this.authService.applicationUserId],
+      applicationUserId: [this.authS.applicationUserId],
     });
   }
   // ...Recibiendo archivo emitido

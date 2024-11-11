@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-input-img',
   templateUrl: './input-img.component.html',
@@ -16,7 +15,7 @@ export default class InputImgComponent {
   @Output() fileSelected = new EventEmitter<File>();
 
   imgBase64: string = '';
-  noImg: string = `${environment.base_urlImg}no-img.png`;
+  // noImg: string = `${environment.base_urlImg}no-img.png`;
 
   change(event: Event): void {
     const input = event.target as HTMLInputElement;

@@ -24,7 +24,7 @@
       >
     </div>
   </div>
-  @if (authService.onValidateRoles(['SuperUsuario'])) {
+  @if (authS.onValidateRoles(['SuperUsuario'])) {
 
   <div class="col-sm-1">
     <custom-button
@@ -115,8 +115,8 @@
             [urlFile]="item.constanciaFiscalPath"
           />
           <!-- Constancia Fiscal -->
-          @if ( item.activo && validateRole([ 'Asistente', 'Mantenimiento',
-          'Residente', 'SuperUsuario', 'SupervisionOperativa' ]) ) {
+          @if ( item.activo && validateRole([ 'Asistente', 'JefeMantenimiento',
+          'Administrador', 'SuperUsuario', 'SupervisionOperativa' ]) ) {
           <btn-edit
             (edit)="
               showModalAddOrEdit({

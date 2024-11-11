@@ -22,7 +22,7 @@ import AddoreditTicketSistemasComponent from './addoredit-ticket-sistemas-report
 export default class SistemasReporteComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
 
   public sistemasReporteService = inject(SistemasReporteService);
   private filtroCalendarService = inject(FiltroCalendarService);
@@ -33,10 +33,10 @@ export default class SistemasReporteComponent implements OnInit {
   listCustomer: any[] = [];
 
   cb_responsableSistemas: ISelectItem[] = [];
-  responsableSistemas: string = this.authService.applicationUserId;
+  responsableSistemas: string = this.authS.applicationUserId;
   status: EStatus = EStatus.Pendiente;
 
-  applicationUserId: string = this.authService.applicationUserId;
+  applicationUserId: string = this.authS.applicationUserId;
 
   pendientes: number = 0;
   concluidos: number = 0;
@@ -76,7 +76,7 @@ export default class SistemasReporteComponent implements OnInit {
   }
   onChangeUser() {
     if (this.applicationUserId == '') {
-      this.applicationUserId = this.authService.applicationUserId;
+      this.applicationUserId = this.authS.applicationUserId;
     } else {
       this.applicationUserId = null;
     }

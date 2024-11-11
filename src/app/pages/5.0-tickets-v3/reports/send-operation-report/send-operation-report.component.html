@@ -28,7 +28,7 @@
     Agregar CCO
   </button>
 
-  <input
+  <!-- <input
     type="week"
     class="form-control w-auto me-2"
     (change)="handleWeekChange($event)"
@@ -39,7 +39,7 @@
     <small>
       {{ errorMessage }}
     </small>
-  </div>
+  </div> -->
 
   <btn-confirmation
     title="Confirmar"
@@ -50,8 +50,8 @@
     tooltipText="Enviar Reporte"
     confirmButtonText="Sí, enviar"
     (OnConfirm)="onEnviarEmail()"
-    [disabled]="isDisabled"
   ></btn-confirmation>
+  <!-- [disabled]="isDisabled" -->
 </div>
 
 <div class="card">

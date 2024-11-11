@@ -31,8 +31,8 @@
         [rolAuth]="
           validateRole([
             'Asistente',
-            'Mantenimiento',
-            'Residente',
+            'JefeMantenimiento',
+            'Administrador',
             'SuperUsuario'
           ])
         "
@@ -106,7 +106,7 @@
           }
         </td>
         <td>
-          @if (authService.onValidateRoles(['SuperUsuario'])) {
+          @if (authS.onValidateRoles(['SuperUsuario'])) {
           <div class="form-check form-switch mb-3" dir="ltr">
             <input
               type="checkbox"
@@ -131,8 +131,9 @@
               ngbTooltip="Visualizar Pdf"
               [urlFile]="item.constanciaFiscalPath"
             />
-            @if ( validateRole([ 'Asistente', 'Mantenimiento', 'Residente',
-            'SuperUsuario', 'SupervisionOperativa' ]) && item.id != 109 ) {
+            @if ( validateRole([ 'Asistente', 'JefeMantenimiento',
+            'Administrador', 'SuperUsuario', 'SupervisionOperativa' ]) &&
+            item.id != 109 ) {
             <btn-edit
               class="bd-highlight"
               (edit)="

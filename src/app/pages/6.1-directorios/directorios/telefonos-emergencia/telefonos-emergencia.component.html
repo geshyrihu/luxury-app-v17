@@ -2,7 +2,7 @@
 <custom-table-caption
   [title]="'Télefonos de Emergencia'"
   [showSearch]="false"
-  [rolAuth]="authService.onValidateRoles(['superUsuario'])"
+  [rolAuth]="authS.onValidateRoles(['superUsuario'])"
   (add)="onModalAddOrEdit({ id: 0, title: 'Nuevo Registro' })"
 />
 <div class="row mt-2">

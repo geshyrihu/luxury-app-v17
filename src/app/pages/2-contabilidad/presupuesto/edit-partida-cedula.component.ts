@@ -15,7 +15,7 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 export default class EditPartidaCedulaComponent implements OnInit {
   formBuilder = inject(FormBuilder);
   apiRequestService = inject(ApiRequestService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
 
@@ -34,7 +34,7 @@ export default class EditPartidaCedulaComponent implements OnInit {
 
     this.submitting = true;
     this.form.patchValue({
-      applicationUserId: this.authService.applicationUserId,
+      applicationUserId: this.authS.applicationUserId,
     });
     if (this.id === 0) {
       this.apiRequestService
@@ -58,7 +58,7 @@ export default class EditPartidaCedulaComponent implements OnInit {
       descripcion: [''],
       presupuestoMensual: [0, Validators.required],
       presupuestoEjercido: [],
-      applicationUserId: [this.authService.applicationUserId],
+      applicationUserId: [this.authS.applicationUserId],
     });
 
     this.apiRequestService

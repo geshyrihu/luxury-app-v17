@@ -33,7 +33,7 @@ export default class AddOrEditRadioComunicacionComponent implements OnInit {
   formBuilder = inject(FormBuilder);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
   customerIdService = inject(CustomerIdService);

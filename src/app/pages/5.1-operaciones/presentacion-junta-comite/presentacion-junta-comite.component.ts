@@ -22,7 +22,7 @@ import AddoreditPresentacionJuntaComiteComponent from './addoredit-presentacion-
 export default class PresentacionJuntaComiteComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   confirmationService = inject(ConfirmationService);
   customerIdService = inject(CustomerIdService);
   dateService = inject(DateService);
@@ -30,7 +30,7 @@ export default class PresentacionJuntaComiteComponent implements OnInit {
   ref: DynamicDialogRef;
 
   applicationUserId: string =
-    this.authService.userTokenDto.infoUserAuthDto.applicationUserId;
+    this.authS.userTokenDto.infoUserAuthDto.applicationUserId;
   customerId$: Observable<number> = this.customerIdService.getCustomerId$();
   data: PresentacionJuntaComiteDto[] = [];
   supervisorContable: boolean = false;
@@ -48,7 +48,7 @@ export default class PresentacionJuntaComiteComponent implements OnInit {
   }
 
   onValidarId(userId: string): boolean {
-    return userId === this.authService.applicationUserId;
+    return userId === this.authS.applicationUserId;
   }
 
   onLoadData(): void {
@@ -104,7 +104,7 @@ export default class PresentacionJuntaComiteComponent implements OnInit {
   }
 
   onValidarPresentacion(id: number) {
-    const urlApi = `PresentacionJuntaComite/AutorizarPresentacion/${id}/${this.authService.applicationUserId}`;
+    const urlApi = `PresentacionJuntaComite/AutorizarPresentacion/${id}/${this.authS.applicationUserId}`;
     this.apiRequestService.onGetItem(urlApi).then((result: boolean) => {
       if (result) {
         this.enviarMailPresentacionComite(id);
@@ -139,7 +139,7 @@ export default class PresentacionJuntaComiteComponent implements OnInit {
             'PresentacionJuntaComite/AutorizarContable/' +
             id +
             '/' +
-            this.authService.applicationUserId;
+            this.authS.applicationUserId;
         } else {
           urlApi = 'PresentacionJuntaComite/RevocarContable/' + id;
         }

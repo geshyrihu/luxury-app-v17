@@ -16,7 +16,7 @@ import { SolicitudCompraService } from 'src/app/core/services/solicitud-compra.s
 })
 export default class ListSolicitudCompraComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   customerIdService = inject(CustomerIdService);
   router = inject(Router);
   solicitudCompraService = inject(SolicitudCompraService);

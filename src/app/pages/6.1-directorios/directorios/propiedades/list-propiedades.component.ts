@@ -17,7 +17,7 @@ import AddOrEditPropiedadesComponent from './addoredit-propiedades.component';
 })
 export default class ListPropiedadesComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   customerIdService = inject(CustomerIdService);
   dialogHandlerService = inject(DialogHandlerService);
 

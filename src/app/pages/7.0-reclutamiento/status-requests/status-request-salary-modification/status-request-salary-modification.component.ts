@@ -30,7 +30,7 @@ export default class StatusRequestSalaryModificationComponent
   dialogService = inject(DialogService);
   customToastService = inject(CustomToastService);
   router = inject(Router);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
 
   workPositionId = this.statusSolicitudVacanteService.getworkPositionId();
   employeeId = this.statusSolicitudVacanteService.getemployeeId();
@@ -41,8 +41,7 @@ export default class StatusRequestSalaryModificationComponent
   data: any;
   noCandidates: boolean = true;
   pahtBaseImg = environment.base_urlImg + 'Administration/accounts/';
-  applicationUserId: string =
-    this.authService.infoUserAuthDto.applicationUserId;
+  applicationUserId: string = this.authS.infoUserAuthDto.applicationUserId;
   ngOnInit() {
     if (this.workPositionId === null || this.employeeId === null) {
       this.router.navigateByUrl('/reclutamiento/plantilla-interna');

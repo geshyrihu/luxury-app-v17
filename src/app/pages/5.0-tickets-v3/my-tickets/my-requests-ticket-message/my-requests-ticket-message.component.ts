@@ -11,7 +11,7 @@ import TicketMessageFollowupComponent from '../../folloups/ticket-message-follow
 import TicketMessageAddOrEditComponent from '../../messages/ticket-message-add-or-edit/ticket-message-add-or-edit.component';
 import { TicketMessageModule } from '../../ticket-message.module';
 import { TicketGroupService } from '../../ticket.service';
-import MyTicketMessageAddComponent from '../my-ticket-message-add/my-ticket-message-add.component';
+import MyTicketMessageAddEditComponent from '../my-ticket-message-addedit/my-ticket-message-add.component';
 
 @Component({
   selector: 'app-my-requests-ticket-message',
@@ -21,7 +21,7 @@ import MyTicketMessageAddComponent from '../my-ticket-message-add/my-ticket-mess
 })
 export default class MyRequestsTicketMessageComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   dialogHandlerService = inject(DialogHandlerService);
   ticketGroupService = inject(TicketGroupService);
   customerIdService = inject(CustomerIdService);
@@ -41,7 +41,7 @@ export default class MyRequestsTicketMessageComponent implements OnInit {
   }
 
   onLoadData(status: any) {
-    const urlApi = `TicketMessage/MyRequestTicketMessage/${this.authService.applicationUserId}/${status}`;
+    const urlApi = `TicketMessage/MyRequestTicketMessage/${this.authS.applicationUserId}/${status}/${this.customerIdService.customerId}`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.data = result;
       this.status = status;
@@ -79,7 +79,7 @@ export default class MyRequestsTicketMessageComponent implements OnInit {
   onModalAdd(data: any) {
     this.dialogHandlerService
       .openDialog(
-        MyTicketMessageAddComponent,
+        MyTicketMessageAddEditComponent,
         { id: data.id },
         data.title,
         this.dialogHandlerService.dialogSizeLg
@@ -91,7 +91,7 @@ export default class MyRequestsTicketMessageComponent implements OnInit {
       });
   }
   onUpdatePriority(id: string) {
-    const urlApi = `TicketMessage/UpdatePriority/${id}/${this.authService.applicationUserId}`;
+    const urlApi = `TicketMessage/UpdatePriority/${id}/${this.authS.applicationUserId}`;
     this.apiRequestService.onGetItem(urlApi).then((result: any) => {
       if (result) {
         // Encuentra el índice del ítem con el ID proporcionado

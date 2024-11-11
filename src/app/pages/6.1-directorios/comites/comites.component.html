@@ -1,0 +1,93 @@
+<!-- <div class="card" *ngIf="data && data.length > 0">
+  <p-table
+    [value]="data"
+    sortField="customer.nombreCorto"
+    sortMode="single"
+    rowGroupMode="subheader"
+    groupRowsBy="customer.nombreCorto"
+    [tableStyle]="{ 'min-width': '60rem' }"
+    styleClass="custom-table"
+  >
+    <ng-template pTemplate="caption">
+      <custom-table-caption
+        title="COMITES DE VIGILANCIA"
+        [showAdd]="false"
+        [showSearch]="false"
+      />
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Cargo</th>
+        <th>Nombre</th>
+        <th>Email</th>
+        <th>Telèfono</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="groupheader" let-customerGroup>
+      <tr pRowGroupHeader>
+        <td colspan="4">
+          <span class="font-bold ml-2">{{
+            customerGroup.customer.nombreCorto
+          }}</span>
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-member let-rowIndex="rowIndex">
+      <tr>
+        {{
+          member.committeeMembers | json
+        }}
+        <td>{{ member.committeeMembers.ePosicionComite }}</td>
+        <td>{{ member.committeeMembers.fullName }}</td>
+        <td>{{ member.committeeMembers.email }}</td>
+        <td>{{ member.committeeMembers.phoneNumber }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div> -->
+
+<div *ngIf="data && data.length > 0" class="card">
+  <div class="p-2">
+    <custom-table-caption
+      title="COMITES DE VIGILANCIA"
+      [showAdd]="false"
+      [showSearch]="false"
+    />
+  </div>
+
+  <table class="custom-table-report mb-3" *ngFor="let customerGroup of data">
+    <thead class="table-light">
+      <tr>
+        <th class="text-center" colspan="4">
+          <strong>{{ customerGroup.customer.nombreCorto }}</strong>
+        </th>
+      </tr>
+      <tr>
+        <th>Cargo</th>
+        <th>Nombre</th>
+        <th>Email</th>
+        <th>Teléfono</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Itera sobre los miembros del comité para cada cliente -->
+      <tr *ngFor="let member of customerGroup.committeeMembers">
+        <!-- Celda vacía debajo del nombre del cliente -->
+        <td>{{ member.ePosicionComite }}</td>
+        <td>{{ member.fullName }}</td>
+        <td>{{ member.email }}</td>
+        <td>{{ member.phoneNumber }}</td>
+      </tr>
+      <!-- Itera sobre cada grupo de clientes -->
+      <!-- Fila para el nombre del cliente -->
+      <!-- <ng-container *ngFor="let customerGroup of data">
+        <tr class="table-primary">
+          <td colspan="4">
+            <strong>{{ customerGroup.customer.nombreCorto }}</strong>
+          </td>
+        </tr>
+      </ng-container> -->
+    </tbody>
+  </table>
+</div>

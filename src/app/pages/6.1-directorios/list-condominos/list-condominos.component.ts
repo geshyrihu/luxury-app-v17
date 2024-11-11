@@ -19,7 +19,7 @@ import AddOrEditCondominosComponent from './addoredit-condominos.component';
 export default class ListCondominosComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   customerIdService = inject(CustomerIdService);
 
   data: IListCondomino[] = [];

@@ -16,7 +16,7 @@ import ModalDatosServicioComponent from './modal-datos-servicio/modal-datos-serv
 export default class CalendarioMaestroComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
 
   data: any[] = [];
   ref: DynamicDialogRef;

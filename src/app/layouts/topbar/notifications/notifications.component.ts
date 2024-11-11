@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { Subscription } from 'rxjs';
 import { SimplebarAngularModule } from 'simplebar-angular';
@@ -15,18 +15,19 @@ import { TicketGroupService } from 'src/app/pages/5.0-tickets-v3/ticket.service'
 })
 export default class NotificationsComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   ticketGroupService = inject(TicketGroupService);
-  signalRService = inject(SignalRService); // Inyecta el NotificationService
+  signalRService = inject(SignalRService);
 
   messageInNotRead: number = 0;
-  dataSignal = signal<number>(0);
-
+  notifications: any[] = [];
   private notificationSubscription: Subscription;
+  private notificationUpdateSubscription: Subscription;
+
   ngOnInit() {
     this.onLoadNotification();
 
-    // Suscribirse al observable de notificaciones
+    // Suscribirse al observable de notificaciones recibidas
     this.notificationSubscription = this.signalRService
       .getNotificationObservable()
       .subscribe((notificationData) => {
@@ -35,21 +36,44 @@ export default class NotificationsComponent implements OnInit {
           notificationData
         );
         this.onLoadNotification();
-        // Aquí puedes manejar la notificación en el componente hijo
+      });
+
+    // Suscribirse a las actualizaciones de lectura
+    this.notificationUpdateSubscription = this.signalRService
+      .getNotificationUpdateObservable()
+      .subscribe(() => {
+        console.log('Notificación marcada como leída, recargando...');
+        this.onLoadNotification();
       });
   }
 
   onLoadNotification() {
-    // const urlApi = `TicketMessage/MessageNotRead/${this.authService.applicationUserId}`;
-    // this.apiRequestService.onGetList(urlApi).then((result: any) => {
-    //   this.messageInNotRead = result;
-    // });
+    this.messageInNotRead = 0;
+    this.notifications = [];
+    console.log('que sucede primero, onLoadNotification');
+    const urlApi = `NotificationUser/GetAllUnread/${this.authS.applicationUserId}`;
+    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      this.notifications = result;
+      this.notifications.forEach((x: any) => {
+        if (!x.isRead) {
+          this.messageInNotRead++;
+        }
+      });
+    });
+  }
+
+  getTruncatedMessage(message: string, maxLength: number): string {
+    return message.length > maxLength
+      ? message.substring(0, maxLength) + '...'
+      : message;
   }
 
   ngOnDestroy() {
-    // Desuscribirse cuando el componente se destruya para evitar fugas de memoria
     if (this.notificationSubscription) {
       this.notificationSubscription.unsubscribe();
+    }
+    if (this.notificationUpdateSubscription) {
+      this.notificationUpdateSubscription.unsubscribe();
     }
   }
 }

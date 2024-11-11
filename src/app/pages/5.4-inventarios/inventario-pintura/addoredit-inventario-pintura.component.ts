@@ -20,7 +20,7 @@ export default class AddoreditInventarioPinturaComponent implements OnInit {
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
   customerIdService = inject(CustomerIdService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
 
   submitting: boolean = false;
 
@@ -34,7 +34,7 @@ export default class AddoreditInventarioPinturaComponent implements OnInit {
     area: ['', Validators.required],
     productoId: ['', Validators.required],
     producto: ['', Validators.required],
-    applicationUserId: [this.authService.applicationUserId],
+    applicationUserId: [this.authS.applicationUserId],
   });
 
   ngOnInit(): void {

@@ -18,7 +18,7 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 export default class FormCatalogoGastosFijosComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   customerIdService = inject(CustomerIdService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   formBuilder = inject(FormBuilder);
   ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);
@@ -46,7 +46,7 @@ export default class FormCatalogoGastosFijosComponent implements OnInit {
     formaDePagoId: ['', Validators.required],
     catalogoGastosFijosPresupuesto: this.formBuilder.array([]),
     catalogoGastosFijosDetalles: this.formBuilder.array([]),
-    applicationUserId: [this.authService.applicationUserId],
+    applicationUserId: [this.authS.applicationUserId],
   });
 
   ngOnInit(): void {

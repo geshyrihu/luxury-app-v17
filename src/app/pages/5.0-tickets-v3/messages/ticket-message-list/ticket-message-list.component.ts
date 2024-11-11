@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
@@ -12,6 +12,7 @@ import Swal from 'sweetalert2';
 import CardEmployeeComponent from '../../../6.1-directorios/employee/card-employee/card-employee.component';
 import TicketMessageFollowupComponent from '../../folloups/ticket-message-followup/ticket-message-followup.component';
 import { TicketResult } from '../../interfaces/ticket-message-list';
+import SendOperationReportComponent from '../../reports/send-operation-report/send-operation-report.component';
 import { TicketMessageModule } from '../../ticket-message.module';
 import { TicketGroupService } from '../../ticket.service';
 import TicketMessageAddOrEditComponent from '../ticket-message-add-or-edit/ticket-message-add-or-edit.component';
@@ -27,14 +28,15 @@ import TicketMessageReopenComponent from '../ticket-message-reopen/ticket-messag
 })
 export default class TicketMessageListComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   dialogHandlerService = inject(DialogHandlerService);
   ticketGroupService = inject(TicketGroupService);
   customerIdService = inject(CustomerIdService);
   customToastService = inject(CustomToastService);
   activatedRoute = inject(ActivatedRoute);
+  router = inject(Router);
 
-  isSuperUser = this.authService.onValidateRoles(['SuperUsuario']);
+  isSuperUser = this.authS.onValidateRoles(['SuperUsuario']);
   data: TicketResult = {
     nameGroup: '',
     items: [],
@@ -53,9 +55,31 @@ export default class TicketMessageListComponent implements OnInit {
   urlImage = this.ticketGroupService.onGetPathUrlImage(
     this.customerIdService.customerId.toString()
   );
-
+  year: number = this.ticketGroupService.year || 0;
+  numeroSemana: number = this.ticketGroupService.numeroSemana || 0;
+  wekklyIsNullOrEmpty = true;
+  weekInputValue: string = '';
   ngOnInit(): void {
+    this.year = this.ticketGroupService.year || 0;
+    this.numeroSemana = this.ticketGroupService.numeroSemana || 0;
+
+    if (this.year === 0 || this.numeroSemana === 0) {
+      this.wekklyIsNullOrEmpty = true;
+    } else {
+      this.wekklyIsNullOrEmpty = false;
+      const startOfWeek = this.getStartOfWeek(this.year, this.numeroSemana);
+      const inputValue = `${startOfWeek.getFullYear()}-W${
+        this.numeroSemana < 10 ? '0' : ''
+      }${this.numeroSemana}`;
+      // Establecer el valor en el input
+      this.weekInputValue = inputValue; // Asegúrate de declarar esta propiedad
+    }
     this.onLoadData(this.status);
+  }
+  getStartOfWeek(year: number, weekNumber: number): Date {
+    const januaryFirst = new Date(year, 0, 1);
+    const daysToAdd = (weekNumber - 1) * 7 - (januaryFirst.getDay() || 7) + 1; // Ajustar para que inicie el lunes
+    return new Date(year, 0, 1 + daysToAdd);
   }
 
   onLoadData(status: any) {
@@ -164,7 +188,7 @@ export default class TicketMessageListComponent implements OnInit {
       cancelButtonText: 'Cancelar',
     }).then((result) => {
       if (result.value) {
-        const urlApi = `TicketMessage/InProgress/${id}/${this.authService.applicationUserId}`;
+        const urlApi = `TicketMessage/InProgress/${id}/${this.authS.applicationUserId}`;
 
         this.apiRequestService.onGetItem(urlApi).then((result: any) => {
           // Actualizamos el valor del signal con los datos recibidos
@@ -209,7 +233,7 @@ export default class TicketMessageListComponent implements OnInit {
   }
 
   onUpdatePriority(id: string) {
-    const urlApi = `TicketMessage/UpdatePriority/${id}/${this.authService.applicationUserId}`;
+    const urlApi = `TicketMessage/UpdatePriority/${id}/${this.authS.applicationUserId}`;
     this.apiRequestService.onGetItem(urlApi).then((result: any) => {
       if (result) {
         // Encuentra el índice del ítem con el ID proporcionado
@@ -225,25 +249,6 @@ export default class TicketMessageListComponent implements OnInit {
         }
       }
     });
-  }
-
-  calculateDaysDifference(item: {
-    createdAtDate: string;
-    closedAtDate?: string;
-  }): number {
-    // Convertir las fechas en objetos Date
-    const createdAt = new Date(item.createdAtDate);
-    const closedAt = item.closedAtDate
-      ? new Date(item.closedAtDate)
-      : new Date(); // Si closedAtDate no existe, usar la fecha de hoy
-
-    // Calcular la diferencia en milisegundos
-    const diffInMs = closedAt.getTime() - createdAt.getTime();
-
-    // Convertir la diferencia de milisegundos a días
-    const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
-
-    return diffInDays;
   }
 
   // Funcion para eliminar un banco y refres
@@ -262,5 +267,60 @@ export default class TicketMessageListComponent implements OnInit {
           );
         }
       });
+  }
+
+  // handleWeekChange(event: Event): void {
+  //   // Obtener el valor del input en formato 'YYYY-WXX'
+  //   const weekValue = (event.target as HTMLInputElement).value; // '2024-W41'
+
+  //   // Obtener el año y el número de semana
+  //   // Verificar si weekValue tiene un valor
+  //   if (weekValue) {
+  //     this.year = parseInt(weekValue.split('-W')[0], 10);
+  //     this.numeroSemana = parseInt(weekValue.split('-W')[1], 10);
+
+  //     this.ticketGroupService.year = this.year;
+  //     this.ticketGroupService.numeroSemana = this.numeroSemana;
+  //     this.wekklyIsNullOrEmpty = false;
+  //   }
+  // }
+
+  handleWeekChange(event: Event): void {
+    const weekValue = (event.target as HTMLInputElement).value; // '2024-W43'
+
+    if (weekValue) {
+      this.year = parseInt(weekValue.split('-W')[0], 10); // Año 2024
+      this.numeroSemana = parseInt(weekValue.split('-W')[1], 10); // Semana 43
+      this.wekklyIsNullOrEmpty = false;
+
+      // Enviar el año y el número de semana al backend
+      this.ticketGroupService.year = this.year;
+      this.ticketGroupService.numeroSemana = this.numeroSemana;
+      this.wekklyIsNullOrEmpty = false;
+    }
+  }
+  onPreviewWeeklyReport(): void {
+    // Lógica para la vista previa
+    this.router.navigate(['/tickets/weekly-report-preview']);
+  }
+  onSendWeeklyReport(): void {
+    // Lógica para enviar el reporte
+    this.dialogHandlerService
+      .openDialog(
+        SendOperationReportComponent,
+        {
+          year: this.year,
+          numeroSemana: this.numeroSemana,
+        },
+        'Envio de reporte semanal',
+        this.dialogHandlerService.dialogSizeFull
+      )
+      .then((result: boolean) => {
+        if (result) this.onLoadData(this.status);
+      });
+  }
+  onPreviewClickedWorkPlan(): void {
+    // Lógica para la vista previa
+    this.router.navigate(['/tickets/work-plan-preview']);
   }
 }

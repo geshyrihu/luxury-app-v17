@@ -1,5 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
+import { differenceInDays } from 'date-fns';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
@@ -63,5 +64,12 @@ export default class ListContratoPolizaComponent implements OnInit {
     this.apiRequestService.onGetItem(urlApi).then((result: any) => {
       this.onLoadData();
     });
+  }
+  // Suponiendo que 'item.endDate' es una fecha en formato ISO o de tipo Date
+  isCloseToEndDate(endDate: string | Date): boolean {
+    const today = new Date();
+    const end = new Date(endDate);
+    const daysDifference = differenceInDays(end, today);
+    return daysDifference <= 45;
   }
 }

@@ -138,7 +138,11 @@
             {{ item.request }}
           </small>
         </td>
-        <td class="p-column-title">{{ item.applicationUserResponsible }}</td>
+        <td class="p-column-title">
+          <i *ngIf="item.isInternal" class="fa-solid fa-i me-2"></i>
+          <i *ngIf="!item.isInternal" class="fa-solid fa-e me-2"></i>
+          {{ item.applicationUserResponsible }}
+        </td>
 
         <!-- <td class="p-column-title text-center">
           @if (item.request.length > 0) {

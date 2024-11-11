@@ -15,7 +15,7 @@ import AddFileEstadoFinancieroComponent from './add-file-estado-financiero/add-f
   imports: [LuxuryAppComponentsModule],
 })
 export default class EstadoFinancieroListComponent implements OnInit {
-  private authService = inject(AuthService);
+  private authS = inject(AuthService);
   customerIdService = inject(CustomerIdService);
   dialogHandlerService = inject(DialogHandlerService);
   apiRequestService = inject(ApiRequestService);
@@ -61,7 +61,7 @@ export default class EstadoFinancieroListComponent implements OnInit {
   onAuthorize(id: string) {
     this.apiRequestService
       .onGetItem(
-        `EstadoFinanciero/Authorize/${id}/${this.authService.applicationUserId}`
+        `EstadoFinanciero/Authorize/${id}/${this.authS.applicationUserId}`
       )
       .then((_) => {
         this.onLoadData();
@@ -79,7 +79,7 @@ export default class EstadoFinancieroListComponent implements OnInit {
   onSendEstadosFinancieros(data: any) {
     this.apiRequestService
       .onPost(
-        `EstadoFinanciero/Send/${data.id}/${this.authService.applicationUserId}`,
+        `EstadoFinanciero/Send/${data.id}/${this.authS.applicationUserId}`,
         null
       )
       .then((_) => {

@@ -85,7 +85,7 @@ export default class TicketGroupListComponent implements OnInit {
     // this.ticketGroupService.ticketGroupId = ticketGroupId;
     this.ticketGroupService.ticketGroupMessageStatus = ticketGroupMessageStatus;
     this.ticketGroupService.setStatus(ticketGroupMessageStatus);
-    this.router.navigate(['/luxury-chat/messages/' + ticketGroupId]);
+    this.router.navigate(['/tickets/messages/' + ticketGroupId]);
   }
 
   onDelete(id: number) {

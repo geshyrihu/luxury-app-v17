@@ -15,7 +15,7 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
   templateUrl: './send-operation-report.component.html',
 })
 export default class SendOperationReportComponent {
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   apiRequestService = inject(ApiRequestService);
   formBuilder = inject(FormBuilder);
   config = inject(DynamicDialogConfig);
@@ -23,11 +23,11 @@ export default class SendOperationReportComponent {
   messageService = inject(MessageService);
   ref = inject(DynamicDialogRef);
 
-  year: number = 0;
-  numeroSemana: number = 0;
+  year: number = this.config.data.year;
+  numeroSemana: number = this.config.data.numeroSemana;
 
-  isDisabled: boolean = true; // Controla si el botón debe estar deshabilitado
-  errorMessage: string = ''; // Mensaje de error
+  // isDisabled: boolean = true; // Controla si el botón debe estar deshabilitado
+  // errorMessage: string = ''; // Mensaje de error
 
   destinatarios: any[] = [];
   destinatariosFinal: IDestinatariosMailReporte[] = [];
@@ -51,16 +51,6 @@ export default class SendOperationReportComponent {
   });
 
   ngOnInit(): void {
-    // Si el año y el número de semana son válidos, habilitar el botón
-    if (this.year > 0 && this.numeroSemana > 0) {
-      this.isDisabled = false;
-      this.errorMessage = ''; // Limpiar el mensaje de error si todo es válido
-    } else {
-      this.isDisabled = true;
-      this.errorMessage =
-        '<== Seleccione una semana válida, que corresponda al reporte a enviar.';
-    }
-
     this.onLoadSelectItem();
   }
 
@@ -79,7 +69,7 @@ export default class SendOperationReportComponent {
 
   onEnviarEmail() {
     const urlApi = `SendEmail/OperationReport/${
-      this.authService.applicationUserId
+      this.authS.applicationUserId
     }/${this.customerIdService.getCustomerId()}/${this.year}/${
       this.numeroSemana
     }`;
@@ -152,28 +142,28 @@ export default class SendOperationReportComponent {
     this.destinatariosAdicionales.splice(indexArr, 1);
   }
 
-  handleWeekChange(event: Event): void {
-    // Obtener el valor del input en formato 'YYYY-WXX'
-    const weekValue = (event.target as HTMLInputElement).value; // '2024-W41'
+  // handleWeekChange(event: Event): void {
+  //   // Obtener el valor del input en formato 'YYYY-WXX'
+  //   const weekValue = (event.target as HTMLInputElement).value; // '2024-W41'
 
-    // Obtener el año y el número de semana
-    // Verificar si weekValue tiene un valor
-    if (weekValue) {
-      this.year = parseInt(weekValue.split('-W')[0], 10);
-      this.numeroSemana = parseInt(weekValue.split('-W')[1], 10);
+  //   // Obtener el año y el número de semana
+  //   // Verificar si weekValue tiene un valor
+  //   if (weekValue) {
+  //     this.year = parseInt(weekValue.split('-W')[0], 10);
+  //     this.numeroSemana = parseInt(weekValue.split('-W')[1], 10);
 
-      // Si el año y el número de semana son válidos, habilitar el botón
-      if (this.year > 0 && this.numeroSemana > 0) {
-        this.isDisabled = false;
-        this.errorMessage = ''; // Limpiar el mensaje de error si todo es válido
-      } else {
-        this.isDisabled = true;
-        this.errorMessage = 'Por favor, seleccione una semana válida.';
-      }
-    } else {
-      // Si no se seleccionó una semana, deshabilitar el botón y mostrar el mensaje
-      this.isDisabled = true;
-      this.errorMessage = 'Por favor, seleccione una semana.';
-    }
-  }
+  //     // Si el año y el número de semana son válidos, habilitar el botón
+  //     if (this.year > 0 && this.numeroSemana > 0) {
+  //       this.isDisabled = false;
+  //       this.errorMessage = ''; // Limpiar el mensaje de error si todo es válido
+  //     } else {
+  //       this.isDisabled = true;
+  //       this.errorMessage = 'Por favor, seleccione una semana válida.';
+  //     }
+  //   } else {
+  //     // Si no se seleccionó una semana, deshabilitar el botón y mostrar el mensaje
+  //     this.isDisabled = true;
+  //     this.errorMessage = 'Por favor, seleccione una semana.';
+  //   }
+  // }
 }

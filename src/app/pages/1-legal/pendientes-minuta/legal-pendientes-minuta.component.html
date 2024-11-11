@@ -140,15 +140,15 @@
         <td class="p-column-title">
           <div class="d-flex align-content-center">
             <custom-button
-              [customClass]="'btn-sm btn-soft-primary'"
+              customClass="btn-soft-primary waves-effect waves-light  bg-gradient me-1"
               ngbTooltip="Ver todos los seguimientos"
-              icon="fa-light fa-list text-primary"
+              icon="icon-list"
               (clicked)="onModalTodosSeguimientos(item.id)"
             />
             <custom-button
-              [customClass]="'btn-sm btn-outline-info'"
+              customClass="btn-soft-primary waves-effect waves-light  bg-gradient me-1"
               ngbTooltip="Agregar Seguimiento"
-              icon="fa-light fa-plus text-info"
+              icon="icon-plus"
               (clicked)="onModalAddOrEditSeguimiento(item.id, 0)"
             />
             <btn-edit

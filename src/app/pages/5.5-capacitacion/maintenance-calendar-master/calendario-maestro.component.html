@@ -6,7 +6,7 @@
   <div class="col-sm-3">
     <ngb-alert [dismissible]="false" type="primary"
       >{{ item.mes }}
-      @if (authService.onValidateRoles(['SuperUsuario'])) {
+      @if (authS.onValidateRoles(['SuperUsuario'])) {
       <button
         type="button"
         ngbTooltip="Agregar"
@@ -22,7 +22,7 @@
       @for (evento of item.items; track evento; let i = $index) {
       <li class="pointer list-group-item mb-2">
         <div class="d-flex justify-content-start">
-          @if (authService.onValidateRoles(['SuperUsuario'])) {
+          @if (authS.onValidateRoles(['SuperUsuario'])) {
           <div class="btn-group me-3" role="group" ngbDropdown>
             <i
               id="btnGroupVerticalDrop1"

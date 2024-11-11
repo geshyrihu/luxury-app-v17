@@ -15,7 +15,7 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 })
 export default class AddoreditPiscinaBitacoraComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   formBuilder = inject(FormBuilder);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
@@ -48,7 +48,7 @@ export default class AddoreditPiscinaBitacoraComponent implements OnInit {
       cepillado: [false, Validators.required],
       aspirado: [false, Validators.required],
       cenefas: [false, Validators.required],
-      applicationUserId: [this.authService.applicationUserId],
+      applicationUserId: [this.authS.applicationUserId],
     });
   }
 

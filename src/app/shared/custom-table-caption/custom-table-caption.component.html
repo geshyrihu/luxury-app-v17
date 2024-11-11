@@ -14,9 +14,11 @@ Extra Large (xl): 1200px o más. -->
       <div
         class="page-title-box d-sm-flex align-items-center justify-content-between"
       >
-        <h4 class="mb-sm-0">
+        <!-- <h4 class="mb-sm-0">
           {{ title | uppercase }}
-        </h4>
+        </h4> -->
+        <h4 class="mb-sm-0 font-size-18">{{ title | uppercase }}</h4>
+        <!-- <app-pagetitle /> -->
       </div>
     </div>
     <!-- Columna Bootstrap: ocupa 3 unidades en pantallas pequeñas (col-sm-3) -->
@@ -54,7 +56,7 @@ Extra Large (xl): 1200px o más. -->
       class="page-title-box d-sm-flex align-items-center justify-content-between"
     >
       <h4 class="font-size-18">
-        {{ title }}
+        {{ title | uppercase }}
       </h4>
     </div>
   </div>

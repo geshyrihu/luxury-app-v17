@@ -20,14 +20,14 @@ export function flatpickrFactory() {
 export default class TicketSistemasReportComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
 
   constructor() {
     flatpickrFactory();
   }
 
   cb_responsableSistemas: ISelectItem[] = [];
-  responsableSistemas: string = this.authService.applicationUserId;
+  responsableSistemas: string = this.authS.applicationUserId;
   dateInitial: string = '';
   dateFinal: string = '';
 

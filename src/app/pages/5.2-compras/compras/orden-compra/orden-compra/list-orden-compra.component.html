@@ -27,10 +27,10 @@
       (add)="onModalAdd()"
       [dt]="dt"
       [rolAuth]="
-        authService.onValidateRoles([
+        authS.onValidateRoles([
           'Asistente',
-          'Mantenimiento',
-          'Residente',
+          'JefeMantenimiento',
+          'Administrador',
           'SuperUsuario'
         ])
       "
@@ -181,21 +181,19 @@
           >
             <i class="fa-light fa-file-pdf"></i>
           </a>
-          } @if ( authService.onValidateRoles([ 'Asistente', 'Mantenimiento',
-          'Residente' ]) ) {
+          } @if ( authS.onValidateRoles([ 'Asistente', 'JefeMantenimiento',
+          'Administrador' ]) ) {
           <btn-edit (edit)="onAddOrEdit(item.id)" />
           }
-          <button
-            type="button"
-            class="btn btn-sm btn-outline-info me-1 pointer"
+          <custom-button
+            customClass="btn-soft-primary waves-effect waves-light  bg-gradient me-1"
             ngbTooltip="Ver en modal"
-            placement="top"
-            (click)="onOrdenCompraModal(item.id)"
-          >
-            <i class="fa-light fa-pencil text-info"></i>
-          </button>
-          @if ( statusCompra === 2 && authService.onValidateRoles(['Residente'])
-          ) {
+            icon="icon-edit"
+            (clicked)="onOrdenCompraModal(item.id)"
+          />
+
+          @if ( statusCompra === 2 && authS.onValidateRoles(['Administrador']) )
+          {
           <btn-delete (OnConfirm)="onDelete(item.id)" />
           }
         </div>

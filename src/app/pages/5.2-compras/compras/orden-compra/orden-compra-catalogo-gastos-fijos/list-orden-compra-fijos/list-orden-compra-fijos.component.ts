@@ -20,7 +20,7 @@ import OrdenCompraComponent from '../../orden-compra/orden-compra.component';
 export default class ListOrdenCompraFijosComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   router = inject(Router);
   customerIdService = inject(CustomerIdService);
   ordenCompraService = inject(OrdenCompraService);

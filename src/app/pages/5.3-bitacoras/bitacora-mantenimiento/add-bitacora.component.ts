@@ -14,7 +14,7 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 })
 export default class AddBitacoraComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   config = inject(DynamicDialogConfig);
   formBuilder = inject(FormBuilder);
   ref = inject(DynamicDialogRef);
@@ -28,7 +28,7 @@ export default class AddBitacoraComponent implements OnInit {
 
   ngOnInit(): void {
     this.applicationUserId =
-      this.authService.userTokenDto.infoUserAuthDto.applicationUserId;
+      this.authS.userTokenDto.infoUserAuthDto.applicationUserId;
     this._machineryId = this.config.data.machineryId;
     this.onGetMachinerySelectItem(this._machineryId);
     this.onCreateForm();
@@ -40,7 +40,7 @@ export default class AddBitacoraComponent implements OnInit {
       machinery: ['', Validators.required],
       descripcion: ['', Validators.required],
       emergencia: [false],
-      applicationUserId: [this.authService.applicationUserId],
+      applicationUserId: [this.authS.applicationUserId],
     });
   }
 
@@ -49,7 +49,7 @@ export default class AddBitacoraComponent implements OnInit {
 
     this.submitting = true;
     this.form.patchValue({
-      applicationUserId: this.authService.applicationUserId,
+      applicationUserId: this.authS.applicationUserId,
     });
     this.apiRequestService
       .onPost(`BitacoraMantenimiento`, this.form.value)

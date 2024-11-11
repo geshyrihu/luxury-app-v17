@@ -16,7 +16,7 @@
             [title]="'Catalogo de cuentas'"
             (add)="showModalAddOrEdit({ id: 0, title: 'Nuevo Registro' })"
             [dt]="dt"
-            [rolAuth]="authService.onValidateRoles(['SuperUsuario'])"
+            [rolAuth]="authS.onValidateRoles(['SuperUsuario'])"
           />
         </div>
         <div class="col-2">
@@ -38,7 +38,7 @@
           DESCRIPCIÓN DE LA CUENTA
           <p-sortIcon field="descripcion"></p-sortIcon>
         </th>
-        @if (authService.onValidateRoles(['SuperUsuario'])) {
+        @if (authS.onValidateRoles(['SuperUsuario'])) {
         <th scope="col" style="width: 5%"></th>
         }
       </tr>
@@ -54,7 +54,7 @@
         <td class="p-column-title">
           {{ item.descripcion }}
         </td>
-        @if (authService.onValidateRoles(['SuperUsuario'])) {
+        @if (authS.onValidateRoles(['SuperUsuario'])) {
         <td class="p-column-title">
           <div class="d-flex justify-content-center">
             <btn-edit

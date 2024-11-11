@@ -1,0 +1,30 @@
+<div class="row">
+  <div class="col-12 text-center">
+    <h4 class="h4">{{ header }}</h4>
+  </div>
+
+  <!-- Generar columnas dinámicas con los datos -->
+  <div [ngClass]="columnClass" *ngFor="let ticket of data">
+    <div
+      class="card mb-4 shadow-sm pointer"
+      (click)="onCardClick(ticket.statusKey)"
+    >
+      <div class="card-header text-center p-2">
+        <h5 class="card-title">
+          {{ ticket.title }}
+        </h5>
+      </div>
+      <div class="card-body text-center p-2">
+        <p
+          class="ml-2"
+          [ngClass]="ticket.statusKey === 1 ? 'text-success' : 'text-danger'"
+          style="font-size: 3rem"
+        >
+          <strong>
+            {{ ticket.tickets }}
+          </strong>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

@@ -17,7 +17,7 @@ import { environment } from 'src/environments/environment';
 })
 export default class AddoreditProveedorComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   config = inject(DynamicDialogConfig);
   formBuilder = inject(FormBuilder);
   ref = inject(DynamicDialogRef);
@@ -97,7 +97,7 @@ export default class AddoreditProveedorComponent implements OnInit {
       rfc: ['', Validators.required],
       bankName: ['', Validators.required],
       sales: [false],
-      applicationUserId: [this.authService.applicationUserId],
+      applicationUserId: [this.authS.applicationUserId],
       convenio: [''],
       referencia: [''],
       webPage: [''],
@@ -167,10 +167,7 @@ export default class AddoreditProveedorComponent implements OnInit {
     formData.append('bankId', String(dto.bankId));
     formData.append('paymentAccount', String(dto.paymentAccount));
     formData.append('interbankCode', String(dto.interbankCode));
-    formData.append(
-      'applicationUserId',
-      String(this.authService.applicationUserId)
-    );
+    formData.append('applicationUserId', String(this.authS.applicationUserId));
 
     formData.append('convenio', dto.convenio);
     formData.append('referencia', dto.referencia);

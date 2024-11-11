@@ -16,7 +16,7 @@ import ContMinutaSeguimientosComponent from '../../2-contabilidad/contabilidad-p
 export default class LegalPendientesMinutaComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
 
   data: any[] = [];
   ref: DynamicDialogRef;
@@ -29,7 +29,7 @@ export default class LegalPendientesMinutaComponent implements OnInit {
   onLoadData() {
     this.apiRequestService
       .onGetList(
-        `ContabilidadMinuta/ListaMinutaLegal/${this.authService.userTokenDto.infoUserAuthDto.applicationUserId}/${this.statusFiltro}`
+        `ContabilidadMinuta/ListaMinutaLegal/${this.authS.userTokenDto.infoUserAuthDto.applicationUserId}/${this.statusFiltro}`
       )
       .then((result: any) => {
         this.data = result;

@@ -27,11 +27,11 @@
       (add)="showModalAddOrEdit({ id: 0, title: 'Nuevo Registro' })"
       [dt]="dt"
       [rolAuth]="
-        authService.onValidateRoles([
+        authS.onValidateRoles([
           'Asistente',
-          'Mantenimiento',
+          'JefeMantenimiento',
           'SuperUsuario',
-          'Residente'
+          'Administrador'
         ])
       "
     />
@@ -58,8 +58,8 @@
         Modelo
         <p-sortIcon field="modelo"></p-sortIcon>
       </th>
-      @if ( authService.onValidateRoles([ 'Asistente', 'Mantenimiento',
-      'SuperUsuario', 'Residente' ]) ) {
+      @if ( authS.onValidateRoles([ 'Asistente', 'JefeMantenimiento',
+      'SuperUsuario', 'Administrador' ]) ) {
       <th scope="col" style="width: 5%">Opciones</th>
       }
     </tr>
@@ -91,12 +91,12 @@
       </td>
       <td class="p-column-title">
         <div class="d-flex justify-content-center">
-          @if ( authService.onValidateRoles([ 'SupervisionOperativa',
-          'SuperUsuario', 'Residente' ]) || item.userid === account_id ) {
+          @if ( authS.onValidateRoles([ 'SupervisionOperativa', 'SuperUsuario',
+          'Administrador' ]) || item.userid === account_id ) {
           <btn-edit
             (edit)="showModalAddOrEdit({ id: item.id, title: 'Editar' })"
           />
-          } @if (authService.onValidateRoles(['SuperUsuario'])) {
+          } @if (authS.onValidateRoles(['SuperUsuario'])) {
           <btn-delete (OnConfirm)="onDelete(item.id)" />
           }
         </div>

@@ -1,0 +1,9 @@
+@if (data) {
+
+<app-dashboard-dynamic-card-item
+  header="TICKETS MTTOS"
+  [data]="data"
+  columnClass="col-md-12"
+  (cardClick)="onClick($event)"
+/>
+}

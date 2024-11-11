@@ -19,7 +19,7 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class TicketMessageReopenComponent implements OnInit {
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   apiRequestService = inject(ApiRequestService);
   config = inject(DynamicDialogConfig);
   customerIdService = inject(CustomerIdService);
@@ -30,7 +30,7 @@ export default class TicketMessageReopenComponent implements OnInit {
 
   form: FormGroup = this.formBuilder.group({
     applicationUserId: new FormControl(
-      this.authService.applicationUserId,
+      this.authS.applicationUserId,
       Validators.required
     ),
     ticketMessageId: new FormControl(this.config.data.id, Validators.required),
@@ -38,7 +38,7 @@ export default class TicketMessageReopenComponent implements OnInit {
       Validators.required,
       Validators.maxLength(150),
     ]),
-    userCreateId: [this.authService.applicationUserId, Validators.required],
+    userCreateId: [this.authS.applicationUserId, Validators.required],
   });
   ngOnInit() {}
 

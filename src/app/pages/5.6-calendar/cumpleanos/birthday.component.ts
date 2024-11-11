@@ -20,7 +20,7 @@ const base_urlImg = environment.base_urlImg + 'Administration/accounts/';
 export default class BirthdayComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   customerIdService = inject(CustomerIdService);
 
   url = base_urlImg;

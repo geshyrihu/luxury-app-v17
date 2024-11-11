@@ -23,7 +23,7 @@ import { VisibilityLevel } from '../../interfaces/visibility-level.enum';
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class TicketGroupAddOrEditComponent implements OnInit {
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   apiRequestService = inject(ApiRequestService);
   config = inject(DynamicDialogConfig);
   customerIdService = inject(CustomerIdService);
@@ -45,7 +45,7 @@ export default class TicketGroupAddOrEditComponent implements OnInit {
     ),
     visibility: [false, Validators.required],
     ticketGroupCategoryId: new FormControl('', Validators.required),
-    userCreateId: [this.authService.applicationUserId, Validators.required],
+    userCreateId: [this.authS.applicationUserId, Validators.required],
   });
 
   ngOnInit(): void {

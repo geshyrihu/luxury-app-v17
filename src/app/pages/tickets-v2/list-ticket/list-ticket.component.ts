@@ -28,7 +28,7 @@ export default class ListTicketComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
 
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   customerIdService = inject(CustomerIdService);
   dateService = inject(DateService);
   router = inject(Router);
@@ -192,7 +192,7 @@ export default class ListTicketComponent implements OnInit {
     // Obtener solo el número de semana de la cadena '2024-W03'
     const numeroSemana = +week.split('-W')[1];
 
-    const urlApi = `WeeklyWorkPlan/Create/${numeroSemana}/${year}/${this.customerIdService.customerId}/${this.authService.applicationUserId}`;
+    const urlApi = `WeeklyWorkPlan/Create/${numeroSemana}/${year}/${this.customerIdService.customerId}/${this.authS.applicationUserId}`;
     this.apiRequestService.onGetItem(urlApi).then((result: any) => {
       this.customToastService.onCloseToSuccess();
     });
@@ -218,7 +218,7 @@ export default class ListTicketComponent implements OnInit {
   onLoadMisTickets() {
     const result = this.originalData.filter(
       (resp: any) =>
-        resp.applicationUserResponsableId == this.authService.applicationUserId
+        resp.applicationUserResponsableId == this.authS.applicationUserId
     );
     this.data = result;
   }

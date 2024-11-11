@@ -15,7 +15,7 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 })
 export default class MyTicketMessageProgramComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   formBuilder = inject(FormBuilder);
   customerIdService = inject(CustomerIdService);
   config = inject(DynamicDialogConfig);
@@ -28,10 +28,7 @@ export default class MyTicketMessageProgramComponent implements OnInit {
     id: { value: this.id, disabled: true },
     scheduledDate: [new Date(), Validators.required],
     assigneeId: ['', Validators.required],
-    applicationUserId: [
-      this.authService.applicationUserId,
-      Validators.required,
-    ],
+    applicationUserId: [this.authS.applicationUserId, Validators.required],
   });
 
   ngOnInit() {

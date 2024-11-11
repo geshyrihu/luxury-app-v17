@@ -21,7 +21,7 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 export default class AddoreditMaintenancePreventiveComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   formBuilder = inject(FormBuilder);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   config = inject(DynamicDialogConfig);
   customerIdService = inject(CustomerIdService);
   ref = inject(DynamicDialogRef);
@@ -37,7 +37,7 @@ export default class AddoreditMaintenancePreventiveComponent implements OnInit {
   form: FormGroup;
   id: any = 0;
   idMachinery: number = null;
-  account_id = this.authService.userTokenDto.infoUserAuthDto.applicationUserId;
+  account_id = this.authS.userTokenDto.infoUserAuthDto.applicationUserId;
   fecha: string | undefined;
 
   public saveMachineryId(e: any): void {
@@ -142,7 +142,7 @@ export default class AddoreditMaintenancePreventiveComponent implements OnInit {
       machineryName: ['', Validators.required],
       providerName: ['', Validators.required],
       cuentaName: ['', Validators.required],
-      applicationUserId: [this.authService.applicationUserId],
+      applicationUserId: [this.authS.applicationUserId],
     });
   }
   LoadCopy() {

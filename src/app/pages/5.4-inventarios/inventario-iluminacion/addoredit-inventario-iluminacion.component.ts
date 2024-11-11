@@ -18,7 +18,7 @@ export default class AddoreditInventarioIluminacionComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   customerIdService = inject(CustomerIdService);
   submitting: boolean = false;
 
@@ -34,10 +34,7 @@ export default class AddoreditInventarioIluminacionComponent implements OnInit {
     cantidad: ['', Validators.required],
     productoId: ['', Validators.required],
     producto: ['', Validators.required],
-    applicationUserId: [
-      this.authService.applicationUserId,
-      Validators.required,
-    ],
+    applicationUserId: [this.authS.applicationUserId, Validators.required],
   });
 
   ngOnInit(): void {

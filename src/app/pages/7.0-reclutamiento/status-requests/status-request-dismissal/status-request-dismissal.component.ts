@@ -25,7 +25,7 @@ export default class StatusRequestDismissalComponent
   implements OnInit, OnDestroy
 {
   private statusSolicitudVacanteService = inject(StatusSolicitudVacanteService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   customerIdService = inject(CustomerIdService);
   dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
@@ -41,8 +41,7 @@ export default class StatusRequestDismissalComponent
   data: any;
   noCandidates: boolean = true;
   pahtBaseImg = environment.base_urlImg + 'Administration/accounts/';
-  applicationUserId: string =
-    this.authService.infoUserAuthDto.applicationUserId;
+  applicationUserId: string = this.authS.infoUserAuthDto.applicationUserId;
   ngOnInit() {
     if (this.workPositionId === null) {
       this.router.navigateByUrl('/reclutamiento/plantilla-interna');

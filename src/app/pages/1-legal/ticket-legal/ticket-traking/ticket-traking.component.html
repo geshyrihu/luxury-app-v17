@@ -14,6 +14,13 @@
         <div class="card">
           <div class="card-body">
             <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
+              <custom-input-date
+                [control]="form.get('dateCreation')"
+                formControlName="dateCreation"
+                label="Fecha"
+                placeholder="fecha"
+              />
+
               <div class="form-floating">
                 <textarea
                   class="form-control"

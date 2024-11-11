@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { SignalRService } from './core/services/signal-r.service';
+import { UpdateService } from './core/services/update-pwa.service';
 
 @Component({
   selector: 'app-root',
@@ -10,6 +11,7 @@ import { SignalRService } from './core/services/signal-r.service';
 })
 export class AppComponent {
   notificationPushService = inject(SignalRService);
+  updateService = inject(UpdateService);
   ngOnInit() {
     this.requestNotificationPermission();
   }

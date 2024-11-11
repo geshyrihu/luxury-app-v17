@@ -19,7 +19,7 @@ import { environment } from 'src/environments/environment';
 })
 export default class AddOrEditPiscinaComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   formBuilder = inject(FormBuilder);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
@@ -50,7 +50,7 @@ export default class AddOrEditPiscinaComponent implements OnInit {
       ],
       pathImage: [''],
       typePiscina: [0, Validators.required],
-      applicationUserId: [this.authService.applicationUserId],
+      applicationUserId: [this.authS.applicationUserId],
       customerId: [this.customerIdService.getCustomerId()],
     });
   }
@@ -95,10 +95,7 @@ export default class AddOrEditPiscinaComponent implements OnInit {
     formData.append('volumen', dto.volumen);
     formData.append('typePiscina', String(dto.typePiscina));
     formData.append('customerId', String(this.customerIdService.customerId));
-    formData.append(
-      'applicationUserId',
-      String(this.authService.applicationUserId)
-    );
+    formData.append('applicationUserId', String(this.authS.applicationUserId));
     formData.append('customerId', String(dto.customerId));
     if (dto.pathImage) {
       formData.append('pathImage', dto.pathImage);

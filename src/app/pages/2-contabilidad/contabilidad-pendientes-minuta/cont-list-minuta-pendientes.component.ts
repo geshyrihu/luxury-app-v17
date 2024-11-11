@@ -20,7 +20,7 @@ import ContMinutaSeguimientosComponent from './cont-minuta-seguimientos.componen
 export default class ContListMinutaPendientesComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   dialogService = inject(DialogService);
   messageService = inject(MessageService);
 
@@ -35,7 +35,7 @@ export default class ContListMinutaPendientesComponent implements OnInit {
   onLoadData() {
     this.apiRequestService
       .onGetList(
-        `ContabilidadMinuta/ListaMinuta/${this.authService.userTokenDto.infoUserAuthDto.applicationUserId}/${this.statusFiltro}`
+        `ContabilidadMinuta/ListaMinuta/${this.authS.userTokenDto.infoUserAuthDto.applicationUserId}/${this.statusFiltro}`
       )
       .then((result: any) => {
         this.data = result;

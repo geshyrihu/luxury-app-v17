@@ -17,7 +17,7 @@ import { environment } from 'src/environments/environment';
 export default class AddoreditDocumentoComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   customerIdService = inject(CustomerIdService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   formBuilder = inject(FormBuilder);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);

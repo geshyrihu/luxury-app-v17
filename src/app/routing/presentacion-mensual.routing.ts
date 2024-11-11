@@ -7,5 +7,6 @@ export default [
       import(
         'src/app/pages/5.1-operaciones/presentacion-junta-comite/presentacion-junta-comite.component'
       ),
+    data: { title: 'Presentaciones' },
   },
 ] as Routes;

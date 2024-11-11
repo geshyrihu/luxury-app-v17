@@ -7,6 +7,7 @@ export default [
       import(
         'src/app/pages/3-supervision/agenda-supervision/agenda-supervision.component'
       ),
+    data: { title: 'Agenda de Supervisión' },
   },
   {
     path: 'minutas-resumen',
@@ -14,6 +15,7 @@ export default [
       import(
         'src/app/pages/3-supervision/minutas-resumen/minutas-resumen.component'
       ),
+    data: { title: 'Minutas Resumen' },
   },
   {
     path: 'reporte-tickets',
@@ -21,6 +23,7 @@ export default [
       import(
         'src/app/pages/3-supervision/reporte-tickets/reporte-tickets.component'
       ),
+    data: { title: 'Reporte de Tickets' },
   },
   {
     path: 'grafico-resultado-general',
@@ -28,6 +31,7 @@ export default [
       import(
         'src/app/pages/3-supervision/resultado-general-grafico/resultado-general-grafico.component'
       ),
+    data: { title: 'Gráfico Resultado General' },
   },
   {
     path: 'resultado-general-posicion',
@@ -35,6 +39,7 @@ export default [
       import(
         'src/app/pages/3-supervision/resultado-general-posicion/resultado-general-posicion.component'
       ),
+    data: { title: 'Resultado General por Posición' },
   },
   {
     path: 'evaluacion-areas',
@@ -42,6 +47,7 @@ export default [
       import(
         'src/app/pages/3-supervision/resultado-general-evaluacion-areas/resultado-general-evaluacion-areas.component'
       ),
+    data: { title: 'Evaluación de Áreas' },
   },
   {
     path: 'resultado-general-dashboard',
@@ -49,6 +55,7 @@ export default [
       import(
         'src/app/pages/3-supervision/resultado-general-dashboard/resultado-general-dashboard.component'
       ),
+    data: { title: 'Dashboard de Resultado General' },
   },
   {
     path: 'presentaciones-juntas-comite',
@@ -56,5 +63,6 @@ export default [
       import(
         'src/app/pages/3-supervision/presentaciones-juntas-comite/presentaciones-juntas-comite.component'
       ),
+    data: { title: 'Presentaciones de Juntas Comité' },
   },
 ] as Routes;

@@ -16,7 +16,7 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 export default class AddOrEditEmailDataComponent implements OnInit {
   formBuilder = inject(FormBuilder);
   apiRequestService = inject(ApiRequestService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
 

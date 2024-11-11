@@ -15,7 +15,7 @@ import AddOrEditComunicadoComponent from './addoredit-comunicado.component';
 export default class ComunicadoComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
 
   data: any[] = [];
   ref: DynamicDialogRef;

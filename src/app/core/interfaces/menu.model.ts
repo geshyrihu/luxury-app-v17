@@ -1,4 +1,5 @@
 export interface IMenuItem {
+  isTitle?: boolean;
   visible: boolean;
   label: string;
   icon?: string;

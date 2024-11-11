@@ -8,6 +8,7 @@ export default [
       import(
         'src/app/pages/5.4-inventarios/panel-inventories/panel-inventories.component'
       ),
+    data: { title: 'Panel de Inventarios' },
   },
   {
     path: 'calendario-anual',
@@ -16,25 +17,13 @@ export default [
         'src/app/pages/5.6-calendar/mantenimiento-preventivo/list-calendario-mtto.component'
       ),
     canActivate: [AuthGuard],
+    data: { title: 'Calendario Anual' },
   },
-  {
-    path: 'almacen',
-    loadChildren: () => import('./almacen.routing'),
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'bitacora',
-    loadChildren: () => import('./bitacora.routing'),
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'catalogo',
-    loadChildren: () => import('./catalogos.routing'),
-    canActivate: [AuthGuard],
-  },
+
   {
     path: 'inventario',
     loadChildren: () => import('./inventarios.routing'),
     canActivate: [AuthGuard],
+    data: { title: 'Inventario' },
   },
 ] as Routes;

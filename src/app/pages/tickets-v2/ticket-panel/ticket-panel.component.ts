@@ -11,7 +11,7 @@ import { MenuTikecket } from './ticket-panel-menu';
   standalone: true,
 })
 export default class TicketPanelComponent {
-  authService = inject(AuthService);
+  authS = inject(AuthService);
 
   ticketPanelMenuItems: ITicketPanelMenu[] = MenuTikecket;
 }

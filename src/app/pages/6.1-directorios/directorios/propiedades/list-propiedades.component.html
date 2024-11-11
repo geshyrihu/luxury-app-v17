@@ -20,7 +20,7 @@
       (add)="showModalAddOrEdit({ id: 0, title: 'Nuevo Registro' })"
       [dt]="dt"
       [rolAuth]="
-        authService.onValidateRoles(['Asistente', 'Residente', 'SuperUsuario'])
+        authS.onValidateRoles(['Asistente', 'Administrador', 'SuperUsuario'])
       "
     />
   </ng-template>
@@ -44,8 +44,8 @@
         Departamento
         <p-sortIcon field="department"></p-sortIcon>
       </th>
-      @if ( authService.onValidateRoles([ 'Asistente', 'Residente',
-      'SuperUsuario' ]) ) {
+      @if ( authS.onValidateRoles([ 'Asistente', 'Administrador', 'SuperUsuario'
+      ]) ) {
       <th scope="col" style="width: 5%" class="text-small">Opciones</th>
       }
     </tr>
@@ -62,8 +62,8 @@
           {{ item.department }}
         </small>
       </td>
-      @if ( authService.onValidateRoles([ 'Asistente', 'Residente',
-      'SuperUsuario' ]) ) {
+      @if ( authS.onValidateRoles([ 'Asistente', 'Administrador', 'SuperUsuario'
+      ]) ) {
       <td class="p-column-title">
         <div class="d-flex justify-content-center">
           <!-- Componente editar registro -->

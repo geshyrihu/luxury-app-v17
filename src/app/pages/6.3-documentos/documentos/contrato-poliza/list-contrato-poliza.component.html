@@ -29,11 +29,11 @@
         <th scope="col" pSortableColumn="description">
           Descripción<p-sortIcon field="description"></p-sortIcon>
         </th>
-        <th scope="col" pSortableColumn="startDate">
-          Fecha Contratación<p-sortIcon field="startDate"></p-sortIcon>
+        <th scope="col" pSortableColumn="startDateFilter">
+          Fecha Contratación<p-sortIcon field="startDateFilter"></p-sortIcon>
         </th>
-        <th scope="col" pSortableColumn="endDate">
-          Fecha de Término<p-sortIcon field="endDate"></p-sortIcon>
+        <th scope="col" pSortableColumn="endDateFilter">
+          Fecha de Término<p-sortIcon field="endDateFilter"></p-sortIcon>
         </th>
         <th scope="col">Documento</th>
         <th scope="col" style="width: 5%">Opciones</th>
@@ -54,7 +54,19 @@
           {{ item.startDate }}
         </td>
         <td class="p-column-title">
-          {{ item.endDate }}
+          <span
+            class="badge p-2 w-75"
+            [ngClass]="{
+              'bg-danger-subtle text-danger': isCloseToEndDate(
+                item.endDateFilter
+              ),
+              'bg-success-subtle text-success': !isCloseToEndDate(
+                item.endDateFilter
+              )
+            }"
+          >
+            {{ item.endDate }}
+          </span>
         </td>
         <td class="p-column-title text-center">
           <btn-download-file

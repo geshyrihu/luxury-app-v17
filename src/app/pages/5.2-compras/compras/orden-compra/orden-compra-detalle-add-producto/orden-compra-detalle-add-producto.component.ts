@@ -20,7 +20,7 @@ export default class OrdenCompraDetalleAddProductoComponent implements OnInit {
 
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
 
   ordenCompraId: number = 0;
   data: any[] = [];
@@ -55,7 +55,7 @@ export default class OrdenCompraDetalleAddProductoComponent implements OnInit {
     }
 
     item.applicationUserId =
-      this.authService.userTokenDto.infoUserAuthDto.applicationUserId;
+      this.authS.userTokenDto.infoUserAuthDto.applicationUserId;
 
     this.apiRequestService
       .onPost(`OrdenCompraDetalle/`, item)

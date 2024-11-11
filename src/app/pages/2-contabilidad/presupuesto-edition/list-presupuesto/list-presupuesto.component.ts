@@ -20,7 +20,7 @@ import PresupuestoAddComponent from '../presupuesto-add/presupuesto-add.componen
 export default class ListPresupuestoComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   customerIdService = inject(CustomerIdService);
   customToastService = inject(CustomToastService);
   router = inject(Router);

@@ -38,45 +38,28 @@
     <ng-template pTemplate="header">
       <tr>
         <th scope="col" style="width: 6%">FOLIO</th>
-        <th scope="col" style="width: 8%" pSortableColumn="priority">
-          DESTACADO
-          <p-sortIcon
-            field="priority"
-            icon="fa-solid fa-user-tag fa-2xl"
-          ></p-sortIcon>
-        </th>
-        <th scope="col" style="width: 5%" pSortableColumn="userCreate">
-          <i
-            class="fa-solid fa-user-pen fa-2xl"
-            style="color: #74c0fc"
-            ngbTooltip="Reporto"
-          ></i>
-          <p-sortIcon field="userCreate"></p-sortIcon>
-        </th>
         <th scope="col" style="width: 8%" pSortableColumn="createdAtFilter">
           FECHA SOL.
           <p-sortIcon field="createdAtFilter"></p-sortIcon>
-        </th>
-        <th scope="col">
-          <i class="fa-solid fa-images fa-2xl" ngbTooltip="Evidencia"></i>
         </th>
         <th scope="col" style="width: 30%" pSortableColumn="responsibleArea">
           SOLICITUD
           <p-sortIcon field="responsibleArea"></p-sortIcon>
         </th>
-
+        <th scope="col">EVIDENCIA</th>
+        <th scope="col" style="width: 8%" pSortableColumn="priority">
+          PRIORIDAD
+          <p-sortIcon field="priority"></p-sortIcon>
+        </th>
         <th scope="col" style="width: 10%" pSortableColumn="scheduledAtFilter">
-          <i
-            class="fa-sharp-duotone fa-solid fa-calendars fa-2xl"
-            style="color: #74c0fc"
-            ngbTooltip="Fecha de Programación"
-          ></i>
+          PROGRAMACIÓN
           <p-sortIcon field="scheduledAtFilter"></p-sortIcon>
         </th>
         <th scope="col" style="width: 10%" pSortableColumn="dateFinishedFiltro">
           FECHA CIERRE
           <p-sortIcon field="dateFinishedFiltro"></p-sortIcon>
         </th>
+        <th scope="col">EVIDENCIA</th>
         <th scope="col" style="width: 10%" pSortableColumn="daysDifference">
           DIAS
           <p-sortIcon field="daysDifference"></p-sortIcon>
@@ -90,32 +73,17 @@
         <td>
           {{ item.folio }}
         </td>
-        <td class="text-center">
-          <i
-            (click)="onUpdatePriority(item.id)"
-            *ngIf="item.priority === 'Alta'"
-            class="fa-sharp fa-solid fa-star fa-xl pointer"
-          ></i>
-          <i
-            (click)="onUpdatePriority(item.id)"
-            *ngIf="item.priority === 'Baja'"
-            class="fa-sharp fa-thin fa-star fa-xl pointer"
-          ></i>
-        </td>
 
-        <td class="text-center">
-          <img
-            (click)="onCardEmployee(item.creatorId)"
-            [src]="urlAccount + item.creatorImg"
-            class="rounded avatar-md"
-            style="cursor: pointer"
-          />
-        </td>
         <td>
           {{ item.createdAtDate }} <br />
           {{ item.createdAtHour }}
         </td>
-
+        <td>
+          <h4 class="card-title fs-5">{{ item.title }}</h4>
+          <p class="card-text fs-6">
+            {{ item.description }}
+          </p>
+        </td>
         <td class="text-center">
           <div class="d-flex justify-content-center align-items-center">
             <p-image
@@ -126,6 +94,29 @@
               class="me-2 border border-danger"
               [preview]="true"
             ></p-image>
+          </div>
+        </td>
+
+        <td class="text-center">
+          <i
+            (click)="onUpdatePriority(item.id)"
+            *ngIf="item.priority === 'High'"
+            class="fa-sharp fa-solid fa-star fa-xl pointer text-primary"
+          ></i>
+          <i
+            (click)="onUpdatePriority(item.id)"
+            *ngIf="item.priority === 'Low'"
+            class="fa-sharp fa-thin fa-star fa-xl pointer text-primary"
+          ></i>
+        </td>
+        <td>
+          {{ item.scheduledAt }}
+        </td>
+        <td>
+          {{ item.closedAtDate }}
+        </td>
+        <td class="text-center">
+          <div class="d-flex justify-content-center align-items-center">
             <p-image
               *ngIf="item.afterWork"
               [src]="this.urlImage + item.afterWork"
@@ -135,19 +126,6 @@
               [preview]="true"
             ></p-image>
           </div>
-        </td>
-
-        <td>
-          <h4 class="card-title fs-5">{{ item.title }}</h4>
-          <p class="card-text fs-6">
-            {{ item.description }}
-          </p>
-        </td>
-        <td>
-          {{ item.scheduledAt }}
-        </td>
-        <td>
-          {{ item.closedAtDate }}
         </td>
         <td class="text-center">
           <p>
@@ -161,13 +139,9 @@
 
         <td class="text-center">
           <div class="d-flex justify-content-center">
-            <custom-button
-              [routerLink]="['/luxury-chat/message', item.id]"
-              customClass="btn-outline-primary me-1"
-              icon="fa-duotone fa-solid fa-info "
-              ngbTooltip="Ver detalles"
+            <btn-edit
+              (edit)="onModalAddOrEdit({ id: item.id, title: 'Editar' })"
             />
-
             <button
               type="button"
               class="btn btn-outline-primary position-relative me-1 text-start"
@@ -182,17 +156,6 @@
                 <span class="visually-hidden">unread messages</span></span
               >
             </button>
-            <custom-button
-              customClass="btn-outline-primary  text-start"
-              icon="fa-pen-to-square"
-              (clicked)="
-                onModalAddOrEdit({
-                  id: item.id,
-                  title: 'Editar',
-                  ticketGroupId: item.ticketGroupId
-                })
-              "
-            />
           </div>
         </td>
       </tr>

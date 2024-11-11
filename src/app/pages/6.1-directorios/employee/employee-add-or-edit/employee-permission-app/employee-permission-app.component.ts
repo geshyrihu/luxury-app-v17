@@ -15,7 +15,7 @@ import { EmployeeAddOrEditService } from '../employee-add-or-edit.service';
 export default class EmployeePermissionAppComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   employeeAddOrEditService = inject(EmployeeAddOrEditService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   customToastService = inject(CustomToastService);
 
   @Input()

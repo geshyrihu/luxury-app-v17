@@ -22,7 +22,7 @@ export default class ListSolicitudAltaComponent implements OnInit, OnDestroy {
   dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
   private filterRequestsService = inject(FilterRequestsService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   dialogService = inject(DialogService);
   messageService = inject(MessageService);
   public statusSolicitudVacanteService = inject(StatusSolicitudVacanteService);

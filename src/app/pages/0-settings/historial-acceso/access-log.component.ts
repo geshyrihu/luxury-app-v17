@@ -16,7 +16,7 @@ import { environment } from 'src/environments/environment';
 export default class AccessLogComponent implements OnInit {
   dateService = inject(DateService);
   customerIdService = inject(CustomerIdService);
-  private filtroCalendarService = inject(FiltroCalendarService);
+  filtroCalendarService = inject(FiltroCalendarService);
 
   apiRequestService = inject(ApiRequestService);
 

@@ -24,7 +24,7 @@ import { environment } from 'src/environments/environment';
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class AddoreditToolsComponent implements OnInit, OnDestroy {
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
   formBuilder = inject(FormBuilder);
@@ -66,10 +66,7 @@ export default class AddoreditToolsComponent implements OnInit, OnDestroy {
       technicalSpecifications: [''],
       observations: [''],
       categoryId: ['', [Validators.required]],
-      applicationUserId: [
-        this.authService.applicationUserId,
-        [Validators.required],
-      ],
+      applicationUserId: [this.authS.applicationUserId, [Validators.required]],
       customerId: [this.customerIdService.getCustomerId()],
     });
   }
@@ -155,10 +152,7 @@ export default class AddoreditToolsComponent implements OnInit, OnDestroy {
     formData.append('technicalSpecifications', dto.technicalSpecifications);
     formData.append('observations', dto.observations);
     formData.append('categoryId', String(dto.categoryId));
-    formData.append(
-      'applicationUserId',
-      String(this.authService.applicationUserId)
-    );
+    formData.append('applicationUserId', String(this.authS.applicationUserId));
     formData.append('customerId', String(dto.customerId));
     if (dto.photoPath) {
       formData.append('photoPath', dto.photoPath);

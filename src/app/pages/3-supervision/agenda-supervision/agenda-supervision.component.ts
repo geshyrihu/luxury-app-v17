@@ -19,7 +19,7 @@ const base_url = environment.base_urlImg + 'Administration/accounts/';
 })
 export default class AgendaSupervisionComponent implements OnInit, OnDestroy {
   dateService = inject(DateService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
   dialogService = inject(DialogService);
@@ -42,12 +42,12 @@ export default class AgendaSupervisionComponent implements OnInit, OnDestroy {
   fechaFinal: string = this.dateService.getDateFormat(
     this.rangoCalendarioService.fechaFinalDateFull
   );
-  applicationUserId = this.authService.applicationUserId;
+  applicationUserId = this.authS.applicationUserId;
   depto: string = 'SUPERVISIÓN DE OPERACIONES';
   nombre: string =
-    this.authService.infoUserAuthDto.firstName +
+    this.authS.infoUserAuthDto.firstName +
     ' ' +
-    this.authService.infoUserAuthDto.lastName;
+    this.authS.infoUserAuthDto.lastName;
   semana: string = this.fechaInicial + ' a ' + this.fechaFinal;
 
   ngOnInit(): void {

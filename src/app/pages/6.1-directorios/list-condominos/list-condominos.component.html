@@ -22,7 +22,7 @@
       (add)="showModalAddOrEdit({ id: 0, title: 'Nuevo Registro' })"
       [dt]="dt"
       [rolAuth]="
-        authService.onValidateRoles(['Asistente', 'Residente', 'SuperUsuario'])
+        authS.onValidateRoles(['Asistente', 'Administrador', 'SuperUsuario'])
       "
     />
     <div class="row">
@@ -75,8 +75,8 @@
         Enviar Info
         <p-sortIcon field="mail"></p-sortIcon>
       </th>
-      @if ( authService.onValidateRoles([ 'Asistente', 'Residente',
-      'SuperUsuario' ]) ) {
+      @if ( authS.onValidateRoles([ 'Asistente', 'Administrador', 'SuperUsuario'
+      ]) ) {
       <th scope="col" style="width: 5%" class="no-print">Opciones</th>
       }
     </tr>
@@ -111,8 +111,8 @@
         <i class="text-danger fa-light fa-x"></i>
         }
       </td>
-      @if ( authService.onValidateRoles([ 'Asistente', 'Residente',
-      'SuperUsuario' ]) ) {
+      @if ( authS.onValidateRoles([ 'Asistente', 'Administrador', 'SuperUsuario'
+      ]) ) {
       <td class="p-column-title no-print">
         <div class="d-flex justify-content-center">
           <!-- Componente editar registro -->

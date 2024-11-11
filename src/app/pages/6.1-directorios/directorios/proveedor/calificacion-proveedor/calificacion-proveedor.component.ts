@@ -13,7 +13,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
 })
 export default class CalificacionProveedorComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   config = inject(DynamicDialogConfig);
   formBuilder = inject(FormBuilder);
   ref = inject(DynamicDialogRef);
@@ -23,10 +23,7 @@ export default class CalificacionProveedorComponent implements OnInit {
   qualificationProviderId: number = 0;
 
   form: FormGroup = this.formBuilder.group({
-    applicationUserId: [
-      this.authService.applicationUserId,
-      Validators.required,
-    ],
+    applicationUserId: [this.authS.applicationUserId, Validators.required],
     providerId: [this.config.data.providerId, Validators.required],
     precio: [0, Validators.required],
     servicio: [0, Validators.required],
@@ -39,7 +36,7 @@ export default class CalificacionProveedorComponent implements OnInit {
   }
 
   onLoadData() {
-    const urlApi = `QualificationProvider/${this.authService.applicationUserId}/${this.providerId}`;
+    const urlApi = `QualificationProvider/${this.authS.applicationUserId}/${this.providerId}`;
     this.apiRequestService.onGetItem(urlApi).then((result: any) => {
       if (result != null) {
         this.qualificationProviderId = result.id;

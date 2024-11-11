@@ -17,7 +17,7 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 })
 export default class AddoreditLedgerAccountsComponent implements OnInit {
   formBuilder = inject(FormBuilder);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   apiRequestService = inject(ApiRequestService);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
@@ -27,7 +27,7 @@ export default class AddoreditLedgerAccountsComponent implements OnInit {
   cb_state: ISelectItem[] = onGetSelectItemFromEnum(EState);
 
   applicationUserId: string =
-    this.authService.userTokenDto.infoUserAuthDto.applicationUserId;
+    this.authS.userTokenDto.infoUserAuthDto.applicationUserId;
   id: any = 0;
   form: FormGroup;
 

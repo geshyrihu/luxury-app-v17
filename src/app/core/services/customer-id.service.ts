@@ -19,13 +19,14 @@ export class CustomerIdService implements OnDestroy {
   customerId: number = 0; // Valor predeconcluido para el ID del cliente
   private customerId$ = new Subject<number>(); // Observable para el ID del cliente
 
-  constructor(public authService: AuthService) {
+  constructor(public authS: AuthService) {
     // Al construir el servicio, se intenta obtener el ID del cliente desde AuthService
 
     // Verificamos simpre que exista un Token si existe
     // Obtener el token almacenado en el sistema de almacenamiento
-    if (this.authService.userTokenDto) {
+    if (this.authS.userTokenDto) {
       // si hay toquen intentamos obtener la clave del cliente almacenada
+
       // Si no existe
       if (
         this.storageService.retrieve('customerId') === null ||
@@ -33,10 +34,9 @@ export class CustomerIdService implements OnDestroy {
       ) {
         this.storageService.store(
           'customerId',
-          this.authService.userTokenDto.infoUserAuthDto.customerId
+          this.authS.userTokenDto.infoUserAuthDto.customerId
         );
-        this.customerId =
-          this.authService.userTokenDto.infoUserAuthDto.customerId;
+        this.customerId = this.authS.userTokenDto.infoUserAuthDto.customerId;
       } else {
         this.customerId = this.storageService.retrieve('customerId');
       }

@@ -15,7 +15,7 @@ import { TicketGroupService } from '../../ticket.service';
 export default class TicketMessageReportWorkPlanPreviewComponent {
   apiRequestService = inject(ApiRequestService);
   customerIdService = inject(CustomerIdService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   ticketGroupService = inject(TicketGroupService);
 
   data: any; // Almacena los datos obtenidos del API
@@ -36,7 +36,7 @@ export default class TicketMessageReportWorkPlanPreviewComponent {
 
   onSendWoekPlan() {
     const urlApi = `TicketWorkPlan/Create/${
-      this.authService.applicationUserId
+      this.authS.applicationUserId
     }/${this.customerIdService.getCustomerId()}/${this.year}/${
       this.numeroSemana
     }`;

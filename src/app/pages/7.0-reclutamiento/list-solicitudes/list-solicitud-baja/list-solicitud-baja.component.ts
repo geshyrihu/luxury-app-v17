@@ -19,7 +19,7 @@ import AddoreditSolicitudBajaComponent from './addoredit-solicitud-baja/addoredi
 })
 export default class ListSolicitudBajaComponent implements OnInit {
   customToastService = inject(CustomToastService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
   dialogService = inject(DialogService);

@@ -16,7 +16,7 @@ import AddOrEditProcesoComponent from './addoredit-proceso.component';
 export default class ProcesoComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
 
   data: any[] = [];
   ref: DynamicDialogRef;

@@ -29,7 +29,7 @@ export default class ListWorkPlantillaComponent implements OnInit {
   dialogHandlerService = inject(DialogHandlerService);
 
   router = inject(Router);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   confirmationService = inject(ConfirmationService);
   customerIdService = inject(CustomerIdService);
   customToastService = inject(CustomToastService);
@@ -170,7 +170,7 @@ export default class ListWorkPlantillaComponent implements OnInit {
   onValidateRole(professionId: number): boolean {
     let validation = true;
     if (professionId === 5 || professionId === 6) {
-      validation = this.authService.onValidateRoles([
+      validation = this.authS.onValidateRoles([
         'SupervisionOperativa',
         'SuperUsuario',
       ]);
@@ -207,18 +207,18 @@ export default class ListWorkPlantillaComponent implements OnInit {
   onValidateShowTIcket(professionId: number): boolean {
     let permission = true;
     if (professionId == 5) {
-      permission = this.authService.onValidateRoles([
+      permission = this.authS.onValidateRoles([
         'SupervisionOperativa',
         'SuperUsuario',
         'Reclutamiento',
       ]);
     }
     if (professionId == 6) {
-      permission = this.authService.onValidateRoles([
+      permission = this.authS.onValidateRoles([
         'SupervisionOperativa',
         'SuperUsuario',
         'Reclutamiento',
-        'Residente',
+        'Administrador',
       ]);
     }
     return permission;
@@ -235,9 +235,9 @@ export default class ListWorkPlantillaComponent implements OnInit {
   }
 
   ngGetAuthEdit(): boolean {
-    return this.authService.onValidateRoles([
+    return this.authS.onValidateRoles([
       'Asistente',
-      'Residente',
+      'Administrador',
       'SuperUsuario',
     ]);
   }
@@ -262,7 +262,7 @@ export default class ListWorkPlantillaComponent implements OnInit {
         return true;
       } else {
         // Si no es profesión 54, verificamos si el usuario tiene el rol 'SuperUsuario'.
-        if (this.authService.onValidateRoles(['SuperUsuario'])) {
+        if (this.authS.onValidateRoles(['SuperUsuario'])) {
           return true;
         } else {
           // Si no tiene el rol 'SuperUsuario', el acceso se deniega.

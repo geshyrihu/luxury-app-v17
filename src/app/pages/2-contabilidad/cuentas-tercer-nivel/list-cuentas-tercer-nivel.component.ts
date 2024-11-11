@@ -15,7 +15,7 @@ import AddoreditLedgerAccountsComponent from './addoredit-cuentas-tercer-nivel.c
 export default class ListCuentasTercerNivelComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
 
   data: any[] = [];
   ref: DynamicDialogRef;

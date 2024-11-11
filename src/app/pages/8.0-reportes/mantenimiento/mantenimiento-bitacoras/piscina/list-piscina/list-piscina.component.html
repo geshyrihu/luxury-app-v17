@@ -63,18 +63,12 @@
               (edit)="onModalAddOrEdit({ id: item.id, title: 'Editar' })"
             />
             <btn-delete (OnConfirm)="onDelete(item.id)" />
-            <a
-              type="button"
-              class="btn btn-sm btn-outline-info me-1 pointer"
+            <custom-button
+              customClass="btn-soft-primary waves-effect waves-light  bg-gradient me-1"
               ngbTooltip="Bitacora"
-              placement="top"
-              [routerLink]="[
-                '/mantenimiento/bitacora/piscina-bitacora/',
-                item.id
-              ]"
-            >
-              <i class="fa-light fa-book text-primary"></i>
-            </a>
+              icon="icon-library"
+              [routerLink]="['/logbook/piscina-bitacora/', item.id]"
+            />
           </div>
         </td>
         <!-- Opciones -->

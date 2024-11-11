@@ -39,7 +39,7 @@
       />
       <div class="row">
         <div class="col float-end">
-          @if (authService.onValidateRoles(['SuperUsuario']) && id !== '') {
+          @if (authS.onValidateRoles(['SuperUsuario']) && id !== '') {
           <custom-button
             customClass="btn-soft-primary mt-1"
             (clicked)="TestEmail()"

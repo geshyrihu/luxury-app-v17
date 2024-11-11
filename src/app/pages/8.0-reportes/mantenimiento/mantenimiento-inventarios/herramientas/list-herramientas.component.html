@@ -18,7 +18,7 @@
       [title]="'Herramientas'"
       (add)="showModalAddOrEdit({ id: 0, title: 'Nuevo Registro' })"
       [dt]="dt"
-      [rolAuth]="authService.onValidateRoles(['Mantenimiento', 'SuperUsuario'])"
+      [rolAuth]="authS.onValidateRoles(['JefeMantenimiento', 'SuperUsuario'])"
     />
     <a
       class="mt-1 btn btn-sm btn-outline-danger"
@@ -38,7 +38,7 @@
         Categoria
         <p-sortIcon field="category"></p-sortIcon>
       </th>
-      @if (authService.onValidateRoles(['Mantenimiento', 'SuperUsuario'])) {
+      @if (authS.onValidateRoles(['JefeMantenimiento', 'SuperUsuario'])) {
       <th scope="col" style="width: 10%">Opciones</th>
       }
     </tr>
@@ -50,7 +50,7 @@
           class="img-thumbnail"
           alt="200x200"
           width="100"
-          [src]="base_urlImg + item.photoPath"
+          [src]="item.photoPath"
           data-holder-rendered="true"
         />
       </td>
@@ -61,7 +61,7 @@
         <small>{{ item.category }} </small>
       </td>
       <!-- Opciones -->
-      @if (authService.onValidateRoles(['Mantenimiento', 'SuperUsuario'])) {
+      @if (authS.onValidateRoles(['JefeMantenimiento', 'SuperUsuario'])) {
       <td class="p-column-title">
         <div class="d-flex justify-content-center">
           <btn-edit

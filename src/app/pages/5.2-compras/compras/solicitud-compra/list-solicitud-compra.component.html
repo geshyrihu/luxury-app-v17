@@ -26,10 +26,10 @@
       (add)="onSolicitudCompra(0)"
       [dt]="dt"
       [rolAuth]="
-        authService.onValidateRoles([
+        authS.onValidateRoles([
           'Asistente',
-          'Mantenimiento',
-          'Residente',
+          'JefeMantenimiento',
+          'Administrador',
           'SuperUsuario'
         ])
       "
@@ -148,10 +148,10 @@
       </td>
       <td class="p-column-title">
         <div class="d-flex justify-content-center">
-          @if ( authService.onValidateRoles([ 'Asistente', 'Mantenimiento',
-          'Residente', 'SuperUsuario' ]) ) {
+          @if ( authS.onValidateRoles([ 'Asistente', 'JefeMantenimiento',
+          'Administrador', 'SuperUsuario' ]) ) {
           <btn-edit (edit)="onSolicitudCompra(item.id)" />
-          } @if (authService.onValidateRoles(['SuperUsuario'])) {
+          } @if (authS.onValidateRoles(['SuperUsuario'])) {
           <btn-delete (OnConfirm)="onDelete(item.id)" />
           }
         </div>

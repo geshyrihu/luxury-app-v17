@@ -107,8 +107,8 @@
             class="no-print"
           ></p-sortIcon>
         </th>
-        @if ( authService.onValidateRoles([ 'Mantenimiento', 'SuperUsuario',
-        'Residente' ]) ) {
+        @if ( authS.onValidateRoles([ 'JefeMantenimiento', 'SuperUsuario',
+        'Administrador' ]) ) {
         <th style="width: 15%" scope="col" class="no-print">Opciones</th>
         }
       </tr>
@@ -174,29 +174,29 @@
             {{ item.serviceOrderDocument.length }}
           </span>
         </td>
-        @if ( authService.onValidateRoles([ 'Mantenimiento', 'SuperUsuario',
-        'Residente' ]) ) {
+        @if ( authS.onValidateRoles([ 'JefeMantenimiento', 'SuperUsuario',
+        'Administrador' ]) ) {
         <td class="no-print">
           <div class="d-flex justify-content-center">
-            <a
+            <custom-button
               ngbTooltip="Imprimir hoja de soporte"
-              placement="left"
-              type="button"
-              class="btn btn-sm btn-outline-danger me-1"
-              [routerLink]="['/reporte/soporte-orden-servicio', item.id]"
-            >
-              <span class="fa-light fa-file-pdf"></span>
-            </a>
+              customClass="btn-soft-primary waves-effect waves-light  bg-gradient me-1"
+              icon="icon-file-pdf"
+              [routerLink]="[
+                '/report/maintenance-report/soporte-orden-servicio',
+                item.id
+              ]"
+            />
             <custom-button
               ngbTooltip="Cargar Imagen"
-              [customClass]="'btn-sm btn-outline-info me-1'"
-              icon="fa-light fa-camera text-info"
+              customClass="btn-soft-primary waves-effect waves-light  bg-gradient me-1"
+              icon="fa-camera "
               (clicked)="onModalFormUploadImg(item.id)"
             />
             <custom-button
               ngbTooltip="Cargar documentos"
-              [customClass]="'btn-sm btn-outline-secondary me-1'"
-              icon="fa-light fa-file-alt text-secondary"
+              customClass="btn-soft-primary waves-effect waves-light  bg-gradient me-1"
+              icon="fa-file-alt"
               (clicked)="onModalFormUploadDoc(item.id)"
             />
             <btn-edit

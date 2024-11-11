@@ -1,10 +1,10 @@
 import {
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  inject,
+    Component,
+    EventEmitter,
+    Input,
+    OnInit,
+    Output,
+    inject,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
@@ -21,8 +21,8 @@ import { SolicitudCompraService } from 'src/app/core/services/solicitud-compra.s
   imports: [LuxuryAppComponentsModule],
 })
 export default class AddProductComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  authService = inject(AuthService);
+  apiRequestService= inject(ApiRequestService);
+  authS = inject(AuthService);
   formBuilder = inject(FormBuilder);
   solicitudCompraService = inject(SolicitudCompraService);
 
@@ -45,7 +45,7 @@ export default class AddProductComponent implements OnInit {
     cantidad: [0, Validators.required],
     unidadMedidaId: ['', Validators.required],
     solicitudCompraId: [],
-    applicationUserId: [this.authService.applicationUserId],
+    applicationUserId: [this.authS.applicationUserId],
   });
   onUpdateData() {
     this.updateData.emit();
@@ -79,7 +79,7 @@ export default class AddProductComponent implements OnInit {
       solicitudCompraId: this.solicitudCompraId,
     });
     this.form.patchValue({
-      applicationUserId: this.authService.applicationUserId,
+      applicationUserId: this.authS.applicationUserId,
     });
     this.apiRequestService
       .onPost(`SolicitudCompraDetalle`, this.form.value)

@@ -33,7 +33,7 @@ export default class ListVacantesComponent implements OnInit, OnDestroy {
   dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
   filterRequestsService = inject(FilterRequestsService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   dialogService = inject(DialogService);
   messageService = inject(MessageService);
   statusSolicitudVacanteService = inject(StatusSolicitudVacanteService);

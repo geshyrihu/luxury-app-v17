@@ -22,7 +22,7 @@ import RecorridoAddOrEditComponent from './addoreedit-recorrido.component';
 })
 export default class ListRecorridoComponent implements OnInit, OnDestroy {
   customToastService = inject(CustomToastService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   public confirmationService = inject(ConfirmationService);
   customerIdService = inject(CustomerIdService);
   dataService = inject(DataService);

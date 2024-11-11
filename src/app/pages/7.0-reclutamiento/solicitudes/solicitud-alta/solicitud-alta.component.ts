@@ -28,7 +28,7 @@ export default class SolicitudAltaComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
   formBuilder = inject(FormBuilder);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
 
@@ -83,7 +83,7 @@ export default class SolicitudAltaComponent implements OnInit {
     this.submitting = true;
     // Mostrar un mensaje de carga
 
-    var urlApi = `solicitudesreclutamiento/solicitudalta/${this.authService.applicationUserId}`;
+    var urlApi = `solicitudesreclutamiento/solicitudalta/${this.authS.applicationUserId}`;
     this.apiRequestService
       .onPost(urlApi, this.form.value)
       .then((result: boolean) => {

@@ -22,7 +22,7 @@ const date = new Date();
 export default class CatalogoGastosFijosComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   customerIdService = inject(CustomerIdService);
   catalogoGastosFijosService = inject(CatalogoGastosFijosService);
 

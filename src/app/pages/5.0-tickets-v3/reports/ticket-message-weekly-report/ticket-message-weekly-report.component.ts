@@ -26,7 +26,7 @@ import SendOperationReportComponent from '../send-operation-report/send-operatio
 export default class TicketMessageWeeklyReportComponent {
   activatedRoute = inject(ActivatedRoute);
   apiRequestService = inject(ApiRequestService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   customerIdService = inject(CustomerIdService);
   customToastService = inject(CustomToastService);
   dialogHandlerService = inject(DialogHandlerService);
@@ -134,7 +134,7 @@ export default class TicketMessageWeeklyReportComponent {
 
   onPreviewClicked(): void {
     // Lógica para la vista previa
-    this.router.navigate(['/luxury-chat/weekly-report-preview']);
+    this.router.navigate(['/tickets/weekly-report-preview']);
   }
   onSendReportClicked(): void {
     // Lógica para enviar el reporte
@@ -142,7 +142,7 @@ export default class TicketMessageWeeklyReportComponent {
       .openDialog(
         SendOperationReportComponent,
         {},
-        'Seguimiento',
+        'Envio de reporte semanal',
         this.dialogHandlerService.dialogSizeFull
       )
       .then((result: boolean) => {

@@ -2,7 +2,7 @@
 <div class="no-print row">
   <div
     class="col-sm-3"
-    *ngIf="authService.onValidateRoles(['SuperUsuario', 'Direccion'])"
+    *ngIf="authS.onValidateRoles(['SuperUsuario', 'Direccion'])"
   >
     <div class="card p-1">
       <label> Responsable de sistemas </label>
@@ -269,7 +269,7 @@
                 })
               "
             />
-            @if (authService.onValidateRoles(['SupervisionOperativa'])) {
+            @if (authS.onValidateRoles(['SupervisionOperativa'])) {
             <btn-delete> (OnConfirm)="onDelete(item.id)" ></btn-delete>
             }
             <button

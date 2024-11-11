@@ -15,7 +15,7 @@
       (add)="onAddPresupuesto(0)"
       [dt]="dt"
       [rolAuth]="
-        authService.onValidateRoles(['Residente', 'SuperUsuario', 'Contador'])
+        authS.onValidateRoles(['Administrador', 'SuperUsuario', 'Contador'])
       "
     />
   </ng-template>
@@ -37,7 +37,7 @@
           @if (!item.finished) {
           <custom-button
             ngbTooltip="Finalizar presupuesto"
-            [customClass]="'btn-outline-info btn-sm'"
+            customClass="btn-soft-primary waves-effect waves-light  bg-gradient me-1"
             icon="fa-light fa-pen-field  text-danger"
             (clicked)="onFinished(item.id, !item.finished)"
           />
@@ -47,29 +47,25 @@
           @if (item.finished) {
           <custom-button
             ngbTooltip="Habilitar edición"
-            [customClass]="'btn-outline-info btn-sm'"
-            icon="fa-light fa-check-double text-success"
+            customClass="btn-soft-primary waves-effect waves-light  bg-gradient me-1"
+            icon="icon-check-double text-success"
             (clicked)="onFinished(item.id, !item.finished)"
           />
           }
           <!-- End Boton para Habilitar presupuesto -->
-          @if (authService.onValidateRoles(['SuperUsuario'])) {
+          @if (authS.onValidateRoles(['SuperUsuario'])) {
           <custom-button
-            customClass="btn-sm btn-soft-primary"
+            customClass="btn-soft-primary waves-effect waves-light  bg-gradient me-1"
             (clicked)="onModalAddOrEdit(item.id)"
-            icon="fa-light fa-pen-to-square"
+            icon="fa-solid fa-pen-to-square"
             ngbTooltip="Editar periodo"
           />
-          } @if ( authService.onValidateRoles([ 'Residente', 'SuperUsuario',
+          } @if ( authS.onValidateRoles([ 'Administrador', 'SuperUsuario',
           'Contador', 'SupervisorContable', 'SupervisionOperativa' ]) &&
           !item.finished ) {
-          <custom-button
-            customClass="btn-sm btn-outline-success"
-            (clicked)="onGetPresupuestoDetalle(item.id)"
-            icon="fa-light fa-money-bill-trend-up"
-            ngbTooltip="Editar el presupuesto"
-          />
-          } @if (authService.onValidateRoles(['SuperUsuario'])) {
+
+          <btn-edit (edit)="onGetPresupuestoDetalle(item.id)" />
+          } @if (authS.onValidateRoles(['SuperUsuario'])) {
           <btn-delete (OnConfirm)="onDelete(item.id)" />
           }
         </div>

@@ -16,7 +16,7 @@ export default class AddoreditPeriodoCedulaPresupuestalComponent
   implements OnInit
 {
   apiRequestService = inject(ApiRequestService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   config = inject(DynamicDialogConfig);
   formBuilder = inject(FormBuilder);
   ref = inject(DynamicDialogRef);

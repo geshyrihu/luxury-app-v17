@@ -14,7 +14,7 @@
         <th scope="col">Motivo de baja</th>
         <th scope="col">Colaborador enterado</th>
         <th scope="col">Se solicita abogado</th>
-        @if ( authService.onValidateRoles(['SuperUsuario', 'Reclutamiento']) ) {
+        @if ( authS.onValidateRoles(['SuperUsuario', 'Reclutamiento']) ) {
         <th scope="col"></th>
         }
       </tr>
@@ -37,7 +37,7 @@
         <td>
           {{ data.lawyerAssistance ? "Si" : "No" }}
         </td>
-        @if ( authService.onValidateRoles(['SuperUsuario', 'Reclutamiento']) ) {
+        @if ( authS.onValidateRoles(['SuperUsuario', 'Reclutamiento']) ) {
         <td>
           <div class="d-flex justify-content-end">
             <btn-edit
@@ -63,8 +63,7 @@
             <strong>Descripción:</strong> {{ item.description }}<br />
             <strong>Descuento:</strong> {{ item.discount }}
           </div>
-          @if ( authService.onValidateRoles(['SuperUsuario', 'Reclutamiento']) )
-          {
+          @if ( authS.onValidateRoles(['SuperUsuario', 'Reclutamiento']) ) {
           <div class="col-3">
             <div class="d-flex justify-content-end">
               <btn-edit

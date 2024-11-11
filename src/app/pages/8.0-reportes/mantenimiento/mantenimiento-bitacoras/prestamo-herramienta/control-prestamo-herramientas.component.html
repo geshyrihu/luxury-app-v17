@@ -20,7 +20,7 @@
       [title]="'Control Prestamo de Herramienta'"
       (add)="onModalAddOrEdit({ id: 0, title: 'Nuevo Registro' })"
       [dt]="dt"
-      [rolAuth]="authService.onValidateRoles(['SuperUsuario', 'Mantenimiento'])"
+      [rolAuth]="authS.onValidateRoles(['SuperUsuario', 'JefeMantenimiento'])"
     />
   </ng-template>
   <ng-template pTemplate="header">
@@ -41,7 +41,7 @@
       <th scope="col" pSortableColumn="observaciones">
         Observaciones<p-sortIcon field="observaciones"></p-sortIcon>
       </th>
-      @if (authService.onValidateRoles(['SuperUsuario', 'Mantenimiento'])) {
+      @if (authS.onValidateRoles(['SuperUsuario', 'JefeMantenimiento'])) {
       <th scope="col" style="width: 5%">Opciones</th>
       }
     </tr>
@@ -74,7 +74,7 @@
         </small>
       </td>
       <!-- Opciones -->
-      @if (authService.onValidateRoles(['SuperUsuario', 'Mantenimiento'])) {
+      @if (authS.onValidateRoles(['SuperUsuario', 'JefeMantenimiento'])) {
       <td class="p-column-title">
         <div class="d-flex justify-content-center">
           <btn-edit

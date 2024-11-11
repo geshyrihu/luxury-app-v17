@@ -17,7 +17,7 @@ export default class AddoreditFormaPagoComponent implements OnInit {
   formBuilder = inject(FormBuilder);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
-  private authService = inject(AuthService);
+  private authS = inject(AuthService);
 
   submitting: boolean = false;
 
@@ -34,7 +34,7 @@ export default class AddoreditFormaPagoComponent implements OnInit {
       codigo: ['', [Validators.required]],
       descripcion: ['', Validators.required],
       applicationUserId: [
-        this.authService.userTokenDto.infoUserAuthDto.applicationUserId,
+        this.authS.userTokenDto.infoUserAuthDto.applicationUserId,
       ],
     });
   }

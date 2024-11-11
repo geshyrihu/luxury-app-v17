@@ -35,7 +35,7 @@ export default class AddoreditTicketComponent implements OnInit {
   customToastService = inject(CustomToastService);
   dataService = inject(DataService);
   dateService = inject(DateService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
 
   cb_priority = onGetSelectItemFromEnum(EPriority);
   cb_status = onGetSelectItemFromEnum(EStatusTask);
@@ -73,7 +73,7 @@ export default class AddoreditTicketComponent implements OnInit {
       dateFinished: [null],
       applicationUserCargoReporteId: [''],
       applicationUserResponsable: [''],
-      applicationUserResponsableId: [this.authService.applicationUserId],
+      applicationUserResponsableId: [this.authS.applicationUserId],
     });
   }
 
@@ -206,7 +206,7 @@ export default class AddoreditTicketComponent implements OnInit {
     } else {
       formData.append(
         'applicationUserCargoReporteId',
-        String(this.authService.applicationUserId)
+        String(this.authS.applicationUserId)
       );
     }
 

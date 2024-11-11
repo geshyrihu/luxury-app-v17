@@ -17,7 +17,7 @@ import TarjetaProductoComponent from '../../8.0-reportes/mantenimiento/mantenimi
 export default class AddProductosAlmacenComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   customerIdService = inject(CustomerIdService);
 
   ref = inject(DynamicDialogRef);
@@ -61,7 +61,7 @@ export default class AddProductosAlmacenComponent implements OnInit {
     });
   }
   onSubmit(item: IProductoListAdd) {
-    item.applicationUserId = this.authService.applicationUserId;
+    item.applicationUserId = this.authS.applicationUserId;
     item.customerId = this.customerIdService.customerId;
 
     if (

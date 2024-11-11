@@ -10,7 +10,7 @@ import { TopbarModule } from './topbar.module';
   imports: [TopbarModule],
 })
 export class TopbarComponent {
-  authService = inject(AuthService);
+  authS = inject(AuthService);
 
   @Output() settingsButtonClicked = new EventEmitter();
 

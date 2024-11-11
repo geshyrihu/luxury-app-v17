@@ -49,7 +49,7 @@
             (clicked)="showModalFichatecnica(machinery)"
           />
 
-          @if ( authService.onValidateRoles([ 'Mantenimiento', 'Residente',
+          @if ( authS.onValidateRoles([ 'JefeMantenimiento', 'Administrador',
           'SuperUsuario' ]) ) {
           <btn-edit
             (edit)="
@@ -61,7 +61,7 @@
          />
           }
 
-          @if ( authService.onValidateRoles([ 'Mantenimiento', 'Residente',
+          @if ( authS.onValidateRoles([ 'JefeMantenimiento', 'Administrador',
           'SuperUsuario' ]) ) {
           <btn-delete
             (OnConfirm)="onDelete(machinery.id)"
@@ -98,9 +98,9 @@
             (add)="showModalAddoredit({ id: 0, title: 'Nuevo Registro' })"
             [dt]="dt"
             [rolAuth]="
-              authService.onValidateRoles([
-                'Mantenimiento',
-                'Residente',
+              authS.onValidateRoles([
+                'JefeMantenimiento',
+                'Administrador',
                 'SuperUsuario'
               ])
             "
@@ -194,35 +194,35 @@
             <!-- Documentos -->
             <custom-button
               ngbTooltip="Documentos"
-              customClass="btn-sm btn-outline-danger me-1"
-              icon="fa-light fa-file-pdf"
+              customClass="btn-soft-primary waves-effect waves-light  bg-gradient me-1"
+              icon="icon-file"
               (clicked)="onDocumentos(item.id)"
             />
             <!-- Documentos -->
             <!-- Bitacora -->
             <custom-button
               ngbTooltip="Historico de servicios"
-              customClass="btn-sm btn-soft-primary me-1"
-              icon="fa-light fa-swatchbook"
+              customClass="btn-soft-primary waves-effect waves-light  bg-gradient me-1"
+              icon="icon-rectangle-history"
               (clicked)="onServiceHistory(item.id)"
             />
             <custom-button
               ngbTooltip="Bitacora"
-              customClass="btn-sm btn-outline-warning me-1"
-              icon="fa-light fa-book-open"
+              customClass="btn-soft-primary waves-effect waves-light  bg-gradient me-1"
+              icon="icon-library"
               (clicked)="onBitacoraIndividual(item.id)"
             />
             <!-- Bitacora -->
             <!-- Ficha tecnica -->
             <custom-button
               ngbTooltip="Ficha técnica"
-              customClass="btn-sm btn-soft-primary me-1"
-              icon="fa-light fa-book"
+              customClass="btn-soft-primary waves-effect waves-light  bg-gradient me-1"
+              icon="icon-sheet-plastic"
               (clicked)="showModalFichatecnica(item)"
             />
             <!-- Ficha Tecnica -->
             <!-- Editar Role -->
-            @if ( authService.onValidateRoles([ 'Mantenimiento', 'Residente',
+            @if ( authS.onValidateRoles([ 'JefeMantenimiento', 'Administrador',
             'SuperUsuario' ]) ) {
             <btn-edit
               (edit)="
@@ -235,7 +235,7 @@
             }
             <!-- Editar Role -->
             <!-- Borrar -->
-            @if ( authService.onValidateRoles([ 'Mantenimiento', 'Residente',
+            @if ( authS.onValidateRoles([ 'JefeMantenimiento', 'Administrador',
             'SuperUsuario' ]) ) {
             <btn-delete (OnConfirm)="onDelete(item.id)" />
             }
@@ -291,8 +291,8 @@
                     COSTO
                     <p-sortIcon field="price"></p-sortIcon>
                   </th>
-                  @if ( authService.onValidateRoles([ 'Mantenimiento',
-                  'Residente', 'SuperUsuario' ]) ) {
+                  @if ( authS.onValidateRoles([ 'JefeMantenimiento',
+                  'Administrador', 'SuperUsuario' ]) ) {
                   <th scope="col" style="width: 10%">OPCIONES</th>
                   }
                 </tr></ng-template
@@ -320,8 +320,8 @@
                   <td class="p-column-title">
                     {{ order.price | CurrencyMexicoPipe }}
                   </td>
-                  @if ( authService.onValidateRoles([ 'Mantenimiento',
-                  'Residente', 'SuperUsuario' ]) ) {
+                  @if ( authS.onValidateRoles([ 'JefeMantenimiento',
+                  'Administrador', 'SuperUsuario' ]) ) {
                   <td class="p-column-title">
                     <div class="d-flex justify-content-center">
                       <!-- Duplicar Servicio -->

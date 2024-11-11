@@ -15,7 +15,7 @@ import AddOrEditFormatoComponent from './addoredit-formato.component';
 export default class FormatoComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
 
   data: any[] = [];
   ref: DynamicDialogRef;
@@ -57,25 +57,26 @@ export default class FormatoComponent implements OnInit {
 
   // Function to extract file extension from pathFormato
   getFileExtension(pathFormato: string): string {
-    return pathFormato.split('.').pop()?.toLowerCase() || '';
+    const extension = pathFormato.split('.').pop()?.toLowerCase() || '';
+    return extension;
   }
 
   // Function to get icon and color based on file extension
   getIconAndColor(extension: string): { icon: string; color: string } {
     switch (extension) {
       case 'pdf':
-        return { icon: 'fa-file-pdf', color: 'red' };
+        return { icon: 'icon-file-pdf', color: 'red' };
       case 'doc':
       case 'docx':
-        return { icon: 'fa-file-word', color: 'blue' };
+        return { icon: 'icon-file-word', color: 'blue' };
       case 'xls':
       case 'xlsx':
-        return { icon: 'fa-file-excel', color: 'green' };
+        return { icon: 'icon-file-excel', color: 'green' };
       case 'ppt':
       case 'pptx':
-        return { icon: 'fa-file-powerpoint', color: 'orange' };
+        return { icon: 'icon-file-powerpoint', color: 'orange' };
       default:
-        return { icon: 'fa-file', color: 'gray' };
+        return { icon: 'icon-file', color: 'gray' };
     }
   }
 }

@@ -21,7 +21,7 @@ import { EmployeeAddOrEditService } from '../employee-add-or-edit.service';
 export default class EmployeeAddOrEditLaboralDataComponent implements OnInit {
   employeeAddOrEditService = inject(EmployeeAddOrEditService);
   apiRequestService = inject(ApiRequestService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   formBuilder = inject(FormBuilder);
 
   @Input() applicationUserId: string = '';

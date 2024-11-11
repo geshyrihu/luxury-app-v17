@@ -21,9 +21,9 @@ import TicketTrakingComponent from '../ticket-traking/ticket-traking.component';
 export default class LegalListTicketComponent implements OnInit {
   private dialogHandlerService = inject(DialogHandlerService);
   private apiRequestService = inject(ApiRequestService);
-  private authService = inject(AuthService);
+  private authS = inject(AuthService);
 
-  isSuperUser = this.authService.onValidateRoles(['SuperUsuario']);
+  isSuperUser = this.authS.onValidateRoles(['SuperUsuario']);
 
   data: any[] = [];
   inputValue: string = '';

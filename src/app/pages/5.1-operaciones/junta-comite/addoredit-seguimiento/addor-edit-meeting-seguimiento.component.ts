@@ -21,7 +21,7 @@ export default class AddorEditMeetingSeguimientoComponent implements OnInit {
   formBuilder = inject(FormBuilder);
   ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
 
   submitting: boolean = false;
 
@@ -32,10 +32,7 @@ export default class AddorEditMeetingSeguimientoComponent implements OnInit {
     meetingDetailsId: [this.config.data.meetingDetailsId, Validators.required],
     fecha: ['', Validators.required],
     seguimiento: ['', Validators.required],
-    applicationUserId: [
-      this.authService.applicationUserId,
-      Validators.required,
-    ],
+    applicationUserId: [this.authS.applicationUserId, Validators.required],
   });
 
   ngOnInit(): void {

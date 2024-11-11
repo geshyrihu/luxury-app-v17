@@ -60,9 +60,7 @@
 <div class="card p-2">
   <ngb-alert [dismissible]="false" type="primary">Asignar Permisos</ngb-alert>
 
-  <div
-    *ngIf="this.authService.onValidateRoles(['SuperUsuario']); else adminRoles"
-  >
+  <div *ngIf="this.authS.onValidateRoles(['SuperUsuario']); else adminRoles">
     <ng-container *ngFor="let item of rolesSuperUser; trackBy: trackByRoleId">
       <div class="form-check pointer">
         <input

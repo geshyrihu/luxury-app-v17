@@ -18,8 +18,8 @@ import CreateOrdenCompraComponent from '../../orden-compra/orden-compra/create-o
   imports: [LuxuryAppComponentsModule, FormsModule, CommonModule, ToastModule],
 })
 export default class ModalEditCotizacionComponent implements OnInit, OnDestroy {
-  apiRequestService = inject(ApiRequestService);
-  authService = inject(AuthService);
+  apiRequestService= inject(ApiRequestService);
+  authS = inject(AuthService);
   dialogHandlerService = inject(DialogHandlerService);
   customToastService = inject(CustomToastService);
   ref = inject(DynamicDialogRef);
@@ -84,7 +84,7 @@ export default class ModalEditCotizacionComponent implements OnInit, OnDestroy {
 
   onChange(item: any) {
     const data = {
-      applicationUserId: this.authService.applicationUserId,
+      applicationUserId: this.authS.applicationUserId,
       cantidad: item.cantidad,
       descuento: item.descuento,
       descuento2: item.descuento2,

@@ -17,7 +17,7 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 })
 export default class OrdenCompraDatosPagoComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   formBuilder = inject(FormBuilder);
   ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);

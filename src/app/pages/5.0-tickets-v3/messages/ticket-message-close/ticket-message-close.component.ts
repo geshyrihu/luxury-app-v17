@@ -22,7 +22,7 @@ import { TicketGroupService } from '../../ticket.service';
 })
 export default class TicketMessageCloseComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   formBuilder = inject(FormBuilder);
   ticketGroupService = inject(TicketGroupService);
   customerIdService = inject(CustomerIdService);
@@ -53,7 +53,7 @@ export default class TicketMessageCloseComponent implements OnInit {
     this.apiRequestService.onGetItem(urlApi).then((result: any) => {
       this.form.patchValue(result);
       this.form.patchValue({
-        closedById: this.authService.applicationUserId,
+        closedById: this.authS.applicationUserId,
       });
       // Si las imágenes existen, carga las vistas previas
       // Si las imágenes existen, establece las vistas previas con la URL completa

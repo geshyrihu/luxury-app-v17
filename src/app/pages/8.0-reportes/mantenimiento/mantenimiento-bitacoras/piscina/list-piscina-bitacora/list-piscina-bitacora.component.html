@@ -56,28 +56,28 @@
         <td class="p-column-title text-center">{{ item.aplicationPhMenos }}</td>
         <td class="p-column-title text-center">
           <i
+            class="fa-solid"
             [ngClass]="{
-              'fa-light fa-check-double text-success font-size-18':
-                item.cepillado,
-              'fa-light fa-x text-danger font-size-18': !item.cepillado
+              'icon-check-double text-success font-size-18': item.cepillado,
+              'icon-x text-danger font-size-18': !item.cepillado
             }"
           ></i>
         </td>
         <td class="p-column-title text-center">
           <i
+            class="fa-solid"
             [ngClass]="{
-              'fa-light fa-check-double text-success font-size-18':
-                item.aspirado,
-              'fa-light fa-x text-danger font-size-18': !item.aspirado
+              'icon-check-double  text-success font-size-18': item.aspirado,
+              'icon-x text-danger font-size-18': !item.aspirado
             }"
           ></i>
         </td>
         <td class="p-column-title text-center">
           <i
+            class="fa-solid"
             [ngClass]="{
-              'fa-light fa-check-double text-success font-size-18':
-                item.cenefas,
-              'fa-light fa-x text-danger font-size-18': !item.cenefas
+              'icon-check-double text-success font-size-18': item.cenefas,
+              'icon-x text-danger font-size-18': !item.cenefas
             }"
           ></i>
         </td>

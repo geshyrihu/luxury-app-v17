@@ -20,7 +20,7 @@ import { TicketGroupService } from '../../ticket.service';
 })
 export default class TicketMessageReportWorkPlanComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   ticketGroupService = inject(TicketGroupService);
   customerIdService = inject(CustomerIdService);
   dialogHandlerService = inject(DialogHandlerService);
@@ -79,7 +79,7 @@ export default class TicketMessageReportWorkPlanComponent implements OnInit {
 
   onPreviewClicked(): void {
     // Lógica para la vista previa
-    this.router.navigate(['/luxury-chat/work-plan-preview']);
+    this.router.navigate(['/tickets/work-plan-preview']);
   }
   onModalAddOrEdit(data: any) {
     this.dialogHandlerService

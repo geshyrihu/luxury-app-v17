@@ -16,7 +16,7 @@ export default class FormMedidorLecturaComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   formBuilder = inject(FormBuilder);
   dateService = inject(DateService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
 
@@ -61,7 +61,7 @@ export default class FormMedidorLecturaComponent implements OnInit {
       medidorId: [this.medidorId],
       fechaRegistro: [''],
       lectura: ['', Validators.required],
-      applicationUserId: [this.authService.applicationUserId],
+      applicationUserId: [this.authS.applicationUserId],
     });
   }
   onLoadData() {

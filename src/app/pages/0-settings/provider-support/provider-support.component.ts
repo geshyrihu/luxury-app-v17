@@ -16,7 +16,7 @@ import AddOrEditprovidersupportComponent from './add-or-edit-provider-support/ad
   imports: [LuxuryAppComponentsModule],
 })
 export default class providersupportComponent implements OnInit {
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   dialogService = inject(DialogService);
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);

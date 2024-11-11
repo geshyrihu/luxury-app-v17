@@ -22,7 +22,7 @@ export default class CrudSalidasComponent implements OnInit {
   dateService = inject(DateService);
   formBuilder = inject(FormBuilder);
 
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
 
@@ -75,10 +75,7 @@ export default class CrudSalidasComponent implements OnInit {
         `${this.dateTodat.getHours()}:${this.dateTodat.getMinutes()}`,
         Validators.required,
       ],
-      applicationUserId: [
-        this.authService.applicationUserId,
-        Validators.required,
-      ],
+      applicationUserId: [this.authS.applicationUserId, Validators.required],
     });
   }
   // convenience getter for easy access to form fields

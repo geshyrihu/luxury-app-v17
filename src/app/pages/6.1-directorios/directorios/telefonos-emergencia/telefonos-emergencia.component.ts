@@ -16,7 +16,7 @@ export default class TelefonosEmergenciaComponent {
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
 
-  authService = inject(AuthService);
+  authS = inject(AuthService);
 
   data: any[] = [];
   urlImg = `${environment.base_urlImg}Administration/tel-emergencia/`;

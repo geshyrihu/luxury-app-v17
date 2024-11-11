@@ -25,7 +25,7 @@ import { TicketGroupService } from '../../ticket.service';
 })
 export default class TicketMessageAddOrEditComponent implements OnInit {
   customerIdService = inject(CustomerIdService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   apiRequestService = inject(ApiRequestService);
   formBuilder = inject(FormBuilder);
   config = inject(DynamicDialogConfig);
@@ -33,12 +33,14 @@ export default class TicketMessageAddOrEditComponent implements OnInit {
   ticketGroupService = inject(TicketGroupService);
   notificationPushService = inject(SignalRService);
 
+  mode: 'pending' | 'concluded' | 'program' = 'pending'; // Estado inicial
+
   id: string = '';
   submitting: boolean = false;
 
   cb_priority = onGetSelectItemFromEnum(EPriorityLevel);
   cb_ticket_group: ISelectItem[] = [];
-
+  cb_user: any[] = [];
   urlImage = this.ticketGroupService.onGetPathUrlImage(
     this.customerIdService.customerId.toString()
   );
@@ -52,16 +54,25 @@ export default class TicketMessageAddOrEditComponent implements OnInit {
     title: ['', [Validators.required, Validators.maxLength(100)]], // Título
     description: ['', [Validators.required, Validators.maxLength(150)]], // Descripción
     priority: [1, Validators.required], // Prioridad (enum)
-    creatorId: [this.authService.applicationUserId], // Id del creador
+    creatorId: [this.authS.applicationUserId], // Id del creador
     customerId: [this.customerIdService.customerId], // Id del cliente
     beforeWork: [null], // Imagen del trabajo previo
     afterWork: [null], // Imagen del trabajo posterior
     beforeWorkPreview: [null], // Vista previa de BeforeWork
     afterWorkPreview: [null], // Vista previa de AfterWork
-    applicationUserId: [this.authService.applicationUserId],
+    applicationUserId: [this.authS.applicationUserId],
+    assignee: [''],
+    assigneeId: [null],
+    scheduledDate: [null],
+    closedDate: [null],
   });
 
+  // Función para cambiar entre modos
+  setMode(mode: 'pending' | 'concluded' | 'program') {
+    this.mode = mode;
+  }
   ngOnInit() {
+    this.onLoadUsers();
     this.onLoadTicketGroup();
     this.id = this.config.data.id;
     if (this.id !== '') this.onLoadData();
@@ -106,22 +117,23 @@ export default class TicketMessageAddOrEditComponent implements OnInit {
       }
 
       this.form.patchValue({
-        applicationUserId: this.authService.applicationUserId,
+        applicationUserId: this.authS.applicationUserId,
       });
     });
   }
+
   onSubmit(): void {
     if (this.form.valid) {
       this.submitting = true;
+
       const formData = new FormData();
 
       // Agrega todos los controles del formulario a FormData
       Object.keys(this.form.controls).forEach((key) => {
         const control = this.form.get(key);
 
-        // Verifica si el control es un array (en este caso, para las imágenes) o si es un archivo individual
         if (key === 'images' && control instanceof FormArray) {
-          // Si es un FormArray (como el de imágenes adicionales), agrega cada archivo
+          // Manejar el FormArray para las imágenes adicionales
           control.controls.forEach((fileControl: FormControl) => {
             const file = fileControl.value as File;
             if (file) {
@@ -129,16 +141,30 @@ export default class TicketMessageAddOrEditComponent implements OnInit {
             }
           });
         } else if (key === 'beforeWork' || key === 'afterWork') {
-          // Si es una de las imágenes de trabajo antes/después, agrégala por separado
+          // Manejar las imágenes de beforeWork y afterWork
           const file = control?.value as File;
           if (file) {
             formData.append(key, file, file.name);
           }
+        } else if (key === 'scheduledDate' || key === 'closedDate') {
+          // Manejar la fecha programada (ScheduledDate) y la fecha de cierre (ClosedDate)
+          const dateValue = control?.value;
+          if (dateValue) {
+            const formattedDate = new Date(dateValue)
+              .toISOString()
+              .split('T')[0]; // Formato 'YYYY-MM-DD'
+            formData.append(key, formattedDate);
+          } else {
+            formData.append(key, ''); // Si no hay valor, se envía como vacío
+          }
         } else {
-          // Para todos los demás controles, agrega los valores como texto (excepto archivos)
-          formData.append(key, control?.value);
+          // Verifica si el valor es null antes de agregarlo a FormData
+          const value = control?.value === null ? '' : control?.value;
+          formData.append(key, value);
         }
       });
+
+      // Verifica si es creación o actualización
       if (this.id === '') {
         this.apiRequestService
           .onPost(`TicketMessage/Create`, formData)
@@ -153,5 +179,19 @@ export default class TicketMessageAddOrEditComponent implements OnInit {
           });
       }
     }
+  }
+
+  onLoadUsers() {
+    const urlApi = `TicketMessage/Participant/${this.config.data.ticketGroupId}`;
+    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      this.cb_user = result;
+    });
+  }
+
+  public saveUserId(e: any): void {
+    let find = this.cb_user.find((x) => x?.label === e.target.value);
+    this.form.patchValue({
+      assigneeId: find?.value,
+    });
   }
 }

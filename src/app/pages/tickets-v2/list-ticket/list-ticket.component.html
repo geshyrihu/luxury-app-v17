@@ -61,8 +61,8 @@
     </div>
   </div>
 
-  @if ( authService.onValidateRoles(['Asistente', 'Residente', 'SuperUsuario'])
-  ) {
+  @if ( authS.onValidateRoles(['Asistente', 'Administrador', 'SuperUsuario']) )
+  {
   <div class="col-sm-2">
     <div class="card p-1">
       <label class="">Reporte semanal</label>
@@ -320,8 +320,8 @@
         </td>
 
         <!-- Opciones -->
-        @if ( authService.onValidateRoles([ 'Asistente', 'Residente',
-        'SuperUsuario', 'SupervisionOperativa', 'Mantenimiento' ]) ) {
+        @if ( authS.onValidateRoles([ 'Asistente', 'Administrador', 'SuperUsuario',
+        'SupervisionOperativa', 'JefeMantenimiento' ]) ) {
         <td class="text-center no-print">
           <input
             type="checkbox"
@@ -341,7 +341,7 @@
                 })
               "
             />
-            @if (authService.onValidateRoles(['SupervisionOperativa'])) {
+            @if (authS.onValidateRoles(['SupervisionOperativa'])) {
             <btn-delete (OnConfirm)="onDelete(item)" />
             }
             <button

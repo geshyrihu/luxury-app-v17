@@ -18,7 +18,7 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 })
 export default class AddOrEditCondominosComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   config = inject(DynamicDialogConfig);
   customerIdService = inject(CustomerIdService);
   formBuilder = inject(FormBuilder);

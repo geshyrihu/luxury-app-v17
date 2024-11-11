@@ -45,7 +45,7 @@
         <td>Estatus</td>
         <td>{{ data.status }}</td>
       </tr>
-      @if (authService.onValidateRoles(['SuperUsuario', 'Reclutamiento'])) {
+      @if (authS.onValidateRoles(['SuperUsuario', 'Reclutamiento'])) {
       <tr>
         <td>Opciones</td>
         <td>

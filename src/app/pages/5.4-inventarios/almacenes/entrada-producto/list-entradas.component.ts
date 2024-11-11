@@ -17,7 +17,7 @@ import AddOrEditEntradasComponent from './addoredit-entradas.component';
 export default class ListEntradasComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   customerIdService = inject(CustomerIdService);
 
   data: any[] = [];

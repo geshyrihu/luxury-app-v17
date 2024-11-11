@@ -16,7 +16,7 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 export default class AddOrEditPropiedadesComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   formBuilder = inject(FormBuilder);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
   customerIdService = inject(CustomerIdService);
@@ -31,7 +31,7 @@ export default class AddOrEditPropiedadesComponent implements OnInit {
     customerId: [this.customerId, Validators.required],
     tower: ['', Validators.required],
     user: [''],
-    applicationUserId: [this.authService.applicationUserId],
+    applicationUserId: [this.authS.applicationUserId],
   });
 
   ngOnInit(): void {

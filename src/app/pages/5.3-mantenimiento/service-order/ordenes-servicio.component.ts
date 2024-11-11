@@ -27,7 +27,7 @@ const date = new Date();
 export default class OrdenesServicioComponentComponent
   implements OnInit, OnDestroy, OnChanges
 {
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   customerIdService = inject(CustomerIdService);
   messageService = inject(MessageService);
   public reporteOrdenesServicioService = inject(ReporteOrdenesServicioService);

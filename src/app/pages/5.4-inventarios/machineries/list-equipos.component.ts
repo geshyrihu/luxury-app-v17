@@ -28,7 +28,7 @@ export default class ListEquiposComponent implements OnInit {
   dialogHandlerService = inject(DialogHandlerService);
 
   customerIdService = inject(CustomerIdService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   rutaActiva = inject(ActivatedRoute);
   router = inject(Router);
 

@@ -13,7 +13,7 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 })
 export default class FormGastosFijosPresupuestoComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);
   catalogoGastosFijosService = inject(CatalogoGastosFijosService);

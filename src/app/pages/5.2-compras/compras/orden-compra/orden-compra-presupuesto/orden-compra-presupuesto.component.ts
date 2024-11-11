@@ -16,7 +16,7 @@ const fechaActual = new Date();
 })
 export default class OrdenCompraPresupuestoComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   config = inject(DynamicDialogConfig);
   customerIdService = inject(CustomerIdService);
   ordenCompraService = inject(OrdenCompraService);

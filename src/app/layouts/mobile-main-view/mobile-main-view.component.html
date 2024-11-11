@@ -1,0 +1,189 @@
+<nav class="navbar bg-dark fixed-top">
+  <div
+    class="container-fluid d-flex justify-content-between align-items-center py-2"
+  >
+    <!-- Icono de flecha a la izquierda -->
+    <div class="d-flex align-items-center">
+      <!-- <i
+        (click)="onBack()"
+        class="fa-duotone fa-solid fa-arrow-left-to-line text-light fa-xl"
+      ></i> -->
+      <!-- <p class="text-light m-0 fw-bold">
+        {{ nameUser.length > 25 ? (nameUser | slice : 0 : 25) + "" : nameUser }}
+      </p> -->
+      <!-- <small class="text-light m-0 fw-bold">{{ nameCustomer }}</small> -->
+      <div class="dropdown me-3">
+        <small
+          class="text-light"
+          id="dropdownBuilding"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+          role="button"
+        >
+          {{
+            nameCustomer.length > 25
+              ? (nameCustomer | slice : 0 : 25) + ""
+              : nameCustomer
+          }}
+        </small>
+        <ul
+          class="dropdown-menu dropdown-menu-start"
+          aria-labelledby="dropdownBuilding"
+        >
+          <li *ngFor="let item of cb_customer">
+            <a class="dropdown-item" (click)="selectCustomer(item.value)">
+              {{ item.label }}
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Contenedor centrado para el nombre de usuario -->
+    <!-- <div class="d-flex justify-content-center flex-grow-1">
+
+    </div> -->
+
+    <!-- Contenedor para íconos de la derecha -->
+    <div class="d-flex align-items-center">
+      <!-- Icono de notificaciones -->
+      <i
+        *ngIf="isSuperUser"
+        class="fa-solid fa-bell me-3 mt-1 text-light fa-xl"
+      ></i>
+
+      <!-- Ícono de building con dropdown -->
+      <!-- <div class="dropdown me-3">
+        <i
+          class="fa-solid fa-building text-light fa-xl"
+          id="dropdownBuilding"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+          role="button"
+        ></i>
+        <ul
+          class="dropdown-menu dropdown-menu-end"
+          aria-labelledby="dropdownBuilding"
+        >
+          <li *ngFor="let item of cb_customer">
+            <a class="dropdown-item" (click)="selectCustomer(item.value)">
+              {{ item.label }}
+            </a>
+          </li>
+        </ul>
+      </div> -->
+
+      <!-- Dropdown de opciones de usuario -->
+      <div class="dropdown">
+        <i
+          class="fa-solid fa-list text-light fa-xl"
+          id="dropdownMenuButton"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+          role="button"
+        ></i>
+        <ul
+          class="dropdown-menu dropdown-menu-end"
+          aria-labelledby="dropdownMenuButton"
+        >
+          <li>
+            <a
+              class="dropdown-item my-1 mb-1"
+              [routerLink]="['/update-user-profile']"
+              >Mi perfil</a
+            >
+          </li>
+          <li>
+            <a class="dropdown-item my-1 mb-1" (click)="logout()"
+              >Cerrar sesión</a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Contenedor principal ajustable -->
+<div class="main-content">
+  <router-outlet></router-outlet>
+</div>
+
+<footer
+  class="footer bg-light fixed-bottom text-center text-white py-2 shadow-sm"
+>
+  <div class="row row-cols-6 gx-0 py-2">
+    <!-- Iconos del footer -->
+    <div class="col">
+      <i
+        [routerLink]="['/tickets/list']"
+        class="fa-duotone fa-solid fa-ticket fa-xl text-primary"
+      ></i>
+    </div>
+    <div class="col">
+      <i
+        [routerLink]="['/logbook/recorrido']"
+        class="fa-duotone fa-solid fa-book fa-xl text-primary"
+      ></i>
+    </div>
+    <div class="col">
+      <i
+        [routerLink]="['/logbook/lista-medidor']"
+        class="fa-duotone fa-solid fa-file-invoice fa-xl text-primary"
+      ></i>
+    </div>
+    <div class="col">
+      <i
+        [routerLink]="['/mantenimiento/calendario-anual']"
+        class="fa-duotone fa-solid fa-calendar fa-xl text-primary"
+      ></i>
+    </div>
+
+    <div class="col" *ngIf="isSuperUser">
+      <i
+        [routerLink]="['/accounts']"
+        class="fa-duotone fa-solid fa-users fa-xl text-primary"
+      ></i>
+    </div>
+    <div class="col">
+      <i
+        [routerLink]="['/movil-options']"
+        class="fa-duotone fa-solid fa-home fa-xl text-primary"
+      ></i>
+    </div>
+  </div>
+</footer>
+
+<style>
+  /* Estilos de body */
+  html,
+  body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Contenido principal con espacio para footer */
+  .main-content {
+    flex: 1;
+    overflow-y: auto;
+    padding-top: 3.5rem; /* Ajusta según la altura del header */
+    padding-bottom: 3.5rem; /* Ajusta según la altura del footer */
+  }
+
+  /* Header fijo */
+  .navbar {
+    width: 100%;
+    z-index: 10;
+  }
+
+  /* Footer fijo */
+  .footer {
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    z-index: 10;
+  }
+</style>

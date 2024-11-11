@@ -21,7 +21,7 @@ import PresupuestoEditionFileComponent from './presupuesto-edition-file/presupue
   imports: [LuxuryAppComponentsModule],
 })
 export default class PresupuestoIndividualComponent implements OnInit {
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   customerIdService = inject(CustomerIdService);
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
@@ -29,7 +29,7 @@ export default class PresupuestoIndividualComponent implements OnInit {
 
   // Declaración e inicialización de variables
   id: number = 0;
-  applicationUserId: string = this.authService.applicationUserId;
+  applicationUserId: string = this.authS.applicationUserId;
   data: any;
   ref: DynamicDialogRef; // Referencia a un cuadro de diálogo modal
 

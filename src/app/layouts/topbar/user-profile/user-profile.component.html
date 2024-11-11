@@ -1,32 +1,55 @@
 <div class="dropdown d-inline-block" ngbDropdown>
   <button
     type="button"
-    class="btn header-item topbar-light bg-light-subtle border-start border-end"
-    id="page-header-user-dropdown"
+    class="btn header-item topbar-light bg-light-subtle border"
+    id="page-header-notifications-dropdown"
     data-bs-toggle="dropdown"
     aria-haspopup="true"
     aria-expanded="false"
     ngbDropdownToggle
   >
     <img class="rounded avatar-md" [src]="profileImageUrl" alt="Img" />
-    <span class="d-none d-xl-inline-block ms-1 fw-medium"
+    <span class="d-none d-xl-inline-block ms-1 fw-medium text-dark"
       >{{ infoAccountAuthDto.firstName }} {{ infoAccountAuthDto.lastName }}
     </span>
-    <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
+    <i
+      class="fa-duotone fa-solid fa-caret-down d-none d-xl-inline-block text-dark"
+    ></i>
   </button>
-  <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
-    <div class="dropdown-divider"></div>
-    <a [routerLink]="['/accounts/actualizar-perfil']" class="dropdown-item">
-      <i class="fa-thin fa-key me-2" style="color: #ffd43b"></i> Cambiar
-      contraseña
-    </a>
 
-    <a class="dropdown-item pointer" (click)="logout()">
-      <i
-        class="fa-sharp fa-light fa-arrow-right-from-bracket fa-flip-vertical me-2"
-        style="color: #f50000"
-      ></i
-      >Cerrar Sesión
-    </a>
+  <div
+    class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
+    aria-labelledby="page-header-notifications-dropdown"
+    ngbDropdownMenu
+  >
+    <ngx-simplebar style="max-height: 230px">
+      <a
+        [routerLink]="['/update-user-profile']"
+        class="text-reset notification-item"
+      >
+        <div class="d-flex">
+          <div class="flex-grow-1">
+            <div class="font-size-13 text-muted">
+              <p class="mb-0">
+                <i class="fa-thin fa-key me-2" style="color: #ffd43b"></i>
+                Cambiar contraseña
+              </p>
+            </div>
+          </div>
+        </div>
+      </a>
+      <a (click)="logout()" class="text-reset notification-item">
+        <div class="d-flex">
+          <div class="flex-grow-1">
+            <div class="font-size-13 text-muted">
+              <p class="mb-0 card-text">
+                <i class="fa-thin fa-key me-2" style="color: #f50000"></i>
+                Cerrar Sesión
+              </p>
+            </div>
+          </div>
+        </div>
+      </a>
+    </ngx-simplebar>
   </div>
 </div>

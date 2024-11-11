@@ -1,6 +1,26 @@
 <div class="card">
   <div class="card-body">
     <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
+      <div class="form-group mb-2">
+        <label>Cliente</label>
+        <select class="form-select" formControlName="customerId">
+          <option [value]="''">Seleccionar cliente</option>
+          <option *ngFor="let item of cb_customer" [value]="item.value">
+            {{ item.label }}
+          </option>
+        </select>
+      </div>
+
+      <custom-input-datalist
+        (propagar)="saveLegalMatter($event)"
+        [control]="form.get('title')"
+        [data]="cb_legal_matter"
+        formControlName="title"
+        label="Asunto:"
+        placeholder="asunto"
+        [horizontal]="false"
+        dataListId="titleDatalistOptions"
+      />
       <custom-input-text-area
         [control]="form.get('request')"
         formControlName="request"

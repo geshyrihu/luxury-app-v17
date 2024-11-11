@@ -19,7 +19,7 @@ import TarjetaProveedorComponent from '../tarjeta-proveedor/tarjeta-proveedor.co
 export default class BuscadorProvedorComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
 
   incluirInactivos: boolean = false;
   url_img = `${environment.base_urlImg}providers/`;
@@ -30,7 +30,7 @@ export default class BuscadorProvedorComponent implements OnInit {
   resultados: any[] = [];
   loading: boolean = false;
   validateRole(value: string[]): boolean {
-    return this.authService.onValidateRoles(value);
+    return this.authS.onValidateRoles(value);
   }
   ngOnInit(): void {}
   onSelectForState() {

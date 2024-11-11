@@ -6,7 +6,7 @@ import { CustomerIdService } from './customer-id.service';
   providedIn: 'root',
 })
 export class TicketFilterService {
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   customerIdService = inject(CustomerIdService);
 
   filterTicket: IFilterTicket = {

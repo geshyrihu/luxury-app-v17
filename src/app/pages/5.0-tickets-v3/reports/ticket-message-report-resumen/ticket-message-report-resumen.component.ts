@@ -14,7 +14,7 @@ import { TicketGroupService } from '../../ticket.service';
 })
 export default class TicketMessageReportResumenComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   ticketGroupService = inject(TicketGroupService);
   customerIdService = inject(CustomerIdService);
 

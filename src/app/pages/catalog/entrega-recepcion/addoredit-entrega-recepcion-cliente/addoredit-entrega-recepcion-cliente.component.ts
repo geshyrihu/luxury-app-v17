@@ -18,7 +18,7 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 })
 export default class CrudEntregaRecepcionClienteComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   formBuilder = inject(FormBuilder);
   ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);
@@ -49,7 +49,7 @@ export default class CrudEntregaRecepcionClienteComponent implements OnInit {
     this.apiRequestService
       .onPut(
         `EntregaRecepcionCliente/${this.id}/${
-          this.authService.applicationUserId
+          this.authS.applicationUserId
         }/${this.customerIdService.getCustomerId()}`,
         model
       )

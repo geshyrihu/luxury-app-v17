@@ -11,7 +11,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
   providedIn: 'root',
 })
 export class AuthGuard {
-  private authService = inject(AuthService);
+  private authS = inject(AuthService);
   private route = inject(Router);
 
   /**
@@ -21,11 +21,11 @@ export class AuthGuard {
    * @returns Un observable que emite un valor booleano que indica si el token es válido o no.
    */
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    return this.authService.validateToken().pipe(
+    return this.authS.validateToken().pipe(
       tap((JWTisValid) => {
         if (!JWTisValid) {
           // Guardar la URL a la que el usuario intentaba acceder
-          this.authService.redirectUrl = state.url;
+          this.authS.redirectUrl = state.url;
           // Redirigir al usuario a la página de inicio de sesión si el token no es válido.
           this.route.navigateByUrl('/auth/login');
         }

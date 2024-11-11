@@ -13,8 +13,8 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class OrdenCompraDenegadaComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  authService = inject(AuthService);
+  apiRequestService= inject(ApiRequestService);
+  authS = inject(AuthService);
   config = inject(DynamicDialogConfig);
   formBuilder = inject(FormBuilder);
   ref = inject(DynamicDialogRef);
@@ -47,7 +47,7 @@ export default class OrdenCompraDenegadaComponent implements OnInit {
     this.submitting = true;
     this.apiRequestService
       .onPut(
-        `OrdenCompraAuth/NoAutorizada/${this.ordenCompraAuthId}/${this.authService.applicationUserId}`,
+        `OrdenCompraAuth/NoAutorizada/${this.ordenCompraAuthId}/${this.authS.applicationUserId}`,
         this.form.value
       )
       .then((result: boolean) => {

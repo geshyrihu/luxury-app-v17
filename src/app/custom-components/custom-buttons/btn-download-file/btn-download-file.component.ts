@@ -22,7 +22,12 @@ export default class BtnDownloadFileComponent {
     // Llamamos a la función para descargar el archivo
     this.downloadFile(this.urlFile);
   }
-
+  /**
+   *
+   */
+  constructor() {
+    console.log('urlFile', this.urlFile);
+  }
   private downloadFile(url: string) {
     if (!url) {
       console.error('URL no proporcionada.');

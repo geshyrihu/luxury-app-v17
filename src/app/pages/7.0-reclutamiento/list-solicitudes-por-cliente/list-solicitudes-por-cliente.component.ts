@@ -28,7 +28,7 @@ export default class ListSolicitudesPorClienteComponent implements OnInit {
   dialogService = inject(DialogService);
   public statusSolicitudVacanteService = inject(StatusSolicitudVacanteService);
   router = inject(Router);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
 
   customerId$: Observable<number> = this.customerIdService.getCustomerId$();
   // Declaración e inicialización de variables
@@ -55,7 +55,7 @@ export default class ListSolicitudesPorClienteComponent implements OnInit {
         'SolicitudesReclutamiento/solicitudesporcliente/' +
           this.customerIdService.getCustomerId() +
           '/' +
-          this.authService.infoUserAuthDto.applicationUserId
+          this.authS.infoUserAuthDto.applicationUserId
       )
       .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({

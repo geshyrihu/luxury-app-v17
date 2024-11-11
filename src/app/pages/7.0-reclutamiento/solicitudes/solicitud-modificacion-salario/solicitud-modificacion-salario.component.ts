@@ -34,7 +34,7 @@ export default class SolicitudModificacionSalarioComponent {
   customerIdService = inject(CustomerIdService);
   dateService = inject(DateService);
   ref = inject(DynamicDialogRef);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
@@ -99,7 +99,7 @@ export default class SolicitudModificacionSalarioComponent {
     this.dataService
       .post(
         `SolicitudesReclutamiento/SolicitudModificacionSalario/${this.customerIdService.getCustomerId()}/${
-          this.authService.infoUserAuthDto.applicationUserId
+          this.authS.infoUserAuthDto.applicationUserId
         } `,
         model
       )

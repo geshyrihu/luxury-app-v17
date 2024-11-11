@@ -44,4 +44,28 @@ export default class DepuracionComponent {
         this.customToastService.onClose();
       });
   }
+  UpdateTicketLegal(path: string) {
+    this.apiRequestService.onGetList('UpdateDataBase/' + path).then(() => {
+      this.customToastService.onShowSuccess();
+      this.customToastService.onClose();
+    });
+  }
+  SendEmailPending(path: string) {
+    this.apiRequestService.onGetList('LegalReport/' + path).then(() => {
+      this.customToastService.onShowSuccess();
+      this.customToastService.onClose();
+    });
+  }
+  SendLegalTicketReportToCustomer(path: string) {
+    this.apiRequestService.onGetList('Reports/' + path).then(() => {
+      this.customToastService.onShowSuccess();
+      this.customToastService.onClose();
+    });
+  }
+  GenerateSignalEvent(path: string) {
+    this.apiRequestService.onGetList('UpdateDataBase/' + path).then(() => {
+      this.customToastService.onShowSuccess();
+      this.customToastService.onClose();
+    });
+  }
 }

@@ -1,5 +1,30 @@
 <div class="card">
   <div class="card-body">
+    <!-- Botones para elegir si es Pendiente o Concluido -->
+    <div class="mb-3 text-center">
+      <button
+        class="btn btn-soft-primary btn-block"
+        (click)="setMode('pending')"
+        [class.active]="mode === 'pending'"
+      >
+        Agregar Pendiente
+      </button>
+      <button
+        class="btn btn-soft-primary btn-block"
+        (click)="setMode('program')"
+        [class.active]="mode === 'program'"
+      >
+        Agregar con programación
+      </button>
+      <button
+        class="btn btn-soft-primary btn-block"
+        (click)="setMode('concluded')"
+        [class.active]="mode === 'concluded'"
+      >
+        Agregar Concluido
+      </button>
+    </div>
+
     <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
       <custom-input-text
         [control]="form.get('id')"
@@ -18,8 +43,8 @@
       <custom-input-text
         [control]="form.get('title')"
         formControlName="title"
-        label="Titulo"
-        placeholder="titulo"
+        label="Area"
+        placeholder="area"
       />
 
       <custom-input-text-area
@@ -34,6 +59,36 @@
         label="Prioridad"
         [data]="cb_priority"
         [selectDefaulOption]="false"
+      />
+
+      <!-- programar -->
+      <custom-input-date
+        *ngIf="mode === 'concluded' || mode === 'program'"
+        [control]="form.get('scheduledDate')"
+        formControlName="scheduledDate"
+        label="Fecha de programación"
+        placeholder="fecha"
+      />
+
+      <!-- Responsable -->
+      <custom-input-datalist
+        *ngIf="mode === 'concluded' || mode === 'program'"
+        (propagar)="saveUserId($event)"
+        [control]="form.get('assignee')"
+        [data]="cb_user"
+        formControlName="assignee"
+        label="Asignar"
+        placeholder="Asignar"
+        dataListId="assigneeDatalistOptions"
+      />
+
+      <!-- Este es por si es ticket concluido -->
+      <custom-input-date
+        *ngIf="mode === 'concluded'"
+        [control]="form.get('closedDate')"
+        formControlName="closedDate"
+        label="Fecha de término"
+        placeholder="fecha de término"
       />
 
       <div class="row">

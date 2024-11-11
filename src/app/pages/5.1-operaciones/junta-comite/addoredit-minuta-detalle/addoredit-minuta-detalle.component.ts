@@ -20,7 +20,7 @@ export default class AddoreditMinutaDetalleComponent implements OnInit {
   formBuilder = inject(FormBuilder);
   ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
 
   submitting: boolean = false;
 
@@ -52,7 +52,7 @@ export default class AddoreditMinutaDetalleComponent implements OnInit {
     title: ['', Validators.required],
     requestService: ['', Validators.required],
     meetingId: [this.config.data.meetingId, Validators.required],
-    applicationUserId: [this.authService.applicationUserId],
+    applicationUserId: [this.authS.applicationUserId],
   });
 
   ngOnInit(): void {

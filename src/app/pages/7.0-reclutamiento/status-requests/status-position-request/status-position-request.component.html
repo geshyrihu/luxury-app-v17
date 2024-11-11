@@ -27,7 +27,7 @@
             [showAdd]="true"
           />
         </div>
-        @if (authService.onValidateRoles(['SuperUsuario', 'Reclutamiento'])) {
+        @if (authS.onValidateRoles(['SuperUsuario', 'Reclutamiento'])) {
         <div class="col-1">
           <!-- Enviar por correo solo puede si es reclutamiento -->
           <btn-confirmation

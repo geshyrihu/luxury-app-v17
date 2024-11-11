@@ -36,7 +36,7 @@ import EmployeeReclutamientoComponent from './employee-reclutamiento/employee-re
 export default class EmployeeAddOrEditComponent implements OnInit {
   employeeAddOrEditService = inject(EmployeeAddOrEditService);
   apiRequestService = inject(ApiRequestService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   router = inject(Router);
 
   applicationUserId: string = '';
@@ -50,10 +50,10 @@ export default class EmployeeAddOrEditComponent implements OnInit {
 
     // TODO: Repararar
     // if (
-    //   this.authService.infoEmployeeDto.professionId == 5 ||
-    //   this.authService.infoEmployeeDto.professionId == 57 ||
-    //   this.authService.infoEmployeeDto.professionId == 58 ||
-    //   this.authService.infoEmployeeDto.professionId == 6
+    //   this.apiRequestService.infoEmployeeDto.professionId == 5 ||
+    //   this.apiRequestService.infoEmployeeDto.professionId == 57 ||
+    //   this.apiRequestService.infoEmployeeDto.professionId == 58 ||
+    //   this.apiRequestService.infoEmployeeDto.professionId == 6
     // ) {
     //   this.onValidarAdminAsis();
     // }
@@ -63,15 +63,13 @@ export default class EmployeeAddOrEditComponent implements OnInit {
     this.nameEmployee = this.employeeAddOrEditService.onGetNameEmployee();
 
     if (this.applicationUserId === '')
-      this.router.navigate(['/directorio/empleados/interno']);
+      this.router.navigate(['/directory/empleados/interno']);
   }
 
   onValidarAdminAsis() {
     // ProfessionId Administrador= 5, Asistente = 6
     this.apiRequestService
-      .onGetItem(
-        `Employees/validaradminasis/${this.authService.applicationUserId}`
-      )
+      .onGetItem(`Employees/validaradminasis/${this.authS.applicationUserId}`)
       .then((result: any) => {
         this.tienePermiso = result;
       });

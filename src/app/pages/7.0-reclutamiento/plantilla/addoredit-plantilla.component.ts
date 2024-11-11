@@ -24,7 +24,7 @@ export default class AddoreditPlantillaComponent implements OnInit, OnDestroy {
   customToastService = inject(CustomToastService);
   apiRequestService = inject(ApiRequestService);
   formBuilder = inject(FormBuilder);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   config = inject(DynamicDialogConfig);
   customerIdService = inject(CustomerIdService);
   dataService = inject(DataService);

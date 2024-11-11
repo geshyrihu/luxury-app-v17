@@ -1,27 +1,48 @@
 // ICONS
 /* FontAwesome */
-@import url("https://site-assets.fontawesome.com/releases/v6.4.0/css/all.css");
-@import url("https://site-assets.fontawesome.com/releases/v6.4.0/css/sharp-solid.css");
-@import url("https://site-assets.fontawesome.com/releases/v6.4.0/css/sharp-regular.css");
-@import url("https://site-assets.fontawesome.com/releases/v6.4.0/css/sharp-light.css");
+@import url("https://site-assets.fontawesome.com/releases/v6.6.0/css/all.css");
+@import url("https://site-assets.fontawesome.com/releases/v6.6.0/css/sharp-solid.css");
+@import url("https://site-assets.fontawesome.com/releases/v6.6.0/css/sharp-regular.css");
+@import url("https://site-assets.fontawesome.com/releases/v6.6.0/css/sharp-light.css");
+
+// Material Design
+
 @import url("https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/7.4.47/css/materialdesignicons.min.css");
 
 /* Definir variables CSS para tipos de íconos */
 :root {
-  --icon-edit: "\f5ad"; /* FontAwesome edit icon */
+  --cart-shopping: "\f07a"; /* FontAwesome cart-shopping icon */
+  --icon-check-double: "\f00c"; /* FontAwesome check-double icon */
   --icon-delete: "\f1f8"; /* FontAwesome delete icon */
+  --icon-document: "\f15c"; /* FontAwesome document icon */
+  --icon-edit: "\f5ad"; /* FontAwesome edit icon */
+  --icon-envelope: "\f0e0"; /* FontAwesome envelope icon */
+  --icon-file-pdf: "\f1c1"; /* FontAwesome file-pdf icon */
+  --icon-file-excel: "\f1c3"; /* FontAwesome file-excel icon */
+  --icon-file-word: "\f1c2"; /* FontAwesome file-word icon */
+  --icon-file-powerpoint: "\f1c4"; /* FontAwesome file-powerpoint icon */
+  --icon-list: "\f03a"; /* FontAwesome list icon */
+  --icon-list: "\f03a"; /* FontAwesome list icon */
+  --icon-lock: "\f023"; /* FontAwesome lock icon */
+  --icon-pdf-download: "\f019"; /* FontAwesome pdf-download icon */
+  --icon-file: "\f15b"; /* FontAwesome file icon */
+  --icon-plus: "\f067"; /* FontAwesome plus icon */
+  --icon-unlock: "\f09c"; /* FontAwesome unlock icon */
   --icon-update: "\f021"; /* FontAwesome update icon */
   --icon-user: "\f007"; /* FontAwesome user icon */
-  --icon-list: "\f03a"; /* FontAwesome list icon */
-  --icon-document: "\f15c"; /* FontAwesome document icon */
-  --icon-lock: "\f023"; /* FontAwesome lock icon */
-  --icon-unlock: "\f09c"; /* FontAwesome unlock icon */
-  --icon-check-double: "\f00c"; /* FontAwesome check-double icon */
+  --icon-paper-plane: "\f1d8"; /* FontAwesome paper-plane icon */
+  --icon-database: "\f1c0"; /* FontAwesome database icon */
+  --icon-chart-line: "\f201"; /* FontAwesome chart-line icon */
+  --icon-library: "\f5db"; /* FontAwesome library icon */
+  --icon-x: "\f00d"; /* FontAwesome x icon */
+  --icon-rectangle-history: "\e4a2"; /* FontAwesome rectangle-history icon */
+  --icon-sheet-plastic: "\e571"; /* FontAwesome sheet-plastic icon */
+
   --mdi-user: "\F1016"; /* MaterialDesign user icon */
 }
 /* Aplicar iconos a elementos usando variables */
 .icon {
-  font-family: "Font Awesome 5 Free";
+  font-family: "Font Awesome 6 Pro";
   font-weight: 900; /* Asegura el uso del estilo sólido */
 }
 
@@ -59,7 +80,70 @@
 .icon-check-double::before {
   content: var(--icon-check-double);
 }
+.icon-pdf-download::before {
+  content: var(--icon-pdf-download);
+}
 
+.icon-envelope::before {
+  content: var(--icon-envelope);
+}
+
+.icon-plus::before {
+  content: var(--icon-plus);
+}
+
+.icon-list::before {
+  content: var(--icon-list);
+}
+
+.cart-shopping::before {
+  content: var(--cart-shopping);
+}
+
+.icon-file-pdf::before {
+  content: var(--icon-file-pdf);
+}
+
+.icon-paper-plane::before {
+  content: var(--icon-paper-plane);
+}
+
+.icon-file-excel::before {
+  content: var(--icon-file-excel);
+}
+
+.icon-file-word::before {
+  content: var(--icon-file-word);
+}
+.icon-file-powerpoint::before {
+  content: var(--icon-file-powerpoint);
+}
+.icon-database::before {
+  content: var(--icon-database);
+}
+
+.icon-chart-line::before {
+  content: var(--icon-chart-line);
+}
+.icon-library::before {
+  content: var(--icon-library);
+}
+
+.icon-x::before {
+  content: var(--icon-x);
+}
+
+.icon-file::before {
+  content: var(--icon-file);
+}
+
+.icon-rectangle-history::before {
+  content: var(--icon-rectangle-history);
+}
+
+.icon-sheet-plastic::before {
+  content: var(--icon-sheet-plastic);
+}
 /* Aplicar iconos de Material Design usando variables */
 .icon-mdi-user::before {
   content: var(--mdi-user);

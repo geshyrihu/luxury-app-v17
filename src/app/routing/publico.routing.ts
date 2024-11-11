@@ -7,6 +7,7 @@ export default [
       import(
         'src/app/pages/8.0-reportes/report-client/report-client.component'
       ),
+    data: { title: 'Reporte Operación' },
   },
   {
     path: 'operation-report-client/:customer/:inicio/:final',
@@ -14,6 +15,7 @@ export default [
       import(
         'src/app/pages/8.0-reportes/operation-report-client/operation-report-client.component'
       ),
+    data: { title: 'Reporte Cliente Operación' },
   },
   {
     path: 'reporte-minuta/:customer/:id',
@@ -21,6 +23,7 @@ export default [
       import(
         'src/app/pages/8.0-reportes/report-meeting/report-meeting.component'
       ),
+    data: { title: 'Reporte de Minuta' },
   },
   {
     path: 'reporte-ticket-pendientes-proveedor/:customerId/:departamentId',
@@ -28,5 +31,6 @@ export default [
       import(
         'src/app/pages/8.0-reportes/reporte-ticket-pendientes-proveedor/reporte-ticket-pendientes-proveedor.component'
       ),
+    data: { title: 'Reporte de Tickets Pendientes Proveedor' },
   },
 ] as Routes;

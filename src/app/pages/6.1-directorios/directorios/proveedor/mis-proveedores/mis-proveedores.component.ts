@@ -17,7 +17,7 @@ import AddOrEditCustomerProviderComponent from '../addoredit-customer-provider.c
 export default class MisProveedoresComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   customerIdService = inject(CustomerIdService);
 
   data: any[] = [];

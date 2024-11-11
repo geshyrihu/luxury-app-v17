@@ -13,7 +13,7 @@ import AddOrEditUnidadMedidaComponent from './addoredit-unidad-medida.component'
   imports: [LuxuryAppComponentsModule],
 })
 export default class ListUnidadMedidaComponent implements OnInit {
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   dialogHandlerService = inject(DialogHandlerService);
   apiRequestService = inject(ApiRequestService);
 

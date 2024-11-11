@@ -19,7 +19,7 @@ import CrudEntregaRecepcionClienteComponent from '../../../catalog/entrega-recep
 export default class EntregaRecepcionClienteComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   customerIdService = inject(CustomerIdService);
 
   public route = inject(Router);
@@ -36,11 +36,11 @@ export default class EntregaRecepcionClienteComponent implements OnInit {
   departamento = this.cb_departamento[0].value;
 
   onValidarCargo() {
-    if (this.authService.onValidateRoles(['Contador']))
+    if (this.authS.onValidateRoles(['Contador']))
       this.departamento = this.cb_departamento[1].value;
-    if (this.authService.onValidateRoles(['Legal']))
+    if (this.authS.onValidateRoles(['Legal']))
       this.departamento = this.cb_departamento[0].value;
-    if (this.authService.onValidateRoles(['Operaciones']))
+    if (this.authS.onValidateRoles(['Operaciones']))
       this.departamento = this.cb_departamento[2].value;
   }
 
@@ -95,7 +95,7 @@ export default class EntregaRecepcionClienteComponent implements OnInit {
   onValidarDocument(id: number) {
     this.apiRequestService
       .onPut(
-        `EntregaRecepcionCliente/ValidarArchivo/${this.authService.applicationUserId}/${id}`,
+        `EntregaRecepcionCliente/ValidarArchivo/${this.authS.applicationUserId}/${id}`,
         null
       )
       .then((result: boolean) => {

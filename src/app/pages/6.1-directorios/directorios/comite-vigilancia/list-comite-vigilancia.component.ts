@@ -18,7 +18,7 @@ import AddOrEditComiteVigilanciaComponent from './addoredit-comite-vigilancia.co
 export default class ListComiteVigilanciaComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   customerIdService = inject(CustomerIdService);
 
   data: IComiteVigilancia[] = [];

@@ -33,10 +33,10 @@
         (add)="addProductos({ id: 0, title: 'Agregar Registro' })"
         [dt]="dt"
         [rolAuth]="
-          authService.onValidateRoles([
+          authS.onValidateRoles([
             'Asistente',
-            'Mantenimiento',
-            'Residente',
+            'JefeMantenimiento',
+            'Administrador',
             'SuperUsuario'
           ])
         "
@@ -68,8 +68,8 @@
           Compra Sugerida
           <p-sortIcon field="compraRequerida"></p-sortIcon>
         </th>
-        @if ( authService.onValidateRoles([ 'Asistente', 'Mantenimiento',
-        'Residente', 'SuperUsuario' ]) ) {
+        @if ( authS.onValidateRoles([ 'Asistente', 'JefeMantenimiento',
+        'Administrador', 'SuperUsuario' ]) ) {
         <th scope="col">Opciones</th>
         }
       </tr>
@@ -118,15 +118,15 @@
         <td class="text-center">
           {{ item.compraRequerida }}
         </td>
-        @if ( authService.onValidateRoles([ 'Asistente', 'Mantenimiento',
-        'Residente', 'SuperUsuario' ]) ) {
+        @if ( authS.onValidateRoles([ 'Asistente', 'JefeMantenimiento',
+        'Administrador', 'SuperUsuario' ]) ) {
         <td>
           <div class="d-flex justify-content-center">
-            @if ( authService.onValidateRoles([ 'Asistente', 'Mantenimiento',
-            'Residente', 'SuperUsuario' ]) ) {
+            @if ( authS.onValidateRoles([ 'Asistente', 'JefeMantenimiento',
+            'Administrador', 'SuperUsuario' ]) ) {
             <custom-button
+              customClass="btn-soft-danger waves-effect waves-light  bg-gradient me-1"
               ngbTooltip="Registrar Entrada"
-              [customClass]="'btn-sm btn-outline-danger'"
               icon="fa-light fa-plus text-danger"
               (clicked)="
                 onAddEntrada({
@@ -136,11 +136,11 @@
                 })
               "
             />
-            } @if ( authService.onValidateRoles([ 'Asistente', 'Mantenimiento',
-            'Residente', 'SuperUsuario' ]) ) {
+            } @if ( authS.onValidateRoles([ 'Asistente', 'JefeMantenimiento',
+            'Administrador', 'SuperUsuario' ]) ) {
             <custom-button
+              customClass="btn-soft-success waves-effect waves-light  bg-gradient me-1"
               ngbTooltip="Registrar Salida"
-              [customClass]="'btn-sm btn-outline-success'"
               icon="fa-light fa-minus text-success"
               (clicked)="
                 onAddSalida({
@@ -151,12 +151,12 @@
                 })
               "
             />
-            } @if ( authService.onValidateRoles([ 'Asistente', 'Mantenimiento',
-            'Residente', 'SuperUsuario' ]) ) {
+            } @if ( authS.onValidateRoles([ 'Asistente', 'JefeMantenimiento',
+            'Administrador', 'SuperUsuario' ]) ) {
             <btn-edit
               (edit)="editProductos({ id: item.id, title: 'Editar' })"
             />
-            } @if (authService.onValidateRoles(['Mantenimiento'])) {
+            } @if (authS.onValidateRoles(['JefeMantenimiento'])) {
             <btn-delete (OnConfirm)="onDelete(item.id)" />
             }
           </div>

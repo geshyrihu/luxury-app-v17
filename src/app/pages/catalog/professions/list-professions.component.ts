@@ -20,7 +20,7 @@ import DescripcionPuestoComponent from './descripcion-puesto.component';
 })
 export default class ListProfessionsComponent implements OnInit, OnDestroy {
   customToastService = inject(CustomToastService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   dataService = inject(DataService);
   apiRequestService = inject(ApiRequestService);
   messageService = inject(MessageService);

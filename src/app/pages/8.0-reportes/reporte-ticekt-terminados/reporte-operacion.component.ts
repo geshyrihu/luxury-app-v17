@@ -19,7 +19,7 @@ import { environment } from 'src/environments/environment';
 })
 export default class ReporteOperacionComponent implements OnInit, OnDestroy {
   customToastService = inject(CustomToastService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   public reportService = inject(ReportService);
   public ticketFilterService = inject(TicketFilterService);
   dataService = inject(DataService);

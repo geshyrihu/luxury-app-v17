@@ -15,7 +15,7 @@ import EditSalidasComponent from './edit-salidas/edit-salidas.component';
 })
 export default class ListSalidasComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   customerIdService = inject(CustomerIdService);
   dialogHandlerService = inject(DialogHandlerService);
 

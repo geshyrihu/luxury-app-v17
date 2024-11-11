@@ -11,7 +11,7 @@ import { MenuInventoriesPanel } from '../panel-inventories-menu';
   standalone: true,
 })
 export default class PanelInventoriesComponent {
-  authService = inject(AuthService);
+  authS = inject(AuthService);
 
   ticketPanelMenuItems: IInventoriesPanelMenu[] = MenuInventoriesPanel;
 }

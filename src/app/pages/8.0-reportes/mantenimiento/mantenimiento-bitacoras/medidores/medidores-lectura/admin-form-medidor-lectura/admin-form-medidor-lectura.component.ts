@@ -17,7 +17,7 @@ export default class AdminFormMedidorLecturaComponent implements OnInit {
   formBuilder = inject(FormBuilder);
   ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
 
   submitting: boolean = false;
 
@@ -38,7 +38,7 @@ export default class AdminFormMedidorLecturaComponent implements OnInit {
       medidorId: [this.medidorId],
       fechaRegistro: [this.today, Validators.required],
       lectura: ['', Validators.required],
-      applicationUserId: [this.authService.applicationUserId],
+      applicationUserId: [this.authS.applicationUserId],
     });
   }
   onLoadData() {

@@ -21,7 +21,7 @@ import { environment } from 'src/environments/environment';
 export default class AddoreditContratoPolizaComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   customerIdService = inject(CustomerIdService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   config = inject(DynamicDialogConfig);
   dateService = inject(DateService);
   formBuilder = inject(FormBuilder);

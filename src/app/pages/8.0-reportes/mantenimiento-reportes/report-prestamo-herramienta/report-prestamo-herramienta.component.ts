@@ -1,17 +1,17 @@
-import { Component, OnInit, inject } from '@angular/core';
-import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Observable, Subject, takeUntil } from 'rxjs';
-import { ApiRequestService } from 'src/app/core/services/api-request.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
-import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataService } from 'src/app/core/services/data.service';
-import { DateService } from 'src/app/core/services/date.service';
-import { PeriodoMonthService } from 'src/app/core/services/periodo-month.service';
-import PagetitleReportComponent from 'src/app/shared/cabeceras/pagetitlereport/pagetitlereport.component';
+import { Component, OnInit, inject } from "@angular/core";
+import LuxuryAppComponentsModule from "app/shared/luxuryapp-components.module";
+import { DynamicDialogRef } from "primeng/dynamicdialog";
+import { Observable, Subject, takeUntil } from "rxjs";
+import { ApiRequestService } from "src/app/core/services/api-request.service";
+import { CustomToastService } from "src/app/core/services/custom-toast.service";
+import { CustomerIdService } from "src/app/core/services/customer-id.service";
+import { DataService } from "src/app/core/services/data.service";
+import { DateService } from "src/app/core/services/date.service";
+import { PeriodoMonthService } from "src/app/core/services/periodo-month.service";
+import PagetitleReportComponent from "src/app/shared/cabeceras/pagetitlereport/pagetitlereport.component";
 @Component({
-  selector: 'app-report-prestamo-herramienta',
-  templateUrl: './report-prestamo-herramienta.component.html',
+  selector: "app-report-prestamo-herramienta",
+  templateUrl: "./report-prestamo-herramienta.component.html",
   standalone: true,
   imports: [LuxuryAppComponentsModule, PagetitleReportComponent],
 })

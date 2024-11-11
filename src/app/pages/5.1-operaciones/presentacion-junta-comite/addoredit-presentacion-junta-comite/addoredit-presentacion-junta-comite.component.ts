@@ -20,7 +20,7 @@ export default class AddoreditPresentacionJuntaComiteComponent
   formBuilder = inject(FormBuilder);
   customToastService = inject(CustomToastService);
   apiRequestService = inject(ApiRequestService);
-  authService = inject(AuthService);
+  authS = inject(AuthService);
   config = inject(DynamicDialogConfig);
   dataService = inject(DataService);
   ref = inject(DynamicDialogRef);
@@ -79,7 +79,7 @@ export default class AddoreditPresentacionJuntaComiteComponent
   onCreateFormData(dto: any) {
     let formData = new FormData();
     formData.append('id', String(this.id));
-    formData.append('applicationUserId', this.authService.applicationUserId);
+    formData.append('applicationUserId', this.authS.applicationUserId);
     formData.append('area', String(dto.area));
     if (dto.archivo) {
       formData.append('archivo', dto.archivo);

@@ -17,7 +17,7 @@
         [title]="'Formatos'"
         (add)="onModalAddOrEdit({ id: 0, title: 'Nuevo Registro' })"
         [dt]="dt"
-        [showAdd]="authService.onValidateRoles(['SuperUsuario'])"
+        [showAdd]="authS.onValidateRoles(['SuperUsuario'])"
       />
     </ng-template>
     <ng-template pTemplate="header">
@@ -33,7 +33,7 @@
           Archivo
           <p-sortIcon field="pathFormato"></p-sortIcon>
         </th>
-        @if (authService.onValidateRoles(['SuperUsuario'])) {
+        @if (authS.onValidateRoles(['SuperUsuario'])) {
         <th scope="col" style="width: 10%">Opciones</th>
         }
       </tr>
@@ -61,12 +61,12 @@
               [ngStyle]="{
                 color: getIconAndColor(getFileExtension(item.pathFormato)).color
               }"
-              class="fa-thin fa-2x pointer"
+              class="fa-solid fa-2x pointer"
             ></i>
           </a>
         </td>
         <!-- Opciones -->
-        @if (authService.onValidateRoles(['SuperUsuario'])) {
+        @if (authS.onValidateRoles(['SuperUsuario'])) {
         <td class="p-column-title">
           <div class="d-flex justify-content-center">
             <btn-edit

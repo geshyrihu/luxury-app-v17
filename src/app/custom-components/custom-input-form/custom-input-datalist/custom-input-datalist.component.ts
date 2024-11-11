@@ -48,6 +48,7 @@ export default class CustomInputDatalistComponent
   propagar = new EventEmitter<any>();
   ngOnInit(): void {
     this.disabled = this.control.disabled;
+    console.log('data', this.data);
   }
 
   writeValue(value: any): void {

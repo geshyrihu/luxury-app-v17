@@ -21,7 +21,7 @@
         [title]="'Comunicados'"
         (add)="onModalAddOrEdit({ id: 0, title: 'Nuevo Registro' })"
         [dt]="dt"
-        [showAdd]="authService.onValidateRoles(['SuperUsuario'])"
+        [showAdd]="authS.onValidateRoles(['SuperUsuario'])"
       />
     </ng-template>
     <ng-template pTemplate="header">
@@ -41,7 +41,7 @@
           Comunicado<p-sortIcon field="nombreComunicado"></p-sortIcon>
         </th>
         <th scope="col" style="width: 20%">Archivo</th>
-        @if (authService.onValidateRoles(['SuperUsuario'])) {
+        @if (authS.onValidateRoles(['SuperUsuario'])) {
         <th scope="col" style="width: 20%" style="width: 5%">Opciones</th>
         }
       </tr>
@@ -74,7 +74,7 @@
           </a>
         </td>
         <!-- Opciones -->
-        @if (authService.onValidateRoles(['SuperUsuario'])) {
+        @if (authS.onValidateRoles(['SuperUsuario'])) {
         <td class="p-column-title">
           <div class="d-flex justify-content-center">
             <btn-edit
