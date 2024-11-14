@@ -4,23 +4,23 @@ import { AuthGuard } from '../core/guards/auth.guard';
 export default [
   {
     path: '',
-    loadChildren: () => import('./dashboard.routing'),
+    loadComponent: () => import('src/app/pages/dashboard/dashboard.component'),
     canActivate: [AuthGuard],
     data: { title: 'Dashboard' },
-  },
-
-  {
-    path: 'catalog',
-    loadChildren: () => import('./finales/catalog.routing'),
-    canActivate: [AuthGuard],
-    data: { title: 'Catalog' },
   },
   {
     path: 'dashboard',
-    loadChildren: () => import('./dashboard.routing'),
+    loadComponent: () => import('src/app/pages/dashboard/dashboard.component'),
     canActivate: [AuthGuard],
     data: { title: 'Dashboard' },
   },
+  {
+    path: 'catalog',
+    loadChildren: () => import('./catalog.routing'),
+    canActivate: [AuthGuard],
+    data: { title: 'Catalog' },
+  },
+
   {
     path: 'application-user',
     loadComponent: () =>
@@ -33,7 +33,7 @@ export default [
 
   {
     path: 'contabilidad',
-    loadChildren: () => import('./finales/contabilidad.routing'),
+    loadChildren: () => import('./contabilidad.routing'),
     canActivate: [AuthGuard],
     data: { title: 'Contabilidad' },
   },
@@ -63,19 +63,14 @@ export default [
   },
   {
     path: 'menu',
-    loadChildren: () => import('./finales/menu-movil.routing'),
+    loadChildren: () => import('./menu-movil.routing'),
     canActivate: [AuthGuard],
     data: { title: 'Menu' },
   },
 
   {
-    path: 'report',
-    loadChildren: () => import('./finales/report.routing'),
-    data: { title: 'Reporte' },
-  },
-  {
     path: 'documento',
-    loadChildren: () => import('./finales/documents.routing'),
+    loadChildren: () => import('./documents.routing'),
     data: { title: 'Documento' },
   },
   {
@@ -83,83 +78,74 @@ export default [
     loadChildren: () => import('./sistemas.routing'),
     data: { title: 'Sistemas' },
   },
-  {
-    path: 'entrega-recepcion',
-    loadChildren: () => import('./desechar/entrega-recepcion-general.routing'),
-    data: { title: 'Entrega y Recepción' },
-  },
+
   {
     path: 'utilidades',
     loadChildren: () => import('./utillidades.routing'),
     data: { title: 'Utilidades' },
   },
-  {
-    path: 'capacitacion',
-    loadChildren: () => import('./desechar/capacitacion.routing'),
-    data: { title: 'Capacitación' },
-  },
+
   {
     path: 'legal',
-    loadChildren: () => import('./finales/legal.routing'),
+    loadChildren: () => import('./legal.routing'),
     data: { title: 'Legal' },
   },
-  // {
-  //   path: 'tickets',
-  //   loadChildren: () => import('src/app/routing/ticketV2.routing'),
-  //   canActivate: [AuthGuard],
-  //   data: { title: 'Tickets' },
-  // },
 
   // Nuevas rutas validadas
 
   // Rutas con hijos
   {
     path: 'tickets',
-    loadChildren: () => import('src/app/routing/finales/tickets.routing'),
+    loadChildren: () => import('src/app/routing/tickets.routing'),
     canActivate: [AuthGuard],
     data: { title: 'Luxury Chat' },
   },
   {
     path: 'settings',
-    loadChildren: () => import('./finales/settings.routing'),
+    loadChildren: () => import('./settings.routing'),
     canActivate: [AuthGuard],
     data: { title: 'Settings' },
   },
   {
     path: 'report',
-    loadChildren: () => import('src/app/routing/finales/report.routing'),
+    loadChildren: () => import('src/app/routing/report.routing'),
     canActivate: [AuthGuard],
     data: { title: 'Reportes' },
   },
+  // {
+  //   path: 'report',
+  //   loadChildren: () => import('./finales/report.routing'),
+  //   data: { title: 'Reporte' },
+  // },
   {
     path: 'almacen',
-    loadChildren: () => import('./finales/almacen.routing'),
+    loadChildren: () => import('./almacen.routing'),
     canActivate: [AuthGuard],
     data: { title: 'Almacén' },
   },
 
   {
     path: 'calendario',
-    loadChildren: () => import('./finales/calendar.routing'),
+    loadChildren: () => import('./calendar.routing'),
     canActivate: [AuthGuard],
     data: { title: 'Calendario' },
   },
 
   {
     path: 'logbook',
-    loadChildren: () => import('./finales/logbook.routing'),
+    loadChildren: () => import('./logbook.routing'),
     canActivate: [AuthGuard],
     data: { title: 'Bitácora' },
   },
   {
     path: 'entrega-recepcion',
-    loadChildren: () => import('./finales/entrega-recepcion.routing'),
+    loadChildren: () => import('./entrega-recepcion.routing'),
     canActivate: [AuthGuard],
   },
   // Rutas directas
   {
     path: 'directory',
-    loadChildren: () => import('./finales/directory.routing'),
+    loadChildren: () => import('./directory.routing'),
     canActivate: [AuthGuard],
     data: { title: 'Directorio' },
   },

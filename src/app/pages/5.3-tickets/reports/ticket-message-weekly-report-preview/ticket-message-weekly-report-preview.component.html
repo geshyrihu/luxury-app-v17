@@ -1,0 +1,77 @@
+<div class="container my-4" *ngIf="data && data !== undefined">
+  <div class="text-center mb-5">
+    <!-- Encabezado con el logo del cliente y nombre -->
+    <img
+      [src]="urlLogoCustomer + data.customerLogo"
+      alt="Logo del cliente"
+      class="img-fluid mb-3"
+      style="max-width: 150px; height: auto"
+    />
+    <h1 class="h3 font-weight-bold text-primary">{{ data.customer }}</h1>
+    <p class="h5 text-secondary">{{ data.periodReport }}</p>
+    <hr class="my-4" />
+  </div>
+
+  <div *ngFor="let ticket of data.tickets" class="mb-4">
+    <div class="card shadow-sm mb-4">
+      <div class="card-body">
+        <strong>
+          {{ ticket.title }}
+        </strong>
+        <p class="h6 text-justify mb-4">{{ ticket.description }}</p>
+        <div class="row">
+          <div class="col-md-6 col-12 mb-3 mb-md-0">
+            <img
+              [src]="urlImage + ticket.beforeWork"
+              alt="Imagen antes"
+              class="img-fluid rounded shadow"
+              style="width: 100%; height: auto; max-height: 300px"
+            />
+          </div>
+          <div class="col-md-6 col-12">
+            <img
+              [src]="urlImage + ticket.afterWork"
+              alt="Imagen después"
+              class="img-fluid rounded shadow"
+              style="width: 100%; height: auto; max-height: 300px"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Estilos generales */
+  .container {
+    max-width: 900px; /* Limitar el ancho en pantallas grandes */
+  }
+
+  .card {
+    background-color: rgba(240, 240, 240, 0.9); /* Fondo gris claro */
+  }
+
+  /* Estilos para el modo de impresión */
+  @media print {
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    .card {
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+
+    .card-body {
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+  }
+</style>

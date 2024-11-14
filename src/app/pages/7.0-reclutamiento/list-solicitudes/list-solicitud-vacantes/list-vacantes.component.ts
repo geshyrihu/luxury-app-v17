@@ -13,7 +13,7 @@ import { DataService } from 'src/app/core/services/data.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import { FilterRequestsService } from 'src/app/core/services/filter-requests.service';
 import { StatusSolicitudVacanteService } from 'src/app/core/services/status-solicitud-vacante.service';
-import DescripcionPuestoComponent from '../../../catalog/professions/descripcion-puesto.component';
+import DescripcionPuestoComponent from '../../../1.1-catalogos/1.1.9-professions/descripcion-puesto.component';
 import HoursWorkPositionComponent from '../../plantilla/hours-work-position.component';
 import FilterRequestsComponent from '../filter-requests.component';
 import AddOrEditVacanteComponent from './addoredit-vacante.component';

@@ -12,7 +12,7 @@ import { DialogHandlerService } from 'src/app/core/services/dialog-handler.servi
 import { StatusSolicitudVacanteService } from 'src/app/core/services/status-solicitud-vacante.service';
 import CardEmployeeComponent from 'src/app/pages/6.1-directorios/employee/card-employee/card-employee.component';
 import { environment } from 'src/environments/environment';
-import DescripcionPuestoComponent from '../../../catalog/professions/descripcion-puesto.component';
+import DescripcionPuestoComponent from '../../../1.1-catalogos/1.1.9-professions/descripcion-puesto.component';
 import SolicitudVacanteComponent from '../../solicitudes/solicitud-vacante/solicitud-vacante.component';
 import AddoreditPlantillaComponent from '../addoredit-plantilla.component';
 // import EmployeeToWorkPositionComponent from '../employee-to-work-position/employee-to-work-position.component';

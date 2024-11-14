@@ -8,7 +8,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import { environment } from 'src/environments/environment';
-import CrudEntregaRecepcionClienteComponent from '../../../catalog/entrega-recepcion/addoredit-entrega-recepcion-cliente/addoredit-entrega-recepcion-cliente.component';
+import CrudEntregaRecepcionClienteComponent from '../../../1.1-catalogos/1.1.15-entrega-recepcion/addoredit-entrega-recepcion-cliente/addoredit-entrega-recepcion-cliente.component';
 
 @Component({
   selector: 'app-entrega-recepcion-cliente',

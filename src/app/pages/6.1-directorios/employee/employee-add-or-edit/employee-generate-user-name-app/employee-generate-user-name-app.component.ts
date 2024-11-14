@@ -57,26 +57,10 @@ export default class EmployeeGenerateUserNameAppComponent implements OnInit {
     });
   }
   roles: IRoles[] = [];
-
   rolesSuperUser: IRoles[] = [
     {
-      roleId: '12a4611b-8213-4040-8ed5-16bc9f1934c7',
-      roleName: 'Sistemas',
-      isSelected: false,
-    },
-    {
-      roleId: '21bbee13-be15-43f4-8482-40694e8a8124',
-      roleName: 'Operaciones',
-      isSelected: false,
-    },
-    {
-      roleId: '257a8b97-5e50-4ac5-8083-53d755b9da9a',
-      roleName: 'Colaborador',
-      isSelected: false,
-    },
-    {
-      roleId: '398d295f-062b-4c92-b449-267f63439559',
-      roleName: 'Mantenimiento',
+      roleId: '6b8aa482-2d46-452c-9ad0-b9c2b561ebdd',
+      roleName: 'Administrador',
       isSelected: false,
     },
     {
@@ -85,48 +69,18 @@ export default class EmployeeGenerateUserNameAppComponent implements OnInit {
       isSelected: false,
     },
     {
-      roleId: '7addd2fb-c5dc-45e4-a16c-9a940898cbd9',
-      roleName: 'Direccion',
+      roleId: '1f526847-38d6-422b-a152-f601d465b583',
+      roleName: 'Auxiliar de Mantenimiento',
       isSelected: false,
     },
     {
-      roleId: '83615151-b431-4c34-bb1a-3f1d22109f21',
-      roleName: 'Cliente',
+      roleId: '369b69f4-219c-4476-902f-68bb6472824c',
+      roleName: 'Cobranza',
       isSelected: false,
     },
     {
       roleId: '844ee9d7-5837-42db-8561-f8e5e12eaa52',
-      roleName: 'Administrador',
-      isSelected: false,
-    },
-    {
-      roleId: '862f8332-9c5e-41c3-8ceb-218119150de2',
-      roleName: 'Legal',
-      isSelected: false,
-    },
-    {
-      roleId: '90048e42-82b4-4f80-aeaf-ce32dbd63e9e',
-      roleName: 'Proveedor',
-      isSelected: false,
-    },
-    {
-      roleId: '93cb6199-1f65-4609-b10c-5c938dc6f3f1',
-      roleName: 'Reclutamiento',
-      isSelected: false,
-    },
-    {
-      roleId: '9b0b2d1c-ae39-47bc-ad10-252e2ce29cda',
-      roleName: 'SupervisorContable',
-      isSelected: false,
-    },
-    {
-      roleId: 'ab5ea21b-0a6a-4fd4-8beb-b12f921c853b',
-      roleName: 'GerenteMantenimiento',
-      isSelected: false,
-    },
-    {
-      roleId: 'c6a6dfaa-39a2-469a-8199-704de476b67d',
-      roleName: 'SupervisionOperativa',
+      roleName: 'Condomino',
       isSelected: false,
     },
     {
@@ -134,17 +88,68 @@ export default class EmployeeGenerateUserNameAppComponent implements OnInit {
       roleName: 'Contador',
       isSelected: false,
     },
+    {
+      roleId: '39cb8153-56d2-4ea9-9162-c80d5d0ee1af',
+      roleName: 'Jardineria',
+      isSelected: false,
+    },
+    {
+      roleId: 'b7620a4a-1759-4260-b148-5be445410624',
+      roleName: 'Jefe de limpieza',
+      isSelected: false,
+    },
+    {
+      roleId: '8d705bbd-6502-414d-b9ed-89acf994ef54',
+      roleName: 'Jefe de Mantenimiento',
+      isSelected: false,
+    },
+    {
+      roleId: '3364c03a-86a5-4cf3-abc4-b770871ef920',
+      roleName: 'Jefe de Seguridad',
+      isSelected: false,
+    },
+    {
+      roleId: 'b2545f85-5c53-4dac-b5a5-ccd8be679a28',
+      roleName: 'Legal',
+      isSelected: false,
+    },
+    {
+      roleId: '6eb2f1d0-3a83-4fbb-8864-69d508fa6a9f',
+      roleName: 'Limpieza',
+      isSelected: false,
+    },
+    {
+      roleId: '493a5544-17b3-450c-acc4-9d9155eb1278',
+      roleName: 'Reclutamiento',
+      isSelected: false,
+    },
+    {
+      roleId: '00e6b795-d530-4113-83b6-3845c22f3f2e',
+      roleName: 'Seguridad',
+      isSelected: false,
+    },
+    {
+      roleId: 'c0c7efa5-73a9-434c-a46b-ce925ad1520e',
+      roleName: 'Sistemas',
+      isSelected: false,
+    },
+    {
+      roleId: '699d7cc1-d143-4985-b55a-d030864c693e',
+      roleName: 'SuperUsuario',
+      isSelected: false,
+    },
+
+    {
+      roleId: 'c6a6dfaa-39a2-469a-8199-704de476b67d',
+      roleName: 'Supervisor Operativo',
+      isSelected: false,
+    },
   ];
 
   rolesAdmin: IRoles[] = [
     {
-      roleId: '257a8b97-5e50-4ac5-8083-53d755b9da9a',
-      roleName: 'Colaborador',
-      isSelected: false,
-    },
-    {
-      roleId: '398d295f-062b-4c92-b449-267f63439559',
-      roleName: 'Mantenimiento',
+      roleId: '6b8aa482-2d46-452c-9ad0-b9c2b561ebdd',
+      roleName: 'Administrador',
       isSelected: false,
     },
     {
@@ -153,8 +158,51 @@ export default class EmployeeGenerateUserNameAppComponent implements OnInit {
       isSelected: false,
     },
     {
-      roleId: '844ee9d7-5837-42db-8561-f8e5e12eaa52',
-      roleName: 'Administrador',
+      roleId: '1f526847-38d6-422b-a152-f601d465b583',
+      roleName: 'Auxiliar de Mantenimiento',
+      isSelected: false,
+    },
+    // {
+    //   roleId: '844ee9d7-5837-42db-8561-f8e5e12eaa52',
+    //   roleName: 'Condomino',
+    //   isSelected: false,
+    // },
+
+    {
+      roleId: '39cb8153-56d2-4ea9-9162-c80d5d0ee1af',
+      roleName: 'Jardineria',
+      isSelected: false,
+    },
+    {
+      roleId: 'b7620a4a-1759-4260-b148-5be445410624',
+      roleName: 'Jefe de limpieza',
+      isSelected: false,
+    },
+    {
+      roleId: '8d705bbd-6502-414d-b9ed-89acf994ef54',
+      roleName: 'Jefe de Mantenimiento',
+      isSelected: false,
+    },
+    {
+      roleId: '3364c03a-86a5-4cf3-abc4-b770871ef920',
+      roleName: 'Jefe de Seguridad',
+      isSelected: false,
+    },
+
+    {
+      roleId: '6eb2f1d0-3a83-4fbb-8864-69d508fa6a9f',
+      roleName: 'Limpieza',
+      isSelected: false,
+    },
+
+    {
+      roleId: '00e6b795-d530-4113-83b6-3845c22f3f2e',
+      roleName: 'Seguridad',
+      isSelected: false,
+    },
+    {
+      roleId: 'c0c7efa5-73a9-434c-a46b-ce925ad1520e',
+      roleName: 'Sistemas',
       isSelected: false,
     },
   ];

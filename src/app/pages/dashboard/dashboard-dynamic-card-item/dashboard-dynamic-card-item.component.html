@@ -9,16 +9,14 @@
       class="card mb-4 shadow-sm pointer"
       (click)="onCardClick(ticket.statusKey)"
     >
-      <div class="card-header text-center p-2">
-        <h5 class="card-title">
-          {{ ticket.title }}
-        </h5>
-      </div>
       <div class="card-body text-center p-2">
+        <h3 class="card-title">
+          {{ ticket.title }}
+        </h3>
         <p
           class="ml-2"
           [ngClass]="ticket.statusKey === 1 ? 'text-success' : 'text-danger'"
-          style="font-size: 3rem"
+          style="font-size: 2rem"
         >
           <strong>
             {{ ticket.tickets }}

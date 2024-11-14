@@ -2,7 +2,7 @@ import { DatePipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
-import TicketDateRangeSelectorComponent from 'src/app/pages/5.0-tickets-v3/shared/ticket-date-range-selector/ticket-date-range-selector.component';
+import TicketDateRangeSelectorComponent from 'src/app/pages/5.3-tickets/shared/ticket-date-range-selector/ticket-date-range-selector.component';
 
 @Component({
   selector: 'app-legal-reports-external',

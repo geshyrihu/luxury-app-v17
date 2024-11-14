@@ -1,23 +1,44 @@
 import { CommonModule, Location } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
+import { Subscription } from 'rxjs';
+import { SimplebarAngularModule } from 'simplebar-angular';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
+import { SignalRService } from 'src/app/core/services/signal-r.service';
+import { TicketGroupService } from 'src/app/pages/5.3-tickets/ticket.service';
 
 @Component({
   selector: 'app-mobile-main-view',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule],
+  imports: [
+    SimplebarAngularModule,
+    LuxuryAppComponentsModule,
+    CommonModule,
+    RouterModule,
+    FormsModule,
+  ],
   templateUrl: './mobile-main-view.component.html',
 })
-export default class MobileMainViewComponent {
+export default class MobileMainViewComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   authS = inject(AuthService);
   location = inject(Location);
   router = inject(Router);
   customerIdService = inject(CustomerIdService);
+
+  ticketGroupService = inject(TicketGroupService);
+  signalRService = inject(SignalRService);
+
+  messageInNotRead: number = 0;
+  notifications: any[] = [];
+  private notificationSubscription: Subscription;
+  private notificationUpdateSubscription: Subscription;
+
+  options = { autoHide: true };
 
   isSuperUser = this.authS.onValidateRoles(['SuperUsuario']);
   isJefe = this.authS.onValidateRoles([
@@ -70,5 +91,58 @@ export default class MobileMainViewComponent {
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.nameCustomer = result.nameCustomer;
     });
+  }
+
+  ngOnInit() {
+    this.onLoadNotification();
+
+    // Suscribirse al observable de notificaciones recibidas
+    this.notificationSubscription = this.signalRService
+      .getNotificationObservable()
+      .subscribe((notificationData) => {
+        console.log(
+          'Notificación recibida en el componente hijo:',
+          notificationData
+        );
+        this.onLoadNotification();
+      });
+
+    // Suscribirse a las actualizaciones de lectura
+    this.notificationUpdateSubscription = this.signalRService
+      .getNotificationUpdateObservable()
+      .subscribe(() => {
+        console.log('Notificación marcada como leída, recargando...');
+        this.onLoadNotification();
+      });
+  }
+
+  onLoadNotification() {
+    this.messageInNotRead = 0;
+    this.notifications = [];
+    console.log('que sucede primero, onLoadNotification');
+    const urlApi = `NotificationUser/GetAllUnread/${this.authS.applicationUserId}`;
+    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      this.notifications = result;
+      this.notifications.forEach((x: any) => {
+        if (!x.isRead) {
+          this.messageInNotRead++;
+        }
+      });
+    });
+  }
+
+  getTruncatedMessage(message: string, maxLength: number): string {
+    return message.length > maxLength
+      ? message.substring(0, maxLength) + '...'
+      : message;
+  }
+
+  ngOnDestroy() {
+    if (this.notificationSubscription) {
+      this.notificationSubscription.unsubscribe();
+    }
+    if (this.notificationUpdateSubscription) {
+      this.notificationUpdateSubscription.unsubscribe();
+    }
   }
 }

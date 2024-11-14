@@ -13,7 +13,7 @@ export default [
     path: 'departamentos',
     loadComponent: () =>
       import(
-        'src/app/pages/catalog/area-responsable/list-area-responsable.component'
+        'src/app/pages/1.1-catalogos/1.1.8-departamento-de-trabajo/list-area-responsable.component'
       ),
     data: { title: 'Áreas Responsables' },
   },

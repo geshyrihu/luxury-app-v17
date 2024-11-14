@@ -3,7 +3,7 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
-import AddOrEditCatalogoDescripcionComponent from '../../../catalog/entrega-recepcion/addoredit-catalogo-descripcion/addoredit-catalogo-descripcion.component';
+import AddOrEditCatalogoDescripcionComponent from '../../../1.1-catalogos/1.1.15-entrega-recepcion/addoredit-catalogo-descripcion/addoredit-catalogo-descripcion.component';
 
 @Component({
   selector: 'app-list-catalogo-descripcion',

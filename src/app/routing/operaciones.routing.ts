@@ -27,7 +27,7 @@ export default [
   },
   {
     path: 'compras',
-    loadChildren: () => import('./finales/compras.routing'),
+    loadChildren: () => import('./compras.routing'),
     canActivate: [AuthGuard],
   },
   {

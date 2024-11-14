@@ -3,7 +3,7 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
-import { PermissionDto } from 'src/app/pages/catalog/module-app/module-app-permission/module-app-permission.component';
+import { PermissionDto } from 'src/app/pages/1.1-catalogos/1.1.1-module-app/module-app-permission/module-app-permission.component';
 import { EmployeeAddOrEditService } from '../employee-add-or-edit.service';
 
 @Component({

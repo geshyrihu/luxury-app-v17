@@ -4,14 +4,6 @@
   >
     <!-- Icono de flecha a la izquierda -->
     <div class="d-flex align-items-center">
-      <!-- <i
-        (click)="onBack()"
-        class="fa-duotone fa-solid fa-arrow-left-to-line text-light fa-xl"
-      ></i> -->
-      <!-- <p class="text-light m-0 fw-bold">
-        {{ nameUser.length > 25 ? (nameUser | slice : 0 : 25) + "" : nameUser }}
-      </p> -->
-      <!-- <small class="text-light m-0 fw-bold">{{ nameCustomer }}</small> -->
       <div class="dropdown me-3">
         <small
           class="text-light"
@@ -40,40 +32,78 @@
     </div>
 
     <!-- Contenedor centrado para el nombre de usuario -->
-    <!-- <div class="d-flex justify-content-center flex-grow-1">
-
-    </div> -->
 
     <!-- Contenedor para íconos de la derecha -->
     <div class="d-flex align-items-center">
       <!-- Icono de notificaciones -->
-      <i
-        *ngIf="isSuperUser"
-        class="fa-solid fa-bell me-3 mt-1 text-light fa-xl"
-      ></i>
-
-      <!-- Ícono de building con dropdown -->
-      <!-- <div class="dropdown me-3">
+      <div class="dropdown me-2" ngbDropdown>
         <i
-          class="fa-solid fa-building text-light fa-xl"
-          id="dropdownBuilding"
+          *ngIf="messageInNotRead === 0"
+          class="text-success fa-solid fa-bell"
+          id="page-header-notifications-dropdown"
           data-bs-toggle="dropdown"
+          aria-haspopup="true"
           aria-expanded="false"
+          ngbDropdownToggle
           role="button"
         ></i>
-        <ul
-          class="dropdown-menu dropdown-menu-end"
-          aria-labelledby="dropdownBuilding"
+        <i
+          *ngIf="messageInNotRead !== 0"
+          class="text-danger fa-solid fa-bell-ring fa-xl"
+          id="page-header-notifications-dropdown"
+          data-bs-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+          ngbDropdownToggle
+          role="button"
+        ></i>
+        <span class="badge bg-light rounded-pill">{{ messageInNotRead }}</span>
+        <div
+          class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0 full-width-dropdown"
+          aria-labelledby="page-header-notifications-dropdown"
+          ngbDropdownMenu
         >
-          <li *ngFor="let item of cb_customer">
-            <a class="dropdown-item" (click)="selectCustomer(item.value)">
-              {{ item.label }}
+          <ngx-simplebar [options]="options" *ngIf="messageInNotRead === 0">
+            <a
+              [routerLink]="['/tickets/my-tickets']"
+              class="text-reset notification-item"
+            >
+              <div class="d-flex card">
+                <div class="flex-grow-1">
+                  <h6 class="mb-1">Sin notificaciones nuevas</h6>
+                </div>
+              </div>
             </a>
-          </li>
-        </ul>
-      </div> -->
+          </ngx-simplebar>
+          <ngx-simplebar
+            style="width: 100% !important; max-height: 230px"
+            *ngIf="messageInNotRead !== 0"
+          >
+            <a
+              *ngFor="let notification of notifications"
+              [routerLink]="notification.url"
+              class="text-reset notification-item"
+            >
+              <div class="d-flex">
+                <div class="flex-grow-1">
+                  <h6 class="mb-1">{{ notification.title }}</h6>
+                  <div class="font-size-13 text-muted">
+                    <p class="mb-0">
+                      <span>{{
+                        getTruncatedMessage(notification.message, 45)
+                      }}</span>
+                    </p>
+                    <p class="mb-0">
+                      <small>{{ notification.createdAt }}</small>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </ngx-simplebar>
+        </div>
+      </div>
 
-      <!-- Dropdown de opciones de usuario -->
       <div class="dropdown">
         <i
           class="fa-solid fa-list text-light fa-xl"
@@ -116,7 +146,7 @@
     <!-- Iconos del footer -->
     <div class="col">
       <i
-        [routerLink]="['/tickets/list']"
+        [routerLink]="['/tickets/my-tickets']"
         class="fa-duotone fa-solid fa-ticket fa-xl text-primary"
       ></i>
     </div>
@@ -185,5 +215,8 @@
     position: fixed;
     bottom: 0;
     z-index: 10;
+  }
+  ngx-simplebar {
+    height: 100%;
   }
 </style>
