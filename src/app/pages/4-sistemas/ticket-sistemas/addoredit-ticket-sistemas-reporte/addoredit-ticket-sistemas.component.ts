@@ -1,18 +1,19 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { EStatusTask } from 'src/app/core/enums/estatus-task.enum';
-import { EPriority } from 'src/app/core/enums/priority.enum';
-import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
-import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
-import { ApiRequestService } from 'src/app/core/services/api-request.service';
-import { AuthService } from 'src/app/core/services/auth.service';
-import { DateService } from 'src/app/core/services/date.service';
-import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
+import { Component, OnInit, inject } from "@angular/core";
+import { FormBuilder, Validators } from "@angular/forms";
+import LuxuryAppComponentsModule from "app/shared/luxuryapp-components.module";
+import { DynamicDialogConfig, DynamicDialogRef } from "primeng/dynamicdialog";
+import { EStatusTask } from "src/app/core/enums/estatus-task.enum";
+import { EPriority } from "src/app/core/enums/priority.enum";
+import { onGetSelectItemFromEnum } from "src/app/core/helpers/enumeration";
+import { ISelectItem } from "src/app/core/interfaces/select-Item.interface";
+import { ApiRequestService } from "src/app/core/services/api-request.service";
+import { AuthService } from "src/app/core/services/auth.service";
+import { DateService } from "src/app/core/services/date.service";
+import CustomInputModule from "src/app/custom-components/custom-input-form/custom-input.module";
+
 @Component({
-  selector: 'app-addoredit-ticket-sistemas',
-  templateUrl: './addoredit-ticket-sistemas.component.html',
+  selector: "app-addoredit-ticket-sistemas",
+  templateUrl: "./addoredit-ticket-sistemas.component.html",
   standalone: true,
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
@@ -35,18 +36,18 @@ export default class AddoreditTicketSistemasComponent implements OnInit {
   cb_responsableSistemas: ISelectItem[] = [];
   form = this.formBuilder.group({
     id: { value: this.id, disabled: true },
-    activity: ['', Validators.required],
+    activity: ["", Validators.required],
     dateFinished: [],
-    dateRequest: ['', Validators.required],
-    observations: [''],
+    dateRequest: ["", Validators.required],
+    observations: [""],
     priority: [0, Validators.required],
     status: [this.config.data.status, Validators.required],
     applicationUserResponsableId: [
       this.authS.applicationUserId,
       Validators.required,
     ],
-    applicationUserCargoReporteId: ['', Validators.required],
-    applicationUserCargoReporte: ['', Validators.required],
+    applicationUserCargoReporteId: ["", Validators.required],
+    applicationUserCargoReporte: ["", Validators.required],
   });
 
   ngOnInit(): void {
@@ -65,7 +66,7 @@ export default class AddoreditTicketSistemasComponent implements OnInit {
   }
   onLoadSelectItem() {
     this.apiRequestService
-      .onGetSelectItem('AplicationUser')
+      .onGetSelectItem("AplicationUser")
       .then((result: any) => {
         this.cb_user = result;
       });

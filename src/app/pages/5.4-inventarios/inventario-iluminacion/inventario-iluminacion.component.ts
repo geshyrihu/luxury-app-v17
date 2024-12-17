@@ -6,8 +6,8 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
-import { environment } from 'src/environments/environment';
 import AddoreditInventarioIluminacionComponent from './addoredit-inventario-iluminacion.component';
+
 @Component({
   selector: 'app-inventario-iluminacion',
   templateUrl: './inventario-iluminacion.component.html',
@@ -21,12 +21,10 @@ export default class InventarioIluminacionComponent implements OnInit {
   dialogHandlerService = inject(DialogHandlerService);
   dialogService = inject(DialogService);
 
-  urlImg = environment.base_urlImg + 'Administration/products/';
   data: any[] = [];
 
   ref: DynamicDialogRef;
   customerId$: Observable<number> = this.customerIdService.getCustomerId$();
-  url = `${environment.base_urlImg}Administration/products/`;
 
   ngOnInit(): void {
     this.customerId$ = this.customerIdService.getCustomerId$();

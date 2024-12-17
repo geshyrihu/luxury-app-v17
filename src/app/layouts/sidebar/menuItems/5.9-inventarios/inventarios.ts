@@ -51,7 +51,7 @@ export const inventariosMenu = (authS: AuthService) => [
       },
       {
         visible: authS.canRead('5.9 INVENTARIOS'),
-        label: '5.9.8 Compito y CCTV',
+        label: '5.9.8 Computo y CCTV',
         routerLink: '/mantenimiento/inventario/equipos/6',
         name: 'Inventarios-Equipos de sistemas',
       },

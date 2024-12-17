@@ -8,12 +8,13 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataService } from 'src/app/core/services/data.service';
+import { DataConnectorService } from 'src/app/core/services/data.service';
 import { StatusSolicitudVacanteService } from 'src/app/core/services/status-solicitud-vacante.service';
 import CardEmployeeComponent from 'src/app/pages/6.1-directorios/employee/card-employee/card-employee.component';
 import AddOrEditStatusRequestSalaryModificationComponent from './addoredit-status-request-salary-modification/addoredit-status-request-salary-modification.component';
 
 import { environment } from 'src/environments/environment';
+
 @Component({
   selector: 'app-status-request-salary-modification',
   templateUrl: './status-request-salary-modification.component.html',
@@ -25,7 +26,7 @@ export default class StatusRequestSalaryModificationComponent
 {
   private statusSolicitudVacanteService = inject(StatusSolicitudVacanteService);
   customerIdService = inject(CustomerIdService);
-  dataService = inject(DataService);
+  dataService = inject(DataConnectorService);
   apiRequestService = inject(ApiRequestService);
   dialogService = inject(DialogService);
   customToastService = inject(CustomToastService);

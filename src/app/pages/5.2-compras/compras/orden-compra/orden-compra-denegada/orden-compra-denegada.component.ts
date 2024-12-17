@@ -13,7 +13,7 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class OrdenCompraDenegadaComponent implements OnInit {
-  apiRequestService= inject(ApiRequestService);
+  apiRequestService = inject(ApiRequestService);
   authS = inject(AuthService);
   config = inject(DynamicDialogConfig);
   formBuilder = inject(FormBuilder);

@@ -5,6 +5,7 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ITicketseguimiento } from 'src/app/core/interfaces/ticketseguimiento.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
+
 @Component({
   selector: 'app-ticket-seguimiento',
   templateUrl: './ticket-seguimiento.component.html',

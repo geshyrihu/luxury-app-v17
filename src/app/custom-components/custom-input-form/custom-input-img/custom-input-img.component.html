@@ -10,7 +10,9 @@
     alt="imgBase64"
     [ngStyle]="{
       width: contentWidth + 'px',
-      height: contentHeight + 'px'
+      height: contentHeight + 'px',
+      'max-width': '100px',
+      'max-height': '100px'
     }"
   />
   } @if (!imgBase64 && onValidateImgCurrent()) {
@@ -20,7 +22,9 @@
     alt="no-image"
     [ngStyle]="{
       width: contentWidth + 'px',
-      height: contentHeight + 'px'
+      height: contentHeight + 'px',
+      'max-width': '100px',
+      'max-height': '100px'
     }"
   />
   } @if (!imgBase64 && !onValidateImgCurrent()) {
@@ -30,7 +34,9 @@
     alt=""
     [ngStyle]="{
       width: contentWidth + 'px',
-      height: contentHeight + 'px'
+      height: contentHeight + 'px',
+      'max-width': '100px',
+      'max-height': '100px'
     }"
   />
   }

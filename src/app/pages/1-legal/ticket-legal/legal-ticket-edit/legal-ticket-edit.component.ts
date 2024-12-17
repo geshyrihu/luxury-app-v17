@@ -1,15 +1,15 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
-import { ApiRequestService } from 'src/app/core/services/api-request.service';
-import { AuthService } from 'src/app/core/services/auth.service';
-import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
+import { Component, OnInit, inject } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import LuxuryAppComponentsModule from "app/shared/luxuryapp-components.module";
+import { DynamicDialogConfig, DynamicDialogRef } from "primeng/dynamicdialog";
+import { ISelectItem } from "src/app/core/interfaces/select-Item.interface";
+import { ApiRequestService } from "src/app/core/services/api-request.service";
+import { AuthService } from "src/app/core/services/auth.service";
+import CustomInputModule from "src/app/custom-components/custom-input-form/custom-input.module";
 
 @Component({
-  selector: 'app-legal-ticket-edit',
-  templateUrl: './legal-ticket-edit.component.html',
+  selector: "app-legal-ticket-edit",
+  templateUrl: "./legal-ticket-edit.component.html",
   standalone: true,
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
@@ -23,15 +23,15 @@ export default class LegalTicketEditComponent implements OnInit {
 
   cb_customer: ISelectItem[] = [];
 
-  id: string = '';
+  id: string = "";
   submitting: boolean = false;
   applicationUserResponsible_cb: ISelectItem[] = [];
   list: ISelectItem[] = [];
   form: FormGroup = this.formBuilder.group({
     id: { value: this.id, disabled: true },
-    customerId: ['', Validators.required],
+    customerId: ["", Validators.required],
     request: [],
-    title: ['', Validators.required],
+    title: ["", Validators.required],
     documentCloud: [false],
     documentEmail: [false],
     personResponsibleId: [null],
@@ -45,7 +45,7 @@ export default class LegalTicketEditComponent implements OnInit {
     });
 
     this.id = this.config.data.id;
-    if (this.id !== '') this.onLoadData();
+    if (this.id !== "") this.onLoadData();
     this.apiRequestService
       .onGetItem(`TicketLegal/EmployeeLegal`)
       .then((result: any) => {
@@ -82,7 +82,6 @@ export default class LegalTicketEditComponent implements OnInit {
 
   saveLegalMatter(e: any): void {
     let find = this.cb_legal_matter.find((x) => x?.label === e.target.value);
-    console.log('🚀 ~ e.target.value:', e.target.value);
     this.form.patchValue({
       isInternal: find?.value,
       title: e.target.value,

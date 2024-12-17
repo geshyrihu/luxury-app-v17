@@ -7,8 +7,8 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
-import { environment } from 'src/environments/environment';
 import AddOrEditRadioComunicacionComponent from './addoredit-radio-comunicacion.component';
+
 @Component({
   selector: 'app-radio-comunicacion',
   templateUrl: './radio-comunicacion.component.html',
@@ -24,7 +24,6 @@ export default class RadioComunicacionComponent implements OnInit {
 
   ref: DynamicDialogRef;
 
-  urlBaseImg: string = `${environment.base_urlImg}customers/${this.customerIdService.customerId}/radios/`;
   customerId$: Observable<number> = this.customerIdService.getCustomerId$();
 
   ngOnInit(): void {

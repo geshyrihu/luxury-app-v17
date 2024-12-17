@@ -4,7 +4,8 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
-import { DataService } from 'src/app/core/services/data.service';
+import { DataConnectorService } from 'src/app/core/services/data.service';
+
 @Component({
   selector: 'app-hours-work-position',
   templateUrl: './hours-work-position.component.html',
@@ -13,7 +14,7 @@ import { DataService } from 'src/app/core/services/data.service';
 })
 export default class HoursWorkPositionComponent implements OnInit, OnDestroy {
   config = inject(DynamicDialogConfig);
-  dataService = inject(DataService);
+  dataService = inject(DataConnectorService);
   apiRequestService = inject(ApiRequestService);
   ref = inject(DynamicDialogRef);
   customToastService = inject(CustomToastService);

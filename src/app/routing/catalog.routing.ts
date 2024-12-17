@@ -181,4 +181,13 @@ export default [
         'src/app/pages/5.4-inventarios/inventario-pintura/inventario-pintura.component'
       ),
   },
+  {
+    title: 'Catalog-color',
+    data: { title: 'Catalog-color' },
+    path: 'catalog-color',
+    loadComponent: () =>
+      import(
+        'src/app/pages/1.1-catalogos/1.1.15-catalog-color/catalog-color.component'
+      ),
+  },
 ] as Routes;

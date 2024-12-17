@@ -1,10 +1,11 @@
-import { Component, Input, OnInit, inject } from '@angular/core';
-import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { DynamicDialogConfig } from 'primeng/dynamicdialog';
-import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { Component, Input, OnInit, inject } from "@angular/core";
+import LuxuryAppComponentsModule from "app/shared/luxuryapp-components.module";
+import { DynamicDialogConfig } from "primeng/dynamicdialog";
+import { ApiRequestService } from "src/app/core/services/api-request.service";
+
 @Component({
-  selector: 'app-addoredit-list-administration',
-  templateUrl: './addoredit-list-administration.component.html',
+  selector: "app-addoredit-list-administration",
+  templateUrl: "./addoredit-list-administration.component.html",
   standalone: true,
   imports: [LuxuryAppComponentsModule],
 })
@@ -19,7 +20,7 @@ export default class AddOrEditListAdministrationComponent implements OnInit {
   cb_ParticipantAdministration: any[] = [];
   cb_Administration: any[] = [];
   participantsList: any[] = [];
-  administrationparticipante = '';
+  administrationparticipante = "";
   listaParticipantesAdministration: any[] = [];
 
   ngOnInit(): void {

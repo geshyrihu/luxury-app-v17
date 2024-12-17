@@ -10,8 +10,6 @@ export class UpdateService {
       this.swUpdate.versionUpdates.subscribe((event) => {
         if (event.type === 'VERSION_READY') {
           window.location.reload();
-
-          console.log('Se actualizo la app');
         }
       });
     }

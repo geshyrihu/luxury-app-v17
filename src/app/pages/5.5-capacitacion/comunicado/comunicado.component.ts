@@ -6,6 +6,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import { environment } from 'src/environments/environment';
 import AddOrEditComunicadoComponent from './addoredit-comunicado.component';
+
 @Component({
   selector: 'app-comunicado',
   templateUrl: './comunicado.component.html',

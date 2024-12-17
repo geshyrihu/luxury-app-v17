@@ -24,7 +24,7 @@
       >
     </div>
   </div>
-  @if (authS.onValidateRoles(['SuperUsuario'])) {
+  @if (authS.canCreate('CARGA-PROVEEDORES')) {
 
   <div class="col-sm-1">
     <custom-button

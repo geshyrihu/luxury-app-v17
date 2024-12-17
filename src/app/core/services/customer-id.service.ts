@@ -1,15 +1,14 @@
 import { Injectable, OnDestroy, inject } from '@angular/core';
 import { Observable, Subject, takeUntil } from 'rxjs';
-import { environment } from 'src/environments/environment';
 import { AuthService } from './auth.service';
-import { DataService } from './data.service';
+import { DataConnectorService } from './data.service';
 import { StorageService } from './storage.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CustomerIdService implements OnDestroy {
-  dataService = inject(DataService);
+  dataService = inject(DataConnectorService);
   private storageService = inject(StorageService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
@@ -77,7 +76,7 @@ export class CustomerIdService implements OnDestroy {
       .subscribe({
         next: (resp: any) => {
           this.nameCustomer = resp.body.nameCustomer;
-          this.logoCustomer = `${environment.base_urlImg}Administration/customer/${resp.body.photoPath}`;
+          this.logoCustomer = resp.body.photoPath;
 
           this.customerId$.next(customerId); // Notificar a los observadores sobre el cambio en el ID del cliente.
         },

@@ -11,12 +11,10 @@
       <div class="form-group row mb-2">
         <label class="col-sm-3">Imagen</label>
         <div class="col-sm-9">
-          <div class="card">
+          <div class="card text-center">
             <app-input-img
               (fileSelected)="uploadFile($event)"
               [urlImgCurrent]="urlBaseImg"
-              [contentHeight]="'150'"
-              [contentWidth]="'250'"
             />
           </div>
         </div>

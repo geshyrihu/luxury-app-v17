@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, forwardRef } from '@angular/core';
 import {
-  ControlValueAccessor,
-  FormControl,
-  FormsModule,
-  NG_VALUE_ACCESSOR,
+    ControlValueAccessor,
+    FormControl,
+    FormsModule,
+    NG_VALUE_ACCESSOR,
 } from '@angular/forms';
 import { FlatpickrModule } from 'angularx-flatpickr';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';

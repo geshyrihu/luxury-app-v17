@@ -51,13 +51,39 @@ export default [
     title: 'Calendario Maestro Equipo', // Añadido título
     data: { title: 'Calendario Maestro Equipo' },
   },
+  // {
+  //   path: 'custom-calendar-events',
+  //   loadComponent: () =>
+  //     import(
+  //       'src/app/pages/5.6-calendar/custom-calendar/custom-calendar-events/custom-calendar-events.component'
+  //     ),
+  //   title: 'Eventos Personalizados del Calendario', // Añadido título
+  //   data: { title: 'Eventos Personalizados del Calendario' },
+  // },
+
   {
-    path: 'custom-calendar-events',
+    path: 'list',
     loadComponent: () =>
       import(
-        'src/app/pages/5.6-calendar/custom-calendar/custom-calendar-events/custom-calendar-events.component'
+        'src/app/pages/5.11-calendars/calendar-list/calendar-list.component'
       ),
-    title: 'Eventos Personalizados del Calendario', // Añadido título
-    data: { title: 'Eventos Personalizados del Calendario' },
+    title: 'Calendario',
+    data: { title: 'Calendarios' },
+  },
+  {
+    path: 'detail/:id',
+    loadComponent: () =>
+      import(
+        'src/app/pages/5.11-calendars/calendar-detail/calendar-detail.component'
+      ),
+    title: 'Calendario',
+    data: { title: 'Calendarios' },
+  },
+  {
+    path: 'reuniones-comite',
+    loadComponent: () =>
+      import(
+        'src/app/pages/5.11-calendars/reuniones-comite/reuniones-comite.component'
+      ),
   },
 ] as Routes;

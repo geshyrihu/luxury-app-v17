@@ -8,7 +8,7 @@ import { EAreaMinutasDetalles } from 'src/app/core/enums/area-minutas-detalles.e
 import { EStatusTask } from 'src/app/core/enums/estatus-task.enum';
 import { EStatusPipe } from 'src/app/core/pipes/status.pipe';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
-import { DataService } from 'src/app/core/services/data.service';
+import { DataConnectorService } from 'src/app/core/services/data.service';
 
 @Component({
   selector: 'app-resultado-general-evaluacion-areas-detalle',
@@ -25,7 +25,7 @@ import { DataService } from 'src/app/core/services/data.service';
 export default class ResultadoGeneralEvaluacionAreasDetalleComponent
   implements OnInit, OnDestroy
 {
-  dataService = inject(DataService);
+  dataService = inject(DataConnectorService);
   config = inject(DynamicDialogConfig);
   customToastService = inject(CustomToastService);
 

@@ -4,7 +4,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataService } from 'src/app/core/services/data.service';
+import { DataConnectorService } from 'src/app/core/services/data.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -15,7 +15,7 @@ import { environment } from 'src/environments/environment';
 export default class CabeceraSolicitudPagoPdfComponent
   implements OnInit, OnDestroy
 {
-  dataService = inject(DataService);
+  dataService = inject(DataConnectorService);
   apiRequestService = inject(ApiRequestService);
   customerIdService = inject(CustomerIdService);
   customToastService = inject(CustomToastService);

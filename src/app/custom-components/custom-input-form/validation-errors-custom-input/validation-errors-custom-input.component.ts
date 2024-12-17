@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
+
 @Component({
   selector: 'app-validation-errors-custom-input',
   templateUrl: './validation-errors-custom-input.component.html',

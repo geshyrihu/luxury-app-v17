@@ -2,6 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
+
 @Component({
   selector: 'app-onden-compra-pdf-solicitud-pago',
   templateUrl: './onden-compra-pdf-solicitud-pago.component.html',

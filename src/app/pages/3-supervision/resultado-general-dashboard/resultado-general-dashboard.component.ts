@@ -6,7 +6,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { Subject, takeUntil } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
-import { DataService } from 'src/app/core/services/data.service';
+import { DataConnectorService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
 import { PeriodoMonthService } from 'src/app/core/services/periodo-month.service';
 
@@ -19,7 +19,7 @@ import { PeriodoMonthService } from 'src/app/core/services/periodo-month.service
 export default class ResultadoGeneralDashboardComponent
   implements OnInit, OnDestroy
 {
-  dataService = inject(DataService);
+  dataService = inject(DataConnectorService);
   apiRequestService = inject(ApiRequestService);
   dateService = inject(DateService);
   dialogService = inject(DialogService);

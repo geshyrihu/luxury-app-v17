@@ -65,14 +65,7 @@ export default [
       ),
     data: { title: 'Órdenes de Compra' },
   },
-  {
-    path: 'caratula-fondeo',
-    loadComponent: () =>
-      import(
-        'src/app/pages/5.2-compras/compras/caratula-fondeo/vista-caratula-fondeo/vista-caratula-fondeo.component'
-      ),
-    data: { title: 'Carátula de Fondeo' },
-  },
+
   {
     path: 'orden-compra/:id',
     loadComponent: () =>

@@ -5,12 +5,11 @@ import { IFechasFiltro } from 'src/app/core/interfaces/fechas-filtro.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
-import { DataService } from 'src/app/core/services/data.service';
+import { DataConnectorService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
 import { FiltroCalendarService } from 'src/app/core/services/filtro-calendar.service';
-import { environment } from 'src/environments/environment';
 import AddOrEditAgendaSupervisionComponent from './addoredit-agenda-supervision.component';
-const base_url = environment.base_urlImg + 'Administration/accounts/';
+
 @Component({
   selector: 'app-agenda-supervision',
   templateUrl: './agenda-supervision.component.html',
@@ -20,14 +19,13 @@ const base_url = environment.base_urlImg + 'Administration/accounts/';
 export default class AgendaSupervisionComponent implements OnInit, OnDestroy {
   dateService = inject(DateService);
   authS = inject(AuthService);
-  dataService = inject(DataService);
+  dataService = inject(DataConnectorService);
   apiRequestService = inject(ApiRequestService);
   dialogService = inject(DialogService);
   rangoCalendarioService = inject(FiltroCalendarService);
   customToastService = inject(CustomToastService);
 
   loading: boolean = true;
-  base_url = base_url;
   rangeDates: Date[] = [];
   ref: DynamicDialogRef;
   data: any[] = [];

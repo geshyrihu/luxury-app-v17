@@ -1,0 +1,15 @@
+<button
+  class="btn btn-primary"
+  (click)="
+    onModalAddOrEditEvent({
+      eventId: '',
+      calendarId: calendarId,
+      title: 'Agregar evento'
+    })
+  "
+>
+  Agregar evento
+</button>
+<div class="calendar-container">
+  <full-calendar [options]="calendarOptions"></full-calendar>
+</div>

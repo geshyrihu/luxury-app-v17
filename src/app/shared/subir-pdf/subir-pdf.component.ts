@@ -4,6 +4,7 @@ import { SharedModule } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { FileUploadModule } from 'primeng/fileupload';
 import { environment } from 'src/environments/environment';
+
 @Component({
   selector: 'app-subir-pdf',
   templateUrl: './subir-pdf.component.html',

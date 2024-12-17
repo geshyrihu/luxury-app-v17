@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ChartModule } from 'primeng/chart';
+
 @Component({
   selector: 'app-chart-module-prime',
   templateUrl: './ChartModulePrime.component.html',

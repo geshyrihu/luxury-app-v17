@@ -7,10 +7,11 @@ import { Observable, Subject, takeUntil } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
-import { DataService } from 'src/app/core/services/data.service';
+import { DataConnectorService } from 'src/app/core/services/data.service';
 import { FilterRequestsService } from 'src/app/core/services/filter-requests.service';
 import FilterRequestsComponent from '../filter-requests.component';
 import AddoreditSolicitudBajaComponent from './addoredit-solicitud-baja/addoredit-solicitud-baja.component';
+
 @Component({
   selector: 'app-list-solicitud-baja',
   templateUrl: './list-solicitud-baja.component.html',
@@ -20,7 +21,7 @@ import AddoreditSolicitudBajaComponent from './addoredit-solicitud-baja/addoredi
 export default class ListSolicitudBajaComponent implements OnInit {
   customToastService = inject(CustomToastService);
   authS = inject(AuthService);
-  dataService = inject(DataService);
+  dataService = inject(DataConnectorService);
   apiRequestService = inject(ApiRequestService);
   dialogService = inject(DialogService);
   messageService = inject(MessageService);

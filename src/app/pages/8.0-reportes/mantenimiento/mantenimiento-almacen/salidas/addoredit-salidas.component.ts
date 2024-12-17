@@ -1,18 +1,18 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, inject } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import LuxuryAppComponentsModule, {
   flatpickrFactory,
-} from 'app/shared/luxuryapp-components.module';
-import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { ApiRequestService } from 'src/app/core/services/api-request.service';
-import { AuthService } from 'src/app/core/services/auth.service';
-import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DateService } from 'src/app/core/services/date.service';
-import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
+} from "app/shared/luxuryapp-components.module";
+import { DynamicDialogConfig, DynamicDialogRef } from "primeng/dynamicdialog";
+import { ApiRequestService } from "src/app/core/services/api-request.service";
+import { AuthService } from "src/app/core/services/auth.service";
+import { CustomerIdService } from "src/app/core/services/customer-id.service";
+import { DateService } from "src/app/core/services/date.service";
+import CustomInputModule from "src/app/custom-components/custom-input-form/custom-input.module";
 
 @Component({
-  selector: 'app-addoredit-salidas',
-  templateUrl: './addoredit-salidas.component.html',
+  selector: "app-addoredit-salidas",
+  templateUrl: "./addoredit-salidas.component.html",
   standalone: true,
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
@@ -31,14 +31,14 @@ export default class CrudSalidasComponent implements OnInit {
   form: FormGroup;
   id = 0;
   idProducto = 0;
-  nombreProducto = '';
+  nombreProducto = "";
   cantidadActual = 0;
   contidadSeleccionada: number = 0;
   cb_productos: any[] = [];
   cb_measurement_unit: any[] = [];
   existenciaActual: 0;
   dateTodat = new Date();
-  noHaystock = '';
+  noHaystock = "";
 
   ngOnInit(): void {
     flatpickrFactory();
@@ -68,9 +68,9 @@ export default class CrudSalidasComponent implements OnInit {
       fechaSalida: [this.dateService.getDateNow(), Validators.required],
       productoId: [this.idProducto, Validators.required],
       cantidad: [0, Validators.required],
-      unidadMedidaId: ['', Validators.required],
-      usoPrducto: ['', Validators.required],
-      quienUso: ['', Validators.required],
+      unidadMedidaId: ["", Validators.required],
+      usoPrducto: ["", Validators.required],
+      quienUso: ["", Validators.required],
       horaSalida: [
         `${this.dateTodat.getHours()}:${this.dateTodat.getMinutes()}`,
         Validators.required,
@@ -100,7 +100,7 @@ export default class CrudSalidasComponent implements OnInit {
 
     if (this.id === 0) {
       this.apiRequestService
-        .onPost('SalidaProductos', this.form.value)
+        .onPost("SalidaProductos", this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
         });

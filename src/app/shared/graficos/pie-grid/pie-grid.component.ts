@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from "@angular/core";
 import {
   ApexAnnotations,
   ApexAxisChartSeries,
@@ -11,7 +11,7 @@ import {
   ApexYAxis,
   ChartComponent,
   NgApexchartsModule,
-} from 'ng-apexcharts';
+} from "ng-apexcharts";
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -25,49 +25,50 @@ export type ChartOptions = {
   stroke: ApexStroke;
   grid: ApexGrid;
 };
+
 @Component({
-  selector: 'app-pie-grid',
-  templateUrl: './pie-grid.component.html',
-  styleUrls: ['./pie-grid.component.css'],
+  selector: "app-pie-grid",
+  templateUrl: "./pie-grid.component.html",
+  styleUrls: ["./pie-grid.component.css"],
   standalone: true,
   imports: [NgApexchartsModule],
 })
 export default class PieGridComponent implements OnInit {
   ngOnInit() {}
-  @ViewChild('chart') chart: ChartComponent;
+  @ViewChild("chart") chart: ChartComponent;
   public chartOptions: Partial<ChartOptions>;
 
   constructor() {
     this.chartOptions = {
       series: [
         {
-          name: 'Servings',
+          name: "Servings",
           data: [56, 50, 2, 4],
         },
       ],
 
       chart: {
         height: 300,
-        type: 'bar',
+        type: "bar",
         toolbar: {
           show: false,
         },
       },
       plotOptions: {
         bar: {
-          columnWidth: '60%',
+          columnWidth: "60%",
           // endingShape: 'flat',
         },
       },
       // "start" | "middle" |
       dataLabels: {
         enabled: true,
-        textAnchor: 'middle',
+        textAnchor: "middle",
         style: {
-          fontSize: '20px',
-          fontWeight: 'bold',
-          fontFamily: 'Arial',
-          colors: ['#000000'],
+          fontSize: "20px",
+          fontWeight: "bold",
+          fontFamily: "Arial",
+          colors: ["#000000"],
         },
       },
       stroke: {
@@ -76,15 +77,15 @@ export default class PieGridComponent implements OnInit {
 
       grid: {
         row: {
-          colors: ['#fff', '#f2f2f2'],
+          colors: ["#fff", "#f2f2f2"],
         },
       },
       xaxis: {
         labels: {
           rotate: -45,
         },
-        categories: ['Total', 'Termiando', 'Pendiente', 'Denegado'],
-        tickPlacement: 'off',
+        categories: ["Total", "Termiando", "Pendiente", "Denegado"],
+        tickPlacement: "off",
       },
       // yaxis: {
       //   title: {
@@ -92,10 +93,10 @@ export default class PieGridComponent implements OnInit {
       //   }
       // },
       fill: {
-        type: 'gradient',
+        type: "gradient",
         gradient: {
-          shade: 'light',
-          type: 'horizontal',
+          shade: "light",
+          type: "horizontal",
           shadeIntensity: 0.25,
           gradientToColors: undefined,
           inverseColors: true,
@@ -109,15 +110,15 @@ export default class PieGridComponent implements OnInit {
 }
 export var datos = [
   {
-    name: 'Total',
+    name: "Total",
     value: 56,
   },
   {
-    name: 'Concluido',
+    name: "Concluido",
     value: 52,
   },
   {
-    name: 'Pendiente',
+    name: "Pendiente",
     value: 4,
   },
 ];

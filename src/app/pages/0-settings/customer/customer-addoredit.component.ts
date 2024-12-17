@@ -9,7 +9,6 @@ import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { DateService } from 'src/app/core/services/date.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-customer-addoredit',
@@ -32,7 +31,6 @@ export default class CustomerAddOrEditComponent implements OnInit {
     { value: false, label: 'Inactivo' },
   ];
 
-  urlBaseImg = `${environment.base_urlImg}Administration/customer/`;
   model: ICustomerAddOrEdit;
   photoFileUpdate: boolean = false;
 

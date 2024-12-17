@@ -7,8 +7,6 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import TarjetaProductoComponent from 'src/app/pages/8.0-reportes/mantenimiento/mantenimiento-catalogos/tarjeta-producto/tarjeta-producto.component';
 
-import { environment } from 'src/environments/environment';
-
 @Component({
   selector: 'app-add-product-modal',
   templateUrl: './add-product-modal.component.html',
@@ -16,7 +14,7 @@ import { environment } from 'src/environments/environment';
   imports: [LuxuryAppComponentsModule],
 })
 export default class AddProductModalComponent implements OnInit, OnDestroy {
-  apiRequestService= inject(ApiRequestService);
+  apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
@@ -25,7 +23,6 @@ export default class AddProductModalComponent implements OnInit, OnDestroy {
   isInRole: boolean;
   id: any = 0;
   data: any[] = [];
-  urlImagenProducto = environment.base_urlImg + 'Administration/products/';
   mensajeError = false;
 
   solicitudCompraId: number = 0;

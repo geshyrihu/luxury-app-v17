@@ -125,8 +125,8 @@ export default [
   },
 
   {
-    path: 'calendario',
-    loadChildren: () => import('./calendar.routing'),
+    path: 'calendars',
+    loadChildren: () => import('./calendars.routing'),
     canActivate: [AuthGuard],
     data: { title: 'Calendario' },
   },

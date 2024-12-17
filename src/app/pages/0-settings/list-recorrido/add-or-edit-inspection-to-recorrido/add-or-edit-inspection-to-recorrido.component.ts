@@ -1,13 +1,13 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { ApiRequestService } from 'src/app/core/services/api-request.service';
-import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
+import { Component, OnInit, inject } from "@angular/core";
+import { FormBuilder, FormGroup } from "@angular/forms";
+import LuxuryAppComponentsModule from "app/shared/luxuryapp-components.module";
+import { DynamicDialogConfig, DynamicDialogRef } from "primeng/dynamicdialog";
+import { ApiRequestService } from "src/app/core/services/api-request.service";
+import CustomInputModule from "src/app/custom-components/custom-input-form/custom-input.module";
 
 @Component({
-  selector: 'app-add-or-edit-inspection-to-recorrido',
-  templateUrl: './add-or-edit-inspection-to-recorrido.component.html',
+  selector: "app-add-or-edit-inspection-to-recorrido",
+  templateUrl: "./add-or-edit-inspection-to-recorrido.component.html",
   standalone: true,
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
@@ -24,8 +24,8 @@ export default class AddOrEditInspectionToRecorridoComponent implements OnInit {
 
   form: FormGroup = this.formBuilder.group({
     customerAmenitiesCatalogId: [this.config.data.id],
-    catalogInspectionId: [''],
-    inspeccion: [''],
+    catalogInspectionId: [""],
+    inspeccion: [""],
   });
 
   ngOnInit(): void {

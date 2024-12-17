@@ -2,7 +2,7 @@ import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataService } from 'src/app/core/services/data.service';
+import { DataConnectorService } from 'src/app/core/services/data.service';
 import { TicketFilterService } from 'src/app/core/services/ticket-filter.service';
 import { environment } from 'src/environments/environment';
 
@@ -12,7 +12,7 @@ import { environment } from 'src/environments/environment';
   standalone: true,
 })
 export default class ReportHeaderComponent implements OnInit, OnDestroy {
-  dataService = inject(DataService);
+  dataService = inject(DataConnectorService);
   apiRequestService = inject(ApiRequestService);
   customerIdService = inject(CustomerIdService);
   public filterReportOperationService = inject(TicketFilterService);

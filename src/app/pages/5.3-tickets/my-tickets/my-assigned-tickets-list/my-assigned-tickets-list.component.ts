@@ -7,7 +7,6 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import CardEmployeeComponent from 'src/app/pages/6.1-directorios/employee/card-employee/card-employee.component';
-import { environment } from 'src/environments/environment';
 import TicketMessageFollowupComponent from '../../folloups/ticket-message-followup/ticket-message-followup.component';
 import TicketMessageAddOrEditComponent from '../../messages/ticket-message-add-or-edit/ticket-message-add-or-edit.component';
 import TicketMessageCloseComponent from '../../messages/ticket-message-close/ticket-message-close.component';
@@ -33,11 +32,6 @@ export default class MyAssignedTicketsListComponent implements OnInit {
 
   data: any[] = [];
   status: string = this.ticketGroupService.ticketGroupMessageStatus;
-
-  urlAccount = environment.url_account;
-  urlImage = this.ticketGroupService.onGetPathUrlImage(
-    this.customerIdService.customerId.toString()
-  );
 
   customerId$: Observable<number> = this.customerIdService.getCustomerId$();
 

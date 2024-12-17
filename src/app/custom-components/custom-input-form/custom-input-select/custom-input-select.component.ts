@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, Input, forwardRef } from '@angular/core';
 import {
-  ControlValueAccessor,
-  FormControl,
-  NG_VALUE_ACCESSOR,
+    ControlValueAccessor,
+    FormControl,
+    NG_VALUE_ACCESSOR,
 } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';

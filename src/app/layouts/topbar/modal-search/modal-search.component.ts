@@ -1,13 +1,14 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
-import { Router } from '@angular/router';
-import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { DynamicDialogRef } from 'primeng/dynamicdialog';
-import { IMenuItem } from 'src/app/core/interfaces/menu.model';
-import { SidebarService } from 'src/app/core/services/sidebar.service';
+import { CommonModule } from "@angular/common";
+import { Component, OnInit, inject } from "@angular/core";
+import { Router } from "@angular/router";
+import LuxuryAppComponentsModule from "app/shared/luxuryapp-components.module";
+import { DynamicDialogRef } from "primeng/dynamicdialog";
+import { IMenuItem } from "src/app/core/interfaces/menu.model";
+import { SidebarService } from "src/app/core/services/sidebar.service";
+
 @Component({
-  selector: 'app-modal-search',
-  templateUrl: './modal-search.component.html',
+  selector: "app-modal-search",
+  templateUrl: "./modal-search.component.html",
   standalone: true,
   imports: [LuxuryAppComponentsModule, CommonModule],
 })

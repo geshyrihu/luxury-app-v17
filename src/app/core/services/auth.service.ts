@@ -7,7 +7,7 @@ import {
   IUserToken,
   InfoAccountAuthDto,
 } from '../interfaces/user-token.interface';
-import { DataService } from './data.service';
+import { DataConnectorService } from './data.service';
 import { StorageService } from './storage.service';
 
 @Injectable({
@@ -15,7 +15,7 @@ import { StorageService } from './storage.service';
 })
 export class AuthService {
   storageService = inject(StorageService);
-  dataService = inject(DataService);
+  dataService = inject(DataConnectorService);
   router = inject(Router);
 
   userTokenDto: IUserToken;

@@ -1,9 +1,10 @@
-import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
-import { ChartModule } from 'primeng/chart';
+import { CommonModule } from "@angular/common";
+import { Component, Input, OnInit } from "@angular/core";
+import { ChartModule } from "primeng/chart";
+
 @Component({
-  selector: 'app-custom-bar-chart',
-  templateUrl: './custom-bar-chart.component.html',
+  selector: "app-custom-bar-chart",
+  templateUrl: "./custom-bar-chart.component.html",
   standalone: true,
   imports: [ChartModule, CommonModule],
 })
@@ -15,11 +16,11 @@ export default class CustomBarChartComponent implements OnInit {
 
   ngOnInit() {
     const documentStyle = getComputedStyle(document.documentElement);
-    const textColor = documentStyle.getPropertyValue('--text-color');
+    const textColor = documentStyle.getPropertyValue("--text-color");
     const textColorSecondary = documentStyle.getPropertyValue(
-      '--text-color-secondary'
+      "--text-color-secondary"
     );
-    const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
+    const surfaceBorder = documentStyle.getPropertyValue("--surface-border");
 
     this.options = {
       maintainAspectRatio: false,

@@ -1,16 +1,16 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
-import { ApiRequestService } from 'src/app/core/services/api-request.service';
-import { AuthService } from 'src/app/core/services/auth.service';
-import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
+import { Component, OnInit, inject } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import LuxuryAppComponentsModule from "app/shared/luxuryapp-components.module";
+import { DynamicDialogConfig, DynamicDialogRef } from "primeng/dynamicdialog";
+import { ISelectItem } from "src/app/core/interfaces/select-Item.interface";
+import { ApiRequestService } from "src/app/core/services/api-request.service";
+import { AuthService } from "src/app/core/services/auth.service";
+import { CustomerIdService } from "src/app/core/services/customer-id.service";
+import CustomInputModule from "src/app/custom-components/custom-input-form/custom-input.module";
 
 @Component({
-  selector: 'app-form-control-prestamo-herramienta',
-  templateUrl: './form-control-prestamo-herramienta.component.html',
+  selector: "app-form-control-prestamo-herramienta",
+  templateUrl: "./form-control-prestamo-herramienta.component.html",
   standalone: true,
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
@@ -27,7 +27,7 @@ export default class FormControlPrestamoHerramientaComponent implements OnInit {
   id: number = 0;
   cb_applicationUser: ISelectItem[] = [];
   cb_tool: any[] = [];
-  today: string = '';
+  today: string = "";
   form: FormGroup;
 
   ngOnInit(): void {
@@ -51,10 +51,10 @@ export default class FormControlPrestamoHerramientaComponent implements OnInit {
       customerId: [this.customerIdService.customerId],
       fechaSalida: [this.today, Validators.required],
       fechaRegreso: [],
-      applicationUserId: ['', Validators.required],
-      applicationUser: ['', Validators.required],
-      toolId: ['', Validators.required],
-      tool: ['', Validators.required],
+      applicationUserId: ["", Validators.required],
+      applicationUser: ["", Validators.required],
+      toolId: ["", Validators.required],
+      tool: ["", Validators.required],
       observaciones: [],
       applicationUserResponsableId: [this.authS.applicationUserId],
     });

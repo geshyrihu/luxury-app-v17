@@ -5,7 +5,6 @@ import { Observable } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
-import { environment } from 'src/environments/environment';
 import BitacoraIndividualComponent from '../../5.3-bitacoras/bitacora-mantenimiento/bitacora-individual.component';
 import AddOrEditActivosComponent from '../machineries/addoredit-activos.component';
 import FichaTecnicaActivoComponent from '../machineries/ficha-tecnica-activo/ficha-tecnica-activo.component';
@@ -28,7 +27,6 @@ export default class InventoryEngineSystemComponent implements OnInit {
   filteredData: any[] = [];
 
   ref: DynamicDialogRef; // Referencia a un cuadro de diálogo modal
-  pathImgBase = `${environment.base_urlImg}`;
   customerId$: Observable<number> = this.customerIdService.getCustomerId$();
 
   ngOnInit(): void {

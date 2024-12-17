@@ -1,0 +1,103 @@
+:root {
+  --primary-color: #007580;
+}
+
+body {
+  background-color: #f7f7f7;
+}
+.palette-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+  height: 60px;
+  color: var(--text-color);
+}
+
+/* Ajuste responsivo */
+@media screen and (max-width: 768px) {
+  .palette-column {
+    height: 200px; /* Reducción en dispositivos pequeños */
+  }
+  .palette-box small {
+    font-size: 0.8em; /* Ajuste de texto en móviles */
+  }
+}
+
+.navbar {
+  background-color: var(--primary-color);
+}
+
+.btn-outline-primary {
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+}
+
+.btn-submit-primary {
+  background-color: var(--primary-color);
+  color: var(--primary-color);
+}
+.btn-outline-primary:hover {
+  background-color: var(--primary-color);
+  color: #fff;
+}
+
+.navbar-dark .navbar-nav .nav-link i {
+  color: #fff;
+}
+
+.navbar-dark .navbar-nav .nav-link:hover i {
+  color: #ff6347; // Cambiar el color cuando el enlace es hover
+}
+
+.card-title i {
+  color: #007580; // Personalizar el color del icono en el título de las tarjetas
+}
+
+.btn i {
+  margin-right: 5px; // Agregar un pequeño espacio entre el icono y el texto del botón
+}
+
+// Colores de fondo y texto para el login
+.card {
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+  color: var(--primary-color);
+}
+
+// Estilo de los iconos del footer
+.social-icon i {
+  color: var(--primary-color);
+  transition: color 0.3s ease;
+}
+
+.social-icon i:hover {
+  color: #ff6347; // Color cuando se pasa el ratón sobre el icono
+}
+
+// Cambiar iconos al color primario
+footer {
+  background-color: #f8f9fa;
+  padding: 30px 0;
+}
+
+footer .container {
+  max-width: 1200px;
+}
+
+footer .social-icon i {
+  color: var(--primary-color);
+  transition: color 0.3s ease;
+}
+
+footer .social-icon i:hover {
+  color: #ff6347; // Color al hacer hover sobre el icono
+}
+
+footer .col-4 i {
+  font-size: 3rem; // Tamaño grande de los iconos
+}

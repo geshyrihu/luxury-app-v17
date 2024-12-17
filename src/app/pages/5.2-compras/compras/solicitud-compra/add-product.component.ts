@@ -1,10 +1,10 @@
 import {
-    Component,
-    EventEmitter,
-    Input,
-    OnInit,
-    Output,
-    inject,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  inject,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
@@ -21,7 +21,7 @@ import { SolicitudCompraService } from 'src/app/core/services/solicitud-compra.s
   imports: [LuxuryAppComponentsModule],
 })
 export default class AddProductComponent implements OnInit {
-  apiRequestService= inject(ApiRequestService);
+  apiRequestService = inject(ApiRequestService);
   authS = inject(AuthService);
   formBuilder = inject(FormBuilder);
   solicitudCompraService = inject(SolicitudCompraService);

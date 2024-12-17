@@ -19,7 +19,7 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataService } from 'src/app/core/services/data.service';
+import { DataConnectorService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
@@ -32,7 +32,7 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 export default class SolicitudBajaComponent implements OnInit, OnDestroy {
   customToastService = inject(CustomToastService);
   apiRequestService = inject(ApiRequestService);
-  dataService = inject(DataService);
+  dataService = inject(DataConnectorService);
   formBuilder = inject(FormBuilder);
   authS = inject(AuthService);
   config = inject(DynamicDialogConfig);
@@ -119,6 +119,7 @@ export default class SolicitudBajaComponent implements OnInit, OnDestroy {
     // Actualizar la validez del control y su estado
     this.filesControl.updateValueAndValidity();
   }
+
   onSubmit() {
     if (!this.apiRequestService.validateForm(this.form)) return;
 
@@ -130,7 +131,7 @@ export default class SolicitudBajaComponent implements OnInit, OnDestroy {
 
     this.dataService
       .post(
-        `solicitudesreclutamiento/solicitudbaja/
+        `SolicitudesReclutamiento/SolicitudBaja/
           ${this.customerIdService.getCustomerId()}/${this.employeeId}/${
           this.authS.infoUserAuthDto.applicationUserId
         }`,

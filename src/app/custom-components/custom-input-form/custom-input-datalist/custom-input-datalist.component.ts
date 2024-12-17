@@ -1,16 +1,16 @@
 import { CommonModule } from '@angular/common';
 import {
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  forwardRef,
+    Component,
+    EventEmitter,
+    Input,
+    OnInit,
+    Output,
+    forwardRef,
 } from '@angular/core';
 import {
-  ControlValueAccessor,
-  FormControl,
-  NG_VALUE_ACCESSOR,
+    ControlValueAccessor,
+    FormControl,
+    NG_VALUE_ACCESSOR,
 } from '@angular/forms';
 import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import ValidationErrorsCustomInputComponent from '../validation-errors-custom-input/validation-errors-custom-input.component';
@@ -48,7 +48,6 @@ export default class CustomInputDatalistComponent
   propagar = new EventEmitter<any>();
   ngOnInit(): void {
     this.disabled = this.control.disabled;
-    console.log('data', this.data);
   }
 
   writeValue(value: any): void {

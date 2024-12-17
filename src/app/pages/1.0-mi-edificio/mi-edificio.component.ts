@@ -6,8 +6,7 @@ import { Observable, Subject, takeUntil } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataService } from 'src/app/core/services/data.service';
-import { environment } from 'src/environments/environment';
+import { DataConnectorService } from 'src/app/core/services/data.service';
 import FichaTecnicaActivoComponent from '../5.4-inventarios/machineries/ficha-tecnica-activo/ficha-tecnica-activo.component';
 
 @Component({
@@ -19,12 +18,11 @@ import FichaTecnicaActivoComponent from '../5.4-inventarios/machineries/ficha-te
 export default class MiEdificioComponent implements OnInit, OnDestroy {
   customerIdService = inject(CustomerIdService);
   customToastService = inject(CustomToastService);
-  dataService = inject(DataService);
+  dataService = inject(DataConnectorService);
   apiRequestService = inject(ApiRequestService);
   dialogService = inject(DialogService);
   messageService = inject(MessageService);
 
-  baseUrlImg = environment.base_urlImg;
   data: any;
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente

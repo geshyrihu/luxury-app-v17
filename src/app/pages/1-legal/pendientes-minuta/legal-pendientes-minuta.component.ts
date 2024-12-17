@@ -7,6 +7,7 @@ import { DialogHandlerService } from 'src/app/core/services/dialog-handler.servi
 import AddoreditMinutaDetalleComponent from 'src/app/pages/5.1-operaciones/junta-comite/addoredit-minuta-detalle/addoredit-minuta-detalle.component';
 import AddorEditMeetingSeguimientoComponent from 'src/app/pages/5.1-operaciones/junta-comite/addoredit-seguimiento/addor-edit-meeting-seguimiento.component';
 import ContMinutaSeguimientosComponent from '../../2-contabilidad/contabilidad-pendientes-minuta/cont-minuta-seguimientos.component';
+
 @Component({
   selector: 'app-legal-pendientes-minuta',
   templateUrl: './legal-pendientes-minuta.component.html',

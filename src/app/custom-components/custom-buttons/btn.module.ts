@@ -7,7 +7,6 @@ import BtnConfirmationComponent from './btn-confirmation/btn-confirmation.compon
 import BtnDeleteSpanComponent from './btn-delete-span/btn-delete-span.component';
 import BtnDeleteComponent from './btn-delete/btn-delete.component';
 import BtnDownloadFileComponent from './btn-download-file/btn-download-file.component';
-import BtnDownloadPdfComponent from './btn-download-pdf/btn-download-pdf.component';
 import BtnDropdownItemComponent from './btn-dropdown-item/btn-pdf-dropdown-item.component';
 import BtnEditComponent from './btn-edit/btn-edit.component';
 import BtnExportExcelComponent from './btn-export-excel/btn-export-excel.component';
@@ -27,7 +26,6 @@ import BtnSubmitComponent from './btn-submit/btn-submit.component';
     BtnDeleteComponent,
     BtnDeleteSpanComponent,
     BtnDownloadFileComponent,
-    BtnDownloadPdfComponent,
     BtnDropdownItemComponent,
     BtnEditComponent,
     BtnExportExcelComponent,
@@ -46,7 +44,6 @@ import BtnSubmitComponent from './btn-submit/btn-submit.component';
     BtnDeleteComponent,
     BtnDeleteSpanComponent,
     BtnDownloadFileComponent,
-    BtnDownloadPdfComponent,
     BtnDropdownItemComponent,
     BtnEditComponent,
     BtnExportExcelComponent,

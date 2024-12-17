@@ -1,11 +1,11 @@
-import { Component, EventEmitter, Output, inject } from '@angular/core';
-import { AuthService } from 'src/app/core/services/auth.service';
+import { Component, EventEmitter, Output, inject } from "@angular/core";
+import { AuthService } from "src/app/core/services/auth.service";
 
-import { TopbarModule } from './topbar.module';
+import { TopbarModule } from "./topbar.module";
 
 @Component({
-  selector: 'app-topbar',
-  templateUrl: './topbar.component.html',
+  selector: "app-topbar",
+  templateUrl: "./topbar.component.html",
   standalone: true,
   imports: [TopbarModule],
 })

@@ -132,7 +132,7 @@
           <div class="d-flex justify-content-center align-items-center">
             <p-image
               *ngIf="item.beforeWork"
-              [src]="this.urlImage + item.beforeWork"
+              [src]="item.beforeWork"
               alt="."
               width="40"
               class="me-2 border border-danger"
@@ -159,7 +159,7 @@
           @if (item.assigneeId) {
           <img
             (click)="onCardEmployee(item.assigneeId)"
-            [src]="urlAccount + item.assigneeImg"
+            [src]="tem.assigneeImg"
             alt="."
             width="32"
             style="cursor: pointer"

@@ -5,6 +5,7 @@ import { EAreaMinutasDetallesPipe } from 'src/app/core/pipes/area-minuta-detalle
 import { EStatusPipe } from 'src/app/core/pipes/status.pipe';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { DateService } from 'src/app/core/services/date.service';
+
 @Component({
   selector: 'app-addoredit-meeting-detail',
   templateUrl: './addoredit-meeting-detail.component.html',

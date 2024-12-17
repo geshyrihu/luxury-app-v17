@@ -14,6 +14,7 @@ import MetisMenu from 'metismenujs';
 import { SimplebarAngularModule } from 'simplebar-angular';
 import { SidebarService } from 'src/app/core/services/sidebar.service';
 import { IMenuItem } from '../../core/interfaces/menu.model';
+
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',

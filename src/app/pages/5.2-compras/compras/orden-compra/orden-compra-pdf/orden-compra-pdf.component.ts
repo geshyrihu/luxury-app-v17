@@ -2,7 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
-import { environment } from 'src/environments/environment';
+
 @Component({
   selector: 'app-orden-compra-pdf',
   templateUrl: './orden-compra-pdf.component.html',
@@ -13,7 +13,6 @@ export default class OrdenCompraPdfComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   routeActive = inject(ActivatedRoute);
 
-  url: string = environment.base_urlImg + 'Administration/customer/';
   model: any;
   ordenCompraId: number = 0;
   nombreAutorizador = '';

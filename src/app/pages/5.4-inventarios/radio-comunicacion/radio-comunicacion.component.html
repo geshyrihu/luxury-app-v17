@@ -22,7 +22,7 @@
   >
     <ng-template pTemplate="caption">
       <custom-table-caption
-        [title]="'Radios de Comunicación'"
+        title="Radios de Comunicación"
         (add)="onModalAddOrEdit({ id: 0, title: 'Nuevo Registro' })"
         [dt]="dt"
       />
@@ -70,9 +70,8 @@
           {{ i + 1 }}
         </td>
         <td class="p-column-title">
-          <!-- <img [src]="urlBaseImg + item.fotografia" alt="" /> -->
           <p-image
-            [src]="urlBaseImg + item.fotografia"
+            [src]="item.fotografia"
             alt="Image"
             width="120"
             height="70"

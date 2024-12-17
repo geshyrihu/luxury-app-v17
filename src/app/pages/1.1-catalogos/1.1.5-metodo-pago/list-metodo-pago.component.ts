@@ -5,6 +5,7 @@ import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import AddoreditMetodoPagoComponent from './addoredit-metodo-pago.component';
+
 @Component({
   selector: 'app-list-metodo-pago',
   templateUrl: './list-metodo-pago.component.html',

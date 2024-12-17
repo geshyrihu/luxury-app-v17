@@ -4,10 +4,11 @@ import { Subject, takeUntil } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataService } from 'src/app/core/services/data.service';
+import { DataConnectorService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
 import { ReporteOrdenesServicioService } from 'src/app/core/services/reporte-ordenes-servicio.service';
 import ResumenOrdenesServicioGraficoComponent from '../resumen-ordenes-servicio-grafico/resumen-ordenes-servicio-grafico.component';
+
 @Component({
   selector: 'app-resumen-ordenes-servicio',
   templateUrl: './resumen-ordenes-servicio.component.html',
@@ -18,7 +19,7 @@ export default class ResumenOrdenesServicioComponent
   implements OnInit, OnDestroy
 {
   customerIdService = inject(CustomerIdService);
-  dataService = inject(DataService);
+  dataService = inject(DataConnectorService);
   apiRequestService = inject(ApiRequestService);
   dateService = inject(DateService);
   public reporteOrdenesServicioService = inject(ReporteOrdenesServicioService);

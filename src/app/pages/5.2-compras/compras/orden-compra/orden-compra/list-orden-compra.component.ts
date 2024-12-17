@@ -8,7 +8,6 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import { OrdenCompraService } from 'src/app/core/services/orden-compra.service';
-import CaratulaFondeoComponent from '../../caratula-fondeo/caratula-fondeo.component';
 import CreateOrdenCompraComponent from './create-orden-compra/create-orden-compra.component';
 import OrdenCompraComponent from './orden-compra.component';
 
@@ -85,18 +84,6 @@ export default class ListOrdenCompraComponent implements OnInit {
       });
   }
 
-  onModalCaratula() {
-    this.dialogHandlerService
-      .openDialog(
-        CaratulaFondeoComponent,
-        {},
-        'Caratula',
-        this.dialogHandlerService.dialogSizeFull
-      )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
-      });
-  }
   onAddOrEdit(id: number) {
     this.router.navigateByUrl(`operaciones/compras/orden-compra/${id}`);
   }

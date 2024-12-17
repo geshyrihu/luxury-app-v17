@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
-import { DataService } from 'src/app/core/services/data.service';
+import { DataConnectorService } from 'src/app/core/services/data.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import { FilterRequestsService } from 'src/app/core/services/filter-requests.service';
 import { StatusSolicitudVacanteService } from 'src/app/core/services/status-solicitud-vacante.service';
@@ -30,7 +30,7 @@ import RegisterEmployeToVacancyComponent from './register-employe-to-vacancy/reg
   ],
 })
 export default class ListVacantesComponent implements OnInit, OnDestroy {
-  dataService = inject(DataService);
+  dataService = inject(DataConnectorService);
   apiRequestService = inject(ApiRequestService);
   filterRequestsService = inject(FilterRequestsService);
   authS = inject(AuthService);

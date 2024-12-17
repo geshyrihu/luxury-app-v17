@@ -18,7 +18,7 @@ import CreateOrdenCompraComponent from '../../orden-compra/orden-compra/create-o
   imports: [LuxuryAppComponentsModule, FormsModule, CommonModule, ToastModule],
 })
 export default class ModalEditCotizacionComponent implements OnInit, OnDestroy {
-  apiRequestService= inject(ApiRequestService);
+  apiRequestService = inject(ApiRequestService);
   authS = inject(AuthService);
   dialogHandlerService = inject(DialogHandlerService);
   customToastService = inject(CustomToastService);

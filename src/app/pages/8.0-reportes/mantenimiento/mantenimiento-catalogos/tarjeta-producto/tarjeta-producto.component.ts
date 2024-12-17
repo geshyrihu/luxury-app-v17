@@ -3,6 +3,7 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { environment } from 'src/environments/environment';
+
 @Component({
   selector: 'app-tarjeta-producto',
   templateUrl: './tarjeta-producto.component.html',

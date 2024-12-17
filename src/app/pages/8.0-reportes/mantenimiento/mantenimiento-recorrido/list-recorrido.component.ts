@@ -7,7 +7,7 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataService } from 'src/app/core/services/data.service';
+import { DataConnectorService } from 'src/app/core/services/data.service';
 import { environment } from 'src/environments/environment';
 import AddBitacoraComponent from '../../../5.3-bitacoras/bitacora-mantenimiento/add-bitacora.component';
 import BitacoraIndividualComponent from '../../../5.3-bitacoras/bitacora-mantenimiento/bitacora-individual.component';
@@ -25,7 +25,7 @@ export default class ListRecorridoComponent implements OnInit, OnDestroy {
   authS = inject(AuthService);
   public confirmationService = inject(ConfirmationService);
   customerIdService = inject(CustomerIdService);
-  dataService = inject(DataService);
+  dataService = inject(DataConnectorService);
   apiRequestService = inject(ApiRequestService);
   dialogService = inject(DialogService);
   messageService = inject(MessageService);

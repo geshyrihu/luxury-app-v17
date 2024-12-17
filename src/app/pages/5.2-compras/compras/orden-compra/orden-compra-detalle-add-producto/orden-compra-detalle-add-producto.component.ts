@@ -6,8 +6,6 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import AddOrEditProductosComponent from 'src/app/pages/catalog/productos/addoredit-productos.component';
 
-import { environment } from 'src/environments/environment';
-
 @Component({
   selector: 'app-orden-compra-detalle-add-producto',
   templateUrl: './orden-compra-detalle-add-producto.component.html',
@@ -24,7 +22,6 @@ export default class OrdenCompraDetalleAddProductoComponent implements OnInit {
 
   ordenCompraId: number = 0;
   data: any[] = [];
-  urlImagenProducto = environment.base_urlImg + 'Administration/products/';
   mensajeError = false;
 
   id: any;

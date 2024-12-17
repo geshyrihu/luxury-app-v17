@@ -7,7 +7,7 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataService } from 'src/app/core/services/data.service';
+import { DataConnectorService } from 'src/app/core/services/data.service';
 import { StatusSolicitudVacanteService } from 'src/app/core/services/status-solicitud-vacante.service';
 import AddOrEditSolicitudAltaComponent from '../list-solicitudes/list-solicitud-alta/addoredit-solicitud-alta/addoredit-solicitud-alta.component';
 import AddoreditSolicitudBajaComponent from '../list-solicitudes/list-solicitud-baja/addoredit-solicitud-baja/addoredit-solicitud-baja.component';
@@ -21,7 +21,7 @@ import AddOrEditVacanteComponent from '../list-solicitudes/list-solicitud-vacant
   imports: [LuxuryAppComponentsModule],
 })
 export default class ListSolicitudesPorClienteComponent implements OnInit {
-  dataService = inject(DataService);
+  dataService = inject(DataConnectorService);
   apiRequestService = inject(ApiRequestService);
   customToastService = inject(CustomToastService);
   customerIdService = inject(CustomerIdService);

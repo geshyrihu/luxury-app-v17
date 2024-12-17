@@ -6,6 +6,7 @@ import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DateService } from 'src/app/core/services/date.service';
 import { PeriodoMonthService } from 'src/app/core/services/periodo-month.service';
+
 @Component({
   selector: 'app-resumen-mantenimientos',
   templateUrl: './resumen-mantenimientos.component.html',

@@ -6,7 +6,7 @@ import { Observable, Subject, takeUntil } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataService } from 'src/app/core/services/data.service';
+import { DataConnectorService } from 'src/app/core/services/data.service';
 import AddoreditMaintenancePreventiveComponent from 'src/app/pages/5.6-calendar/mantenimiento-preventivo/addoredit-maintenance-preventive.component';
 
 @Component({
@@ -18,7 +18,7 @@ import AddoreditMaintenancePreventiveComponent from 'src/app/pages/5.6-calendar/
 })
 export default class GastosMantenimientoComponent implements OnInit, OnDestroy {
   customToastService = inject(CustomToastService);
-  dataService = inject(DataService);
+  dataService = inject(DataConnectorService);
   apiRequestService = inject(ApiRequestService);
   customerIdService = inject(CustomerIdService);
   messageService = inject(MessageService);

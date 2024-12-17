@@ -12,7 +12,7 @@
   >
     <ng-template pTemplate="caption">
       <custom-table-caption
-        [title]="'Presentaciónes Juntas de comité'"
+        title="Presentaciónes Juntas de comité"
         (add)="showModalAdd({ id: 0, titulo: 'Nuevo Registro' })"
         [dt]="dt"
       />
@@ -160,6 +160,7 @@
               <!-- <btn-download-file
                 [urlFile]="url + item.id + '/' + item.archivoContable"
               /> -->
+
               <btn-download-file
                 [urlFile]="urlBase + item.id + '/' + item.archivoContable"
                 download="Contabilidad.pdf"

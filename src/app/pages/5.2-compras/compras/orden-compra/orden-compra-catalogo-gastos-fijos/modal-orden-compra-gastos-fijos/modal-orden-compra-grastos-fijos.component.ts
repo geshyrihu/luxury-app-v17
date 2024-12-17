@@ -5,6 +5,7 @@ import { CatalogoGastosFijosService } from 'src/app/core/services/catalogo-gasto
 import FormCatalogoGastosFijosComponent from '../form-catalogo-gastos-fijos/form-catalogo-gastos-fijos.component';
 import FormGastosFijosPresupuestoComponent from '../form-gastos-fijos-presupuesto/form-gastos-fijos-presupuesto.component';
 import FormGastosFijosServiciosComponent from '../form-gastos-fijos-servicios/form-gastos-fijos-servicios.component';
+
 @Component({
   selector: 'app-modal-orden-compra-grastos-fijos',
   templateUrl: './modal-orden-compra-grastos-fijos.component.html',

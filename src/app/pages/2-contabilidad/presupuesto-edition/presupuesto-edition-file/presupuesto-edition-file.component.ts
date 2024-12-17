@@ -22,7 +22,6 @@ export default class PresupuestoEditionFileComponent implements OnInit {
 
   id = this.config.data.id;
   url: string = `${environment.base_url}Cuentas/SetDocuments/${this.id}`;
-  urlimg = environment.base_urlImg;
   uploadedFiles: any[] = [];
   data: any[] = [];
   description: string = '';

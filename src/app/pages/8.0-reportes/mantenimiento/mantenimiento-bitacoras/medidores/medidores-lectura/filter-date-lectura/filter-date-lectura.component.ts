@@ -7,7 +7,8 @@
 // const date = new Date();
 // const mesActual = date.getMonth();
 // const mesAnterior = new Date(date.getFullYear(), mesActual - 1, date.getDate());
-// import ComponentsModule from 'src/app/shared/components.module';
+// import ComponentsModule from 'src/app/shared/components.module';import { DataConnectorService } from 'src/app/core/services/data.service';
+
 @Component({
 //   selector: 'app-filter-date-lectura',
 //   templateUrl: './filter-date-lectura.component.html',

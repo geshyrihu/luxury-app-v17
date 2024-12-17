@@ -6,6 +6,7 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { DateService } from 'src/app/core/services/date.service';
 const date = new Date();
+
 @Component({
   selector: 'app-form-medidor-lectura',
   templateUrl: './form-medidor-lectura.component.html',

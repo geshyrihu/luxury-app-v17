@@ -8,7 +8,7 @@ const urlBase = environment.base_url;
 @Injectable({
   providedIn: 'root',
 })
-export class DataService implements OnDestroy {
+export class DataConnectorService implements OnDestroy {
   private http = inject(HttpClient);
   /**
    * Realiza una solicitud GET al servidor.

@@ -18,7 +18,7 @@ export default [
     data: { title: 'Tickets' },
   },
   {
-    path: 'message/:ticketMessageId/:notificationUserId',
+    path: 'message/:ticketMessageId/:ticketGroupId/:notificationUserId',
     loadComponent: () =>
       import(
         'src/app/pages/5.3-tickets/messages/ticket-message-view/ticket-message-view.component'
@@ -77,7 +77,7 @@ export default [
     path: 'weekly-report',
     loadComponent: () =>
       import(
-        'src/app/pages/5.3-tickets/reports/ticket-message-weekly-report/ticket-message-weekly-report.component'
+        'src/app/pages/5.3-tickets/reports/ticket-message-operation-report/ticket-message-operation-report.component'
       ),
     data: { title: 'Reporte semanal' },
   },

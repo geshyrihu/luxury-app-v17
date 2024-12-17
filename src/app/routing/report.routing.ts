@@ -33,6 +33,14 @@ export default [
       ),
     data: { title: 'Reporte de minutas pendientes' },
   },
+  {
+    path: 'estados-financieros',
+    loadComponent: () =>
+      import(
+        'src/app/pages/8.0-reportes/estados-financieros/estados-financieros.component'
+      ),
+    data: { title: 'Reporte estados-financieros' },
+  },
   // {
   //   path: 'maintenance-report',
   //   loadChildren: () => import('./mantenimiento.routing'),

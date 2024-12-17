@@ -6,7 +6,7 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataService } from 'src/app/core/services/data.service';
+import { DataConnectorService } from 'src/app/core/services/data.service';
 import { ReportService } from 'src/app/core/services/report.service';
 import { TicketFilterService } from 'src/app/core/services/ticket-filter.service';
 import { environment } from 'src/environments/environment';
@@ -22,7 +22,7 @@ export default class ReporteOperacionComponent implements OnInit, OnDestroy {
   authS = inject(AuthService);
   public reportService = inject(ReportService);
   public ticketFilterService = inject(TicketFilterService);
-  dataService = inject(DataService);
+  dataService = inject(DataConnectorService);
   apiRequestService = inject(ApiRequestService);
   customerIdService = inject(CustomerIdService);
   urlImg = '';

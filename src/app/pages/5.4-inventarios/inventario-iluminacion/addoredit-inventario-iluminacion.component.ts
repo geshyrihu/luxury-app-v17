@@ -7,6 +7,7 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
+
 @Component({
   selector: 'app-addoredit-inventario-iluminacion',
   templateUrl: './addoredit-inventario-iluminacion.component.html',

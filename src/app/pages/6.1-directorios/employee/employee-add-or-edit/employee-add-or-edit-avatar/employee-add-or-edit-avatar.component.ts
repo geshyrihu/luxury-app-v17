@@ -1,9 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
-import { environment } from 'src/environments/environment';
 import { EmployeeAddOrEditService } from '../employee-add-or-edit.service';
-const baseUrlImg = environment.base_urlImg;
 
 @Component({
   selector: 'employee-add-or-edit-avatar',
@@ -14,8 +12,6 @@ const baseUrlImg = environment.base_urlImg;
 export default class EmployeeAddOrEditAvatarComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   employeeAddOrEditService = inject(EmployeeAddOrEditService);
-
-  base_urlImg = environment.base_urlImg + 'Administration/accounts/';
 
   applicationUserId: string = '';
   photoPath: string = '';
@@ -64,9 +60,7 @@ export default class EmployeeAddOrEditAvatarComponent implements OnInit {
         formData
       )
       .then((result: any) => {
-        if (result) {
-          this.photoPath = `${this.base_urlImg}${result.photoPath}`;
-        }
+        if (result) this.photoPath = result.photoPath;
       });
   }
 }

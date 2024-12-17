@@ -1,6 +1,6 @@
-<div class="form-group w-100">
+<div class="form-group" style="width: 100%">
   <!-- <Label>Selecciona Estatus</Label><br /> -->
-  <div class="btn-group" role="group" aria-label="Estado">
+  <div class="btn-group w-100" role="group" aria-label="Estado">
     <button
       *ngFor="let item of cb_status"
       type="button"
@@ -10,8 +10,8 @@
         'btn-soft-info': status !== item.value
       }"
       (click)="onStatusChange(item.value)"
+      style="flex: 1"
     >
-      <!-- Agrega el icono aquí si es necesario -->
       {{ item.label }}
     </button>
   </div>

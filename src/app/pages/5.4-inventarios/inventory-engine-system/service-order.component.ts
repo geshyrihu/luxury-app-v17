@@ -10,7 +10,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
-import { DataService } from 'src/app/core/services/data.service';
+import { DataConnectorService } from 'src/app/core/services/data.service';
 import AddoreditMaintenancePreventiveComponent from 'src/app/pages/5.6-calendar/mantenimiento-preventivo/addoredit-maintenance-preventive.component';
 
 //TODO: VALIDAR SU AUN ESTA ACTIVO ESTE MODULO
@@ -22,7 +22,7 @@ import AddoreditMaintenancePreventiveComponent from 'src/app/pages/5.6-calendar/
 })
 export default class ServiceOrderComponent implements OnInit, OnDestroy {
   customToastService = inject(CustomToastService);
-  dataService = inject(DataService);
+  dataService = inject(DataConnectorService);
   apiRequestService = inject(ApiRequestService);
   messageService = inject(MessageService);
   dialogService = inject(DialogService);

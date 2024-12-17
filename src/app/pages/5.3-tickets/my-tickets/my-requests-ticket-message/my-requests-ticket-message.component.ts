@@ -6,7 +6,6 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
-import { environment } from 'src/environments/environment';
 import TicketMessageFollowupComponent from '../../folloups/ticket-message-followup/ticket-message-followup.component';
 import TicketMessageAddOrEditComponent from '../../messages/ticket-message-add-or-edit/ticket-message-add-or-edit.component';
 import { TicketMessageModule } from '../../ticket-message.module';
@@ -30,11 +29,6 @@ export default class MyRequestsTicketMessageComponent implements OnInit {
 
   data: any[] = [];
   status: string = this.ticketGroupService.ticketGroupMessageStatus;
-
-  urlAccount = environment.url_account;
-  urlImage = this.ticketGroupService.onGetPathUrlImage(
-    this.customerIdService.customerId.toString()
-  );
 
   ngOnInit() {
     this.onLoadData(this.status);

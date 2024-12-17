@@ -6,6 +6,7 @@ import {
   NG_VALUE_ACCESSOR,
 } from '@angular/forms';
 import ValidationErrorsCustomInputComponent from '../validation-errors-custom-input/validation-errors-custom-input.component';
+
 @Component({
   imports: [CommonModule, ValidationErrorsCustomInputComponent],
   selector: 'custom-input-check',

@@ -1,15 +1,16 @@
-import { CommonModule } from '@angular/common';
-import { Component, Input, forwardRef } from '@angular/core';
+import { CommonModule } from "@angular/common";
+import { Component, Input, forwardRef } from "@angular/core";
 import {
   ControlValueAccessor,
   FormControl,
   NG_VALUE_ACCESSOR,
-} from '@angular/forms';
-import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import ValidationErrorsCustomInputComponent from '../validation-errors-custom-input/validation-errors-custom-input.component';
+} from "@angular/forms";
+import LuxuryAppComponentsModule from "app/shared/luxuryapp-components.module";
+import ValidationErrorsCustomInputComponent from "../validation-errors-custom-input/validation-errors-custom-input.component";
+
 @Component({
-  selector: 'custom-input-number',
-  templateUrl: './custom-input-number.component.html',
+  selector: "custom-input-number",
+  templateUrl: "./custom-input-number.component.html",
   standalone: true,
   imports: [
     LuxuryAppComponentsModule,

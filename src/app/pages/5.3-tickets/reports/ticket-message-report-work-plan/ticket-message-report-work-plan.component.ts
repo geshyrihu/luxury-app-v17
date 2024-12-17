@@ -7,7 +7,6 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import CardEmployeeComponent from 'src/app/pages/6.1-directorios/employee/card-employee/card-employee.component';
-import { environment } from 'src/environments/environment';
 import TicketMessageAddOrEditComponent from '../../messages/ticket-message-add-or-edit/ticket-message-add-or-edit.component';
 import { TicketMessageModule } from '../../ticket-message.module';
 import { TicketGroupService } from '../../ticket.service';
@@ -25,11 +24,6 @@ export default class TicketMessageReportWorkPlanComponent implements OnInit {
   customerIdService = inject(CustomerIdService);
   dialogHandlerService = inject(DialogHandlerService);
   router = inject(Router);
-
-  urlAccount = environment.url_account;
-  urlImage = this.ticketGroupService.onGetPathUrlImage(
-    this.customerIdService.customerId.toString()
-  );
 
   data: any[] = [];
   originalData: any[] = [];

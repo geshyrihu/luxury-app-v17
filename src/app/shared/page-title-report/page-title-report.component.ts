@@ -1,6 +1,8 @@
 // import { Component, Input } from '@angular/core';
 
-// @Component({
+// import { DataConnectorService } from 'src/app/core/services/data.service';
+
+@Component({
 //   selector: 'page-title-report-maintenance',
 //   templateUrl: './page-title-report.component.html',
 // })

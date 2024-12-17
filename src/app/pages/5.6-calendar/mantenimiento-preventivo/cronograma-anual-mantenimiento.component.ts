@@ -37,6 +37,7 @@ export default class CronogramaAnualMantenimientoComponent {
     { icon: 'fa-dumbbell', id: 5, nombre: 'gimnasio' },
     { icon: 'fa-video', id: 6, nombre: 'sistemas' },
     { icon: 'fa-paint-roller', id: 9, nombre: 'pintura' },
+    { icon: 'fa-hammer', id: 11, nombre: 'Carpinteria' },
   ];
 
   meses = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];

@@ -6,11 +6,9 @@ import { Observable, Subject, takeUntil } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataService } from 'src/app/core/services/data.service';
+import { DataConnectorService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
 import { PeriodoMonthService } from 'src/app/core/services/periodo-month.service';
-import { environment } from 'src/environments/environment';
-const base_urlImg = environment.base_urlImg + 'Administration/accounts/';
 
 @Component({
   selector: 'app-reporte-tickets',
@@ -20,7 +18,7 @@ const base_urlImg = environment.base_urlImg + 'Administration/accounts/';
 })
 export default class ReporteTicketsComponent implements OnInit, OnDestroy {
   customerIdService = inject(CustomerIdService);
-  dataService = inject(DataService);
+  dataService = inject(DataConnectorService);
   apiRequestService = inject(ApiRequestService);
   dateService = inject(DateService);
   dialogService = inject(DialogService);
@@ -28,25 +26,19 @@ export default class ReporteTicketsComponent implements OnInit, OnDestroy {
   public periodoMonthService = inject(PeriodoMonthService);
   customToastService = inject(CustomToastService);
 
-  base_urlImg = '';
   data: any[] = [];
   customerId$: Observable<number> = this.customerIdService.getCustomerId$();
-  url = base_urlImg;
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   ngOnInit(): void {
     this.onLoadData();
-    this.urlImg(this.customerIdService.getCustomerId());
     this.customerId$ = this.customerIdService.getCustomerId$();
     this.customerId$.subscribe((resp) => {
-      this.urlImg(this.customerIdService.getCustomerId());
       this.onLoadData();
     });
   }
-  urlImg(customerId: number): void {
-    this.base_urlImg = `${environment.base_urlImg}customers/${customerId}/tools/`;
-  }
+
   onFiltrarPeriodo(periodo: string) {
     this.periodoMonthService.setPeriodo(periodo);
     this.onLoadData();

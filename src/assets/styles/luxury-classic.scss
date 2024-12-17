@@ -1,0 +1,7 @@
+$blue: #2c3e50; // Azul oscuro elegante
+$yellow: #d4af37; // Oro
+$gray-dark: #343a40; // Gris oscuro
+$white: #ffffff; // Blanco puro
+@import "./theme-base";
+@import "../../../node_modules/bootstrap/scss/functions";
+@import "../../../node_modules/bootstrap/scss/variables";

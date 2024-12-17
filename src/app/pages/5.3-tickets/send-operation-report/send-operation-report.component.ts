@@ -68,11 +68,9 @@ export default class SendOperationReportComponent {
   }
 
   onEnviarEmail() {
-    const urlApi = `SendEmail/OperationReport/${
-      this.authS.applicationUserId
-    }/${this.customerIdService.getCustomerId()}/${this.year}/${
-      this.numeroSemana
-    }`;
+    const applicationUserId = this.authS.applicationUserId;
+    const customerId = this.customerIdService.getCustomerId();
+    const urlApi = `SendEmail/OperationReport/${applicationUserId}/${customerId}/${this.year}/${this.numeroSemana}`;
     this.apiRequestService
       .onPost(urlApi, this.onFilterDestinatarios())
       .then((result: boolean) => {});

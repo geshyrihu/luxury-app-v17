@@ -1,16 +1,15 @@
-import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
-import { SimplebarAngularModule } from 'simplebar-angular';
-import { InfoAccountAuthDto } from 'src/app/core/interfaces/user-token.interface';
-import { ApiRequestService } from 'src/app/core/services/api-request.service';
-import { AuthService } from 'src/app/core/services/auth.service';
-import { ProfielServiceService } from 'src/app/core/services/profiel-service.service';
-import { environment } from 'src/environments/environment';
+import { CommonModule } from "@angular/common";
+import { Component, inject, OnInit } from "@angular/core";
+import { Router, RouterModule } from "@angular/router";
+import { SimplebarAngularModule } from "simplebar-angular";
+import { InfoAccountAuthDto } from "src/app/core/interfaces/user-token.interface";
+import { ApiRequestService } from "src/app/core/services/api-request.service";
+import { AuthService } from "src/app/core/services/auth.service";
+import { ProfielServiceService } from "src/app/core/services/profiel-service.service";
 
 @Component({
-  selector: 'app-user-profile',
-  templateUrl: './user-profile.component.html',
+  selector: "app-user-profile",
+  templateUrl: "./user-profile.component.html",
   standalone: true,
   imports: [CommonModule, RouterModule, SimplebarAngularModule],
 })
@@ -22,14 +21,11 @@ export default class UserProfileComponent implements OnInit {
 
   infoAccountAuthDto: InfoAccountAuthDto;
 
-  profileImageUrl: string = '';
+  profileImageUrl: string = "";
 
   ngOnInit() {
     this.infoAccountAuthDto = this.authS.infoUserAuthDto;
-    this.profileImageUrl =
-      environment.base_urlImg +
-      'Administration/Accounts/' +
-      this.infoAccountAuthDto.photoPath;
+    this.profileImageUrl = this.infoAccountAuthDto.photoPath;
     this.profielServiceService.imagenPerfilActualizada$.subscribe(
       (nuevaImagenUrl: any) => {
         this.infoAccountAuthDto = nuevaImagenUrl.imagenUrl;
@@ -42,8 +38,8 @@ export default class UserProfileComponent implements OnInit {
    */
   logout() {
     const currentUrl = this.router.url;
-    localStorage.setItem('currentUrl', currentUrl);
-    this.router.navigate(['/auth/login']);
+    localStorage.setItem("currentUrl", currentUrl);
+    this.router.navigate(["/auth/login"]);
 
     this.apiRequestService
       .onGetItem(`Auth/Logout/${this.authS.infoUserAuthDto.applicationUserId}`)

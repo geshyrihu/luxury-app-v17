@@ -14,6 +14,7 @@ import AddOrEditComiteComponent from './addoredit-comite/addoredit-comite.compon
 import AddOrEditInvitedComponent from './addoredit-invitado/addoredit-invited.component';
 
 const date = new Date();
+
 @Component({
   selector: 'app-addoredit-meeting',
   templateUrl: './addoredit-meeting.component.html',

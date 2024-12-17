@@ -9,7 +9,6 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-addoredit-inventario-extintor',
@@ -28,8 +27,8 @@ export default class AddoreditInventarioExtintorComponent implements OnInit {
   submitting: boolean = false;
 
   cb_extintor: ISelectItem[] = onGetSelectItemFromEnum(EExtintor);
-  urlBaseImg = `${environment.base_urlImg}customers/`;
   photoFileUpdate: boolean = false;
+  urlBaseImg: string = '';
   id: number = 0;
 
   form: FormGroup = this.formBuilder.group({
@@ -53,7 +52,7 @@ export default class AddoreditInventarioExtintorComponent implements OnInit {
   onLoadData() {
     const urlApi = `InventarioExtintor/${this.id}`;
     this.apiRequestService.onGetItem(urlApi).then((result: any) => {
-      this.urlBaseImg = `${environment.base_urlImg}/customers/${result.customerId}/extintor/${result.photo}`;
+      this.urlBaseImg = result.currentPhoto;
       this.form.patchValue(result);
     });
   }

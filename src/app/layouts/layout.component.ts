@@ -14,6 +14,7 @@ import {
   TOPBAR,
 } from './layouts.model';
 import VerticalComponent from './vertical/vertical.component';
+
 @Component({
   selector: 'app-layout',
   templateUrl: './layout.component.html',

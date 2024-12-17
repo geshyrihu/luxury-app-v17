@@ -6,8 +6,9 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
-import { DataService } from 'src/app/core/services/data.service';
+import { DataConnectorService } from 'src/app/core/services/data.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
+
 @Component({
   selector: 'app-addoredit-status-request-dismissal-discount',
   templateUrl: './addoredit-status-request-dismissal-discount.component.html',
@@ -18,7 +19,7 @@ export default class AddOrEditStatusRequestDismissalDiscountComponent
   implements OnInit, OnDestroy
 {
   formBuilder = inject(FormBuilder);
-  dataService = inject(DataService);
+  dataService = inject(DataConnectorService);
   apiRequestService = inject(ApiRequestService);
   ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);

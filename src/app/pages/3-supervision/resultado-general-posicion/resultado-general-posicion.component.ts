@@ -6,7 +6,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { IFechasFiltro } from 'src/app/core/interfaces/fechas-filtro.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
-import { DataService } from 'src/app/core/services/data.service';
+import { DataConnectorService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
 import { FiltroCalendarService } from 'src/app/core/services/filtro-calendar.service';
 
@@ -19,7 +19,7 @@ import { FiltroCalendarService } from 'src/app/core/services/filtro-calendar.ser
 export default class ResultadoGeneralPosicionComponent
   implements OnInit, OnDestroy
 {
-  dataService = inject(DataService);
+  dataService = inject(DataConnectorService);
   apiRequestService = inject(ApiRequestService);
   dateService = inject(DateService);
   customToastService = inject(CustomToastService);

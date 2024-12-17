@@ -8,6 +8,7 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import { environment } from 'src/environments/environment';
 import AddoreditContratoPolizaComponent from './addoredit-contrato-poliza.component';
+
 @Component({
   selector: 'app-contrato-poliza',
   templateUrl: './list-contrato-poliza.component.html',

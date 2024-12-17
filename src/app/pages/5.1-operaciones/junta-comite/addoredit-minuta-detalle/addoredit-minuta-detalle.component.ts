@@ -1,17 +1,17 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { EAreaMinutasDetalles } from 'src/app/core/enums/area-minutas-detalles.enum';
-import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
-import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
-import { ApiRequestService } from 'src/app/core/services/api-request.service';
-import { AuthService } from 'src/app/core/services/auth.service';
-import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
+import { Component, inject, OnInit } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import LuxuryAppComponentsModule from "app/shared/luxuryapp-components.module";
+import { DynamicDialogConfig, DynamicDialogRef } from "primeng/dynamicdialog";
+import { EAreaMinutasDetalles } from "src/app/core/enums/area-minutas-detalles.enum";
+import { onGetSelectItemFromEnum } from "src/app/core/helpers/enumeration";
+import { ISelectItem } from "src/app/core/interfaces/select-Item.interface";
+import { ApiRequestService } from "src/app/core/services/api-request.service";
+import { AuthService } from "src/app/core/services/auth.service";
+import CustomInputModule from "src/app/custom-components/custom-input-form/custom-input.module";
 
 @Component({
-  selector: 'app-addoredit-minuta-detalle',
-  templateUrl: './addoredit-minuta-detalle.component.html',
+  selector: "app-addoredit-minuta-detalle",
+  templateUrl: "./addoredit-minuta-detalle.component.html",
   standalone: true,
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
@@ -27,15 +27,15 @@ export default class AddoreditMinutaDetalleComponent implements OnInit {
   cb_estatus = [
     {
       value: 0,
-      label: 'Pendiente',
+      label: "Pendiente",
     },
     {
       value: 1,
-      label: 'Concluido',
+      label: "Concluido",
     },
     {
       value: 2,
-      label: 'No Autorizado',
+      label: "No Autorizado",
     },
   ];
   cb_area: ISelectItem[] = onGetSelectItemFromEnum(EAreaMinutasDetalles);
@@ -49,8 +49,8 @@ export default class AddoreditMinutaDetalleComponent implements OnInit {
       this.config.data.areaResponsable,
       Validators.required,
     ],
-    title: ['', Validators.required],
-    requestService: ['', Validators.required],
+    title: ["", Validators.required],
+    requestService: ["", Validators.required],
     meetingId: [this.config.data.meetingId, Validators.required],
     applicationUserId: [this.authS.applicationUserId],
   });
@@ -63,9 +63,9 @@ export default class AddoreditMinutaDetalleComponent implements OnInit {
     const urlApi = `MeetingsDetails/${this.id}`;
     this.apiRequestService.onGetItem(urlApi).then((result: any) => {
       this.form.patchValue(result);
-      const contenidoHTML = this.form.get('requestService').value;
-      const contenidoSinHTML = contenidoHTML.replace(/<[^>]*>|&nbsp;/g, '');
-      this.form.get('requestService').patchValue(contenidoSinHTML);
+      const contenidoHTML = this.form.get("requestService").value;
+      const contenidoSinHTML = contenidoHTML.replace(/<[^>]*>|&nbsp;/g, "");
+      this.form.get("requestService").patchValue(contenidoSinHTML);
     });
   }
   onSubmit() {

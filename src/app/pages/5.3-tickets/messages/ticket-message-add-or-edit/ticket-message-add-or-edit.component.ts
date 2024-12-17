@@ -1,25 +1,25 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from "@angular/core";
 import {
-  FormArray,
   FormBuilder,
   FormControl,
   FormGroup,
   Validators,
-} from '@angular/forms';
-import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { EPriorityLevel } from 'src/app/core/enums/priority-level.enum';
-import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
-import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
-import { ApiRequestService } from 'src/app/core/services/api-request.service';
-import { AuthService } from 'src/app/core/services/auth.service';
-import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { SignalRService } from 'src/app/core/services/signal-r.service';
-import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
-import { TicketGroupService } from '../../ticket.service';
+} from "@angular/forms";
+import LuxuryAppComponentsModule from "app/shared/luxuryapp-components.module";
+import { DynamicDialogConfig, DynamicDialogRef } from "primeng/dynamicdialog";
+import { EPriorityLevel } from "src/app/core/enums/priority-level.enum";
+import { onGetSelectItemFromEnum } from "src/app/core/helpers/enumeration";
+import { ISelectItem } from "src/app/core/interfaces/select-Item.interface";
+import { ApiRequestService } from "src/app/core/services/api-request.service";
+import { AuthService } from "src/app/core/services/auth.service";
+import { CustomerIdService } from "src/app/core/services/customer-id.service";
+import { SignalRService } from "src/app/core/services/signal-r.service";
+import CustomInputModule from "src/app/custom-components/custom-input-form/custom-input.module";
+import { TicketGroupService } from "../../ticket.service";
+
 @Component({
-  selector: 'app-ticket-message-add-or-edit',
-  templateUrl: './ticket-message-add-or-edit.component.html',
+  selector: "app-ticket-message-add-or-edit",
+  templateUrl: "./ticket-message-add-or-edit.component.html",
   standalone: true,
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
@@ -33,17 +33,12 @@ export default class TicketMessageAddOrEditComponent implements OnInit {
   ticketGroupService = inject(TicketGroupService);
   notificationPushService = inject(SignalRService);
 
-  mode: 'pending' | 'concluded' | 'program' = 'pending'; // Estado inicial
-
-  id: string = '';
+  id: string = "";
   submitting: boolean = false;
 
   cb_priority = onGetSelectItemFromEnum(EPriorityLevel);
   cb_ticket_group: ISelectItem[] = [];
   cb_user: any[] = [];
-  urlImage = this.ticketGroupService.onGetPathUrlImage(
-    this.customerIdService.customerId.toString()
-  );
 
   form: FormGroup = this.formBuilder.group({
     id: new FormControl(
@@ -51,8 +46,8 @@ export default class TicketMessageAddOrEditComponent implements OnInit {
       Validators.required
     ),
     ticketGroupId: [this.config.data.ticketGroupId, Validators.required], // ticketGroupId
-    title: ['', [Validators.required, Validators.maxLength(100)]], // Título
-    description: ['', [Validators.required, Validators.maxLength(150)]], // Descripción
+    title: ["", [Validators.required, Validators.maxLength(100)]], // Título
+    description: ["", [Validators.required, Validators.maxLength(150)]], // Descripción
     priority: [1, Validators.required], // Prioridad (enum)
     creatorId: [this.authS.applicationUserId], // Id del creador
     customerId: [this.customerIdService.customerId], // Id del cliente
@@ -61,21 +56,17 @@ export default class TicketMessageAddOrEditComponent implements OnInit {
     beforeWorkPreview: [null], // Vista previa de BeforeWork
     afterWorkPreview: [null], // Vista previa de AfterWork
     applicationUserId: [this.authS.applicationUserId],
-    assignee: [''],
+    assignee: [""],
     assigneeId: [null],
     scheduledDate: [null],
     closedDate: [null],
   });
 
-  // Función para cambiar entre modos
-  setMode(mode: 'pending' | 'concluded' | 'program') {
-    this.mode = mode;
-  }
   ngOnInit() {
     this.onLoadUsers();
     this.onLoadTicketGroup();
     this.id = this.config.data.id;
-    if (this.id !== '') this.onLoadData();
+    if (this.id !== "") this.onLoadData();
   }
 
   onLoadTicketGroup() {
@@ -94,7 +85,7 @@ export default class TicketMessageAddOrEditComponent implements OnInit {
       // Crear una vista previa
       const reader = new FileReader();
       reader.onload = () => {
-        this.form.get(fieldName + 'Preview')?.setValue(reader.result);
+        this.form.get(fieldName + "Preview")?.setValue(reader.result);
       };
       reader.readAsDataURL(file);
     }
@@ -107,15 +98,12 @@ export default class TicketMessageAddOrEditComponent implements OnInit {
       // Si las imágenes existen, carga las vistas previas
       // Si las imágenes existen, establece las vistas previas con la URL completa
       if (result.beforeWorkPreview) {
-        const beforeWorkUrl = `${this.urlImage}/${result.beforeWorkPreview}`;
-        this.form.get('beforeWorkPreview')?.setValue(beforeWorkUrl);
+        this.form.get("beforeWorkPreview")?.setValue(result.beforeWorkPreview);
       }
 
       if (result.afterWorkPreview) {
-        const afterWorkUrl = `${this.urlImage}/${result.afterWorkPreview}`;
-        this.form.get('afterWorkPreview')?.setValue(afterWorkUrl);
+        this.form.get("afterWorkPreview")?.setValue(result.afterWorkPreview);
       }
-
       this.form.patchValue({
         applicationUserId: this.authS.applicationUserId,
       });
@@ -128,54 +116,57 @@ export default class TicketMessageAddOrEditComponent implements OnInit {
 
       const formData = new FormData();
 
-      // Agrega todos los controles del formulario a FormData
-      Object.keys(this.form.controls).forEach((key) => {
-        const control = this.form.get(key);
+      const rawValues = this.form.getRawValue();
+      Object.keys(rawValues).forEach((key) => {
+        const value = rawValues[key];
 
-        if (key === 'images' && control instanceof FormArray) {
-          // Manejar el FormArray para las imágenes adicionales
-          control.controls.forEach((fileControl: FormControl) => {
-            const file = fileControl.value as File;
+        if (key === "images" && Array.isArray(value)) {
+          value.forEach((file: File) => {
             if (file) {
-              formData.append('Images', file, file.name);
+              formData.append("Images", file, file.name);
             }
           });
-        } else if (key === 'beforeWork' || key === 'afterWork') {
-          // Manejar las imágenes de beforeWork y afterWork
-          const file = control?.value as File;
-          if (file) {
+        } else if (key === "beforeWork" || key === "afterWork") {
+          const file = value as File;
+          if (file && file instanceof File) {
             formData.append(key, file, file.name);
+          } else {
+            formData.append(key, "");
           }
-        } else if (key === 'scheduledDate' || key === 'closedDate') {
-          // Manejar la fecha programada (ScheduledDate) y la fecha de cierre (ClosedDate)
-          const dateValue = control?.value;
+        } else if (key === "scheduledDate" || key === "closedDate") {
+          const dateValue = value;
           if (dateValue) {
             const formattedDate = new Date(dateValue)
               .toISOString()
-              .split('T')[0]; // Formato 'YYYY-MM-DD'
+              .split("T")[0];
             formData.append(key, formattedDate);
           } else {
-            formData.append(key, ''); // Si no hay valor, se envía como vacío
+            formData.append(key, "");
           }
         } else {
-          // Verifica si el valor es null antes de agregarlo a FormData
-          const value = control?.value === null ? '' : control?.value;
-          formData.append(key, value);
+          formData.append(key, value != null ? value : "");
         }
       });
 
+      // Verificar contenido de FormData
+      formData.forEach((value, key) => {
+        console.log(`${key}:`, value);
+      });
+
       // Verifica si es creación o actualización
-      if (this.id === '') {
+      if (this.id === "") {
         this.apiRequestService
           .onPost(`TicketMessage/Create`, formData)
-          .then((result: boolean) => {
-            result ? this.ref.close(true) : (this.submitting = false);
+          .then((result: any) => {
+            this.ref.close(result);
+            this.submitting = false;
           });
       } else {
         this.apiRequestService
           .onPut(`TicketMessage/Update/${this.id}`, formData)
-          .then((result: boolean) => {
-            result ? this.ref.close(true) : (this.submitting = false);
+          .then((result: any) => {
+            this.ref.close(result.value);
+            this.submitting = false;
           });
       }
     }

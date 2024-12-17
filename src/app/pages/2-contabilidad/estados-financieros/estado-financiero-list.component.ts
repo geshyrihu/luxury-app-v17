@@ -6,8 +6,8 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
-import { environment } from 'src/environments/environment';
 import AddFileEstadoFinancieroComponent from './add-file-estado-financiero/add-file-estado-financiero.component';
+
 @Component({
   selector: 'app-estado-financiero-list',
   templateUrl: './estado-financiero-list.component.html',
@@ -22,7 +22,6 @@ export default class EstadoFinancieroListComponent implements OnInit {
 
   data: any[] = [];
   ref: DynamicDialogRef;
-  baseUrlApi = environment.base_urlImg;
 
   customerId$: Observable<number> = this.customerIdService.getCustomerId$();
 
@@ -34,13 +33,10 @@ export default class EstadoFinancieroListComponent implements OnInit {
   }
 
   onLoadData(): void {
-    this.apiRequestService
-      .onGetList(
-        `EstadoFinanciero/ToCustomer/${this.customerIdService.customerId}/`
-      )
-      .then((result: any) => {
-        this.data = result;
-      });
+    const urlApi = `EstadoFinanciero/ToCustomer/${this.customerIdService.customerId}/`;
+    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      this.data = result;
+    });
   }
 
   // Función para abrir un cuadro de diálogo modal paraa agregar el archivo

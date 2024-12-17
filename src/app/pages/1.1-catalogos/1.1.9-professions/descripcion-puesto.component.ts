@@ -5,7 +5,8 @@ import { Subject, takeUntil } from 'rxjs';
 import { AutosizeDirective } from 'src/app/core/directives/autosize-text-area.diective';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
-import { DataService } from 'src/app/core/services/data.service';
+import { DataConnectorService } from 'src/app/core/services/data.service';
+
 @Component({
   selector: 'app-descripcion-puesto',
   templateUrl: './descripcion-puesto.component.html',
@@ -13,7 +14,7 @@ import { DataService } from 'src/app/core/services/data.service';
   imports: [LuxuryAppComponentsModule, AutosizeDirective],
 })
 export default class DescripcionPuestoComponent implements OnInit, OnDestroy {
-  dataService = inject(DataService);
+  dataService = inject(DataConnectorService);
   apiRequestService = inject(ApiRequestService);
   config = inject(DynamicDialogConfig);
   customToastService = inject(CustomToastService);

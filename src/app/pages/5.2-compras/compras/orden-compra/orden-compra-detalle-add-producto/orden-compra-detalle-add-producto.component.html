@@ -21,7 +21,7 @@
 >
   <ng-template pTemplate="caption">
     <custom-table-caption
-      [title]="'Productos'"
+      title="Productos"
       [dt]="dt"
       (add)="showModalAddOrEdit()"
     />
@@ -51,11 +51,7 @@
     <tr>
       <td class="p-column-title" style="width: 10%">
         <small>
-          <img
-            [src]="urlImagenProducto + item.urlImagenProducto"
-            alt=""
-            width="50%"
-          />
+          <img [src]="item.urlImagenProducto" alt="" width="50%" />
         </small>
       </td>
       <td class="p-column-title">

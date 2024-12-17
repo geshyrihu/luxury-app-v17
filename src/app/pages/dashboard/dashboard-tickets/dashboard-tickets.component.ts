@@ -7,6 +7,7 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import DashboardDynamicCardItemComponent from '../dashboard-dynamic-card-item/dashboard-dynamic-card-item.component';
 import SummaryTicketsComponent from '../summary-tickets/summary-tickets.component';
+
 @Component({
   selector: 'app-dashboard-tickets',
   templateUrl: './dashboard-tickets.component.html',

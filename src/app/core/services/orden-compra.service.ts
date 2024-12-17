@@ -1,12 +1,12 @@
 import { Injectable, OnDestroy, inject } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
-import { DataService } from './data.service';
+import { DataConnectorService } from './data.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class OrdenCompraService implements OnDestroy {
-  dataService = inject(DataService);
+  dataService = inject(DataConnectorService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 

@@ -7,10 +7,11 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataService } from 'src/app/core/services/data.service';
+import { DataConnectorService } from 'src/app/core/services/data.service';
 import { ReportService } from 'src/app/core/services/report.service';
 import { TicketFilterService } from 'src/app/core/services/ticket-filter.service';
 import { environment } from 'src/environments/environment';
+
 @Component({
   selector: 'app-pending-report',
   templateUrl: './pending-report.component.html',
@@ -20,7 +21,7 @@ import { environment } from 'src/environments/environment';
 export default class PendingReportComponent implements OnInit, OnDestroy {
   authS = inject(AuthService);
   customerIdService = inject(CustomerIdService);
-  dataService = inject(DataService);
+  dataService = inject(DataConnectorService);
   apiRequestService = inject(ApiRequestService);
   public filterReportOperationService = inject(TicketFilterService);
   public reportService = inject(ReportService);

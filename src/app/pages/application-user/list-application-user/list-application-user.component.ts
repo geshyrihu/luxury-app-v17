@@ -13,6 +13,7 @@ import { environment } from 'src/environments/environment';
 import ModuleAppPermissionComponent from '../../1.1-catalogos/1.1.1-module-app/module-app-permission/module-app-permission.component';
 import AddOrEditApplicationUserComponent from '../add-or-edit-application-user/add-or-edit-application-user.component';
 import MdEditAccountComponent from '../modal-edit-account/modal-edit-account/md-edit-account.component';
+
 @Component({
   selector: 'app-list-application-user',
   templateUrl: './list-application-user.component.html',

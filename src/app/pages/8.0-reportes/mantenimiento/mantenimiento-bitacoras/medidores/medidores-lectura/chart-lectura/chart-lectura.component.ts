@@ -10,6 +10,7 @@ import { IFechasFiltro } from 'src/app/core/interfaces/fechas-filtro.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { DateService } from 'src/app/core/services/date.service';
 import { FiltroCalendarService } from 'src/app/core/services/filtro-calendar.service';
+
 @Component({
   selector: 'app-chart-lectura',
   templateUrl: './chart-lectura.component.html',

@@ -5,7 +5,6 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import SubirPdfComponent from 'src/app/shared/subir-pdf/subir-pdf.component';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-activos-documentos',
@@ -25,9 +24,6 @@ export default class ActivosDocumentosComponent implements OnInit {
   url: string = '';
 
   ngOnInit(): void {
-    this.url = `${
-      environment.base_urlImg
-    }customers/${this.customerIdService.getCustomerId()}/machinery/`;
     this.machineryId = this.config.data.machineryId;
     if (this.machineryId !== 0) this.onLoadData();
   }
@@ -52,7 +48,7 @@ export default class ActivosDocumentosComponent implements OnInit {
           serviceOrderId: id,
           pathUrl: 'Machineries/SubirDocumento/',
         },
-        'Cargar Imagenes',
+        'Cargar Documentos',
         this.dialogHandlerService.dialogSizeMd
       )
       .then((result: boolean) => {

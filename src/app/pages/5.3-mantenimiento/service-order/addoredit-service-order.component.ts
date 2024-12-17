@@ -12,7 +12,7 @@ import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataService } from 'src/app/core/services/data.service';
+import { DataConnectorService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import ValidationErrorsCustomInputComponent from 'src/app/custom-components/custom-input-form/validation-errors-custom-input/validation-errors-custom-input.component';
@@ -35,7 +35,7 @@ export default class ServiceOrderAddOrEditComponent
   formBuilder = inject(FormBuilder);
   config = inject(DynamicDialogConfig);
   customerIdService = inject(CustomerIdService);
-  dataService = inject(DataService);
+  dataService = inject(DataConnectorService);
   dateService = inject(DateService);
   ref = inject(DynamicDialogRef);
 

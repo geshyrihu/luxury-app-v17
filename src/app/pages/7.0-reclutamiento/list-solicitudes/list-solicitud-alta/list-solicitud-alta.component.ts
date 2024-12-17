@@ -7,11 +7,12 @@ import { Observable, Subject, takeUntil } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
-import { DataService } from 'src/app/core/services/data.service';
+import { DataConnectorService } from 'src/app/core/services/data.service';
 import { FilterRequestsService } from 'src/app/core/services/filter-requests.service';
 import { StatusSolicitudVacanteService } from 'src/app/core/services/status-solicitud-vacante.service';
 import FilterRequestsComponent from '../filter-requests.component';
 import AddOrEditSolicitudAltaComponent from './addoredit-solicitud-alta/addoredit-solicitud-alta.component';
+
 @Component({
   selector: 'app-list-solicitud-alta',
   templateUrl: './list-solicitud-alta.component.html',
@@ -19,7 +20,7 @@ import AddOrEditSolicitudAltaComponent from './addoredit-solicitud-alta/addoredi
   imports: [LuxuryAppComponentsModule, FilterRequestsComponent],
 })
 export default class ListSolicitudAltaComponent implements OnInit, OnDestroy {
-  dataService = inject(DataService);
+  dataService = inject(DataConnectorService);
   apiRequestService = inject(ApiRequestService);
   private filterRequestsService = inject(FilterRequestsService);
   authS = inject(AuthService);

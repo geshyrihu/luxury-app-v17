@@ -12,7 +12,6 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DateService } from 'src/app/core/services/date.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-addoredit-activos',
@@ -32,7 +31,6 @@ export default class AddOrEditActivosComponent implements OnInit {
 
   submitting: boolean = false;
 
-  urlBaseImg = '';
   id: number = 0;
   applicationUserId = this.authS.userTokenDto.infoUserAuthDto.applicationUserId;
   customerId: number = this.customerIdService.getCustomerId();
@@ -48,9 +46,7 @@ export default class AddOrEditActivosComponent implements OnInit {
   optionActive: ISelectItem[] = onGetSelectItemFromEnum(EState);
   ngOnInit(): void {
     this.onLoadEquipoClasificacion();
-    this.urlBaseImg = `${
-      environment.base_urlImg
-    }customers/${this.customerIdService.getCustomerId()}/machinery/`;
+
     this.category = this.config.data.inventoryCategory;
 
     if (this.config.data.id !== 0) this.onLoadData(this.config.data.id);

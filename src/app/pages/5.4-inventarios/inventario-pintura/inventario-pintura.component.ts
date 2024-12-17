@@ -7,6 +7,7 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import AddoreditInventarioPinturaComponent from './addoredit-inventario-pintura.component';
+
 @Component({
   selector: 'app-inventario-pintura',
   templateUrl: './inventario-pintura.component.html',

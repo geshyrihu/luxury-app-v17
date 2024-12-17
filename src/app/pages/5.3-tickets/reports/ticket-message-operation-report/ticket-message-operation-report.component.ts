@@ -7,7 +7,6 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
-import { environment } from 'src/environments/environment';
 import TicketMessageFollowupComponent from '../../folloups/ticket-message-followup/ticket-message-followup.component';
 import TicketMessageAddOrEditComponent from '../../messages/ticket-message-add-or-edit/ticket-message-add-or-edit.component';
 import TicketMessageCloseComponent from '../../messages/ticket-message-close/ticket-message-close.component';
@@ -18,12 +17,12 @@ import { TicketMessageModule } from '../../ticket-message.module';
 import { TicketGroupService } from '../../ticket.service';
 
 @Component({
-  selector: 'app-ticket-message-weekly-report',
-  templateUrl: './ticket-message-weekly-report.component.html',
+  selector: 'app-ticket-message-operation-report',
+  templateUrl: './ticket-message-operation-report.component.html',
   standalone: true,
   imports: [LuxuryAppComponentsModule, TicketMessageModule],
 })
-export default class TicketMessageWeeklyReportComponent {
+export default class TicketMessageOperationReportComponent {
   activatedRoute = inject(ActivatedRoute);
   apiRequestService = inject(ApiRequestService);
   authS = inject(AuthService);
@@ -42,10 +41,6 @@ export default class TicketMessageWeeklyReportComponent {
   cb_assignee: ISelectItem[] = [];
   ticketGroupId: string = this.activatedRoute.snapshot.params.ticketGroupId;
 
-  urlAccount = environment.url_account;
-  urlImage = this.ticketGroupService.onGetPathUrlImage(
-    this.customerIdService.customerId.toString()
-  );
   onLoadData() {
     this.ticketGroupService.setStatus(this.status);
 

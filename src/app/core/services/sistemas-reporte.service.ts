@@ -1,11 +1,11 @@
 import { Injectable, inject } from '@angular/core';
-import { DataService } from './data.service';
+import { DataConnectorService } from './data.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SistemasReporteService {
-  dataService = inject(DataService);
+  dataService = inject(DataConnectorService);
 
   data: any[] = [];
   applicationUser: any[] = [];

@@ -1,13 +1,13 @@
-import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
-import TicketMessageFollowupComponent from '../../../5.3-tickets/folloups/ticket-message-followup/ticket-message-followup.component';
+import { CommonModule } from "@angular/common";
+import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { DialogHandlerService } from "src/app/core/services/dialog-handler.service";
+import TicketMessageFollowupComponent from "../../../5.3-tickets/folloups/ticket-message-followup/ticket-message-followup.component";
 
 @Component({
-  selector: 'app-ticket-follow-up-button',
+  selector: "app-ticket-follow-up-button",
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './ticket-follow-up-button.component.html',
+  templateUrl: "./ticket-follow-up-button.component.html",
 })
 export default class TicketFollowUpButtonComponent {
   @Input() id!: string; // ID para el seguimiento
@@ -21,7 +21,7 @@ export default class TicketFollowUpButtonComponent {
       .openDialog(
         TicketMessageFollowupComponent,
         { id: this.id },
-        'Seguimiento',
+        "Seguimiento",
         this.dialogHandlerService.dialogSizeMd
       )
       .then((result: boolean) => {

@@ -6,9 +6,10 @@ import { Subject, takeUntil } from 'rxjs';
 import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
-import { DataService } from 'src/app/core/services/data.service';
+import { DataConnectorService } from 'src/app/core/services/data.service';
 import { FilterRequestsService } from 'src/app/core/services/filter-requests.service';
 import CBtnModule from 'src/app/custom-components/custom-buttons/btn.module';
+
 @Component({
   selector: 'app-filter-requests',
   templateUrl: './filter-requests.component.html',
@@ -17,7 +18,7 @@ import CBtnModule from 'src/app/custom-components/custom-buttons/btn.module';
 })
 export default class FilterRequestsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {}
-  dataService = inject(DataService);
+  dataService = inject(DataConnectorService);
   apiRequestService = inject(ApiRequestService);
   private router = inject(Router);
   private filterRequestsService = inject(FilterRequestsService);

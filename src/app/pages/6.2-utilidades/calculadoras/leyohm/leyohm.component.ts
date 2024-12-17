@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
+
 @Component({
   selector: 'app-leyohm',
   templateUrl: './leyohm.component.html',

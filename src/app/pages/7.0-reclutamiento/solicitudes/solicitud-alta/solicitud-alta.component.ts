@@ -8,21 +8,16 @@ import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { DataService } from 'src/app/core/services/data.service';
+import { DataConnectorService } from 'src/app/core/services/data.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
-import ValidationErrorsCustomInputComponent from 'src/app/custom-components/custom-input-form/validation-errors-custom-input/validation-errors-custom-input.component';
 
 @Component({
   selector: 'app-solicitud-alta',
   templateUrl: './solicitud-alta.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    CustomInputModule,
-    ValidationErrorsCustomInputComponent,
-  ],
-  providers: [DataService],
+  imports: [LuxuryAppComponentsModule, CustomInputModule],
+  providers: [DataConnectorService],
 })
 export default class SolicitudAltaComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);

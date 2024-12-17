@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
 import BtnComponent from '../a-master-btn-button/a-master-btn.component';
+
 @Component({
   imports: [NgbTooltip, BtnComponent],
   selector: 'c-btn-delete',

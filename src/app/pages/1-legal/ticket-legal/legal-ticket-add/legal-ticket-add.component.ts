@@ -1,20 +1,20 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { FlatpickrModule } from 'angularx-flatpickr';
-import { ISelectItem } from './../../../../core/interfaces/select-Item.interface';
+import { Component, OnInit, inject } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { FlatpickrModule } from "angularx-flatpickr";
+import { ISelectItem } from "./../../../../core/interfaces/select-Item.interface";
 
 import LuxuryAppComponentsModule, {
   flatpickrFactory,
-} from 'app/shared/luxuryapp-components.module';
-import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { ApiRequestService } from 'src/app/core/services/api-request.service';
-import { AuthService } from 'src/app/core/services/auth.service';
-import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
+} from "app/shared/luxuryapp-components.module";
+import { DynamicDialogConfig, DynamicDialogRef } from "primeng/dynamicdialog";
+import { ApiRequestService } from "src/app/core/services/api-request.service";
+import { AuthService } from "src/app/core/services/auth.service";
+import { CustomerIdService } from "src/app/core/services/customer-id.service";
+import CustomInputModule from "src/app/custom-components/custom-input-form/custom-input.module";
 
 @Component({
-  selector: 'app-legal-ticket-add-or-edit',
-  templateUrl: './legal-ticket-add.component.html',
+  selector: "app-legal-ticket-add-or-edit",
+  templateUrl: "./legal-ticket-add.component.html",
   standalone: true,
   imports: [LuxuryAppComponentsModule, CustomInputModule, FlatpickrModule],
 })
@@ -29,7 +29,7 @@ export default class LegalTicketAddComponent implements OnInit {
   constructor() {
     flatpickrFactory();
   }
-  id: string = '';
+  id: string = "";
   list: ISelectItem[] = [];
   submitting: boolean = false;
   tipoSolicitud = 1;
@@ -38,10 +38,10 @@ export default class LegalTicketAddComponent implements OnInit {
   employee: ISelectItem[] = [];
   form: FormGroup = this.formBuilder.group({
     id: { value: this.id, disabled: true },
-    customerId: ['', Validators.required],
+    customerId: ["", Validators.required],
     typeService: [0, Validators.required],
     ApplicationUserRequestId: [this.auhtService.applicationUserId],
-    title: ['', Validators.required],
+    title: ["", Validators.required],
     isInternal: [],
     fechaAsamblea: [],
     fechaJunta: [],
@@ -59,7 +59,7 @@ export default class LegalTicketAddComponent implements OnInit {
       this.cb_customer = resp;
     });
     this.id = this.config.data.id;
-    if (this.id !== '') this.onLoadData();
+    if (this.id !== "") this.onLoadData();
     this.apiRequestService
       .onGetItem(`TicketLegal/EmployeeLegal`)
       .then((result: any) => {
@@ -82,10 +82,7 @@ export default class LegalTicketAddComponent implements OnInit {
       });
   }
   onSubmit() {
-    this.form.removeControl('typeService');
-
-    console.log(this.form.value);
-
+    this.form.removeControl("typeService");
     if (!this.apiRequestService.validateForm(this.form)) return;
     this.id = this.config.data.id;
     this.submitting = true;
@@ -98,7 +95,6 @@ export default class LegalTicketAddComponent implements OnInit {
   }
   saveLegalMatter(e: any): void {
     let find = this.cb_legal_matter.find((x) => x?.label === e.target.value);
-    console.log('🚀 ~ e.target.value:', e.target.value);
     this.form.patchValue({
       isInternal: find?.value,
       title: e.target.value,

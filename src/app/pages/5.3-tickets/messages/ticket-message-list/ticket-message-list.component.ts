@@ -1,49 +1,51 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
-import { ApiRequestService } from 'src/app/core/services/api-request.service';
-import { AuthService } from 'src/app/core/services/auth.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
-import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
-import { environment } from 'src/environments/environment';
-import Swal from 'sweetalert2';
-import CardEmployeeComponent from '../../../6.1-directorios/employee/card-employee/card-employee.component';
-import TicketMessageFollowupComponent from '../../folloups/ticket-message-followup/ticket-message-followup.component';
-import { TicketResult } from '../../interfaces/ticket-message-list';
-import SendOperationReportComponent from '../../send-operation-report/send-operation-report.component';
-import { TicketMessageModule } from '../../ticket-message.module';
-import { TicketGroupService } from '../../ticket.service';
-import TicketMessageAddOrEditComponent from '../ticket-message-add-or-edit/ticket-message-add-or-edit.component';
-import TicketMessageCloseComponent from '../ticket-message-close/ticket-message-close.component';
-import TicketMessageProgramComponent from '../ticket-message-program/ticket-message-program.component';
-import TicketMessageReadListComponent from '../ticket-message-read-list/ticket-message-read-list.component';
-import TicketMessageReopenComponent from '../ticket-message-reopen/ticket-message-reopen.component';
+import { Component, inject, OnInit } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
+import LuxuryAppComponentsModule from "app/shared/luxuryapp-components.module";
+import { ISelectItem } from "src/app/core/interfaces/select-Item.interface";
+import { ApiRequestService } from "src/app/core/services/api-request.service";
+import { AuthService } from "src/app/core/services/auth.service";
+import { CustomToastService } from "src/app/core/services/custom-toast.service";
+import { CustomerIdService } from "src/app/core/services/customer-id.service";
+import { DialogHandlerService } from "src/app/core/services/dialog-handler.service";
+import Swal from "sweetalert2";
+import CardEmployeeComponent from "../../../6.1-directorios/employee/card-employee/card-employee.component";
+import TicketMessageFollowupComponent from "../../folloups/ticket-message-followup/ticket-message-followup.component";
+import { TicketResult } from "../../interfaces/ticket-message-list";
+import SendOperationReportComponent from "../../send-operation-report/send-operation-report.component";
+import { TicketMessageModule } from "../../ticket-message.module";
+import { TicketGroupService } from "../../ticket.service";
+import TicketMessageAddOrEditComponent from "../ticket-message-add-or-edit/ticket-message-add-or-edit.component";
+import TicketMessageCloseComponent from "../ticket-message-close/ticket-message-close.component";
+import TicketMessageProgramComponent from "../ticket-message-program/ticket-message-program.component";
+import TicketMessageReadListComponent from "../ticket-message-read-list/ticket-message-read-list.component";
+import TicketMessageReopenComponent from "../ticket-message-reopen/ticket-message-reopen.component";
+
 @Component({
-  selector: 'app-ticket-message-list',
-  templateUrl: './ticket-message-list.component.html',
+  selector: "app-ticket-message-list",
+  templateUrl: "./ticket-message-list.component.html",
   standalone: true,
   imports: [LuxuryAppComponentsModule, TicketMessageModule],
 })
 export default class TicketMessageListComponent implements OnInit {
+  activatedRoute = inject(ActivatedRoute);
   apiRequestService = inject(ApiRequestService);
   authS = inject(AuthService);
-  dialogHandlerService = inject(DialogHandlerService);
-  ticketGroupService = inject(TicketGroupService);
   customerIdService = inject(CustomerIdService);
   customToastService = inject(CustomToastService);
-  activatedRoute = inject(ActivatedRoute);
+  dialogHandlerService = inject(DialogHandlerService);
   router = inject(Router);
+  ticketGroupService = inject(TicketGroupService);
 
-  isSuperUser = this.authS.onValidateRoles(['SuperUsuario']);
+  applicationUser = this.authS.applicationUserId;
+
+  isSuperUser = this.authS.onValidateRoles(["SuperUsuario"]);
   data: TicketResult = {
-    nameGroup: '',
+    nameGroup: "",
     items: [],
   };
 
   originalData: TicketResult = {
-    nameGroup: '',
+    nameGroup: "",
     items: [],
   };
   assignee: string = null;
@@ -51,14 +53,10 @@ export default class TicketMessageListComponent implements OnInit {
   ticketGroupId: string = this.activatedRoute.snapshot.params.ticketGroupId;
   status: string = this.ticketGroupService.ticketGroupMessageStatus;
 
-  urlAccount = environment.url_account;
-  urlImage = this.ticketGroupService.onGetPathUrlImage(
-    this.customerIdService.customerId.toString()
-  );
   year: number = this.ticketGroupService.year || 0;
   numeroSemana: number = this.ticketGroupService.numeroSemana || 0;
   wekklyIsNullOrEmpty = true;
-  weekInputValue: string = '';
+  weekInputValue: string = "";
   ngOnInit(): void {
     this.year = this.ticketGroupService.year || 0;
     this.numeroSemana = this.ticketGroupService.numeroSemana || 0;
@@ -69,7 +67,7 @@ export default class TicketMessageListComponent implements OnInit {
       this.wekklyIsNullOrEmpty = false;
       const startOfWeek = this.getStartOfWeek(this.year, this.numeroSemana);
       const inputValue = `${startOfWeek.getFullYear()}-W${
-        this.numeroSemana < 10 ? '0' : ''
+        this.numeroSemana < 10 ? "0" : ""
       }${this.numeroSemana}`;
       // Establecer el valor en el input
       this.weekInputValue = inputValue; // Asegúrate de declarar esta propiedad
@@ -83,6 +81,7 @@ export default class TicketMessageListComponent implements OnInit {
   }
 
   onLoadData(status: any) {
+    this.status = status;
     const urlApi = `TicketMessage/List/${this.ticketGroupId}/${status}`;
     this.apiRequestService.onGetList(urlApi).then((result: TicketResult) => {
       this.data = result;
@@ -100,13 +99,13 @@ export default class TicketMessageListComponent implements OnInit {
 
       this.cb_assignee.push({
         value: null,
-        label: 'Mostrar todos',
+        label: "Mostrar todos",
       });
     });
   }
 
   onResponsibleChange(event: any) {
-    if (event.target.value === 'null') {
+    if (event.target.value === "null") {
       // Mostrar todos los elementos
       this.data.items = [...this.originalData.items]; // Restaura todos
     } else {
@@ -122,12 +121,14 @@ export default class TicketMessageListComponent implements OnInit {
       .openDialog(
         TicketMessageAddOrEditComponent,
         { id: data.id, ticketGroupId: this.ticketGroupId },
-        'Agregar',
+        data.title,
         this.dialogHandlerService.dialogSizeLg
       )
       .then((result: boolean) => {
+        console.log("🚀 ~ result-Modal---:", result);
+
+        this.onLoadData(this.status);
         if (result) {
-          this.onLoadData(this.status);
         }
       });
   }
@@ -135,7 +136,7 @@ export default class TicketMessageListComponent implements OnInit {
     this.dialogHandlerService.openDialog(
       CardEmployeeComponent,
       { applicationUserId },
-      'Colaborador',
+      "Colaborador",
       this.dialogHandlerService.dialogSizeMd
     );
   }
@@ -144,7 +145,7 @@ export default class TicketMessageListComponent implements OnInit {
       .openDialog(
         TicketMessageProgramComponent,
         { id: id, ticketGroupId: this.ticketGroupId },
-        'Programar actividad',
+        "Programar actividad",
         this.dialogHandlerService.dialogSizeMd
       )
       .then((result: boolean) => {
@@ -156,7 +157,7 @@ export default class TicketMessageListComponent implements OnInit {
       .openDialog(
         TicketMessageReopenComponent,
         { id: id },
-        'Re abrir ticket',
+        "Re abrir ticket",
         this.dialogHandlerService.dialogSizeMd
       )
       .then((result: boolean) => {
@@ -168,7 +169,7 @@ export default class TicketMessageListComponent implements OnInit {
       .openDialog(
         TicketMessageReadListComponent,
         { id: id },
-        'Vistas',
+        "Vistas",
         this.dialogHandlerService.dialogSizeMd
       )
       .then((result: boolean) => {
@@ -178,14 +179,14 @@ export default class TicketMessageListComponent implements OnInit {
 
   onProgress(id: string) {
     Swal.fire({
-      title: 'Confirmar',
-      text: 'Se colocara el ticket en proceso',
-      icon: 'warning',
+      title: "Confirmar",
+      text: "Se colocara el ticket en proceso",
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: '#50C878',
-      cancelButtonColor: '#9B1B30',
-      confirmButtonText: 'Si, en proceso!',
-      cancelButtonText: 'Cancelar',
+      confirmButtonColor: "#50C878",
+      cancelButtonColor: "#9B1B30",
+      confirmButtonText: "Si, en proceso!",
+      cancelButtonText: "Cancelar",
     }).then((result) => {
       if (result.value) {
         const urlApi = `TicketMessage/InProgress/${id}/${this.authS.applicationUserId}`;
@@ -203,7 +204,7 @@ export default class TicketMessageListComponent implements OnInit {
       .openDialog(
         TicketMessageCloseComponent,
         { id: id },
-        'Cerrar ticket',
+        "Cerrar ticket",
         this.dialogHandlerService.dialogSizeLg
       )
       .then((result: boolean) => {
@@ -224,7 +225,7 @@ export default class TicketMessageListComponent implements OnInit {
       .openDialog(
         TicketMessageFollowupComponent,
         { id: id },
-        'Seguimiento',
+        "Seguimiento",
         this.dialogHandlerService.dialogSizeMd
       )
       .then((result: boolean) => {
@@ -245,7 +246,7 @@ export default class TicketMessageListComponent implements OnInit {
 
           // Alterna entre 'alta' y 'baja'
           this.data.items[itemIndex].priority =
-            currentPriority === 'Alta' ? 'Baja' : 'Alta';
+            currentPriority === "Alta" ? "Baja" : "Alta";
         }
       }
     });
@@ -269,28 +270,12 @@ export default class TicketMessageListComponent implements OnInit {
       });
   }
 
-  // handleWeekChange(event: Event): void {
-  //   // Obtener el valor del input en formato 'YYYY-WXX'
-  //   const weekValue = (event.target as HTMLInputElement).value; // '2024-W41'
-
-  //   // Obtener el año y el número de semana
-  //   // Verificar si weekValue tiene un valor
-  //   if (weekValue) {
-  //     this.year = parseInt(weekValue.split('-W')[0], 10);
-  //     this.numeroSemana = parseInt(weekValue.split('-W')[1], 10);
-
-  //     this.ticketGroupService.year = this.year;
-  //     this.ticketGroupService.numeroSemana = this.numeroSemana;
-  //     this.wekklyIsNullOrEmpty = false;
-  //   }
-  // }
-
   handleWeekChange(event: Event): void {
     const weekValue = (event.target as HTMLInputElement).value; // '2024-W43'
 
     if (weekValue) {
-      this.year = parseInt(weekValue.split('-W')[0], 10); // Año 2024
-      this.numeroSemana = parseInt(weekValue.split('-W')[1], 10); // Semana 43
+      this.year = parseInt(weekValue.split("-W")[0], 10); // Año 2024
+      this.numeroSemana = parseInt(weekValue.split("-W")[1], 10); // Semana 43
       this.wekklyIsNullOrEmpty = false;
 
       // Enviar el año y el número de semana al backend
@@ -301,7 +286,7 @@ export default class TicketMessageListComponent implements OnInit {
   }
   onPreviewWeeklyReport(): void {
     // Lógica para la vista previa
-    this.router.navigate(['/tickets/weekly-report-preview']);
+    this.router.navigate(["/tickets/weekly-report-preview"]);
   }
   onSendWeeklyReport(): void {
     // Lógica para enviar el reporte
@@ -312,7 +297,7 @@ export default class TicketMessageListComponent implements OnInit {
           year: this.year,
           numeroSemana: this.numeroSemana,
         },
-        'Envio de reporte semanal',
+        "Envio de reporte semanal",
         this.dialogHandlerService.dialogSizeFull
       )
       .then((result: boolean) => {
@@ -321,6 +306,6 @@ export default class TicketMessageListComponent implements OnInit {
   }
   onPreviewClickedWorkPlan(): void {
     // Lógica para la vista previa
-    this.router.navigate(['/tickets/work-plan-preview']);
+    this.router.navigate(["/tickets/work-plan-preview"]);
   }
 }

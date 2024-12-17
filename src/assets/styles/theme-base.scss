@@ -1,0 +1,16 @@
+body {
+  background-color: $gray-dark;
+  color: $white;
+}
+
+.btn-primary {
+  background-color: $blue;
+  border-color: $blue;
+}
+
+.card {
+  background-color: $yellow;
+  color: $gray-dark;
+}
+@import "../../../node_modules/bootstrap/scss/functions";
+@import "../../../node_modules/bootstrap/scss/variables";

@@ -5,10 +5,11 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { Subject, takeUntil } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
-import { DataService } from 'src/app/core/services/data.service';
+import { DataConnectorService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
 import { PeriodoMonthService } from 'src/app/core/services/periodo-month.service';
 import FiltroMinutasAreaComponent from '../filtro-minutas-area/filtro-minutas-area.component';
+
 @Component({
   selector: 'app-minutas-resumen',
   templateUrl: './minutas-resumen.component.html',
@@ -17,7 +18,7 @@ import FiltroMinutasAreaComponent from '../filtro-minutas-area/filtro-minutas-ar
 })
 export default class MinutasResumenComponent implements OnInit, OnDestroy {
   customToastService = inject(CustomToastService);
-  dataService = inject(DataService);
+  dataService = inject(DataConnectorService);
   apiRequestService = inject(ApiRequestService);
   dateService = inject(DateService);
   dialogService = inject(DialogService);

@@ -2,7 +2,7 @@
   <div class="text-center mb-5">
     <!-- Encabezado con el logo del cliente y nombre -->
     <img
-      [src]="urlLogoCustomer + data.logoCustomer"
+      [src]="data.logoCustomer"
       alt="Logo del cliente"
       class="img-fluid mb-3"
       style="max-width: 150px; height: auto"
@@ -20,7 +20,7 @@
         <div class="row">
           <div class="col-md-6 col-12 mb-3 mb-md-0">
             <img
-              [src]="urlImage + ticket.beforeWork"
+              [src]="ticket.beforeWork"
               alt="Imagen antes"
               class="img-fluid rounded shadow"
               style="width: 100%; height: auto; max-height: 300px"
@@ -28,7 +28,7 @@
           </div>
           <div class="col-md-6 col-12">
             <img
-              [src]="urlImage + ticket.afterWork"
+              [src]="ticket.afterWork"
               alt="Imagen después"
               class="img-fluid rounded shadow"
               style="width: 100%; height: auto; max-height: 300px"

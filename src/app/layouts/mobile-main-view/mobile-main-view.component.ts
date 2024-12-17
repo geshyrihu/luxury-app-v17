@@ -100,10 +100,6 @@ export default class MobileMainViewComponent implements OnInit {
     this.notificationSubscription = this.signalRService
       .getNotificationObservable()
       .subscribe((notificationData) => {
-        console.log(
-          'Notificación recibida en el componente hijo:',
-          notificationData
-        );
         this.onLoadNotification();
       });
 
@@ -111,7 +107,6 @@ export default class MobileMainViewComponent implements OnInit {
     this.notificationUpdateSubscription = this.signalRService
       .getNotificationUpdateObservable()
       .subscribe(() => {
-        console.log('Notificación marcada como leída, recargando...');
         this.onLoadNotification();
       });
   }
@@ -119,7 +114,6 @@ export default class MobileMainViewComponent implements OnInit {
   onLoadNotification() {
     this.messageInNotRead = 0;
     this.notifications = [];
-    console.log('que sucede primero, onLoadNotification');
     const urlApi = `NotificationUser/GetAllUnread/${this.authS.applicationUserId}`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.notifications = result;

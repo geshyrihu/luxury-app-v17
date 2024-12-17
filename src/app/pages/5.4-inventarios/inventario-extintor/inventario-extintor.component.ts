@@ -6,7 +6,6 @@ import { IInventarioExtintor } from 'src/app/core/interfaces/inventario-extintor
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
-import { environment } from 'src/environments/environment';
 import AddoreditInventarioExtintorComponent from './addoredit-inventario-extintor.component';
 
 @Component({
@@ -22,7 +21,6 @@ export default class InventarioExtintorComponent implements OnInit {
 
   data: IInventarioExtintor[] = [];
   customerId$: Observable<number> = this.customerIdService.getCustomerId$();
-  url = `${environment.base_urlImg}customers/`;
 
   ngOnInit(): void {
     this.onLoadData();

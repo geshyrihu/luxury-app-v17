@@ -12,8 +12,9 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataService } from 'src/app/core/services/data.service';
+import { DataConnectorService } from 'src/app/core/services/data.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
+
 @Component({
   selector: 'app-addoredit-plantilla',
   templateUrl: './addoredit-plantilla.component.html',
@@ -27,7 +28,7 @@ export default class AddoreditPlantillaComponent implements OnInit, OnDestroy {
   authS = inject(AuthService);
   config = inject(DynamicDialogConfig);
   customerIdService = inject(CustomerIdService);
-  dataService = inject(DataService);
+  dataService = inject(DataConnectorService);
   ref = inject(DynamicDialogRef);
 
   submitting: boolean = false;

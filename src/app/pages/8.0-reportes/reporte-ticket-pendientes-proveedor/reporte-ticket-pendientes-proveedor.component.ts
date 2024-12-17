@@ -5,7 +5,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
-import { DataService } from 'src/app/core/services/data.service';
+import { DataConnectorService } from 'src/app/core/services/data.service';
 import { ReportService } from 'src/app/core/services/report.service';
 import { environment } from 'src/environments/environment';
 
@@ -19,7 +19,7 @@ export default class ReporteTicketPendientesProveedorComponent
   implements OnInit
 {
   authS = inject(AuthService);
-  dataService = inject(DataService);
+  dataService = inject(DataConnectorService);
   apiRequestService = inject(ApiRequestService);
   public reportService = inject(ReportService);
   router = inject(Router);

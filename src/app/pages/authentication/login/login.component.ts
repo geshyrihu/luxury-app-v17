@@ -7,10 +7,11 @@ import { catchError, throwError } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
-import { DataService } from 'src/app/core/services/data.service';
+import { DataConnectorService } from 'src/app/core/services/data.service';
 import { SecurityService } from 'src/app/core/services/security.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import Swal from 'sweetalert2';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -21,7 +22,7 @@ export default class LoginComponent implements OnInit {
   activateRoute = inject(ActivatedRoute);
   apiRequestService = inject(ApiRequestService);
   customToastService = inject(CustomToastService);
-  dataService = inject(DataService);
+  dataService = inject(DataConnectorService);
   formBuilder = inject(FormBuilder);
   router = inject(Router);
   securityService = inject(SecurityService);
@@ -76,6 +77,7 @@ export default class LoginComponent implements OnInit {
       )
       .subscribe((resp: any) => {
         if (resp.body.token != null) {
+          console.log('🚀 ~ Login:', resp.body);
           this.onRemember(this.form.get('remember').value);
           // var route = localStorage.getItem('currentUrl');
           // this.router.navigateByUrl(localStorage.getItem('currentUrl'));

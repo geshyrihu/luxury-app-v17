@@ -14,6 +14,7 @@ import { EmployeeAddOrEditService } from '../employee-add-or-edit/employee-add-o
 import { EmployeeProviderAddOrEditComponent } from '../employee-provider-add-or-edit/employee-provider-add-or-edit.component';
 
 const base_urlImg = environment.base_urlImg + 'Administration/accounts/';
+
 @Component({
   selector: 'app-list-employee-customer',
   templateUrl: './list-employee-customer.component.html',
@@ -93,9 +94,7 @@ export default class ListEmployeeComponent implements OnInit {
   onCardEmployee(applicationUserId: string) {
     this.dialogHandlerService.openDialog(
       CardEmployeeComponent,
-      {
-        applicationUserId,
-      },
+      { applicationUserId },
       'Colaborador',
       this.dialogHandlerService.dialogSizeSm
     );

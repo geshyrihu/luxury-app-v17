@@ -5,6 +5,7 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { RatingModule } from 'primeng/rating';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
+
 @Component({
   selector: 'app-calificacion-proveedor',
   templateUrl: './calificacion-proveedor.component.html',

@@ -17,6 +17,7 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { SignalRService } from 'src/app/core/services/signal-r.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import { TicketGroupService } from '../../ticket.service';
+
 @Component({
   selector: 'app-my-ticket-message-addedit',
   templateUrl: './my-ticket-message-addedit.component.html',
@@ -38,9 +39,6 @@ export default class MyTicketMessageAddEditComponent implements OnInit {
 
   cb_priority = onGetSelectItemFromEnum(EPriorityLevel);
   cb_ticket_group: ISelectItem[] = [];
-  urlImage = this.ticketGroupService.onGetPathUrlImage(
-    this.customerIdService.customerId.toString()
-  );
 
   form: FormGroup = this.formBuilder.group({
     id: new FormControl(
@@ -99,13 +97,11 @@ export default class MyTicketMessageAddEditComponent implements OnInit {
       // Si las imágenes existen, carga las vistas previas
       // Si las imágenes existen, establece las vistas previas con la URL completa
       if (result.beforeWorkPreview) {
-        const beforeWorkUrl = `${this.urlImage}/${result.beforeWorkPreview}`;
-        this.form.get('beforeWorkPreview')?.setValue(beforeWorkUrl);
+        this.form.get('beforeWorkPreview')?.setValue(result.beforeWorkPreview);
       }
 
       if (result.afterWorkPreview) {
-        const afterWorkUrl = `${this.urlImage}/${result.afterWorkPreview}`;
-        this.form.get('afterWorkPreview')?.setValue(afterWorkUrl);
+        this.form.get('afterWorkPreview')?.setValue(result.afterWorkPreview);
       }
 
       this.form.patchValue({

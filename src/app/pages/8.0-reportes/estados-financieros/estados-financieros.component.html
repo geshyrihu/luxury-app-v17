@@ -1,0 +1,50 @@
+<div class="card" *ngIf="data">
+  <!-- Encabezado del reporte -->
+
+  <!-- Tabla de solicitudes pendientes -->
+  <p-table *ngIf="data" [value]="data" styleClass="custom-table-report">
+    <ng-template pTemplate="header">
+      <tr>
+        <th scope="col" colspan="6" class="text-center">
+          <div class="row align-items-center">
+            <!-- Información del Cliente -->
+            <div class="col-md-4 text-start">
+              <img
+                *ngIf="customerData.customerImage"
+                [src]="customerData.customerImage"
+                alt="Logo del cliente"
+                class="img-fluid border mb-2"
+                style="max-width: 80px"
+              />
+              <h5>{{ customerData.nombreCorto }}</h5>
+              <!-- <p class="text-muted">{{ customerData.nameCustomer }}</p> -->
+            </div>
+
+            <!-- Título del Reporte -->
+            <div class="col-md-4 text-center">
+              Informe envio de estados financieros
+            </div>
+          </div>
+        </th>
+      </tr>
+      <tr>
+        <th scope="col" class="text-center" style="width: 10%">N°</th>
+        <th scope="col" class="text-center" style="width: 10%">PERIODO</th>
+        <th scope="col" class="text-center" style="width: 40%">CONTADOR</th>
+        <th scope="col" class="text-center" style="width: 40%">
+          FECHA DE ENVIO
+        </th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-ticket let-rowIndex="rowIndex">
+      <tr>
+        <td class="text-center">{{ rowIndex + 1 }}</td>
+        <td class="text-center">{{ ticket.period }}</td>
+        <td class="text-center">{{ ticket.fullName }}</td>
+        <td class="text-center">{{ ticket.sendDate }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+

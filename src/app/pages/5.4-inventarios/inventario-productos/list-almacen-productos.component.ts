@@ -6,14 +6,11 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
-import { environment } from 'src/environments/environment';
 import CrudSalidasComponent from '../../8.0-reportes/mantenimiento/mantenimiento-almacen/salidas/addoredit-salidas.component';
 import TarjetaProductoComponent from '../../8.0-reportes/mantenimiento/mantenimiento-catalogos/tarjeta-producto/tarjeta-producto.component';
 import AddOrEditEntradasComponent from '../almacenes/entrada-producto/addoredit-entradas.component';
 import AddProductosAlmacenComponent from './add-productos-almacen.component';
 import EditProductosAlmacenComponent from './edit-productos-almacen.component';
-
-const urlImgBase = environment.base_urlImg;
 
 @Component({
   selector: 'app-list-almacen-productos',
@@ -30,7 +27,6 @@ export default class ListAlmacenProductosComponent implements OnInit {
   data: any[] = [];
   ref: DynamicDialogRef;
 
-  urlImgBase = urlImgBase + 'Administration/products/';
   customerId$: Observable<number> = this.customerIdService.getCustomerId$();
   rowGroupMetadata: any = this.customerIdService.getCustomerId$();
 

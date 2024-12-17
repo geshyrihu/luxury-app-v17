@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import { EmployeeAddOrEditService } from '../employee-add-or-edit.service';
+import { RolesAdmin, RolesSuperUser } from './roles';
 
 @Component({
   selector: 'employee-generate-user-name-app',
@@ -57,155 +58,8 @@ export default class EmployeeGenerateUserNameAppComponent implements OnInit {
     });
   }
   roles: IRoles[] = [];
-  rolesSuperUser: IRoles[] = [
-    {
-      roleId: '6b8aa482-2d46-452c-9ad0-b9c2b561ebdd',
-      roleName: 'Administrador',
-      isSelected: false,
-    },
-    {
-      roleId: '3cd4991d-f21d-4340-868a-bc3a0362f5c3',
-      roleName: 'Asistente',
-      isSelected: false,
-    },
-    {
-      roleId: '1f526847-38d6-422b-a152-f601d465b583',
-      roleName: 'Auxiliar de Mantenimiento',
-      isSelected: false,
-    },
-    {
-      roleId: '369b69f4-219c-4476-902f-68bb6472824c',
-      roleName: 'Cobranza',
-      isSelected: false,
-    },
-    {
-      roleId: '844ee9d7-5837-42db-8561-f8e5e12eaa52',
-      roleName: 'Condomino',
-      isSelected: false,
-    },
-    {
-      roleId: 'd5a031e4-a8ff-48ba-b20f-9d50251d4355',
-      roleName: 'Contador',
-      isSelected: false,
-    },
-    {
-      roleId: '39cb8153-56d2-4ea9-9162-c80d5d0ee1af',
-      roleName: 'Jardineria',
-      isSelected: false,
-    },
-    {
-      roleId: 'b7620a4a-1759-4260-b148-5be445410624',
-      roleName: 'Jefe de limpieza',
-      isSelected: false,
-    },
-    {
-      roleId: '8d705bbd-6502-414d-b9ed-89acf994ef54',
-      roleName: 'Jefe de Mantenimiento',
-      isSelected: false,
-    },
-    {
-      roleId: '3364c03a-86a5-4cf3-abc4-b770871ef920',
-      roleName: 'Jefe de Seguridad',
-      isSelected: false,
-    },
-    {
-      roleId: 'b2545f85-5c53-4dac-b5a5-ccd8be679a28',
-      roleName: 'Legal',
-      isSelected: false,
-    },
-    {
-      roleId: '6eb2f1d0-3a83-4fbb-8864-69d508fa6a9f',
-      roleName: 'Limpieza',
-      isSelected: false,
-    },
-    {
-      roleId: '493a5544-17b3-450c-acc4-9d9155eb1278',
-      roleName: 'Reclutamiento',
-      isSelected: false,
-    },
-    {
-      roleId: '00e6b795-d530-4113-83b6-3845c22f3f2e',
-      roleName: 'Seguridad',
-      isSelected: false,
-    },
-    {
-      roleId: 'c0c7efa5-73a9-434c-a46b-ce925ad1520e',
-      roleName: 'Sistemas',
-      isSelected: false,
-    },
-    {
-      roleId: '699d7cc1-d143-4985-b55a-d030864c693e',
-      roleName: 'SuperUsuario',
-      isSelected: false,
-    },
-
-    {
-      roleId: 'c6a6dfaa-39a2-469a-8199-704de476b67d',
-      roleName: 'Supervisor Operativo',
-      isSelected: false,
-    },
-  ];
-
-  rolesAdmin: IRoles[] = [
-    {
-      roleId: '6b8aa482-2d46-452c-9ad0-b9c2b561ebdd',
-      roleName: 'Administrador',
-      isSelected: false,
-    },
-    {
-      roleId: '3cd4991d-f21d-4340-868a-bc3a0362f5c3',
-      roleName: 'Asistente',
-      isSelected: false,
-    },
-    {
-      roleId: '1f526847-38d6-422b-a152-f601d465b583',
-      roleName: 'Auxiliar de Mantenimiento',
-      isSelected: false,
-    },
-    // {
-    //   roleId: '844ee9d7-5837-42db-8561-f8e5e12eaa52',
-    //   roleName: 'Condomino',
-    //   isSelected: false,
-    // },
-
-    {
-      roleId: '39cb8153-56d2-4ea9-9162-c80d5d0ee1af',
-      roleName: 'Jardineria',
-      isSelected: false,
-    },
-    {
-      roleId: 'b7620a4a-1759-4260-b148-5be445410624',
-      roleName: 'Jefe de limpieza',
-      isSelected: false,
-    },
-    {
-      roleId: '8d705bbd-6502-414d-b9ed-89acf994ef54',
-      roleName: 'Jefe de Mantenimiento',
-      isSelected: false,
-    },
-    {
-      roleId: '3364c03a-86a5-4cf3-abc4-b770871ef920',
-      roleName: 'Jefe de Seguridad',
-      isSelected: false,
-    },
-
-    {
-      roleId: '6eb2f1d0-3a83-4fbb-8864-69d508fa6a9f',
-      roleName: 'Limpieza',
-      isSelected: false,
-    },
-
-    {
-      roleId: '00e6b795-d530-4113-83b6-3845c22f3f2e',
-      roleName: 'Seguridad',
-      isSelected: false,
-    },
-    {
-      roleId: 'c0c7efa5-73a9-434c-a46b-ce925ad1520e',
-      roleName: 'Sistemas',
-      isSelected: false,
-    },
-  ];
+  rolesSuperUser: IRoles[] = RolesSuperUser;
+  rolesAdmin: IRoles[] = RolesAdmin;
   ngOnInit(): void {
     this.onLoadData();
     this.getRoles();

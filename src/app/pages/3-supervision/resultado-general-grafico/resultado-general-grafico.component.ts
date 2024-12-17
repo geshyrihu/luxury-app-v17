@@ -2,6 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { FiltroCalendarService } from 'src/app/core/services/filtro-calendar.service';
 import { ResultadoGeneralService } from 'src/app/core/services/resultado-general.service';
+
 @Component({
   selector: 'app-grafico-resultado-general',
   templateUrl: './resultado-general-grafico.component.html',

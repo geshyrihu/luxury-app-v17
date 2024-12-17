@@ -6,7 +6,6 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DateService } from 'src/app/core/services/date.service';
 import { FiltroCalendarService } from 'src/app/core/services/filtro-calendar.service';
 
-import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-access-log',
   templateUrl: './access-log.component.html',
@@ -20,7 +19,6 @@ export default class AccessLogComponent implements OnInit {
 
   apiRequestService = inject(ApiRequestService);
 
-  urlImgApi = environment.base_urlImg + 'Administration/accounts/';
   data: any[] = [];
 
   customerId$: Observable<number> = this.customerIdService.getCustomerId$();
@@ -46,17 +44,10 @@ export default class AccessLogComponent implements OnInit {
   }
 
   onLoadData(fechaInicial: string, fechaFinal: string): void {
-    this.apiRequestService
-      .onGetList(
-        'HistorialAcceso/Customer/' +
-          this.customerIdService.customerId +
-          '/' +
-          fechaInicial +
-          '/' +
-          fechaFinal
-      )
-      .then((result: any) => {
-        this.data = result;
-      });
+    const urlApi = `AccessHistory/${this.customerIdService.customerId}/${fechaInicial}/${fechaFinal}`;
+
+    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      this.data = result;
+    });
   }
 }

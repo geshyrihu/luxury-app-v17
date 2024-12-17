@@ -1,15 +1,15 @@
-import { Component, inject, OnInit } from '@angular/core';
-import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { Subscription } from 'rxjs';
-import { SimplebarAngularModule } from 'simplebar-angular';
-import { ApiRequestService } from 'src/app/core/services/api-request.service';
-import { AuthService } from 'src/app/core/services/auth.service';
-import { SignalRService } from 'src/app/core/services/signal-r.service';
-import { TicketGroupService } from 'src/app/pages/5.3-tickets/ticket.service';
+import { Component, inject, OnInit } from "@angular/core";
+import LuxuryAppComponentsModule from "app/shared/luxuryapp-components.module";
+import { Subscription } from "rxjs";
+import { SimplebarAngularModule } from "simplebar-angular";
+import { ApiRequestService } from "src/app/core/services/api-request.service";
+import { AuthService } from "src/app/core/services/auth.service";
+import { SignalRService } from "src/app/core/services/signal-r.service";
+import { TicketGroupService } from "src/app/pages/5.3-tickets/ticket.service";
 
 @Component({
-  selector: 'app-notifications',
-  templateUrl: './notifications.component.html',
+  selector: "app-notifications",
+  templateUrl: "./notifications.component.html",
   standalone: true,
   imports: [SimplebarAngularModule, LuxuryAppComponentsModule],
 })
@@ -31,10 +31,6 @@ export default class NotificationsComponent implements OnInit {
     this.notificationSubscription = this.signalRService
       .getNotificationObservable()
       .subscribe((notificationData) => {
-        console.log(
-          'Notificación recibida en el componente hijo:',
-          notificationData
-        );
         this.onLoadNotification();
       });
 
@@ -42,15 +38,16 @@ export default class NotificationsComponent implements OnInit {
     this.notificationUpdateSubscription = this.signalRService
       .getNotificationUpdateObservable()
       .subscribe(() => {
-        console.log('Notificación marcada como leída, recargando...');
         this.onLoadNotification();
       });
   }
 
+  onGetUrl(a: string, b: string) {
+    return `${a}/${b}`;
+  }
   onLoadNotification() {
     this.messageInNotRead = 0;
     this.notifications = [];
-    console.log('que sucede primero, onLoadNotification');
     const urlApi = `NotificationUser/GetAllUnread/${this.authS.applicationUserId}`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.notifications = result;
@@ -64,7 +61,7 @@ export default class NotificationsComponent implements OnInit {
 
   getTruncatedMessage(message: string, maxLength: number): string {
     return message.length > maxLength
-      ? message.substring(0, maxLength) + '...'
+      ? message.substring(0, maxLength) + "..."
       : message;
   }
 

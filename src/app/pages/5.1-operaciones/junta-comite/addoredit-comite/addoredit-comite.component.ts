@@ -1,10 +1,11 @@
-import { Component, Input, OnInit, inject } from '@angular/core';
-import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { DynamicDialogConfig } from 'primeng/dynamicdialog';
-import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { Component, Input, OnInit, inject } from "@angular/core";
+import LuxuryAppComponentsModule from "app/shared/luxuryapp-components.module";
+import { DynamicDialogConfig } from "primeng/dynamicdialog";
+import { ApiRequestService } from "src/app/core/services/api-request.service";
+
 @Component({
-  selector: 'app-addoredit-comite',
-  templateUrl: './addoredit-comite.component.html',
+  selector: "app-addoredit-comite",
+  templateUrl: "./addoredit-comite.component.html",
   standalone: true,
   imports: [LuxuryAppComponentsModule],
 })
@@ -18,7 +19,7 @@ export default class AddOrEditComiteComponent implements OnInit {
   meetingId: number;
   cb_ParticipantComite: any[] = [];
   // cb_Comite: ISelectItem[] = [];
-  comiteparticipante = '';
+  comiteparticipante = "";
   // participantsList: any[] = [];
   listaParticipantesComite: any[] = [];
 
@@ -50,7 +51,7 @@ export default class AddOrEditComiteComponent implements OnInit {
   }
 
   onLoadData() {
-    this.comiteparticipante = '';
+    this.comiteparticipante = "";
     const urlApi = `MeetingComite/ParticipantesComite/${this.meetingId}`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.listaParticipantesComite = result;

@@ -3,6 +3,7 @@ import { FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 
 import { LuxuryAppService } from 'src/app/core/services/luxury-app.service';
+
 @Component({
   selector: 'app-ticket-message-followup',
   templateUrl: './ticket-message-followup.component.html',

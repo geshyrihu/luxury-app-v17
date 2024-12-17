@@ -6,6 +6,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import { environment } from 'src/environments/environment';
 import AddOrEditFormatoComponent from './addoredit-formato.component';
+
 @Component({
   selector: 'app-formato',
   templateUrl: './formato.component.html',

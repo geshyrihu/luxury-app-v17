@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { UpdatePasswordDto } from 'src/app/core/interfaces/user-info.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
+
 @Component({
   selector: 'app-update-password-account',
   templateUrl: './update-password-account.component.html',

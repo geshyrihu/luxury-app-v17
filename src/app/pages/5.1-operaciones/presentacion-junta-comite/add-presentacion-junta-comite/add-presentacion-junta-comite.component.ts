@@ -1,18 +1,18 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { FlatpickrModule } from 'angularx-flatpickr';
+import { Component, OnInit, inject } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { FlatpickrModule } from "angularx-flatpickr";
 import LuxuryAppComponentsModule, {
   flatpickrFactory,
-} from 'app/shared/luxuryapp-components.module';
-import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { ApiRequestService } from 'src/app/core/services/api-request.service';
-import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DateService } from 'src/app/core/services/date.service';
-import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
+} from "app/shared/luxuryapp-components.module";
+import { DynamicDialogConfig, DynamicDialogRef } from "primeng/dynamicdialog";
+import { ApiRequestService } from "src/app/core/services/api-request.service";
+import { CustomerIdService } from "src/app/core/services/customer-id.service";
+import { DateService } from "src/app/core/services/date.service";
+import CustomInputModule from "src/app/custom-components/custom-input-form/custom-input.module";
 
 @Component({
-  selector: 'app-add-presentacion-junta-comite',
-  templateUrl: './add-presentacion-junta-comite.component.html',
+  selector: "app-add-presentacion-junta-comite",
+  templateUrl: "./add-presentacion-junta-comite.component.html",
   standalone: true,
   imports: [LuxuryAppComponentsModule, FlatpickrModule, CustomInputModule],
 })
@@ -26,14 +26,14 @@ export default class AddPresentacionJuntaComiteComponent implements OnInit {
 
   submitting: boolean = false;
   id: number = 0;
-  filePath: string = '';
-  errorMessage: string = '';
+  filePath: string = "";
+  errorMessage: string = "";
 
   form: FormGroup = this.formBuilder.group({
     id: { value: this.id, disabled: true },
     customerId: [this.customerIdService.getCustomerId()],
-    fechaCorrespondiente: ['', Validators.required],
-    fechaJunta: [''],
+    fechaCorrespondiente: ["", Validators.required],
+    fechaJunta: [""],
   });
 
   ngOnInit(): void {

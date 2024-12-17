@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { environment } from 'src/environments/environment';
+
 @Component({
   selector: 'app-herramientas',
   templateUrl: './herramientas.component.html',

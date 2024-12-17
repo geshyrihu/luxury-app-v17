@@ -45,7 +45,7 @@ export const catalogMenu = (authS: AuthService) => [
         name: 'uso de cfdi',
       },
       {
-        visible: authS.canRead('CONTABILIDAD'),
+        visible: authS.onValidateRoles(['SuperUsuario']),
         label: '1.1.7 Catalogo de cuentas',
         routerLink: '/contabilidad/catalogo-cuentas',
         name: 'Cuentas',
@@ -116,6 +116,12 @@ export const catalogMenu = (authS: AuthService) => [
         label: '1.1.14 Calendario maestro mtto',
         routerLink: '/calendario/calendario-maestro-equipo',
         name: 'Capacitación-Guia calendario general de mtto',
+      },
+      {
+        visible: authS.onValidateRoles(['SuperUsuario']),
+        label: '1.1.15 Catalogo de colores',
+        routerLink: '/catalog/catalog-color',
+        name: 'Catalogo de colores',
       },
     ],
   },

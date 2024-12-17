@@ -2,6 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
+
 @Component({
   selector: 'app-provider-use',
   templateUrl: './provider-use.component.html',

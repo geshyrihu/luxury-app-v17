@@ -1,17 +1,17 @@
-import { Component, OnInit, inject } from '@angular/core';
-import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Observable } from 'rxjs';
-import { ApiRequestService } from 'src/app/core/services/api-request.service';
-import { AuthService } from 'src/app/core/services/auth.service';
-import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
-import { ReporteHerramientasPdfService } from 'src/app/core/services/reporte-herramientas-pdf.service';
-import AddoreditToolsComponent from './addoredit-herramienta.component';
+import { Component, OnInit, inject } from "@angular/core";
+import LuxuryAppComponentsModule from "app/shared/luxuryapp-components.module";
+import { DynamicDialogRef } from "primeng/dynamicdialog";
+import { Observable } from "rxjs";
+import { ApiRequestService } from "src/app/core/services/api-request.service";
+import { AuthService } from "src/app/core/services/auth.service";
+import { CustomerIdService } from "src/app/core/services/customer-id.service";
+import { DialogHandlerService } from "src/app/core/services/dialog-handler.service";
+import { ReporteHerramientasPdfService } from "src/app/core/services/reporte-herramientas-pdf.service";
+import AddoreditToolsComponent from "./addoredit-herramienta.component";
 
 @Component({
-  selector: 'app-list-herramientas',
-  templateUrl: './list-herramientas.component.html',
+  selector: "app-list-herramientas",
+  templateUrl: "./list-herramientas.component.html",
   standalone: true,
   imports: [LuxuryAppComponentsModule],
 })
@@ -23,7 +23,7 @@ export default class ListerramientasComponent implements OnInit {
 
   public reporteHerramientasPdfService = inject(ReporteHerramientasPdfService);
 
-  base_urlImg = '';
+  base_urlImg = "";
   data: any[] = [];
 
   ref: DynamicDialogRef;

@@ -8,6 +8,7 @@ import {
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { NgxMaskModule } from 'ngx-mask';
 import ValidationErrorsCustomInputComponent from '../validation-errors-custom-input/validation-errors-custom-input.component';
+
 @Component({
   selector: 'custom-input-mask',
   templateUrl: './custom-input-mask.component.html',

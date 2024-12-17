@@ -3,6 +3,7 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
+
 @Component({
   selector: 'app-summary-ticket-committee-meeting',
   templateUrl: './summary-ticket-committee-meeting.component.html',

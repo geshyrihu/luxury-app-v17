@@ -1,10 +1,10 @@
-import { Component, inject, OnInit } from '@angular/core';
-import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { Component, inject, OnInit } from "@angular/core";
+import LuxuryAppComponentsModule from "app/shared/luxuryapp-components.module";
+import { ApiRequestService } from "src/app/core/services/api-request.service";
 
 @Component({
-  selector: 'app-legal-reports-pending',
-  templateUrl: './legal-reports-pending.component.html',
+  selector: "app-legal-reports-pending",
+  templateUrl: "./legal-reports-pending.component.html",
   standalone: true,
   imports: [LuxuryAppComponentsModule],
 })

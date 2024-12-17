@@ -100,31 +100,24 @@ $table-dark-border-color: tint-color($gray-800, 7.5%);
 // Las variables deben seguir la fórmula `$component-state-property-size` para
 // un nombramiento consistente. Ej: $nav-link-disabled-color y $modal-content-box-shadow-xs.
 
-// Sistema de colores
+// Color system
 
 // scss-docs-start gray-color-variables
-// Fondo de pantalla
-$white: #fff; // Blanco
-$gray-100: #f8f9fa; // Gris claro 100
-$gray-200: #e9e9ef; // Gris claro 200
-$gray-300: #f6f6f6; // Gris claro 300
-$gray-400: #ced4da; // Gris claro 400
-$gray-500: #adb5bd; // Gris medio 500
-$gray-600: #74788d; // Gris medio 600
-$gray-700: #313533; // Gris oscuro 700
-
-// OPCION 1
-
-$gray-800: #2c302e; // Gris oscuro 800
-// $gray-800: #1c1c1c; // Gris oscuro 800
-
-$gray-900: #212529; // Gris oscuro 900
-$black: #000; // Negro
+$gray-100: #f8f9fa;
+$gray-200: #e9e9ef;
+$gray-300: #f6f6f6;
+$gray-400: #ced4da;
+$gray-500: #adb5bd;
+$gray-600: #74788d;
+$gray-700: #313533; //#495057;
+$gray-800: #343a40; // Tu gris oscuro
+// $gray-800: #2c302e;
+$gray-900: #212529;
+$black: #000;
 // scss-docs-end gray-color-variables
 
 // fusv-disable
 // scss-docs-start gray-colors-map
-// Mapa de colores grises
 $grays: (
   "100": $gray-100,
   "200": $gray-200,
@@ -141,57 +134,87 @@ $grays: (
 
 // scss-docs-start color-variables
 
-// Opcion 1
+// Opcion Original
+// $blue: #5156be;
+// $blue: #2c3e50; // Azul oscuro elegante
+$blue: #0d3b66; // Azul oscuro elegante
+$yellow: #ffbf53;
+$white: #fff;
 
-// $blue: #9ab7d3; // Azul
-
-// $blue: #1e3a8a; // Azul
-// $blue: #1a4731; // Verde Bosque Oscuro
-$blue: #0d3b66; // Azul Medianoche
-
-$indigo: #2a2f66; // Índigo (un tono oscuro y profundo que se complementa perfectamente con el azul medianoche, ideal para elementos secundarios)
-$purple: #543885; // Púrpura (un púrpura oscuro y sutil que agrega sofisticación sin romper la armonía)
-$pink: #b02f5d; // Rosa oscuro (un rosa saturado con un tono profundo que destaca bien con el azul medianoche)
-// $red: #c53030; // Rojo oscuro (un tono menos brillante que mantiene la intensidad y es ideal para alertas o mensajes importantes)
-$red: #6f0c0c; // Rojo oscuro (un tono menos brillante que mantiene la intensidad y es ideal para alertas o mensajes importantes)
-$orange: #d4641c; // Naranja quemado (un tono cálido y profundo que crea un contraste elegante con el azul)
-// $yellow: #d4a00b; // Amarillo mostaza (cálido y terroso, excelente para acentos y detalles sin ser llamativo)
-$yellow: #8f6705; // Amarillo mostaza (cálido y terroso, excelente para acentos y detalles sin ser llamativo)
-// $green: #12833e; // Verde bosque (un verde oscuro que complementa el azul medianoche, ideal para variaciones sutiles y acentos naturales)
-$green: #056705; // Verde bosque (un verde oscuro que complementa el azul medianoche, ideal para variaciones sutiles y acentos naturales)
-$teal: #146d66; // Verde azulado oscuro (un tono elegante que mantiene la coherencia de la paleta, perfecto para detalles y elementos interactivos)
-$cyan: #087d99; // Cian profundo (más saturado y oscuro, resalta como acento visual pero se mantiene sofisticado)
-
-// $indigo: #564ab1; // Índigo
-// $purple: #6f42c1; // Púrpura
-// $pink: #e83e8c; // Rosa
-// // $red: #c00000; // Rojo
-// $red: #fd625e; // Rojo
-// $orange: #f1734f; // Naranja
-// $yellow: #ffbf53; // Amarillo
-// $green: #2ab57d; // Verde
-// $teal: #050505; // Verde azulado
-// $cyan: #82ccdd; // Cian
+$indigo: #564ab1;
+$purple: #6f42c1;
+$pink: #e83e8c;
+$red: #fd625e;
+$orange: #f1734f;
+$green: #2ab57d;
+$teal: #050505;
+$cyan: #4ba6ef;
 // scss-docs-end color-variables
 
-// scss-docs-start colors-map
-// Mapa de colores
-$colors: (
-  "blue": $blue,
-  "indigo": $indigo,
-  "purple": $purple,
-  "pink": $pink,
-  "red": $red,
-  "orange": $orange,
-  "yellow": $yellow,
-  "green": $green,
-  "teal": $teal,
-  "cyan": $cyan,
-  "black": $black,
-  "white": $white,
-  "gray": $gray-600,
-  "gray-dark": $gray-800,
-);
+// 1. Paleta Inspirada en el Lujo Clásico
+// $blue: #2c3e50; // Azul oscuro elegante
+// $yellow: #d4af37; // Oro
+// $white: #fff;
+
+// $indigo: #564ab1;
+// $purple: #6f42c1;
+// $pink: #e83e8c;
+// $red: #fd625e;
+// $orange: #f1734f;
+// $green: #2ab57d;
+// $teal: #050505;
+// $cyan: #4ba6ef;
+// // scss-docs-start colors-map
+// $colors: (
+//   "blue": $blue,
+//   "indigo": $indigo,
+//   "purple": $purple,
+//   "pink": $pink,
+//   "red": $red,
+//   "orange": $orange,
+//   "yellow": $yellow,
+//   "green": $green,
+//   "teal": $teal,
+//   "cyan": $cyan,
+//   "black": $black,
+//   "white": $white,
+//   "gray": $gray-600,
+//   "gray-dark": $gray-800,
+// );
+
+// 2. Paleta Inspirada en Minimalismo Sofisticado
+
+// $blue: #007580; // Azul petróleo
+// $green: #a2b38b; // Verde oliva
+// $white: #f8f9fa;
+
+// $indigo: #564ab1;
+// $purple: #6f42c1;
+// $pink: #e83e8c;
+// $yellow: #ffbf53; // Oro
+// $red: #fd625e;
+// $orange: #f1734f;
+// // $green: #2ab57d;
+// $teal: #050505;
+// $cyan: #4ba6ef;
+// // scss-docs-start colors-map
+// $colors: (
+//   "blue": $blue,
+//   "indigo": $indigo,
+//   "purple": $purple,
+//   "pink": $pink,
+//   "red": $red,
+//   "orange": $orange,
+//   "yellow": $yellow,
+//   "green": $green,
+//   "teal": $teal,
+//   "cyan": $cyan,
+//   "black": $black,
+//   "white": $white,
+//   "gray": $gray-600,
+//   "gray-dark": $gray-800,
+// );
+
 // scss-docs-end colors-map
 
 // La relación de contraste para alcanzar contra el blanco, para determinar si el color cambia de "claro" a "oscuro". Los valores aceptables para WCAG 2.0 son 3, 4.5 y 7.

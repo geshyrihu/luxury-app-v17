@@ -20,6 +20,15 @@ export default [
     data: { title: 'Recorrido' },
   },
   {
+    path: 'equipos',
+    loadComponent: () =>
+      import(
+        'src/app/pages/5.3-bitacoras/javi-bitacora/javi-bitacora.component'
+      ),
+    title: 'Equipos Recorrido',
+    data: { title: 'Equipos Reocrrido' },
+  },
+  {
     path: 'piscina',
     loadComponent: () =>
       import(

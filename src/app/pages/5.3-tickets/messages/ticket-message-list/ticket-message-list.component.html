@@ -19,24 +19,22 @@
       'title',
       'description'
     ]"
-    [autoLayout]="true"
-    [tableStyle]="{ 'min-width': '50rem' }"
   >
     <ng-template pTemplate="caption">
       <div class="row">
-        <div class="col-lg-9">
+        <div class="col-lg-10">
           <custom-table-caption
             [title]="data.nameGroup"
             (add)="
               onModalAddOrEdit({
                 id: '',
-                title: 'Nuevo Registro'
+                title: 'Nuevo Registro----'
               })
             "
             [dt]="dt"
           />
         </div>
-        <div class="col-lg-3">
+        <div class="col-lg-2">
           <app-ticket-message-status (statusChange)="onLoadData($event)" />
         </div>
       </div>
@@ -152,6 +150,15 @@
           scope="col"
           style="width: 8%"
           class="font-size-12"
+          pSortableColumn="status"
+        >
+          STATUS
+          <p-sortIcon field="status"></p-sortIcon>
+        </th>
+        <th
+          scope="col"
+          style="width: 8%"
+          class="font-size-12"
           pSortableColumn="responsableNombre"
         >
           ASIGNADO A
@@ -204,11 +211,11 @@
         <td>
           {{ item.folio }}
         </td>
-        <td>
+        <td class="text-center">
           <!-- Imagen -->
           <img
             (click)="onCardEmployee(item.creatorId)"
-            [src]="urlAccount + item.creatorImg"
+            [src]="item.creatorImg"
             class="rounded avatar-md"
             style="cursor: pointer"
           />
@@ -227,7 +234,7 @@
           <div class="d-flex justify-content-center align-items-center">
             <p-image
               *ngIf="item.beforeWork"
-              [src]="this.urlImage + item.beforeWork"
+              [src]="item.beforeWork"
               alt="."
               width="40"
               class="me-2 border border-danger"
@@ -238,14 +245,36 @@
         <td class="text-center">
           <i
             (click)="onUpdatePriority(item.id)"
-            *ngIf="item.priority === 'Alta'"
+            *ngIf="item.priority === 'Low'"
             class="fa-sharp fa-solid fa-star fa-xl pointer text-primary"
           ></i>
           <i
             (click)="onUpdatePriority(item.id)"
-            *ngIf="item.priority === 'Baja'"
+            *ngIf="item.priority === 'High'"
             class="fa-sharp fa-thin fa-star fa-xl pointer text-primary"
           ></i>
+        </td>
+        <td class="text-center">
+          <span
+            *ngIf="item.status === 'Closed'"
+            class="badge bg-success-subtle text-success p-2 w-75"
+            >CERRADO</span
+          >
+          <span
+            *ngIf="item.status === 'InProgress'"
+            class="badge bg-warning-subtle text-warning p-2 w-75"
+            >PROCESO</span
+          >
+          <span
+            *ngIf="item.status === 'Open'"
+            class="badge bg-danger-subtle text-danger p-2 w-75"
+            >ABIERTO</span
+          >
+          <span
+            *ngIf="item.status === 'Reopened'"
+            class="badge bg-danger-subtle text-danger p-2 w-75"
+            >RE ABIERTO</span
+          >
         </td>
 
         <!-- <td class="text-center"></td> -->
@@ -254,7 +283,7 @@
           @if (item.assigneeId) {
           <img
             (click)="onCardEmployee(item.assigneeId)"
-            [src]="urlAccount + item.assigneeImg"
+            [src]="item.assigneeImg"
             alt="."
             width="32"
             style="cursor: pointer"
@@ -272,7 +301,7 @@
           <div class="d-flex justify-content-center align-items-center">
             <p-image
               *ngIf="item.afterWork"
-              [src]="this.urlImage + item.afterWork"
+              [src]="item.afterWork"
               alt="."
               width="40"
               class="me-2 border border-danger"
@@ -308,7 +337,7 @@
           <div class="d-flex justify-content-center">
             <button
               type="button"
-              class="btn btn-soft-primary position-relative w-100 me-3 text-start"
+              class="btn btn-soft-primary position-relative w-100 me-1 text-start"
               ngbTooltip="Seguimiento"
               placement="top"
               (click)="onFollowUp(item.id)"
@@ -324,7 +353,7 @@
               <button
                 id="options"
                 ngbDropdownToggle
-                class="btn btn-soft-primary bg-gradient"
+                class="btn btn-soft-primary bg-gradient me-1"
                 ngbTooltip="Opciones"
               >
                 <i class="fa-light fa-ellipsis-vertical"></i>
@@ -377,6 +406,17 @@
                 <br />
               </div>
             </div>
+            <a
+              class="btn btn-soft-primary waves-effect waves-light bg-gradient me-1"
+              [routerLink]="[
+                '/tickets/message/',
+                item.id,
+                applicationUser,
+                item.ticketGroupId
+              ]"
+            >
+              <i class="fa-solid icon-edit"></i>
+            </a>
             <btn-delete
               *ngIf="isSuperUser"
               class="ms-1"

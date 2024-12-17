@@ -5,6 +5,7 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CatalogoGastosFijosService } from 'src/app/core/services/catalogo-gastos-fijos.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
+
 @Component({
   selector: 'app-form-gastos-fijos-presupuesto',
   templateUrl: './form-gastos-fijos-presupuesto.component.html',

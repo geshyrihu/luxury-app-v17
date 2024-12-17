@@ -57,8 +57,6 @@ export default class LegalMatterCategoryComponent {
     });
   }
   onSubmit() {
-    console.log('🚀 ~ this.form.value:', this.form.value);
-
     if (!this.appService.apiRequestService.validateForm(this.form)) return;
     this.submitting = true;
 

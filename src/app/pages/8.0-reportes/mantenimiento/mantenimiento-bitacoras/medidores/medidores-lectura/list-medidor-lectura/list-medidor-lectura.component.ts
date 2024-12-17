@@ -8,6 +8,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import AdminFormMedidorLecturaComponent from '../admin-form-medidor-lectura/admin-form-medidor-lectura.component';
 import FormMedidorLecturaComponent from '../form-medidor-lectura/form-medidor-lectura.component';
+
 @Component({
   selector: 'app-list-medidor-lectura',
   templateUrl: './list-medidor-lectura.component.html',

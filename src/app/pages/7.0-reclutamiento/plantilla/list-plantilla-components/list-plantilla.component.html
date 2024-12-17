@@ -66,7 +66,8 @@
     </ng-template>
     <ng-template pTemplate="body" let-item>
       <!-- Si no hay empleado, entonces la vacangte no esta cubierta y se pone en rojo -->
-      @if (onValidateCustomerId(item.professionId)) {
+      @if (onValidateCustomerId(item.professionId)
+      ||authS.onValidateRoles(['Reclutamiento'])) {
       <tr>
         <td>
           {{ item.folio }}
@@ -133,9 +134,10 @@
             </button>
             <div ngbDropdownMenu aria-labelledby="options">
               <!-- Solicitar vacante para puesto de trabajo -->
-              @if (( item.positionRequest.status !== 0
-              &&item.positionRequest.status !== 3 ) &&
-              onValidateRole(item.professionId) && item.state == 0 ) {
+              @if (authS.onValidateRoles(['Reclutamiento'])||(
+              item.positionRequest.status !== 0 &&item.positionRequest.status
+              !== 3 ) && onValidateRole(item.professionId) && item.state == 0 )
+              {
               <custom-button
                 (clicked)="onModalSolicitudVacante(item.id)"
                 customClass="btn-outline-secondary  w-100 mt-1 text-start"
@@ -143,6 +145,12 @@
                 label="Solicitar vacante"
               />
               }
+              <custom-button
+                (clicked)="onModalSolicitudVacante(item.id)"
+                customClass="btn-outline-secondary  w-100 mt-1 text-start"
+                icon="fa-light fa-user-magnifying-glass me-2"
+                label="Solicitar vacante"
+              />
               <br />
 
               <!-- Asignar empleado -->

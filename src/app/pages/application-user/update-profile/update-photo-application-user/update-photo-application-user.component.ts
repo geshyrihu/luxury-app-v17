@@ -7,7 +7,7 @@ import { InfoAccountAuthDto } from 'src/app/core/interfaces/user-token.interface
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { ProfielServiceService } from 'src/app/core/services/profiel-service.service';
-import { environment } from 'src/environments/environment';
+
 @Component({
   selector: 'app-update-photo-application-user',
   templateUrl: './update-photo-application-user.component.html',
@@ -19,7 +19,6 @@ export default class UpdatePhotoApplicationUserComponent implements OnInit {
   authS = inject(AuthService);
   public profielServiceService = inject(ProfielServiceService);
 
-  base_urlImg = environment.base_urlImg + 'Administration/accounts/';
   applicationUserId: string = this.authS.applicationUserId;
   infoEmployeeDto: InfoAccountAuthDto;
 
@@ -60,7 +59,7 @@ export default class UpdatePhotoApplicationUserComponent implements OnInit {
       )
       .then((result: any) => {
         if (result) {
-          this.infoEmployeeDto.photoPath = `${this.base_urlImg}${result.photoPath}`;
+          this.infoEmployeeDto.photoPath = result.photoPath;
           this.profielServiceService.actualizarImagenPerfil(
             this.infoEmployeeDto.photoPath
           );

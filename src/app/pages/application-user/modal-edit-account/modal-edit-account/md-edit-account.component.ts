@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import AccessCustomerComponent from '../customer-account/access-customer.component';
 import UpdatePasswordAccountComponent from '../update-password/update-password-account.component';
 import UpdateRoleComponent from '../update-role.component';
+
 @Component({
   selector: 'app-md-edit-account',
   templateUrl: './md-edit-account.component.html',

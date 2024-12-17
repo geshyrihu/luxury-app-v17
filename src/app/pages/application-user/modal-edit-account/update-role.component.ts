@@ -2,6 +2,7 @@ import { Component, Input, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { IRoles } from 'src/app/core/interfaces/roles.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
+
 @Component({
   selector: 'app-update-role',
   templateUrl: './update-role.component.html',

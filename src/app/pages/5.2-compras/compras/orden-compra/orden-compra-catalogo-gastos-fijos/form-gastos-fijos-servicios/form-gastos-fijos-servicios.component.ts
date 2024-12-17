@@ -3,7 +3,6 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CatalogoGastosFijosService } from 'src/app/core/services/catalogo-gastos-fijos.service';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-form-gastos-fijos-servicios',
@@ -18,7 +17,6 @@ export default class FormGastosFijosServiciosComponent implements OnInit {
 
   catalogoGastosFijosId: number = 0;
   productos: any[] = [];
-  urlImagenProducto = environment.base_urlImg + 'Administration/products/';
   mensajeError = false;
   catalogoGastosFijosDetalles: any;
   id: any;

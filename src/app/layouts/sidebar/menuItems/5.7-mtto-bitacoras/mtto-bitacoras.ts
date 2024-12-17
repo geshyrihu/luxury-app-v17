@@ -9,6 +9,12 @@ export const mttoBitacorasMenu = (authS: AuthService) => [
     items: [
       {
         visible: authS.canRead('5.7 MTTOBITACORAS'),
+        label: '5.7.1 Recorrido equipos',
+        routerLink: '/logbook/equipos',
+        name: 'Equipos recorrido diario',
+      },
+      {
+        visible: authS.canRead('5.7 MTTOBITACORAS'),
         label: '5.7.2 Recorrido diario',
         routerLink: '/logbook/recorrido',
         name: 'Bitacoras-mantenimiento recorrido diario',

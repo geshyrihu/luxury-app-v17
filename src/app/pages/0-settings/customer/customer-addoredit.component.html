@@ -13,7 +13,7 @@
         <div class="col-sm-9">
           <app-input-img
             (fileSelected)="uploadFile($event)"
-            [urlImgCurrent]="urlBaseImg + model?.photoPath"
+            [urlImgCurrent]="model?.photoPath"
             [contentHeight]="'50px'"
             [contentWidth]="'50px'"
           />

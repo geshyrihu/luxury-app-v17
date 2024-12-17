@@ -10,6 +10,7 @@ import MobileMainViewComponent from '../mobile-main-view/mobile-main-view.compon
 import SidebarComponent from '../sidebar/sidebar.component';
 import CustomerSelectionComponent from '../topbar/customer-selection/customer-selection.component';
 import { TopbarComponent } from '../topbar/topbar.component';
+
 @Component({
   selector: 'app-vertical',
   templateUrl: './vertical.component.html',

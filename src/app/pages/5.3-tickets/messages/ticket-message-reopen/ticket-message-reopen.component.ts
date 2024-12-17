@@ -1,20 +1,20 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from "@angular/core";
 import {
   FormBuilder,
   FormControl,
   FormGroup,
   Validators,
-} from '@angular/forms';
-import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { ApiRequestService } from 'src/app/core/services/api-request.service';
-import { AuthService } from 'src/app/core/services/auth.service';
-import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
+} from "@angular/forms";
+import LuxuryAppComponentsModule from "app/shared/luxuryapp-components.module";
+import { DynamicDialogConfig, DynamicDialogRef } from "primeng/dynamicdialog";
+import { ApiRequestService } from "src/app/core/services/api-request.service";
+import { AuthService } from "src/app/core/services/auth.service";
+import { CustomerIdService } from "src/app/core/services/customer-id.service";
+import CustomInputModule from "src/app/custom-components/custom-input-form/custom-input.module";
 
 @Component({
-  selector: 'app-ticket-message-reopen',
-  templateUrl: './ticket-message-reopen.component.html',
+  selector: "app-ticket-message-reopen",
+  templateUrl: "./ticket-message-reopen.component.html",
   standalone: true,
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
@@ -34,7 +34,7 @@ export default class TicketMessageReopenComponent implements OnInit {
       Validators.required
     ),
     ticketMessageId: new FormControl(this.config.data.id, Validators.required),
-    description: new FormControl('', [
+    description: new FormControl("", [
       Validators.required,
       Validators.maxLength(150),
     ]),

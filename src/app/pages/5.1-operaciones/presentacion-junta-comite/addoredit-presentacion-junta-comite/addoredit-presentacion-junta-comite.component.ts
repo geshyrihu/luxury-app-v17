@@ -6,7 +6,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
-import { DataService } from 'src/app/core/services/data.service';
+import { DataConnectorService } from 'src/app/core/services/data.service';
 
 @Component({
   selector: 'app-addoredit-presentacion-junta-comite',
@@ -22,7 +22,7 @@ export default class AddoreditPresentacionJuntaComiteComponent
   apiRequestService = inject(ApiRequestService);
   authS = inject(AuthService);
   config = inject(DynamicDialogConfig);
-  dataService = inject(DataService);
+  dataService = inject(DataConnectorService);
   ref = inject(DynamicDialogRef);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente

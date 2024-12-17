@@ -10,16 +10,16 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import { ReportService } from 'src/app/core/services/report.service';
-import NewLinePipe from '../../../core/pipes/new-line.pipe';
 import AddOrEditMeetingDetailComponent from './addoredit-meeting-detail.component';
 import AddOrEditMeetingComponent from './addoredit-meeting.component';
 import AddoreditMinutaDetalleComponent from './addoredit-minuta-detalle/addoredit-minuta-detalle.component';
 import AddorEditMeetingSeguimientoComponent from './addoredit-seguimiento/addor-edit-meeting-seguimiento.component';
+
 @Component({
   selector: 'app-list-minutas',
   templateUrl: './list-minutas.component.html',
   standalone: true,
-  imports: [LuxuryAppComponentsModule, NewLinePipe],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class ListMinutasComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);

@@ -24,6 +24,7 @@ export type ChartOptions = {
   fill: ApexFill;
   title: ApexTitleSubtitle;
 };
+
 @Component({
   selector: 'app-barras-chart',
   templateUrl: './barras-chart.component.html',

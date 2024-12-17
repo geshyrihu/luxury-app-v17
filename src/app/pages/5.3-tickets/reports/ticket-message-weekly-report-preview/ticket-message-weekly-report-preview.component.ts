@@ -3,7 +3,6 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { TicketGroupService } from 'src/app/pages/5.3-tickets/ticket.service';
-import { environment } from 'src/environments/environment';
 import { DateRangeStorageService } from '../../services/date-range-storage.service';
 
 @Component({
@@ -25,11 +24,6 @@ export default class TicketMessageWeeklyReportPreviewComponent
   // Modificamos la declaración de dateRange para que use un objeto con from y to
   year: any = this.ticketGroupService.year || 0;
   numeroSemana: any = this.ticketGroupService.numeroSemana || 0;
-
-  urlImage = this.ticketGroupService.onGetPathUrlImage(
-    this.customerIdService.customerId.toString()
-  );
-  urlLogoCustomer = `${environment.base_urlImg}/Administration/customer/`;
 
   ngOnInit(): void {
     this.onLoadData();

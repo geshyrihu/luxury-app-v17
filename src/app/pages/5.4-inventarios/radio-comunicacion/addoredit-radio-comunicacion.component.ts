@@ -11,10 +11,9 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataService } from 'src/app/core/services/data.service';
+import { DataConnectorService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-addoredit-radio-comunicacion',
@@ -34,7 +33,7 @@ export default class AddOrEditRadioComunicacionComponent implements OnInit {
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
   authS = inject(AuthService);
-  dataService = inject(DataService);
+  dataService = inject(DataConnectorService);
   apiRequestService = inject(ApiRequestService);
   customerIdService = inject(CustomerIdService);
   customToastService = inject(CustomToastService);
@@ -69,8 +68,6 @@ export default class AddOrEditRadioComunicacionComponent implements OnInit {
     this.apiRequestService
       .onGetItem<IRadioComunicacionAddOrEdit>(urlApi)
       .then((result: IRadioComunicacionAddOrEdit) => {
-        this.urlBaseImg = `${environment.base_urlImg}customers/${result.customerId}/radios/${result.fotografia}`;
-
         this.form.patchValue(result);
       });
   }

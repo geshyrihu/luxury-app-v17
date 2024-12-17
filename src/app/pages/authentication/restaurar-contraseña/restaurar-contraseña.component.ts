@@ -12,7 +12,7 @@ import { MessageService } from 'primeng/api';
 import { Subscription } from 'rxjs';
 import { IResetPassword } from 'src/app/core/interfaces/reset-password.interface';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
-import { DataService } from 'src/app/core/services/data.service';
+import { DataConnectorService } from 'src/app/core/services/data.service';
 import CBtnModule from 'src/app/custom-components/custom-buttons/btn.module';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
@@ -28,7 +28,7 @@ export default class RestaurarContraseñaComponent implements OnInit, OnDestroy 
   private formBuilder = inject(FormBuilder);
   private router = inject(Router);
   public customToastService = inject(CustomToastService);
-  private dataService = inject(DataService);
+  private dataService = inject(DataConnectorService);
 
   subRef$: Subscription;
   form: FormGroup;

@@ -9,6 +9,7 @@ import { environment } from 'src/environments/environment';
 import AddoreditProveedorComponent from '../addoredit-proveedor/addoredit-proveedor.component';
 import TarjetaProveedorComponent from '../tarjeta-proveedor/tarjeta-proveedor.component';
 import ProviderUseComponent from '../uso-proveedores/provider-use.component';
+
 @Component({
   selector: 'app-list-provider',
   templateUrl: './list-provider.component.html',

@@ -7,7 +7,6 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
-import { environment } from 'src/environments/environment';
 import AddOrEditPiscinaComponent from '../addoredit-piscina/addoredit-piscina.component';
 
 @Component({
@@ -27,9 +26,7 @@ export default class ListPiscinaComponent implements OnInit {
   ref: DynamicDialogRef;
 
   customerId$: Observable<number> = this.customerIdService.getCustomerId$();
-  urlBaseImg = `${
-    environment.base_urlImg
-  }customers/${this.customerIdService.getCustomerId()}/piscina/`;
+
   ngOnInit(): void {
     this.onLoadData();
     this.customerId$.subscribe(() => {

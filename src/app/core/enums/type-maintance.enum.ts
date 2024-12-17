@@ -3,4 +3,5 @@
   Correctivo,
   Predictivo,
   Pintura,
+  Carpinteria,
 }

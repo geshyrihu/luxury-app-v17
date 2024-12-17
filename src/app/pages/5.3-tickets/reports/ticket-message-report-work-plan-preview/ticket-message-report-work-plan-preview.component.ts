@@ -3,7 +3,6 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { environment } from 'src/environments/environment';
 import { TicketGroupService } from '../../ticket.service';
 
 @Component({
@@ -23,11 +22,6 @@ export default class TicketMessageReportWorkPlanPreviewComponent {
   year: number = 0; // Almacena el año seleccionado
   numeroSemana: number = 0; // Almacena el número de semana seleccionado
   weekInputValue: string = '';
-
-  urlAccount = environment.url_account;
-  urlImage = this.ticketGroupService.onGetPathUrlImage(
-    this.customerIdService.customerId.toString()
-  );
 
   ngOnInit(): void {
     this.setCurrentWeekAndYear();
@@ -88,6 +82,5 @@ export default class TicketMessageReportWorkPlanPreviewComponent {
     this.weekInputValue = `${this.year}-W${this.numeroSemana
       .toString()
       .padStart(2, '0')}`;
-    console.log('🚀 ~ this.weekInputValue:', this.weekInputValue);
   }
 }

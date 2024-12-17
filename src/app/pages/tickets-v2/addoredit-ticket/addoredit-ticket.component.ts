@@ -14,10 +14,11 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataService } from 'src/app/core/services/data.service';
+import { DataConnectorService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import { environment } from 'src/environments/environment';
+
 @Component({
   selector: 'app-addoredit-ticket',
   templateUrl: './addoredit-ticket.component.html',
@@ -33,7 +34,7 @@ export default class AddoreditTicketComponent implements OnInit {
   ref = inject(DynamicDialogRef);
 
   customToastService = inject(CustomToastService);
-  dataService = inject(DataService);
+  dataService = inject(DataConnectorService);
   dateService = inject(DateService);
   authS = inject(AuthService);
 

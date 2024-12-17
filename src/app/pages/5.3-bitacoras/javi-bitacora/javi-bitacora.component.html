@@ -1,0 +1,30 @@
+<div class="col-sm-7">
+  <div>
+    <custom-button
+      ngbTooltip="Bitacora de Mantenimiento"
+      [customClass]="
+        'btn btn-primary waves-effect waves-light btn-flat float-end'
+      "
+      label="Bitacora de Mantenimiento"
+      (clicked)="extraLarge(exlargeModal)"
+      data-bs-toggle="modal"
+      data-bs-target=".bs-example-modal-xl"
+    />
+    <!-- sample modal content -->
+    <ng-template #exlargeModal let-modal>
+      <div class="mt-3 d-grid">
+        <div class="modal-header">
+          <custom-button
+            customClass="btn-close float-end"
+            aria-label="Close"
+            (clicked)="modal.dismiss('Close click')"
+          />
+        </div>
+      </div>
+      <div class="modal-body">
+        <app-bitacora-mantenimiento></app-bitacora-mantenimiento>
+      </div>
+    </ng-template>
+  </div>
+  <!-- end preview-->
+</div>

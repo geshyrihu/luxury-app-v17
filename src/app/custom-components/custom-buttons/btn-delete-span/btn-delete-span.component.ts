@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { ToastModule } from 'primeng/toast';
 import Swal from 'sweetalert2';
+
 @Component({
   imports: [ToastModule, NgbTooltip],
   selector: 'btn-delete-span',

@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule, {
-    flatpickrFactory,
+  flatpickrFactory,
 } from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
@@ -16,7 +16,7 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class ModalOrdenCompraComponent implements OnInit {
-  apiRequestService= inject(ApiRequestService);
+  apiRequestService = inject(ApiRequestService);
   formBuilder = inject(FormBuilder);
   authS = inject(AuthService);
   config = inject(DynamicDialogConfig);

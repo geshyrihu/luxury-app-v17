@@ -9,6 +9,7 @@ import EditPartidaCedulaComponent from 'src/app/pages/2-contabilidad/presupuesto
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import AddoreditPeriodoCedulaPresupuestalComponent from './addoredit-periodo-cedula.component';
 import OrdenesCompraCedulaComponent from './ordenes-compra-cedula/ordenes-compra-cedula.component';
+
 @Component({
   selector: 'app-cedula-cliente',
   templateUrl: './cedula-cliente.component.html',

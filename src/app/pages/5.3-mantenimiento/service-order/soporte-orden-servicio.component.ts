@@ -3,9 +3,9 @@ import { ActivatedRoute } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataService } from 'src/app/core/services/data.service';
+import { DataConnectorService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
-import { environment } from 'src/environments/environment';
+
 @Component({
   selector: 'app-soporte-orden-servicio',
   templateUrl: './soporte-orden-servicio.component.html',
@@ -17,7 +17,7 @@ export default class SoporteOrdenServicioComponent
 {
   dateService = inject(DateService);
   private route = inject(ActivatedRoute);
-  dataService = inject(DataService);
+  dataService = inject(DataConnectorService);
   apiRequestService = inject(ApiRequestService);
   customerIdService = inject(CustomerIdService);
 
@@ -41,7 +41,6 @@ export default class SoporteOrdenServicioComponent
         this.nameCarpetaFecha = this.dateService.getDateFormat(
           resp.body.fechaSolicitud
         );
-        this.urlImg = `${environment.base_urlImg}customers/${this.customerIdService.customerId}/ordenServicio/${this.nameCarpetaFecha}/`;
         this.item = resp.body;
       });
   }
@@ -51,7 +50,7 @@ export default class SoporteOrdenServicioComponent
       .subscribe((resp: any) => {
         this.dataCustomer = resp.body;
         this.nameCustomer = resp.body.nameCustomer;
-        this.logoCustomer = `${environment.base_urlImg}Administration/customer/${resp.body.photoPath}`;
+        this.logoCustomer = resp.body.photoPath;
       });
   }
   ngOnDestroy(): void {

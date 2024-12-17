@@ -54,21 +54,6 @@ export default class BirthdayComponent implements OnInit {
     // Aquí puedes hacer lo que necesites con el mes seleccionado
   }
 
-  // calendarOptions: CalendarOptions = {
-  //   locale: esLocale, // Agrega el idioma español
-  //   headerToolbar: {
-  //     left: 'dayGridMonth,dayGridWeek,dayGridDay',
-  //     center: 'title',
-  //     right: 'prevYear,prev,next,nextYear',
-  //   },
-  //   themeSystem: 'bootstrap5',
-  //   initialView: 'dayGridMonth',
-  //   plugins: [dayGridPlugin],
-  // };
-  // toggleWeekends() {
-  //   this.calendarOptions.weekends = !this.calendarOptions.weekends; // toggle the boolean!
-  // }
-
   data: any[] = [];
   ref: DynamicDialogRef;
   customerId$: Observable<number> = this.customerIdService.getCustomerId$();
@@ -80,31 +65,6 @@ export default class BirthdayComponent implements OnInit {
       )
       .then((result: any) => {
         this.data = result;
-        // this.calendarOptions = {
-        //   initialView: 'dayGridMonth',
-        //   headerToolbar: {
-        //     left: 'dayGridMonth,dayGridWeek,dayGridDay',
-        //     center: 'title',
-        //     right: 'prevYear,prev,next,nextYear',
-        //   },
-        //   themeSystem: 'bootstrap5',
-        //   plugins: [dayGridPlugin],
-        //   locales: [esLocale],
-        //   locale: 'es',
-        //   events: result,
-        //   eventClick: this.tarjetaUsuario.bind(this),
-        // };
       });
   }
-
-  // tarjetaUsuario(clickInfo: EventClickArg) {
-  //   this.dialogHandlerService.openDialog(
-  //     CardEmployeeComponent,
-  //     {
-  //       applicationUserId: clickInfo.event._def.extendedProps.applicationUserId,
-  //     },
-  //     'Datos de usuario',
-  //     this.dialogHandlerService.dialogSizeMd
-  //   );
-  // }
 }

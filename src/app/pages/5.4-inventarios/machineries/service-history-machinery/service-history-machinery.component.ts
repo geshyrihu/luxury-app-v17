@@ -8,7 +8,7 @@ import {
 import { Subject, takeUntil } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
-import { DataService } from 'src/app/core/services/data.service';
+import { DataConnectorService } from 'src/app/core/services/data.service';
 import ServiceOrderAddOrEditComponent from '../../../5.3-mantenimiento/service-order/addoredit-service-order.component';
 
 @Component({
@@ -20,7 +20,7 @@ import ServiceOrderAddOrEditComponent from '../../../5.3-mantenimiento/service-o
 export default class ServiceHistoryMachineryComponent
   implements OnInit, OnDestroy
 {
-  dataService = inject(DataService);
+  dataService = inject(DataConnectorService);
   apiRequestService = inject(ApiRequestService);
   config = inject(DynamicDialogConfig);
   customToastService = inject(CustomToastService);

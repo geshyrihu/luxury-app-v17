@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
+
 @Component({
   selector: 'app-form-actas-entrega-equipos',
   templateUrl: './form-actas-entrega-equipos.component.html',

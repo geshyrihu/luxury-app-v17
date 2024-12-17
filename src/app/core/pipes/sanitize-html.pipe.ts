@@ -1,17 +1,15 @@
-import { Pipe, PipeTransform, inject } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
+import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
   name: 'sanitizeHtml',
   standalone: true,
 })
 export class SanitizeHtmlPipe implements PipeTransform {
-  private _sanitizer = inject(DomSanitizer);
-
-  // transform(v: string): SafeHtml {
-  //   return this._sanitizer.bypassSecurityTrustHtml(v);
-  // }
-  transform(value: string): string {
-    return value.replace(/\n/g, '<br>');
+  transform(value: string | null | undefined): string {
+    if (!value) {
+      return ''; // Devuelve un valor por defecto si es null o undefined
+    }
+    // Continúa con el procesamiento si `value` es válido
+    return value.replace(/<\/?[^>]+(>|$)/g, ''); // Ejemplo de eliminación de etiquetas HTML
   }
 }

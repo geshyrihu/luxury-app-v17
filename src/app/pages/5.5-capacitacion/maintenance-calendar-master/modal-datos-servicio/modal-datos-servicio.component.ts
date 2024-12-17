@@ -6,6 +6,7 @@ import {
   DynamicDialogRef,
 } from 'primeng/dynamicdialog';
 import TarjetaProveedorComponent from 'src/app/pages/6.1-directorios/directorios/proveedor/tarjeta-proveedor/tarjeta-proveedor.component';
+
 @Component({
   selector: 'app-modal-datos-servicio',
   templateUrl: './modal-datos-servicio.component.html',

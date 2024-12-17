@@ -29,7 +29,8 @@
               authS.onValidateRoles([
                 'Asistente',
                 'Administrador',
-                'SuperUsuario'
+                'SuperUsuario',
+                'Reclutamiento'
               ])
             "
           />
@@ -89,7 +90,7 @@
           <p-sortIcon field="email"></p-sortIcon>
         </th>
         @if ( authS.onValidateRoles([ 'Asistente', 'Administrador',
-        'SuperUsuario' ]) ) {
+        'SuperUsuario' ,'Reclutamiento' ]) ) {
         <th scope="col" style="width: 5%"></th>
         }
       </tr>
@@ -128,11 +129,11 @@
           {{ item.correoPersonal }}
         </td>
         @if ( authS.onValidateRoles([ 'Asistente', 'Administrador',
-        'SuperUsuario' ]) ) {
+        'SuperUsuario','Reclutamiento' ]) ) {
         <td class="p-column-title no-print">
           <div class="d-flex justify-content-center">
             @if ( authS.onValidateRoles([ 'SuperUsuario', 'Administrador',
-            'Asistente' ]) ) {
+            'Asistente','Reclutamiento' ]) ) {
             <custom-button
               [ngbTooltipCustom]="'Opciones'"
               customClass=" btn-soft-primary"

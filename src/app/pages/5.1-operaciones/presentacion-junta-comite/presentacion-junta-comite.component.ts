@@ -28,22 +28,19 @@ export default class PresentacionJuntaComiteComponent implements OnInit {
   dateService = inject(DateService);
 
   ref: DynamicDialogRef;
-
+  urlBase = `${environment.base_urlImg}/customers/${this.customerIdService.customerId}/presentacion/`;
   applicationUserId: string =
     this.authS.userTokenDto.infoUserAuthDto.applicationUserId;
   customerId$: Observable<number> = this.customerIdService.getCustomerId$();
   data: PresentacionJuntaComiteDto[] = [];
   supervisorContable: boolean = false;
-  urlBase: string = `${environment.base_urlImg}customers/`;
 
   ngOnInit(): void {
     const pathCutomer = `${this.customerIdService.getCustomerId()}/presentacion/`;
     this.onLoadData();
-    this.urlBase = this.urlBase + pathCutomer;
 
     this.customerId$.subscribe(() => {
       this.onLoadData();
-      this.urlBase = this.urlBase + pathCutomer;
     });
   }
 

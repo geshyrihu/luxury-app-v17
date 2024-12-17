@@ -1,8 +1,8 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output } from "@angular/core";
 
 @Component({
-  selector: 'app-ticket-report-actions',
-  templateUrl: './ticket-report-actions.component.html',
+  selector: "app-ticket-report-actions",
+  templateUrl: "./ticket-report-actions.component.html",
   standalone: true,
   imports: [],
 })

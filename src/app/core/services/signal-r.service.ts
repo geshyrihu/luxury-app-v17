@@ -28,8 +28,6 @@ export class SignalRService {
       .catch((err) => console.error('Error while starting connection: ' + err));
 
     this.hubConnection.on('ReceiveNotification', (data: any) => {
-      console.log('Notification received:', data);
-
       if (
         data &&
         this.authService.applicationUserId === data.applicationUserId
@@ -69,7 +67,6 @@ export class SignalRService {
 
   // Emitir actualización de lectura
   emitNotificationUpdate() {
-    console.log('Emitir actualización de notificación leída');
     this.notificationUpdateSubject.next();
   }
 

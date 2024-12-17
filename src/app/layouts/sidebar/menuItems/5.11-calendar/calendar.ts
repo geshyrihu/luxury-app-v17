@@ -9,13 +9,13 @@ export const calendarMenu = (authS: AuthService) => [
       {
         visible: authS.canRead('5.11 CALENDARIOS'),
         label: '5.11.1 Fondeos',
-        routerLink: '/calendario/fondeos',
+        routerLink: '/calendars/fondeos',
         name: 'Calendario-Fondeos',
       },
       {
-        visible: authS.onValidateRoles(['SuperUsuario']),
-        label: '5.11.2 Juntas de comité',
-        routerLink: '/calendario/fondeos888',
+        visible: authS.canRead('5.11 CALENDARIOS'),
+        label: '5.11.2 Reuniones con comité',
+        routerLink: '/calendars/reuniones-comite',
         name: 'Calendario-Fondeos',
       },
       {
@@ -33,19 +33,25 @@ export const calendarMenu = (authS: AuthService) => [
       {
         visible: authS.canRead('5.11 CALENDARIOS'),
         label: '5.11.5 Cumpleaños',
-        routerLink: '/calendario/cumpleanos',
+        routerLink: '/calendars/cumpleanos',
         name: 'Calendario-Cumpleaños',
       },
       {
         visible: authS.canRead('5.11 CALENDARIOS'),
         label: '5.11.6 Fiestas Judías',
-        routerLink: '/calendario/fiestas-judias',
+        routerLink: '/calendars/fiestas-judias',
         name: 'Calendario-Fiestaws judias',
       },
       {
         visible: authS.canRead('5.11 CALENDARIOS'),
         label: '5.11.7 Fiestas Catolicas',
-        routerLink: '/calendario/fiestas-cristianas',
+        routerLink: '/calendars/fiestas-cristianas',
+        name: 'Calendario-Fiestaws catolicas',
+      },
+      {
+        visible: authS.onValidateRoles(['SuperUsuario']),
+        label: '5.11.7 Listado',
+        routerLink: '/calendars/list',
         name: 'Calendario-Fiestaws catolicas',
       },
     ],

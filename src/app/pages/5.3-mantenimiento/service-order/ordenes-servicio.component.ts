@@ -7,11 +7,10 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataService } from 'src/app/core/services/data.service';
+import { DataConnectorService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
 import { ReporteOrdenesServicioService } from 'src/app/core/services/reporte-ordenes-servicio.service';
 import SubirPdfComponent from 'src/app/shared/subir-pdf/subir-pdf.component';
-import { environment } from 'src/environments/environment';
 import ServiceOrderAddOrEditComponent from './addoredit-service-order.component';
 import FormUploadImgComponent from './cargar-imagen/form-upload-img.component';
 import OrdenesServicioFotosComponent from './ordenes-servicio-fotos/ordenes-servicio-fotos.component';
@@ -32,7 +31,7 @@ export default class OrdenesServicioComponentComponent
   messageService = inject(MessageService);
   public reporteOrdenesServicioService = inject(ReporteOrdenesServicioService);
   dialogService = inject(DialogService);
-  dataService = inject(DataService);
+  dataService = inject(DataConnectorService);
   apiRequestService = inject(ApiRequestService);
   dateService = inject(DateService);
   customToastService = inject(CustomToastService);
@@ -46,7 +45,7 @@ export default class OrdenesServicioComponentComponent
   observations: [''];
   ref: DynamicDialogRef;
 
-  urlImg: string = '';
+  // urlImg: string = '';
   nameCarpetaFecha = '';
   customerId$: Observable<number> = this.customerIdService.getCustomerId$();
 
@@ -178,7 +177,6 @@ export default class OrdenesServicioComponentComponent
             this.nameCarpetaFecha = this.dateService.getDateFormat(
               this.data[0].requestDate
             );
-            this.urlImg = `${environment.base_urlImg}customers/${this.customerIdService.customerId}/ordenServicio/${this.nameCarpetaFecha}/`;
           }
         },
         error: (error) => {
@@ -208,7 +206,6 @@ export default class OrdenesServicioComponentComponent
             this.nameCarpetaFecha = this.dateService.getDateFormat(
               this.data[0].requestDate
             );
-            this.urlImg = `${environment.base_urlImg}customers/${this.customerIdService.customerId}/ordenServicio/${this.nameCarpetaFecha}/`;
           }
         },
         error: (error) => {

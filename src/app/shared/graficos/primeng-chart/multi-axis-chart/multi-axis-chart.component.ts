@@ -1,8 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { ChartModule } from 'primeng/chart';
+import { Component, Input, OnInit } from "@angular/core";
+import { ChartModule } from "primeng/chart";
+
 @Component({
-  selector: 'app-multi-axis-chart',
-  templateUrl: './multi-axis-chart.component.html',
+  selector: "app-multi-axis-chart",
+  templateUrl: "./multi-axis-chart.component.html",
   standalone: true,
   imports: [ChartModule],
 })
@@ -15,11 +16,11 @@ export default class MultiAxisChartComponent implements OnInit {
 
   ngOnInit() {
     const documentStyle = getComputedStyle(document.documentElement);
-    const textColor = documentStyle.getPropertyValue('--text-color');
+    const textColor = documentStyle.getPropertyValue("--text-color");
     const textColorSecondary = documentStyle.getPropertyValue(
-      '--text-color-secondary'
+      "--text-color-secondary"
     );
-    const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
+    const surfaceBorder = documentStyle.getPropertyValue("--surface-border");
 
     this.options = {
       stacked: false,
@@ -42,9 +43,9 @@ export default class MultiAxisChartComponent implements OnInit {
           },
         },
         y: {
-          type: 'linear',
+          type: "linear",
           display: true,
-          position: 'left',
+          position: "left",
           ticks: {
             color: textColorSecondary,
           },
@@ -53,9 +54,9 @@ export default class MultiAxisChartComponent implements OnInit {
           },
         },
         y1: {
-          type: 'linear',
+          type: "linear",
           display: true,
-          position: 'right',
+          position: "right",
           ticks: {
             color: textColorSecondary,
           },

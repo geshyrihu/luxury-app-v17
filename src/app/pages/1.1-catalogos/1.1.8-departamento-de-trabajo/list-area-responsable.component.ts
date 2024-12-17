@@ -4,7 +4,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
-import { DataService } from 'src/app/core/services/data.service';
+import { DataConnectorService } from 'src/app/core/services/data.service';
 import AddOrEditAreaResponsableComponent from './addoredit-area-responsable.component';
 
 @Component({
@@ -14,7 +14,7 @@ import AddOrEditAreaResponsableComponent from './addoredit-area-responsable.comp
   imports: [LuxuryAppComponentsModule],
 })
 export default class ListAreaResponsableComponent implements OnInit, OnDestroy {
-  dataService = inject(DataService);
+  dataService = inject(DataConnectorService);
   apiRequestService = inject(ApiRequestService);
   dialogService = inject(DialogService);
   customToastService = inject(CustomToastService);

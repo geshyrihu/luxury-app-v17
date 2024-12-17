@@ -4,10 +4,10 @@ import { Observable, Subject, takeUntil } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataService } from 'src/app/core/services/data.service';
+import { DataConnectorService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
 import { PeriodoMonthService } from 'src/app/core/services/periodo-month.service';
-import { environment } from 'src/environments/environment';
+
 @Component({
   selector: 'page-title-report',
   templateUrl: './pagetitlereport.component.html',
@@ -20,7 +20,7 @@ import { environment } from 'src/environments/environment';
  */
 export default class PagetitleReportComponent implements OnDestroy {
   customerIdService = inject(CustomerIdService);
-  dataService = inject(DataService);
+  dataService = inject(DataConnectorService);
   apiRequestService = inject(ApiRequestService);
   periodoMonthService = inject(PeriodoMonthService);
   dateService = inject(DateService);
@@ -52,7 +52,7 @@ export default class PagetitleReportComponent implements OnDestroy {
       .subscribe({
         next: (resp: any) => {
           this.nameCustomer = resp.body.nameCustomer;
-          this.logoCustomer = `${environment.base_urlImg}Administration/customer/${resp.body.photoPath}`;
+          this.logoCustomer = resp.body.photoPath;
         },
         error: (error) => {
           this.customToastService.onCloseToError(error);

@@ -1,16 +1,16 @@
-import { Component, OnInit, inject } from '@angular/core';
-import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Observable } from 'rxjs';
-import { ApiRequestService } from 'src/app/core/services/api-request.service';
-import { AuthService } from 'src/app/core/services/auth.service';
-import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
-import FormControlPrestamoHerramientaComponent from './form-control-prestamo-herramienta.component';
+import { Component, OnInit, inject } from "@angular/core";
+import LuxuryAppComponentsModule from "app/shared/luxuryapp-components.module";
+import { DynamicDialogRef } from "primeng/dynamicdialog";
+import { Observable } from "rxjs";
+import { ApiRequestService } from "src/app/core/services/api-request.service";
+import { AuthService } from "src/app/core/services/auth.service";
+import { CustomerIdService } from "src/app/core/services/customer-id.service";
+import { DialogHandlerService } from "src/app/core/services/dialog-handler.service";
+import FormControlPrestamoHerramientaComponent from "./form-control-prestamo-herramienta.component";
 
 @Component({
-  selector: 'app-control-prestamo-herramientas',
-  templateUrl: './control-prestamo-herramientas.component.html',
+  selector: "app-control-prestamo-herramientas",
+  templateUrl: "./control-prestamo-herramientas.component.html",
   standalone: true,
   imports: [LuxuryAppComponentsModule],
 })

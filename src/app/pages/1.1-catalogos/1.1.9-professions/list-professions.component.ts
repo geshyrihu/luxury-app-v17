@@ -8,7 +8,7 @@ import { IProfession } from 'src/app/core/interfaces/profession.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
-import { DataService } from 'src/app/core/services/data.service';
+import { DataConnectorService } from 'src/app/core/services/data.service';
 import AddOrEditProfessionsComponent from './addoredit-professions.component';
 import DescripcionPuestoComponent from './descripcion-puesto.component';
 
@@ -21,7 +21,7 @@ import DescripcionPuestoComponent from './descripcion-puesto.component';
 export default class ListProfessionsComponent implements OnInit, OnDestroy {
   customToastService = inject(CustomToastService);
   authS = inject(AuthService);
-  dataService = inject(DataService);
+  dataService = inject(DataConnectorService);
   apiRequestService = inject(ApiRequestService);
   messageService = inject(MessageService);
   dialogService = inject(DialogService);

@@ -13,13 +13,13 @@ export const reclutamientoMenu = (authS: AuthService) => [
         name: 'Reclutamiento-Plantilla',
       },
       {
-        visible: authS.canRead('7.1.1 RECLUTAMIENTOPLANTILLA'),
+        visible: authS.onValidateRoles(['SuperUsuario']),
         label: '7.1.2 Solicitudes (cliente)',
         routerLink: '/reclutamiento/solicitudes_cliente',
         name: 'Reclutamiento-Solicitudes por cliente',
       },
       {
-        visible: authS.canRead('7.1 RECLUTAMIENTO'),
+        visible: authS.onValidateRoles(['Reclutamiento']),
         label: '7.1.3 Solicitudes (Gral)',
         routerLink: '/reclutamiento/solicitudes/vacantes',
         name: 'Reclutamiento-Solicitudes a reclutamiento',
@@ -30,6 +30,18 @@ export const reclutamientoMenu = (authS: AuthService) => [
         routerLink: '',
         name: 'Reclutamiento-Profesiones',
       },
+      {
+        visible: authS.onValidateRoles(['Reclutamiento']),
+        label: '5.12.4 Personal interno',
+        routerLink: '/directory/personal-interno',
+        name: 'Directorio-Empleados internos',
+      },
+      // {
+      //   visible: authS.onValidateRoles(['Reclutamiento']),
+      //   label: '1.3 Usuarios',
+      //   icon: 'fa-duotone fa-solid fa-user-tie',
+      //   routerLink: '/accounts',
+      // },
     ],
   },
 ];

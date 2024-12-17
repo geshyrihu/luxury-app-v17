@@ -49,7 +49,7 @@ export const directoryMenu = (authS: AuthService) => [
         name: 'Operaciones-Mis proveedores',
       },
       {
-        visible: authS.canRead('5.12 DIRECTORIOS'),
+        visible: authS.onValidateRoles(['SuperUsuario']),
         label: '5.12.8 Supervisores externos',
         routerLink: '/settings/supplier-supervisors',
         name: 'supplier-supervisors',

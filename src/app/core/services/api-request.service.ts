@@ -4,13 +4,13 @@ import saveAs from 'file-saver';
 import { Subject, lastValueFrom, takeUntil } from 'rxjs';
 import Swal from 'sweetalert2';
 import { CustomToastService } from './custom-toast.service';
-import { DataService } from './data.service';
+import { DataConnectorService } from './data.service';
 @Injectable({
   providedIn: 'root',
 })
 export class ApiRequestService implements OnDestroy {
   customToastService = inject(CustomToastService);
-  dataService = inject(DataService);
+  dataService = inject(DataConnectorService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 

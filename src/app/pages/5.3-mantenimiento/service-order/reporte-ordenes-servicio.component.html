@@ -98,13 +98,13 @@
     <tr>
       <td colspan="3">
         @if (item.serviceOrderImg[0] !== undefined) {
-        <img class="w-25" [src]="urlImg + item.serviceOrderImg[0].img" alt="" />
+        <img class="w-25" [src]="item.serviceOrderImg[0]" alt="" />
         } @if (item.serviceOrderImg[1] !== undefined) {
-        <img class="w-25" [src]="urlImg + item.serviceOrderImg[1].img" alt="" />
+        <img class="w-25" [src]="item.serviceOrderImg[1]" alt="" />
         } @if (item.serviceOrderImg[2] !== undefined) {
-        <img class="w-25" [src]="urlImg + item.serviceOrderImg[2].img" alt="" />
+        <img class="w-25" [src]="item.serviceOrderImg[2]" alt="" />
         } @if (item.serviceOrderImg[3] !== undefined) {
-        <img class="w-25" [src]="urlImg + item.serviceOrderImg[3].img" alt="" />
+        <img class="w-25" [src]="item.serviceOrderImg[3]" alt="" />
         }
       </td>
     </tr>

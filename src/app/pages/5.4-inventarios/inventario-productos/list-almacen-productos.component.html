@@ -88,11 +88,7 @@
             (click)="onModalTarjetaProducto(item.productoId)"
             class="pointer"
           >
-            <img
-              [src]="urlImgBase + item.urlImagen"
-              alt="..."
-              class="rounded avatar-lg"
-            />
+            <img [src]="item.urlImagen" alt="..." class="rounded avatar-lg" />
             {{ item.producto }}</small
           >
         </td>

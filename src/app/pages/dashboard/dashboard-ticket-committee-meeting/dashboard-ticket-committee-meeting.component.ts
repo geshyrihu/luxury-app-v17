@@ -42,7 +42,6 @@ export default class DashboardTicketCommitteeMeetingComponent
   }
 
   onModalAddOrEditMinutaDetalle(statusKey: number) {
-    console.log('🚀 ~ eAreaMinutasDetalles:', statusKey);
     let titulo: string = '';
 
     if (statusKey == 0) {

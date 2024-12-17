@@ -18,7 +18,7 @@
     <!-- styleClass="p-datatable-sm" -->
     <ng-template pTemplate="caption">
       <custom-table-caption
-        [title]="'ESTADOS FINANCIEROS'"
+        title="ESTADOS FINANCIEROS"
         [showAdd]="false"
         [dt]="dt"
       />
@@ -81,7 +81,7 @@
               placement="top"
               type="button"
               target="_blank"
-              href="{{ baseUrlApi }}/{{ item.nameFileEstadoFinanciero }}"
+              [href]="item.nameFileEstadoFinanciero"
               class="btn btn-soft-danger w-xs waves-effect btn-label waves-light me-1 no-print"
             >
               <i class="fa-light fa-download pointer label-icon"></i>

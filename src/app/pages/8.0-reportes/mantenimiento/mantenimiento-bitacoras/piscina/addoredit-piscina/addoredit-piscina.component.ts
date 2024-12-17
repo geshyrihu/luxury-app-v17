@@ -9,7 +9,6 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-addoredit-piscina',
@@ -59,9 +58,6 @@ export default class AddOrEditPiscinaComponent implements OnInit {
     const urlApi = `piscina/${this.id}`;
     this.apiRequestService.onGetItem(urlApi).then((result: any) => {
       this.model = result;
-      this.urlBaseImg = `${
-        environment.base_urlImg
-      }customers/${this.customerIdService.getCustomerId()}/piscina/`;
       this.form.patchValue(result);
     });
   }

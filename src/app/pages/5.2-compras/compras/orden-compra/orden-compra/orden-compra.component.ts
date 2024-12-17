@@ -10,7 +10,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
-import { DataService } from 'src/app/core/services/data.service';
+import { DataConnectorService } from 'src/app/core/services/data.service';
 import { OrdenCompraService } from 'src/app/core/services/orden-compra.service';
 import OrdenCompraDatosPagoParcialComponent from '../components/orden-compra-datos-pago-parcial/orden-compra-datos-pago-parcial.component';
 import OrdenCompraDatosCotizacionComponent from '../components/orden-compra-parcial/orden-compra-datos-cotizacion.component';
@@ -23,6 +23,7 @@ import OrdenCompraDenegadaComponent from './../orden-compra-denegada/orden-compr
 import ModalOrdenCompraComponent from './modal-orden-compra.component';
 import OrdenCompraEditDetalleComponent from './orden-compra-edit-detalle.component';
 import OrdenCompraEditPresupustoUtilizadoComponent from './orden-compra-edit-presupusto-utilizado.component';
+
 @Component({
   selector: 'app-orden-compra',
   templateUrl: './orden-compra.component.html',
@@ -41,8 +42,8 @@ import OrdenCompraEditPresupustoUtilizadoComponent from './orden-compra-edit-pre
 export default class OrdenCompraComponent implements OnInit, OnDestroy {
   customToastService = inject(CustomToastService);
   authS = inject(AuthService);
-  dataService = inject(DataService);
-  apiRequestService= inject(ApiRequestService);
+  dataService = inject(DataConnectorService);
+  apiRequestService = inject(ApiRequestService);
   routeActive = inject(ActivatedRoute);
   router = inject(Router);
   dialogService = inject(DialogService);

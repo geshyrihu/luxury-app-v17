@@ -4,6 +4,7 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { FileUploadModule } from 'primeng/fileupload';
 import { environment } from 'src/environments/environment';
+
 @Component({
   selector: 'app-form-upload-img',
   templateUrl: './form-upload-img.component.html',

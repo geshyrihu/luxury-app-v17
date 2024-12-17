@@ -1,13 +1,13 @@
 import { Component, inject, type OnInit } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
-import { environment } from 'src/environments/environment';
 import AddOrEditCustomerProviderComponent from '../addoredit-customer-provider.component';
+
 @Component({
   selector: 'app-mis-proveedores',
   standalone: true,
@@ -22,8 +22,6 @@ export default class MisProveedoresComponent implements OnInit {
 
   data: any[] = [];
   ref: DynamicDialogRef; // Referencia a un cuadro de diálogo modal
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
-  url_img = `${environment.base_urlImg}providers/`;
 
   // logica para el cambio de cliente
   customerId: number;

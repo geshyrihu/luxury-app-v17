@@ -1,11 +1,11 @@
-import { Component, OnInit, inject } from '@angular/core';
-import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { DynamicDialogConfig } from 'primeng/dynamicdialog';
-import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { Component, OnInit, inject } from "@angular/core";
+import LuxuryAppComponentsModule from "app/shared/luxuryapp-components.module";
+import { DynamicDialogConfig } from "primeng/dynamicdialog";
+import { ApiRequestService } from "src/app/core/services/api-request.service";
 
 @Component({
-  selector: 'app-ticket-traking-customer',
-  templateUrl: './ticket-traking-customer.component.html',
+  selector: "app-ticket-traking-customer",
+  templateUrl: "./ticket-traking-customer.component.html",
   standalone: true,
   imports: [LuxuryAppComponentsModule],
 })
@@ -18,7 +18,7 @@ export class TicketTrakingCustomerComponent implements OnInit {
 
   loading = false;
   ticketId: string = this.config.data.ticketId;
-  id: string = '';
+  id: string = "";
 
   ngOnInit() {
     this.onCargaListaseguimientos();

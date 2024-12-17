@@ -26,12 +26,12 @@ export const reportMenu = (authS: AuthService) => [
       },
       {
         visible: true,
-        label: '6.3.4 Tickets minutas',
+        label: 'Tickets minutas',
         routerLink: '/report/pending-minutes',
         name: 'access-history',
       },
       {
-        visible: true,
+        visible: authS.onValidateRoles(['SuperUsuario']),
         label: '6.3.5 Tickets proyectos',
         routerLink: '/',
         name: '',
@@ -39,20 +39,20 @@ export const reportMenu = (authS: AuthService) => [
 
       {
         visible: true,
-        label: '6.3.6 Envio edos financieros',
-        routerLink: '/',
+        label: 'Envio edos financieros',
+        routerLink: '/report/estados-financieros',
         name: '',
       },
       {
-        visible: true,
+        visible: authS.onValidateRoles(['SuperUsuario']),
         label: '6.3.7 Presentaciones JC',
         routerLink: '/',
         name: '',
       },
       {
-        visible: true,
+        visible: authS.onValidateRoles(['SuperUsuario']),
         label: '6.3.8 Historial de acceso',
-        routerLink: '/',
+        routerLink: '/report/access-history',
         name: '',
       },
     ],

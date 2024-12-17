@@ -10,6 +10,7 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import FormMedidorLecturaComponent from '../../medidores-lectura/form-medidor-lectura/form-medidor-lectura.component';
 import FormMedidorComponent from '../form-medidor/form-medidor.component';
+
 @Component({
   selector: 'app-lista-medidores',
   templateUrl: './lista-medidores.component.html',

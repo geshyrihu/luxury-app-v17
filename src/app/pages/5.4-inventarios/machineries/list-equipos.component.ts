@@ -9,7 +9,6 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import AddoreditMaintenancePreventiveComponent from 'src/app/pages/5.6-calendar/mantenimiento-preventivo/addoredit-maintenance-preventive.component';
-import { environment } from 'src/environments/environment';
 import BitacoraIndividualComponent from '../../5.3-bitacoras/bitacora-mantenimiento/bitacora-individual.component';
 import ServiceOrderComponent from '../inventory-engine-system/service-order.component';
 import ActivosDocumentosComponent from './activos-documentos.component';
@@ -34,11 +33,9 @@ export default class ListEquiposComponent implements OnInit {
 
   subscriber: Subscription;
 
-  base_urlImg = '';
   customerId: number;
   customerId$: Observable<number> = this.customerIdService.getCustomerId$();
   data: any[];
-  // dataCard: any[];
   datadetail: any[];
   paramId: string = '';
   ref: DynamicDialogRef;
@@ -51,7 +48,7 @@ export default class ListEquiposComponent implements OnInit {
 
   ngOnInit() {
     this.inventoryCategoryId = this.rutaActiva.snapshot.params.categoria;
-    this.base_urlImg = this.urlImg(this.customerId);
+
     this.customerId$ = this.customerIdService.getCustomerId$();
     this.customerId = this.customerIdService.getCustomerId();
     this.onLoadData();
@@ -75,8 +72,6 @@ export default class ListEquiposComponent implements OnInit {
   onLoadData() {
     if (this.state) this.subTitle = ' Inactivos';
     if (!this.state) this.subTitle = ' Activos';
-    // this.onPath();
-    this.base_urlImg = this.urlImg(this.customerId);
 
     const urlApi = `Machineries/GetAll/${this.customerIdService.customerId}/${this.inventoryCategoryId}/${this.state}`;
 
@@ -193,10 +188,6 @@ export default class ListEquiposComponent implements OnInit {
       'Documentos',
       this.dialogHandlerService.dialogSizeFull
     );
-  }
-
-  urlImg(customerId: any): string {
-    return `${environment.base_urlImg}customers/${customerId}/machinery/`;
   }
 
   OnChageTitle() {

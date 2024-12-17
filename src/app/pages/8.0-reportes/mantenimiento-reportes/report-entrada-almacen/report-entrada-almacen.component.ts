@@ -5,10 +5,11 @@ import { Observable, Subject, takeUntil } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataService } from 'src/app/core/services/data.service';
+import { DataConnectorService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
 import { PeriodoMonthService } from 'src/app/core/services/periodo-month.service';
 import PagetitleReportComponent from 'src/app/shared/cabeceras/pagetitlereport/pagetitlereport.component';
+
 @Component({
   selector: 'app-report-entrada-almacen',
   templateUrl: './report-entrada-almacen.component.html',
@@ -16,7 +17,7 @@ import PagetitleReportComponent from 'src/app/shared/cabeceras/pagetitlereport/p
   imports: [LuxuryAppComponentsModule, PagetitleReportComponent],
 })
 export default class ReportEntradaAlmacenComponent implements OnInit {
-  dataService = inject(DataService);
+  dataService = inject(DataConnectorService);
   apiRequestService = inject(ApiRequestService);
   customerIdService = inject(CustomerIdService);
   customToastService = inject(CustomToastService);
