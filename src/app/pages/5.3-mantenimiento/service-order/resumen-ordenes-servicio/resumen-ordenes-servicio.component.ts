@@ -1,10 +1,7 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { Subject, takeUntil } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataConnectorService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
 import { ReporteOrdenesServicioService } from 'src/app/core/services/reporte-ordenes-servicio.service';
 import ResumenOrdenesServicioGraficoComponent from '../resumen-ordenes-servicio-grafico/resumen-ordenes-servicio-grafico.component';
@@ -15,15 +12,11 @@ import ResumenOrdenesServicioGraficoComponent from '../resumen-ordenes-servicio-
   standalone: true,
   imports: [LuxuryAppComponentsModule, ResumenOrdenesServicioGraficoComponent],
 })
-export default class ResumenOrdenesServicioComponent
-  implements OnInit, OnDestroy
-{
-  customerIdService = inject(CustomerIdService);
-  dataService = inject(DataConnectorService);
+export default class ResumenOrdenesServicioComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
+  customerIdService = inject(CustomerIdService);
   dateService = inject(DateService);
-  public reporteOrdenesServicioService = inject(ReporteOrdenesServicioService);
-  customToastService = inject(CustomToastService);
+  reporteOrdenesServicioService = inject(ReporteOrdenesServicioService);
 
   data: any[] = [];
   dataGraficos: any[] = [];
@@ -31,10 +24,7 @@ export default class ResumenOrdenesServicioComponent
   pendientes = 0;
   noAutorizados = 0;
   grafico: any;
-  // date: Date;
   urlImg: string = '';
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   customerId: Number;
 
@@ -44,49 +34,27 @@ export default class ResumenOrdenesServicioComponent
   }
 
   onLoadData() {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .get(
-        'MeetingDertailsSeguimiento/ResumenPreventivosPresentacion/' +
-          this.customerId +
-          '/' +
-          this.dateService.getDateFormat(
-            this.reporteOrdenesServicioService.getDate()
-          )
-      )
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.data = this.customToastService.onCloseOnGetData(resp.body);
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
-    this.dataService
-      .get(
-        'MeetingDertailsSeguimiento/ResumenPreventivosGraficoPresentacion/' +
-          this.customerId +
-          '/' +
-          this.dateService.getDateFormat(
-            this.reporteOrdenesServicioService.getDate()
-          )
-      )
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.dataGraficos = resp.body;
-          this.reporteOrdenesServicioService.setDateGrafico(this.dataGraficos);
-          this.customToastService.onClose();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
-  }
+    const urlApi =
+      'MeetingDertailsSeguimiento/ResumenPreventivosPresentacion/' +
+      this.customerId +
+      '/' +
+      this.dateService.getDateFormat(
+        this.reporteOrdenesServicioService.getDate()
+      );
+    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      this.data = result;
+    });
 
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
+    const urlApi2 =
+      'MeetingDertailsSeguimiento/ResumenPreventivosGraficoPresentacion/' +
+      this.customerId +
+      '/' +
+      this.dateService.getDateFormat(
+        this.reporteOrdenesServicioService.getDate()
+      );
+    this.apiRequestService.onGetList(urlApi2).then((result: any) => {
+      this.dataGraficos = result;
+      this.reporteOrdenesServicioService.setDateGrafico(this.dataGraficos);
+    });
   }
 }

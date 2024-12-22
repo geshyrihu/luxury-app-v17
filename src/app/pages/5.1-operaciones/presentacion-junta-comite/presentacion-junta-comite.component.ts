@@ -36,7 +36,6 @@ export default class PresentacionJuntaComiteComponent implements OnInit {
   supervisorContable: boolean = false;
 
   ngOnInit(): void {
-    const pathCutomer = `${this.customerIdService.getCustomerId()}/presentacion/`;
     this.onLoadData();
 
     this.customerId$.subscribe(() => {

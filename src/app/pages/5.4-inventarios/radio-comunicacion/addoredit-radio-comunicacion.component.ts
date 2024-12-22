@@ -4,14 +4,11 @@ import LuxuryAppComponentsModule, {
   flatpickrFactory,
 } from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subject, takeUntil } from 'rxjs';
 import { IRadioComunicacionAddOrEdit } from 'src/app/core/interfaces/radio-comunicacion-add-or-edit.interface';
 import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataConnectorService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
@@ -22,23 +19,13 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class AddOrEditRadioComunicacionComponent implements OnInit {
-  ngOnInit(): void {
-    flatpickrFactory();
-    this.onLoadSelectItem();
-    this.id = this.config.data.id;
-    if (this.id !== 0) this.onLoadData();
-  }
-  dateService = inject(DateService);
-  formBuilder = inject(FormBuilder);
-  config = inject(DynamicDialogConfig);
-  ref = inject(DynamicDialogRef);
-  authS = inject(AuthService);
-  dataService = inject(DataConnectorService);
   apiRequestService = inject(ApiRequestService);
+  config = inject(DynamicDialogConfig);
+  formBuilder = inject(FormBuilder);
+  ref = inject(DynamicDialogRef);
+  dateService = inject(DateService);
+  authS = inject(AuthService);
   customerIdService = inject(CustomerIdService);
-  customToastService = inject(CustomToastService);
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   submitting: boolean = false;
 
@@ -63,6 +50,12 @@ export default class AddOrEditRadioComunicacionComponent implements OnInit {
     applicationUser: [''],
   });
 
+  ngOnInit(): void {
+    flatpickrFactory();
+    this.onLoadSelectItem();
+    this.id = this.config.data.id;
+    if (this.id !== 0) this.onLoadData();
+  }
   onLoadData() {
     const urlApi = `RadioComunicacion/${this.id}`;
     this.apiRequestService
@@ -83,38 +76,18 @@ export default class AddOrEditRadioComunicacionComponent implements OnInit {
     const formData = this.createFormData(this.form.value);
 
     this.submitting = true;
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
 
     if (this.id === 0) {
-      this.dataService
-        .post('RadioComunicacion', formData)
-        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-        .subscribe({
-          next: () => {
-            this.ref.close(true);
-            this.customToastService.onClose();
-          },
-          error: (error) => {
-            // Habilitar el botón nuevamente al finalizar el envío del formulario
-            this.submitting = false;
-            this.customToastService.onCloseToError(error);
-          },
+      this.apiRequestService
+        .onPost('RadioComunicacion', formData)
+        .then((result: boolean) => {
+          result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.dataService
-        .put(`RadioComunicacion/${this.id}`, formData)
-        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-        .subscribe({
-          next: () => {
-            this.ref.close(true);
-            this.customToastService.onClose();
-          },
-          error: (error) => {
-            // Habilitar el botón nuevamente al finalizar el envío del formulario
-            this.submitting = false;
-            this.customToastService.onCloseToError(error);
-          },
+      this.apiRequestService
+        .onPut(`RadioComunicacion/${this.id}`, formData)
+        .then((result: boolean) => {
+          result ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }
@@ -179,8 +152,5 @@ export default class AddOrEditRadioComunicacionComponent implements OnInit {
       .then((response: any) => {
         this.cb_area_responsable = response;
       });
-  }
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
   }
 }

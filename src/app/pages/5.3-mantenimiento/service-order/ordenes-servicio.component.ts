@@ -1,14 +1,12 @@
-import { Component, OnChanges, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnChanges, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { MessageService } from 'primeng/api';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Observable, Subject, Subscription, takeUntil } from 'rxjs';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { Observable, Subscription } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataConnectorService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
+import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import { ReporteOrdenesServicioService } from 'src/app/core/services/reporte-ordenes-servicio.service';
 import SubirPdfComponent from 'src/app/shared/subir-pdf/subir-pdf.component';
 import ServiceOrderAddOrEditComponent from './addoredit-service-order.component';
@@ -24,19 +22,14 @@ const date = new Date();
   imports: [LuxuryAppComponentsModule],
 })
 export default class OrdenesServicioComponentComponent
-  implements OnInit, OnDestroy, OnChanges
+  implements OnInit, OnChanges
 {
+  apiRequestService = inject(ApiRequestService);
   authS = inject(AuthService);
   customerIdService = inject(CustomerIdService);
-  messageService = inject(MessageService);
-  public reporteOrdenesServicioService = inject(ReporteOrdenesServicioService);
-  dialogService = inject(DialogService);
-  dataService = inject(DataConnectorService);
-  apiRequestService = inject(ApiRequestService);
+  reporteOrdenesServicioService = inject(ReporteOrdenesServicioService);
   dateService = inject(DateService);
-  customToastService = inject(CustomToastService);
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+  dialogHandlerService = inject(DialogHandlerService);
 
   mm = date.getMonth() + 1;
   fecha = [date.getFullYear(), (this.mm > 9 ? '' : '0') + this.mm].join('-');
@@ -83,156 +76,115 @@ export default class OrdenesServicioComponentComponent
   }
 
   onModalFormUploadImg(id: number) {
-    this.ref = this.dialogService.open(FormUploadImgComponent, {
-      data: {
-        serviceOrderId: id,
-      },
-      header: 'Cargar Imagenes',
-      styleClass: 'modal-md',
-      closeOnEscape: true,
-      baseZIndex: 10000,
-    });
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        this.customToastService.onShowSuccess();
-        this.onLoadData();
-      }
-    });
+    this.dialogHandlerService
+      .openDialog(
+        FormUploadImgComponent,
+        {
+          serviceOrderId: id,
+        },
+        'Cargar Imagenes',
+        this.dialogHandlerService.dialogSizeFull
+      )
+      .then((result: boolean) => {
+        if (result) this.onLoadData();
+      });
   }
   onModalFormUploadDoc(id: number) {
-    this.ref = this.dialogService.open(SubirPdfComponent, {
-      data: {
-        serviceOrderId: id,
-        pathUrl: 'ServiceOrders/SubirDocumento/',
-      },
-      header: 'Cargar Documentos',
-      styleClass: 'modal-md',
-      closeOnEscape: true,
-      baseZIndex: 10000,
-    });
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        this.customToastService.onShowSuccess();
-        this.onLoadData();
-      }
-    });
+    this.dialogHandlerService
+      .openDialog(
+        SubirPdfComponent,
+        {
+          serviceOrderId: id,
+          pathUrl: 'ServiceOrders/SubirDocumento/',
+        },
+        'Cargar Documentos',
+        this.dialogHandlerService.dialogSizeFull
+      )
+      .then((result: boolean) => {
+        if (result) this.onLoadData();
+      });
   }
   onModalFotos(id: number) {
-    this.ref = this.dialogService.open(OrdenesServicioFotosComponent, {
-      data: {
-        id,
-      },
-      header: 'Soporte Fotografico',
-      width: '100%',
-      closeOnEscape: true,
-      baseZIndex: 10000,
-    });
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        this.customToastService.onShowSuccess();
-        this.onLoadData();
-      }
-    });
-  }
-  onModalRpeorteProveedor(id: number) {
-    this.ref = this.dialogService.open(
-      OrdenesServicioReporteProveedorComponent,
-      {
-        data: {
+    this.dialogHandlerService
+      .openDialog(
+        OrdenesServicioFotosComponent,
+        {
           id,
         },
-        header: 'Reportes de proveedor',
-        styleClass: 'modal-md',
-        closeOnEscape: true,
-        baseZIndex: 10000,
-      }
-    );
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        this.customToastService.onShowSuccess();
-        this.onLoadData();
-      }
-    });
+        'Soporte Fotografico',
+        this.dialogHandlerService.dialogSizeFull
+      )
+      .then((result: boolean) => {
+        if (result) this.onLoadData();
+      });
+  }
+  onModalRpeorteProveedor(id: number) {
+    this.dialogHandlerService
+      .openDialog(
+        OrdenesServicioReporteProveedorComponent,
+        {
+          id,
+        },
+        'Reportes de proveedor',
+        this.dialogHandlerService.dialogSizeMd
+      )
+      .then((result: boolean) => {
+        if (result) this.onLoadData();
+      });
   }
 
   onLoadPintura() {
     let converToDate = new Date(this.fecha + '-' + 1);
     this.reporteOrdenesServicioService.setDate(converToDate);
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
 
-    this.dataService
-      .get(
-        `ServiceOrders/GetAllPintura/${
-          this.customerIdService.customerId
-        }/${this.dateService.getDateFormat(converToDate)}`
-      )
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.data = this.customToastService.onCloseOnGetData(resp.body);
-          this.reporteOrdenesServicioService.setData(this.data);
+    const urlApi = `ServiceOrders/GetAllPintura/${
+      this.customerIdService.customerId
+    }/${this.dateService.getDateFormat(converToDate)}`;
+    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      this.data = result;
+      this.reporteOrdenesServicioService.setData(this.data);
 
-          if (this.data.length !== 0) {
-            this.nameCarpetaFecha = this.dateService.getDateFormat(
-              this.data[0].requestDate
-            );
-          }
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
+      if (this.data.length !== 0) {
+        this.nameCarpetaFecha = this.dateService.getDateFormat(
+          this.data[0].requestDate
+        );
+      }
+    });
   }
   onLoadData() {
     let converToDate = new Date(this.fecha + '-' + 1);
     this.reporteOrdenesServicioService.setDate(converToDate);
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
 
-    this.dataService
-      .get(
-        `ServiceOrders/GetAll/${
-          this.customerIdService.customerId
-        }/${this.dateService.getDateFormat(converToDate)}/${this.filtroId}`
-      )
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.data = this.customToastService.onCloseOnGetData(resp.body);
-          this.reporteOrdenesServicioService.setData(this.data);
+    const urlApi = `ServiceOrders/GetAll/${
+      this.customerIdService.customerId
+    }/${this.dateService.getDateFormat(converToDate)}/${this.filtroId}`;
+    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      this.data = result;
+      this.reporteOrdenesServicioService.setData(this.data);
 
-          if (this.data.length !== 0) {
-            this.nameCarpetaFecha = this.dateService.getDateFormat(
-              this.data[0].requestDate
-            );
-          }
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
-    this.customToastService.onClose();
+      if (this.data.length !== 0) {
+        this.nameCarpetaFecha = this.dateService.getDateFormat(
+          this.data[0].requestDate
+        );
+      }
+    });
   }
 
   onEdit(data: any) {
-    this.ref = this.dialogService.open(ServiceOrderAddOrEditComponent, {
-      data: {
-        id: data.id,
-        machineryId: data.machineryId,
-        providerId: data.providerId,
-      },
-      header: data.title,
-      width: '100%',
-      closeOnEscape: true,
-      baseZIndex: 10000,
-    });
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        this.customToastService.onShowSuccess();
-        this.onLoadData();
-      }
-    });
+    this.dialogHandlerService
+      .openDialog(
+        ServiceOrderAddOrEditComponent,
+        {
+          id: data.id,
+          machineryId: data.machineryId,
+          providerId: data.providerId,
+        },
+        data.title,
+        this.dialogHandlerService.dialogSizeFull
+      )
+      .then((result: boolean) => {
+        if (result) this.onLoadData();
+      });
   }
 
   onDelete(id: number) {
@@ -243,9 +195,6 @@ export default class OrdenesServicioComponentComponent
       });
   }
 
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
-  }
   ngOnChanges() {
     this.subscriber?.unsubscribe();
   }

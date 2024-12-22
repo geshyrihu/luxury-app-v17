@@ -25,6 +25,9 @@ export default class ListApplicationUserComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
 
   data: IApplicationUserDto[] = [];
+  filteredData: IApplicationUserDto[] = []; // Para almacenar la data filtrada
+  searchText: string = ''; // Para almacenar el texto de búsqueda
+  selectCustomer: ISelectItem[] = [];
 
   applicationUserId: string = '';
   employeeId: number = 0;
@@ -34,17 +37,59 @@ export default class ListApplicationUserComponent implements OnInit {
   urlImgApi = environment.base_urlImg + 'Administration/accounts/';
   applicationUserState: boolean = true;
   cb_typePerson: ISelectItem[] = onGetSelectItemFromEnum(ETypePerson);
-  typePerson: ETypePerson = ETypePerson.Employee;
+  typePerson: ETypePerson = ETypePerson.Empleado;
   ngOnInit(): void {
     this.onLoadData(true, this.typePerson);
   }
+
+  onSearch() {
+    const searchTextLower = this.searchText.toLowerCase();
+
+    this.filteredData = this.data.filter((item) =>
+      ['fullName', 'userName', 'customer', 'email', 'phoneNumber'].some((key) =>
+        item[key]?.toLowerCase().includes(searchTextLower)
+      )
+    );
+  }
+
   onLoadData(applicationUserState: boolean, typePerson: ETypePerson): void {
     this.apiRequestService
       .onGetList(`ApplicationUser/List/${applicationUserState}/${typePerson}`)
       .then((result: any) => {
         this.data = result;
+        this.filteredData = result;
+
+        // Agrupar customers únicos para el select
+        const uniqueCustomers = [
+          ...new Set(result.map((item: any) => item.customer)),
+        ];
+
+        // Crear opciones para el select
+        this.selectCustomer = [
+          { label: 'Mostrar todos', value: 'all' }, // Opción para mostrar todos
+          ...uniqueCustomers.map(
+            (customer): ISelectItem => ({
+              label: customer ? String(customer) : 'Sin Cliente',
+              value: customer ? String(customer) : 'sin_cliente',
+            })
+          ),
+        ];
       });
   }
+
+  // Método para filtrar por cliente
+  onSelectForCustomer(selectedValue: string) {
+    if (selectedValue === 'all') {
+      // Si selecciona "Mostrar todos", mostrar todos los datos
+      this.filteredData = this.data;
+    } else {
+      // Filtrar datos por el valor seleccionado
+      this.filteredData = this.data.filter(
+        (item: any) => item.customer === selectedValue
+      );
+    }
+  }
+
   onSelectTypePerson(typePerson: ETypePerson): any {
     this.typePerson = typePerson;
     this.onLoadData(this.applicationUserState, typePerson);
@@ -53,6 +98,8 @@ export default class ListApplicationUserComponent implements OnInit {
     this.applicationUserState = applicationUserState;
     this.onLoadData(applicationUserState, this.typePerson);
   }
+
+  // Tarjeta de Usuraio
   onCardEmployee(applicationUserId: string) {
     this.dialogHandlerService.openDialog(
       CardEmployeeComponent,
@@ -61,12 +108,12 @@ export default class ListApplicationUserComponent implements OnInit {
       this.dialogHandlerService.dialogSizeMd
     );
   }
-  onAddOrEdit(applicationUserId: string) {
+  onAddOrEdit(applicationUserId: string, title: string) {
     this.dialogHandlerService
       .openDialog(
         AddOrEditApplicationUserComponent,
         { applicationUserId },
-        'Crear Cuenta',
+        title,
         this.dialogHandlerService.dialogSizeMd
       )
       .then((result: any) => {
@@ -113,8 +160,12 @@ export default class ListApplicationUserComponent implements OnInit {
     this.apiRequestService
       .onDelete(`ApplicationUser/${applicationUserId}`)
       .then((result: boolean) => {
-        if (result)
+        if (result) {
           this.data = this.data.filter((item) => item.id !== applicationUserId);
+          this.filteredData = this.filteredData.filter(
+            (item) => item.id !== applicationUserId
+          );
+        }
       });
   }
 

@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import saveAs from 'file-saver';
@@ -16,15 +16,12 @@ import CBtnModule from 'src/app/custom-components/custom-buttons/btn.module';
   standalone: true,
   imports: [LuxuryAppComponentsModule, CBtnModule],
 })
-export default class FilterRequestsComponent implements OnInit, OnDestroy {
-  ngOnInit(): void {}
-  dataService = inject(DataConnectorService);
+export default class FilterRequestsComponent {
   apiRequestService = inject(ApiRequestService);
-  private router = inject(Router);
-  private filterRequestsService = inject(FilterRequestsService);
+  dataService = inject(DataConnectorService);
+  router = inject(Router);
+  filterRequestsService = inject(FilterRequestsService);
   customToastService = inject(CustomToastService);
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   menu = [
     { label: 'Vacantes', path: 'vacantes' },
@@ -48,6 +45,8 @@ export default class FilterRequestsComponent implements OnInit, OnDestroy {
   @Input() apiUrl: string;
   @Input() nameFile: string;
 
+  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+
   exportToExcel(): void {
     this.dataService
       .getFile(this.apiUrl, this.filterRequestsService.getParams())
@@ -68,20 +67,10 @@ export default class FilterRequestsComponent implements OnInit, OnDestroy {
       });
   }
   onSendReportVacants() {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .get(`solicitudesreclutamiento/sendreportvacants`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (_) => {
-          this.customToastService.onCloseToSuccess();
-          this.onLoadData();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
+    const urlApi = `solicitudesreclutamiento/sendreportvacants`;
+    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+      this.onLoadData();
+    });
   }
 
   onLoadData() {
@@ -98,9 +87,5 @@ export default class FilterRequestsComponent implements OnInit, OnDestroy {
     const currentPath = this.router.url;
     // Verifica si la ruta actual coincide con el enlace del botón.
     return currentPath.includes('/reclutamiento/solicitudes/' + path);
-  }
-
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
   }
 }

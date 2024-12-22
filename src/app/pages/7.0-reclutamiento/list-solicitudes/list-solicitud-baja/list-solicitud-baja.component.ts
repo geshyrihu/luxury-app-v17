@@ -1,13 +1,11 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { MessageService } from 'primeng/api';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { Observable } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
-import { DataConnectorService } from 'src/app/core/services/data.service';
+import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import { FilterRequestsService } from 'src/app/core/services/filter-requests.service';
 import FilterRequestsComponent from '../filter-requests.component';
 import AddoreditSolicitudBajaComponent from './addoredit-solicitud-baja/addoredit-solicitud-baja.component';
@@ -19,18 +17,13 @@ import AddoreditSolicitudBajaComponent from './addoredit-solicitud-baja/addoredi
   imports: [LuxuryAppComponentsModule, FilterRequestsComponent],
 })
 export default class ListSolicitudBajaComponent implements OnInit {
-  customToastService = inject(CustomToastService);
   authS = inject(AuthService);
-  dataService = inject(DataConnectorService);
   apiRequestService = inject(ApiRequestService);
-  dialogService = inject(DialogService);
-  messageService = inject(MessageService);
-  private filterRequestsService = inject(FilterRequestsService);
+  filterRequestsService = inject(FilterRequestsService);
+  dialogHandlerService = inject(DialogHandlerService);
 
   data: any[] = [];
   ref: DynamicDialogRef;
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   paramsEmit$: Observable<HttpParams> = this.filterRequestsService.getParams$();
   ngOnInit(): void {
@@ -39,34 +32,25 @@ export default class ListSolicitudBajaComponent implements OnInit {
   }
 
   onLoadData() {
-    this.dataService
-      .get(`requestdismissal/list/`, this.filterRequestsService.getParams())
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.data = this.customToastService.onCloseOnGetData(resp.body);
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
+    const urlApi = `requestdismissal/list/`;
+    const params = this.filterRequestsService.getParams();
+    this.apiRequestService.onGetList(urlApi, params).then((result: any) => {
+      this.data = result;
+    });
   }
   onModalAddOrEdit(data: any) {
-    this.ref = this.dialogService.open(AddoreditSolicitudBajaComponent, {
-      data: {
-        id: data.id,
-      },
-      header: data.title,
-      styleClass: 'modal-md modal-backdrop',
-      closeOnEscape: true,
-      baseZIndex: 10000,
-    });
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        this.customToastService.onShowSuccess();
-        this.onLoadData();
-      }
-    });
+    this.dialogHandlerService
+      .openDialog(
+        AddoreditSolicitudBajaComponent,
+        {
+          id: data.id,
+        },
+        data.title,
+        this.dialogHandlerService.dialogSizeFull
+      )
+      .then((result: boolean) => {
+        if (result) this.onLoadData();
+      });
   }
   onDelete(id: number) {
     this.apiRequestService
@@ -74,9 +58,5 @@ export default class ListSolicitudBajaComponent implements OnInit {
       .then((result: boolean) => {
         if (result) this.data = this.data.filter((item) => item.id !== id);
       });
-  }
-
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
   }
 }

@@ -1,13 +1,12 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { ConfirmationService, MessageService } from 'primeng/api';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { ConfirmationService } from 'primeng/api';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { Observable } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataConnectorService } from 'src/app/core/services/data.service';
+import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import { environment } from 'src/environments/environment';
 import AddBitacoraComponent from '../../../5.3-bitacoras/bitacora-mantenimiento/add-bitacora.component';
 import BitacoraIndividualComponent from '../../../5.3-bitacoras/bitacora-mantenimiento/bitacora-individual.component';
@@ -20,20 +19,15 @@ import RecorridoAddOrEditComponent from './addoreedit-recorrido.component';
   standalone: true,
   imports: [LuxuryAppComponentsModule],
 })
-export default class ListRecorridoComponent implements OnInit, OnDestroy {
-  customToastService = inject(CustomToastService);
+export default class ListRecorridoComponent implements OnInit {
   authS = inject(AuthService);
-  public confirmationService = inject(ConfirmationService);
+  confirmationService = inject(ConfirmationService);
   customerIdService = inject(CustomerIdService);
-  dataService = inject(DataConnectorService);
   apiRequestService = inject(ApiRequestService);
-  dialogService = inject(DialogService);
-  messageService = inject(MessageService);
+  dialogHandlerService = inject(DialogHandlerService);
 
   pathImg = environment.base_urlImg;
   data: any[] = [];
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   ref: DynamicDialogRef;
   customerId$: Observable<number> = this.customerIdService.getCustomerId$();
@@ -62,26 +56,12 @@ export default class ListRecorridoComponent implements OnInit, OnDestroy {
   }
 
   onLoadData(value: number) {
-    if (this.filterValue === ' ') {
-      // Mostrar un mensaje de carga
-      this.customToastService.onLoading();
-    }
-
-    this.dataService
-      .get(
-        `Routes/GetAll/${this.customerIdService.getCustomerId()}/${value}/${
-          this.filterValue
-        }`
-      )
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.data = this.customToastService.onCloseOnGetData(resp.body);
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
+    const urlApi = `Routes/GetAll/${this.customerIdService.getCustomerId()}/${value}/${
+      this.filterValue
+    }`;
+    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      this.data = result;
+    });
   }
 
   onDelete(id: number) {
@@ -94,104 +74,71 @@ export default class ListRecorridoComponent implements OnInit, OnDestroy {
   }
 
   onDeleteTask(taskId: number) {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .delete(`RouteTask/${taskId}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          this.customToastService.onCloseToSuccess();
-          this.onLoadData(this.value);
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
+    const urlApi = `RouteTask/${taskId}`;
+    this.apiRequestService.onDelete(urlApi).then((result: boolean) => {
+      this.onLoadData(this.value);
+    });
   }
 
   onModalAddOrEdit(data: any) {
-    this.ref = this.dialogService.open(RecorridoAddOrEditComponent, {
-      data: {
-        id: data.id,
-      },
-      header: data.title,
-      styleClass: 'modal-md',
-      closeOnEscape: true,
-      baseZIndex: 10000,
-    });
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        this.customToastService.onShowSuccess();
-        this.onLoadData(this.value);
-      }
-    });
+    this.dialogHandlerService
+      .openDialog(
+        RecorridoAddOrEditComponent,
+        {
+          id: data.id,
+        },
+        data.title,
+        this.dialogHandlerService.dialogSizeMd
+      )
+      .then((result: boolean) => {
+        if (result) this.onLoadData(this.value);
+      });
   }
   onModalAddTask(data: any) {
-    this.ref = this.dialogService.open(RecorridoTaskAddOrEditComponent, {
-      data: {
-        id: data.id,
-        routeId: data.routeId,
-      },
-      header: 'Agregar revisión a recorrido',
-      styleClass: 'modal-md',
-      closeOnEscape: true,
-      baseZIndex: 10000,
-    });
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        this.customToastService.onShowSuccess();
-        this.onLoadData(this.value);
-      }
-    });
+    this.dialogHandlerService
+      .openDialog(
+        RecorridoTaskAddOrEditComponent,
+        {
+          id: data.id,
+          routeId: data.routeId,
+        },
+        'Agregar revisión a recorrido',
+        this.dialogHandlerService.dialogSizeMd
+      )
+      .then((result: boolean) => {
+        if (result) this.onLoadData(this.value);
+      });
   }
 
   eliminarRecorrido(id: number) {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .delete('Routes/' + id)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          this.customToastService.onCloseToSuccess();
-          this.onLoadData(this.value);
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
+    const urlApi = `Routes/${id}`;
+    this.apiRequestService.onDelete(urlApi).then((result: boolean) => {
+      this.onLoadData(this.value);
+    });
   }
   onModalBitacora(machineryId: number) {
-    this.ref = this.dialogService.open(AddBitacoraComponent, {
-      data: {
+    this.dialogHandlerService.openDialog(
+      AddBitacoraComponent,
+      {
         machineryId,
       },
-      header: 'Registrar novedades',
-      styleClass: 'modal-md',
-      closeOnEscape: true,
-      baseZIndex: 10000,
-    });
+      'Registrar novedades',
+      this.dialogHandlerService.dialogSizeMd
+    );
   }
   onModalBitacoraIndividual(data: any) {
-    this.ref = this.dialogService.open(BitacoraIndividualComponent, {
-      data: {
-        machineryId: data.machineryId,
-        nameMachinery: data.nameMachinery,
-      },
-      header: 'Bitacora',
-      styleClass: 'modal-md',
-      closeOnEscape: true,
-      baseZIndex: 10000,
-    });
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        this.customToastService.onShowSuccess();
-        this.onLoadData(this.value);
-      }
-    });
-  }
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
+    this.dialogHandlerService
+      .openDialog(
+        BitacoraIndividualComponent,
+        {
+          machineryId: data.machineryId,
+          nameMachinery: data.nameMachinery,
+        },
+        'Bitacora',
+        this.dialogHandlerService.dialogSizeMd
+      )
+      .then((result: boolean) => {
+        if (result) this.onLoadData(this.value);
+      });
   }
 }

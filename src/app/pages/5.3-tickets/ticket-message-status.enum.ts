@@ -1,6 +1,6 @@
 export enum ETicketMessageStatus {
-  Abiertas = 0,
+  Pendientes = 0,
   'En proceso' = 1,
-  Cerrado = 3,
-  Reabiertas,
+  Cerrado = 2,
+  Reabiertas = 3,
 }

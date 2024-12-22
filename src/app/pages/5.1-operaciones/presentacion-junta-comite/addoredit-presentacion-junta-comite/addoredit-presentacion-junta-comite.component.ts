@@ -1,12 +1,9 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subject, takeUntil } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
-import { DataConnectorService } from 'src/app/core/services/data.service';
 
 @Component({
   selector: 'app-addoredit-presentacion-junta-comite',
@@ -15,17 +12,13 @@ import { DataConnectorService } from 'src/app/core/services/data.service';
   imports: [LuxuryAppComponentsModule],
 })
 export default class AddoreditPresentacionJuntaComiteComponent
-  implements OnInit, OnDestroy
+  implements OnInit
 {
-  formBuilder = inject(FormBuilder);
-  customToastService = inject(CustomToastService);
   apiRequestService = inject(ApiRequestService);
-  authS = inject(AuthService);
+  formBuilder = inject(FormBuilder);
   config = inject(DynamicDialogConfig);
-  dataService = inject(DataConnectorService);
+  authS = inject(AuthService);
   ref = inject(DynamicDialogRef);
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   submitting: boolean = false;
   id: number = 0;
@@ -53,27 +46,12 @@ export default class AddoreditPresentacionJuntaComiteComponent
     const model = this.onCreateFormData(this.form.value);
 
     this.submitting = true;
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
 
-    this.dataService
-      .post(`PresentacionJuntaComite/AddFile`, model)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          this.ref.close(true);
-          this.customToastService.onClose();
-        },
-        error: (error) => {
-          // Habilitar el botón nuevamente al finalizar el envío del formulario
-          this.submitting = false;
-          this.customToastService.onCloseToError(error);
-        },
+    this.apiRequestService
+      .onPost(`PresentacionJuntaComite/AddFile`, model)
+      .then((result: boolean) => {
+        result ? this.ref.close(true) : (this.submitting = false);
       });
-  }
-
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
   }
 
   onCreateFormData(dto: any) {

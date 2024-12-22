@@ -11,6 +11,24 @@ export default [
   //   data: { title: 'Bitacora de Equipos' },
   // },
   {
+    path: 'inspections',
+    loadComponent: () =>
+      import(
+        'src/app/pages/8.0-reportes/mantenimiento/inspections/inspections-list.component'
+      ),
+    title: 'Inspections',
+    data: { title: 'Inspections' },
+  },
+  {
+    path: 'inspections-areas',
+    loadComponent: () =>
+      import(
+        'src/app/pages/8.0-reportes/mantenimiento/inspections/inspections-areas/inspections-areas.component'
+      ),
+    title: 'Inspections-areas',
+    data: { title: 'Inspections-areas' },
+  },
+  {
     path: 'recorrido',
     loadComponent: () =>
       import(

@@ -1,12 +1,12 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataConnectorService } from 'src/app/core/services/data.service';
+import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import AddoreditMaintenancePreventiveComponent from 'src/app/pages/5.6-calendar/mantenimiento-preventivo/addoredit-maintenance-preventive.component';
 
 @Component({
@@ -16,15 +16,10 @@ import AddoreditMaintenancePreventiveComponent from 'src/app/pages/5.6-calendar/
   imports: [LuxuryAppComponentsModule],
   providers: [MessageService, DialogService, CustomToastService],
 })
-export default class GastosMantenimientoComponent implements OnInit, OnDestroy {
-  customToastService = inject(CustomToastService);
-  dataService = inject(DataConnectorService);
+export default class GastosMantenimientoComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   customerIdService = inject(CustomerIdService);
-  messageService = inject(MessageService);
-  dialogService = inject(DialogService);
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+  dialogHandlerService = inject(DialogHandlerService);
 
   data: any[] = [];
   resumenGastos: any[] = [];
@@ -39,60 +34,31 @@ export default class GastosMantenimientoComponent implements OnInit, OnDestroy {
     });
   }
   onLoadData() {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .get(
-        `MaintenanceCalendars/SummaryOfExpenses/${this.customerIdService.getCustomerId()}`
-      )
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.data = resp.body.items;
-          this.totalGasto = resp.body.totalGastos;
-          this.customToastService.onClose();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
-    this.dataService
-      .get(
-        `MaintenanceCalendars/Resumengastos/${this.customerIdService.getCustomerId()}`
-      )
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.resumenGastos = resp.body;
-          this.customToastService.onClose();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
+    const urlApi = `MaintenanceCalendars/SummaryOfExpenses/${this.customerIdService.getCustomerId()}`;
+    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      this.data = result.items;
+      this.totalGasto = result.totalGastos;
+    });
+
+    const urlApi2 = `MaintenanceCalendars/Resumengastos/${this.customerIdService.getCustomerId()}`;
+    this.apiRequestService.onGetList(urlApi2).then((result: any) => {
+      this.resumenGastos = result;
+    });
   }
   onModalItem(item: any) {
-    this.ref = this.dialogService.open(
-      AddoreditMaintenancePreventiveComponent,
-      {
-        data: {
+    this.dialogHandlerService
+      .openDialog(
+        AddoreditMaintenancePreventiveComponent,
+        {
           id: item.id,
           task: 'edit',
           idMachinery: item.idEquipo,
         },
-        header: 'Editar regitro',
-        styleClass: 'modal-mdInventory',
-        closeOnEscape: true,
-      }
-    );
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        this.customToastService.onShowSuccess();
-        this.onLoadData();
-      }
-    });
-  }
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
+        'Editar regitro',
+        this.dialogHandlerService.dialogSizeFull
+      )
+      .then((result: boolean) => {
+        if (result) this.onLoadData();
+      });
   }
 }

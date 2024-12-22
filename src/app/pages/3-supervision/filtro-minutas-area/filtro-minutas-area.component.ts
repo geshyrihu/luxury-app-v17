@@ -1,30 +1,23 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subject, takeUntil } from 'rxjs';
+import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { EAreaMinutasDetalles } from 'src/app/core/enums/area-minutas-detalles.enum';
 import {
   onGetNameEnumeration,
   onGetSelectItemFromEnum,
 } from 'src/app/core/helpers/enumeration';
+import { CustomPipeModule } from 'src/app/core/pipes/custom-pipe.module';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
-import { DataConnectorService } from 'src/app/core/services/data.service';
 
 @Component({
   selector: 'app-filtro-minutas-area',
   templateUrl: './filtro-minutas-area.component.html',
   standalone: true,
-  imports: [LuxuryAppComponentsModule],
+  imports: [LuxuryAppComponentsModule, CustomPipeModule],
 })
-export default class FiltroMinutasAreaComponent implements OnInit, OnDestroy {
-  dataService = inject(DataConnectorService);
+export default class FiltroMinutasAreaComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);
-  customToastService = inject(CustomToastService);
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   data: any[] = [];
   meetingId: number;
@@ -52,23 +45,10 @@ export default class FiltroMinutasAreaComponent implements OnInit, OnDestroy {
   }
 
   onLoadData() {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .get(
-        `Dashboard/FiltroMinutasArea/${this.meetingId}/${this.area}/${this.estatus}`
-      )
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.data = this.customToastService.onCloseOnGetData(resp.body);
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
-  }
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
+    const urlApi = `Dashboard/FiltroMinutasArea/${this.meetingId}/${this.area}/${this.estatus}`;
+
+    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      this.data = result;
+    });
   }
 }

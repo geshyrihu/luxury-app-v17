@@ -59,10 +59,18 @@ export default class AddOrEditApplicationUserComponent implements OnInit {
 
     this.submitting = true;
 
-    this.apiRequestService
-      .onPut(`Auth/EditAccount/${this.applicationUserId}`, this.form.value)
-      .then((result: boolean) => {
-        result ? this.ref.close(true) : (this.submitting = false);
-      });
+    if (this.applicationUserId === '') {
+      this.apiRequestService
+        .onPost('Auth/CreateAccount', this.form.value)
+        .then((result: boolean) => {
+          result ? this.ref.close(true) : (this.submitting = false);
+        });
+    } else {
+      this.apiRequestService
+        .onPut(`Auth/EditAccount/${this.applicationUserId}`, this.form.value)
+        .then((result: boolean) => {
+          result ? this.ref.close(true) : (this.submitting = false);
+        });
+    }
   }
 }

@@ -1,14 +1,8 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import {
-  DialogService,
-  DynamicDialogConfig,
-  DynamicDialogRef,
-} from 'primeng/dynamicdialog';
-import { Subject, takeUntil } from 'rxjs';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
-import { DataConnectorService } from 'src/app/core/services/data.service';
+import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import ServiceOrderAddOrEditComponent from '../../../5.3-mantenimiento/service-order/addoredit-service-order.component';
 
 @Component({
@@ -17,18 +11,12 @@ import ServiceOrderAddOrEditComponent from '../../../5.3-mantenimiento/service-o
   standalone: true,
   imports: [LuxuryAppComponentsModule],
 })
-export default class ServiceHistoryMachineryComponent
-  implements OnInit, OnDestroy
-{
-  dataService = inject(DataConnectorService);
+export default class ServiceHistoryMachineryComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
+  dialogHandlerService = inject(DialogHandlerService);
   config = inject(DynamicDialogConfig);
-  customToastService = inject(CustomToastService);
-  dialogService = inject(DialogService);
 
   id: number = this.config.data.id;
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   data: any[] = [];
   ref: DynamicDialogRef;
@@ -38,41 +26,26 @@ export default class ServiceHistoryMachineryComponent
   }
 
   onLoadData() {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .get(`Machineries/ServiceHistory/${this.config.data.id}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.data = this.customToastService.onCloseOnGetData(resp.body);
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
+    const urlApi = `Machineries/ServiceHistory/${this.config.data.id}`;
+    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      this.data = result;
+    });
   }
 
   onEdit(data: any) {
-    this.ref = this.dialogService.open(ServiceOrderAddOrEditComponent, {
-      data: {
-        id: data.id,
-        machineryId: data.machineryId,
-        providerId: data.providerId,
-      },
-      header: data.title,
-      width: '100%',
-      closeOnEscape: true,
-      baseZIndex: 10000,
-    });
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        this.customToastService.onShowSuccess();
-        this.onLoadData();
-      }
-    });
-  }
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
+    this.dialogHandlerService
+      .openDialog(
+        ServiceOrderAddOrEditComponent,
+        {
+          id: data.id,
+          machineryId: data.machineryId,
+          providerId: data.providerId,
+        },
+        data.title,
+        this.dialogHandlerService.dialogSizeMd
+      )
+      .then((result: boolean) => {
+        if (result) this.onLoadData();
+      });
   }
 }

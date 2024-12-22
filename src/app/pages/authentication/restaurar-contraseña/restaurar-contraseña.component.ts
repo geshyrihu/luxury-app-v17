@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -11,8 +11,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { Subscription } from 'rxjs';
 import { IResetPassword } from 'src/app/core/interfaces/reset-password.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
-import { DataConnectorService } from 'src/app/core/services/data.service';
 import CBtnModule from 'src/app/custom-components/custom-buttons/btn.module';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
@@ -23,12 +23,11 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   imports: [CommonModule, ReactiveFormsModule, CustomInputModule, CBtnModule],
   providers: [MessageService, CustomToastService],
 })
-export default class RestaurarContraseñaComponent implements OnInit, OnDestroy {
+export default class RestaurarContraseñaComponent implements OnInit {
+  apiRequestService = inject(ApiRequestService);
   private activatedRoute = inject(ActivatedRoute);
   private formBuilder = inject(FormBuilder);
   private router = inject(Router);
-  public customToastService = inject(CustomToastService);
-  private dataService = inject(DataConnectorService);
 
   subRef$: Subscription;
   form: FormGroup;
@@ -79,21 +78,9 @@ export default class RestaurarContraseñaComponent implements OnInit, OnDestroy 
       token: this.token,
     };
 
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.subRef$ = this.dataService
-      .post('Auth/ResetPassword', this.data)
-      .subscribe({
-        next: () => {
-          this.customToastService.onClose();
-          this.router.navigateByUrl('#/auth/login');
-        },
-        error: (err: any) => {
-          this.customToastService.onLoadingError(
-            'Error, ' + err.error.description
-          );
-        },
-      });
+    this.apiRequestService.onPost('Auth/ResetPassword', this.data).then((_) => {
+      this.router.navigateByUrl('/auth/login');
+    });
   }
 
   passwordMatchValidator(formGroup: UntypedFormGroup) {

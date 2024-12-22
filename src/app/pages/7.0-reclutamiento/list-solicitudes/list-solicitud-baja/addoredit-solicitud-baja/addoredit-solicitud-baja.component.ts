@@ -9,15 +9,12 @@ import {
 } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subject, takeUntil } from 'rxjs';
 import { cb_ESiNo } from 'src/app/core/enums/si-no.enum';
 import { EStatus } from 'src/app/core/enums/status.enum';
 import { ETypeOfDeparture } from 'src/app/core/enums/type-of-departure.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
-import { DataConnectorService } from 'src/app/core/services/data.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
@@ -27,14 +24,10 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class AddoreditSolicitudBajaComponent implements OnInit {
-  formBuilder = inject(FormBuilder);
-  dataService = inject(DataConnectorService);
   apiRequestService = inject(ApiRequestService);
+  formBuilder = inject(FormBuilder);
   ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);
-  customToastService = inject(CustomToastService);
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   submitting: boolean = false;
 
@@ -65,28 +58,20 @@ export default class AddoreditSolicitudBajaComponent implements OnInit {
     if (this.id !== 0) this.onLoadData();
   }
   onLoadData() {
-    this.dataService
-      .get(`RequestDismissal/GetById/${this.id}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.form.patchValue(resp.body);
-
-          // Luego, recorre el arreglo de discounts y agrégalo al formArray 'discounts'
-          resp.body.discounts.forEach((discount: any) => {
-            this.discounts.push(
-              this.formBuilder.group({
-                description: discount.description,
-                discount: discount.discount,
-                id: discount.id,
-              })
-            );
-          });
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+    const urlApi = `RequestDismissal/GetById/${this.id}`;
+    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+      this.form.patchValue(result);
+      // Luego, recorre el arreglo de discounts y agrégalo al formArray 'discounts'
+      result.discounts.forEach((discount: any) => {
+        this.discounts.push(
+          this.formBuilder.group({
+            description: discount.description,
+            discount: discount.discount,
+            id: discount.id,
+          })
+        );
       });
+    });
   }
 
   onSubmit() {
@@ -95,49 +80,30 @@ export default class AddoreditSolicitudBajaComponent implements OnInit {
     this.id = this.config.data.id;
 
     this.submitting = true;
+
     if (this.id === 0) {
-      this.dataService
-        .post(`RequestDismissal/`, this.form.value)
-        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-        .subscribe({
-          next: () => {
-            this.customToastService.onClose();
-            this.ref.close(true);
-          },
-          error: (error) => {
-            // Habilitar el botón nuevamente al finalizar el envío del formulario
-            this.submitting = false;
-            this.customToastService.onCloseToError(error);
-          },
+      this.apiRequestService
+        .onPost(`RequestDismissal`, this.form.value)
+        .then((result: boolean) => {
+          result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.dataService
-        .put(`RequestDismissal/${this.id}`, this.form.value)
-        .subscribe({
-          next: () => {
-            this.customToastService.onClose();
-            this.ref.close(true);
-          },
-          error: (error) => {
-            // Habilitar el botón nuevamente al finalizar el envío del formulario
-            this.submitting = false;
-            this.customToastService.onCloseToError(error);
-          },
+      this.apiRequestService
+        .onPut(`RequestDismissal/${this.id}`, this.form.value)
+        .then((result: boolean) => {
+          result ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }
 
   addDiscountDescription() {
     const discountDescription = this.formBuilder.group({
+      id: ['', Validators.required],
       description: ['', Validators.required],
       discount: ['', Validators.required],
-      id: ['', Validators.required],
     });
     this.discounts.push(discountDescription);
   }
-  // isControlInvalid(control: FormControl) {
-  //   return control.invalid && (control.dirty || control.touched);
-  // }
 
   isControlInvalid(control: AbstractControl | null): boolean {
     if (control instanceof FormControl) {
@@ -147,27 +113,13 @@ export default class AddoreditSolicitudBajaComponent implements OnInit {
   }
 
   removeDiscountDescription(index: number, id: number) {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .delete(`RequestDismissalDiscount/${id}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          this.customToastService.onCloseToSuccess();
-          this.discounts.removeAt(index);
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
+    const urlApi = `RequestDismissalDiscount/${id}`;
+    this.apiRequestService.onDelete(urlApi).then((result: boolean) => {
+      this.discounts.removeAt(index);
+    });
   }
 
   get discounts() {
     return this.form.get('discounts') as FormArray;
-  }
-
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
   }
 }

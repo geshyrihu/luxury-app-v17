@@ -3,7 +3,6 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { IFichaTecnicaActivo } from 'src/app/core/interfaces/ficha-tecnica-activo.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
-import { DataConnectorService } from 'src/app/core/services/data.service';
 
 @Component({
   selector: 'app-ficha-tecnica-activo',
@@ -12,7 +11,6 @@ import { DataConnectorService } from 'src/app/core/services/data.service';
   imports: [LuxuryAppComponentsModule],
 })
 export default class FichaTecnicaActivoComponent implements OnInit {
-  dataService = inject(DataConnectorService);
   apiRequestService = inject(ApiRequestService);
   config = inject(DynamicDialogConfig);
 

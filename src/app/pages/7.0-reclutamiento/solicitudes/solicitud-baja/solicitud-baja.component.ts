@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   AbstractControl,
   FormArray,
@@ -10,16 +10,13 @@ import {
 import { FileUploadModule, FileUploadValidators } from '@iplab/ngx-file-upload';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subject, takeUntil } from 'rxjs';
 import { cb_ESiNo } from 'src/app/core/enums/si-no.enum';
 import { ETipoBaja } from 'src/app/core/enums/tipo-baja.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataConnectorService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
@@ -29,18 +26,14 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   standalone: true,
   imports: [LuxuryAppComponentsModule, CustomInputModule, FileUploadModule],
 })
-export default class SolicitudBajaComponent implements OnInit, OnDestroy {
-  customToastService = inject(CustomToastService);
+export default class SolicitudBajaComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  dataService = inject(DataConnectorService);
   formBuilder = inject(FormBuilder);
   authS = inject(AuthService);
   config = inject(DynamicDialogConfig);
   customerIdService = inject(CustomerIdService);
   dateService = inject(DateService);
   ref = inject(DynamicDialogRef);
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   data: any;
   id: number = 0;
@@ -88,18 +81,10 @@ export default class SolicitudBajaComponent implements OnInit, OnDestroy {
     });
   }
   onLoadData() {
-    this.dataService
-      .get(`RequestDismissal/GetRequestDismissal/${this.employeeId}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.data = this.customToastService.onCloseOnGetData(resp.body);
-          this.form.patchValue(resp.body);
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
+    const urlApi = `RequestDismissal/GetRequestDismissal/${this.employeeId}`;
+    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+      this.form.patchValue(result);
+    });
   }
 
   handleValueChange(newValue: any) {
@@ -126,31 +111,18 @@ export default class SolicitudBajaComponent implements OnInit, OnDestroy {
     var model = this.createFormData(this.form.value);
 
     this.submitting = true;
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
 
-    this.dataService
-      .post(
+    this.apiRequestService
+      .onPost(
         `SolicitudesReclutamiento/SolicitudBaja/
           ${this.customerIdService.getCustomerId()}/${this.employeeId}/${
           this.authS.infoUserAuthDto.applicationUserId
         }`,
         model
       )
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          this.ref.close(true);
-          this.customToastService.onClose();
-        },
-        error: (error) => {
-          // Habilitar el botón nuevamente al finalizar el envío del formulario
-          this.submitting = false;
-          this.customToastService.onCloseToError(error);
-        },
+      .then((result: boolean) => {
+        result ? this.ref.close(true) : (this.submitting = false);
       });
-
-    // Aquí puedes hacer lo que desees con el objeto `solicitud`
   }
   createFormData(form: any) {
     const formData = new FormData();
@@ -257,8 +229,5 @@ export default class SolicitudBajaComponent implements OnInit, OnDestroy {
         this.filesControl.setErrors(null);
       }
     }
-  }
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
   }
 }

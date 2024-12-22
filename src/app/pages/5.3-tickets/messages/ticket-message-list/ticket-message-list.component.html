@@ -28,7 +28,7 @@
             (add)="
               onModalAddOrEdit({
                 id: '',
-                title: 'Nuevo Registro----'
+                title: 'Nuevo Registro'
               })
             "
             [dt]="dt"
@@ -395,10 +395,7 @@
                   customClass="btn-soft-primary w-100 mt-1 text-start"
                   icon="fa-pen-to-square me-2"
                   (clicked)="
-                    onModalAddOrEdit({
-                      id: item.id,
-                      title: 'Editar'
-                    })
+                    onNavigateEdit(item.id, applicationUser, item.ticketGroupId)
                   "
                 />
                 <br />
@@ -406,7 +403,7 @@
                 <br />
               </div>
             </div>
-            <a
+            <!-- <a
               class="btn btn-soft-primary waves-effect waves-light bg-gradient me-1"
               [routerLink]="[
                 '/tickets/message/',
@@ -416,7 +413,7 @@
               ]"
             >
               <i class="fa-solid icon-edit"></i>
-            </a>
+            </a> -->
             <btn-delete
               *ngIf="isSuperUser"
               class="ms-1"

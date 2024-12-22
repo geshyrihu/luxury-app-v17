@@ -1,12 +1,10 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { MultiSelectModule } from 'primeng/multiselect';
-import { Subject, takeUntil } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
-import { DataConnectorService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
+import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import { PeriodoMonthService } from 'src/app/core/services/periodo-month.service';
 import FiltroMinutasAreaComponent from '../filtro-minutas-area/filtro-minutas-area.component';
 
@@ -16,15 +14,11 @@ import FiltroMinutasAreaComponent from '../filtro-minutas-area/filtro-minutas-ar
   standalone: true,
   imports: [LuxuryAppComponentsModule, MultiSelectModule],
 })
-export default class MinutasResumenComponent implements OnInit, OnDestroy {
-  customToastService = inject(CustomToastService);
-  dataService = inject(DataConnectorService);
+export default class MinutasResumenComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
+  dialogHandlerService = inject(DialogHandlerService);
+  periodoMonthService = inject(PeriodoMonthService);
   dateService = inject(DateService);
-  dialogService = inject(DialogService);
-  public periodoMonthService = inject(PeriodoMonthService);
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   ref: DynamicDialogRef;
   cb_customers: any[] = [];
@@ -38,6 +32,7 @@ export default class MinutasResumenComponent implements OnInit, OnDestroy {
     this.periodo = this.dateService.getNameMontYear(
       this.periodoMonthService.fechaInicial
     );
+
     this.apiRequestService
       .onGetSelectItem(`NombreCorto`)
       .then((response: any) => {
@@ -65,36 +60,20 @@ export default class MinutasResumenComponent implements OnInit, OnDestroy {
   }
 
   onLoadData(fehcaInicio: string, fechaFinal: string) {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .get(
+    this.apiRequestService
+      .onGetList(
         `ResumenGeneral/ResumenMinutasGeneralLista/${fehcaInicio}/${fechaFinal}`
       )
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.generalMinutas = resp.body;
-          this.customToastService.onClose();
-        },
-
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+      .then((result: any) => {
+        this.generalMinutas = result;
       });
-    this.dataService
-      .get(
+
+    this.apiRequestService
+      .onGetList(
         `ResumenGeneral/ResumenMinutasGeneralGrupo/${fehcaInicio}/${fechaFinal}`
       )
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.generalMinutasGrupo = resp.body;
-          this.customToastService.onClose();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+      .then((result: any) => {
+        this.generalMinutasGrupo = result;
       });
   }
   onModalFiltroMinutasArea(
@@ -104,23 +83,17 @@ export default class MinutasResumenComponent implements OnInit, OnDestroy {
     estatus: number,
     customerName: string
   ) {
-    this.ref = this.dialogService.open(FiltroMinutasAreaComponent, {
-      data: {
-        meetingId,
-        area,
-        titleEstatus,
-        estatus,
-        customerName,
+    this.dialogHandlerService.openDialog(
+      FiltroMinutasAreaComponent,
+      {
+        meetingId: meetingId,
+        area: area,
+        titleEstatus: titleEstatus,
+        estatus: estatus,
+        customerName: customerName,
       },
-      width: '100%',
-      height: '100%',
-      closeOnEscape: true,
-      baseZIndex: 10000,
-      styleClass: 'customFullModal',
-    });
-  }
-
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
+      '',
+      this.dialogHandlerService.dialogSizeFull
+    );
   }
 }

@@ -1,8 +1,7 @@
-import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataConnectorService } from 'src/app/core/services/data.service';
 import { TicketFilterService } from 'src/app/core/services/ticket-filter.service';
 import { environment } from 'src/environments/environment';
 
@@ -11,11 +10,10 @@ import { environment } from 'src/environments/environment';
   templateUrl: './report-header.component.html',
   standalone: true,
 })
-export default class ReportHeaderComponent implements OnInit, OnDestroy {
-  dataService = inject(DataConnectorService);
+export default class ReportHeaderComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   customerIdService = inject(CustomerIdService);
-  public filterReportOperationService = inject(TicketFilterService);
+  filterReportOperationService = inject(TicketFilterService);
 
   logoLuxury = `${environment.base_urlImg}logo2.jpg`;
   @Input()
@@ -36,14 +34,10 @@ export default class ReportHeaderComponent implements OnInit, OnDestroy {
     });
   }
   onLoadData() {
-    this.dataService
-      .get(`Customers/${this.customerIdService.customerId}`)
-      .subscribe((resp: any) => {
-        this.nameCustomer = resp.body.nameCustomer;
-        this.logoCustomer = `${environment.base_urlImg}Administration/customer/${resp.body.photoPath}`;
-      });
-  }
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
+    const urlApi = `Customers/${this.customerIdService.customerId}`;
+    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+      this.nameCustomer = result.nameCustomer;
+      this.logoCustomer = `${environment.base_urlImg}Administration/customer/${result.photoPath}`;
+    });
   }
 }

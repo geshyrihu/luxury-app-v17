@@ -1,14 +1,12 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { MessageService } from 'primeng/api';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { Observable, Subject } from 'rxjs';
 import { IInventarioLlave } from 'src/app/core/interfaces/inventario-llave-dto.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataConnectorService } from 'src/app/core/services/data.service';
+import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import FormInventarioLlaveComponent from './form-inventario-llave.component';
 
 @Component({
@@ -17,14 +15,12 @@ import FormInventarioLlaveComponent from './form-inventario-llave.component';
   standalone: true,
   imports: [LuxuryAppComponentsModule],
 })
-export default class ListLlavesComponent implements OnInit, OnDestroy {
-  customToastService = inject(CustomToastService);
-  authS = inject(AuthService);
-  dataService = inject(DataConnectorService);
+export default class ListLlavesComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  dialogService = inject(DialogService);
-  messageService = inject(MessageService);
+  authS = inject(AuthService);
   customerIdService = inject(CustomerIdService);
+  dialogHandlerService = inject(DialogHandlerService);
+
   data: IInventarioLlave[] = [];
 
   ref: DynamicDialogRef;
@@ -43,21 +39,10 @@ export default class ListLlavesComponent implements OnInit, OnDestroy {
   }
 
   onLoadData() {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .get<IInventarioLlave[]>(
-        `InventarioLlave/GetAll/${this.customerIdService.customerId}`
-      )
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.data = this.customToastService.onCloseOnGetData(resp.body);
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
+    const urlApi = `InventarioLlave/GetAll/${this.customerIdService.customerId}`;
+    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      this.data = result;
+    });
   }
   onDelete(id: number) {
     this.apiRequestService
@@ -68,24 +53,17 @@ export default class ListLlavesComponent implements OnInit, OnDestroy {
   }
 
   onModalAddOrEdit(data: any) {
-    this.ref = this.dialogService.open(FormInventarioLlaveComponent, {
-      data: {
-        id: data.id,
-      },
-      header: data.title,
-      styleClass: 'modal-md',
-      closeOnEscape: true,
-      baseZIndex: 10000,
-    });
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        this.customToastService.onShowSuccess();
-        this.onLoadData();
-      }
-    });
-  }
-
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
+    this.dialogHandlerService
+      .openDialog(
+        FormInventarioLlaveComponent,
+        {
+          id: data.id,
+        },
+        data.title,
+        this.dialogHandlerService.dialogSizeMd
+      )
+      .then((result: boolean) => {
+        if (result) this.onLoadData();
+      });
   }
 }

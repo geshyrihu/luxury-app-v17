@@ -1,18 +1,15 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule, {
   flatpickrFactory,
 } from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subject, takeUntil } from 'rxjs';
 import { EState } from 'src/app/core/enums/state.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataConnectorService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import { environment } from 'src/environments/environment';
@@ -23,20 +20,16 @@ import { environment } from 'src/environments/environment';
   standalone: true,
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
-export default class AddoreditToolsComponent implements OnInit, OnDestroy {
-  authS = inject(AuthService);
-  dataService = inject(DataConnectorService);
+export default class AddoreditToolsComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
+  authS = inject(AuthService);
   formBuilder = inject(FormBuilder);
   dateService = inject(DateService);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
   customerIdService = inject(CustomerIdService);
-  customToastService = inject(CustomToastService);
 
   submitting: boolean = false;
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   id: number = 0;
   urlBaseImg = '';
@@ -79,21 +72,19 @@ export default class AddoreditToolsComponent implements OnInit, OnDestroy {
       });
   }
   onLoadData() {
-    this.dataService
-      .get(`Tools/Get/${this.id}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe((resp: any) => {
-        this.model = resp.body;
-        resp.body.dateOfPurchase = this.dateService.getDateFormat(
-          resp.body.dateOfPurchase
-        );
-        this.urlBaseImg = `${
-          environment.base_urlImg
-        }customers/${this.customerIdService.getCustomerId()}/tools/${
-          this.model.photoPath
-        }`;
-        this.form.patchValue(resp.body);
-      });
+    const urlApi = `Tools/Get/${this.id}`;
+    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+      this.model = result;
+      result.dateOfPurchase = this.dateService.getDateFormat(
+        result.dateOfPurchase
+      );
+      this.urlBaseImg = `${
+        environment.base_urlImg
+      }customers/${this.customerIdService.getCustomerId()}/tools/${
+        this.model.photoPath
+      }`;
+      this.form.patchValue(result);
+    });
   }
 
   onSubmit() {
@@ -101,41 +92,20 @@ export default class AddoreditToolsComponent implements OnInit, OnDestroy {
     const formDataDto = this.onCreateFormData(this.form.value);
 
     this.submitting = true;
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
 
     if (this.id === 0) {
-      this.dataService
-        .post('Tools', formDataDto)
-        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-        .subscribe({
-          next: () => {
-            this.ref.close(true);
-            this.customToastService.onClose();
-          },
-          error: (error) => {
-            // Habilitar el botón nuevamente al finalizar el envío del formulario
-            this.submitting = false;
-            this.customToastService.onCloseToError(error);
-          },
+      this.apiRequestService
+        .onPost(`Tools`, formDataDto)
+        .then((result: boolean) => {
+          result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.dataService
-        .put(`Tools/${this.id}`, formDataDto)
-        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-        .subscribe({
-          next: () => {
-            this.ref.close(true);
-            this.customToastService.onClose();
-          },
-          error: (error) => {
-            // Habilitar el botón nuevamente al finalizar el envío del formulario
-            this.submitting = false;
-            this.customToastService.onCloseToError(error);
-          },
+      this.apiRequestService
+        .onPut(`Tools/${this.id}`, formDataDto)
+        .then((result: boolean) => {
+          result ? this.ref.close(true) : (this.submitting = false);
         });
     }
-    this.submitting = false;
   }
   onCreateFormData(dto: any) {
     let formData = new FormData();
@@ -163,8 +133,5 @@ export default class AddoreditToolsComponent implements OnInit, OnDestroy {
   uploadFile(file: File) {
     this.photoFileUpdate = true;
     this.form.patchValue({ photoPath: file });
-  }
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
   }
 }

@@ -1,10 +1,8 @@
 import {} from '@angular/common';
-import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { Component, Input, OnInit, inject } from '@angular/core';
+import { Observable } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataConnectorService } from 'src/app/core/services/data.service';
 import { TicketFilterService } from 'src/app/core/services/ticket-filter.service';
 import { environment } from 'src/environments/environment';
 
@@ -13,12 +11,10 @@ import { environment } from 'src/environments/environment';
   templateUrl: './haeder-customer.component.html',
   standalone: true,
 })
-export default class HaederCustomerComponent implements OnInit, OnDestroy {
-  dataService = inject(DataConnectorService);
+export default class HaederCustomerComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   customerIdService = inject(CustomerIdService);
   filterReportOperationService = inject(TicketFilterService);
-  customToastService = inject(CustomToastService);
 
   logoCustomer = '';
   nameCustomer = '';
@@ -29,8 +25,6 @@ export default class HaederCustomerComponent implements OnInit, OnDestroy {
   @Input()
   subTitle: string = '';
 
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
-
   ngOnInit(): void {
     this.onLoadData();
     this.customerId$.subscribe(() => {
@@ -39,20 +33,10 @@ export default class HaederCustomerComponent implements OnInit, OnDestroy {
   }
 
   onLoadData() {
-    this.dataService
-      .get(`Customers/${this.customerIdService.customerId}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.nameCustomer = resp.body.nameCustomer;
-          this.logoCustomer = `${environment.base_urlImg}Administration/customer/${resp.body.photoPath}`;
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
-  }
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
+    const urlApi = `Customers/${this.customerIdService.customerId}`;
+    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+      this.nameCustomer = result.nameCustomer;
+      this.logoCustomer = `${environment.base_urlImg}Administration/customer/${result.photoPath}`;
+    });
   }
 }

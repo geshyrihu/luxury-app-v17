@@ -1,12 +1,8 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { MessageService } from 'primeng/api';
-import { DialogService } from 'primeng/dynamicdialog';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataConnectorService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
 import { PeriodoMonthService } from 'src/app/core/services/periodo-month.service';
 
@@ -14,22 +10,16 @@ import { PeriodoMonthService } from 'src/app/core/services/periodo-month.service
   selector: 'app-reporte-tickets',
   templateUrl: './reporte-tickets.component.html',
   standalone: true,
-  imports: [LuxuryAppComponentsModule, ReporteTicketsComponent],
+  imports: [LuxuryAppComponentsModule],
 })
-export default class ReporteTicketsComponent implements OnInit, OnDestroy {
-  customerIdService = inject(CustomerIdService);
-  dataService = inject(DataConnectorService);
+export default class ReporteTicketsComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   dateService = inject(DateService);
-  dialogService = inject(DialogService);
-  messageService = inject(MessageService);
-  public periodoMonthService = inject(PeriodoMonthService);
-  customToastService = inject(CustomToastService);
+  periodoMonthService = inject(PeriodoMonthService);
+  customerIdService = inject(CustomerIdService);
 
   data: any[] = [];
   customerId$: Observable<number> = this.customerIdService.getCustomerId$();
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   ngOnInit(): void {
     this.onLoadData();
@@ -45,28 +35,16 @@ export default class ReporteTicketsComponent implements OnInit, OnDestroy {
   }
 
   onLoadData() {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .get(
-        `ResumenGeneral/ReporteResumenTicket/${
-          this.customerIdService.customerId
-        }/${this.dateService.getDateFormat(
-          this.periodoMonthService.getPeriodoInicio
-        )}/${this.dateService.getDateFormat(
-          this.periodoMonthService.getPeriodoFin
-        )}`
-      )
-
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.data = this.customToastService.onCloseOnGetData(resp.body);
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
+    const urlApi = `ResumenGeneral/ReporteResumenTicket/${
+      this.customerIdService.customerId
+    }/${this.dateService.getDateFormat(
+      this.periodoMonthService.getPeriodoInicio
+    )}/${this.dateService.getDateFormat(
+      this.periodoMonthService.getPeriodoFin
+    )}`;
+    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      this.data = result;
+    });
   }
 
   onSumaTotales(data: any[]) {
@@ -85,9 +63,5 @@ export default class ReporteTicketsComponent implements OnInit, OnDestroy {
       atendidas,
       pendientes,
     };
-  }
-
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
   }
 }

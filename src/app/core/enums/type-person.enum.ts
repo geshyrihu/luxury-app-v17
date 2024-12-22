@@ -1,6 +1,6 @@
 export enum ETypePerson {
-  Employee,
-  Provider,
-  Client,
+  Empleado,
+  Proveedor,
+  Condomino,
   Directivo,
 }

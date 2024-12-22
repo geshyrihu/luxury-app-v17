@@ -1,161 +1,357 @@
 <p-toast position="top-right" [baseZIndex]="99999"></p-toast>
-
 @if (data) {
-<div class="card">
-  <p-table
-    #dt
-    [globalFilterFields]="[
-      'fullName',
-      'userName',
-      'customer',
-      'email',
-      'phoneNumber'
-    ]"
-    [paginator]="true"
-    [rows]="100"
-    [rowsPerPageOptions]="[100, 200]"
-    [showCurrentPageReport]="true"
-    [value]="data"
-    currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
-    styleClass="custom-table"
-    [tableStyle]="{ 'min-width': '50rem' }"
-  >
-    <ng-template pTemplate="caption">
-      <div class="row">
-        <div class="col-sm-8">
-          <custom-table-caption
-            (add)="onAddOrEdit('')"
-            [title]="'Cuentas de acceso '"
-            [dt]="dt"
-          />
-        </div>
-        <div class="col-sm-2">
-          <select
-            class="form-select"
-            (change)="onSelectTypePerson($event.target.value)"
-          >
-            <option *ngFor="let item of cb_typePerson" [value]="item.value">
-              {{ item.label }}
-            </option>
-          </select>
-        </div>
-        <div class="col-sm-2">
-          <btn-active-desactive
-            (activo)="onSelectActive($event)"
-            (inactivo)="onSelectActive($event)"
-          />
-        </div>
-        <div class="col">
-          <div class="p-d-flex p-ai-center p-jc-between">
-            En total hay
-            {{ data ? data.length : 0 }} registros.
+<!-- Contenido para pantallas medianas y grandes (md en adelante) -->
+<div class="d-none d-md-block">
+  <div class="card">
+    <p-table
+      #dt
+      [globalFilterFields]="[
+        'fullName',
+        'userName',
+        'customer',
+        'email',
+        'phoneNumber'
+      ]"
+      [paginator]="true"
+      [rows]="100"
+      [rowsPerPageOptions]="[100, 200]"
+      [showCurrentPageReport]="true"
+      [value]="data"
+      currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+      styleClass="custom-table"
+      [tableStyle]="{ 'min-width': '50rem' }"
+    >
+      <ng-template pTemplate="caption">
+        <div class="row">
+          <div class="col-sm-8">
+            <custom-table-caption
+              (add)="onAddOrEdit('', 'Crear Cuenta')"
+              [title]="'Cuentas de acceso '"
+              [dt]="dt"
+            />
+          </div>
+          <div class="col-sm-2">
+            <select
+              class="form-select"
+              (change)="onSelectTypePerson($event.target.value)"
+            >
+              <option *ngFor="let item of cb_typePerson" [value]="item.value">
+                {{ item.label }}
+              </option>
+            </select>
+          </div>
+          <div class="col-sm-2">
+            <btn-active-desactive
+              (activo)="onSelectActive($event)"
+              (inactivo)="onSelectActive($event)"
+            />
+          </div>
+          <div class="col">
+            <div class="p-d-flex p-ai-center p-jc-between">
+              En total hay
+              {{ data ? data.length : 0 }} registros.
+            </div>
           </div>
         </div>
-      </div>
-    </ng-template>
-    <ng-template pTemplate="header">
-      <tr>
-        <th
-          class="bg-gradient"
-          style="width: 15%"
-          scope="col"
-          pSortableColumn="customer"
-        >
-          CLIENTE<p-sortIcon field="customer"></p-sortIcon>
-        </th>
-        <th
-          class="bg-gradient"
-          style="width: 10%"
-          scope="col"
-          pSortableColumn="userName"
-        >
-          USUARIO <p-sortIcon field="userName"></p-sortIcon>
-        </th>
-        <th
-          class="bg-gradient"
-          style="width: 25%"
-          scope="col"
-          pSortableColumn="fullName"
-        >
-          NOMBRE <p-sortIcon field="fullName"></p-sortIcon>
-        </th>
-        <th
-          class="bg-gradient"
-          scope="col"
-          style="width: 25%"
-          pSortableColumn="email"
-        >
-          CORREO
-          <p-sortIcon field="email"></p-sortIcon>
-        </th>
-        <th class="bg-gradient" scope="col" style="width: 10%">TÉLEFONO</th>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th
+            class="bg-gradient"
+            style="width: 15%"
+            scope="col"
+            pSortableColumn="customer"
+          >
+            CLIENTE<p-sortIcon field="customer"></p-sortIcon>
+          </th>
+          <th
+            class="bg-gradient"
+            style="width: 10%"
+            scope="col"
+            pSortableColumn="userName"
+          >
+            USUARIO <p-sortIcon field="userName"></p-sortIcon>
+          </th>
+          <th
+            class="bg-gradient"
+            style="width: 25%"
+            scope="col"
+            pSortableColumn="fullName"
+          >
+            NOMBRE <p-sortIcon field="fullName"></p-sortIcon>
+          </th>
+          <th
+            class="bg-gradient"
+            scope="col"
+            style="width: 25%"
+            pSortableColumn="email"
+          >
+            CORREO
+            <p-sortIcon field="email"></p-sortIcon>
+          </th>
+          <th class="bg-gradient" scope="col" style="width: 10%">TÉLEFONO</th>
 
-        <th class="bg-gradient" scope="col" style="width: 10%"></th>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-item>
-      <tr>
-        <td class="p-column-title">
-          {{ item.customer }}
-        </td>
-        <td class="p-column-title">
-          {{ item.userName }}
-        </td>
-        <td class="p-column-title">
+          <th class="bg-gradient" scope="col" style="width: 10%"></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-item>
+        <tr>
+          <td class="p-column-title">
+            {{ item.customer }}
+          </td>
+          <td class="p-column-title">
+            {{ item.userName }}
+          </td>
+          <td class="p-column-title">
+            <img
+              [src]="urlImgApi + item.photoPath"
+              alt="..."
+              class="rounded avatar-md pointer"
+              (click)="onCardEmployee(item.id)"
+            />
+            {{ item.fullName }}
+          </td>
+          <td class="p-column-title">
+            {{ item.email }}
+          </td>
+          <td class="p-column-title">
+            {{ item.phoneNumber }}
+          </td>
+
+          <td class="p-column-title no-print">
+            <div class="d-flex justify-content-center">
+              @if (item.active) {
+              <custom-button
+                (clicked)="onToBlockAccount(item.id)"
+                customClass="btn-soft-success waves-effect waves-light me-1"
+                icon="fa-solid fa-user-lock text-success"
+                ngbTooltip="Bloquear"
+              />
+              } @if (!item.active) {
+              <custom-button
+                (clicked)="onToUnlockAccount(item.id)"
+                customClass="btn-soft-danger waves-effect waves-light me-1"
+                icon="fa-solid fa-user-check text-danger"
+                ngbTooltip="Desbloquear"
+              />
+              }
+              <custom-button
+                customClass="btn-soft-primary waves-effect waves-light me-1"
+                icon="fa-solid fa-building "
+                (clicked)="onModalEditAccount(item.id, item.email)"
+              />
+              <custom-button
+                customClass="btn-soft-primary waves-effect waves-light me-1"
+                icon="fa-key"
+                (clicked)="onModalPermission(item.id)"
+              />
+              <btn-edit (edit)="onAddOrEdit(item.id, 'Editar Cuenta')" />
+              <btn-delete (OnConfirm)="onDelete(item.id)" />
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="paginatorleft">
+        <div class="p-d-flex p-ai-center p-jc-between">
+          En total hay
+          {{ data ? data.length : 0 }} registros.
+        </div>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+<!-- Contenido para pantallas pequeñas (sm y menores) -->
+<div class="d-block d-md-none">
+  <div class="container-fluid py-3">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h4 class="page-title-box">Usuarios</h4>
+      <custom-button
+        ngbTooltip="Agregar"
+        customClass="btn-soft-primary waves-effect waves-light  bg-gradient"
+        icon="fa-plus"
+        (clicked)="onAddOrEdit('', 'Crear Cuenta')"
+      />
+    </div>
+
+    <div class="mb-3 d-flex justify-content-between mt-1 mb-1">
+      <select
+        class="form-select form-select-sm w-50 me-2"
+        (change)="onSelectForCustomer($event.target.value)"
+      >
+        <option *ngFor="let item of selectCustomer" [value]="item.value">
+          {{ item.label }}
+        </option>
+      </select>
+      <select
+        class="form-select form-select-sm w-50"
+        (change)="onSelectTypePerson($event.target.value)"
+      >
+        <option *ngFor="let item of cb_typePerson" [value]="item.value">
+          {{ item.label }}
+        </option>
+      </select>
+    </div>
+
+    <div class="d-flex align-items-center mb-3">
+      <input
+        type="text"
+        placeholder="Ingresa texto para buscar..."
+        class="form-control form-control-sm w-75 me-2"
+        [(ngModel)]="searchText"
+        (input)="onSearch()"
+      />
+      <div class="d-flex justify-content-start gap-2 w-25">
+        <button
+          *ngIf="applicationUserState === false"
+          class="btn btn-soft-primary waves-effect waves-light bg-gradient btn-sm w-100"
+          (click)="onSelectActive(true)"
+        >
+          Activas
+        </button>
+
+        <button
+          *ngIf="applicationUserState === true"
+          class="btn btn-soft-primary waves-effect waves-light bg-gradient btn-sm w-100"
+          (click)="onSelectActive(false)"
+        >
+          Inactivas
+        </button>
+      </div>
+    </div>
+
+    <div *ngIf="filteredData" class="list-group mt-1">
+      <div
+        *ngFor="let item of filteredData"
+        class="list-group-item d-flex align-items-center justify-content-between py-1"
+      >
+        <!-- aqui tengo un espacio que no logro disminuir, como lo hago? -->
+        <div class="d-flex align-items-center">
           <img
             [src]="urlImgApi + item.photoPath"
-            alt="..."
-            class="rounded avatar-md pointer"
-            (click)="onCardEmployee(item.id)"
+            alt="Usuario"
+            class="rounded-top avatar-xl me-2"
+            style="width: 50px; height: 50px"
           />
-          {{ item.fullName }}
-        </td>
-        <td class="p-column-title">
-          {{ item.email }}
-        </td>
-        <td class="p-column-title">
-          {{ item.phoneNumber }}
-        </td>
-
-        <td class="p-column-title no-print">
-          <div class="d-flex justify-content-center">
-            @if (item.active) {
-            <custom-button
-              (clicked)="onToBlockAccount(item.id)"
-              customClass="btn-soft-success waves-effect waves-light me-1"
-              icon="fa-solid fa-user-lock text-success"
-              ngbTooltip="Bloquear"
-            />
-            } @if (!item.active) {
-            <custom-button
-              (clicked)="onToUnlockAccount(item.id)"
-              customClass="btn-soft-danger waves-effect waves-light me-1"
-              icon="fa-solid fa-user-check text-danger"
-              ngbTooltip="Desbloquear"
-            />
-            }
-            <custom-button
-              customClass="btn-soft-primary waves-effect waves-light me-1"
-              icon="fa-solid fa-building "
-              (clicked)="onModalEditAccount(item.id, item.email)"
-            />
-            <custom-button
-              customClass="btn-soft-primary waves-effect waves-light me-1"
-              icon="fa-key"
-              (clicked)="onModalPermission(item.id)"
-            />
-            <btn-edit (edit)="onAddOrEdit(item.id)" />
-            <btn-delete (OnConfirm)="onDelete(item.id)" />
+          <div>
+            <h6 class="mb-0">{{ item.fullName }}</h6>
+            <small class="text-muted">{{ item.customer }}</small>
           </div>
-        </td>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="paginatorleft">
-      <div class="p-d-flex p-ai-center p-jc-between">
-        En total hay
-        {{ data ? data.length : 0 }} registros.
+        </div>
+        <div class="d-flex align-items-center">
+          <div class="dropdown">
+            <button
+              class="btn btn-soft-primary waves-effect waves-light bg-gradient btn-sm dropdown-toggle"
+              type="button"
+              id="dropdownMenuButton"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+              title="Opciones"
+            >
+              <i class="fa-solid fa-ellipsis-vertical"></i>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <!-- Bloquear o Desbloquear -->
+              <li *ngIf="item.active">
+                <button
+                  class="dropdown-item"
+                  (click)="onToBlockAccount(item.id)"
+                  title="Bloquear"
+                >
+                  <i class="fa-solid fa-user-lock text-success me-2"></i>
+                  Bloquear
+                </button>
+              </li>
+              <li *ngIf="!item.active">
+                <button
+                  class="dropdown-item"
+                  (click)="onToUnlockAccount(item.id)"
+                  title="Desbloquear"
+                >
+                  <i class="fa-solid fa-user-check text-danger me-2"></i>
+                  Desbloquear
+                </button>
+              </li>
+
+              <!-- Editar cuenta -->
+              <li>
+                <button
+                  class="dropdown-item"
+                  (click)="onModalEditAccount(item.id, item.email)"
+                  title="Editar Cuenta"
+                >
+                  <i class="fa-solid fa-building me-2"></i>
+                  Editar Cuenta
+                </button>
+              </li>
+
+              <!-- Permisos -->
+              <li>
+                <button
+                  class="dropdown-item"
+                  (click)="onModalPermission(item.id)"
+                  title="Permisos"
+                >
+                  <i class="fa-solid fa-key me-2"></i>
+                  Permisos
+                </button>
+              </li>
+
+              <!-- Editar -->
+              <li>
+                <button
+                  class="dropdown-item"
+                  (click)="onAddOrEdit(item.id, 'Editar Cuenta')"
+                  title="Editar"
+                >
+                  <i class="fa-solid fa-edit me-2"></i>
+                  Editar
+                </button>
+              </li>
+
+              <!-- Eliminar -->
+              <li>
+                <button
+                  class="dropdown-item"
+                  (click)="onDelete(item.id)"
+                  title="Eliminar"
+                >
+                  <i class="fa-solid fa-trash text-danger me-2"></i>
+                  Eliminar
+                </button>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
-    </ng-template>
-  </p-table>
+    </div>
+    <div *ngIf="!data" class="text-center mt-3">
+      <p>No se encontraron usuarios.</p>
+    </div>
+  </div>
 </div>
 }
+
+<style>
+  .list-group-item {
+    background: #f9f9f9;
+    border: 1px solid #e0e0e0;
+    border-radius: 3px;
+    margin-bottom: 5px;
+    padding: 8px 10px;
+    transition: box-shadow 0.3s, background 0.3s;
+  }
+
+  .list-group-item:hover {
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background: #ffffff;
+    border-color: #c0c0c0;
+  }
+
+  .rounded-circle {
+    object-fit: cover;
+  }
+
+  .list-group {
+    margin-top: 10px;
+  }
+</style>

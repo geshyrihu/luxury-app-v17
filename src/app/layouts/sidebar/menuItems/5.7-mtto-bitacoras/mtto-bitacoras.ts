@@ -14,6 +14,18 @@ export const mttoBitacorasMenu = (authS: AuthService) => [
         name: 'Equipos recorrido diario',
       },
       {
+        visible: authS.onValidateRoles(['SuperUsuario']),
+        label: 'Inspecciones',
+        routerLink: '/logbook/inspections',
+        name: 'Equipos recorrido diario',
+      },
+      {
+        visible: authS.onValidateRoles(['SuperUsuario']),
+        label: 'Inspecciones-areas',
+        routerLink: '/logbook/inspections-areas',
+        name: 'Inspecciones-areas',
+      },
+      {
         visible: authS.canRead('5.7 MTTOBITACORAS'),
         label: '5.7.2 Recorrido diario',
         routerLink: '/logbook/recorrido',

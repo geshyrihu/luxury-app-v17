@@ -1,25 +1,25 @@
-import { CommonModule } from "@angular/common";
-import { Component, EventEmitter, inject, Output } from "@angular/core";
-import { FormsModule } from "@angular/forms";
-import { onGetSelectItemFromEnum } from "src/app/core/helpers/enumeration";
-import { ISelectItem } from "src/app/core/interfaces/select-Item.interface";
-import { TicketGroupService } from "../../../5.3-tickets/ticket.service";
-import { ETicketMessageStatus } from "../../ticket-message-status.enum";
+import { CommonModule } from '@angular/common';
+import { Component, EventEmitter, inject, Output } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
+import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
+import { TicketGroupService } from '../../../5.3-tickets/ticket.service';
+import { ETicketMessageStatus } from '../../ticket-message-status.enum';
 
 @Component({
-  selector: "app-ticket-message-status",
-  templateUrl: "./ticket-message-status.component.html",
+  selector: 'app-ticket-message-status',
+  templateUrl: './ticket-message-status.component.html',
   standalone: true,
   imports: [CommonModule, FormsModule],
 })
 export default class TicketMessageStatusComponent {
   ticketGroupService = inject(TicketGroupService);
 
-  cb_statuss: ISelectItem[] = onGetSelectItemFromEnum(ETicketMessageStatus); // Lista de estados
-  cb_status: ISelectItem[] = [
-    { label: "Pendientes", value: 0 },
-    { label: "Cerrado", value: 2 },
-  ]; // Lista de estados
+  cb_status: ISelectItem[] = onGetSelectItemFromEnum(ETicketMessageStatus); // Lista de estados
+  // cb_status: ISelectItem[] = [
+  //   { label: "Pendientes", value: 0 },
+  //   { label: "Cerrado", value: 2 },
+  // ]; // Lista de estados
   status: string = this.ticketGroupService.ticketGroupMessageStatus; // Estado actual
   @Output() statusChange = new EventEmitter<string>(); // Evento para emitir el cambio de estado
 

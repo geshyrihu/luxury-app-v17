@@ -12,9 +12,7 @@ import { IFilterTicket } from 'src/app/core/interfaces/filter-ticket.interface';
 import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataConnectorService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import { environment } from 'src/environments/environment';
@@ -33,8 +31,6 @@ export default class AddoreditTicketComponent implements OnInit {
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
 
-  customToastService = inject(CustomToastService);
-  dataService = inject(DataConnectorService);
   dateService = inject(DateService);
   authS = inject(AuthService);
 

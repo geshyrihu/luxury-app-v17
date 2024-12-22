@@ -13,10 +13,10 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class AddOrEditCategoryComponent implements OnInit {
-  formBuilder = inject(FormBuilder);
-  config = inject(DynamicDialogConfig);
-  ref = inject(DynamicDialogRef);
   apiRequestService = inject(ApiRequestService);
+  config = inject(DynamicDialogConfig);
+  formBuilder = inject(FormBuilder);
+  ref = inject(DynamicDialogRef);
 
   submitting: boolean = false;
 
@@ -44,8 +44,9 @@ export default class AddOrEditCategoryComponent implements OnInit {
   }
 
   onLoadData() {
+    const urlApi = `Categories/${this.id}`;
     this.apiRequestService
-      .onGetItem<ICategoryAddOrEdit>(`Categories/${this.id}`)
+      .onGetItem(urlApi)
       .then((result: ICategoryAddOrEdit) => {
         this.form.patchValue(result);
       });

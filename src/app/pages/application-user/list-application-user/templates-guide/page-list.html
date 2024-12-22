@@ -1,0 +1,194 @@
+<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
+@if (data) {
+<!-- Contenido para pantallas medianas y grandes (md en adelante) -->
+<div class="d-none d-md-block"></div>
+<!-- Contenido para pantallas pequeñas (sm y menores) -->
+<div class="d-block d-md-none">
+  <div class="container-fluid py-3">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h4 class="page-title-box mb-0">
+        <!-- Titulo de page -->
+      </h4>
+      <custom-button
+        ngbTooltip="Agregar"
+        customClass="btn-soft-primary waves-effect waves-light  bg-gradient"
+        icon="fa-plus"
+        (clicked)="onAdd($event)"
+      />
+    </div>
+
+    <div class="mb-3 d-flex justify-content-between mt-1 mb-1">
+      <select
+        class="form-select form-select-sm w-50 me-2"
+        (change)="onSelectForCustomer($event.target.value)"
+      >
+        <option *ngFor="let item of selectCustomer" [value]="item.value">
+          {{ item.label }}
+        </option>
+      </select>
+      <select
+        class="form-select form-select-sm w-50"
+        (change)="onSelectTypePerson($event.target.value)"
+      >
+        <option *ngFor="let item of cb_typePerson" [value]="item.value">
+          {{ item.label }}
+        </option>
+      </select>
+    </div>
+
+    <div class="d-flex align-items-center mb-3">
+      <input
+        type="text"
+        placeholder="Ingresa texto para buscar..."
+        class="form-control form-control-sm w-75 me-2"
+        [(ngModel)]="searchText"
+        (input)="onSearch()"
+      />
+      <div class="d-flex justify-content-start gap-2 w-25">
+        <button
+          *ngIf="applicationUserState === false"
+          class="btn btn-soft-primary waves-effect waves-light bg-gradient btn-sm w-100"
+          (click)="onSelectActive(true)"
+        >
+          Activas
+        </button>
+
+        <button
+          *ngIf="applicationUserState === true"
+          class="btn btn-soft-primary waves-effect waves-light bg-gradient btn-sm w-100"
+          (click)="onSelectActive(false)"
+        >
+          Inactivas
+        </button>
+      </div>
+    </div>
+
+    <p-toast position="top-right" [baseZIndex]="99999"></p-toast>
+    <div *ngIf="filteredData" class="list-group mt-1">
+      <div
+        *ngFor="let item of filteredData"
+        class="list-group-item d-flex align-items-center justify-content-between py-3"
+      >
+        <div class="d-flex align-items-center">
+          <img
+            [src]="urlImgApi + item.photoPath"
+            alt="Usuario"
+            class="rounded-circle me-3"
+            style="width: 50px; height: 50px"
+          />
+          <div>
+            <h6 class="mb-0">{{ item.fullName }}</h6>
+            <small class="text-muted">{{ item.customer }}</small>
+          </div>
+        </div>
+        <div class="d-flex align-items-center">
+          <div class="dropdown">
+            <button
+              class="btn btn-soft-primary waves-effect waves-light bg-gradient btn-sm dropdown-toggle"
+              type="button"
+              id="dropdownMenuButton"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+              title="Opciones"
+            >
+              <i class="fa-solid fa-ellipsis-vertical"></i>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <!-- Bloquear o Desbloquear -->
+              <li *ngIf="item.active">
+                <button
+                  class="dropdown-item"
+                  (click)="onToBlockAccount(item.id)"
+                  title="Bloquear"
+                >
+                  <i class="fa-solid fa-user-lock text-success me-2"></i>
+                  Bloquear
+                </button>
+              </li>
+              <li *ngIf="!item.active">
+                <button
+                  class="dropdown-item"
+                  (click)="onToUnlockAccount(item.id)"
+                  title="Desbloquear"
+                >
+                  <i class="fa-solid fa-user-check text-danger me-2"></i>
+                  Desbloquear
+                </button>
+              </li>
+
+              <!-- Editar cuenta -->
+              <li>
+                <button
+                  class="dropdown-item"
+                  (click)="onModalEditAccount(item.id, item.email)"
+                  title="Editar Cuenta"
+                >
+                  <i class="fa-solid fa-building me-2"></i>
+                  Editar Cuenta
+                </button>
+              </li>
+
+              <!-- Permisos -->
+              <li>
+                <button
+                  class="dropdown-item"
+                  (click)="onModalPermission(item.id)"
+                  title="Permisos"
+                >
+                  <i class="fa-solid fa-key me-2"></i>
+                  Permisos
+                </button>
+              </li>
+
+              <!-- Editar -->
+              <li>
+                <button
+                  class="dropdown-item"
+                  (click)="onAddOrEdit(item.id)"
+                  title="Editar"
+                >
+                  <i class="fa-solid fa-edit me-2"></i>
+                  Editar
+                </button>
+              </li>
+
+              <!-- Eliminar -->
+              <li>
+                <button
+                  class="dropdown-item"
+                  (click)="onDelete(item.id)"
+                  title="Eliminar"
+                >
+                  <i class="fa-solid fa-trash text-danger me-2"></i>
+                  Eliminar
+                </button>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="!data" class="text-center mt-3">
+      <p>No se encontraron usuarios.</p>
+    </div>
+  </div>
+</div>
+}
+
+<style>
+  .list-group-item {
+    background: #f9f9f9;
+    border: 1px solid #e0e0e0;
+    border-radius: 3px;
+    margin-bottom: 5px;
+    transition: box-shadow 0.3s;
+  }
+
+  .list-group-item:hover {
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  .rounded-circle {
+    object-fit: cover;
+  }
+</style>

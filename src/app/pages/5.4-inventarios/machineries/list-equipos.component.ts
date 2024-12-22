@@ -10,7 +10,6 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import AddoreditMaintenancePreventiveComponent from 'src/app/pages/5.6-calendar/mantenimiento-preventivo/addoredit-maintenance-preventive.component';
 import BitacoraIndividualComponent from '../../5.3-bitacoras/bitacora-mantenimiento/bitacora-individual.component';
-import ServiceOrderComponent from '../inventory-engine-system/service-order.component';
 import ActivosDocumentosComponent from './activos-documentos.component';
 import AddOrEditActivosComponent from './addoredit-activos.component';
 import FichaTecnicaActivoComponent from './ficha-tecnica-activo/ficha-tecnica-activo.component';
@@ -146,21 +145,6 @@ export default class ListEquiposComponent implements OnInit {
       '',
       this.dialogHandlerService.dialogSizeFull
     );
-  }
-
-  showModalListOrderService(id: number) {
-    this.dialogHandlerService
-      .openDialog(
-        ServiceOrderComponent,
-        {
-          id: id,
-        },
-        'Servicios de Mantenimiento',
-        this.dialogHandlerService.dialogSizeFull
-      )
-      .then((result: any) => {
-        if (result) this.onLoadData();
-      });
   }
 
   showModalAddOrEditCalendars(data: any) {

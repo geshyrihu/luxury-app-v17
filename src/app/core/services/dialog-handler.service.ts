@@ -25,23 +25,6 @@ export class DialogHandlerService {
     return this.subscribeToDialogClose(ref);
   }
 
-  // justOpenDialog(
-  //   component: any,
-  //   data: any,
-  //   title: string,
-  //   size: DialogSize
-  // ): void {
-  //   const ref = this.dialogService.open(component, {
-  //     data,
-  //     header: title,
-  //     styleClass: size,
-  //     closeOnEscape: true,
-  //     baseZIndex: 10000,
-  //   });
-
-  //   this.subscribeToDialogClose(ref);
-  // }
-
   private subscribeToDialogClose(ref: any): Promise<boolean> {
     return new Promise<boolean>((resolve) => {
       ref.onClose.subscribe((resp: any) => {

@@ -1,15 +1,12 @@
 import { HttpParams } from '@angular/common/http';
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { MessageService } from 'primeng/api';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
-import { DataConnectorService } from 'src/app/core/services/data.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import { FilterRequestsService } from 'src/app/core/services/filter-requests.service';
 import { StatusSolicitudVacanteService } from 'src/app/core/services/status-solicitud-vacante.service';
@@ -29,15 +26,12 @@ import RegisterEmployeToVacancyComponent from './register-employe-to-vacancy/reg
     NgbDropdownModule,
   ],
 })
-export default class ListVacantesComponent implements OnInit, OnDestroy {
-  dataService = inject(DataConnectorService);
+export default class ListVacantesComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   filterRequestsService = inject(FilterRequestsService);
   authS = inject(AuthService);
-  dialogService = inject(DialogService);
-  messageService = inject(MessageService);
   statusSolicitudVacanteService = inject(StatusSolicitudVacanteService);
-  customToastService = inject(CustomToastService);
+
   router = inject(Router);
   dialogHandlerService = inject(DialogHandlerService);
 
@@ -46,10 +40,6 @@ export default class ListVacantesComponent implements OnInit, OnDestroy {
 
   paramsEmit$: Observable<HttpParams> = this.filterRequestsService.getParams$();
   ngOnInit(): void {
-    // this.onModalRegisterEmployeToVacancy({
-    //   workPositionId: 1,
-    //   title: 'Vacante ',
-    // });
     this.onLoadData();
     this.paramsEmit$.subscribe(() => this.onLoadData());
   }
@@ -72,66 +62,53 @@ export default class ListVacantesComponent implements OnInit, OnDestroy {
   }
 
   onModalAddOrEdit(data: any) {
-    this.ref = this.dialogService.open(AddOrEditVacanteComponent, {
-      data: {
-        id: data.id,
-      },
-      header: 'Editar registro',
-      width: '100%',
-      height: '100%',
-      closeOnEscape: true,
-      baseZIndex: 10000,
-    });
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        this.customToastService.onShowSuccess();
-        this.onLoadData();
-      }
-    });
+    this.dialogHandlerService
+      .openDialog(
+        AddOrEditVacanteComponent,
+        {
+          id: data.id,
+        },
+        'Editar registro',
+        this.dialogHandlerService.dialogSizeLg
+      )
+      .then((result: boolean) => {
+        if (result) this.onLoadData();
+      });
   }
 
   //Modal para visualizar horarios de la vacante
   onModalHoursWorkPosition(workPositionId: number) {
-    this.ref = this.dialogService.open(HoursWorkPositionComponent, {
-      data: {
-        workPositionId,
-      },
-      header: 'Horario de trabajo',
-      styleClass: 'modal-lg',
-      closeOnEscape: true,
-      baseZIndex: 10000,
-    });
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        this.customToastService.onShowSuccess();
-        this.onLoadData();
-      }
-    });
+    this.dialogHandlerService
+      .openDialog(
+        HoursWorkPositionComponent,
+        {
+          workPositionId,
+        },
+        'Horario de trabajo',
+        this.dialogHandlerService.dialogSizeLg
+      )
+      .then((result: boolean) => {
+        if (result) this.onLoadData();
+      });
   }
   //Modal para visualizar descripcion de puesto
   onModalJobDescription(id: number) {
-    this.ref = this.dialogService.open(DescripcionPuestoComponent, {
-      data: {
-        id,
-      },
-      header: 'Descripción del puesto',
-      styleClass: 'modal-lg',
-      closeOnEscape: true,
-      baseZIndex: 10000,
-    });
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        this.customToastService.onShowSuccess();
-        this.onLoadData();
-      }
-    });
+    this.dialogHandlerService
+      .openDialog(
+        DescripcionPuestoComponent,
+        {
+          id,
+        },
+        'Descripción del puesto',
+        this.dialogHandlerService.dialogSizeLg
+      )
+      .then((result: boolean) => {
+        if (result) this.onLoadData();
+      });
   }
   onRouteEstatusSolicitud(id) {
     this.statusSolicitudVacanteService.setPositionRequestId(id);
     this.router.navigate(['/reclutamiento/status-solicitud-vacante']);
-  }
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
   }
 
   onModalRegisterEmployeToVacancy(data: any) {

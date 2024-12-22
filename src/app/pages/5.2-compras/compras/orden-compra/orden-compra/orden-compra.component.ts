@@ -1,16 +1,14 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ContextMenuModule } from 'primeng/contextmenu';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subject, takeUntil } from 'rxjs';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
-import { DataConnectorService } from 'src/app/core/services/data.service';
+import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import { OrdenCompraService } from 'src/app/core/services/orden-compra.service';
 import OrdenCompraDatosPagoParcialComponent from '../components/orden-compra-datos-pago-parcial/orden-compra-datos-pago-parcial.component';
 import OrdenCompraDatosCotizacionComponent from '../components/orden-compra-parcial/orden-compra-datos-cotizacion.component';
@@ -34,24 +32,19 @@ import OrdenCompraEditPresupustoUtilizadoComponent from './orden-compra-edit-pre
     OrdenCompraDatosCotizacionComponent,
     OrdenCompraDatosPagoParcialComponent,
     OrdenCompraStatusParcialComponent,
-    OrdenCompraEditPresupustoUtilizadoComponent,
     ContextMenuModule,
     ConfirmDialogModule,
   ],
 })
-export default class OrdenCompraComponent implements OnInit, OnDestroy {
-  customToastService = inject(CustomToastService);
+export default class OrdenCompraComponent implements OnInit {
   authS = inject(AuthService);
-  dataService = inject(DataConnectorService);
   apiRequestService = inject(ApiRequestService);
+  dialogHandlerService = inject(DialogHandlerService);
   routeActive = inject(ActivatedRoute);
   router = inject(Router);
-  dialogService = inject(DialogService);
   messageService = inject(MessageService);
   ordenCompraService = inject(OrdenCompraService);
   confirmationService = inject(ConfirmationService);
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   ref: DynamicDialogRef;
 
@@ -173,269 +166,197 @@ export default class OrdenCompraComponent implements OnInit, OnDestroy {
   }
 
   validarOrdenesCompraMismoFolioSolicituCompra() {
-    this.dataService
-      .get(
-        'OrdenCompra/ValidarOrdenesCompraMismoFolioSolicituCompra/' +
-          this.ordenCompraId
-      )
-      .subscribe((resp: any) => {
-        this.totalRelacionadoConOtrasOrdenes = resp.body;
-      });
+    const urlApi =
+      'OrdenCompra/ValidarOrdenesCompraMismoFolioSolicituCompra/' +
+      this.ordenCompraId;
+    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+      this.totalRelacionadoConOtrasOrdenes = result;
+    });
   }
 
   onLoadData() {
     this.esGastoFijo = false;
     // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .get(`OrdenCompra/${this.ordenCompraId}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.customToastService.onClose();
-          this.ordenCompra = resp.body;
-          if (this.ordenCompra.ordenCompraDatosPago.tipoGasto === 0) {
-            this.esGastoFijo = true;
-          }
-          this.ordenCompraDetalle = this.ordenCompra.ordenCompraDetalle;
-          this.ordenCompraPresupuestoUtilizado =
-            this.ordenCompra.ordenCompraPresupuestoUtilizado;
-          this.ordenCompraService.actualizarTotalOrdenCompra(
-            this.ordenCompraId
-          );
-          this.cargarTotalesOrdenCompra();
 
-          //... Obtener Id SolicitudCompra
+    const urlApi = `OrdenCompra/${this.ordenCompraId}`;
+    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      this.ordenCompra = result;
+      if (this.ordenCompra.ordenCompraDatosPago.tipoGasto === 0) {
+        this.esGastoFijo = true;
+      }
+      this.ordenCompraDetalle = this.ordenCompra.ordenCompraDetalle;
+      this.ordenCompraPresupuestoUtilizado =
+        this.ordenCompra.ordenCompraPresupuestoUtilizado;
+      this.ordenCompraService.actualizarTotalOrdenCompra(this.ordenCompraId);
+      this.cargarTotalesOrdenCompra();
+      if (this.ordenCompra.folioSolicitudCompra) {
+        this.apiRequestService
+          .onGetList(
+            `SolicitudCompra/GetIdSolicitudCompra/${this.ordenCompra.folioSolicitudCompra}/${this.ordenCompra.customerId}`
+          )
+          .then((result: any) => {
+            this.solicitudCompraId = result;
+          });
+      }
+      if (this.ordenCompra.ordenCompraAuth.revisadoPorResidente?.length > 0) {
+        this.revisadaPorResidente = true;
+        this.mensajeRevision = 'Revocar Revisión';
+      } else {
+        this.revisadaPorResidente = false;
+        this.mensajeRevision = 'Validar Revisión';
+      }
+      //   Fin Validando si ya fue revisada por el Residente
 
-          if (this.ordenCompra.folioSolicitudCompra) {
-            this.dataService
-              .get(
-                `SolicitudCompra/GetIdSolicitudCompra/${this.ordenCompra.folioSolicitudCompra}/${this.ordenCompra.customerId}`
-              )
-              .subscribe((resp: any) => {
-                this.solicitudCompraId = resp.body;
-              });
-          }
-          //...Fin Obtener Id SolicitudCompra
+      if (this.ordenCompra.ordenCompraAuth.statusOrdenCompra === 0) {
+        this.ordenCompraEstaAutorizada = true;
+      }
+      if (
+        this.ordenCompra.ordenCompraAuth.statusOrdenCompra === 1 ||
+        this.ordenCompra.ordenCompraAuth.statusOrdenCompra === 2
+      ) {
+        this.ordenCompraEstaAutorizada = false;
+      }
+      if (this.ordenCompra.ordenCompraAuth.applicationUserAuthId !== null) {
+        this.nombreAutorizador = `${this.ordenCompra.ordenCompraAuth.applicationUserAuthId} `;
+      }
 
-          //   Validando si ya fue revisada por el Residente
+      if (this.ordenCompraService.getTotalPorCubrir() < 0) {
+        this.esNumeroNegativo = true;
+      }
 
-          if (
-            this.ordenCompra.ordenCompraAuth.revisadoPorResidente?.length > 0
-          ) {
-            this.revisadaPorResidente = true;
-            this.mensajeRevision = 'Revocar Revisión';
-          } else {
-            this.revisadaPorResidente = false;
-            this.mensajeRevision = 'Validar Revisión';
-          }
-          //   Fin Validando si ya fue revisada por el Residente
-
-          if (this.ordenCompra.ordenCompraAuth.statusOrdenCompra === 0) {
-            this.ordenCompraEstaAutorizada = true;
-          }
-          if (
-            this.ordenCompra.ordenCompraAuth.statusOrdenCompra === 1 ||
-            this.ordenCompra.ordenCompraAuth.statusOrdenCompra === 2
-          ) {
-            this.ordenCompraEstaAutorizada = false;
-          }
-          if (this.ordenCompra.ordenCompraAuth.applicationUserAuthId !== null) {
-            this.nombreAutorizador = `${this.ordenCompra.ordenCompraAuth.applicationUserAuthId} `;
-          }
-
-          if (this.ordenCompraService.getTotalPorCubrir() < 0) {
-            this.esNumeroNegativo = true;
-          }
-
-          // Buscar Ordenes de compra relacionadas
-          if (this.ordenCompra.folioSolicitudCompra) {
-            this.validarOrdenesCompraMismoFolioSolicituCompra();
-          }
-          // Fin Buscar Ordenes de compra relacionadas
-
-          this.customToastService.onClose();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
+      // Buscar Ordenes de compra relacionadas
+      if (this.ordenCompra.folioSolicitudCompra) {
+        this.validarOrdenesCompraMismoFolioSolicituCompra();
+      }
+    });
   }
 
   autorizarCompra() {
-    // this.onRevisadaPorResidente();
-    this.dataService
-      .get(
-        `OrdenCompraAuth/Autorizar/${this.ordenCompraId}/${this.authS.applicationUserId}`
-      )
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.onLoadData();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
+    const urlApi = `OrdenCompraAuth/Autorizar/${this.ordenCompraId}/${this.authS.applicationUserId}`;
+    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      this.onLoadData();
+    });
   }
 
   deautorizarCompra() {
-    this.dataService
-      .get(`OrdenCompraAuth/Desautorizar/${this.ordenCompraId}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.nombreAutorizador = '';
-          this.onLoadData();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
+    const urlApi = `OrdenCompraAuth/Desautorizar/${this.ordenCompraId}`;
+    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      this.nombreAutorizador = '';
+      this.onLoadData();
+    });
   }
 
   //... Modales
 
   onModalEditarPresupuestoUtilizado(id: number) {
-    this.ref = this.dialogService.open(
-      OrdenCompraEditPresupustoUtilizadoComponent,
-      {
-        data: {
-          id,
-        },
-        header: 'Actualizar presupuesto utilizado',
-        width: '20%',
-        closeOnEscape: true,
-        baseZIndex: 10000,
-      }
-    );
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        this.customToastService.onShowSuccess();
+    this.dialogHandlerService
+      .openDialog(
+        OrdenCompraEditPresupustoUtilizadoComponent,
+        { id: id },
+        'Actualizar presupuesto utilizado',
+        this.dialogHandlerService.dialogSizeMd
+      )
+      .then((result: boolean) => {
         this.onLoadData();
-      }
-    });
+      });
   }
   onModalEditarDetalle(id: number) {
-    this.ref = this.dialogService.open(OrdenCompraEditDetalleComponent, {
-      data: {
-        id,
-      },
-      header: 'Actualizar ' + this.ordenCompraDetalleSeleccionado.producto,
-      width: '50%',
-      closeOnEscape: true,
-      baseZIndex: 10000,
-    });
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        this.customToastService.onShowSuccess();
-        this.onLoadData();
-      }
-    });
+    this.dialogHandlerService
+      .openDialog(
+        OrdenCompraEditDetalleComponent,
+        { id: id },
+        'Actualizar ' + this.ordenCompraDetalleSeleccionado.producto,
+        this.dialogHandlerService.dialogSizeMd
+      )
+      .then((result: boolean) => {
+        if (result) this.onLoadData();
+      });
   }
 
   onModalOrdenCompra() {
-    this.ref = this.dialogService.open(ModalOrdenCompraComponent, {
-      data: {
-        ordenCompra: this.ordenCompra,
-      },
-      header: 'Actualizar información',
-      styleClass: 'modal-md',
-      closeOnEscape: true,
-      baseZIndex: 10000,
-    });
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        this.customToastService.onShowSuccess();
-        this.onLoadData();
-      }
-    });
+    this.dialogHandlerService
+      .openDialog(
+        ModalOrdenCompraComponent,
+        {
+          ordenCompra: this.ordenCompra,
+        },
+        'Actualizar información',
+        this.dialogHandlerService.dialogSizeMd
+      )
+      .then((result: boolean) => {
+        if (result) this.onLoadData();
+      });
   }
   onModalOrdenCompraDatosPago() {
-    this.ref = this.dialogService.open(OrdenCompraDatosPagoComponent, {
-      data: {
-        ordenCompra: this.ordenCompra,
-      },
-      header: 'Autorizar Datos de pago',
-      styleClass: 'modal-md',
-      closeOnEscape: true,
-      baseZIndex: 10000,
-    });
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        this.customToastService.onShowSuccess();
-        this.onLoadData();
-      }
-    });
+    this.dialogHandlerService
+      .openDialog(
+        OrdenCompraDatosPagoComponent,
+        {
+          ordenCompra: this.ordenCompra,
+        },
+        'Autorizar Datos de pago',
+        this.dialogHandlerService.dialogSizeMd
+      )
+      .then((result: boolean) => {
+        if (result) this.onLoadData();
+      });
   }
   onModalOrdenCompraStatus() {
-    this.ref = this.dialogService.open(OrdenCompraStatusComponent, {
-      data: {
-        ordenCompraId: this.ordenCompraId,
-      },
-      header: 'Autorizar Status de Orden de compra',
-      styleClass: 'modal-md',
-      closeOnEscape: true,
-      baseZIndex: 10000,
-    });
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        this.customToastService.onShowSuccess();
-        this.onLoadData();
-      }
-    });
+    this.dialogHandlerService
+      .openDialog(
+        OrdenCompraStatusComponent,
+        {
+          ordenCompraId: this.ordenCompraId,
+        },
+        'Autorizar Status de Orden de compra',
+        this.dialogHandlerService.dialogSizeMd
+      )
+      .then((result: boolean) => {
+        if (result) this.onLoadData();
+      });
   }
   onModalOrdenCompraPresupuesto() {
-    this.ref = this.dialogService.open(OrdenCompraPresupuestoComponent, {
-      data: {
-        ordenCompraId: this.ordenCompraId,
-      },
-      header: 'Selecciona partida presupuestal',
-      width: '100%',
-      closeOnEscape: true,
-      baseZIndex: 10000,
-    });
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        this.customToastService.onShowSuccess();
-        this.onLoadData();
-      }
-    });
+    this.dialogHandlerService
+      .openDialog(
+        OrdenCompraPresupuestoComponent,
+        {
+          ordenCompraId: this.ordenCompraId,
+        },
+        'Selecciona partida presupuestal',
+        this.dialogHandlerService.dialogSizeFull
+      )
+      .then((result: boolean) => {
+        if (result) this.onLoadData();
+      });
   }
   onModalAgregarproducto() {
-    this.ref = this.dialogService.open(OrdenCompraDetalleAddProductoComponent, {
-      data: {
-        ordenCompraId: this.ordenCompraId,
-      },
-      header: 'Agregar producto o Servicio',
-      width: '100%',
-      closeOnEscape: true,
-      baseZIndex: 10000,
-    });
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        this.customToastService.onShowSuccess();
-        this.onLoadData();
-      }
-    });
+    this.dialogHandlerService
+      .openDialog(
+        OrdenCompraDetalleAddProductoComponent,
+        {
+          ordenCompraId: this.ordenCompraId,
+        },
+        'Agregar producto o Servicio',
+        this.dialogHandlerService.dialogSizeMd
+      )
+      .then((result: boolean) => {
+        if (result) this.onLoadData();
+      });
   }
   onModalcompraNoAutorizada() {
-    this.ref = this.dialogService.open(OrdenCompraDenegadaComponent, {
-      data: {
-        ordenCompraId: this.ordenCompra.id,
-        ordenCompraAuthId: this.ordenCompra.ordenCompraAuth.id,
-      },
-      header: 'Denegar Orden de Compra',
-      styleClass: 'modal-md',
-      closeOnEscape: true,
-      baseZIndex: 10000,
-    });
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        this.customToastService.onShowSuccess();
-        this.onLoadData();
-      }
-    });
+    this.dialogHandlerService
+      .openDialog(
+        OrdenCompraDenegadaComponent,
+        {
+          ordenCompraId: this.ordenCompra.id,
+          ordenCompraAuthId: this.ordenCompra.ordenCompraAuth.id,
+        },
+        'Denegar Orden de Compra',
+        this.dialogHandlerService.dialogSizeMd
+      )
+      .then((result: boolean) => {
+        if (result) this.onLoadData();
+      });
   }
   //... Fin Modales
   onCuadroComparativo(idSolicitudCompra: number) {
@@ -443,50 +364,24 @@ export default class OrdenCompraComponent implements OnInit, OnDestroy {
   }
   // ... Editar presupeusto del que se va a disponer
   onEditOrdenCompraPresupuesto(item: any): void {
-    this.dataService
-      .put(`OrdenCompraPresupuesto/${item.id}`, item)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          this.onLoadData();
-          this.customToastService.onShowSuccess();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+    this.apiRequestService
+      .onPut(`OrdenCompraPresupuesto/${item.id}`, item)
+      .then((result: boolean) => {
+        this.onLoadData();
       });
   }
   onDeleteOrdenCompraPresupuesto(id: number): void {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .delete(`OrdenCompraPresupuesto/${id}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          this.onLoadData();
-          this.customToastService.onCloseToSuccess();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
+    const urlApi = `OrdenCompraPresupuesto/${id}`;
+    this.apiRequestService.onDelete(urlApi).then((result: boolean) => {
+      this.onLoadData();
+    });
   }
   // TODO: PARECE QUE ESTE METODO NO SE UTILIZA
   onDeleteProduct(data: any): void {
-    this.customToastService.onLoading();
-    this.dataService
-      .delete(`OrdenCompraDetalle/${data.id}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          this.onLoadData();
-          this.customToastService.onCloseToSuccess();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
+    const urlApi = `OrdenCompraDetalle/${data.id}`;
+    this.apiRequestService.onDelete(urlApi).then((result: boolean) => {
+      this.onLoadData();
+    });
   }
   onSubmitProducto(item: any): void {
     const data = {
@@ -502,16 +397,10 @@ export default class OrdenCompraComponent implements OnInit, OnDestroy {
       total: item.total,
       unidadMedidaId: item.unidadMedidaId,
     };
-    this.dataService
-      .put(`OrdenCompraDetalle/${item.id}`, data)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          this.onLoadData();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
+    this.apiRequestService
+      .onPut(`OrdenCompraDetalle/${item.id}`, data)
+      .then((result: boolean) => {
+        this.onLoadData();
       });
   }
   cargarTotalesOrdenCompra() {
@@ -533,8 +422,5 @@ export default class OrdenCompraComponent implements OnInit, OnDestroy {
     this.iva = ivaTotal;
     this.subtotal = subTotal;
     this.totalOrdenCompra = this.subtotal + this.iva - this.retencionIva;
-  }
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
   }
 }

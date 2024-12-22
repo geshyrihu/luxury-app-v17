@@ -1,18 +1,15 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataConnectorService } from 'src/app/core/services/data.service';
 import { StatusSolicitudVacanteService } from 'src/app/core/services/status-solicitud-vacante.service';
 import CardEmployeeComponent from 'src/app/pages/6.1-directorios/employee/card-employee/card-employee.component';
 import AddOrEditStatusRequestSalaryModificationComponent from './addoredit-status-request-salary-modification/addoredit-status-request-salary-modification.component';
 
+import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -22,22 +19,18 @@ import { environment } from 'src/environments/environment';
   imports: [LuxuryAppComponentsModule],
 })
 export default class StatusRequestSalaryModificationComponent
-  implements OnInit, OnDestroy
+  implements OnInit
 {
   private statusSolicitudVacanteService = inject(StatusSolicitudVacanteService);
-  customerIdService = inject(CustomerIdService);
-  dataService = inject(DataConnectorService);
   apiRequestService = inject(ApiRequestService);
-  dialogService = inject(DialogService);
-  customToastService = inject(CustomToastService);
+  customerIdService = inject(CustomerIdService);
+  dialogHandlerService = inject(DialogHandlerService);
   router = inject(Router);
   authS = inject(AuthService);
 
   workPositionId = this.statusSolicitudVacanteService.getworkPositionId();
   employeeId = this.statusSolicitudVacanteService.getemployeeId();
   ref: DynamicDialogRef;
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   data: any;
   noCandidates: boolean = true;
@@ -51,56 +44,38 @@ export default class StatusRequestSalaryModificationComponent
   }
 
   onLoadData() {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .get(
-        `RequestSalaryModification/${this.workPositionId}/${this.employeeId}`
-      )
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.data = this.customToastService.onCloseOnGetData(resp.body);
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
+    const urlApi = `RequestSalaryModification/${this.workPositionId}/${this.employeeId}`;
+    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      this.data = result;
+    });
   }
 
   //Ver tarjeta de Colaborador
   onCardEmployee(applicationUserId: string) {
-    this.ref = this.dialogService.open(CardEmployeeComponent, {
-      data: {
+    this.dialogHandlerService.openDialog(
+      CardEmployeeComponent,
+      {
         applicationUserId,
       },
-      header: 'Tarjeta de colaborador',
-      styleClass: 'modal-md',
-      closeOnEscape: true,
-      baseZIndex: 10000,
-    });
+      'Tarjeta de colaborador',
+      this.dialogHandlerService.dialogSizeMd
+    );
   }
 
   //Editar solicitud de baja
   onModalAddOrEdit(data: any) {
-    this.ref = this.dialogService.open(
-      AddOrEditStatusRequestSalaryModificationComponent,
-      {
-        data: {
+    this.dialogHandlerService
+      .openDialog(
+        AddOrEditStatusRequestSalaryModificationComponent,
+        {
           id: data.id,
         },
-        header: data.title,
-        styleClass: 'modal-md',
-        closeOnEscape: true,
-        baseZIndex: 10000,
-      }
-    );
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        this.customToastService.onShowSuccess();
-        this.onLoadData();
-      }
-    });
+        data.title,
+        this.dialogHandlerService.dialogSizeMd
+      )
+      .then((result: boolean) => {
+        if (result) this.onLoadData();
+      });
   }
 
   //Eliminar solicitud de baja
@@ -110,9 +85,5 @@ export default class StatusRequestSalaryModificationComponent
       .then((result: boolean) => {
         if (result) this.data = this.data.filter((item) => item.id !== id);
       });
-  }
-
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
   }
 }

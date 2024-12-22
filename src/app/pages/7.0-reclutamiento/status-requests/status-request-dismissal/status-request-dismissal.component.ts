@@ -1,13 +1,11 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subject, takeUntil } from 'rxjs';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataConnectorService } from 'src/app/core/services/data.service';
+import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import { StatusSolicitudVacanteService } from 'src/app/core/services/status-solicitud-vacante.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import CardEmployeeComponent from 'src/app/pages/6.1-directorios/employee/card-employee/card-employee.component';
@@ -21,22 +19,17 @@ import AddOrEditStatusRequestDismissalDiscountComponent from './addoredit-status
   standalone: true,
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
-export default class StatusRequestDismissalComponent
-  implements OnInit, OnDestroy
-{
-  private statusSolicitudVacanteService = inject(StatusSolicitudVacanteService);
+export default class StatusRequestDismissalComponent implements OnInit {
+  apiRequestService = inject(ApiRequestService);
+  dialogHandlerService = inject(DialogHandlerService);
+
+  statusSolicitudVacanteService = inject(StatusSolicitudVacanteService);
   authS = inject(AuthService);
   customerIdService = inject(CustomerIdService);
-  dataService = inject(DataConnectorService);
-  apiRequestService = inject(ApiRequestService);
-  dialogService = inject(DialogService);
   router = inject(Router);
-  customToastService = inject(CustomToastService);
 
   workPositionId = this.statusSolicitudVacanteService.getworkPositionId();
   ref: DynamicDialogRef;
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   data: any;
   noCandidates: boolean = true;
@@ -50,55 +43,42 @@ export default class StatusRequestDismissalComponent
   }
 
   onLoadData() {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .get('RequestDismissal/' + this.workPositionId)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.data = this.customToastService.onCloseOnGetData(resp.body);
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
+    const urlApi = 'RequestDismissal/' + this.workPositionId;
+    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+      this.data = result;
+    });
   }
 
   //Ver tarjeta de Colaborador
   onCardEmployee(applicationUserId: string) {
-    this.ref = this.dialogService.open(CardEmployeeComponent, {
-      data: {
-        applicationUserId,
-      },
-      header: 'Tarjeta de Colaborador',
-      styleClass: 'modal-md',
-      closeOnEscape: true,
-      baseZIndex: 10000,
-    });
+    this.dialogHandlerService
+      .openDialog(
+        CardEmployeeComponent,
+        {
+          applicationUserId,
+        },
+        'Tarjeta de Colaborador',
+        this.dialogHandlerService.dialogSizeSm
+      )
+      .then((result: boolean) => {
+        if (result) this.onLoadData();
+      });
   }
 
   //Editar solicitud de baja
   onModalAddOrEdit(data: any) {
-    this.ref = this.dialogService.open(
-      // AddOrEditStatusRequestDismissalComponent,
-      AddoreditSolicitudBajaComponent,
-      {
-        data: {
+    this.dialogHandlerService
+      .openDialog(
+        AddoreditSolicitudBajaComponent,
+        {
           id: data.id,
         },
-        header: data.title,
-        styleClass: 'modal-md',
-        closeOnEscape: true,
-        baseZIndex: 10000,
-      }
-    );
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        this.customToastService.onShowSuccess();
-        this.onLoadData();
-      }
-    });
+        data.title,
+        this.dialogHandlerService.dialogSizeMd
+      )
+      .then((result: boolean) => {
+        if (result) this.onLoadData();
+      });
   }
   //Eliminar solicitud de baja
   onDelete(id: number) {
@@ -110,45 +90,24 @@ export default class StatusRequestDismissalComponent
   }
   //Editar solicitud de Discounts
   onModalAddOrEditDiscounts(data: any) {
-    this.ref = this.dialogService.open(
-      AddOrEditStatusRequestDismissalDiscountComponent,
-      {
-        data: {
+    this.dialogHandlerService
+      .openDialog(
+        AddOrEditStatusRequestDismissalDiscountComponent,
+        {
           id: data.id,
         },
-        header: data.title,
-        styleClass: 'modal-md',
-        closeOnEscape: true,
-        baseZIndex: 10000,
-      }
-    );
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        this.customToastService.onShowSuccess();
-        this.onLoadData();
-      }
-    });
+        data.title,
+        this.dialogHandlerService.dialogSizeMd
+      )
+      .then((result: boolean) => {
+        if (result) this.onLoadData();
+      });
   }
   //Eliminar solicitud de baja
   onDeleteDiscounts(id: number) {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-    this.dataService
-      .delete(`RequestDismissalDiscount/${id}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: () => {
-          this.onLoadData();
-          // Mostrar un mensaje de éxito y cerrar Loading....
-          this.customToastService.onCloseToSuccess();
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
-  }
-
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
+    const urlApi = `RequestDismissalDiscount/${id}`;
+    this.apiRequestService.onDelete(urlApi).then((result: boolean) => {
+      this.onLoadData();
+    });
   }
 }

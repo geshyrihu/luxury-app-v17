@@ -1,13 +1,12 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { Observable } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataConnectorService } from 'src/app/core/services/data.service';
+import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import { StatusSolicitudVacanteService } from 'src/app/core/services/status-solicitud-vacante.service';
 import AddOrEditSolicitudAltaComponent from '../list-solicitudes/list-solicitud-alta/addoredit-solicitud-alta/addoredit-solicitud-alta.component';
 import AddoreditSolicitudBajaComponent from '../list-solicitudes/list-solicitud-baja/addoredit-solicitud-baja/addoredit-solicitud-baja.component';
@@ -21,12 +20,10 @@ import AddOrEditVacanteComponent from '../list-solicitudes/list-solicitud-vacant
   imports: [LuxuryAppComponentsModule],
 })
 export default class ListSolicitudesPorClienteComponent implements OnInit {
-  dataService = inject(DataConnectorService);
   apiRequestService = inject(ApiRequestService);
-  customToastService = inject(CustomToastService);
+  dialogHandlerService = inject(DialogHandlerService);
   customerIdService = inject(CustomerIdService);
-  dialogService = inject(DialogService);
-  public statusSolicitudVacanteService = inject(StatusSolicitudVacanteService);
+  statusSolicitudVacanteService = inject(StatusSolicitudVacanteService);
   router = inject(Router);
   authS = inject(AuthService);
 
@@ -34,7 +31,6 @@ export default class ListSolicitudesPorClienteComponent implements OnInit {
   // Declaración e inicialización de variables
   data: any[] = [];
   ref: DynamicDialogRef; // Referencia a un cuadro de diálogo modal
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   ngOnInit(): void {
     this.onLoadData();
@@ -46,26 +42,14 @@ export default class ListSolicitudesPorClienteComponent implements OnInit {
   // Si es administrador vamos a evitar que traiga todas las solicitudes que sean de administrador y asisntente
 
   onLoadData() {
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
-
-    // Realizar una solicitud HTTP para obtener datos de bancos
-    this.dataService
-      .get(
-        'SolicitudesReclutamiento/solicitudesporcliente/' +
-          this.customerIdService.getCustomerId() +
-          '/' +
-          this.authS.infoUserAuthDto.applicationUserId
-      )
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.data = this.customToastService.onCloseOnGetData(resp.body);
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
+    const urlApi =
+      'SolicitudesReclutamiento/solicitudesporcliente/' +
+      this.customerIdService.getCustomerId() +
+      '/' +
+      this.authS.infoUserAuthDto.applicationUserId;
+    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      this.data = result;
+    });
   }
 
   onRouteEstatusSolicitud(id) {
@@ -73,84 +57,62 @@ export default class ListSolicitudesPorClienteComponent implements OnInit {
     this.router.navigate(['/reclutamiento/status-solicitud-vacante']);
   }
   onModalEditVacante(data: any) {
-    this.ref = this.dialogService.open(AddOrEditVacanteComponent, {
-      data: {
-        id: data.id,
-      },
-      header: 'Editar Registro',
-      styleClass: 'modal-md ',
-      closeOnEscape: true,
-      baseZIndex: 10000,
-    });
-    this.ref.onClose.subscribe((resp: boolean) => {
-      this.onLoadData();
-      if (resp) {
-        this.onLoadData();
-        this.customToastService.onShowSuccess();
-      }
-    });
+    this.dialogHandlerService
+      .openDialog(
+        AddOrEditVacanteComponent,
+        {
+          id: data.id,
+        },
+        'Editar Registro',
+        this.dialogHandlerService.dialogSizeMd
+      )
+      .then((result: boolean) => {
+        if (result) this.onLoadData();
+      });
   }
 
   onModalEditSolicitudAlta(data: any) {
-    this.ref = this.dialogService.open(AddOrEditSolicitudAltaComponent, {
-      data: {
-        id: data.id,
-      },
-      header: 'Editar Registro',
-      styleClass: 'modal-md ',
-      closeOnEscape: true,
-      baseZIndex: 10000,
-    });
-    this.ref.onClose.subscribe((resp: boolean) => {
-      this.onLoadData();
-      if (resp) {
-        this.onLoadData();
-        this.customToastService.onShowSuccess();
-      }
-    });
+    this.dialogHandlerService
+      .openDialog(
+        AddOrEditSolicitudAltaComponent,
+        {
+          id: data.id,
+        },
+        'Editar Registro',
+        this.dialogHandlerService.dialogSizeMd
+      )
+      .then((result: boolean) => {
+        if (result) this.onLoadData();
+      });
   }
 
   onModalEditSolicitudBaja(data: any) {
-    this.ref = this.dialogService.open(AddoreditSolicitudBajaComponent, {
-      data: {
-        id: data.id,
-      },
-      header: 'Editar Registro',
-      styleClass: 'modal-md ',
-      closeOnEscape: true,
-      baseZIndex: 10000,
-    });
-    this.ref.onClose.subscribe((resp: boolean) => {
-      this.onLoadData();
-      if (resp) {
-        this.onLoadData();
-        this.customToastService.onShowSuccess();
-      }
-    });
+    this.dialogHandlerService
+      .openDialog(
+        AddoreditSolicitudBajaComponent,
+        {
+          id: data.id,
+        },
+        'Editar Registro',
+        this.dialogHandlerService.dialogSizeMd
+      )
+      .then((result: boolean) => {
+        if (result) this.onLoadData();
+      });
   }
 
   onModalEditModificacionSalario(data: any) {
-    this.ref = this.dialogService.open(AddoreditModificacionSalarioComponent, {
-      data: {
-        id: data.id,
-      },
-      header: 'Editar Registro',
-      styleClass: 'modal-md ',
-      closeOnEscape: true,
-      baseZIndex: 10000,
-    });
-    this.ref.onClose.subscribe((resp: boolean) => {
-      this.onLoadData();
-      if (resp) {
-        this.onLoadData();
-        this.customToastService.onShowSuccess();
-      }
-    });
-  }
-
-  ngOnDestroy(): void {
-    // Cuando se destruye el componente, desvincular y liberar recursos
-    this.destroy$.next();
-    this.destroy$.complete();
+    this.dialogHandlerService
+      .openDialog(
+        AddoreditModificacionSalarioComponent,
+        {
+          id: data.id,
+        },
+        'Editar Registro',
+        this.dialogHandlerService.dialogSizeMd
+      )
+      .then((result: boolean) => {
+        if (result) this.onLoadData();
+      });
   }
 }

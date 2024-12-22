@@ -11,7 +11,6 @@ import { DataConnectorService } from 'src/app/core/services/data.service';
 import { SecurityService } from 'src/app/core/services/security.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import Swal from 'sweetalert2';
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',

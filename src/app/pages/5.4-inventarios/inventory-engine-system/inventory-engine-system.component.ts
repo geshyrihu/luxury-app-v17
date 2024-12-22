@@ -9,7 +9,6 @@ import BitacoraIndividualComponent from '../../5.3-bitacoras/bitacora-mantenimie
 import AddOrEditActivosComponent from '../machineries/addoredit-activos.component';
 import FichaTecnicaActivoComponent from '../machineries/ficha-tecnica-activo/ficha-tecnica-activo.component';
 import ServiceHistoryMachineryComponent from '../machineries/service-history-machinery/service-history-machinery.component';
-import ServiceOrderComponent from './service-order.component';
 
 @Component({
   selector: 'app-inventory-engine-system',
@@ -76,20 +75,20 @@ export default class InventoryEngineSystemComponent implements OnInit {
       this.dialogHandlerService.dialogSizeFull
     );
   }
-  showModalListOrderService(id: number) {
-    this.dialogHandlerService
-      .openDialog(
-        ServiceOrderComponent,
-        {
-          id: id,
-        },
-        'Servicios de Mantenimiento',
-        this.dialogHandlerService.dialogSizeFull
-      )
-      .then((result: any) => {
-        if (result) this.onLoadData();
-      });
-  }
+  // showModalListOrderService(id: number) {
+  //   this.dialogHandlerService
+  //     .openDialog(
+  //       ServiceOrderComponent,
+  //       {
+  //         id: id,
+  //       },
+  //       'Servicios de Mantenimiento',
+  //       this.dialogHandlerService.dialogSizeFull
+  //     )
+  //     .then((result: any) => {
+  //       if (result) this.onLoadData();
+  //     });
+  // }
 
   showModalAddoredit(data: any) {
     this.dialogHandlerService

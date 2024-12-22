@@ -1,18 +1,15 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule, {
   flatpickrFactory,
 } from 'app/shared/luxuryapp-components.module';
 import { SelectItem } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subject, takeUntil } from 'rxjs';
 import { EStatusTask } from 'src/app/core/enums/estatus-task.enum';
 import { ETypeMaintance } from 'src/app/core/enums/type-maintance.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataConnectorService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import ValidationErrorsCustomInputComponent from 'src/app/custom-components/custom-input-form/validation-errors-custom-input/validation-errors-custom-input.component';
@@ -27,21 +24,15 @@ import ValidationErrorsCustomInputComponent from 'src/app/custom-components/cust
     ValidationErrorsCustomInputComponent,
   ],
 })
-export default class ServiceOrderAddOrEditComponent
-  implements OnInit, OnDestroy
-{
-  customToastService = inject(CustomToastService);
+export default class ServiceOrderAddOrEditComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   formBuilder = inject(FormBuilder);
   config = inject(DynamicDialogConfig);
-  customerIdService = inject(CustomerIdService);
-  dataService = inject(DataConnectorService);
   dateService = inject(DateService);
+  customerIdService = inject(CustomerIdService);
   ref = inject(DynamicDialogRef);
 
   submitting: boolean = false;
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   cb_machinery: any[] = [];
   cb_providers: any[] = [];
@@ -134,70 +125,43 @@ export default class ServiceOrderAddOrEditComponent
   }
 
   onLoadData() {
-    this.dataService
-      .get(`ServiceOrders/${this.id}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe((resp: any) => {
-        resp.body.executionDate = this.dateService.getDateFormat(
-          resp.body.executionDate
-        );
-        resp.body.requestDate = this.dateService.getDateFormat(
-          resp.body.requestDate
-        );
+    const urlApi = `ServiceOrders/${this.id}`;
+    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+      result.executionDate = this.dateService.getDateFormat(
+        result.executionDate
+      );
+      result.requestDate = this.dateService.getDateFormat(result.requestDate);
+      this.form.patchValue(result);
+      const contenidoHTML = this.form.get('activity').value;
+      const contenidoSinHTML = contenidoHTML.replace(/<[^>]*>|&nbsp;/g, '');
+      this.form.get('activity').patchValue(contenidoSinHTML);
 
-        this.form.patchValue(resp.body);
-        const contenidoHTML = this.form.get('activity').value;
-        const contenidoSinHTML = contenidoHTML.replace(/<[^>]*>|&nbsp;/g, '');
-        this.form.get('activity').patchValue(contenidoSinHTML);
-
-        const contenidoHTML2 = this.form.get('observations').value;
-        const contenidoSinHTML2 = contenidoHTML2.replace(/<[^>]*>|&nbsp;/g, '');
-        this.form.get('observations').patchValue(contenidoSinHTML2);
-      });
+      const contenidoHTML2 = this.form.get('observations').value;
+      const contenidoSinHTML2 = contenidoHTML2.replace(/<[^>]*>|&nbsp;/g, '');
+      this.form.get('observations').patchValue(contenidoSinHTML2);
+    });
   }
   onSubmit() {
     if (!this.apiRequestService.validateForm(this.form)) return;
     this.id = this.config.data.id;
 
     this.submitting = true;
-    // Mostrar un mensaje de carga
-    this.customToastService.onLoading();
 
     if (this.id === 0) {
-      this.dataService
-        .post(`ServiceOrders`, this.form.value)
-        .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-        .subscribe({
-          next: () => {
-            this.ref.close(true);
-            this.customToastService.onClose();
-          },
-          error: (error) => {
-            // Habilitar el botón nuevamente al finalizar el envío del formulario
-            this.submitting = false;
-            this.customToastService.onCloseToError(error);
-          },
+      this.apiRequestService
+        .onPost(`ServiceOrders`, this.form.value)
+        .then((result: boolean) => {
+          result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.dataService
-        .put(`ServiceOrders/${this.id}`, this.form.value)
-        .subscribe({
-          next: () => {
-            this.ref.close(true);
-            this.customToastService.onClose();
-          },
-          error: (error) => {
-            // Habilitar el botón nuevamente al finalizar el envío del formulario
-            this.submitting = false;
-            this.customToastService.onCloseToError(error);
-          },
+      this.apiRequestService
+        .onPut(`ServiceOrders/${this.id}`, this.form.value)
+        .then((result: boolean) => {
+          result ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }
   get f() {
     return this.form.controls;
-  }
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
   }
 }

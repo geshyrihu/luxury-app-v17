@@ -1,10 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnDestroy, inject } from '@angular/core';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { Component, Input, inject } from '@angular/core';
+import { Observable } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataConnectorService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
 import { PeriodoMonthService } from 'src/app/core/services/periodo-month.service';
 
@@ -18,15 +16,11 @@ import { PeriodoMonthService } from 'src/app/core/services/periodo-month.service
 /**
  * Page Title Component
  */
-export default class PagetitleReportComponent implements OnDestroy {
+export default class PagetitleReportComponent {
   customerIdService = inject(CustomerIdService);
-  dataService = inject(DataConnectorService);
   apiRequestService = inject(ApiRequestService);
   periodoMonthService = inject(PeriodoMonthService);
   dateService = inject(DateService);
-  customToastService = inject(CustomToastService);
-
-  destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   @Input() title: string | undefined;
   @Input() periodo: string = this.dateService.formatDateTimeToMMMMAAAA(
@@ -46,20 +40,10 @@ export default class PagetitleReportComponent implements OnDestroy {
     });
   }
   onLoadData() {
-    this.dataService
-      .get(`Customers/${this.customerIdService.customerId}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
-      .subscribe({
-        next: (resp: any) => {
-          this.nameCustomer = resp.body.nameCustomer;
-          this.logoCustomer = resp.body.photoPath;
-        },
-        error: (error) => {
-          this.customToastService.onCloseToError(error);
-        },
-      });
-  }
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
+    const urlApi = `Customers/${this.customerIdService.customerId}`;
+    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+      this.nameCustomer = result.nameCustomer;
+      this.logoCustomer = result.photoPath;
+    });
   }
 }

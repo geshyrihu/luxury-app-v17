@@ -1,9 +1,8 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataConnectorService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
 
 @Component({
@@ -12,13 +11,10 @@ import { DateService } from 'src/app/core/services/date.service';
   standalone: true,
   imports: [LuxuryAppComponentsModule],
 })
-export default class SoporteOrdenServicioComponent
-  implements OnInit, OnDestroy
-{
-  dateService = inject(DateService);
-  private route = inject(ActivatedRoute);
-  dataService = inject(DataConnectorService);
+export default class SoporteOrdenServicioComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
+  dateService = inject(DateService);
+  route = inject(ActivatedRoute);
   customerIdService = inject(CustomerIdService);
 
   id: string = '';
@@ -35,25 +31,20 @@ export default class SoporteOrdenServicioComponent
     this.onLoadData();
   }
   onLoadItem() {
-    this.dataService
-      .get(`ServiceOrders/SoporteOrdenServicio/${this.id}`)
-      .subscribe((resp: any) => {
-        this.nameCarpetaFecha = this.dateService.getDateFormat(
-          resp.body.fechaSolicitud
-        );
-        this.item = resp.body;
-      });
+    const urlApi = `ServiceOrders/SoporteOrdenServicio/${this.id}`;
+    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      this.nameCarpetaFecha = this.dateService.getDateFormat(
+        result.fechaSolicitud
+      );
+      this.item = result;
+    });
   }
   onLoadData() {
-    this.dataService
-      .get(`Customers/${this.customerIdService.customerId}`)
-      .subscribe((resp: any) => {
-        this.dataCustomer = resp.body;
-        this.nameCustomer = resp.body.nameCustomer;
-        this.logoCustomer = resp.body.photoPath;
-      });
-  }
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
+    const urlApi = `Customers/${this.customerIdService.customerId}`;
+    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      this.dataCustomer = result;
+      this.nameCustomer = result.nameCustomer;
+      this.logoCustomer = result.photoPath;
+    });
   }
 }

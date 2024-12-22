@@ -1,12 +1,11 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { IFechasFiltro } from 'src/app/core/interfaces/fechas-filtro.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { CustomToastService } from 'src/app/core/services/custom-toast.service';
-import { DataConnectorService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
+import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import { FiltroCalendarService } from 'src/app/core/services/filtro-calendar.service';
 import AddOrEditAgendaSupervisionComponent from './addoredit-agenda-supervision.component';
 
@@ -16,14 +15,13 @@ import AddOrEditAgendaSupervisionComponent from './addoredit-agenda-supervision.
   standalone: true,
   imports: [LuxuryAppComponentsModule],
 })
-export default class AgendaSupervisionComponent implements OnInit, OnDestroy {
+export default class AgendaSupervisionComponent implements OnInit {
   dateService = inject(DateService);
   authS = inject(AuthService);
-  dataService = inject(DataConnectorService);
   apiRequestService = inject(ApiRequestService);
-  dialogService = inject(DialogService);
+  dialogHandlerService = inject(DialogHandlerService);
+
   rangoCalendarioService = inject(FiltroCalendarService);
-  customToastService = inject(CustomToastService);
 
   loading: boolean = true;
   rangeDates: Date[] = [];
@@ -82,21 +80,16 @@ export default class AgendaSupervisionComponent implements OnInit, OnDestroy {
   }
 
   showModalAddOrEdit(data: any) {
-    this.ref = this.dialogService.open(AddOrEditAgendaSupervisionComponent, {
-      data: {
-        id: data.id,
-      },
-      header: data.title,
-      width: '40%',
-      closeOnEscape: true,
-      baseZIndex: 10000,
-    });
-    this.ref.onClose.subscribe((resp: boolean) => {
-      if (resp) {
-        this.customToastService.onShowSuccess();
-        this.onLoadData();
-      }
-    });
+    this.dialogHandlerService
+      .openDialog(
+        AddOrEditAgendaSupervisionComponent,
+        data,
+        data.title,
+        this.dialogHandlerService.dialogSizeMd
+      )
+      .then((result: boolean) => {
+        if (result) this.onLoadData();
+      });
   }
 
   onDelete(id: number) {
@@ -105,9 +98,5 @@ export default class AgendaSupervisionComponent implements OnInit, OnDestroy {
       .then((result: boolean) => {
         if (result) this.data = this.data.filter((item) => item.id !== id);
       });
-  }
-
-  ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
   }
 }

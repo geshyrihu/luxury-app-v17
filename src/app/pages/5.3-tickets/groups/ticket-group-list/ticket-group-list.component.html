@@ -1,6 +1,11 @@
 <p-toast position="top-right" [baseZIndex]="99999"></p-toast>
 
-<p-table #dt [value]="dataSignal()" styleClass="custom-table">
+<p-table
+  #dt
+  [value]="dataSignal()"
+  styleClass="custom-table"
+  [globalFilterFields]="['nameGroup']"
+>
   <ng-template pTemplate="caption">
     <custom-table-caption
       title="GRUPOS"
@@ -9,7 +14,7 @@
     />
   </ng-template>
 
-  <ng-template pTemplate="header">
+  <!-- <ng-template pTemplate="header">
     <tr>
       <th scope="col" pSortableColumn="isPublic">
         Acceso
@@ -37,101 +42,140 @@
       </th>
       <th scope="col">Opciones</th>
     </tr>
-  </ng-template>
+  </ng-template> -->
 
   <ng-template pTemplate="body" let-item>
     <tr>
-      <td>
-        <span
-          class="badge p-2 bg-success-subtle text-dark"
-          *ngIf="item.visibility === 'Public'"
+      <div class="list-group">
+        <div
+          class="list-group-item d-flex align-items-center justify-content-between py-1"
         >
-          Público
-        </span>
-        <span
-          class="badge p-2 bg-secondary-subtle text-dark"
-          *ngIf="item.visibility === 'Internal'"
-        >
-          Interno
-        </span>
-        <span
-          class="badge p-2 bg-secondary-subtle text-dark"
-          *ngIf="item.visibility === 'Condominiums'"
-        >
-          Cliente
-        </span>
-      </td>
-      <td>
-        {{ item.nameGroup }}
-      </td>
+          <div
+            class="d-flex align-items-center pointer"
+            (click)="onNavigateMessage(item.id, 0, item.nameGroup)"
+          >
+            <div>
+              <h5 class="mb-0">{{ item.nameGroup }}</h5>
+              <p class="text-muted">
+                <span
+                  class="badge p-2 bg-success-subtle text-dark"
+                  *ngIf="item.visibility === 'Public'"
+                >
+                  Público
+                </span>
+                <span
+                  class="badge p-2 bg-secondary-subtle text-dark"
+                  *ngIf="item.visibility === 'Internal'"
+                >
+                  Interno
+                </span>
+                <span
+                  class="badge p-2 bg-secondary-subtle text-dark"
+                  *ngIf="item.visibility === 'Condominiums'"
+                >
+                  Cliente
+                </span>
+              </p>
+            </div>
+          </div>
+          <div class="d-flex align-items-center">
+            <btn-bagges
+              icon="fa-solid  fa-clock"
+              ngbTooltipCustom="Pendientes"
+              customClass="btn-soft-danger waves-effect waves-light gb-gradient me-1"
+              (clicked)="onNavigateMessage(item.id, 0, item.nameGroup)"
+              [count]="item.open"
+            />
+            <btn-bagges
+              icon="fa-solid fa-spinner fa-spin"
+              ngbTooltipCustom="En Proceso"
+              customClass="btn-soft-warning waves-effect waves-light gb-gradient me-1"
+              (clicked)="onNavigateMessage(item.id, 1, item.nameGroup)"
+              [count]="item.inProgress"
+            />
+            <btn-bagges
+              icon="fa-solid fa-folder-open"
+              ngbTooltipCustom="Reabierto"
+              customClass="btn-soft-secondary waves-effect waves-light gb-gradient me-1"
+              (clicked)="onNavigateMessage(item.id, 3, item.nameGroup)"
+              [count]="item.reopened"
+            />
+            <btn-bagges
+              icon="fa-solid fa-check-circle"
+              ngbTooltipCustom="Cerrado"
+              customClass="btn-soft-success waves-effect waves-light gb-gradient me-1"
+              (clicked)="onNavigateMessage(item.id, 2, item.nameGroup)"
+              [count]="item.closed"
+            />
 
-      <td class="text-center">
-        <btn-bagges
-          icon="fa-solid  fa-clock"
-          ngbTooltipCustom="Pendientes"
-          customClass="btn-soft-danger waves-effect waves-light gb-gradient me-1"
-          (clicked)="onNavigateMessage(item.id, 0, item.nameGroup)"
-          [count]="item.open"
-        />
-      </td>
-      <td class="text-center">
-        <btn-bagges
-          icon="fa-solid fa-spinner fa-spin"
-          ngbTooltipCustom="En Proceso"
-          customClass="btn-soft-warning waves-effect waves-light gb-gradient me-1"
-          (clicked)="onNavigateMessage(item.id, 1, item.nameGroup)"
-          [count]="item.inProgress"
-        />
-      </td>
-      <td class="text-center">
-        <btn-bagges
-          icon="fa-solid fa-folder-open"
-          ngbTooltipCustom="Reabierto"
-          customClass="btn-soft-secondary waves-effect waves-light gb-gradient me-1"
-          (clicked)="onNavigateMessage(item.id, 3, item.nameGroup)"
-          [count]="item.reopened"
-        />
-      </td>
-      <td class="text-center">
-        <btn-bagges
-          icon="fa-solid fa-check-circle"
-          ngbTooltipCustom="Cerrado"
-          customClass="btn-soft-success waves-effect waves-light gb-gradient me-1"
-          (clicked)="onNavigateMessage(item.id, 2, item.nameGroup)"
-          [count]="item.closed"
-        />
-      </td>
-      <td>
-        <div class="d-flex justify-content-center">
-          <btn-bagges
-            icon="fa-solid fa-users"
-            ngbTooltipCustom="Participantes"
-            customClass="btn-soft-success waves-effect waves-light gb-gradient me-1"
-            (clicked)="onModalParticipants(item)"
-            [count]="item.ticketGroupParticipant"
-          />
+            <div class="dropdown">
+              <button
+                class="btn btn-soft-primary waves-effect waves-light bg-gradient dropdown-toggle"
+                type="button"
+                id="dropdownMenuButton"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                title="Opciones"
+              >
+                <i class="fa-solid fa-ellipsis-vertical"></i>
+              </button>
 
-          <btn-edit
-            *ngIf="item.active"
-            (edit)="onModalAddOrEdit({ id: item.id, title: 'Editar' })"
-          />
-          <btn-delete (OnConfirm)="onDelete(item.id)" />
-          <custom-button
-            *ngIf="item.active"
-            ngbTooltip="Bloquear"
-            customClass="btn-soft-success waves-effect waves-light  bg-gradient me-1"
-            icon="fa-solid fa-unlock"
-            (clicked)="onToggleStatus(item.id)"
-          />
-          <custom-button
-            *ngIf="!item.active"
-            ngbTooltip="Activar"
-            customClass="btn-soft-danger waves-effect waves-light  bg-gradient me-1"
-            icon="fa-solid fa-lock"
-            (clicked)="onToggleStatus(item.id)"
-          />
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <li>
+                  <button
+                    class="dropdown-item"
+                    (click)="onModalParticipants(item)"
+                    title="Participantes"
+                  >
+                    <i class="fa-solid fa-users me-2 text-success"></i>
+                    Participantes ({{ item.ticketGroupParticipant }})
+                  </button>
+                </li>
+                <li *ngIf="item.active">
+                  <button
+                    class="dropdown-item"
+                    (click)="onModalAddOrEdit({ id: item.id, title: 'Editar' })"
+                    title="Editar"
+                  >
+                    <i class="fa-solid fa-edit me-2 text-primary"></i>
+                    Editar
+                  </button>
+                </li>
+                <li>
+                  <button
+                    class="dropdown-item"
+                    (click)="onDelete(item.id)"
+                    title="Eliminar"
+                  >
+                    <i class="fa-solid fa-trash me-2 text-danger"></i>
+                    Eliminar
+                  </button>
+                </li>
+                <li *ngIf="item.active">
+                  <button
+                    class="dropdown-item"
+                    (click)="onToggleStatus(item.id)"
+                    title="Bloquear"
+                  >
+                    <i class="fa-solid fa-unlock me-2 text-warning"></i>
+                    Bloquear
+                  </button>
+                </li>
+                <li *ngIf="!item.active">
+                  <button
+                    class="dropdown-item"
+                    (click)="onToggleStatus(item.id)"
+                    title="Activar"
+                  >
+                    <i class="fa-solid fa-lock me-2 text-success"></i>
+                    Activar
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
-      </td>
-    </tr>
-  </ng-template>
-</p-table>
+      </div>
+    </tr></ng-template
+  ></p-table
+>

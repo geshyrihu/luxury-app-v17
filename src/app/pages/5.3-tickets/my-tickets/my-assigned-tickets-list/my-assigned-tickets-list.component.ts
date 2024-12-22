@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import CardEmployeeComponent from 'src/app/pages/6.1-directorios/employee/card-employee/card-employee.component';
+import Swal from 'sweetalert2';
 import TicketMessageFollowupComponent from '../../folloups/ticket-message-followup/ticket-message-followup.component';
 import TicketMessageAddOrEditComponent from '../../messages/ticket-message-add-or-edit/ticket-message-add-or-edit.component';
 import TicketMessageCloseComponent from '../../messages/ticket-message-close/ticket-message-close.component';
@@ -30,7 +31,6 @@ export default class MyAssignedTicketsListComponent implements OnInit {
   customerIdService = inject(CustomerIdService);
   activatedRoute = inject(ActivatedRoute);
 
-  data: any[] = [];
   status: string = this.ticketGroupService.ticketGroupMessageStatus;
 
   customerId$: Observable<number> = this.customerIdService.getCustomerId$();
@@ -43,12 +43,28 @@ export default class MyAssignedTicketsListComponent implements OnInit {
     });
   }
 
+  data: any[] = [];
+  filteredData: any[] = []; // Para almacenar la data filtrada
+  searchText: string = ''; // Para almacenar el texto de búsqueda
+
   onLoadData(status: any) {
     const urlApi = `TicketMessage/MyAssignedTickets/${this.authS.applicationUserId}/${status}`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.data = result;
+      this.filteredData = result; // Inicializa la data filtrada
       this.status = status;
     });
+  }
+
+  onSearch() {
+    this.filteredData = this.data.filter((item) =>
+      item.description.toLowerCase().includes(this.searchText.toLowerCase())
+    );
+  }
+  getTruncatedDescription(description: string): string {
+    return description.length > 100
+      ? description.slice(0, 100) + '...'
+      : description;
   }
 
   onProgram(id: string) {
@@ -136,5 +152,27 @@ export default class MyAssignedTicketsListComponent implements OnInit {
       'Colaborador',
       this.dialogHandlerService.dialogSizeMd
     );
+  }
+
+  onProgress(id: string) {
+    Swal.fire({
+      title: 'Confirmar',
+      text: 'Se colocara el ticket en proceso',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#50C878',
+      cancelButtonColor: '#9B1B30',
+      confirmButtonText: 'Si, en proceso!',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.value) {
+        const urlApi = `TicketMessage/InProgress/${id}/${this.authS.applicationUserId}`;
+
+        this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+          // Actualizamos el valor del signal con los datos recibidos
+          this.onLoadData(this.status);
+        });
+      }
+    });
   }
 }

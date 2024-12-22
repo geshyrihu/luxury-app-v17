@@ -1,16 +1,18 @@
 <div class="card">
   <div class="card-body">
     <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
-      <div class="row">
-        <h5 class="h5">Agregar</h5>
-        <div class="col-sm-6">
+      <div class="row g-3">
+        <h5 class="h5 text-center">Agregar</h5>
+        <!-- <div class="col-12 col-md-6">
           <custom-input-text
             [control]="form.get('id')"
             formControlName="id"
             label="Id"
             placeholder="Id"
             [hidden]="false"
-          />
+          ></custom-input-text>
+        </div> -->
+        <div class="col-12 col-md-6">
           <custom-input-datalist
             (propagar)="onSelectUser($event)"
             [control]="form.get('applicationUser')"
@@ -18,93 +20,109 @@
             formControlName="applicationUser"
             label="Usuario"
             dataListId="applicationUserDatalistOptions"
-          />
+          ></custom-input-datalist>
         </div>
-        <div class="col-4">
+        <div class="col-12 col-md-6">
           <custom-input-select
             [control]="form.get('isAdmin')"
             formControlName="isAdmin"
             label="Rol"
             [selectDefaulOption]="false"
             [data]="cb_eLuxury_group_rol"
-          />
+          ></custom-input-select>
         </div>
-        <div class="col-2">
-          <btn-submit [disabled]="this.form.invalid || submitting" />
+        <div class="col-12 d-flex justify-content-end">
+          <btn-submit [disabled]="this.form.invalid || submitting"></btn-submit>
         </div>
       </div>
     </form>
   </div>
 </div>
+
 <p
-  class="card-text text-center text-danger"
+  class="card-text text-center text-danger mt-3"
   *ngIf="cb_existing_Participant && cb_existing_Participant.length === 0"
 >
   No hay integrantes
 </p>
-<app-loading-spinner *ngIf="loading_existing_participant" />
+<app-loading-spinner *ngIf="loading_existing_participant"></app-loading-spinner>
 
 <div
-  class="card"
   *ngIf="cb_existing_Participant && cb_existing_Participant.length > 0"
+  class="list-group"
 >
-  <p-table
-    #dt
-    [value]="cb_existing_Participant"
-    [autoLayout]="true"
-    [globalFilterFields]="['applicationUser']"
-    styleClass="custom-table"
+  <div
+    *ngFor="let item of cb_existing_Participant"
+    class="list-group-item d-flex align-items-center justify-content-between py-3"
   >
-    <!-- styleClass="p-datatable-sm" -->
-    <ng-template pTemplate="caption">
-      <custom-table-caption title="" [showAdd]="false" [dt]="dt" />
-    </ng-template>
-
-    <ng-template pTemplate="header">
-      <tr>
-        <th scope="col" style="width: 20%" pSortableColumn="isAdmin">
-          Rol<p-sortIcon field="isAdmin"></p-sortIcon>
-        </th>
-        <th scope="col" style="width: 70%" pSortableColumn="applicationUser">
-          Nombre
-          <p-sortIcon field="applicationUser"></p-sortIcon>
-        </th>
-        <th scope="col" style="width: 10%" class="no-print">Opciones</th>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-item>
-      <tr>
-        <td class="p-column-title text-center">
-          <!-- <span class="badge bg-danger bg-gradient p-2"> Administrador</span> -->
-          <span
-            class="badge bg-danger-subtle text-dark p-2"
-            *ngIf="item.isAdmin"
-            ><i class="fa-solid fa-user-tie fa-lg me-2"></i> Administrador</span
-          >
-          <span
-            class="badge bg-success-subtle text-dark p-2"
-            *ngIf="!item.isAdmin"
-            ><i class="fa-solid fa-user fa-lg me-2"></i> Participante</span
-          >
-        </td>
-        <td class="p-column-title">
-          {{ item.applicationUser }}
-        </td>
-        <!-- Opciones -->
-        <td class="p-column-title" class="no-print">
-          <div class="d-flex justify-content-center">
-            <btn-edit (edit)="onEditParticipant(item)" />
-            <btn-delete (OnConfirm)="onDelete(item.id)" />
-          </div>
-        </td>
-        <!-- Opciones -->
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="paginatorleft">
-      <div class="p-d-flex p-ai-center p-jc-between no-print">
-        En total hay
-        {{ data ? data.length : 0 }} registros.
+    <div class="d-flex align-items-center">
+      <div>
+        <h6 class="text-title mt-0">{{ item.applicationUser }}</h6>
+        <span class="badge bg-danger text-sm p-1" *ngIf="item.isAdmin">
+          <i class="fa-solid fa-user-tie"></i>
+          <small> Administrador </small>
+        </span>
+        <span class="badge bg-success text-sm p-1" *ngIf="!item.isAdmin">
+          <i class="fa-solid fa-user"></i>
+          <small> Participante </small>
+        </span>
       </div>
-    </ng-template>
-  </p-table>
+    </div>
+    <div class="d-flex align-items-center">
+      <div class="dropdown">
+        <button
+          class="btn btn-soft-primary waves-effect waves-light bg-gradient btn-sm dropdown-toggle"
+          type="button"
+          id="dropdownMenuButton"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+          title="Opciones"
+        >
+          <i class="fa-solid fa-ellipsis-vertical"></i>
+        </button>
+
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <!-- Opción de Editar -->
+          <li>
+            <button
+              class="dropdown-item"
+              (click)="onEditParticipant(item)"
+              title="Editar participante"
+            >
+              <i class="fa-solid fa-pen me-2 text-info"></i>
+              Editar Participante
+            </button>
+          </li>
+          <!-- Opción de Eliminar -->
+          <li>
+            <button
+              class="dropdown-item"
+              (click)="onDelete(item.id)"
+              title="Eliminar participante"
+            >
+              <i class="fa-solid fa-trash me-2 text-danger"></i>
+              Eliminar Participante
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
 </div>
+<style>
+  .list-group-item {
+    background: #f9f9f9;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    transition: box-shadow 0.3s;
+  }
+
+  .list-group-item:hover {
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  .rounded-circle {
+    object-fit: cover;
+  }
+</style>

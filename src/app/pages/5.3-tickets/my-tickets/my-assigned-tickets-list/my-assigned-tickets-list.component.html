@@ -1,165 +1,406 @@
-<div class="card">
-  <!-- Contenedor flexible para scroll horizontal en móviles -->
-  <div class="table-responsive">
-    <p-table
-      *ngIf="data && data !== undefined"
-      #dt
-      [value]="data"
-      styleClass="custom-table"
-      [tableStyle]="{ 'min-width': '50rem' }"
-      [rows]="100"
-      [paginator]="true"
-      currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
-      [showCurrentPageReport]="true"
-      [rowsPerPageOptions]="[100, 200, 300, 500]"
-      [globalFilterFields]="[
-        'userCreate',
-        'createdAtFilter',
-        'scheduledAtFilter',
-        'description'
-      ]"
-      [autoLayout]="true"
-    >
-      <ng-template pTemplate="caption">
-        <custom-table-caption
-          title="Mis tickets asignados"
-          (add)="
+<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
+
+<div>
+  <!-- Contenido para pantallas medianas y grandes (md en adelante) -->
+  <div class="d-none d-md-block">
+    <div class="card">
+      <div class="table-responsive">
+        <p-table
+          *ngIf="data && data !== undefined"
+          #dt
+          [value]="data"
+          styleClass="custom-table"
+          [tableStyle]="{ 'min-width': '50rem' }"
+          [rows]="100"
+          [paginator]="true"
+          currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+          [showCurrentPageReport]="true"
+          [rowsPerPageOptions]="[100, 200, 300, 500]"
+          [globalFilterFields]="[
+            'userCreate',
+            'createdAtFilter',
+            'scheduledAtFilter',
+            'description'
+          ]"
+          [autoLayout]="true"
+        >
+          <ng-template pTemplate="caption">
+            <custom-table-caption
+              title="Mis tickets asignados"
+              (add)="
             onModalAdd({
               id: '',
               title: 'Agregar',
             })
           "
-          [dt]="dt"
+              [dt]="dt"
+            />
+            <div class="row">
+              <div class="col-lg-4">
+                <app-ticket-message-status
+                  (statusChange)="onLoadData($event)"
+                />
+              </div>
+            </div>
+          </ng-template>
+          <ng-template pTemplate="header">
+            <tr>
+              <th scope="col" class="font-size-12">FOLIO</th>
+              <th scope="col" class="font-size-12 d-none d-md-table-cell">
+                SOLICITA
+              </th>
+              <th scope="col" class="font-size-12">FECHA SOL.</th>
+              <th scope="col" class="font-size-12">SOLICITUD</th>
+              <th scope="col" class="font-size-12 d-none d-md-table-cell">
+                EVIDENCIA
+              </th>
+              <th scope="col" class="font-size-12">PRIORIDAD</th>
+              <th scope="col" class="font-size-12">PROGRAMADO</th>
+              <th scope="col" class="font-size-12 d-none d-md-table-cell">
+                CIERRE
+              </th>
+              <th scope="col" class="font-size-12">DIAS</th>
+              <th scope="col" class="font-size-12"></th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-item>
+            <tr>
+              <td>{{ item.folio }}</td>
+              <td class="text-center d-none d-md-table-cell">
+                <img
+                  (click)="onCardEmployee(item.creatorId)"
+                  [src]="item.creatorImg"
+                  class="rounded avatar-md"
+                  style="cursor: pointer"
+                />
+              </td>
+              <td>
+                {{ item.createdAtDate }} <br />
+                {{ item.createdAtHour }}
+              </td>
+              <td>
+                <strong class="card-text">
+                  <em>{{ item.title }}</em>
+                </strong>
+                <p class="card-text">{{ item.description }}</p>
+              </td>
+              <td class="text-center d-none d-md-table-cell">
+                <p-image
+                  *ngIf="item.beforeWork"
+                  [src]="item.beforeWork"
+                  alt="."
+                  width="40"
+                  class="me-2 border border-danger"
+                  [preview]="true"
+                ></p-image>
+              </td>
+              <td class="text-center">
+                <i
+                  *ngIf="item.priority === 'Alta'"
+                  class="fa-sharp fa-solid fa-star fa-xl"
+                ></i>
+                <i
+                  *ngIf="item.priority === 'Baja'"
+                  class="fa-sharp fa-thin fa-star fa-xl"
+                ></i>
+              </td>
+              <td>{{ item.scheduledAt }}</td>
+              <td class="text-center d-none d-md-table-cell">
+                {{ item.closedAtDate }}
+              </td>
+              <td class="text-center">
+                <p>
+                  <strong>{{ item.daysDifference }}</strong>
+                </p>
+              </td>
+              <td class="text-center">
+                <div class="d-flex justify-content-center">
+                  <button
+                    type="button"
+                    class="btn btn-soft-primary bg-gradientg position-relative me-1 text-start"
+                    ngbTooltip="Seguimiento"
+                    placement="top"
+                    (click)="onFollowUp(item.id)"
+                  >
+                    <i class="fa-light fa-list"></i>
+                    <span
+                      class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-info"
+                      >{{ item.ticketMessageFollowUp }}</span
+                    >
+                  </button>
+                  <custom-button
+                    *ngIf="item.status !== 'Closed'"
+                    (clicked)="onProgram(item.id)"
+                    pTooltip="Programar"
+                    customClass="btn btn-soft-primary bg-gradientg position-relative me-1 text-start"
+                    icon="fa-light fa-calendar-week"
+                  />
+                  <custom-button
+                    *ngIf="item.status !== 'Closed'"
+                    pTooltip="Cerrar"
+                    customClass="btn btn-soft-primary bg-gradientg position-relative me-1 text-start"
+                    icon="fa-light fa-thin fa-lock"
+                    (clicked)="onClosed(item.id)"
+                  />
+                  <custom-button
+                    *ngIf="item.status === 'Closed'"
+                    pTooltip="Re abrir"
+                    customClass="btn btn-soft-primary bg-gradientg position-relative me-1 text-start"
+                    icon="fa-solid fa-question"
+                    (clicked)="onReopen(item.id)"
+                  />
+                  <custom-button
+                    *ngIf="item.status !== 'Closed'"
+                    pTooltip="Editar"
+                    customClass="btn btn-soft-primary bg-gradientg position-relative me-1 text-start"
+                    icon="fa-pen-to-square"
+                    (clicked)="
+                      onModalAddOrEdit({
+                        id: item.id,
+                        title: 'Editar',
+                        ticketGroupId: item.ticketGroupId
+                      })
+                    "
+                  />
+                </div>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contenido para pantallas pequeñas (sm y menores) -->
+  <div class="d-block d-md-none">
+    <div class="container-fluid py-1">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4 class="mb-0">Mis Tickets Asignados</h4>
+        <custom-button
+          ngbTooltip="Agregar"
+          customClass="btn-sm btn-soft-primary waves-effect waves-light  bg-gradient"
+          icon="fa-plus"
+          (clicked)="onModalAdd({
+              id: '',
+              title: 'Agregar',
+            })"
         />
-        <div class="row">
-          <div class="col-lg-4">
-            <app-ticket-message-status (statusChange)="onLoadData($event)" />
+      </div>
+
+      <div class="d-flex align-items-center mb-1">
+        <input
+          type="text"
+          placeholder="Ingresa texto para buscar..."
+          class="form-control form-control-sm w-100"
+          [(ngModel)]="searchText"
+          (input)="onSearch()"
+        />
+      </div>
+
+      <div class="d-flex align-items-center mb-3">
+        <button
+          class="btn btn-soft-primary waves-effect waves-light bg-gradient btn-sm w-25"
+          (click)="onLoadData(0)"
+        >
+          Pendientes
+        </button>
+        <button
+          class="btn btn-soft-primary waves-effect waves-light bg-gradient btn-sm w-25"
+          (click)="onLoadData(3)"
+        >
+          Reabiertas
+        </button>
+        <button
+          class="btn btn-soft-primary waves-effect waves-light bg-gradient btn-sm w-25"
+          (click)="onLoadData(1)"
+        >
+          Proceso
+        </button>
+        <button
+          class="btn btn-soft-primary waves-effect waves-light bg-gradient btn-sm w-25"
+          (click)="onLoadData(2)"
+        >
+          Terminados
+        </button>
+      </div>
+
+      <div *ngIf="filteredData" class="ticket-list">
+        <div
+          *ngFor="let item of filteredData"
+          class="ticket-item py-1"
+          [ngClass]="{
+            'border-danger': item.status === 'Open',
+            'border-secondary': item.status === 'Reopened',
+            'border-success': item.status === 'Closed',
+            'border-warning': item.status === 'InProgress',
+          }"
+        >
+          <!-- Fecha del Ticket -->
+          <div class="d-flex justify-content-between align-items-center mb-1">
+            <small class="text-muted" style="font-size: 10px">
+              <i
+                class="fa-solid fa-bookmark me-2"
+                [ngClass]="{
+            'text-danger': item.priority === 'High',
+            'text-success': item.priority === 'Low',
+          }"
+              ></i>
+              {{ item.folio }} | {{ item.createdAtDate }} |
+              {{ item.createdAtHour }}
+            </small>
+            <span class="badge bg-primary-subtle text-primary">{{
+              item.daysDifference
+            }}</span>
+          </div>
+
+          <div class="d-flex align-items-center">
+            <!-- Foto de la evidencia -->
+            <div class="me-3">
+              <p-image
+                *ngIf="item.beforeWork"
+                [src]="item.beforeWork"
+                alt="."
+                width="50"
+                class="rounded border"
+                [preview]="true"
+              ></p-image>
+            </div>
+
+            <!-- Detalles del Ticket -->
+            <div class="flex-grow-1">
+              <div class="ticket-title text-truncate mb-1">
+                {{ item.title }}
+              </div>
+              <small class="ticket-description two-lines text-muted">
+                {{ item.description }}
+              </small>
+            </div>
+
+            <!-- Opciones del Dropdown -->
+            <div class="ms-3">
+              <div class="dropdown">
+                <button
+                  class="btn btn-soft-primary waves-effect waves-light bg-gradient btn-sm dropdown-toggle"
+                  type="button"
+                  id="dropdownMenuButton"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                  title="Opciones"
+                >
+                  <i class="fa-solid fa-ellipsis-vertical"></i>
+                </button>
+
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <li>
+                    <button
+                      class="dropdown-item"
+                      (click)="
+                        onModalAddOrEdit({ id: item.id, title: 'Editar' })
+                      "
+                      title="Editar"
+                    >
+                      <i class="fa-solid fa-edit me-2 text-primary"></i>
+                      Editar
+                    </button>
+                  </li>
+                  <li *ngIf="item.status !== 'Closed'">
+                    <button
+                      class="dropdown-item"
+                      (click)="onProgram(item.id)"
+                      title="Programar"
+                    >
+                      <i
+                        class="fa-light fa-calendar-week me-2 text-warning"
+                      ></i>
+                      Programar
+                    </button>
+                  </li>
+                  <!-- <custom-button
+                    *ngIf="item.status !== 'InProgress'"
+                    label="En proceso"
+                    customClass="btn-soft-primary  w-100 mt-1 text-start"
+                    icon="fa-duotone fa-solid fa-spinner  me-2"
+                    (clicked)="onProgress(item.id)"
+                  /> -->
+                  <li *ngIf="item.status !== 'Closed'">
+                    <button
+                      class="dropdown-item"
+                      (click)="onProgress(item.id)"
+                      title="En proceso"
+                    >
+                      <i
+                        class="fa-light fa-thin fa-spinner me-2 text-warning"
+                      ></i>
+                      En proceso
+                    </button>
+                  </li>
+                  <li *ngIf="item.status !== 'Closed'">
+                    <button
+                      class="dropdown-item"
+                      (click)="onClosed(item.id)"
+                      title="Cerrar"
+                    >
+                      <i class="fa-light fa-thin fa-lock me-2 text-danger"></i>
+                      Cerrar
+                    </button>
+                  </li>
+                  <li *ngIf="item.status === 'Closed'">
+                    <button
+                      class="dropdown-item"
+                      (click)="onReopen(item.id)"
+                      title="Reabrir"
+                    >
+                      <i class="fa-solid fa-question me-2 text-success"></i>
+                      Reabrir
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
-      </ng-template>
-      <ng-template pTemplate="header">
-        <tr>
-          <th scope="col" class="font-size-12">FOLIO</th>
-          <th scope="col" class="font-size-12 d-none d-md-table-cell">
-            SOLICITA
-          </th>
-          <th scope="col" class="font-size-12">FECHA SOL.</th>
-          <th scope="col" class="font-size-12">SOLICITUD</th>
-          <th scope="col" class="font-size-12 d-none d-md-table-cell">
-            EVIDENCIA
-          </th>
-          <th scope="col" class="font-size-12">PRIORIDAD</th>
-          <th scope="col" class="font-size-12">PROGRAMADO</th>
-          <th scope="col" class="font-size-12 d-none d-md-table-cell">
-            CIERRE
-          </th>
-          <th scope="col" class="font-size-12">DIAS</th>
-          <th scope="col" class="font-size-12"></th>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-item>
-        <tr>
-          <td>{{ item.folio }}</td>
-          <td class="text-center d-none d-md-table-cell">
-            <img
-              (click)="onCardEmployee(item.creatorId)"
-              [src]="item.creatorImg"
-              class="rounded avatar-md"
-              style="cursor: pointer"
-            />
-          </td>
-          <td>
-            {{ item.createdAtDate }} <br />
-            {{ item.createdAtHour }}
-          </td>
-          <td>
-            <strong class="card-text">
-              <em>{{ item.title }}</em>
-            </strong>
-            <p class="card-text">{{ item.description }}</p>
-          </td>
-          <td class="text-center d-none d-md-table-cell">
-            <p-image
-              *ngIf="item.beforeWork"
-              [src]="item.beforeWork"
-              alt="."
-              width="40"
-              class="me-2 border border-danger"
-              [preview]="true"
-            ></p-image>
-          </td>
-          <td class="text-center">
-            <i
-              *ngIf="item.priority === 'Alta'"
-              class="fa-sharp fa-solid fa-star fa-xl"
-            ></i>
-            <i
-              *ngIf="item.priority === 'Baja'"
-              class="fa-sharp fa-thin fa-star fa-xl"
-            ></i>
-          </td>
-          <td>{{ item.scheduledAt }}</td>
-          <td class="text-center d-none d-md-table-cell">
-            {{ item.closedAtDate }}
-          </td>
-          <td class="text-center">
-            <p>
-              <strong>{{ item.daysDifference }}</strong>
-            </p>
-          </td>
-          <td class="text-center">
-            <div class="d-flex justify-content-center">
-              <button
-                type="button"
-                class="btn btn-soft-primary bg-gradientg position-relative me-1 text-start"
-                ngbTooltip="Seguimiento"
-                placement="top"
-                (click)="onFollowUp(item.id)"
-              >
-                <i class="fa-light fa-list"></i>
-                <span
-                  class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-info"
-                  >{{ item.ticketMessageFollowUp }}</span
-                >
-              </button>
-              <custom-button
-                *ngIf="item.status !== 'Closed'"
-                (clicked)="onProgram(item.id)"
-                pTooltip="Programar"
-                customClass="btn btn-soft-primary bg-gradientg position-relative me-1 text-start"
-                icon="fa-light fa-calendar-week"
-              />
-              <custom-button
-                *ngIf="item.status !== 'Closed'"
-                pTooltip="Cerrar"
-                customClass="btn btn-soft-primary bg-gradientg position-relative me-1 text-start"
-                icon="fa-light fa-thin fa-lock"
-                (clicked)="onClosed(item.id)"
-              />
-              <custom-button
-                *ngIf="item.status === 'Closed'"
-                pTooltip="Re abrir"
-                customClass="btn btn-soft-primary bg-gradientg position-relative me-1 text-start"
-                icon="fa-solid fa-question"
-                (clicked)="onReopen(item.id)"
-              />
-              <custom-button
-                *ngIf="item.status !== 'Closed'"
-                pTooltip="Editar"
-                customClass="btn btn-soft-primary bg-gradientg position-relative me-1 text-start"
-                icon="fa-pen-to-square"
-                (clicked)="
-                  onModalAddOrEdit({
-                    id: item.id,
-                    title: 'Editar',
-                    ticketGroupId: item.ticketGroupId
-                  })
-                "
-              />
-            </div>
-          </td>
-        </tr>
-      </ng-template>
-    </p-table>
+
+        <style>
+          .ticket-description.two-lines {
+            display: -webkit-box;
+            -webkit-line-clamp: 2; /* Número máximo de líneas */
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: normal;
+          }
+          .ticket-list {
+            width: 100%;
+          }
+
+          .ticket-item {
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+            background-color: #fff;
+            border-bottom: 2px solid #e0e0e0;
+            transition: box-shadow 0.3s ease;
+          }
+
+          .ticket-title {
+            font-weight: bold;
+            font-size: 14px;
+            color: #333;
+          }
+
+          .ticket-description {
+            font-size: 12px;
+          }
+
+          .rounded {
+            border-radius: 5px;
+          }
+
+          .ticket-item:hover {
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+          }
+        </style>
+      </div>
+    </div>
   </div>
 </div>

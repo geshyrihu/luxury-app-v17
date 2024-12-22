@@ -3,27 +3,18 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { Observable } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DataConnectorService } from 'src/app/core/services/data.service';
 import { DateService } from 'src/app/core/services/date.service';
 import { PeriodoMonthService } from 'src/app/core/services/periodo-month.service';
 import PagetitleReportComponent from 'src/app/shared/cabeceras/pagetitlereport/pagetitlereport.component';
-import MesanioComponent from 'src/app/shared/mesanio/mesanio.component';
 import { MenuReportMaintenance } from './menu-report-maintenance';
-import ResumenMantenimientosComponent from './resumen-mantenimientos/resumen-mantenimientos.component';
 
 @Component({
   selector: 'app-maintenance-reports',
   templateUrl: './maintenance-reports.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    MesanioComponent,
-    ResumenMantenimientosComponent,
-    PagetitleReportComponent,
-  ],
+  imports: [LuxuryAppComponentsModule, PagetitleReportComponent],
 })
 export default class MaintenanceReportsComponent implements OnInit {
-  dataService = inject(DataConnectorService);
   apiRequestService = inject(ApiRequestService);
   dateService = inject(DateService);
   periodoMonthService = inject(PeriodoMonthService);
