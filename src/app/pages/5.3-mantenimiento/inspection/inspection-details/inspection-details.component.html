@@ -1,0 +1,106 @@
+@if (data) {
+<div class="p-2">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <div>
+      <div class="text-center">
+        <p>Detalles de la inspección</p>
+      </div>
+      <h5 class="card-title">{{ data.departamentName }}</h5>
+      <small class="text-muted">{{ data.inspectionName }}</small>
+    </div>
+    <custom-button
+      ngbTooltip="Agregar"
+      customClass="btn-soft-primary waves-effect waves-light  bg-gradient"
+      icon="fa-plus"
+      (clicked)="
+        onModalInspectionCondominiumAssetAdd({
+          title: 'Agregar área',
+          inspectionId: data.inspectionId
+        })
+      "
+    />
+  </div>
+
+  <hr />
+
+  @for (item of data. amenities; track $index) {
+
+  <ul class="list-group mb-3">
+    <li
+      class="list-group-item active d-flex justify-content-between align-items-center"
+    >
+      <div>
+        <i class="fa-solid fa-arrows-up-down-left-right me-2"></i>
+        {{ item.name }}
+      </div>
+      <div class="dropdown">
+        <button
+          class="btn btn-soft-ligth waves-effect waves-light bg-gradient btn-sm dropdown-toggle"
+          type="button"
+          id="dropdownMenuButton1"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+          title="Opciones"
+        >
+          <i class="fa-solid fa-ellipsis-vertical"></i>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+          <li>
+            <button
+              class="dropdown-item"
+              (click)="
+                onModalInspectionCondominiumAssetEdit({
+                  title: 'Editar área',
+                  id: item.id,
+                  inspectionId: data.inspectionId,
+                  inspectionCondominiumAssetId: item.inspectionCondominiumAssetId,
+
+                })
+              "
+            >
+              Editar Area
+            </button>
+          </li>
+          <li>
+            <button class="dropdown-item" (click)="onModalAddRevision()">
+              Agregar Revisión
+            </button>
+          </li>
+
+          <li>
+            <button class="dropdown-item">Eliminar Area</button>
+          </li>
+        </ul>
+      </div>
+    </li>
+
+    @for (review of item.reviews; track $index) {
+    <li
+      class="list-group-item d-flex justify-content-between align-items-center"
+    >
+      {{ review.description }}
+      <div class="dropdown">
+        <button
+          class="btn btn-soft-primary waves-effect waves-light bg-gradient btn-sm dropdown-toggle"
+          type="button"
+          id="dropdownMenuButton1"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+          title="Opciones"
+        >
+          <i class="fa-solid fa-ellipsis-vertical"></i>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+          <li>
+            <button class="dropdown-item" (click)="onDeleteReview(review.id)">
+              Eliminar revision
+            </button>
+          </li>
+        </ul>
+      </div>
+    </li>
+    }
+  </ul>
+  }
+</div>
+}

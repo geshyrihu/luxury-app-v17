@@ -46,11 +46,11 @@ export class CustomToastService {
   /**
    * Muestra un mensaje de error.
    */
-  onShowError() {
+  onShowError(errorMessage: any = 'No se pudo completar la tarea') {
     this.messageService.add({
       severity: 'error',
       summary: 'Error',
-      detail: 'No se pudo completar la tarea',
+      detail: errorMessage,
     });
   }
 
@@ -82,22 +82,9 @@ export class CustomToastService {
     Swal.close();
   }
   onCloseToError(err: any = null): void {
-    this.onShowError();
-    Swal.close();
     // En caso de error, mostrar un mensaje de error y registrar el error en la consola
     console.log('Error:', err.error);
-  }
-
-  /**
-   * Muestra una ventana emergente de error con un mensaje personalizado.
-   * @param mensaje Mensaje de error a mostrar.
-   */
-  onLoadingError(mensaje: string) {
-    Swal.fire({
-      allowOutsideClick: false,
-      icon: 'error',
-      title: 'Error',
-      text: mensaje,
-    });
+    this.onShowError(err.error);
+    Swal.close();
   }
 }

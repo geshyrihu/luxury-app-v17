@@ -6,7 +6,7 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import FooterComponent from '../footer/footer.component';
-import MobileMainViewComponent from '../mobile-main-view/mobile-main-view.component';
+import MobileMainViewComponent from '../mobile-view/mobile-main.component';
 import SidebarComponent from '../sidebar/sidebar.component';
 import CustomerSelectionComponent from '../topbar/customer-selection/customer-selection.component';
 import { TopbarComponent } from '../topbar/topbar.component';
@@ -44,13 +44,7 @@ export default class VerticalComponent implements OnInit {
   }
 
   constructor() {
-    this.apiRequestService
-      .onGetSelectItem(
-        `CustomersAcceso/${this.authS.infoUserAuthDto.applicationUserId}`
-      )
-      .then((resp: any) => {
-        this.cb_customer = resp;
-      });
+    this.cb_customer = this.authS.customerAccess;
   }
   onBack() {
     this.location.back();

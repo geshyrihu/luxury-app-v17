@@ -41,9 +41,11 @@ export default class CalendarFormComponent {
   }
   ngOnInit(): void {
     // Carga de listado de clientes
-    this.apiRequestService.onGetSelectItem('customers').then((resp: any) => {
-      this.cb_customers = resp;
-    });
+    this.apiRequestService
+      .onGetSelectItem('CustomersActive')
+      .then((resp: any) => {
+        this.cb_customers = resp;
+      });
     this.id = this.config.data.id;
     if (this.id !== '') this.onLoadData();
   }

@@ -4,7 +4,7 @@
     <button
       *ngFor="let item of cb_status"
       type="button"
-      class="btn"
+      class="btn btn-sm"
       [ngClass]="{
         'btn-soft-primary': status === item.value,
         'btn-soft-info': status !== item.value
@@ -12,7 +12,9 @@
       (click)="onStatusChange(item.value)"
       style="flex: 1"
     >
-      {{ item.label }}
+      <small class="text-muted">
+        {{ item.label }}
+      </small>
     </button>
   </div>
 </div>

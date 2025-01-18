@@ -1,19 +1,19 @@
-import { Component, inject, OnInit } from "@angular/core";
-import LuxuryAppComponentsModule from "app/shared/luxuryapp-components.module";
-import { Subscription } from "rxjs";
-import { SimplebarAngularModule } from "simplebar-angular";
-import { ApiRequestService } from "src/app/core/services/api-request.service";
-import { AuthService } from "src/app/core/services/auth.service";
-import { SignalRService } from "src/app/core/services/signal-r.service";
-import { TicketGroupService } from "src/app/pages/5.3-tickets/ticket.service";
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
+import { Subscription } from 'rxjs';
+import { SimplebarAngularModule } from 'simplebar-angular';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { SignalRService } from 'src/app/core/services/signal-r.service';
+import { TicketGroupService } from 'src/app/pages/5.3-tickets/ticket.service';
 
 @Component({
-  selector: "app-notifications",
-  templateUrl: "./notifications.component.html",
+  selector: 'app-notifications',
+  templateUrl: './notifications.component.html',
   standalone: true,
   imports: [SimplebarAngularModule, LuxuryAppComponentsModule],
 })
-export default class NotificationsComponent implements OnInit {
+export default class NotificationsComponent implements OnInit, OnDestroy {
   apiRequestService = inject(ApiRequestService);
   authS = inject(AuthService);
   ticketGroupService = inject(TicketGroupService);
@@ -30,7 +30,7 @@ export default class NotificationsComponent implements OnInit {
     // Suscribirse al observable de notificaciones recibidas
     this.notificationSubscription = this.signalRService
       .getNotificationObservable()
-      .subscribe((notificationData) => {
+      .subscribe((_) => {
         this.onLoadNotification();
       });
 
@@ -61,7 +61,7 @@ export default class NotificationsComponent implements OnInit {
 
   getTruncatedMessage(message: string, maxLength: number): string {
     return message.length > maxLength
-      ? message.substring(0, maxLength) + "..."
+      ? message.substring(0, maxLength) + '...'
       : message;
   }
 

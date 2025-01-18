@@ -42,7 +42,7 @@ export default class AddOrEditApplicationUserComponent implements OnInit {
 
   onLoadSelectItem() {
     this.apiRequestService
-      .onGetSelectItem('customers')
+      .onGetSelectItem('CustomersActive')
       .then((items: ISelectItem[]) => {
         this.cb_customer = items;
       });

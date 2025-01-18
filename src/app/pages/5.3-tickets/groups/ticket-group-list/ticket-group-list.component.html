@@ -1,20 +1,445 @@
 <p-toast position="top-right" [baseZIndex]="99999"></p-toast>
+<!-- Contenido para pantallas medianas y grandes (md en adelante) -->
+<div class="d-none d-md-block">
+  <div class="container mt-4">
+    <div class="row">
+      <div class="col-12">
+        <custom-table-caption
+          title="GRUPOS"
+          (add)="onModalAddOrEdit({ id: '', title: 'Nuevo Registro' })"
+          [showAdd]="false"
+        />
+      </div>
+      <div
+        class="col-lg-4 col-md-6 col-sm-12 mb-4"
+        *ngFor="let item of dataSignal()"
+      >
+        <div class="card shadow-sm h-100">
+          <div class="card-body d-flex flex-column justify-content-between">
+            <!-- Encabezado -->
+            <div
+              class="mb-3 pointer"
+              (click)="onNavigateMessage(item.id, 0, item.nameGroup)"
+            >
+              <h5 class="card-title text-primary mb-2">{{ item.nameGroup }}</h5>
+              <p class="text-muted">
+                <span
+                  class="badge bg-success"
+                  *ngIf="item.visibility === 'Public'"
+                >
+                  Público
+                </span>
+                <span
+                  class="badge bg-secondary"
+                  *ngIf="item.visibility === 'Internal'"
+                >
+                  Interno
+                </span>
+                <span
+                  class="badge bg-primary"
+                  *ngIf="item.visibility === 'Condominiums'"
+                >
+                  Cliente
+                </span>
+              </p>
+            </div>
 
-<p-table
-  #dt
-  [value]="dataSignal()"
-  styleClass="custom-table"
-  [globalFilterFields]="['nameGroup']"
->
-  <ng-template pTemplate="caption">
-    <custom-table-caption
-      title="GRUPOS"
-      (add)="onModalAddOrEdit({ id: '', title: 'Nuevo Registro' })"
-      [dt]="dt"
-    />
-  </ng-template>
+            <!-- Contenido: Estados -->
+            <div class="mb-3">
+              <div class="d-flex justify-content-between align-items-center">
+                <btn-bagges
+                  icon="fa-solid fa-clock"
+                  ngbTooltipCustom="Pendientes"
+                  customClass="btn-soft-danger btn-sm"
+                  (clicked)="onNavigateMessage(item.id, 0, item.nameGroup)"
+                  [count]="item.open"
+                ></btn-bagges>
+                <btn-bagges
+                  icon="fa-solid fa-spinner fa-spin"
+                  ngbTooltipCustom="En Proceso"
+                  customClass="btn-soft-warning btn-sm"
+                  (clicked)="onNavigateMessage(item.id, 1, item.nameGroup)"
+                  [count]="item.inProgress"
+                ></btn-bagges>
+                <btn-bagges
+                  icon="fa-solid fa-folder-open"
+                  ngbTooltipCustom="Reabierto"
+                  customClass="btn-soft-secondary btn-sm"
+                  (clicked)="onNavigateMessage(item.id, 3, item.nameGroup)"
+                  [count]="item.reopened"
+                ></btn-bagges>
+                <btn-bagges
+                  icon="fa-solid fa-check-circle"
+                  ngbTooltipCustom="Cerrado"
+                  customClass="btn-soft-success btn-sm"
+                  (clicked)="onNavigateMessage(item.id, 2, item.nameGroup)"
+                  [count]="item.closed"
+                ></btn-bagges>
+              </div>
+            </div>
 
-  <!-- <ng-template pTemplate="header">
+            <!-- Opciones -->
+            <div class="dropdown text-end">
+              <button
+                class="btn btn-outline-primary btn-sm dropdown-toggle"
+                type="button"
+                id="dropdownMenuButton"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Opciones
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <li>
+                  <button
+                    class="dropdown-item"
+                    (click)="onModalParticipants(item)"
+                  >
+                    <i class="fa-solid fa-users me-2"></i> Participantes ({{
+                      item.ticketGroupParticipant
+                    }})
+                  </button>
+                </li>
+                <li *ngIf="item.active">
+                  <button
+                    class="dropdown-item"
+                    (click)="onModalAddOrEdit({ id: item.id, title: 'Editar' })"
+                  >
+                    <i class="fa-solid fa-edit me-2 text-primary"></i> Editar
+                  </button>
+                </li>
+                <li>
+                  <button class="dropdown-item" (click)="onDelete(item.id)">
+                    <i class="fa-solid fa-trash me-2 text-danger"></i> Eliminar
+                  </button>
+                </li>
+                <li *ngIf="item.active">
+                  <button
+                    class="dropdown-item"
+                    (click)="onToggleStatus(item.id)"
+                  >
+                    <i class="fa-solid fa-unlock me-2 text-warning"></i>
+                    Bloquear
+                  </button>
+                </li>
+                <li *ngIf="!item.active">
+                  <button
+                    class="dropdown-item"
+                    (click)="onToggleStatus(item.id)"
+                  >
+                    <i class="fa-solid fa-lock me-2 text-success"></i> Activar
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- <p-table
+    #dt
+    [value]="dataSignal()"
+    styleClass="custom-table"
+    [globalFilterFields]="['nameGroup']"
+  >
+    <ng-template pTemplate="caption">
+      <custom-table-caption
+        title="GRUPOS"
+        (add)="onModalAddOrEdit({ id: '', title: 'Nuevo Registro' })"
+        [dt]="dt"
+      />
+    </ng-template>
+
+    <ng-template pTemplate="body" let-item>
+      <tr>
+        <div class="list-group">
+          <div
+            class="list-group-item d-flex align-items-center justify-content-between py-1"
+          >
+            <div
+              class="d-flex align-items-center pointer"
+              (click)="onNavigateMessage(item.id, 0, item.nameGroup)"
+            >
+              <div>
+                <h5 class="mb-0">{{ item.nameGroup }}</h5>
+                <p class="text-muted">
+                  <span
+                    class="badge p-2 bg-success-subtle text-dark"
+                    *ngIf="item.visibility === 'Public'"
+                  >
+                    Público
+                  </span>
+                  <span
+                    class="badge p-2 bg-secondary-subtle text-dark"
+                    *ngIf="item.visibility === 'Internal'"
+                  >
+                    Interno
+                  </span>
+                  <span
+                    class="badge p-2 bg-secondary-subtle text-dark"
+                    *ngIf="item.visibility === 'Condominiums'"
+                  >
+                    Cliente
+                  </span>
+                </p>
+              </div>
+            </div>
+            <div class="d-flex align-items-center">
+              <btn-bagges
+                icon="fa-solid  fa-clock"
+                ngbTooltipCustom="Pendientes"
+                customClass="btn-soft-danger waves-effect waves-light gb-gradient me-1"
+                (clicked)="onNavigateMessage(item.id, 0, item.nameGroup)"
+                [count]="item.open"
+              />
+              <btn-bagges
+                icon="fa-solid fa-spinner fa-spin"
+                ngbTooltipCustom="En Proceso"
+                customClass="btn-soft-warning waves-effect waves-light gb-gradient me-1"
+                (clicked)="onNavigateMessage(item.id, 1, item.nameGroup)"
+                [count]="item.inProgress"
+              />
+              <btn-bagges
+                icon="fa-solid fa-folder-open"
+                ngbTooltipCustom="Reabierto"
+                customClass="btn-soft-secondary waves-effect waves-light gb-gradient me-1"
+                (clicked)="onNavigateMessage(item.id, 3, item.nameGroup)"
+                [count]="item.reopened"
+              />
+              <btn-bagges
+                icon="fa-solid fa-check-circle"
+                ngbTooltipCustom="Cerrado"
+                customClass="btn-soft-success waves-effect waves-light gb-gradient me-1"
+                (clicked)="onNavigateMessage(item.id, 2, item.nameGroup)"
+                [count]="item.closed"
+              />
+
+              <div class="dropdown">
+                <button
+                  class="btn btn-soft-primary waves-effect waves-light bg-gradient dropdown-toggle"
+                  type="button"
+                  id="dropdownMenuButton"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                  title="Opciones"
+                >
+                  <i class="fa-solid fa-ellipsis-vertical"></i>
+                </button>
+
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <li>
+                    <button
+                      class="dropdown-item"
+                      (click)="onModalParticipants(item)"
+                      title="Participantes"
+                    >
+                      <i class="fa-solid fa-users me-2 text-success"></i>
+                      Participantes ({{ item.ticketGroupParticipant }})
+                    </button>
+                  </li>
+                  <li *ngIf="item.active">
+                    <button
+                      class="dropdown-item"
+                      (click)="
+                        onModalAddOrEdit({ id: item.id, title: 'Editar' })
+                      "
+                      title="Editar"
+                    >
+                      <i class="fa-solid fa-edit me-2 text-primary"></i>
+                      Editar
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      class="dropdown-item"
+                      (click)="onDelete(item.id)"
+                      title="Eliminar"
+                    >
+                      <i class="fa-solid fa-trash me-2 text-danger"></i>
+                      Eliminar
+                    </button>
+                  </li>
+                  <li *ngIf="item.active">
+                    <button
+                      class="dropdown-item"
+                      (click)="onToggleStatus(item.id)"
+                      title="Bloquear"
+                    >
+                      <i class="fa-solid fa-unlock me-2 text-warning"></i>
+                      Bloquear
+                    </button>
+                  </li>
+                  <li *ngIf="!item.active">
+                    <button
+                      class="dropdown-item"
+                      (click)="onToggleStatus(item.id)"
+                      title="Activar"
+                    >
+                      <i class="fa-solid fa-lock me-2 text-success"></i>
+                      Activar
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </tr></ng-template
+    ></p-table
+  > -->
+</div>
+<!-- Contenido para pantallas pequeñas (sm y menores) -->
+<div class="d-block d-md-none">
+  <p-table
+    #dt
+    [value]="dataSignal()"
+    styleClass="custom-table"
+    [globalFilterFields]="['nameGroup']"
+  >
+    <ng-template pTemplate="caption">
+      <custom-table-caption
+        title="GRUPOS"
+        (add)="onModalAddOrEdit({ id: '', title: 'Nuevo Registro' })"
+        [dt]="dt"
+      />
+      <i class="fa-solid fa-unlock me-2"></i>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-item>
+      <tr>
+        <div class="list-group">
+          <div
+            class="list-group-item d-flex align-items-center justify-content-between py-1"
+          >
+            <div
+              class="d-flex align-items-center pointer"
+              (click)="onNavigateMessage(item.id, 0, item.nameGroup)"
+            >
+              <div>
+                <h5 class="mb-0">{{ item.nameGroup }}</h5>
+                <p class="text-muted">
+                  <span *ngIf="item.visibility === 'Public'"> Público </span>
+                  <span *ngIf="item.visibility === 'Internal'"> Interno </span>
+                  <span *ngIf="item.visibility === 'Condominiums'">
+                    Cliente
+                  </span>
+                </p>
+              </div>
+            </div>
+            <div class="d-flex align-items-center">
+              <span
+                class="badge bg-dark me-2 p-2 pointer"
+                (click)="onNavigateMessage(item.id, 0, item.nameGroup)"
+              >
+                {{ item.open + item.inProgress + item.reopened }}</span
+              >
+              <div class="dropdown">
+                <button
+                  class="btn btn-soft-primary waves-effect waves-light bg-gradient dropdown-toggle"
+                  type="button"
+                  id="dropdownMenuButton"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                  title="Opciones"
+                >
+                  <i class="fa-solid fa-ellipsis-vertical"></i>
+                </button>
+
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <li>
+                    <button
+                      class="dropdown-item"
+                      (click)="onModalParticipants(item)"
+                      title="Participantes"
+                    >
+                      <i class="fa-solid fa-users me-2 text-success"></i>
+                      Participantes ({{ item.ticketGroupParticipant }})
+                    </button>
+                  </li>
+                  <li *ngIf="item.active">
+                    <button
+                      class="dropdown-item"
+                      (click)="
+                        onModalAddOrEdit({ id: item.id, title: 'Editar' })
+                      "
+                      title="Editar"
+                    >
+                      <i class="fa-solid fa-edit me-2 text-primary"></i>
+                      Editar
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      class="dropdown-item"
+                      (click)="onDelete(item.id)"
+                      title="Eliminar"
+                    >
+                      <i class="fa-solid fa-trash me-2 text-danger"></i>
+                      Eliminar
+                    </button>
+                  </li>
+                  <li *ngIf="item.active">
+                    <button
+                      class="dropdown-item"
+                      (click)="onToggleStatus(item.id)"
+                      title="Bloquear"
+                    >
+                      <i class="fa-solid fa-unlock me-2 text-warning"></i>
+                      Bloquear
+                    </button>
+                  </li>
+                  <li *ngIf="!item.active">
+                    <button
+                      class="dropdown-item"
+                      (click)="onToggleStatus(item.id)"
+                      title="Activar"
+                    >
+                      <i class="fa-solid fa-lock me-2 text-success"></i>
+                      Activar
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </tr></ng-template
+    ></p-table
+  >
+</div>
+<!-- <btn-bagges
+                icon="fa-solid  fa-clock"
+                ngbTooltipCustom="Pendientes"
+                customClass="btn-soft-danger waves-effect waves-light gb-gradient me-1"
+                (clicked)="onNavigateMessage(item.id, 0, item.nameGroup)"
+                [count]="item.open"
+              />
+              <btn-bagges
+                icon="fa-solid fa-spinner fa-spin"
+                ngbTooltipCustom="En Proceso"
+                customClass="btn-soft-warning waves-effect waves-light gb-gradient me-1"
+                (clicked)="onNavigateMessage(item.id, 1, item.nameGroup)"
+                [count]="item.inProgress"
+              />
+              <btn-bagges
+                icon="fa-solid fa-folder-open"
+                ngbTooltipCustom="Reabierto"
+                customClass="btn-soft-secondary waves-effect waves-light gb-gradient me-1"
+                (clicked)="onNavigateMessage(item.id, 3, item.nameGroup)"
+                [count]="item.reopened"
+              />
+              <btn-bagges
+                icon="fa-solid fa-check-circle"
+                ngbTooltipCustom="Cerrado"
+                customClass="btn-soft-success waves-effect waves-light gb-gradient me-1"
+                (clicked)="onNavigateMessage(item.id, 2, item.nameGroup)"
+                [count]="item.closed"
+              /> -->
+
+<!-- codigo de tabla -->
+<!-- <ng-template pTemplate="header">
     <tr>
       <th scope="col" pSortableColumn="isPublic">
         Acceso
@@ -43,139 +468,3 @@
       <th scope="col">Opciones</th>
     </tr>
   </ng-template> -->
-
-  <ng-template pTemplate="body" let-item>
-    <tr>
-      <div class="list-group">
-        <div
-          class="list-group-item d-flex align-items-center justify-content-between py-1"
-        >
-          <div
-            class="d-flex align-items-center pointer"
-            (click)="onNavigateMessage(item.id, 0, item.nameGroup)"
-          >
-            <div>
-              <h5 class="mb-0">{{ item.nameGroup }}</h5>
-              <p class="text-muted">
-                <span
-                  class="badge p-2 bg-success-subtle text-dark"
-                  *ngIf="item.visibility === 'Public'"
-                >
-                  Público
-                </span>
-                <span
-                  class="badge p-2 bg-secondary-subtle text-dark"
-                  *ngIf="item.visibility === 'Internal'"
-                >
-                  Interno
-                </span>
-                <span
-                  class="badge p-2 bg-secondary-subtle text-dark"
-                  *ngIf="item.visibility === 'Condominiums'"
-                >
-                  Cliente
-                </span>
-              </p>
-            </div>
-          </div>
-          <div class="d-flex align-items-center">
-            <btn-bagges
-              icon="fa-solid  fa-clock"
-              ngbTooltipCustom="Pendientes"
-              customClass="btn-soft-danger waves-effect waves-light gb-gradient me-1"
-              (clicked)="onNavigateMessage(item.id, 0, item.nameGroup)"
-              [count]="item.open"
-            />
-            <btn-bagges
-              icon="fa-solid fa-spinner fa-spin"
-              ngbTooltipCustom="En Proceso"
-              customClass="btn-soft-warning waves-effect waves-light gb-gradient me-1"
-              (clicked)="onNavigateMessage(item.id, 1, item.nameGroup)"
-              [count]="item.inProgress"
-            />
-            <btn-bagges
-              icon="fa-solid fa-folder-open"
-              ngbTooltipCustom="Reabierto"
-              customClass="btn-soft-secondary waves-effect waves-light gb-gradient me-1"
-              (clicked)="onNavigateMessage(item.id, 3, item.nameGroup)"
-              [count]="item.reopened"
-            />
-            <btn-bagges
-              icon="fa-solid fa-check-circle"
-              ngbTooltipCustom="Cerrado"
-              customClass="btn-soft-success waves-effect waves-light gb-gradient me-1"
-              (clicked)="onNavigateMessage(item.id, 2, item.nameGroup)"
-              [count]="item.closed"
-            />
-
-            <div class="dropdown">
-              <button
-                class="btn btn-soft-primary waves-effect waves-light bg-gradient dropdown-toggle"
-                type="button"
-                id="dropdownMenuButton"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-                title="Opciones"
-              >
-                <i class="fa-solid fa-ellipsis-vertical"></i>
-              </button>
-
-              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <li>
-                  <button
-                    class="dropdown-item"
-                    (click)="onModalParticipants(item)"
-                    title="Participantes"
-                  >
-                    <i class="fa-solid fa-users me-2 text-success"></i>
-                    Participantes ({{ item.ticketGroupParticipant }})
-                  </button>
-                </li>
-                <li *ngIf="item.active">
-                  <button
-                    class="dropdown-item"
-                    (click)="onModalAddOrEdit({ id: item.id, title: 'Editar' })"
-                    title="Editar"
-                  >
-                    <i class="fa-solid fa-edit me-2 text-primary"></i>
-                    Editar
-                  </button>
-                </li>
-                <li>
-                  <button
-                    class="dropdown-item"
-                    (click)="onDelete(item.id)"
-                    title="Eliminar"
-                  >
-                    <i class="fa-solid fa-trash me-2 text-danger"></i>
-                    Eliminar
-                  </button>
-                </li>
-                <li *ngIf="item.active">
-                  <button
-                    class="dropdown-item"
-                    (click)="onToggleStatus(item.id)"
-                    title="Bloquear"
-                  >
-                    <i class="fa-solid fa-unlock me-2 text-warning"></i>
-                    Bloquear
-                  </button>
-                </li>
-                <li *ngIf="!item.active">
-                  <button
-                    class="dropdown-item"
-                    (click)="onToggleStatus(item.id)"
-                    title="Activar"
-                  >
-                    <i class="fa-solid fa-lock me-2 text-success"></i>
-                    Activar
-                  </button>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </tr></ng-template
-  ></p-table
->

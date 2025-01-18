@@ -31,13 +31,6 @@ export const ticketsMenu = (authS: AuthService) => [
         routerLink: '/tickets/my-requests',
         name: 'my request',
       },
-
-      // {
-      //   visible: authS.onValidateRoles(['SuperUsuario']),
-      //   label: '5.3.4 Reportes',
-      //   routerLink: '/tickets/reports',
-      //   name: 'message report',
-      // },
     ],
   },
 ];

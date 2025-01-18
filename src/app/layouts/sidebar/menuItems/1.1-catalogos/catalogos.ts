@@ -123,6 +123,24 @@ export const catalogMenu = (authS: AuthService) => [
         routerLink: '/catalog/catalog-color',
         name: 'Catalogo de colores',
       },
+      {
+        visible: authS.onValidateRoles(['SuperUsuario']),
+        label: 'Catalogo de amenidades',
+        routerLink: '/catalog/catalog-asset',
+        name: 'Catalogo de amenidades',
+      },
+      {
+        visible: authS.onValidateRoles(['SuperUsuario']),
+        label: 'Catalogo de inspecciones',
+        routerLink: '/catalog/inspection-reviews-catalog',
+        name: 'Catalogo de inspecciones',
+      },
+      {
+        visible: authS.onValidateRoles(['SuperUsuario']),
+        label: 'Home',
+        routerLink: '/home',
+        name: 'Home',
+      },
     ],
   },
 ];

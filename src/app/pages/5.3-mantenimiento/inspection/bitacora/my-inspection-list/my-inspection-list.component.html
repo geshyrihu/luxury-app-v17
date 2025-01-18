@@ -1,0 +1,87 @@
+<div class="container-fluid py-3">
+  <!-- Encabezado -->
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h4>
+      Inspecciones para:
+      <small>
+        <em>
+          {{ dateSelect | date : "EEEE dd-MMM-yyyy" }}
+        </em>
+      </small>
+    </h4>
+  </div>
+  <!-- Bindeo bidireccional -->
+  <!-- Cambiado a texto para mostrar el formato correctamente -->
+  <div class="w-50">
+    <input
+      class="form-control flatpickr-input"
+      type="text"
+      [(ngModel)]="dateSelect"
+      [value]="dateSelect | date : 'EEEE dd-MMM-yyyy'"
+      (ngModelChange)="onDateChange($event)"
+      mwlFlatpickr
+      [altInput]="true"
+      flatpickr="{
+        dateFormat: 'Y-m-d',
+        altFormat: 'l d-M-Y',}"
+      [convertModelValue]="true"
+    />
+  </div>
+</div>
+@if (data) {
+<!-- Lista de inspecciones -->
+<div *ngIf="data" class="list-group mt-3">
+  <h5 class="text-muted">{{ area }}</h5>
+  <div
+    *ngFor="let item of data"
+    class="list-group-item d-flex justify-content-between mb-1"
+  >
+    <div>
+      <div class="fw-bold">
+        <i
+          *ngIf="item.isRealized"
+          class="me-2 fa-solid fa-check-double text-success"
+        >
+        </i>
+        <i *ngIf="!item.isRealized" class="me-2 fa-solid fa-xmark text-danger">
+        </i>
+        {{ item.nameInspection }}
+      </div>
+      <p class="text-muted mb-0">
+        <small class="mb-0"> {{ item.departament }}</small>
+      </p>
+      <p class="text-muted mb-0">
+        <small class="mb-0"> {{ item.frequency }}</small>
+      </p>
+    </div>
+    <i
+      [routerLink]="['/logbook/my-inspection', item.id]"
+      class="fa-solid fa-chevron-right fa-2x p-1"
+    ></i>
+  </div>
+</div>
+<!-- Sin datos -->
+<div *ngIf="!data" class="text-center mt-3">
+  <p>No se encontraron inspecciones.</p>
+</div>
+
+}
+
+<style>
+  .list-group-item {
+    background: #f9f9f9;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    transition: box-shadow 0.3s;
+  }
+
+  .list-group-item:hover {
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+</style>

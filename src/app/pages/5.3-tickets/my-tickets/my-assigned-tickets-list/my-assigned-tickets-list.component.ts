@@ -48,7 +48,7 @@ export default class MyAssignedTicketsListComponent implements OnInit {
   searchText: string = ''; // Para almacenar el texto de búsqueda
 
   onLoadData(status: any) {
-    const urlApi = `TicketMessage/MyAssignedTickets/${this.authS.applicationUserId}/${status}`;
+    const urlApi = `TicketMessage/MyAssignedTickets/${this.authS.applicationUserId}/${status}/${this.customerIdService.customerId}`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.data = result;
       this.filteredData = result; // Inicializa la data filtrada

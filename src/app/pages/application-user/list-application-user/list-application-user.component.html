@@ -1,5 +1,5 @@
 <p-toast position="top-right" [baseZIndex]="99999"></p-toast>
-@if (data) {
+@if (filteredData) {
 <!-- Contenido para pantallas medianas y grandes (md en adelante) -->
 <div class="d-none d-md-block">
   <div class="card">
@@ -16,19 +16,29 @@
       [rows]="100"
       [rowsPerPageOptions]="[100, 200]"
       [showCurrentPageReport]="true"
-      [value]="data"
+      [value]="filteredData"
       currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
       styleClass="custom-table"
       [tableStyle]="{ 'min-width': '50rem' }"
     >
       <ng-template pTemplate="caption">
         <div class="row">
-          <div class="col-sm-8">
+          <div class="col-sm-6">
             <custom-table-caption
               (add)="onAddOrEdit('', 'Crear Cuenta')"
               [title]="'Cuentas de acceso '"
               [dt]="dt"
             />
+          </div>
+          <div class="col-sm-2">
+            <select
+              class="form-select"
+              (change)="onSelectForCustomer($event.target.value)"
+            >
+              <option *ngFor="let item of selectCustomer" [value]="item.value">
+                {{ item.label }}
+              </option>
+            </select>
           </div>
           <div class="col-sm-2">
             <select
@@ -162,12 +172,12 @@
 </div>
 <!-- Contenido para pantallas pequeñas (sm y menores) -->
 <div class="d-block d-md-none">
-  <div class="container-fluid py-3">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-      <h4 class="page-title-box">Usuarios</h4>
+  <div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center">
+      <h4 class="page-title-box mb-0">Usuarios</h4>
       <custom-button
         ngbTooltip="Agregar"
-        customClass="btn-soft-primary waves-effect waves-light  bg-gradient"
+        customClass="btn-soft-primary waves-effect waves-light bg-gradient"
         icon="fa-plus"
         (clicked)="onAddOrEdit('', 'Crear Cuenta')"
       />
@@ -239,7 +249,7 @@
         </div>
         <div class="d-flex align-items-center">
           <div class="dropdown">
-            <button
+            <!-- <button
               class="btn btn-soft-primary waves-effect waves-light bg-gradient btn-sm dropdown-toggle"
               type="button"
               id="dropdownMenuButton"
@@ -247,8 +257,15 @@
               aria-expanded="false"
               title="Opciones"
             >
-              <i class="fa-solid fa-ellipsis-vertical"></i>
-            </button>
+          </button> -->
+            <i
+              type="button"
+              id="dropdownMenuButton"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+              title="Opciones"
+              class="fa-solid fa-ellipsis-vertical fa-2x p-1 text-primary"
+            ></i>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
               <!-- Bloquear o Desbloquear -->
               <li *ngIf="item.active">

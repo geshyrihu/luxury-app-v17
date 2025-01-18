@@ -1,0 +1,93 @@
+<div class="card">
+  <div class="card-body">
+    <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
+      <!-- Campo Nombre -->
+
+      <custom-input-text
+        [control]="form.get('name')"
+        formControlName="name"
+        label="Nombre de la Inspección"
+        placeholder="Nombre de la Inspección"
+      />
+
+      <!-- Campo Área Responsable -->
+      <custom-input-datalist
+        (propagar)="saveAreResponsableId($event)"
+        [control]="form.get('departamentName')"
+        [data]="cb_area_responsable"
+        formControlName="departamentName"
+        label="Area"
+        dataListId="departamentNameDatalistOptions"
+      />
+
+      <!-- Selector de Frecuencia -->
+      <div class="form-group mb-3">
+        <label for="frequency">Frecuencia</label>
+        <select
+          id="frequency"
+          class="form-select"
+          (change)="onFrequencyChange($event)"
+          formControlName="frequency"
+          required
+        >
+          <option value="" disabled selected>Seleccione una frecuencia</option>
+          <option value="daily">Diaria</option>
+          <option value="weekly">Semanal</option>
+          <option value="monthly">Mensual</option>
+        </select>
+      </div>
+
+      <!-- Opciones de Frecuencia -->
+      <div *ngIf="selectedFrequency === 'weekly'" class="form-group">
+        <label>Días de la semana:</label>
+        <div *ngFor="let day of weekDays">
+          <input
+            type="checkbox"
+            [value]="day.value"
+            [checked]="weeklyDays.value.includes(day.value)"
+            (change)="onCheckboxChange($event)"
+          />
+          {{ day.label }}
+        </div>
+      </div>
+
+      <div *ngIf="selectedFrequency === 'monthly'" class="form-group mb-3">
+        <label for="dayOfMonth">Día del Mes</label>
+        <input
+          type="number"
+          id="dayOfMonth"
+          class="form-control"
+          formControlName="dayOfMonth"
+          placeholder="Ingrese el día (1-31)"
+          min="1"
+          max="31"
+          [(ngModel)]="selectedDayOfMonth"
+        />
+      </div>
+      <!-- Selector de Frecuencia -->
+      <div class="form-group mb-3">
+        <label for="frequency">Activa</label>
+        <select
+          id="isActive"
+          class="form-select"
+          formControlName="isActive"
+          required
+        >
+          <option [value]="true">Activa</option>
+          <option [value]="false">Inactiva</option>
+        </select>
+      </div>
+
+      <btn-submit [disabled]="this.form.invalid || submitting" />
+    </form>
+  </div>
+</div>
+
+<style>
+  .form-group {
+    margin-bottom: 1rem;
+  }
+  .form-check {
+    margin-right: 1rem;
+  }
+</style>

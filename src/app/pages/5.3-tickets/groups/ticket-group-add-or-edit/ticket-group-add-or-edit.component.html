@@ -7,6 +7,7 @@
         label="Id"
         placeholder="Id"
         [readonly]="true"
+        [hidden]="false"
       />
       <custom-input-select
         [control]="form.get('ticketGroupCategoryId')"
@@ -28,46 +29,3 @@
     </form>
   </div>
 </div>
-
-<!-- <div class="card">
-  <div class="card-body">
-    <form
-      autocomplete="off"
-      (ngSubmit)="onSubmit()"
-      [formGroup]="form"
-      class="d-flex flex-column gap-3"
-    >
-      <custom-input-text
-        [control]="form.get('id')"
-        formControlName="id"
-        label="Id"
-        placeholder="Id"
-        [readonly]="true"
-        class="w-100"
-      ></custom-input-text>
-
-      <custom-input-select
-        [control]="form.get('ticketGroupCategoryId')"
-        formControlName="ticketGroupCategoryId"
-        label="Categoria"
-        [selectDefaulOption]="true"
-        [data]="cb_ticketGroupCategory"
-        class="w-100"
-      ></custom-input-select>
-
-      <custom-input-select
-        [control]="form.get('visibility')"
-        formControlName="visibility"
-        label="Privacidad"
-        [selectDefaulOption]="false"
-        [data]="cb_visibility"
-        class="w-100"
-      ></custom-input-select>
-
-      <btn-submit
-        [disabled]="this.form.invalid || submitting"
-        class="align-self-center"
-      ></btn-submit>
-    </form>
-  </div>
-</div> -->

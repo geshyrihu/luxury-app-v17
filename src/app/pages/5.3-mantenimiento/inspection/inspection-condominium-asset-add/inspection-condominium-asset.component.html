@@ -1,0 +1,65 @@
+<div class="card">
+  <div class="card-body">
+    <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
+      <custom-input-datalist
+        (propagar)="saveCondominiumAsset($event)"
+        [control]="form.get('condominiumAssetName')"
+        [data]="cb_activos"
+        formControlName="condominiumAssetName"
+        label="Equipo o área"
+        placeholder="Equipo o área"
+        [horizontal]="false"
+        dataListId="condominiumAssetNameDatalistOptions"
+      ></custom-input-datalist>
+
+      <div class="form-group">
+        <label>Posición</label>
+        <input
+          type="number"
+          class="form-control mb-3"
+          formControlName="position"
+          placeholder="Posición del área"
+        />
+      </div>
+
+      <div class="form-group">
+        <!-- <label>Revisiones</label>
+        <div
+          *ngFor="
+            let review of form.get('inspectionReviews').value;
+            let i = index
+          "
+        >
+          <span>{{ review.value.catalogDescription }}</span>
+          <i (click)="onRemoveReview(i)" class="fa-thin fa-trash p-1"></i>
+        </div> -->
+
+        <div formArrayName="reviewsControl">
+          <div
+            *ngFor="let review of reviewsControl.controls; let i = index"
+            class="d-flex justify-content-between align-items-center"
+          >
+            <span>{{ review.value.label }}</span>
+            <i
+              (click)="onRemoveReview(i)"
+              class="fa-thin fa-trash text-danger p-1 ml-auto"
+            ></i>
+          </div>
+        </div>
+        <select
+          class="form-control mt-2"
+          (change)="onAddReview($event.target.value)"
+        >
+          <option>Seleccione una revisión</option>
+          <option
+            *ngFor="let review of cb_inspection_reviews_catalog"
+            [value]="review.value"
+          >
+            {{ review.label }}
+          </option>
+        </select>
+      </div>
+      <btn-submit [disabled]="this.form.invalid || submitting"></btn-submit>
+    </form>
+  </div>
+</div>

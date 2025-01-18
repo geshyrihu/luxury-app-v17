@@ -15,6 +15,103 @@ export default [
     data: { title: 'Dashboard' },
   },
   {
+    path: 'home',
+    loadComponent: () => import('src/app/pages/home/home.component'),
+    canActivate: [AuthGuard],
+    data: { title: 'Dashboard' },
+  },
+  {
+    path: 'home-ticket',
+    loadComponent: () =>
+      import('src/app/pages/home/jefe-mantenimiento/home-tickets.component'),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'home-bitacoras',
+    loadComponent: () =>
+      import('src/app/pages/home/jefe-mantenimiento/home-bitacoras.component'),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'home-inventory',
+    loadComponent: () =>
+      import('src/app/pages/home/jefe-mantenimiento/home-inventory.component'),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'home-calendar',
+    loadComponent: () =>
+      import('src/app/pages/home/jefe-mantenimiento/home-calendar.component'),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'home-documents',
+    loadComponent: () =>
+      import('src/app/pages/home/jefe-mantenimiento/home-documents.component'),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'home-notification',
+    loadComponent: () =>
+      import(
+        'src/app/pages/home/jefe-mantenimiento/home-notification.component'
+      ),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'home-anuncios',
+    loadComponent: () =>
+      import('src/app/pages/home/jefe-mantenimiento/home-anuncios.component'),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'home-compras',
+    loadComponent: () =>
+      import('src/app/pages/home/jefe-mantenimiento/home-compras.component'),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'home-reports',
+    loadComponent: () =>
+      import('src/app/pages/home/jefe-mantenimiento/home-reports.component'),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'home-attendance',
+    loadComponent: () =>
+      import('src/app/pages/home/jefe-mantenimiento/home-attendance.component'),
+    canActivate: [AuthGuard],
+  },
+
+  {
+    path: 'home-warehouses',
+    loadComponent: () =>
+      import('src/app/pages/home/jefe-mantenimiento/home-warehouses.component'),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'home-inspection',
+    loadComponent: () =>
+      import('src/app/pages/home/jefe-mantenimiento/home-inspection.component'),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'home-directorios',
+    loadComponent: () =>
+      import(
+        'src/app/pages/home/jefe-mantenimiento/home-directorios.component'
+      ),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'home-juntas-comite',
+    loadComponent: () =>
+      import(
+        'src/app/pages/home/jefe-mantenimiento/home-juntas-comite.component'
+      ),
+    canActivate: [AuthGuard],
+  },
+  {
     path: 'catalog',
     loadChildren: () => import('./catalog.routing'),
     canActivate: [AuthGuard],
@@ -177,5 +274,12 @@ export default [
       ),
     canActivate: [AuthGuard],
     data: { title: 'Actualizar Perfil' },
+  },
+
+  {
+    path: 'inspections',
+    loadChildren: () => import('./inspection.routing'),
+    canActivate: [AuthGuard],
+    data: { title: 'Inspecciones' },
   },
 ] as Routes;

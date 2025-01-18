@@ -1,32 +1,40 @@
+// Importaciones necesarias para el servicio
 import { Injectable, OnDestroy, inject } from '@angular/core';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { AuthService } from './auth.service';
 import { DataConnectorService } from './data.service';
 import { StorageService } from './storage.service';
 
+/**
+ * Servicio para gestionar la información del cliente actual.
+ * Permite obtener y almacenar el ID del cliente, su nombre y su foto.
+ */
 @Injectable({
   providedIn: 'root',
 })
 export class CustomerIdService implements OnDestroy {
-  dataService = inject(DataConnectorService);
-  private storageService = inject(StorageService);
+  // Inyección de dependencias necesarias
+  dataService = inject(DataConnectorService); // Servicio para realizar peticiones HTTP
+  private storageService = inject(StorageService); // Servicio para manejar almacenamiento local
 
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
+  private destroy$ = new Subject<void>(); // Utilizado para limpiar suscripciones cuando el servicio se destruye
 
-  nameCustomer: string = '';
-  logoCustomer: string = '';
-  customerId: number = 0; // Valor predeconcluido para el ID del cliente
-  private customerId$ = new Subject<number>(); // Observable para el ID del cliente
+  // Propiedades públicas para almacenar datos del cliente
+  nameCustomer: string = ''; // Nombre del cliente
+  photoPath: string = ''; // Ruta de la foto del cliente
+  customerId: number = 0; // ID del cliente (valor predeterminado)
 
+  private customerId$ = new Subject<number>(); // Observable para emitir cambios en el ID del cliente
+
+  /**
+   * Constructor del servicio.
+   * Intenta inicializar el ID del cliente desde el almacenamiento o desde el token del usuario.
+   * @param authS Servicio de autenticación para acceder al token del usuario.
+   */
   constructor(public authS: AuthService) {
-    // Al construir el servicio, se intenta obtener el ID del cliente desde AuthService
-
-    // Verificamos simpre que exista un Token si existe
-    // Obtener el token almacenado en el sistema de almacenamiento
+    // Verifica si existe un token en el servicio de autenticación
     if (this.authS.userTokenDto) {
-      // si hay toquen intentamos obtener la clave del cliente almacenada
-
-      // Si no existe
+      // Si no existe un customerId en el almacenamiento local, lo establece desde el token
       if (
         this.storageService.retrieve('customerId') === null ||
         this.storageService.retrieve('customerId') === undefined
@@ -37,58 +45,71 @@ export class CustomerIdService implements OnDestroy {
         );
         this.customerId = this.authS.userTokenDto.infoUserAuthDto.customerId;
       } else {
+        // Si ya existe, lo recupera del almacenamiento local
         this.customerId = this.storageService.retrieve('customerId');
       }
     }
+
+    // Carga los datos del cliente basado en el ID obtenido
+    this.onLoadDataCustomer(this.customerId);
   }
 
   /**
-   * Establece el ID del cliente y notifica a los observadores.
-   * @param customerId El ID del cliente a establecer.
+   * Establece un nuevo ID de cliente y carga sus datos.
+   * @param customerId El nuevo ID del cliente.
    */
   setCustomerId(customerId: number) {
-    this.customerId = customerId;
-    this.storageService.store('customerId', customerId);
-    this.customerId$.next(customerId); // Notificar a los observadores sobre el cambio en el ID del cliente.
-    this.onLoadDataCustomer(customerId);
+    this.storageService.store('customerId', customerId); // Almacena el ID del cliente en el almacenamiento local
+    this.customerId = customerId; // Actualiza la propiedad local
+    this.customerId$.next(customerId); // Notifica a los observadores del cambio
+    this.onLoadDataCustomer(customerId); // Carga los datos del cliente
   }
 
   /**
-   * Obtiene un observable que emite el ID del cliente cuando cambia.
-   * @returns Un observable que emite el ID del cliente cuando cambia.
+   * Retorna un observable que emite el ID del cliente cada vez que cambia.
+   * @returns Observable que emite el ID del cliente.
    */
   getCustomerId$(): Observable<number> {
     return this.customerId$.asObservable();
   }
 
   /**
-   * Obtiene el valor actual del ID del cliente.
-   * @returns El valor actual del ID del cliente.
+   * Retorna el valor actual del ID del cliente.
+   * @returns ID del cliente.
    */
   getCustomerId() {
     return this.customerId;
   }
 
+  /**
+   * Carga los datos del cliente desde el servidor.
+   * @param customerId ID del cliente a cargar.
+   */
   onLoadDataCustomer(customerId: number) {
     this.dataService
-      .get(`Customers/${customerId}`)
-      .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
+      .get(`Customers/${customerId}`) // Realiza la petición HTTP
+      .pipe(takeUntil(this.destroy$)) // Gestiona la suscripción para evitar fugas de memoria
       .subscribe({
         next: (resp: any) => {
-          this.nameCustomer = resp.body.nameCustomer;
-          this.logoCustomer = resp.body.photoPath;
+          this.nameCustomer = resp.body.nombreCorto; // Asigna el nombre del cliente
+          this.photoPath = resp.body.photoPath; // Asigna la ruta de la foto del cliente
+          this.customerId = resp.body.id; // Asigna el ID del cliente
 
-          this.customerId$.next(customerId); // Notificar a los observadores sobre el cambio en el ID del cliente.
+          // Notifica a los observadores del cambio en los datos del cliente
+          this.customerId$.next(customerId);
         },
         error: (error) => {
-          console.error(error.error);
+          console.error(error.error); // Maneja errores en la petición
         },
       });
   }
 
+  /**
+   * Se ejecuta cuando el servicio se destruye.
+   * Limpia todas las suscripciones activas.
+   */
   ngOnDestroy(): void {
-    // Cuando se destruye el componente, desvincular y liberar recursos
-    this.destroy$.next();
-    this.destroy$.complete();
+    this.destroy$.next(); // Finaliza las suscripciones
+    this.destroy$.complete(); // Limpia el Subject
   }
 }

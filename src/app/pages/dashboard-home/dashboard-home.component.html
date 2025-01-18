@@ -1,0 +1,512 @@
+<nav
+  class="navbar navbar-expand-lg navbar-thin bg-white border-bottom shadow-sm fixed-top"
+>
+  <div class="container-fluid d-flex align-items-center py-2 position-relative">
+    <div class="d-flex align-items-center me-3">
+      <i class="fa-solid fa-angle-left fa-2x"></i>
+    </div>
+
+    <div class="d-flex align-items-center dropdown-container me-auto">
+      <div class="dropdown">
+        <small
+          id="dropdownBuilding"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+          role="button"
+        >
+          <img
+            src="photoPath"
+            alt=""
+            class="me-1"
+            style="height: 20px; width: auto"
+          />
+          DFT
+        </small>
+      </div>
+    </div>
+
+    <div
+      class="d-flex align-items-center position-absolute logo-centered"
+      style="left: 50%; transform: translateX(-50%); z-index: 1"
+    >
+      <img
+        src="assets/images/full-logo-transp.jpg"
+        alt=""
+        style="height: 20px; width: auto"
+      />
+    </div>
+
+    <div class="d-flex align-items-center">
+      <div class="dropdown">
+        <i
+          class="fa-solid fa-ellipsis-vertical fa-2x"
+          id="dropdownMenuButton"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+          role="button"
+        ></i>
+        <ul
+          class="dropdown-menu dropdown-menu-end"
+          aria-labelledby="dropdownMenuButton"
+        >
+          <li>
+            <a
+              class="dropdown-item my-1 mb-1"
+              [routerLink]="['/update-user-profile']"
+            >
+              <i class="fa-thin fa-user me-2"></i>
+              Mi perfil</a
+            >
+          </li>
+          <li>
+            <a class="dropdown-item my-1 mb-1">
+              <i class="fa-thin fa-left-from-bracket me-2"></i>
+              Cerrar sesión</a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!--start Administrador-->
+<div class="main-content mt-3">
+  <div class="row mt-1">
+    <div class="col-6 col-md-4 col-lg-3">
+      <div class="card shadow text-center custom-tab mb-1">
+        <div class="card-body">
+          <i class="fa-duotone text-primary fa-calendar-alt fa-2x mb-3"></i>
+          <h6 class="card-title">Reservas</h6>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-6 col-md-4 col-lg-3">
+      <div class="card shadow text-center custom-tab mb-1">
+        <div class="card-body">
+          <i class="fa-duotone text-primary fa-box fa-2x mb-3"></i>
+          <h6 class="card-title">Paquetería</h6>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-md-4 col-lg-3">
+      <div class="card shadow text-center custom-tab mb-1">
+        <div class="card-body">
+          <i class="fa-duotone text-primary fa-clipboard-list fa-2x mb-3"></i>
+          <h6 class="card-title">Indicaciones de personal</h6>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-md-4 col-lg-3">
+      <div class="card shadow text-center custom-tab mb-1">
+        <div class="card-body">
+          <i class="fa-duotone text-primary fa-dollar-sign fa-2x mb-3"></i>
+          <h6 class="card-title">Informe Financiero</h6>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-md-4 col-lg-3">
+      <div class="card shadow text-center custom-tab mb-1">
+        <div class="card-body">
+          <i class="fa-duotone text-primary fa-qrcode fa-2x mb-3"></i>
+          <h6 class="card-title">QR</h6>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-md-4 col-lg-3">
+      <div class="card shadow text-center custom-tab mb-1">
+        <div class="card-body">
+          <i
+            class="fa-duotone text-primary fa-file-chart-column fa-2x mb-3"
+          ></i>
+          <h6 class="card-title">Reportes</h6>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-md-4 col-lg-3">
+      <div class="card shadow text-center custom-tab mb-1">
+        <div class="card-body">
+          <i
+            class="fa-duotone text-primary fa-presentation-screen fa-2x mb-3"
+          ></i>
+          <h6 class="card-title">Presentaciones comite</h6>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-md-4 col-lg-3">
+      <div class="card shadow text-center custom-tab mb-1">
+        <div class="card-body">
+          <i class="fa-duotone text-primary fa-handshake fa-2x mb-3"></i>
+          <h6 class="card-title">Minutas comite</h6>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-6 col-md-4 col-lg-3">
+      <div class="card shadow text-center custom-tab mb-1">
+        <div class="card-body">
+          <i class="fa-duotone text-primary fa-ticket fa-2x mb-3"></i>
+          <h6 class="card-title">Tickets</h6>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-6 col-md-4 col-lg-3">
+      <div class="card shadow text-center custom-tab mb-1">
+        <div class="card-body">
+          <i class="fa-duotone text-primary fa-books fa-2x mb-3"></i>
+          <h6 class="card-title">Biblioteca</h6>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-6 col-md-4 col-lg-3">
+      <div class="card shadow text-center custom-tab mb-1">
+        <div class="card-body">
+          <i class="fa-duotone text-primary fa-wrench fa-2x mb-3"></i>
+          <h6 class="card-title">Ordenes de Mtto</h6>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-md-4 col-lg-3">
+      <div class="card shadow text-center custom-tab mb-1">
+        <div class="card-body">
+          <i class="fa-duotone text-primary fa-calendar fa-2x mb-3"></i>
+          <h6 class="card-title">Calendarios</h6>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-md-4 col-lg-3">
+      <div class="card shadow text-center custom-tab mb-1">
+        <div class="card-body">
+          <i class="fa-duotone text-primary fa-file-alt fa-2x mb-3"></i>
+          <h6 class="card-title">Bitacoras</h6>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-6 col-md-4 col-lg-3">
+      <div class="card shadow text-center custom-tab mb-1">
+        <div class="card-body">
+          <i class="fa-duotone text-primary fa-bullhorn fa-2x mb-3"></i>
+          <h6 class="card-title">Anuncios</h6>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-md-4 col-lg-3">
+      <div class="card shadow text-center custom-tab mb-1">
+        <div class="card-body">
+          <i class="fa-duotone text-primary fa-warehouse fa-2x mb-3"></i>
+          <h6 class="card-title">Inventarios</h6>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer
+  class="footer bg-light fixed-bottom text-center py-2 border-top shadow-sm"
+>
+  <div class="row row-cols-4">
+    <div class="col">
+      <i class="fa-thin fa-home fa-2x text-primary mb-2"></i>
+      <p class="small mb-0 text-dark">Inicio</p>
+    </div>
+
+    <div class="col">
+      <i class="fa-thin fa-clipboard-check fa-2x text-primary mb-2"></i>
+      <p class="small mb-0 text-dark">Asistencia</p>
+    </div>
+
+    <div class="col">
+      <i class="fa-thin fa-address-book fa-2x text-primary mb-2"></i>
+      <p class="small mb-0 text-dark">Directorios</p>
+    </div>
+    <div class="col">
+      <i class="fa-thin fa-bell fa-2x text-primary mb-2"></i>
+      <p class="small mb-0 text-dark">Notificaciones</p>
+    </div>
+  </div>
+</footer>
+<!--start Administrador-->
+
+<!-- Supervision -->
+<!-- <div class="main-content mt-3">
+  <div class="row mt-1">
+    <div class="col-6 col-md-4 col-lg-3">
+      <div class="card shadow text-center custom-tab mb-1">
+        <div class="card-body">
+          <i
+            class="fa-duotone text-primary fa-file-chart-column fa-2x mb-3"
+          ></i>
+          <h6 class="card-title">Reportes</h6>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-md-4 col-lg-3">
+      <div class="card shadow text-center custom-tab mb-1">
+        <div class="card-body">
+          <i
+            class="fa-duotone text-primary fa-presentation-screen fa-2x mb-3"
+          ></i>
+          <h6 class="card-title">Presentaciones comite</h6>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-md-4 col-lg-3">
+      <div class="card shadow text-center custom-tab mb-1">
+        <div class="card-body">
+          <i class="fa-duotone text-primary fa-handshake fa-2x mb-3"></i>
+          <h6 class="card-title">Minutas comite</h6>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-6 col-md-4 col-lg-3">
+      <div class="card shadow text-center custom-tab mb-1">
+        <div class="card-body">
+          <i class="fa-duotone text-primary fa-ticket fa-2x mb-3"></i>
+          <h6 class="card-title">Tickets</h6>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-6 col-md-4 col-lg-3">
+      <div class="card shadow text-center custom-tab mb-1">
+        <div class="card-body">
+          <i class="fa-duotone text-primary fa-books fa-2x mb-3"></i>
+          <h6 class="card-title">Biblioteca</h6>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-6 col-md-4 col-lg-3">
+      <div class="card shadow text-center custom-tab mb-1">
+        <div class="card-body">
+          <i class="fa-duotone text-primary fa-calendar fa-2x mb-3"></i>
+          <h6 class="card-title">Calendarios</h6>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-md-4 col-lg-3">
+      <div class="card shadow text-center custom-tab mb-1">
+        <div class="card-body">
+          <i class="fa-duotone text-primary fa-file-alt fa-2x mb-3"></i>
+          <h6 class="card-title">Bitacoras</h6>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-6 col-md-4 col-lg-3">
+      <div class="card shadow text-center custom-tab mb-1">
+        <div class="card-body">
+          <i class="fa-duotone text-primary fa-bullhorn fa-2x mb-3"></i>
+          <h6 class="card-title">Anuncios</h6>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-md-4 col-lg-3">
+      <div class="card shadow text-center custom-tab mb-1">
+        <div class="card-body">
+          <i class="fa-duotone text-primary fa-warehouse fa-2x mb-3"></i>
+          <h6 class="card-title">Inventarios</h6>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer
+  class="footer bg-light fixed-bottom text-center py-2 border-top shadow-sm"
+>
+  <div class="row row-cols-4">
+    <div class="col">
+      <i class="fa-thin fa-home fa-2x text-primary mb-2"></i>
+      <p class="small mb-0 text-dark">Inicio</p>
+    </div>
+
+    <div class="col">
+      <i class="fa-thin fa-clipboard-check fa-2x text-primary mb-2"></i>
+      <p class="small mb-0 text-dark">Asistencia</p>
+    </div>
+
+    <div class="col">
+      <i class="fa-thin fa-address-book fa-2x text-primary mb-2"></i>
+      <p class="small mb-0 text-dark">Directorios</p>
+    </div>
+    <div class="col">
+      <i class="fa-thin fa-bell fa-2x text-primary mb-2"></i>
+      <p class="small mb-0 text-dark">Notificaciones</p>
+    </div>
+  </div>
+</footer> -->
+<!-- Supervision -->
+<!--start Body condominos -->
+<!-- <div class="main-content mt-3">
+  <div class="row mt-1">
+    <div class="col-6 col-md-4 col-lg-3">
+      <div class="card shadow text-center custom-tab mb-1">
+        <div class="card-body">
+          <i class="fa-duotone text-primary fa-calendar-alt fa-2x mb-3"></i>
+          <h6 class="card-title">Reservas</h6>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-6 col-md-4 col-lg-3">
+      <div class="card shadow text-center custom-tab mb-1">
+        <div class="card-body">
+          <i class="fa-duotone text-primary fa-box fa-2x mb-3"></i>
+          <h6 class="card-title">Paquetería</h6>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-6 col-md-4 col-lg-3">
+      <div class="card shadow text-center custom-tab mb-1">
+        <div class="card-body">
+          <i class="fa-duotone text-primary fa-ticket fa-2x mb-3"></i>
+          <h6 class="card-title">Tickets</h6>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-6 col-md-4 col-lg-3">
+      <div class="card shadow text-center custom-tab mb-1">
+        <div class="card-body">
+          <i class="fa-duotone text-primary fa-books fa-2x mb-3"></i>
+          <h6 class="card-title">Biblioteca</h6>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-6 col-md-4 col-lg-3">
+      <div class="card shadow text-center custom-tab mb-1">
+        <div class="card-body">
+          <i class="fa-duotone text-primary fa-calendar fa-2x mb-3"></i>
+          <h6 class="card-title">Calendarios</h6>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-6 col-md-4 col-lg-3">
+      <div class="card shadow text-center custom-tab mb-1">
+        <div class="card-body">
+          <i class="fa-duotone text-primary fa-qrcode fa-2x mb-3"></i>
+          <h6 class="card-title">QR</h6>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-6 col-md-4 col-lg-3">
+      <div class="card shadow text-center custom-tab mb-1">
+        <div class="card-body">
+          <i class="fa-duotone text-primary fa-bullhorn fa-2x mb-3"></i>
+          <h6 class="card-title">Anuncios</h6>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-md-4 col-lg-3">
+      <div class="card shadow text-center custom-tab mb-1">
+        <div class="card-body">
+          <i class="fa-duotone text-primary fa-clipboard-list fa-2x mb-3"></i>
+          <h6 class="card-title">Indicaciones de personal</h6>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-md-4 col-lg-3">
+      <div class="card shadow text-center custom-tab mb-1">
+        <div class="card-body">
+          <i class="fa-duotone text-primary fa-dollar-sign fa-2x mb-3"></i>
+          <h6 class="card-title">Informe Financiero</h6>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer
+  class="footer bg-light fixed-bottom text-center py-2 border-top shadow-sm"
+>
+  <div class="row row-cols-3">
+    <div class="col">
+      <i class="fa-thin fa-home fa-2x text-primary mb-2"></i>
+      <p class="small mb-0 text-dark">Inicio</p>
+    </div>
+    <div class="col">
+      <i class="fa-thin fa-address-book fa-2x text-primary mb-2"></i>
+      <p class="small mb-0 text-dark">Directorios</p>
+    </div>
+    <div class="col">
+      <i class="fa-thin fa-bell fa-2x text-primary mb-2"></i>
+      <p class="small mb-0 text-dark">Notificaciones</p>
+    </div>
+  </div>
+</footer> -->
+<!--End Body condominos -->
+<style>
+  .notification-icon {
+    display: inline-block;
+  }
+
+  .notification-icon .badge {
+    font-size: 0.8rem;
+    width: 1.2rem;
+    height: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%; /* Hace el contador redondo */
+  }
+
+  /* Estilos de body */
+  html,
+  body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Contenido principal con espacio para footer */
+  .main-content {
+    flex: 1;
+    overflow-y: auto;
+    padding-top: 3.5rem; /* Ajusta según la altura del header */
+    padding-bottom: 3.5rem; /* Ajusta según la altura del footer */
+  }
+
+  /* Footer fijo */
+  .footer {
+    position: fixed;
+  }
+  .footer .col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .footer i {
+    margin-bottom: 4px;
+  }
+
+  .footer p {
+    font-size: 0.7rem; /* Tamaño pequeño para textos */
+    font-weight: 500;
+  }
+  .custom-tab mb-1 {
+    border-radius: 4px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .custom-tab mb-1:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  }
+  .card-title {
+    font-size: 1rem;
+    font-weight: 600;
+  }
+</style>

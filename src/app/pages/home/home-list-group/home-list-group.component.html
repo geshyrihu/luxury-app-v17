@@ -1,0 +1,24 @@
+<div class="container mt-4">
+  <h2 class="text-center fw-bold mb-4">{{ title }}</h2>
+  <ul class="list-group">
+    @for (item of data; track $index) { @if (item.isAutorized) {
+
+    <li
+      class="list-group-item d-flex align-items-center justify-content-between py-4 position-relative"
+      style="font-size: 1rem"
+    >
+      <!-- Contenido alineado a la izquierda -->
+      <div class="d-flex align-items-center">
+        <i [class]="item.icon" class="fa-2x text-secondary me-4"></i>
+        <span>{{ item.name }}</span>
+      </div>
+
+      <!-- Ícono alineado al final -->
+      <i class="fa-duotone fa-arrow-right fa-2x text-secondary ms-auto"></i>
+
+      <!-- Link expandido para hacer clic en toda la fila -->
+      <a class="stretched-link" [routerLink]="item.routerLink"></a>
+    </li>
+    } }
+  </ul>
+</div>

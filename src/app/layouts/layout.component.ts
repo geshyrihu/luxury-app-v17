@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import CellPhoneMenuComponent from './cell-phone-option/cell-phone-menu/cell-phone-menu.component';
 import {
   LAYOUT_HORIZONTAL,
   LAYOUT_MODE,
@@ -24,7 +23,6 @@ import VerticalComponent from './vertical/vertical.component';
     CommonModule,
     RouterModule,
     VerticalComponent,
-    CellPhoneMenuComponent,
   ],
 })
 

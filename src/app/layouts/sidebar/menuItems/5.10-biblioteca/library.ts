@@ -40,7 +40,7 @@ export const libraryMenu = (authS: AuthService) => [
       {
         visible: authS.canRead('5.10 BIBLIOTECA'),
         label: '5.10.6 Guia mttos preventivos',
-        routerLink: '/calendario/mantenimiento-master',
+        routerLink: '/calendars/mantenimiento-master',
         name: 'Calendario-Mantenimientos preventivos',
       },
       {

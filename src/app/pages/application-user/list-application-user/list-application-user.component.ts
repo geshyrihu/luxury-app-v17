@@ -1,14 +1,13 @@
 import { Component, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
-import { IApplicationUserDto } from 'src/app/core/interfaces/account-dto.interface';
-import CardEmployeeComponent from 'src/app/pages/6.1-directorios/employee/card-employee/card-employee.component';
-
 import { ETypePerson } from 'src/app/core/enums/type-person.enum';
 import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
+import { IApplicationUserDto } from 'src/app/core/interfaces/account-dto.interface';
 import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
+import CardEmployeeComponent from 'src/app/pages/6.1-directorios/employee/card-employee/card-employee.component';
 import { environment } from 'src/environments/environment';
 import ModuleAppPermissionComponent from '../../1.1-catalogos/1.1.1-module-app/module-app-permission/module-app-permission.component';
 import AddOrEditApplicationUserComponent from '../add-or-edit-application-user/add-or-edit-application-user.component';

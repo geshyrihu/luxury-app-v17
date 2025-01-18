@@ -52,14 +52,17 @@
                       label="Ingresar"
                       type="submit"
                     />
-                    <!-- <custom-button
-                      customClass="btn-primary  btn-lg w-100"
-                      label="Ingresar"
-                      type="submit"
-                    /> -->
                   </div>
                 </form>
+                <br />
+                @if (errorMessage) {
 
+                <ngb-alert [dismissible]="false" type="danger">
+                  A ocurrido un error:
+                  <br />
+                  {{ errorMessage }}
+                </ngb-alert>
+                }
                 <div class="mt-5 text-center">
                   <p class="text-muted mb-0">
                     <a

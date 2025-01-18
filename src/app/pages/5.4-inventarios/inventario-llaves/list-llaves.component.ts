@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { IInventarioLlave } from 'src/app/core/interfaces/inventario-llave-dto.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
@@ -24,8 +24,6 @@ export default class ListLlavesComponent implements OnInit {
   data: IInventarioLlave[] = [];
 
   ref: DynamicDialogRef;
-
-  private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   customerId: number;
   customerId$: Observable<number> = this.customerIdService.getCustomerId$();

@@ -10,20 +10,21 @@ export default [
   //   title: 'Bitacora de Equipos',
   //   data: { title: 'Bitacora de Equipos' },
   // },
-  {
-    path: 'inspections',
-    loadComponent: () =>
-      import(
-        'src/app/pages/8.0-reportes/mantenimiento/inspections/inspections-list.component'
-      ),
-    title: 'Inspections',
-    data: { title: 'Inspections' },
-  },
+
+  // {
+  //   path: 'inspection-details-preview',
+  //   loadComponent: () =>
+  //     import(
+  //       'src/app/pages/8.0-reportes/mantenimiento/inspections/inspection-details-preview/inspection-details-preview.component'
+  //     ),
+  //   title: 'Inspections',
+  //   data: { title: 'Inspections' },
+  // },
   {
     path: 'inspections-areas',
     loadComponent: () =>
       import(
-        'src/app/pages/8.0-reportes/mantenimiento/inspections/inspections-areas/inspections-areas.component'
+        'src/app/pages/5.3-mantenimiento/inspection/inspections-areas/inspections-areas.component'
       ),
     title: 'Inspections-areas',
     data: { title: 'Inspections-areas' },
@@ -115,6 +116,15 @@ export default [
     loadComponent: () =>
       import(
         'src/app/pages/8.0-reportes/mantenimiento/mantenimiento-bitacoras/elevator/list-elevators-emergency-call/list-elevators-emergency-call.component'
+      ),
+    title: 'Reporte de Emergencia',
+    data: { title: 'Reporte de Emergencia' },
+  },
+  {
+    path: 'my-inspection/:customerInspectionId',
+    loadComponent: () =>
+      import(
+        'src/app/pages/5.3-mantenimiento/inspection/bitacora/my-inspection-ejecutar/my-inspection-ejecutar.component'
       ),
     title: 'Reporte de Emergencia',
     data: { title: 'Reporte de Emergencia' },

@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { catchError, map, of } from 'rxjs';
 import { IModelToken } from '../interfaces/model-token.interface';
 import {
+  SelectItemCustomerAccessDto as CustomerAccessDto,
   EPermission,
   IUserToken,
   InfoAccountAuthDto,
@@ -20,6 +21,7 @@ export class AuthService {
 
   userTokenDto: IUserToken;
   infoUserAuthDto: InfoAccountAuthDto;
+  customerAccess: CustomerAccessDto[] = [];
 
   employeeId: number = 0;
   applicationUserId: string = '';
@@ -47,6 +49,7 @@ export class AuthService {
         // Almacenar la información del token y el estado del JWT
         this.userTokenDto = resp.body;
         this.infoUserAuthDto = this.userTokenDto.infoUserAuthDto;
+        this.customerAccess = resp.body.customerAccess;
         this.userTokenDto.permission = resp.body.permission;
         this.applicationUserId = this.infoUserAuthDto.applicationUserId;
         if (resp.body.token) {
@@ -63,7 +66,17 @@ export class AuthService {
    * @param roles Roles a validar.
    * @returns True si el usuario tiene uno de los roles especificados, de lo contrario, false.
    */
+  // onValidateRoles(roles: string[]): boolean {
+  //   return this.userTokenDto.roles.some((item) => roles.includes(item));
+  // }
   onValidateRoles(roles: string[]): boolean {
+    // Verificar si userTokenDto o roles están indefinidos
+    if (!this.userTokenDto || !this.userTokenDto.roles) {
+      this.router.navigateByUrl('/auth/login'); // Redirigir al login
+      return false;
+    }
+
+    // Validar si el usuario tiene alguno de los roles especificados
     return this.userTokenDto.roles.some((item) => roles.includes(item));
   }
 

@@ -40,6 +40,15 @@ export default class SidebarComponent implements OnInit {
   ngOnInit(): void {
     // Cargar elementos del menú desde el servicio de la barra lateral
     this.menuItems = this.sidebarService.onLoadMenu;
+    console.log(
+      '🚀 ~ this.menuItems:',
+      this.menuItems.map((item) => {
+        return {
+          label: item.label,
+          visible: item.visible,
+        };
+      })
+    );
   }
 
   /**

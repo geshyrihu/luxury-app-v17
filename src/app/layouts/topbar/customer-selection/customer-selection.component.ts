@@ -22,13 +22,7 @@ export default class CustomerSelectionComponent implements OnInit {
   customerId = this.customerIdService.customerId;
   selectedCountry: string | undefined;
   ngOnInit() {
-    this.apiRequestService
-      .onGetSelectItem(
-        `CustomersAcceso/${this.authS.infoUserAuthDto.applicationUserId}`
-      )
-      .then((resp: any) => {
-        this.cb_customer = resp;
-      });
+    this.cb_customer = this.authS.customerAccess;
   }
   selectCustomer(customerId: number) {
     this.customerIdService.setCustomerId(customerId);

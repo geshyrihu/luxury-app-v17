@@ -1,0 +1,162 @@
+<footer
+  class="footer bg-white fixed-bottom text-center py-2 border-top shadow-sm"
+  style="height: auto"
+>
+  <div
+    class="row gx-0 py-2"
+    [ngClass]="{
+      'row-cols-3': this.authS.onValidateRoles([
+        'Condomino',
+        'Seguridad',
+        'Limpieza',
+        'Jardineria'
+      ]),
+      'row-cols-4':
+        this.authS.onValidateRoles(['SuperUsuario']) &&
+        !this.authS.onValidateRoles(['Condomino']),
+      'row-cols-5': this.authS.onValidateRoles([
+        'SupervisionOperativa',
+        'JefeMantenimiento',
+        'Administrador',
+        'Asistente'
+      ])
+    }"
+  >
+    <!-- Contenido aquí -->
+
+    <div
+      class="col"
+      *ngIf="
+        this.authS.onValidateRoles([
+          'SuperUsuario',
+          'Condomino',
+          'SupervisionOperativa',
+          'Administrador',
+          'Asistente',
+          'JefeMantenimiento',
+          'AuxiliarMantenimiento',
+          'Seguridad',
+          'Limpieza',
+          'Jardineria'
+        ])
+      "
+    >
+      <a [routerLink]="['/home']" class="text-decoration-none text-dark">
+        <i class="fa-thin fa-home fa-2xl"></i>
+        <div class="small mt-1">Inicio</div>
+      </a>
+    </div>
+
+    <div
+      class="col"
+      *ngIf="
+        this.authS.onValidateRoles([
+          'SuperUsuario',
+          'SupervisionOperativa',
+          'Administrador',
+          'Asistente',
+          'JefeMantenimiento'
+        ])
+      "
+    >
+      <a [routerLink]="['/dashboard']" class="text-decoration-none text-dark">
+        <i class="fa-thin fa-calendar-days fa-2xl"></i>
+        <div class="small mt-1">Resumen</div>
+      </a>
+    </div>
+    <div
+      class="col"
+      *ngIf="
+        this.authS.onValidateRoles([
+          'SuperUsuario',
+          'Condomino',
+          'SupervisionOperativa',
+          'Administrador',
+          'Asistente',
+          'JefeMantenimiento',
+          'AuxiliarMantenimiento',
+          'Seguridad',
+          'Limpieza',
+          'Jardineria'
+        ])
+      "
+    >
+      <a
+        [routerLink]="['/home-anuncios']"
+        class="text-decoration-none text-dark"
+      >
+        <i class="fa-thin fa-bullhorn fa-2xl"></i>
+        <div class="small mt-1">Anuncios</div>
+      </a>
+    </div>
+    <div
+      class="col"
+      *ngIf="
+        this.authS.onValidateRoles([
+          'AuxiliarMantenimiento',
+          'SupervisionOperativa',
+          'JefeMantenimiento',
+          'Administrador',
+          'Asistente'
+        ])
+      "
+    >
+      <a
+        [routerLink]="['/home-attendance']"
+        class="text-decoration-none text-dark"
+      >
+        <i class="fa-thin fa-clock-desk fa-2xl"></i>
+        <div class="small mt-1">Asistencia</div>
+      </a>
+    </div>
+    <div class="col">
+      <a
+        *ngIf="messageInNotRead === 0"
+        [routerLink]="['/home-notification']"
+        class="text-decoration-none text-dark"
+      >
+        <i class="fa-thin fa-thin fa-bell-slash fa-2xl"></i>
+        <div class="small mt-1">Notificaciones</div>
+      </a>
+
+      <a
+        *ngIf="messageInNotRead !== 0"
+        [routerLink]="['/home-notification']"
+        class="text-decoration-none text-dark"
+      >
+        <i class="fa-thin fa-thin fa-bell-ring fa-2xl"></i>
+        <div class="small mt-1">Notificaciones</div>
+      </a>
+    </div>
+    <!-- <div class="col">
+      <a
+        [routerLink]="['/logbook/lista-medidor']"
+        class="text-decoration-none text-dark"
+      >
+        <i class="fa-thin fa-meter-fire fa-lg"></i>
+        <div class="small mt-1">Lecturas</div>
+      </a>
+    </div>
+    <div class="col">
+      <a
+        [routerLink]="['/mantenimiento/calendario-anual']"
+        class="text-decoration-none text-dark"
+      >
+        <i class="fa-thin fa-calendar fa-lg"></i>
+        <div class="small mt-1">Calendario</div>
+      </a>
+    </div>
+    <div class="col" *ngIf="isSuperUser">
+      <a [routerLink]="['/accounts']" class="text-decoration-none text-dark">
+        <i class="fa-thin fa-users fa-lg"></i>
+        <div class="small mt-1">Cuentas</div>
+      </a>
+    </div> -->
+  </div>
+</footer>
+<style>
+  /* Footer fijo */
+  .footer {
+    position: fixed;
+  }
+</style>

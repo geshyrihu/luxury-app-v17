@@ -1,0 +1,33 @@
+<div class="card">
+  <div class="card-body">
+    <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
+      <custom-input-text
+        [control]="form.get('id')"
+        formControlName="id"
+        label="Id"
+        [readonly]="true"
+      />
+      <custom-input-text
+        [control]="form.get('folio')"
+        formControlName="folio"
+        label="Folio"
+        placeholder="folio"
+      />
+      <custom-input-text
+        [control]="form.get('name')"
+        formControlName="name"
+        label="Nombre"
+        placeholder="Nombre"
+      />
+
+      <custom-input-select
+        [control]="form.get('assetCategory')"
+        formControlName="assetCategory"
+        label="Categoria"
+        [data]="cb_category"
+      />
+
+      <btn-submit [disabled]="this.form.invalid || submitting" />
+    </form>
+  </div>
+</div>

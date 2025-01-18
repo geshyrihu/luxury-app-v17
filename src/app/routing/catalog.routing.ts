@@ -190,4 +190,22 @@ export default [
         'src/app/pages/1.1-catalogos/1.1.15-catalog-color/catalog-color.component'
       ),
   },
+  {
+    title: 'catalog-asset',
+    data: { title: 'catalog-asset' },
+    path: 'catalog-asset',
+    loadComponent: () =>
+      import(
+        'src/app/pages/5.3-mantenimiento/inspection/catalog/catalog-asset-list/catalog-asset-list.component'
+      ),
+  },
+  {
+    title: 'inspection-reviews-catalog',
+    data: { title: 'inspection-reviews-catalog' },
+    path: 'inspection-reviews-catalog',
+    loadComponent: () =>
+      import(
+        'src/app/pages/5.3-mantenimiento/inspection/catalog/inspection-reviews-catalog/inspection-reviews-catalog.component'
+      ),
+  },
 ] as Routes;

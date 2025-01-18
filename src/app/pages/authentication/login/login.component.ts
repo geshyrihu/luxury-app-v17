@@ -9,6 +9,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataConnectorService } from 'src/app/core/services/data.service';
 import { SecurityService } from 'src/app/core/services/security.service';
+import { SidebarService } from 'src/app/core/services/sidebar.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import Swal from 'sweetalert2';
 @Component({
@@ -19,6 +20,7 @@ import Swal from 'sweetalert2';
 })
 export default class LoginComponent implements OnInit {
   activateRoute = inject(ActivatedRoute);
+  private sidebarService = inject(SidebarService);
   apiRequestService = inject(ApiRequestService);
   customToastService = inject(CustomToastService);
   dataService = inject(DataConnectorService);
@@ -26,6 +28,8 @@ export default class LoginComponent implements OnInit {
   router = inject(Router);
   securityService = inject(SecurityService);
   authS = inject(AuthService);
+
+  errorMessage: string = '';
 
   fieldTextType!: boolean;
   form: FormGroup;
@@ -41,55 +45,50 @@ export default class LoginComponent implements OnInit {
     // Reinicia los datos de autenticación
     this.securityService.resetAuthData();
   }
-
   onSubmit() {
-    // Verifica si el formulario es inválido y marca todos los campos como tocados si es así
-    if (!this.apiRequestService.validateForm(this.form)) return;
-
     Swal.fire({
       allowOutsideClick: false,
       icon: 'info',
-      text: 'Espere por favor...',
+      text: 'Espere, por favor...',
     });
-    Swal.showLoading(null);
+    Swal.showLoading();
+
     this.dataService
       .post('Auth/login', this.form.value)
       .pipe(
         catchError((error: HttpErrorResponse) => {
-          let errorMessage = 'Ha ocurrido un error en la solicitud.';
+          // Captura el mensaje de error
+          const errorDescription =
+            error.error?.description ||
+            `Ha ocurrido un error inesperado.
+            Revisa tu conexión a internet y vuelve a intentarlo.`;
 
-          if (error.error && error.error.description) {
-            errorMessage = error.error.description;
-          }
-
-          Swal.fire({
-            allowOutsideClick: false,
-            icon: 'error',
-            title: 'Error',
-            text: errorMessage,
-            confirmButtonText: 'Ok',
-          });
-
-          // Retornar un observable con un error para que la cadena de observables continúe
-          return throwError(errorMessage);
+          this.errorMessage = errorDescription;
+          return throwError(() => new Error(errorDescription));
         })
       )
-      .subscribe((resp: any) => {
-        if (resp.body.token != null) {
-          console.log('🚀 ~ Login:', resp.body);
-          this.onRemember(this.form.get('remember').value);
-          // var route = localStorage.getItem('currentUrl');
-          // this.router.navigateByUrl(localStorage.getItem('currentUrl'));
-          this.securityService.setAuthData(resp.body.token);
-          this.customToastService.onCloseToSuccess();
+      .subscribe({
+        next: (resp: any) => {
+          if (resp.body.token != null) {
+            console.log('🚀 ~ Login:', resp.body);
+            this.onRemember(this.form.get('remember').value);
+            // var route = localStorage.getItem('currentUrl');
+            // this.router.navigateByUrl(localStorage.getItem('currentUrl'));
+            this.securityService.setAuthData(resp.body.token);
+            this.customToastService.onCloseToSuccess();
 
-          // Redirigir a la URL original o a una predeterminada si no hay una
-          const redirectUrl = this.authS.redirectUrl || '/dashboard';
-          this.router.navigateByUrl(redirectUrl);
+            // Redirigir a la URL original o a una predeterminada si no hay una
+            const redirectUrl = this.authS.redirectUrl || '/dashboard';
+            this.router.navigateByUrl(redirectUrl);
 
-          // Limpiar la URL de redirección
-          this.authS.redirectUrl = null;
-        }
+            // Limpiar la URL de redirección
+            this.authS.redirectUrl = null;
+          }
+        },
+        error: () => {
+          Swal.close(); // Cierra el modal si ocurre un error
+        },
+        complete: () => Swal.close(), // Cierra el modal al finalizar
       });
   }
 

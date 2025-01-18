@@ -15,14 +15,14 @@ export const mttoBitacorasMenu = (authS: AuthService) => [
       },
       {
         visible: authS.onValidateRoles(['SuperUsuario']),
-        label: 'Inspecciones',
-        routerLink: '/logbook/inspections',
+        label: 'Catalogo Inspecciones',
+        routerLink: '/inspections/catalog',
         name: 'Equipos recorrido diario',
       },
       {
         visible: authS.onValidateRoles(['SuperUsuario']),
-        label: 'Inspecciones-areas',
-        routerLink: '/logbook/inspections-areas',
+        label: 'Inspecciones ',
+        routerLink: '/inspections/my-inspection-list',
         name: 'Inspecciones-areas',
       },
       {

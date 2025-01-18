@@ -1,0 +1,135 @@
+<div class="container py-3">
+  <h4 class="mb-4">Ejecutar Inspección</h4>
+
+  <!-- Iterar sobre las áreas -->
+  <div *ngFor="let area of data" class="mb-4">
+    <div class="mb-2">
+      <h5>{{ area.condominiumAssetName }}</h5>
+    </div>
+
+    <div class="list-group">
+      <!-- Iterar sobre las revisiones dentro de cada área -->
+      <div
+        *ngFor="let revision of area.items"
+        class="list-group-item d-flex flex-column"
+      >
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <span class="fw-bold">{{ revision.inspectionDescription }}</span>
+          <!-- Switch para cambiar entre Bien y Mal -->
+          <div>
+            <label class="switch">
+              <input
+                type="checkbox"
+                [(ngModel)]="revision.state"
+                [ngClass]="{
+                  bien: revision.state === true,
+                  mal: revision.state === false
+                }"
+              />
+              <span class="slider"></span>
+            </label>
+            <span class="ms-2" *ngIf="revision.state === true">Bien</span>
+            <span class="ms-2" *ngIf="revision.state === false">Mal</span>
+          </div>
+        </div>
+
+        <!-- Campo de texto para observaciones -->
+        <textarea
+          class="form-control mb-2"
+          rows="3"
+          [(ngModel)]="revision.observations"
+          placeholder="Agregar observaciones"
+        ></textarea>
+
+        <div class="d-flex align-items-center">
+          <!-- Botón para agregar imágenes -->
+          <input
+            type="file"
+            class="form-control form-control-sm"
+            (change)="onFileSelected($event, area.id, revision.id)"
+            multiple
+          />
+          <button
+            class="btn btn-sm btn-secondary ms-2"
+            (click)="onAddImages(area.id, revision.id, revision.newImages)"
+          >
+            Agregar Imágenes
+          </button>
+          <div class="ms-2">
+            <!-- Mostrar las imágenes añadidas -->
+            <span *ngFor="let image of revision.images">
+              <img
+                [src]="image.url"
+                class="img-thumbnail me-1"
+                style="width: 50px; height: 50px"
+                alt="Imagen subida"
+              />
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-center">
+    <button class="btn btn-success" (click)="onSubmit()">
+      Finalizar Inspección
+    </button>
+  </div>
+</div>
+
+<style>
+  /* Estilo para el Switch */
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+  }
+
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.4s;
+    border-radius: 34px;
+  }
+
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    border-radius: 50%;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: 0.4s;
+  }
+
+  input:checked + .slider {
+    background-color: #4caf50;
+  }
+
+  input:checked + .slider:before {
+    transform: translateX(26px);
+  }
+
+  .bien {
+    background-color: #4caf50;
+  }
+
+  .mal {
+    background-color: #f44336;
+  }
+</style>

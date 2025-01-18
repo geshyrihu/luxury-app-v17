@@ -293,6 +293,21 @@
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                   <li>
                     <button
+                      type="button"
+                      class="dropdown-item"
+                      ngbTooltip="Seguimiento"
+                      placement="top"
+                      (click)="onFollowUp(item.id)"
+                    >
+                      <i class="fa-light fa-list me-2 text-primary"></i>
+                      <span
+                        class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-info"
+                        >{{ item.ticketMessageFollowUp }}</span
+                      >Seguimiento
+                    </button>
+                  </li>
+                  <li>
+                    <button
                       class="dropdown-item"
                       (click)="
                         onModalAddOrEdit({ id: item.id, title: 'Editar' })
@@ -310,7 +325,7 @@
                       title="Programar"
                     >
                       <i
-                        class="fa-light fa-calendar-week me-2 text-warning"
+                        class="fa-light fa-calendar-week me-2 text-primary"
                       ></i>
                       Programar
                     </button>
@@ -329,7 +344,7 @@
                       title="En proceso"
                     >
                       <i
-                        class="fa-light fa-thin fa-spinner me-2 text-warning"
+                        class="fa-light fa-thin fa-spinner me-2 text-primary"
                       ></i>
                       En proceso
                     </button>
@@ -340,7 +355,7 @@
                       (click)="onClosed(item.id)"
                       title="Cerrar"
                     >
-                      <i class="fa-light fa-thin fa-lock me-2 text-danger"></i>
+                      <i class="fa-light fa-thin fa-lock me-2 text-primary"></i>
                       Cerrar
                     </button>
                   </li>

@@ -11,6 +11,7 @@ export class SidebarService {
   private authS = inject(AuthService);
 
   get onLoadMenu() {
+    console.log('🚀 ~ this.menu:', this.menu);
     return this.menu;
   }
   menu: IMenuItem[] = [

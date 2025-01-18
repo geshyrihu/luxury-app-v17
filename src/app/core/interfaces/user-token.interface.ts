@@ -3,6 +3,7 @@ export interface IUserToken {
   expiration: string;
   roles: string[];
   permission: PermissionListDto[];
+  customerAccess: SelectItemCustomerAccessDto[];
   infoUserAuthDto: InfoAccountAuthDto;
 }
 
@@ -32,4 +33,9 @@ export enum EPermission {
   CanRead = 'canRead',
   CanUpdate = 'canUpdate',
   CanDelete = 'canDelete',
+}
+export interface SelectItemCustomerAccessDto {
+  label: string;
+  value: number;
+  image: string;
 }

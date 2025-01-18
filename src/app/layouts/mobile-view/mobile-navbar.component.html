@@ -1,0 +1,110 @@
+<nav
+  class="navbar navbar-expand-lg navbar-thin bg-white border-bottom shadow-sm fixed-top"
+>
+  <div class="container-fluid d-flex align-items-center py-2 position-relative">
+    <div class="d-flex align-items-center me-3">
+      <i class="fa-regular fa-angle-left fa-2x" (click)="onBack()"></i>
+    </div>
+
+    <div class="d-flex align-items-center dropdown-container me-auto">
+      <div class="dropdown">
+        <small
+          id="dropdownBuilding"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+          role="button"
+        >
+          <img
+            [src]="photoPath"
+            alt=""
+            class="me-1"
+            style="height: 20px; width: auto"
+          />
+          {{
+            nameCustomer.length > 4
+              ? (nameCustomer | slice : 0 : 4) + "..."
+              : nameCustomer
+          }}
+        </small>
+
+        <ul
+          class="dropdown-menu dropdown-menu-start"
+          aria-labelledby="dropdownBuilding"
+        >
+          <li *ngFor="let item of cb_customer">
+            <a class="dropdown-item" (click)="selectCustomer(item.value)">
+              {{ item.label }}
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div
+      class="d-flex align-items-center position-absolute logo-centered"
+      style="left: 50%; transform: translateX(-50%); z-index: 1"
+    >
+      <img
+        src="assets/images/full-logo-transp.jpg"
+        alt=""
+        style="height: 20px; width: auto"
+      />
+    </div>
+
+    <div class="d-flex align-items-center">
+      <div class="dropdown">
+        <!-- Icono de opciones -->
+        <button
+          class="btn btn-link p-0"
+          id="dropdownMenuButton"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          <i class="fa-regular fa-ellipsis-vertical fa-2x"></i>
+        </button>
+
+        <!-- Menú desplegable -->
+        <ul
+          class="dropdown-menu dropdown-menu-end"
+          aria-labelledby="dropdownMenuButton"
+        >
+          <!-- Imagen de perfil dentro del dropdown -->
+          <li class="px-3 py-2 text-center mt-2">
+            <img
+              class="rounded-circle avatar-sm"
+              [src]="profileImageUrl"
+              alt="Imagen de perfil"
+            />
+            <div class="mt-2">
+              <span class="fw-medium text-dark d-block">
+                {{ infoAccountAuthDto.firstName }}
+                {{ infoAccountAuthDto.lastName }}
+              </span>
+            </div>
+          </li>
+
+          <!-- Listado de Clientes -->
+
+          <!-- Opción de mi perfil -->
+          <li>
+            <hr />
+          </li>
+          <li>
+            <a class="dropdown-item" [routerLink]="['/update-user-profile']">
+              <i class="fa-thin fa-user me-2"></i>
+              Mi perfil
+            </a>
+          </li>
+
+          <!-- Opción de cerrar sesión -->
+          <li>
+            <a class="dropdown-item" (click)="logout()">
+              <i class="fa-thin fa-left-from-bracket me-2"></i>
+              Cerrar sesión
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>

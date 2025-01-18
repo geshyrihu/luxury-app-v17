@@ -52,7 +52,7 @@ export default class AddOrEditCustomerDataCompanyComponent implements OnInit {
 
   onLoadSelectItem() {
     this.apiRequestService
-      .onGetSelectItem('customers')
+      .onGetSelectItem('CustomersActive')
       .then((items: ISelectItem[]) => {
         this.cb_customer = items;
       });

@@ -28,6 +28,7 @@ export default class ListProfessionsComponent implements OnInit {
   }
 
   onLoadData() {
+    console.log('Si entramos al componente professiones sin temas');
     const urlApi = 'Professions/';
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.data = result;

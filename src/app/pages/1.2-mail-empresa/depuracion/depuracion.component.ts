@@ -14,56 +14,11 @@ export default class DepuracionComponent {
   apiRequestService = inject(ApiRequestService);
   customerIdService = inject(CustomerIdService);
   customToastService = inject(CustomToastService);
-  ImportTickets(path: string) {
-    this.apiRequestService
-      .onGetList(
-        'UpdateDataBase/' + path + '/' + this.customerIdService.customerId
-      )
-      .then(() => {
-        this.customToastService.onShowSuccess();
-        this.customToastService.onClose();
-      });
-  }
-  DeleteDuplicate(path: string) {
-    this.apiRequestService
-      .onGetList(
-        'UpdateDataBase/' + path + '/' + this.customerIdService.customerId
-      )
-      .then(() => {
-        this.customToastService.onShowSuccess();
-        this.customToastService.onClose();
-      });
-  }
-  GenerateFolio(path: string) {
-    this.apiRequestService
-      .onGetList(
-        'UpdateDataBase/' + path + '/' + this.customerIdService.customerId
-      )
-      .then(() => {
-        this.customToastService.onShowSuccess();
-        this.customToastService.onClose();
-      });
-  }
-  UpdateTicketLegal(path: string) {
-    this.apiRequestService.onGetList('UpdateDataBase/' + path).then(() => {
-      this.customToastService.onShowSuccess();
-      this.customToastService.onClose();
-    });
-  }
-  SendEmailPending(path: string) {
-    this.apiRequestService.onGetList('LegalReport/' + path).then(() => {
-      this.customToastService.onShowSuccess();
-      this.customToastService.onClose();
-    });
-  }
-  SendLegalTicketReportToCustomer(path: string) {
-    this.apiRequestService.onGetList('Reports/' + path).then(() => {
-      this.customToastService.onShowSuccess();
-      this.customToastService.onClose();
-    });
-  }
-  GenerateSignalEvent(path: string) {
-    this.apiRequestService.onGetList('UpdateDataBase/' + path).then(() => {
+
+  MigrateAmenities(path: string) {
+    const urlApi =
+      'UpdateDataBase/' + path + '/' + this.customerIdService.customerId;
+    this.apiRequestService.onGetList(urlApi).then(() => {
       this.customToastService.onShowSuccess();
       this.customToastService.onClose();
     });

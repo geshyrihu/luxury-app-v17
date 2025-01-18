@@ -2,11 +2,12 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { throwError } from 'rxjs';
+import { catchError, throwError } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataConnectorService } from 'src/app/core/services/data.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-recovery-password',
@@ -32,33 +33,41 @@ export default class RecoveryPasswordComponent implements OnInit {
   onSubmit() {
     if (!this.apiRequestService.validateForm(this.form)) return;
 
+    // Limpiar mensajes previos
     this.errorMessage = '';
+    this.successMessage = '';
 
-    this.dataService.post(`Auth/RecoverPassword`, this.form.value).subscribe(
-      () => {
-        // Manejar el éxito de la solicitud si es necesario
-        this.successMessage =
-          'Revisa tu correo electrónico, y sigue las intrucciones para restablecer tu contraseña';
-      },
-      (error) => {
-        // Manejar el error
-        this.handleError(error);
-      }
-    );
-  }
+    // Mostrar un mensaje de carga opcional
+    Swal.fire({
+      allowOutsideClick: false,
+      icon: 'info',
+      text: 'Procesando solicitud...',
+    });
+    Swal.showLoading();
 
-  private handleError(error: HttpErrorResponse) {
-    let errorMessage = 'An unknown error occurred';
-    if (error.error instanceof ErrorEvent) {
-      // Error del lado del cliente
-      errorMessage = `Error: ${error.error.message}`;
-    } else {
-      // Error del lado del servidor
-      errorMessage = `Error Code: ${error.status}\nMessage: ${error.error}`;
-    }
-    console.error(errorMessage);
-    this.errorMessage = errorMessage;
-    // Lanzar el error para que pueda ser manejado por el componente o servicio que llamó a este método
-    return throwError(errorMessage);
+    // Realizar la solicitud POST al backend
+
+    const urlApi = 'Auth/RecoverPassword';
+    const body = this.form.value;
+
+    this.dataService
+      .post(urlApi, body)
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          this.errorMessage = error.error?.message;
+          Swal.close();
+          return throwError(() => new Error(this.errorMessage));
+        })
+      )
+      .subscribe({
+        next: (response: any) => {
+          this.successMessage = response.body.message;
+        },
+        error: () => {
+          // Si ocurre un error en la suscripción, asegúrate de cerrar el modal
+          Swal.close();
+        },
+        complete: () => Swal.close(), // Cierra el modal cuando la petición finalice
+      });
   }
 }

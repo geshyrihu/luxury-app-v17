@@ -1,0 +1,18 @@
+<div class="container mt-4">
+  <div class="row g-3">
+    <ng-container *ngFor="let item of data; let i = index">
+      <div *ngIf="item.isAutorized" class="col-6">
+        <div class="card text-center shadow-sm h-100">
+          <div class="card-body">
+            <i
+              class="fa-solid fa-2x text-secondary mb-2"
+              [class]="item.icon"
+            ></i>
+            <h6 class="card-title fw-bold">{{ item.name }}</h6>
+            <a class="stretched-link" [routerLink]="item.routerLink"></a>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>
