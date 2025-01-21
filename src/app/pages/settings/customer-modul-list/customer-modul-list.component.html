@@ -1,0 +1,69 @@
+<div class="text-center" *ngIf="!data || data.length === 0">
+  <div class="spinner-border text-primary m-1" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+</div>
+
+<div class="container mt-4">
+  <h2>Clientes Agrupados por Estado</h2>
+  <div class="row">
+    <div class="col-sm-2">
+      <select
+        class="form-select"
+        (change)="onSelectForCustomer($event.target.value)"
+      >
+        <option *ngFor="let item of selectCustomer" [value]="item.value">
+          {{ item.label }}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Contenedor principal -->
+  <div class="container mt-4" *ngIf="data">
+    <div class="row">
+      <!-- Iterar sobre los clientes -->
+      <div class="col-md-4 mb-4" *ngFor="let customer of data">
+        <!-- Tarjeta para cada cliente -->
+        <div
+          class="card shadow-sm pointer"
+          [ngClass]="{
+            'border-success': customer.isActive,
+            'border-danger': !customer.isActive
+          }"
+          [routerLink]="[
+            '/settings/customer-modul-edit',
+            customer.customerId,
+            customer.nameCustomer
+          ]"
+        >
+          <div class="card-body">
+            <!-- Imagen del cliente -->
+            <div class="d-flex align-items-center mb-3">
+              <img
+                [src]="customer.photoPath"
+                alt="{{ customer.nameCustomer }}"
+                class="img-fluid avatar-lg me-3"
+                style="width: 60px; height: 60px"
+              />
+              <h5 class="mb-0">{{ customer.nameCustomer }}</h5>
+            </div>
+            <!-- Información del cliente -->
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">
+                <strong>ID Cliente:</strong> {{ customer.customerId }}
+              </li>
+
+              <li class="list-group-item">
+                <strong>Número Cliente:</strong> {{ customer.numeroCliente }}
+              </li>
+              <li class="list-group-item">
+                <strong>Registrado:</strong> {{ customer.register }}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

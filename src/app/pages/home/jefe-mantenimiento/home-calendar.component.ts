@@ -42,7 +42,7 @@ export default class HomeCalendarComponent {
     {
       name: 'Juntas de comité',
       icon: 'fa-duotone fa-users', // Ícono para reuniones de grupo o juntas
-      routerLink: '/mantenimiento/calendario-anual',
+      routerLink: '/home-calendar-juntas-comite',
       isAutorized: this.authS.onValidateRoles([
         'SuperUsuario',
         'SupervisionOperativa',

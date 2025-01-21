@@ -11,13 +11,12 @@ export class SidebarService {
   private authS = inject(AuthService);
 
   get onLoadMenu() {
-    console.log('🚀 ~ this.menu:', this.menu);
     return this.menu;
   }
   menu: IMenuItem[] = [
-    ...MenuItems.catalogMenu(this.authS),
-    ...MenuItems.mailsEmpresaMenu(this.authS),
-    ...MenuItems.applicationUserMenu(this.authS),
+    // ...MenuItems.catalogMenu(this.authS),
+    // ...MenuItems.mailsEmpresaMenu(this.authS),
+    // ...MenuItems.applicationUserMenu(this.authS),
     ...MenuItems.legalMenu(this.authS),
     ...MenuItems.contabilidadMenu(this.authS),
     ...MenuItems.sistemasMenu(this.authS),

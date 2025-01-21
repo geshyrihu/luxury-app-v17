@@ -1,0 +1,38 @@
+<div class="container">
+  <!-- Título del cliente -->
+  <h3>MODULOS ASSIGNADOS A {{ roleName | uppercase }}</h3>
+
+  <div *ngIf="data.length === 0">
+    <p>No se encontraron módulos.</p>
+  </div>
+
+  <!-- Mostrar los módulos -->
+  <div class="container">
+    <div class="row">
+      <div
+        class="col-sm-4 pointer"
+        *ngFor="let item of data"
+        (click)="toggleModuleActivation(item)"
+      >
+        <div class="card mb-3">
+          <div class="card-body">
+            <!-- Nombre del módulo -->
+            <h5 class="card-title">{{ item.moduleAppName }}</h5>
+
+            <!-- Estado del módulo -->
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="form-check form-switch form-switch-md mb-3" dir="ltr">
+                <input
+                  type="checkbox"
+                  class="form-check-input"
+                  [(ngModel)]="item.isAssigned"
+                  (change)="toggleModuleActivation(item)"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

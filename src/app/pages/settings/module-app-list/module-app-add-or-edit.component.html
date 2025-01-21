@@ -1,0 +1,55 @@
+<div class="card">
+  <div class="card-body">
+    <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
+      <custom-input-text
+        [control]="form.get('id')"
+        formControlName="id"
+        label="Id"
+        [readonly]="true"
+      />
+      <custom-input-text
+        [control]="form.get('nameModule')"
+        formControlName="nameModule"
+        label="Nombre de Modulo"
+        placeholder="Nombre de Modulo"
+      />
+      <custom-input-text
+        [control]="form.get('label')"
+        formControlName="label"
+        label="Label"
+        placeholder="Label"
+      />
+      <custom-input-text
+        [control]="form.get('routerLink')"
+        formControlName="routerLink"
+        label="RouterLink"
+        placeholder="RouterLink"
+      />
+      <custom-input-text
+        [control]="form.get('icon')"
+        formControlName="icon"
+        label="Icon"
+        placeholder="Icon"
+      />
+      <!-- <custom-input-text
+        [control]="form.get('pathParent')"
+        formControlName="pathParent"
+        label="PathParent"
+        placeholder="PathParent"
+      /> -->
+      <custom-input-select
+        [control]="form.get('pathParent')"
+        formControlName="pathParent"
+        label="Padre"
+        [data]="cb_pathParent"
+      />
+      <custom-input-select
+        [control]="form.get('rolLevel')"
+        formControlName="rolLevel"
+        label="Nivel"
+        [data]="cb_rolLevel"
+      />
+      <btn-submit [disabled]="this.form.invalid || submitting" />
+    </form>
+  </div>
+</div>

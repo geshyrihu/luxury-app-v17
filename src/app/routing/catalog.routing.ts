@@ -2,15 +2,6 @@ import { Routes } from '@angular/router';
 
 export default [
   {
-    title: 'Module App',
-    data: { title: 'Lista de Módulos' },
-    path: 'module-app',
-    loadComponent: () =>
-      import(
-        'src/app/pages/1.1-catalogos/1.1.1-module-app/module-app-list/module-app-list.component'
-      ),
-  },
-  {
     title: 'Roles',
     data: { title: 'Lista de Roles' },
     path: 'roles',

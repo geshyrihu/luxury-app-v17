@@ -44,21 +44,13 @@ export default class TicketGroupListComponent implements OnInit {
     const applicationUserId = this.authService.applicationUserId;
 
     const urlApi = `ticketGroup/GetAllByClient/${customerId}/${applicationUserId}`;
-    this.apiRequestService
-      .onGetList(urlApi)
-      .then((result: any) => {
-        // Actualizamos el valor del signal con los datos recibidos
-        this.dataSignal.set(result);
-      })
-      .catch((error) => {
-        console.log('🚀 ~ error:', error);
-        this.error = error;
-      });
+    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      this.dataSignal.set(result);
+    });
   }
   onToggleStatus(id: string) {
     const urlApi = `ticketGroup/toggle-status/${id}`;
     this.apiRequestService.onGetItem(urlApi).then((result: any) => {
-      // Actualizamos el valor del signal con los datos recibidos
       this.onLoadData();
     });
   }

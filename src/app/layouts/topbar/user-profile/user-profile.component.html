@@ -1,7 +1,7 @@
 <div class="dropdown d-inline-block" ngbDropdown>
   <button
     type="button"
-    class="btn header-item topbar-light bg-light-subtle border"
+    class="btn header-item topbar-light bg-light-subtle"
     id="page-header-notifications-dropdown"
     data-bs-toggle="dropdown"
     aria-haspopup="true"
@@ -9,12 +9,6 @@
     ngbDropdownToggle
   >
     <img class="rounded avatar-md" [src]="profileImageUrl" alt="Img" />
-    <span class="d-none d-xl-inline-block ms-1 fw-medium text-dark"
-      >{{ infoAccountAuthDto.firstName }} {{ infoAccountAuthDto.lastName }}
-    </span>
-    <i
-      class="fa-duotone fa-solid fa-caret-down d-none d-xl-inline-block text-dark"
-    ></i>
   </button>
 
   <div
@@ -22,33 +16,66 @@
     aria-labelledby="page-header-notifications-dropdown"
     ngbDropdownMenu
   >
-    <ngx-simplebar style="max-height: 230px">
+    <ngx-simplebar class="custom-scroll">
+      <div
+        class="d-flex justify-content-between align-items-center pt-2 ps-2 pe-2 mb-0"
+      >
+        <!-- Información del usuario -->
+        <img class="rounded avatar-xl" [src]="profileImageUrl" alt="Img" />
+        <div class="text-center mb-3 mt-2">
+          <div class="flex-grow-1">
+            <span class="font-size-18 text-dark">
+              {{ infoAccountAuthDto.firstName }}
+              {{ infoAccountAuthDto.lastName }}
+            </span>
+            <br />
+            <span class="font-size-16 text-muted">
+              {{ infoAccountAuthDto.position }}
+            </span>
+          </div>
+        </div>
+      </div>
+      <hr />
+
+      @if (cb_customer.length > 1) {
+      <!-- Start Aquí se agrega el select -->
+
+      <div class="ps-2 pe-2 mb-3">
+        <label for="user-options" class="form-label text-muted font-size-16"
+          >Condominios</label
+        >
+        <select
+          [(ngModel)]="customerId"
+          (change)="selectCustomer($event.target.value)"
+          id="user-options"
+          class="form-select"
+        >
+          <option *ngFor="let item of cb_customer" [value]="item.value">
+            {{ item.label }}
+          </option>
+        </select>
+      </div>
+      <!-- End Aquí se agrega el select -->
+      }
+
+      <!-- Opciones del usuario -->
       <a
         [routerLink]="['/update-user-profile']"
-        class="text-reset notification-item"
+        class="text-reset notification-item d-flex align-items-center mb-1"
       >
-        <div class="d-flex">
-          <div class="flex-grow-1">
-            <div class="font-size-13 text-muted">
-              <p class="mb-0">
-                <i class="fa-thin fa-key me-2" style="color: #ffd43b"></i>
-                Cambiar contraseña
-              </p>
-            </div>
-          </div>
-        </div>
+        <p class="text-muted font-size-16 ms-2">
+          <i class="fa-thin fa-key me-2 text-primary"></i>
+          Cambiar contraseña
+        </p>
       </a>
-      <a (click)="logout()" class="text-reset notification-item">
-        <div class="d-flex">
-          <div class="flex-grow-1">
-            <div class="font-size-13 text-muted">
-              <p class="mb-0 card-text">
-                <i class="fa-thin fa-key me-2" style="color: #f50000"></i>
-                Cerrar Sesión
-              </p>
-            </div>
-          </div>
-        </div>
+      <a
+        (click)="logout()"
+        class="text-reset notification-item d-flex align-items-center mb-1"
+      >
+        <p class="text-muted font-size-16 ms-2">
+          <i class="fa-thin fa-sign-out-alt me-2 text-primary"></i>
+          Cerrar Sesión
+        </p>
       </a>
     </ngx-simplebar>
   </div>

@@ -1,13 +1,13 @@
 import { NgClass } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
-import BtnComponent from '../a-master-btn-button/a-master-btn.component';
+import CustomBtnComponent from '../custom-button-button/custom-button.component';
 
 @Component({
   selector: 'btn-submit',
   templateUrl: './btn-submit.component.html',
   standalone: true,
-  imports: [NgClass, ButtonModule, BtnComponent],
+  imports: [NgClass, ButtonModule, CustomBtnComponent],
 })
 export default class BtnSubmitComponent {
   @Input()

@@ -51,7 +51,6 @@ export default class HomeNotificationComponent implements OnInit, OnDestroy {
     const urlApi = `NotificationUser/GetAllUnread/${this.authS.applicationUserId}`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.notifications = result;
-      console.log('🚀 ~ this.notifications:', this.notifications);
       this.notifications.forEach((x: any) => {
         if (!x.isRead) {
           this.messageInNotRead++;

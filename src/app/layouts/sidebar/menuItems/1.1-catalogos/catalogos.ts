@@ -9,12 +9,6 @@ export const catalogMenu = (authS: AuthService) => [
     items: [
       {
         visible: authS.onValidateRoles(['SuperUsuario']),
-        label: '1.1.1 Modulos App',
-        routerLink: '/catalog/module-app',
-        name: 'module-app',
-      },
-      {
-        visible: authS.onValidateRoles(['SuperUsuario']),
         label: '1.1.2 Roles',
         routerLink: '/catalog/roles',
         name: 'Roles',

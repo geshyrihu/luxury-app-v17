@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 
-import BtnComponent from './a-master-btn-button/a-master-btn.component';
 import BtnActiveDesactiveComponent from './btn-active-desactive/btn-active-desactive.component';
 import BtnBaggesComponent from './btn-bagges/btn-bagges.component';
 import BtnConfirmationComponent from './btn-confirmation/btn-confirmation.component';
@@ -15,10 +14,11 @@ import BtnRouterEventComponent from './btn-router-event/btn-router-event.compone
 import BtnNotificationComponent from './btn-router-notification/btn-router-notification.component';
 import BtnSendEmailComponent from './btn-send-email/btn-send-email.component';
 import BtnSubmitComponent from './btn-submit/btn-submit.component';
+import CustomBtnComponent from './custom-button-button/custom-button.component';
 
 @NgModule({
   imports: [
-    BtnComponent,
+    CustomBtnComponent,
 
     BtnActiveDesactiveComponent,
     BtnBaggesComponent,
@@ -36,7 +36,7 @@ import BtnSubmitComponent from './btn-submit/btn-submit.component';
     BtnSubmitComponent,
   ],
   exports: [
-    BtnComponent,
+    CustomBtnComponent,
 
     BtnActiveDesactiveComponent,
     BtnBaggesComponent,

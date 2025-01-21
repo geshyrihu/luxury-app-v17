@@ -1,11 +1,9 @@
-<!-- Vertical layout -->
-@if (isMobileView) {
+<!-- @if (isMobileView) {
 <app-mobile />
 
 }@else {
 
 <div id="layout-wrapper">
-  <!-- Top Bar -->
   <app-topbar
     (mobileMenuButtonClicked)="onToggleMobileMenu()"
     (settingsButtonClicked)="onSettingsButtonClicked()"
@@ -15,13 +13,24 @@
   <div class="main-content" id="mainContent">
     <div class="page-content">
       <div class="container-fluid">
-        <!-- content -->
         <router-outlet />
-        <!-- content -->
       </div>
     </div>
-    <!-- footer -->
   </div>
 </div>
+}
+-->
+@if (isMobileView) {
+<app-mobile />
 
+}@else {
+
+<div class="page-content">
+  <app-topbar />
+  <div class="container-fluid">
+    <!-- content -->
+    <router-outlet />
+    <!-- content -->
+  </div>
+</div>
 }

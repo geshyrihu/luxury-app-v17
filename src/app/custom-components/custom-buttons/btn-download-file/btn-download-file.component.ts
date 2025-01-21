@@ -20,12 +20,10 @@ export default class BtnDownloadFileComponent {
 
   onClick(event: any) {
     // Llamamos a la función para descargar el archivo
-    console.log('🚀 ~ this.urlFile:', this.urlFile);
     this.downloadFile(this.urlFile);
   }
 
   private downloadFile(url: string) {
-    console.log('🚀 ~ url:', url);
     if (!url) {
       console.error('URL no proporcionada.');
       return;

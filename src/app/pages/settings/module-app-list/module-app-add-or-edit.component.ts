@@ -19,6 +19,7 @@ export class ModuleAppAddOrEditComponent {
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
 
+  cb_pathParent: ISelectItem[] = [];
   id: string = '';
   submitting: boolean = false;
   cb_rolLevel: ISelectItem[] = onGetSelectItemFromEnum(ERolLevel);
@@ -26,11 +27,17 @@ export class ModuleAppAddOrEditComponent {
     id: { value: this.id, disabled: true },
     nameModule: ['', [Validators.required]],
     rolLevel: [],
+    label: [],
+    routerLink: [],
+    icon: [],
+    pathParent: [],
   });
 
   ngOnInit(): void {
     this.id = this.config.data.id;
     if (this.id !== '') this.onLoadData();
+
+    this.onLoadModuleApp();
   }
   onLoadData() {
     const urlApi = `ModuleApp/${this.id}`;
@@ -55,6 +62,13 @@ export class ModuleAppAddOrEditComponent {
           result ? this.ref.close(true) : (this.submitting = false);
         });
     }
+  }
+
+  onLoadModuleApp() {
+    const urlApi = `ModuleApp`;
+    this.apiRequestService.onGetSelectItem(urlApi).then((result: any) => {
+      this.cb_pathParent = result;
+    });
   }
 }
 export enum ERolLevel {

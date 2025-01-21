@@ -6,40 +6,6 @@
       <i class="fa-regular fa-angle-left fa-2x" (click)="onBack()"></i>
     </div>
 
-    <div class="d-flex align-items-center dropdown-container me-auto">
-      <div class="dropdown">
-        <small
-          id="dropdownBuilding"
-          data-bs-toggle="dropdown"
-          aria-expanded="false"
-          role="button"
-        >
-          <img
-            [src]="photoPath"
-            alt=""
-            class="me-1"
-            style="height: 20px; width: auto"
-          />
-          {{
-            nameCustomer.length > 4
-              ? (nameCustomer | slice : 0 : 4) + "..."
-              : nameCustomer
-          }}
-        </small>
-
-        <ul
-          class="dropdown-menu dropdown-menu-start"
-          aria-labelledby="dropdownBuilding"
-        >
-          <li *ngFor="let item of cb_customer">
-            <a class="dropdown-item" (click)="selectCustomer(item.value)">
-              {{ item.label }}
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
-
     <div
       class="d-flex align-items-center position-absolute logo-centered"
       style="left: 50%; transform: translateX(-50%); z-index: 1"
@@ -52,58 +18,88 @@
     </div>
 
     <div class="d-flex align-items-center">
-      <div class="dropdown">
-        <!-- Icono de opciones -->
+      <div class="dropdown d-inline-block">
         <button
-          class="btn btn-link p-0"
-          id="dropdownMenuButton"
+          type="button"
+          class="btn header-item"
+          id="page-header-notifications-dropdown"
           data-bs-toggle="dropdown"
+          aria-haspopup="true"
           aria-expanded="false"
         >
-          <i class="fa-regular fa-ellipsis-vertical fa-2x"></i>
+          <i class="fa-regular fa-ellipsis-vertical fa-2x text-dark"></i>
         </button>
 
-        <!-- Menú desplegable -->
-        <ul
-          class="dropdown-menu dropdown-menu-end"
-          aria-labelledby="dropdownMenuButton"
+        <div
+          class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-2"
+          aria-labelledby="page-header-notifications-dropdown"
         >
-          <!-- Imagen de perfil dentro del dropdown -->
-          <li class="px-3 py-2 text-center mt-2">
-            <img
-              class="rounded-circle avatar-sm"
-              [src]="profileImageUrl"
-              alt="Imagen de perfil"
-            />
-            <div class="mt-2">
-              <span class="fw-medium text-dark d-block">
-                {{ infoAccountAuthDto.firstName }}
-                {{ infoAccountAuthDto.lastName }}
+          <!-- Información del usuario -->
+          <div class="text-center">
+            <img class="rounded avatar-md" [src]="profileImageUrl" alt="Img" />
+          </div>
+          <div class="text-center mt-2">
+            <span class="text-dark">
+              {{ infoAccountAuthDto.firstName }}
+              {{ infoAccountAuthDto.lastName }}
+            </span>
+            <br />
+            <span class="text-muted">
+              {{ infoAccountAuthDto.position }}
+            </span>
+          </div>
+          <hr />
+
+          <!-- Select de Condominios -->
+          <div
+            *ngIf="cb_customer.length > 1"
+            class="mb-3"
+            style="cursor: default; width: 300px"
+          >
+            <label for="user-options" class="form-label text-muted">
+              Condominios
+            </label>
+            <select
+              [(ngModel)]="customerId"
+              (change)="selectCustomer($event.target.value)"
+              id="user-options"
+              class="form-select"
+            >
+              <option *ngFor="let item of cb_customer" [value]="item.value">
+                {{ item.label }}
+              </option>
+            </select>
+          </div>
+          <div *ngIf="cb_customer.length === 1" class="mb-3">
+            <div
+              class="d-flex align-items-center bg-light-subtle border rounded h-100 me-2"
+              style="cursor: default; width: 300px"
+            >
+              <img
+                class="ms-2 rounded avatar-md"
+                [src]="cb_customer[0].image"
+                alt="Customer Image"
+                style="width: 50px; height: 50px; object-fit: cover"
+              />
+              <span class="ms-2 fw-medium text-dark" style="flex-grow: 1">
+                {{ cb_customer[0].label }}
               </span>
             </div>
-          </li>
+          </div>
 
-          <!-- Listado de Clientes -->
-
-          <!-- Opción de mi perfil -->
-          <li>
-            <hr />
-          </li>
-          <li>
-            <a class="dropdown-item" [routerLink]="['/update-user-profile']">
-              <i class="fa-thin fa-user me-2"></i>
-              Mi perfil
-            </a>
-          </li>
-
-          <!-- Opción de cerrar sesión -->
-          <li>
-            <a class="dropdown-item" (click)="logout()">
-              <i class="fa-thin fa-left-from-bracket me-2"></i>
-              Cerrar sesión
-            </a>
-          </li>
-        </ul>
+          <!-- Opciones del usuario -->
+          <a
+            [routerLink]="['/update-user-profile']"
+            class="dropdown-item d-flex align-items-center"
+          >
+            <i class="fa-thin fa-key me-2 text-primary"></i>
+            Cambiar contraseña
+          </a>
+          <a (click)="logout()" class="dropdown-item d-flex align-items-center">
+            <i class="fa-thin fa-sign-out-alt me-2 text-primary"></i>
+            Cerrar Sesión
+          </a>
+        </div>
       </div>
     </div>
   </div>

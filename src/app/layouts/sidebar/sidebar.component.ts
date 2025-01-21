@@ -11,7 +11,9 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import MetisMenu from 'metismenujs';
+import { Observable } from 'rxjs';
 import { SimplebarAngularModule } from 'simplebar-angular';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { SidebarService } from 'src/app/core/services/sidebar.service';
 import { IMenuItem } from '../../core/interfaces/menu.model';
 
@@ -34,21 +36,24 @@ import { IMenuItem } from '../../core/interfaces/menu.model';
  */
 export default class SidebarComponent implements OnInit {
   private sidebarService = inject(SidebarService);
+  private customerIdService = inject(CustomerIdService);
+
   @ViewChild('sideMenu') sideMenu!: ElementRef;
   menu: any;
   menuItems: IMenuItem[] = [];
+
+  customerId: number;
+  customerId$: Observable<number> = this.customerIdService.getCustomerId$();
+
   ngOnInit(): void {
     // Cargar elementos del menú desde el servicio de la barra lateral
     this.menuItems = this.sidebarService.onLoadMenu;
-    console.log(
-      '🚀 ~ this.menuItems:',
-      this.menuItems.map((item) => {
-        return {
-          label: item.label,
-          visible: item.visible,
-        };
-      })
-    );
+    this.menuItems.map((item) => {
+      return {
+        label: item.label,
+        visible: item.visible,
+      };
+    });
   }
 
   /**

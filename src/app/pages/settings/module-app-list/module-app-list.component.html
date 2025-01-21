@@ -3,10 +3,12 @@
 <div class="card">
   <p-table
     #dt
-    [value]="dataSignal()"
+    [reorderableColumns]="true"
+    [value]="data"
     [autoLayout]="true"
     [globalFilterFields]="['nameModule']"
     styleClass="custom-table"
+    (onRowReorder)="onRowReorder($event)"
   >
     <!-- styleClass="p-datatable-sm" -->
     <ng-template pTemplate="caption">
@@ -19,9 +21,26 @@
 
     <ng-template pTemplate="header">
       <tr>
+        <th scope="col">Index</th>
         <th scope="col" pSortableColumn="nameModule">
           Nombre
           <p-sortIcon field="nameModule"></p-sortIcon>
+        </th>
+        <th scope="col" pSortableColumn="label">
+          Label
+          <p-sortIcon field="label"></p-sortIcon>
+        </th>
+        <th scope="col" pSortableColumn="icon">
+          Icon
+          <p-sortIcon field="icon"></p-sortIcon>
+        </th>
+        <th scope="col" pSortableColumn="routerLink">
+          RouterLink
+          <p-sortIcon field="routerLink"></p-sortIcon>
+        </th>
+        <th scope="col" pSortableColumn="pathParent">
+          PathParent
+          <p-sortIcon field="pathParent"></p-sortIcon>
         </th>
         <th scope="col" pSortableColumn="rolLevel">
           Nivel
@@ -31,15 +50,30 @@
         <th scope="col" style="width: 5%" class="no-print">Opciones</th>
       </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-item>
-      <tr>
+    <ng-template pTemplate="body" let-item let-index="rowIndex">
+      <tr [pReorderableRow]="index">
+        <td class="p-column-title text-center">
+          <i class="fa-light fa-bars" pReorderableRowHandle></i>
+          {{ item.positionIndex }}
+        </td>
         <td class="p-column-title">
           {{ item.nameModule }}
         </td>
         <td class="p-column-title">
+          {{ item.label }}
+        </td>
+        <td class="p-column-title">
+          {{ item.icon }}
+        </td>
+        <td class="p-column-title">
+          {{ item.routerLink }}
+        </td>
+        <td class="p-column-title">
+          {{ item.pathParent }}
+        </td>
+        <td class="p-column-title">
           {{ item.rolLevel }}
         </td>
-        <!-- Opciones -->
         <td class="p-column-title" class="no-print">
           <div class="d-flex justify-content-center">
             <btn-edit
@@ -48,7 +82,6 @@
             <btn-delete (OnConfirm)="onDelete(item.id)" />
           </div>
         </td>
-        <!-- Opciones -->
       </tr>
     </ng-template>
   </p-table>

@@ -1,0 +1,299 @@
+<!-- <br />
+<br />
+
+<div class="p-3">
+  <h2 class="mb-4">Reservar Junta de comite</h2>
+  <form>
+    <div class="mb-3">
+      <label for="nombre" class="form-label">Tipo de junta</label>
+      <select class="form-select">
+        <option>Selecciona una opcion</option>
+        <option>JCM= Junta de comité mensual</option>
+        <option>ASAM = Asamblea</option>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label for="nombre" class="form-label">Modalidad</label>
+      <select class="form-select">
+        <option>VIR = Virtual</option>
+        <option>PRE = Presencial</option>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label for="fechaInicial" class="form-label">Fecha inicial</label>
+      <input type="date" class="form-control" id="fechaInicial" />
+    </div>
+
+    <div class="mb-3">
+      <label for="horaInicial" class="form-label">Hora inicial</label>
+      <input type="time" class="form-control" id="horaInicial" />
+    </div>
+
+    <div class="mb-3">
+      <label for="fechaFinal" class="form-label">Fecha final</label>
+      <input type="date" class="form-control" id="fechaFinal" />
+    </div>
+
+    <div class="mb-3">
+      <label for="horaFinal" class="form-label">Hora final</label>
+      <input type="time" class="form-control" id="horaFinal" />
+    </div>
+
+
+    <button type="submit" class="btn btn-primary">Guardar</button>
+
+
+    <button
+      type="button"
+      class="btn btn-outline-success d-flex align-items-center"
+    >
+      <img
+        src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Google_Calendar_icon_%282020%29.svg"
+        alt="Google Calendar"
+        width="20"
+        height="20"
+        class="me-2"
+      />
+      Importar a Google Calendar
+    </button>
+  </form>
+</div> -->
+
+<div class="container py-4">
+  <h1 class="h5 text-center mb-3">
+    Calendario Anual de Mantenimiento Preventivo
+  </h1>
+
+  <div class="row mb-3">
+    <div class="col-2 d-flex justify-content-start mb-2">
+      <!-- Ícono de Excel alineado arriba -->
+      <button class="btn btn-light">
+        <i class="fas fa-file-excel fa-2x"></i>
+        <!-- Icono de Excel -->
+      </button>
+    </div>
+
+    <div class="col-5">
+      <label for="equipmentType" class="form-label">Tipo de Equipo</label>
+      <select id="equipmentType" class="form-select">
+        <option selected value="all">Todos</option>
+        <option value="access" *ngFor="let item of opciones">
+          <p><i [class]="item.icon"></i> {{ item.label }}</p>
+          <br />
+        </option>
+      </select>
+    </div>
+    <div class="col-5">
+      <label for="monthSelector" class="form-label">Mes</label>
+      <select id="monthSelector" class="form-select">
+        <option selected value="all">Todos</option>
+        <option value="1">Enero</option>
+        <option value="2">Febrero</option>
+        <option value="3">Marzo</option>
+        <option value="4">Abril</option>
+        <option value="5">Mayo</option>
+        <option value="6">Junio</option>
+        <option value="7">Julio</option>
+        <option value="8">Agosto</option>
+        <option value="9">Septiembre</option>
+        <option value="10">Octubre</option>
+        <option value="11">Noviembre</option>
+        <option value="12">Diciembre</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Titulo del mes -->
+
+  <div class="h6">Servicios para Marzo</div>
+  <!-- Acordeón -->
+  <div class="accordion" id="maintenanceAccordion">
+    <!-- Grupo: Acceso -->
+    <div class="accordion-item" data-type="access">
+      <h2 class="accordion-header" id="headingAccess">
+        <button
+          class="accordion-button"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#collapseAccess"
+          aria-expanded="true"
+          aria-controls="collapseAccess"
+        >
+          Acceso
+        </button>
+      </h2>
+      <div
+        id="collapseAccess"
+        class="accordion-collapse collapse show"
+        aria-labelledby="headingAccess"
+      >
+        <div class="accordion-body">
+          <ul class="list-group">
+            <li
+              class="list-group-item d-flex justify-content-between align-items-center"
+              data-month="1"
+            >
+              <div>
+                <p>Lobby Torre Esmeralda</p>
+                <p class="text-muted">
+                  Plantas eléctricas Sisa Medsi SA. De CV.
+                </p>
+              </div>
+              <div>
+                <i class="fa-regular fa-ellipsis-vertical"></i>
+              </div>
+            </li>
+            <li
+              class="list-group-item d-flex justify-content-between align-items-center"
+              data-month="2"
+            >
+              <div>
+                <p>Lobby Torre Esmeralda</p>
+                <p class="text-muted">
+                  Plantas eléctricas Sisa Medsi SA. De CV.
+                </p>
+              </div>
+              <div>
+                <i class="fa-regular fa-ellipsis-vertical"></i>
+              </div>
+            </li>
+            <li
+              class="list-group-item d-flex justify-content-between align-items-center"
+              data-month="3"
+            >
+              <div>
+                <p>Lobby Torre Esmeralda</p>
+                <p class="text-muted">
+                  Plantas eléctricas Sisa Medsi SA. De CV.
+                </p>
+              </div>
+              <div>
+                <i class="fa-regular fa-ellipsis-vertical"></i>
+              </div>
+            </li>
+            <li
+              class="list-group-item d-flex justify-content-between align-items-center"
+              data-month="4"
+            >
+              <div>
+                <p>Lobby Torre Esmeralda</p>
+                <p class="text-muted">
+                  Plantas eléctricas Sisa Medsi SA. De CV.
+                </p>
+              </div>
+              <div>
+                <i class="fa-regular fa-ellipsis-vertical"></i>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Grupo: Aire Acondicionado -->
+    <div class="accordion-item" data-type="air">
+      <h2 class="accordion-header" id="headingAirConditioning">
+        <button
+          class="accordion-button collapsed"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#collapseAirConditioning"
+          aria-expanded="false"
+          aria-controls="collapseAirConditioning"
+        >
+          Aire Acondicionado
+        </button>
+      </h2>
+      <div
+        id="collapseAirConditioning"
+        class="accordion-collapse collapse"
+        aria-labelledby="headingAirConditioning"
+      >
+        <div class="accordion-body">
+          <p class="small text-muted">Categoría: Sistemas de Climatización</p>
+          <ul class="list-group">
+            <li class="list-group-item" data-month="5">
+              <p>Mini Split Zumba</p>
+              <span class="text-muted">
+                Plantas eléctricas Sisa Medsi SA. De CV.
+              </span>
+            </li>
+            <li class="list-group-item" data-month="6">
+              <p>Mini Split Administración</p>
+              <span class="text-muted">
+                Plantas eléctricas Sisa Medsi SA. De CV.
+              </span>
+            </li>
+            <li
+              class="list-group-item d-flex justify-content-between align-items-center"
+              data-month="7"
+            >
+              <p>Mini Split Contabilidad</p>
+              <span class="text-muted">
+                Plantas eléctricas Sisa Medsi SA. De CV.
+              </span>
+            </li>
+            <li
+              class="list-group-item d-flex justify-content-between align-items-center"
+              data-month="8"
+            >
+              <p>Mini Split Spinning</p>
+              <span class="text-muted">
+                Plantas eléctricas Sisa Medsi SA. De CV.
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Grupo: Albercas y Jacuzzis -->
+    <div class="accordion-item" data-type="pools">
+      <h2 class="accordion-header" id="headingPools">
+        <button
+          class="accordion-button collapsed"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#collapsePools"
+          aria-expanded="false"
+          aria-controls="collapsePools"
+        >
+          Albercas y Jacuzzis
+        </button>
+      </h2>
+      <div
+        id="collapsePools"
+        class="accordion-collapse collapse"
+        aria-labelledby="headingPools"
+      >
+        <div class="accordion-body">
+          <p class="small text-muted">
+            Categoría: Mantenimiento de Agua y Recreación
+          </p>
+          <br />
+          <ul class="list-group">
+            <li
+              class="list-group-item d-flex justify-content-between align-items-center"
+              data-month="9"
+            >
+              Jacuzzi Principal
+            </li>
+            <li
+              class="list-group-item d-flex justify-content-between align-items-center"
+              data-month="10"
+            >
+              Alberca Infantil
+            </li>
+            <li
+              class="list-group-item d-flex justify-content-between align-items-center"
+              data-month="11"
+            >
+              Alberca Olímpica
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

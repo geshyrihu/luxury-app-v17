@@ -23,8 +23,9 @@ export class CustomerIdService implements OnDestroy {
   nameCustomer: string = ''; // Nombre del cliente
   photoPath: string = ''; // Ruta de la foto del cliente
   customerId: number = 0; // ID del cliente (valor predeterminado)
-
+  modulePermission: any[] = [];
   private customerId$ = new Subject<number>(); // Observable para emitir cambios en el ID del cliente
+  private modulePermission$ = new Subject<any[]>(); // Observable para emitir cambios en el ID del cliente
 
   /**
    * Constructor del servicio.
@@ -32,6 +33,8 @@ export class CustomerIdService implements OnDestroy {
    * @param authS Servicio de autenticación para acceder al token del usuario.
    */
   constructor(public authS: AuthService) {
+    const customerId = this.authS.userTokenDto.infoUserAuthDto.customerId;
+    console.log('CustomerId inicializado en el servicio:', customerId);
     // Verifica si existe un token en el servicio de autenticación
     if (this.authS.userTokenDto) {
       // Si no existe un customerId en el almacenamiento local, lo establece desde el token
@@ -39,18 +42,15 @@ export class CustomerIdService implements OnDestroy {
         this.storageService.retrieve('customerId') === null ||
         this.storageService.retrieve('customerId') === undefined
       ) {
-        this.storageService.store(
-          'customerId',
-          this.authS.userTokenDto.infoUserAuthDto.customerId
-        );
-        this.customerId = this.authS.userTokenDto.infoUserAuthDto.customerId;
+        this.storageService.store('customerId', customerId);
+        this.customerId = customerId;
       } else {
         // Si ya existe, lo recupera del almacenamiento local
         this.customerId = this.storageService.retrieve('customerId');
       }
     }
 
-    // Carga los datos del cliente basado en el ID obtenido
+    // Carga inicial
     this.onLoadDataCustomer(this.customerId);
   }
 
@@ -63,6 +63,7 @@ export class CustomerIdService implements OnDestroy {
     this.customerId = customerId; // Actualiza la propiedad local
     this.customerId$.next(customerId); // Notifica a los observadores del cambio
     this.onLoadDataCustomer(customerId); // Carga los datos del cliente
+    this.onLoadPermissions(this.customerId);
   }
 
   /**
@@ -85,7 +86,7 @@ export class CustomerIdService implements OnDestroy {
    * Carga los datos del cliente desde el servidor.
    * @param customerId ID del cliente a cargar.
    */
-  onLoadDataCustomer(customerId: number) {
+  onLoadDataCustomer(customerId: number): void {
     this.dataService
       .get(`Customers/${customerId}`) // Realiza la petición HTTP
       .pipe(takeUntil(this.destroy$)) // Gestiona la suscripción para evitar fugas de memoria
@@ -102,6 +103,29 @@ export class CustomerIdService implements OnDestroy {
           console.error(error.error); // Maneja errores en la petición
         },
       });
+  }
+  onLoadPermissions(customerId: number): void {
+    const urlApi = `CustomerModul/${customerId}/Permissions`;
+    this.dataService
+      .get(urlApi) // Realiza la petición HTTP
+      .pipe(takeUntil(this.destroy$)) // Gestiona la suscripción para evitar fugas de memoria
+      .subscribe({
+        next: (response: any) => {
+          this.modulePermission = response.body;
+          this.modulePermission$.next(this.modulePermission); // Emite el cambio
+        },
+        error: (error) => {
+          console.error(error.error); // Maneja errores en la petición
+        },
+      });
+  }
+
+  /**
+   * Retorna un observable que emite los cambios en modulePermission.
+   * @returns Observable que emite los permisos actualizados.
+   */
+  getModulePermission$(): Observable<any[]> {
+    return this.modulePermission$.asObservable();
   }
 
   /**

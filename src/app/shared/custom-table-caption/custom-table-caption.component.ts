@@ -1,14 +1,14 @@
 import { CommonModule, Location } from '@angular/common';
 import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
-import BtnComponent from 'src/app/custom-components/custom-buttons/a-master-btn-button/a-master-btn.component';
+import CustomBtnComponent from 'src/app/custom-components/custom-buttons/custom-button-button/custom-button.component';
 import PagetitleComponent from '../pagetitle/pagetitle.component';
 
 @Component({
   selector: 'custom-table-caption',
   templateUrl: './custom-table-caption.component.html',
   standalone: true,
-  imports: [CommonModule, NgbTooltip, BtnComponent, PagetitleComponent],
+  imports: [CommonModule, NgbTooltip, CustomBtnComponent, PagetitleComponent],
 })
 export default class CustomTableCaptionComponent {
   private location = inject(Location);

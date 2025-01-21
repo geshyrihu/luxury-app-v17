@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastModule } from 'primeng/toast';
 import { SimplebarAngularModule } from 'simplebar-angular';
+import CurrentTitleComponent from './current-title/current-title.component';
 import CustomerSelectionComponent from './customer-selection/customer-selection.component';
 import NavigationIconComponent from './navigation-icon/navigation-icon.component';
 import NotificationsComponent from './notifications/notifications.component';
@@ -20,6 +21,7 @@ import UserProfileComponent from './user-profile/user-profile.component';
     ToastModule,
     CommonModule,
     NgbDropdownModule,
+    CurrentTitleComponent,
   ],
   exports: [
     CustomerSelectionComponent,
@@ -31,6 +33,7 @@ import UserProfileComponent from './user-profile/user-profile.component';
     ToastModule,
     CommonModule,
     NgbDropdownModule,
+    CurrentTitleComponent,
   ],
 })
 export class TopbarModule {}

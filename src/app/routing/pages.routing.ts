@@ -15,6 +15,13 @@ export default [
     data: { title: 'Dashboard' },
   },
   {
+    path: 'settings-home',
+    loadComponent: () =>
+      import('src/app/pages/settings/settings-home/settings-home.component'),
+    canActivate: [AuthGuard],
+    data: { title: 'Settings' },
+  },
+  {
     path: 'home',
     loadComponent: () => import('src/app/pages/home/home.component'),
     canActivate: [AuthGuard],
@@ -112,20 +119,18 @@ export default [
     canActivate: [AuthGuard],
   },
   {
+    path: 'home-calendar-juntas-comite',
+    loadComponent: () =>
+      import(
+        'src/app/pages/home/jefe-mantenimiento/home-calendar-juntas-comite.component'
+      ),
+    canActivate: [AuthGuard],
+  },
+  {
     path: 'catalog',
     loadChildren: () => import('./catalog.routing'),
     canActivate: [AuthGuard],
     data: { title: 'Catalog' },
-  },
-
-  {
-    path: 'application-user',
-    loadComponent: () =>
-      import(
-        'src/app/pages/application-user/list-application-user/list-application-user.component'
-      ),
-    canActivate: [AuthGuard],
-    data: { title: 'Application User' },
   },
 
   {

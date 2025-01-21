@@ -1,4 +1,52 @@
+<div
+  class="d-flex align-items-center bg-light-subtle border rounded h-100 me-2"
+  style="cursor: default; width: 300px"
+>
+  <img
+    class="ms-2 rounded avatar-md"
+    [src]="customerPhotoPath"
+    alt="Customer Image"
+    style="width: 50px; height: 50px; object-fit: cover"
+  />
+  <span class="ms-2 fw-medium text-dark" style="flex-grow: 1">
+    {{ customerName }}
+  </span>
+</div>
+
+<!-- @if (cb_customer.length === 1) {
+
+<div
+  class="d-flex align-items-center bg-light-subtle border rounded h-100 me-2"
+  style="cursor: default; width: 300px"
+>
+  <img
+    class="ms-2 rounded avatar-md"
+    [src]="cb_customer[0].image"
+    alt="Customer Image"
+    style="width: 50px; height: 50px; object-fit: cover"
+  />
+  <span class="ms-2 fw-medium text-dark" style="flex-grow: 1">
+    {{ cb_customer[0].label }}
+  </span>
+</div>
+
+} @if (cb_customer.length > 1) {
 <div class="app-search mt-1 me-2" style="width: 300px">
+  <select
+    class="form-select"
+    [(ngModel)]="customerId"
+    (change)="selectCustomer($event.target.value)"
+  >
+    <option
+      *ngFor="let item of cb_customer; trackBy: trackByFn"
+      [value]="item.value"
+    >
+      {{ item.label }}
+    </option>
+  </select>
+</div>
+} -->
+<!-- <div class="app-search mt-1 me-2" style="width: 300px">
   <select
     class="form-select"
     [(ngModel)]="customerId"
@@ -12,4 +60,5 @@
     </option>
     }
   </select>
-</div>
+</div> -->
+<!-- Mostrar un párrafo si hay solo un elemento -->

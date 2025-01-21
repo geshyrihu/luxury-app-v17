@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { AuthGuard } from '../core/guards/auth.guard';
 
 export default [
   {
@@ -40,5 +41,59 @@ export default [
       ),
     title: 'Datos de Correo',
     data: { title: 'Datos de Correo' },
+  },
+  {
+    path: 'application-user',
+    title: 'Cuentas de Usuario',
+    loadComponent: () =>
+      import(
+        'src/app/pages/application-user/list-application-user/list-application-user.component'
+      ),
+    canActivate: [AuthGuard],
+    data: { title: 'Application User' },
+  },
+  {
+    path: 'module-app-rol',
+    title: 'Administración Roles Modulos',
+    loadComponent: () =>
+      import('src/app/pages/settings/module-app-rol/module-app-rol.component'),
+    canActivate: [AuthGuard],
+    data: { title: 'Administración Roles Modulos' },
+  },
+  {
+    title: 'CustomerModul',
+    data: { title: 'Modulos Clientes' },
+    path: 'customer-modul',
+    loadComponent: () =>
+      import(
+        'src/app/pages/settings/customer-modul-list/customer-modul-list.component'
+      ),
+  },
+  {
+    title: 'CustomerModulEdit',
+    data: { title: 'Editar modulos' },
+    path: 'customer-modul-edit/:customerId/:customerName',
+    loadComponent: () =>
+      import(
+        'src/app/pages/settings/customer-modul-edit/customer-modul-edit.component'
+      ),
+  },
+  {
+    title: 'Module App',
+    data: { title: 'Lista de Módulos' },
+    path: 'module-app',
+    loadComponent: () =>
+      import(
+        'src/app/pages/settings/module-app-list/module-app-list.component'
+      ),
+  },
+  {
+    title: 'Actualizar modulos a Role',
+    data: { title: 'Actualizar modulos a Role' },
+    path: 'module-app-rol-update/:roleId/:roleName',
+    loadComponent: () =>
+      import(
+        'src/app/pages/settings/module-app-rol/module-app-rol-update.component'
+      ),
   },
 ] as Routes;

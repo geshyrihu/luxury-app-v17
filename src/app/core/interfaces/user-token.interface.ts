@@ -17,6 +17,8 @@ export interface InfoAccountAuthDto {
   phone: string;
   photoPath: string;
   fullName: string;
+  position: string;
+  customerPhotoPath: string;
 }
 export interface PermissionListDto {
   id: string;

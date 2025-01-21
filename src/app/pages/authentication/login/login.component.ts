@@ -9,7 +9,6 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { DataConnectorService } from 'src/app/core/services/data.service';
 import { SecurityService } from 'src/app/core/services/security.service';
-import { SidebarService } from 'src/app/core/services/sidebar.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import Swal from 'sweetalert2';
 @Component({
@@ -20,7 +19,6 @@ import Swal from 'sweetalert2';
 })
 export default class LoginComponent implements OnInit {
   activateRoute = inject(ActivatedRoute);
-  private sidebarService = inject(SidebarService);
   apiRequestService = inject(ApiRequestService);
   customToastService = inject(CustomToastService);
   dataService = inject(DataConnectorService);
@@ -70,7 +68,6 @@ export default class LoginComponent implements OnInit {
       .subscribe({
         next: (resp: any) => {
           if (resp.body.token != null) {
-            console.log('🚀 ~ Login:', resp.body);
             this.onRemember(this.form.get('remember').value);
             // var route = localStorage.getItem('currentUrl');
             // this.router.navigateByUrl(localStorage.getItem('currentUrl'));
@@ -78,7 +75,8 @@ export default class LoginComponent implements OnInit {
             this.customToastService.onCloseToSuccess();
 
             // Redirigir a la URL original o a una predeterminada si no hay una
-            const redirectUrl = this.authS.redirectUrl || '/dashboard';
+            // const redirectUrl = this.authS.redirectUrl || '/dashboard';
+            const redirectUrl = this.authS.redirectUrl || '/home';
             this.router.navigateByUrl(redirectUrl);
 
             // Limpiar la URL de redirección

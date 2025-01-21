@@ -1,14 +1,14 @@
-import { CommonModule } from "@angular/common";
-import { Component, EventEmitter, Input, Output } from "@angular/core";
-import { DialogHandlerService } from "src/app/core/services/dialog-handler.service";
-import BtnComponent from "src/app/custom-components/custom-buttons/a-master-btn-button/a-master-btn.component";
-import TicketMessageProgramComponent from "../../messages/ticket-message-program/ticket-message-program.component";
+import { CommonModule } from '@angular/common';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
+import CustomBtnComponent from 'src/app/custom-components/custom-buttons/custom-button-button/custom-button.component';
+import TicketMessageProgramComponent from '../../messages/ticket-message-program/ticket-message-program.component';
 
 @Component({
-  selector: "app-ticket-program-button",
+  selector: 'app-ticket-program-button',
   standalone: true,
-  imports: [CommonModule, BtnComponent],
-  templateUrl: "./ticket-program-button.component.html",
+  imports: [CommonModule, CustomBtnComponent],
+  templateUrl: './ticket-program-button.component.html',
 })
 export default class TicketProgramButtonComponent {
   @Input() item: any;
@@ -21,7 +21,7 @@ export default class TicketProgramButtonComponent {
       .openDialog(
         TicketMessageProgramComponent,
         { id: this.item.id, ticketGroupId: this.item.ticketGroupId },
-        "Programar actividad",
+        'Programar actividad',
         this.dialogHandlerService.dialogSizeMd
       )
       .then((result: boolean) => {

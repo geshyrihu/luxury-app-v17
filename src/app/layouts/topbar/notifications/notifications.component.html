@@ -1,7 +1,7 @@
-<div class="dropdown me-2" ngbDropdown>
+<div class="dropdown" ngbDropdown>
   <button
     type="button"
-    class="btn header-item noti-icon position-relative border"
+    class="btn header-item noti-icon position-relative"
     id="page-header-notifications-dropdown"
     data-bs-toggle="dropdown"
     aria-haspopup="true"
@@ -10,11 +10,11 @@
   >
     <i
       *ngIf="messageInNotRead === 0"
-      class="text-success fa-solid fa-bell fa-lg"
+      class="text-success fa-solid fa-bell fa-2x ms-2 me-2"
     ></i>
     <i
       *ngIf="messageInNotRead !== 0"
-      class="text-danger fa-solid fa-bell-ring fa-lg"
+      class="text-danger fa-solid fa-bell-ring fa-2x ms-2 me-2"
     ></i>
     <span class="badge bg-light rounded-pill font-size-12">{{
       messageInNotRead

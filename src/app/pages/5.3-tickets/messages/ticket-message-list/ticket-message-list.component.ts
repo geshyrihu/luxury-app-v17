@@ -125,8 +125,6 @@ export default class TicketMessageListComponent implements OnInit {
         this.dialogHandlerService.dialogSizeLg
       )
       .then((result: boolean) => {
-        console.log('🚀 ~ result-Modal---:', result);
-
         this.onLoadData(this.status);
         if (result) {
         }

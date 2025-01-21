@@ -18,6 +18,9 @@ export default class CustomerSelectionComponent implements OnInit {
   customerIdService = inject(CustomerIdService);
   apiRequestService = inject(ApiRequestService);
 
+  customerName = this.authS.infoUserAuthDto.customer;
+  customerPhotoPath = this.authS.infoUserAuthDto.customerPhotoPath;
+
   cb_customer: any[] = [];
   customerId = this.customerIdService.customerId;
   selectedCountry: string | undefined;

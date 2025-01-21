@@ -19,7 +19,6 @@ export const routes: Routes = [
     loadChildren: () => import('src/app/routing/utillidades.routing'),
     canActivate: [AuthGuard],
   },
-
   {
     path: 'auth',
     loadChildren: () => import('src/app/routing/auth.routing'),

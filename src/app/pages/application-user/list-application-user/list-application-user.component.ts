@@ -9,7 +9,7 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import CardEmployeeComponent from 'src/app/pages/6.1-directorios/employee/card-employee/card-employee.component';
 import { environment } from 'src/environments/environment';
-import ModuleAppPermissionComponent from '../../1.1-catalogos/1.1.1-module-app/module-app-permission/module-app-permission.component';
+import ModuleAppPermissionComponent from '../../settings/module-app-permission/module-app-permission.component';
 import AddOrEditApplicationUserComponent from '../add-or-edit-application-user/add-or-edit-application-user.component';
 import MdEditAccountComponent from '../modal-edit-account/modal-edit-account/md-edit-account.component';
 

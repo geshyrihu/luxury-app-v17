@@ -1,18 +1,33 @@
 <custom-button
+  ngbTooltip="Inicio"
+  customClass="header-item"
+  icon="fa-house fa-2x text-white"
+  (clicked)="onHome()"
+/>
+<custom-button
   ngbTooltip="Anterior"
   customClass="header-item"
-  icon="fa-angle-left fa-lg text-dark"
+  icon="fa-angle-left fa-2x text-white"
   (clicked)="onBack()"
 />
 <custom-button
   ngbTooltip="Siguiente"
   customClass="header-item"
-  icon="fa-angle-right fa-lg text-dark"
+  icon="fa-angle-right fa-2x text-white"
   (clicked)="onNext()"
 />
 <custom-button
   ngbTooltip="Recargar"
   customClass="header-item"
-  icon="fa-arrows-rotate fa-lg text-dark"
+  icon="fa-arrows-rotate fa-2x text-white"
   (clicked)="onRefresh()"
 />
+@if (authS.onValidateRoles(['SuperUsuario'])) {
+
+<custom-button
+  ngbTooltip="Configuración"
+  customClass="header-item"
+  icon="fa-gear fa-2x text-white"
+  (clicked)="onSetting()"
+/>
+}

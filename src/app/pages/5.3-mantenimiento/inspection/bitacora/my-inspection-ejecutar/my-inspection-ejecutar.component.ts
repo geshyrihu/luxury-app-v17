@@ -57,7 +57,6 @@ export default class MyInspectionEjecutarComponent implements OnInit {
       }))
     );
 
-    console.log('🚀 ~ inspectionUpdates:', inspectionUpdates); // Verifica el contenido de la variable
     const data = {
       id: 'sdfassddasd',
       state: true,
@@ -68,7 +67,6 @@ export default class MyInspectionEjecutarComponent implements OnInit {
     this.apiRequestService
       .onPost(urlApi, inspectionUpdates)
       .then((result: any) => {
-        console.log('🚀 ~ result:', result);
         // this.onSubmitImages();
         // Luego de enviar los datos JSON, enviar las imágenes
       })
@@ -93,9 +91,7 @@ export default class MyInspectionEjecutarComponent implements OnInit {
 
     // Realizar POST para subir las imágenes
     const urlApi = `InspectionResult/UpdateInspectionImages/${this.customerInspectionId}/${this.customerId}`;
-    this.apiRequestService.onPost(urlApi, formData).then((result: any) => {
-      console.log('🚀 ~ result:', result);
-    });
+    this.apiRequestService.onPost(urlApi, formData).then((result: any) => {});
   }
 
   onAddImages(areaId: string, revisionId: string, images: File[]): void {
@@ -121,8 +117,6 @@ export default class MyInspectionEjecutarComponent implements OnInit {
       };
       revision.images.push(image); // Añadimos la imagen al array de imágenes de la revisión
     });
-
-    console.log('Imágenes añadidas correctamente', revision.images);
   }
 
   onFileSelected(event: any, areaId: string, revisionId: string): void {
@@ -148,12 +142,8 @@ export default class MyInspectionEjecutarComponent implements OnInit {
     // Eliminar imagen de la revisión
     revision.images = revision.images.filter((img: any) => img.id !== imageId);
 
-    console.log('Imagen eliminada correctamente', revision.images);
-
     // Llamar al API para eliminar la imagen del backend
     const urlApi = `InspectionResult/DeleteInspectionImage/${imageId}/${this.customerId}`;
-    this.apiRequestService.onDelete(urlApi).then((result: any) => {
-      console.log('Imagen eliminada del backend', result);
-    });
+    this.apiRequestService.onDelete(urlApi).then((result: any) => {});
   }
 }

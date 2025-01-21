@@ -23,7 +23,6 @@ function gisLoaded() {
     scope: SCOPES,
     callback: (resp) => {}, // Inicializa como función vacía
   });
-  console.log("🚀 ~ tokenClient:", tokenClient);
   gisInited = true;
 }
 
