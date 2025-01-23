@@ -19,7 +19,7 @@
 // export default class PendingReportComponent implements OnInit {
 //   apiRequestService = inject(ApiRequestService);
 //   authS = inject(AuthService);
-//   customerIdService = inject(CustomerIdService);
+//   custIdService = inject(CustomerIdService);
 //   filterReportOperationService = inject(TicketFilterService);
 //   reportService = inject(ReportService);
 //   router = inject(Router);
@@ -29,14 +29,14 @@
 //   nameCustomer: string = '';
 //   logoCustomer: string = '';
 
-//   customerId$: Observable<number> = this.customerIdService.getCustomerId$();
+//   customerId$: Observable<number> = this.custIdService.getCustomerId$();
 
 //   ngOnInit(): void {
 //     this.onLoadData();
-//     this.customerId$ = this.customerIdService.getCustomerId$();
+//     this.customerId$ = this.custIdService.getCustomerId$();
 //     this.customerId$.subscribe((resp) => {
 //       this.filterReportOperationService.setIdCustomer(
-//         this.customerIdService.customerId
+//         this.custIdService.customerId
 //       );
 //       this.onLoadData();
 //     });

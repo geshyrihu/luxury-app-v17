@@ -18,14 +18,14 @@ export default class MisProveedoresComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
   authS = inject(AuthService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
 
   data: any[] = [];
   ref: DynamicDialogRef; // Referencia a un cuadro de diálogo modal
 
   // logica para el cambio de cliente
   customerId: number;
-  customerId$: Observable<number> = this.customerIdService.getCustomerId$();
+  customerId$: Observable<number> = this.custIdService.getCustomerId$();
 
   ngOnInit(): void {
     this.onLoadData();
@@ -36,7 +36,7 @@ export default class MisProveedoresComponent implements OnInit {
 
   // Función para cargar los datos de los CustomerProviders
   onLoadData() {
-    const urlApi = `CustomerProvider/${this.customerIdService.customerId}`;
+    const urlApi = `CustomerProvider/${this.custIdService.customerId}`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });

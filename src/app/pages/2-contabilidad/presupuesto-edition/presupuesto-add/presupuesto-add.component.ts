@@ -24,7 +24,7 @@ import { FiltroCalendarService } from 'src/app/core/services/filtro-calendar.ser
 })
 export default class PresupuestoAddComponent implements OnInit {
   config = inject(DynamicDialogConfig);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
   apiRequestService = inject(ApiRequestService);
   dateService = inject(DateService);
   messageService = inject(MessageService);
@@ -40,7 +40,7 @@ export default class PresupuestoAddComponent implements OnInit {
     this.id = this.config.data.id;
     if (this.id !== 0) this.onLoadData();
     this.periodo = {
-      customerId: this.customerIdService.customerId,
+      customerId: this.custIdService.customerId,
       from: this.dateService.formatDateTime(
         this.rangoCalendarioService.fechaInicial
       ),
@@ -51,7 +51,7 @@ export default class PresupuestoAddComponent implements OnInit {
 
     this.rangoCalendarioService.fechas$.subscribe((resp: IFechasFiltro) => {
       this.periodo = {
-        customerId: this.customerIdService.customerId,
+        customerId: this.custIdService.customerId,
         from: resp.fechaInicio,
         to: resp.fechaFinal,
       };
@@ -77,7 +77,7 @@ export default class PresupuestoAddComponent implements OnInit {
   onLoadData() {
     this.apiRequestService.onGetList('banks').then((result: any) => {
       this.periodo = {
-        customerId: this.customerIdService.customerId,
+        customerId: this.custIdService.customerId,
         from: result.fechaInicio,
         to: result.fechaFinal,
       };

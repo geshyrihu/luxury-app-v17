@@ -19,7 +19,7 @@ export default class AddoreditPiscinaBitacoraComponent implements OnInit {
   formBuilder = inject(FormBuilder);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
 
   submitting: boolean = false;
 

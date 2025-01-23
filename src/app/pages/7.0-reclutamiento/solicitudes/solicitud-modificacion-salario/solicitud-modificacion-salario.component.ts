@@ -26,7 +26,7 @@ export default class SolicitudModificacionSalarioComponent {
   apiRequestService = inject(ApiRequestService);
   formBuilder = inject(FormBuilder);
   config = inject(DynamicDialogConfig);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
   dateService = inject(DateService);
   ref = inject(DynamicDialogRef);
   authS = inject(AuthService);
@@ -79,7 +79,7 @@ export default class SolicitudModificacionSalarioComponent {
 
     this.apiRequestService
       .onPost(
-        `SolicitudesReclutamiento/SolicitudModificacionSalario/${this.customerIdService.getCustomerId()}/${
+        `SolicitudesReclutamiento/SolicitudModificacionSalario/${this.custIdService.getCustomerId()}/${
           this.authS.infoUserAuthDto.applicationUserId
         } `,
         model

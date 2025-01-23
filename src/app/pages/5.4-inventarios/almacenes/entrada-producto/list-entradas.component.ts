@@ -18,11 +18,11 @@ export default class ListEntradasComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
   authS = inject(AuthService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
 
   data: any[] = [];
   ref: DynamicDialogRef;
-  customerId$: Observable<number> = this.customerIdService.getCustomerId$();
+  customerId$: Observable<number> = this.custIdService.getCustomerId$();
 
   ngOnInit(): void {
     this.onLoadData();
@@ -32,7 +32,7 @@ export default class ListEntradasComponent implements OnInit {
   }
 
   onLoadData() {
-    const urlApi = `EntradaProducto/GetEntradaProductos/${this.customerIdService.customerId}`;
+    const urlApi = `EntradaProducto/GetEntradaProductos/${this.custIdService.customerId}`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });

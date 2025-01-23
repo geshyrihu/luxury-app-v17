@@ -12,10 +12,10 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 })
 export default class LlavesComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
 
   data: any[] = [];
-  customerId$: Observable<number> = this.customerIdService.getCustomerId$();
+  customerId$: Observable<number> = this.custIdService.getCustomerId$();
 
   ngOnInit() {
     this.onLoadData();
@@ -24,7 +24,7 @@ export default class LlavesComponent implements OnInit {
     });
   }
   onLoadData() {
-    const urlApi = `EntregaRecepcion/InventarioLlaves/${this.customerIdService.customerId}`;
+    const urlApi = `EntregaRecepcion/InventarioLlaves/${this.custIdService.customerId}`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });

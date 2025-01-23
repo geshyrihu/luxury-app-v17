@@ -18,10 +18,10 @@ import AddoreditMaintenancePreventiveComponent from './addoredit-maintenance-pre
 export default class CronogramaAnualMantenimientoComponent {
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
   cronogramaMantenimientoService = inject(CronogramaMantenimientoService);
 
-  customerId$: Observable<number> = this.customerIdService.getCustomerId$();
+  customerId$: Observable<number> = this.custIdService.getCustomerId$();
   cronogramaAnual: any = [];
   itemsInventario: any = [];
   ref: DynamicDialogRef;
@@ -58,7 +58,7 @@ export default class CronogramaAnualMantenimientoComponent {
   }
   ngOnInit() {
     this.itemsInventario = this.cronogramaMantenimientoService.data;
-    this.customerId$ = this.customerIdService.getCustomerId$();
+    this.customerId$ = this.custIdService.getCustomerId$();
     this.onLoadData();
     this.customerId$.subscribe(() => {
       this.onLoadData();
@@ -68,8 +68,8 @@ export default class CronogramaAnualMantenimientoComponent {
   onLoadData() {
     const endpoint =
       this.filtroId === 10
-        ? `MaintenanceCalendars/CronogramaAnual/${this.customerIdService.customerId}`
-        : `MaintenanceCalendars/CronogramaAnual/${this.customerIdService.customerId}/${this.filtroId}`;
+        ? `MaintenanceCalendars/CronogramaAnual/${this.custIdService.customerId}`
+        : `MaintenanceCalendars/CronogramaAnual/${this.custIdService.customerId}/${this.filtroId}`;
 
     this.apiRequestService.onGetItem(endpoint).then((result: any) => {
       this.cronogramaAnual = result;
@@ -80,7 +80,7 @@ export default class CronogramaAnualMantenimientoComponent {
     let dataCalendar = [];
     this.apiRequestService
       .onGetItem(
-        `MaintenanceCalendars/ExportCalendar/${this.customerIdService.customerId}`
+        `MaintenanceCalendars/ExportCalendar/${this.custIdService.customerId}`
       )
       .then((result: any) => {
         dataCalendar = result;

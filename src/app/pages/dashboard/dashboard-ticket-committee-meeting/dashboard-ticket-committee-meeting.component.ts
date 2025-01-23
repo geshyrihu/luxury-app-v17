@@ -21,16 +21,16 @@ export default class DashboardTicketCommitteeMeetingComponent
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
   authS = inject(AuthService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
 
-  customerId$: Observable<number> = this.customerIdService.getCustomerId$();
+  customerId$: Observable<number> = this.custIdService.getCustomerId$();
   data: any = [];
   ref: DynamicDialogRef;
 
   ngOnInit(): void {
-    this.onLoadData(this.customerIdService.getCustomerId());
+    this.onLoadData(this.custIdService.getCustomerId());
     this.customerId$.subscribe((resp) => {
-      this.onLoadData(this.customerIdService.getCustomerId());
+      this.onLoadData(this.custIdService.getCustomerId());
     });
   }
 

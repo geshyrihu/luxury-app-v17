@@ -15,13 +15,13 @@ import { DialogHandlerService } from 'src/app/core/services/dialog-handler.servi
 export default class MyInspectionEjecutarComponent implements OnInit {
   customerInspectionId: string | null = null;
   activatedRoute = inject(ActivatedRoute);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
   autS = inject(AuthService);
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
   data: any;
   applicationUserId = this.autS.applicationUserId;
-  customerId = this.customerIdService.getCustomerId();
+  customerId = this.custIdService.getCustomerId();
 
   ngOnInit(): void {
     // Capturar el parámetro de la ruta

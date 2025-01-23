@@ -1,28 +1,28 @@
-import { Component, OnInit, inject } from "@angular/core";
-import LuxuryAppComponentsModule from "app/shared/luxuryapp-components.module";
-import { DynamicDialogRef } from "primeng/dynamicdialog";
-import { Observable } from "rxjs";
-import { ApiRequestService } from "src/app/core/services/api-request.service";
-import { AuthService } from "src/app/core/services/auth.service";
-import { CustomerIdService } from "src/app/core/services/customer-id.service";
-import { DialogHandlerService } from "src/app/core/services/dialog-handler.service";
-import EditSalidasComponent from "./edit-salidas/edit-salidas.component";
+import { Component, OnInit, inject } from '@angular/core';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { Observable } from 'rxjs';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
+import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
+import EditSalidasComponent from './edit-salidas/edit-salidas.component';
 
 @Component({
-  selector: "app-list-salidas",
-  templateUrl: "./list-salidas.component.html",
+  selector: 'app-list-salidas',
+  templateUrl: './list-salidas.component.html',
   standalone: true,
   imports: [LuxuryAppComponentsModule],
 })
 export default class ListSalidasComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   authS = inject(AuthService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
   dialogHandlerService = inject(DialogHandlerService);
 
   data: any[] = [];
   ref: DynamicDialogRef;
-  customerId$: Observable<number> = this.customerIdService.getCustomerId$();
+  customerId$: Observable<number> = this.custIdService.getCustomerId$();
 
   ngOnInit(): void {
     this.onLoadData();
@@ -32,7 +32,7 @@ export default class ListSalidasComponent implements OnInit {
   }
 
   onLoadData() {
-    const urlApi = `SalidaProductos/GetSalidaProductos/${this.customerIdService.customerId}`;
+    const urlApi = `SalidaProductos/GetSalidaProductos/${this.custIdService.customerId}`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
@@ -55,7 +55,7 @@ export default class ListSalidasComponent implements OnInit {
           nombreProducto: data.nombreProducto,
           idInventarioProducto: data.idInventarioProducto,
         },
-        "Salida de Productos",
+        'Salida de Productos',
         this.dialogHandlerService.dialogSizeMd
       )
       .then((result: boolean) => {

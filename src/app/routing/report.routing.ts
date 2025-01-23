@@ -6,9 +6,17 @@ import { AuthGuard } from 'src/app/core/guards/auth.guard';
 
 export default [
   {
+    path: 'report-supervision',
+    loadComponent: () =>
+      import(
+        'src/app/pages/8.0-reportes/report-supervision/report-supervision.component'
+      ),
+    data: { title: 'Reporte Supervisión' },
+  },
+  {
     path: 'access-history',
     loadComponent: () =>
-      import('src/app/pages/0-settings/historial-acceso/access-log.component'),
+      import('src/app/pages/settings/historial-acceso/access-log.component'),
     data: { title: 'Historial de Acceso' },
   },
   {

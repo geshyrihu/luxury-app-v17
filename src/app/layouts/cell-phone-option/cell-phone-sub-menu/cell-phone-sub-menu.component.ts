@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IMenuItem, ISubMenuItem } from 'src/app/core/interfaces/menu.model';
-import { SidebarService } from 'src/app/core/services/sidebar.service';
+import { IMenuItem, ISubMenuItem } from 'src/app/layouts/sidebar/menu.model';
+import { SidebarService } from '../../sidebar/sidebar.service';
 
 @Component({
   selector: 'app-cell-phone-sub-menu',

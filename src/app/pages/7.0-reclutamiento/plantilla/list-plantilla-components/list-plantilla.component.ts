@@ -31,13 +31,13 @@ export default class ListWorkPlantillaComponent implements OnInit {
   router = inject(Router);
   authS = inject(AuthService);
   confirmationService = inject(ConfirmationService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
   customToastService = inject(CustomToastService);
   dialogService = inject(DialogService);
   messageService = inject(MessageService);
   statusSolicitudVacanteService = inject(StatusSolicitudVacanteService);
 
-  customerId$: Observable<number> = this.customerIdService.getCustomerId$();
+  customerId$: Observable<number> = this.custIdService.getCustomerId$();
   data: any[] = [];
   pahtBaseImg = environment.base_urlImg + 'Administration/accounts/';
   ref: DynamicDialogRef;
@@ -51,7 +51,7 @@ export default class ListWorkPlantillaComponent implements OnInit {
   }
 
   onLoadData() {
-    const urlApi = `workposition/getall/${this.customerIdService.getCustomerId()}/${
+    const urlApi = `workposition/getall/${this.custIdService.getCustomerId()}/${
       this.state
     }`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
@@ -256,7 +256,7 @@ export default class ListWorkPlantillaComponent implements OnInit {
     let acceso = true;
 
     // Validamos si el cliente tiene el ID 1
-    if (this.customerIdService.customerId == 1) {
+    if (this.custIdService.customerId == 1) {
       // Si la profesión es 54, el cliente tiene acceso.
       if (professionId == 54) {
         return true;

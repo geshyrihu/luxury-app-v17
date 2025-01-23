@@ -25,7 +25,7 @@ export default class ListEquiposComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
 
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
   authS = inject(AuthService);
   rutaActiva = inject(ActivatedRoute);
   router = inject(Router);
@@ -33,7 +33,7 @@ export default class ListEquiposComponent implements OnInit {
   subscriber: Subscription;
 
   customerId: number;
-  customerId$: Observable<number> = this.customerIdService.getCustomerId$();
+  customerId$: Observable<number> = this.custIdService.getCustomerId$();
   data: any[];
   datadetail: any[];
   paramId: string = '';
@@ -48,8 +48,8 @@ export default class ListEquiposComponent implements OnInit {
   ngOnInit() {
     this.inventoryCategoryId = this.rutaActiva.snapshot.params.categoria;
 
-    this.customerId$ = this.customerIdService.getCustomerId$();
-    this.customerId = this.customerIdService.getCustomerId();
+    this.customerId$ = this.custIdService.getCustomerId$();
+    this.customerId = this.custIdService.getCustomerId();
     this.onLoadData();
     this.subscriber = this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
@@ -64,7 +64,7 @@ export default class ListEquiposComponent implements OnInit {
         this.onLoadData();
       });
     this.customerId$.subscribe((resp) => {
-      this.customerId = this.customerIdService.getCustomerId();
+      this.customerId = this.custIdService.getCustomerId();
       this.onLoadData();
     });
   }
@@ -72,7 +72,7 @@ export default class ListEquiposComponent implements OnInit {
     if (this.state) this.subTitle = ' Inactivos';
     if (!this.state) this.subTitle = ' Activos';
 
-    const urlApi = `Machineries/GetAll/${this.customerIdService.customerId}/${this.inventoryCategoryId}/${this.state}`;
+    const urlApi = `Machineries/GetAll/${this.custIdService.customerId}/${this.inventoryCategoryId}/${this.state}`;
 
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.data = result;

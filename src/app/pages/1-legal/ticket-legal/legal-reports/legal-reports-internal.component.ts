@@ -1,12 +1,12 @@
-import { DatePipe } from "@angular/common";
-import { Component, inject, OnInit } from "@angular/core";
-import LuxuryAppComponentsModule from "app/shared/luxuryapp-components.module";
-import { ApiRequestService } from "src/app/core/services/api-request.service";
-import TicketDateRangeSelectorComponent from "src/app/pages/5.3-tickets/shared/ticket-date-range-selector/ticket-date-range-selector.component";
+import { DatePipe } from '@angular/common';
+import { Component, inject, OnInit } from '@angular/core';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import TicketDateRangeSelectorComponent from 'src/app/pages/tickets/shared/ticket-date-range-selector/ticket-date-range-selector.component';
 
 @Component({
-  selector: "app-legal-reports-internal",
-  templateUrl: "./legal-reports-internal.component.html",
+  selector: 'app-legal-reports-internal',
+  templateUrl: './legal-reports-internal.component.html',
   standalone: true,
   imports: [LuxuryAppComponentsModule, TicketDateRangeSelectorComponent],
   providers: [DatePipe], // Provide DatePipe in the component
@@ -27,8 +27,8 @@ export default class LegalReportsInternalComponent implements OnInit {
     PendingTickets: number;
   } | null = null;
 
-  startDate: string = "";
-  endDate: string = "";
+  startDate: string = '';
+  endDate: string = '';
   async ngOnInit(): Promise<void> {
     // Calculate the start date as the first day of the previous month
     const startDate = new Date();
@@ -44,8 +44,8 @@ export default class LegalReportsInternalComponent implements OnInit {
     this.startDate = this.formatDate(startDate);
     this.endDate = this.formatDate(endDate);
     // Format dates as strings (YYYY-MM-DD)
-    const formattedStartDate = startDate.toISOString().split("T")[0];
-    const formattedEndDate = endDate.toISOString().split("T")[0];
+    const formattedStartDate = startDate.toISOString().split('T')[0];
+    const formattedEndDate = endDate.toISOString().split('T')[0];
 
     // Call onLoadData with the formatted dates
     await Promise.all([
@@ -124,14 +124,14 @@ export default class LegalReportsInternalComponent implements OnInit {
     this.onLoadSummaryCustomer(startDateFormatted, endDateFormatted);
   }
   formatDate(date: Date): string {
-    return this.datePipe.transform(date, "dd-MMM-yyyy") || ""; // Formatea la fecha
+    return this.datePipe.transform(date, 'dd-MMM-yyyy') || ''; // Formatea la fecha
   }
 
   GenerateWeeklyReport() {
     const urlApi = `LegalReport/GenerateWeeklyReport/${this.startDate}/${
       this.endDate
     }/${true}`;
-    const nameReport = "Reporte Legal";
+    const nameReport = 'Reporte Legal';
 
     this.apiRequestService.onDownloadFile(urlApi, nameReport);
   }

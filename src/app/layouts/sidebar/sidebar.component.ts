@@ -14,8 +14,8 @@ import MetisMenu from 'metismenujs';
 import { Observable } from 'rxjs';
 import { SimplebarAngularModule } from 'simplebar-angular';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { SidebarService } from 'src/app/core/services/sidebar.service';
-import { IMenuItem } from '../../core/interfaces/menu.model';
+import { IMenuItem } from './menu.model';
+import { SidebarService } from './sidebar.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -36,14 +36,14 @@ import { IMenuItem } from '../../core/interfaces/menu.model';
  */
 export default class SidebarComponent implements OnInit {
   private sidebarService = inject(SidebarService);
-  private customerIdService = inject(CustomerIdService);
+  private custIdService = inject(CustomerIdService);
 
   @ViewChild('sideMenu') sideMenu!: ElementRef;
   menu: any;
   menuItems: IMenuItem[] = [];
 
   customerId: number;
-  customerId$: Observable<number> = this.customerIdService.getCustomerId$();
+  customerId$: Observable<number> = this.custIdService.getCustomerId$();
 
   ngOnInit(): void {
     // Cargar elementos del menú desde el servicio de la barra lateral

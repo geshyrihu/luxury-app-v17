@@ -18,12 +18,16 @@
           item.roleName
         ]"
       >
-        <li class="list-group-item">
-          {{ item.roleName }}
+        <li
+          class="list-group-item d-flex justify-content-between align-items-center"
+        >
+          <div class="role-name">
+            <h5 class="h5">{{ item.roleName }}</h5>
+          </div>
 
           <!-- Botón con el contador de módulos -->
           <button
-            class="btn btn-soft-primary waves-effect waves-light bg-gradient float-end"
+            class="btn btn-soft-primary waves-effect waves-light bg-gradient"
           >
             {{ item.modules }} Modulos
           </button>

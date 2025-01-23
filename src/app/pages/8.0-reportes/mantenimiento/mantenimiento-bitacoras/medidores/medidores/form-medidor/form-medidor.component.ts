@@ -1,15 +1,15 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { ApiRequestService } from 'src/app/core/services/api-request.service';
-import { AuthService } from 'src/app/core/services/auth.service';
-import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
+import { Component, OnInit, inject } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import LuxuryAppComponentsModule from "app/shared/luxuryapp-components.module";
+import { DynamicDialogConfig, DynamicDialogRef } from "primeng/dynamicdialog";
+import { ApiRequestService } from "src/app/core/services/api-request.service";
+import { AuthService } from "src/app/core/services/auth.service";
+import { CustomerIdService } from "src/app/core/services/customer-id.service";
+import CustomInputModule from "src/app/custom-components/custom-input-form/custom-input.module";
 
 @Component({
-  selector: 'app-form-medidor',
-  templateUrl: './form-medidor.component.html',
+  selector: "app-form-medidor",
+  templateUrl: "./form-medidor.component.html",
   standalone: true,
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
@@ -19,7 +19,7 @@ export default class FormMedidorComponent implements OnInit {
   ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);
   authS = inject(AuthService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
 
   submitting: boolean = false;
 
@@ -28,12 +28,12 @@ export default class FormMedidorComponent implements OnInit {
   form: FormGroup = this.formBuilder.group({
     id: { value: this.id, disabled: true },
     medidorActivo: [true],
-    fechaRegistro: [''],
+    fechaRegistro: [""],
     consumoDiarioMaximo: [0, Validators.required],
-    medidorCategoriaId: ['', Validators.required],
-    numeroMedidor: ['', Validators.required],
-    descripcion: ['', Validators.required],
-    customerId: [this.customerIdService.customerId],
+    medidorCategoriaId: ["", Validators.required],
+    numeroMedidor: ["", Validators.required],
+    descripcion: ["", Validators.required],
+    customerId: [this.custIdService.customerId],
   });
 
   ngOnInit(): void {

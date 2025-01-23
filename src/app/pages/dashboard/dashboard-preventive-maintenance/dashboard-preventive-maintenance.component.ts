@@ -20,11 +20,11 @@ export default class DashboardPreventiveMaintenanceComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
   dateService = inject(DateService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
   periodoMonthService = inject(PeriodoMonthService);
 
   ref: DynamicDialogRef;
-  customerId$: Observable<number> = this.customerIdService.getCustomerId$();
+  customerId$: Observable<number> = this.custIdService.getCustomerId$();
   data: any = [];
 
   onChangePeriodo(periodo: string) {
@@ -33,7 +33,7 @@ export default class DashboardPreventiveMaintenanceComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.customerId$ = this.customerIdService.getCustomerId$();
+    this.customerId$ = this.custIdService.getCustomerId$();
     this.onLoadOrdenServicio();
     this.customerId$.subscribe(() => {
       this.onLoadOrdenServicio();
@@ -41,7 +41,7 @@ export default class DashboardPreventiveMaintenanceComponent implements OnInit {
   }
 
   onLoadOrdenServicio() {
-    const urlApi = `Dashboard/OrdenesServicio/${this.customerIdService.getCustomerId()}`;
+    const urlApi = `Dashboard/OrdenesServicio/${this.custIdService.getCustomerId()}`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });

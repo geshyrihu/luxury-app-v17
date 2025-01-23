@@ -15,7 +15,7 @@ export default class SoporteOrdenServicioComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   dateService = inject(DateService);
   route = inject(ActivatedRoute);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
 
   id: string = '';
   item: any;
@@ -40,7 +40,7 @@ export default class SoporteOrdenServicioComponent implements OnInit {
     });
   }
   onLoadData() {
-    const urlApi = `Customers/${this.customerIdService.customerId}`;
+    const urlApi = `Customers/${this.custIdService.customerId}`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.dataCustomer = result;
       this.nameCustomer = result.nameCustomer;

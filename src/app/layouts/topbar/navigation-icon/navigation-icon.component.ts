@@ -35,6 +35,6 @@ export default class NavigationIconComponent {
     this.router.navigateByUrl('/home');
   }
   onSetting() {
-    this.router.navigateByUrl('/settings-home');
+    this.router.navigateByUrl('/settings/home');
   }
 }

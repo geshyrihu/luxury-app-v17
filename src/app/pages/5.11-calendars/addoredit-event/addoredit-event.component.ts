@@ -17,9 +17,9 @@ export default class AddoreditEventComponent implements OnInit {
   formBuilder = inject(FormBuilder);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
 
-  customerId = this.customerIdService.getCustomerId();
+  customerId = this.custIdService.getCustomerId();
   calendarId: string = '';
   eventId: string = '';
   submitting: boolean = false;

@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { DialogModule } from 'primeng/dialog';
-import { IMenuItem } from 'src/app/core/interfaces/menu.model';
+import { IMenuItem } from 'src/app/layouts/sidebar/menu.model';
 @Component({
   selector: 'app-home-menu',
   standalone: true,

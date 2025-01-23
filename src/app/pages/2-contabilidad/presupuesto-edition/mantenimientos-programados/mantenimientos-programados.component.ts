@@ -11,7 +11,7 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
   imports: [LuxuryAppComponentsModule],
 })
 export default class MantenimientosProgramadosComponent implements OnInit {
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
   apiRequestService = inject(ApiRequestService);
   ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);
@@ -30,7 +30,7 @@ export default class MantenimientosProgramadosComponent implements OnInit {
       .onGetList(
         `Presupuesto/ServiciosMttoProgramados/${
           this.cuentaId
-        }/${this.customerIdService.getCustomerId()}`
+        }/${this.custIdService.getCustomerId()}`
       )
       .then((result: any) => {
         this.data = result;

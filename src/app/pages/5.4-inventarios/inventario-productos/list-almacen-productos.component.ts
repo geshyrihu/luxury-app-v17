@@ -21,14 +21,14 @@ import EditProductosAlmacenComponent from './edit-productos-almacen.component';
 export default class ListAlmacenProductosComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
   authS = inject(AuthService);
 
   data: any[] = [];
   ref: DynamicDialogRef;
 
-  customerId$: Observable<number> = this.customerIdService.getCustomerId$();
-  rowGroupMetadata: any = this.customerIdService.getCustomerId$();
+  customerId$: Observable<number> = this.custIdService.getCustomerId$();
+  rowGroupMetadata: any = this.custIdService.getCustomerId$();
 
   ngOnInit(): void {
     this.onLoadData();
@@ -63,7 +63,7 @@ export default class ListAlmacenProductosComponent implements OnInit {
 
   onLoadData() {
     const urlApi =
-      'InventarioProducto/GetAsyncAll/' + this.customerIdService.customerId;
+      'InventarioProducto/GetAsyncAll/' + this.custIdService.customerId;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.data = result;
       this.updateRowGroupMetaData();

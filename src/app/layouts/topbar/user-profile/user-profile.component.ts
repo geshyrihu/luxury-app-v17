@@ -20,14 +20,14 @@ export default class UserProfileComponent implements OnInit {
   authS = inject(AuthService);
   profielServiceService = inject(ProfielServiceService);
   router = inject(Router);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
 
   infoAccountAuthDto: InfoAccountAuthDto;
 
   profileImageUrl: string = '';
 
   cb_customer: any[] = [];
-  customerId = this.customerIdService.customerId;
+  customerId = this.custIdService.customerId;
 
   ngOnInit() {
     this.infoAccountAuthDto = this.authS.infoUserAuthDto;
@@ -54,6 +54,6 @@ export default class UserProfileComponent implements OnInit {
   }
 
   selectCustomer(customerId: number) {
-    this.customerIdService.setCustomerId(customerId);
+    this.custIdService.setCustomerId(customerId);
   }
 }

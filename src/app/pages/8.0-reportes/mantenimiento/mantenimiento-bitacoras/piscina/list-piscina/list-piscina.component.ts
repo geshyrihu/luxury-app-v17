@@ -20,12 +20,12 @@ export default class ListPiscinaComponent implements OnInit {
   dialogHandlerService = inject(DialogHandlerService);
 
   authS = inject(AuthService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
 
   data: any[] = [];
   ref: DynamicDialogRef;
 
-  customerId$: Observable<number> = this.customerIdService.getCustomerId$();
+  customerId$: Observable<number> = this.custIdService.getCustomerId$();
 
   ngOnInit(): void {
     this.onLoadData();
@@ -34,7 +34,7 @@ export default class ListPiscinaComponent implements OnInit {
     });
   }
   onLoadData() {
-    const urlApi = 'piscina/getall/' + this.customerIdService.customerId;
+    const urlApi = 'piscina/getall/' + this.custIdService.customerId;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });

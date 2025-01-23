@@ -17,7 +17,7 @@ import { PeriodoMonthService } from 'src/app/core/services/periodo-month.service
  * Page Title Component
  */
 export default class PagetitleReportComponent {
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
   apiRequestService = inject(ApiRequestService);
   periodoMonthService = inject(PeriodoMonthService);
   dateService = inject(DateService);
@@ -30,17 +30,17 @@ export default class PagetitleReportComponent {
   nameCustomer: string = '';
   logoCustomer: string = '';
 
-  customerId$: Observable<number> = this.customerIdService.getCustomerId$();
+  customerId$: Observable<number> = this.custIdService.getCustomerId$();
 
   ngOnInit(): void {
     this.onLoadData();
-    this.customerId$ = this.customerIdService.getCustomerId$();
+    this.customerId$ = this.custIdService.getCustomerId$();
     this.customerId$.subscribe(() => {
       this.onLoadData();
     });
   }
   onLoadData() {
-    const urlApi = `Customers/${this.customerIdService.customerId}`;
+    const urlApi = `Customers/${this.custIdService.customerId}`;
     this.apiRequestService.onGetItem(urlApi).then((result: any) => {
       this.nameCustomer = result.nameCustomer;
       this.logoCustomer = result.photoPath;

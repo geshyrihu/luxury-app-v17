@@ -19,7 +19,7 @@ export default class AddoreditInventarioPinturaComponent implements OnInit {
   formBuilder = inject(FormBuilder);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
   authS = inject(AuthService);
 
   submitting: boolean = false;
@@ -94,7 +94,7 @@ export default class AddoreditInventarioPinturaComponent implements OnInit {
   }
   onLoadMachinery() {
     const urlApi =
-      'Machineries/GetAutocompeteInv/' + this.customerIdService.getCustomerId();
+      'Machineries/GetAutocompeteInv/' + this.custIdService.getCustomerId();
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.cb_machinery = result;
     });

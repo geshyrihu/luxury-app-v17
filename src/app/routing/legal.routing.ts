@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { AuthGuard } from '../core/guards/auth.guard';
 
 export default [
   {
@@ -80,5 +81,12 @@ export default [
     data: {
       title: 'Listado de Asuntos Legales',
     },
+  },
+  {
+    path: 'comites',
+    loadComponent: () =>
+      import('src/app/pages/6.1-directorios/comites/comites.component'),
+    canActivate: [AuthGuard], // Se agregó canActivate aquí
+    data: { title: 'Comites de vigilancia' },
   },
 ] as Routes;

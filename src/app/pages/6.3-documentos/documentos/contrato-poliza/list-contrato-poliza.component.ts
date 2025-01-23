@@ -19,12 +19,12 @@ export default class ListContratoPolizaComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
 
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
   data: any[] = [];
 
   ref: DynamicDialogRef;
 
-  customerId$: Observable<number> = this.customerIdService.getCustomerId$();
+  customerId$: Observable<number> = this.custIdService.getCustomerId$();
   urlBase = environment.base_urlImg;
 
   ngOnInit(): void {
@@ -35,7 +35,7 @@ export default class ListContratoPolizaComponent implements OnInit {
   }
 
   onLoadData() {
-    const urlApi = `ContratoPoliza/GetAll/${this.customerIdService.getCustomerId()}`;
+    const urlApi = `ContratoPoliza/GetAll/${this.custIdService.getCustomerId()}`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });

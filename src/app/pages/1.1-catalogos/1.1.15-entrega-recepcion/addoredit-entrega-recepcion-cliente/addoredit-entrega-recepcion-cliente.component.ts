@@ -22,7 +22,7 @@ export default class CrudEntregaRecepcionClienteComponent implements OnInit {
   formBuilder = inject(FormBuilder);
   ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
 
   id: number = 0;
 
@@ -50,7 +50,7 @@ export default class CrudEntregaRecepcionClienteComponent implements OnInit {
       .onPut(
         `EntregaRecepcionCliente/${this.id}/${
           this.authS.applicationUserId
-        }/${this.customerIdService.getCustomerId()}`,
+        }/${this.custIdService.getCustomerId()}`,
         model
       )
       .then((result: boolean) => {

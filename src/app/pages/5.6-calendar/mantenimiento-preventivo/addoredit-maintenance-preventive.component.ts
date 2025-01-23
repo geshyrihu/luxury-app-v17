@@ -23,7 +23,7 @@ export default class AddoreditMaintenancePreventiveComponent implements OnInit {
   formBuilder = inject(FormBuilder);
   authS = inject(AuthService);
   config = inject(DynamicDialogConfig);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
   ref = inject(DynamicDialogRef);
 
   cb_machinery: ISelectItem[] = [];
@@ -65,7 +65,7 @@ export default class AddoreditMaintenancePreventiveComponent implements OnInit {
   onLoadSelectItem() {
     this.apiRequestService
       .onGetSelectItem(
-        `MachineriesGetAll/${this.customerIdService.getCustomerId()}`
+        `MachineriesGetAll/${this.custIdService.getCustomerId()}`
       )
       .then((response: any) => {
         this.cb_machinery = response;
@@ -136,7 +136,7 @@ export default class AddoreditMaintenancePreventiveComponent implements OnInit {
       providerId: ['', Validators.required],
       recurrence: ['', Validators.required],
       typeMaintance: ['', Validators.required],
-      customerId: [this.customerIdService.getCustomerId()],
+      customerId: [this.custIdService.getCustomerId()],
       cuentaId: ['', Validators.required],
       // temp
       machineryName: ['', Validators.required],

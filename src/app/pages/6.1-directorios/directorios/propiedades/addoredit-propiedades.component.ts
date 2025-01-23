@@ -19,12 +19,12 @@ export default class AddOrEditPropiedadesComponent implements OnInit {
   authS = inject(AuthService);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
 
   submitting: boolean = false;
 
   id: number = 0;
-  customerId: number = this.customerIdService.customerId;
+  customerId: number = this.custIdService.customerId;
   form: FormGroup = this.formBuilder.group({
     id: { value: this.id, disabled: true },
     department: ['', Validators.required],
@@ -35,7 +35,7 @@ export default class AddOrEditPropiedadesComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    this.customerId = this.customerIdService.customerId;
+    this.customerId = this.custIdService.customerId;
     this.id = this.config.data.id;
     if (this.id !== 0) {
       this.onLoadData();

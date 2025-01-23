@@ -27,13 +27,13 @@ export default class AddOrEditActivosComponent implements OnInit {
   getdateService = inject(DateService);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
 
   submitting: boolean = false;
 
   id: number = 0;
   applicationUserId = this.authS.userTokenDto.infoUserAuthDto.applicationUserId;
-  customerId: number = this.customerIdService.getCustomerId();
+  customerId: number = this.custIdService.getCustomerId();
   machineryDTO: any;
   photoFileUpdate: boolean = false;
   category: any;

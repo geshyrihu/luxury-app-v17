@@ -5,7 +5,7 @@ export default [
     path: 'list',
     loadComponent: () =>
       import(
-        'src/app/pages/5.3-tickets/groups/ticket-group-list/ticket-group-list.component'
+        'src/app/pages/tickets/groups/ticket-group-list/ticket-group-list.component'
       ),
     data: { title: 'Grupos de tickets' },
   },
@@ -13,7 +13,7 @@ export default [
     path: 'messages/:ticketGroupId',
     loadComponent: () =>
       import(
-        'src/app/pages/5.3-tickets/messages/ticket-message-list/ticket-message-list.component'
+        'src/app/pages/tickets/messages/ticket-message-list/ticket-message-list.component'
       ),
     data: { title: 'Tickets' },
   },
@@ -21,7 +21,7 @@ export default [
     path: 'message/:ticketMessageId/:ticketGroupId/:notificationUserId',
     loadComponent: () =>
       import(
-        'src/app/pages/5.3-tickets/messages/ticket-message-view/ticket-message-view.component'
+        'src/app/pages/tickets/messages/ticket-message-view/ticket-message-view.component'
       ),
     data: { title: 'Detalle' },
   },
@@ -29,7 +29,7 @@ export default [
     path: 'my-tickets',
     loadComponent: () =>
       import(
-        'src/app/pages/5.3-tickets/my-tickets/my-assigned-tickets-list/my-assigned-tickets-list.component'
+        'src/app/pages/tickets/my-tickets/my-assigned-tickets-list/my-assigned-tickets-list.component'
       ),
     data: { title: 'Mis tickets' },
   },
@@ -37,7 +37,7 @@ export default [
     path: 'my-requests',
     loadComponent: () =>
       import(
-        'src/app/pages/5.3-tickets/my-tickets/my-requests-ticket-message/my-requests-ticket-message.component'
+        'src/app/pages/tickets/my-tickets/my-requests-ticket-message/my-requests-ticket-message.component'
       ),
     data: { title: 'Mis solicitudes' },
   },
@@ -45,7 +45,7 @@ export default [
     path: 'reports',
     loadComponent: () =>
       import(
-        'src/app/pages/5.3-tickets/messages/ticket-message-report/ticket-message-report.component'
+        'src/app/pages/tickets/messages/ticket-message-report/ticket-message-report.component'
       ),
     data: { title: 'Reportes' },
   },
@@ -53,7 +53,7 @@ export default [
     path: 'resumen',
     loadComponent: () =>
       import(
-        'src/app/pages/5.3-tickets/reports/ticket-message-report-resumen/ticket-message-report-resumen.component'
+        'src/app/pages/tickets/reports/ticket-message-report-resumen/ticket-message-report-resumen.component'
       ),
     data: { title: 'Resumen' },
   },
@@ -61,7 +61,7 @@ export default [
     path: 'work-plan',
     loadComponent: () =>
       import(
-        'src/app/pages/5.3-tickets/reports/ticket-message-report-work-plan/ticket-message-report-work-plan.component'
+        'src/app/pages/tickets/reports/ticket-message-report-work-plan/ticket-message-report-work-plan.component'
       ),
     data: { title: 'Plan de trabajo' },
   },
@@ -69,7 +69,7 @@ export default [
     path: 'work-plan-preview',
     loadComponent: () =>
       import(
-        'src/app/pages/5.3-tickets/reports/ticket-message-report-work-plan-preview/ticket-message-report-work-plan-preview.component'
+        'src/app/pages/tickets/reports/ticket-message-report-work-plan-preview/ticket-message-report-work-plan-preview.component'
       ),
     data: { title: 'Vista previa plan de trabajo' },
   },
@@ -77,7 +77,7 @@ export default [
     path: 'weekly-report',
     loadComponent: () =>
       import(
-        'src/app/pages/5.3-tickets/reports/ticket-message-operation-report/ticket-message-operation-report.component'
+        'src/app/pages/tickets/reports/ticket-message-operation-report/ticket-message-operation-report.component'
       ),
     data: { title: 'Reporte semanal' },
   },
@@ -85,7 +85,7 @@ export default [
     path: 'weekly-report-preview',
     loadComponent: () =>
       import(
-        'src/app/pages/5.3-tickets/reports/ticket-message-weekly-report-preview/ticket-message-weekly-report-preview.component'
+        'src/app/pages/tickets/reports/ticket-message-weekly-report-preview/ticket-message-weekly-report-preview.component'
       ),
     data: { title: 'Reporte semanal vista previa' },
   },

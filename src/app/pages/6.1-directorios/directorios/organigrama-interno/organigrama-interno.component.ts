@@ -13,13 +13,13 @@ import { environment } from 'src/environments/environment';
 })
 export default class OrganigramaInternoComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
 
   nameCustomer: string = '';
   logoCustomer: string = '';
   data: any[] = [];
   baseUrlImg = environment.base_urlImg;
-  customerId$: Observable<number> = this.customerIdService.getCustomerId$();
+  customerId$: Observable<number> = this.custIdService.getCustomerId$();
 
   ngOnInit() {
     this.onLoadData();
@@ -31,15 +31,14 @@ export default class OrganigramaInternoComponent implements OnInit {
   }
 
   onLoadData() {
-    const urlApi =
-      'OrganigramaInterno/' + this.customerIdService.getCustomerId();
+    const urlApi = 'OrganigramaInterno/' + this.custIdService.getCustomerId();
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
   }
   OnLoadCustomer() {
     this.apiRequestService
-      .onGetItem(`Customers/${this.customerIdService.customerId}`)
+      .onGetItem(`Customers/${this.custIdService.customerId}`)
       .then((result: any) => {
         this.nameCustomer = result.nameCustomer;
         this.logoCustomer = `${environment.base_urlImg}Administration/customer/${result.photoPath}`;

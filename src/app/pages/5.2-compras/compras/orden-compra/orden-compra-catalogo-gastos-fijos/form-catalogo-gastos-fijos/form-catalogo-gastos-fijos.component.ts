@@ -17,7 +17,7 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 })
 export default class FormCatalogoGastosFijosComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
   authS = inject(AuthService);
   formBuilder = inject(FormBuilder);
   ref = inject(DynamicDialogRef);
@@ -36,7 +36,7 @@ export default class FormCatalogoGastosFijosComponent implements OnInit {
   proveedor: SelectItem;
   form: FormGroup = this.formBuilder.group({
     id: { value: this.id, disabled: true },
-    customerId: [this.customerIdService.customerId],
+    customerId: [this.custIdService.customerId],
     equipoOInstalacion: ['', Validators.required],
     justificacionGasto: ['', Validators.required],
     providerName: ['', Validators.required],

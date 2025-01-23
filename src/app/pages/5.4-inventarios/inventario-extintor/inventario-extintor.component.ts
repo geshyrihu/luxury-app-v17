@@ -1,26 +1,26 @@
-import { Component, OnInit, inject } from '@angular/core';
-import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { ImageModule } from 'primeng/image';
-import { Observable } from 'rxjs';
-import { IInventarioExtintor } from 'src/app/core/interfaces/inventario-extintor.interface';
-import { ApiRequestService } from 'src/app/core/services/api-request.service';
-import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
-import AddoreditInventarioExtintorComponent from './addoredit-inventario-extintor.component';
+import { Component, OnInit, inject } from "@angular/core";
+import LuxuryAppComponentsModule from "app/shared/luxuryapp-components.module";
+import { ImageModule } from "primeng/image";
+import { Observable } from "rxjs";
+import { IInventarioExtintor } from "src/app/core/interfaces/inventario-extintor.interface";
+import { ApiRequestService } from "src/app/core/services/api-request.service";
+import { CustomerIdService } from "src/app/core/services/customer-id.service";
+import { DialogHandlerService } from "src/app/core/services/dialog-handler.service";
+import AddoreditInventarioExtintorComponent from "./addoredit-inventario-extintor.component";
 
 @Component({
-  selector: 'app-inventario-extintor',
-  templateUrl: './inventario-extintor.component.html',
+  selector: "app-inventario-extintor",
+  templateUrl: "./inventario-extintor.component.html",
   standalone: true,
   imports: [LuxuryAppComponentsModule, ImageModule],
 })
 export default class InventarioExtintorComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
 
   data: IInventarioExtintor[] = [];
-  customerId$: Observable<number> = this.customerIdService.getCustomerId$();
+  customerId$: Observable<number> = this.custIdService.getCustomerId$();
 
   ngOnInit(): void {
     this.onLoadData();
@@ -31,7 +31,7 @@ export default class InventarioExtintorComponent implements OnInit {
 
   onLoadData() {
     const urlApi =
-      'InventarioExtintor/GetAll/' + this.customerIdService.getCustomerId();
+      "InventarioExtintor/GetAll/" + this.custIdService.getCustomerId();
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });

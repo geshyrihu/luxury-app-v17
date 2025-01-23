@@ -14,7 +14,7 @@ import SolicitudModificacionSalarioComponent from 'src/app/pages/7.0-reclutamien
 export default class EmployeeReclutamientoComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
 
   @Input() employeeId: any;
 
@@ -48,7 +48,7 @@ export default class EmployeeReclutamientoComponent implements OnInit {
         SolicitudAltaComponent,
         {
           employeeId: this.employeeId,
-          customerId: this.customerIdService.customerId,
+          customerId: this.custIdService.customerId,
         },
         'Solicitud de alta',
         this.dialogHandlerService.dialogSizeFull

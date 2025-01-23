@@ -22,7 +22,7 @@ export default class AddoreditPlantillaComponent implements OnInit {
   formBuilder = inject(FormBuilder);
   authS = inject(AuthService);
   config = inject(DynamicDialogConfig);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
   ref = inject(DynamicDialogRef);
 
   submitting: boolean = false;
@@ -36,7 +36,7 @@ export default class AddoreditPlantillaComponent implements OnInit {
 
   form: FormGroup = this.formBuilder.group({
     id: { value: this.id, disabled: true },
-    customerId: [this.customerIdService.getCustomerId(), Validators.required],
+    customerId: [this.custIdService.getCustomerId(), Validators.required],
     folio: [''],
     professionId: ['', Validators.required],
     responsibleAreaId: [''],
@@ -117,7 +117,7 @@ export default class AddoreditPlantillaComponent implements OnInit {
 
   onLoadSelectItem() {
     this.apiRequestService
-      .onGetSelectItem(`Employee/${this.customerIdService.getCustomerId()}`)
+      .onGetSelectItem(`Employee/${this.custIdService.getCustomerId()}`)
       .then((response: any) => {
         this.cb_employee = response;
       });

@@ -17,7 +17,7 @@ export default class InspectionCondominiumAssetAddComponent implements OnInit {
   fb = inject(FormBuilder);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
 
   cb_activos: any[] = [];
   cb_inspection_reviews_catalog: any[] = [];
@@ -53,7 +53,7 @@ export default class InspectionCondominiumAssetAddComponent implements OnInit {
 
   onLoadActivos() {
     this.apiRequestService
-      .onGetSelectItem(`CondominiumAsset/${this.customerIdService.customerId}`)
+      .onGetSelectItem(`CondominiumAsset/${this.custIdService.customerId}`)
       .then((resp: any) => {
         this.cb_activos = resp;
       });

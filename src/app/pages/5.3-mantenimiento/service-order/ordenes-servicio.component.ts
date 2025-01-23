@@ -26,7 +26,7 @@ export default class OrdenesServicioComponentComponent
 {
   apiRequestService = inject(ApiRequestService);
   authS = inject(AuthService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
   reporteOrdenesServicioService = inject(ReporteOrdenesServicioService);
   dateService = inject(DateService);
   dialogHandlerService = inject(DialogHandlerService);
@@ -40,7 +40,7 @@ export default class OrdenesServicioComponentComponent
 
   // urlImg: string = '';
   nameCarpetaFecha = '';
-  customerId$: Observable<number> = this.customerIdService.getCustomerId$();
+  customerId$: Observable<number> = this.custIdService.getCustomerId$();
 
   filtroEquiposValue: any = 'todos';
   filtroId: number | string = '';
@@ -68,7 +68,7 @@ export default class OrdenesServicioComponentComponent
   public subscriber: Subscription;
   ngOnInit(): void {
     this.reporteOrdenesServicioService.setDate(Date.now);
-    this.customerId$ = this.customerIdService.getCustomerId$();
+    this.customerId$ = this.custIdService.getCustomerId$();
     this.onLoadData();
     this.customerId$.subscribe((resp) => {
       this.onReloadOrdenes(this.filtroId, this.filtroEquiposValue);
@@ -138,7 +138,7 @@ export default class OrdenesServicioComponentComponent
     this.reporteOrdenesServicioService.setDate(converToDate);
 
     const urlApi = `ServiceOrders/GetAllPintura/${
-      this.customerIdService.customerId
+      this.custIdService.customerId
     }/${this.dateService.getDateFormat(converToDate)}`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.data = result;
@@ -156,7 +156,7 @@ export default class OrdenesServicioComponentComponent
     this.reporteOrdenesServicioService.setDate(converToDate);
 
     const urlApi = `ServiceOrders/GetAll/${
-      this.customerIdService.customerId
+      this.custIdService.customerId
     }/${this.dateService.getDateFormat(converToDate)}/${this.filtroId}`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.data = result;

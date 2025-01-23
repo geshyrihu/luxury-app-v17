@@ -19,7 +19,7 @@ export default class FormInventarioLlaveComponent implements OnInit {
   formBuilder = inject(FormBuilder);
   ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
   authS = inject(AuthService);
 
   submitting: boolean = false;
@@ -29,7 +29,7 @@ export default class FormInventarioLlaveComponent implements OnInit {
   cb_equipoClasificacion: ISelectItem[] = [];
   form: FormGroup = this.formBuilder.group({
     id: { value: this.id, disabled: true },
-    customerId: [this.customerIdService.getCustomerId(), [Validators.required]],
+    customerId: [this.custIdService.getCustomerId(), [Validators.required]],
     descripcion: ['', [Validators.required]],
     marca: ['', [Validators.required]],
     numeroLlave: ['', [Validators.required]],

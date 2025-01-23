@@ -13,7 +13,7 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 })
 export default class OrdenesServicioFotosComponent implements OnInit {
   config = inject(DynamicDialogConfig);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
   apiRequestService = inject(ApiRequestService);
   ref = inject(DynamicDialogRef);
 
@@ -27,7 +27,7 @@ export default class OrdenesServicioFotosComponent implements OnInit {
     if (this.id !== 0) this.onLoadData();
   }
   onLoadData() {
-    const customerId = this.customerIdService.customerId;
+    const customerId = this.custIdService.customerId;
     const urlApi = `ServiceOrders/OrdenesServicioFotos/${this.id}/${customerId}`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.data = result;

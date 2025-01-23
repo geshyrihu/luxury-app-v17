@@ -20,7 +20,7 @@ export default class AddoreditInventarioIluminacionComponent implements OnInit {
   ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);
   authS = inject(AuthService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
   submitting: boolean = false;
 
   cb_machinery: ISelectItem[] = [];
@@ -86,8 +86,7 @@ export default class AddoreditInventarioIluminacionComponent implements OnInit {
   onLoadMachinery() {
     this.apiRequestService
       .onGetList(
-        'Machineries/GetAutocompeteInv/' +
-          this.customerIdService.getCustomerId()
+        'Machineries/GetAutocompeteInv/' + this.custIdService.getCustomerId()
       )
       .then((result: any) => {
         this.cb_machinery = result;

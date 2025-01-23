@@ -22,13 +22,13 @@ const date = new Date();
 export default class ListadoAnualMantenimientoComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   authS = inject(AuthService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
   dialogHandlerService = inject(DialogHandlerService);
 
   data: any[] = [];
   ref: DynamicDialogRef;
 
-  customerId$: Observable<number> = this.customerIdService.getCustomerId$();
+  customerId$: Observable<number> = this.custIdService.getCustomerId$();
   month = date.getMonth();
   months: ISelectItem[] = onGetSelectItemFromEnum(EMonth);
 
@@ -39,7 +39,7 @@ export default class ListadoAnualMantenimientoComponent implements OnInit {
     });
   }
   onLoadData() {
-    const url = `MaintenanceCalendars/GetAll/${this.customerIdService.getCustomerId()}/${
+    const url = `MaintenanceCalendars/GetAll/${this.custIdService.getCustomerId()}/${
       this.month
     }`;
     this.apiRequestService.onGetList(url).then((result: any) => {

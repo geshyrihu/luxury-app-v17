@@ -16,7 +16,7 @@ export default class MantenimientosPreventivosResumenComponent
   implements OnInit
 {
   apiRequestService = inject(ApiRequestService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
   config = inject(DynamicDialogConfig);
   periodoMonthService = inject(PeriodoMonthService);
   dateService = inject(DateService);
@@ -30,7 +30,7 @@ export default class MantenimientosPreventivosResumenComponent
     this.onLoadData(this.estatus);
   }
   onLoadData(status: any) {
-    const urlApi = `Dashboard/ServiceOrderSummary/${this.customerIdService.getCustomerId()}/${status}`;
+    const urlApi = `Dashboard/ServiceOrderSummary/${this.custIdService.getCustomerId()}/${status}`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });

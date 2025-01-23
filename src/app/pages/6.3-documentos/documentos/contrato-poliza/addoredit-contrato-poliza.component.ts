@@ -20,7 +20,7 @@ import { environment } from 'src/environments/environment';
 })
 export default class AddoreditContratoPolizaComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
   authS = inject(AuthService);
   config = inject(DynamicDialogConfig);
   dateService = inject(DateService);
@@ -38,7 +38,7 @@ export default class AddoreditContratoPolizaComponent implements OnInit {
     id: { value: this.id, disabled: true },
     providerId: ['', Validators.required],
     providerName: ['', Validators.required],
-    customerId: [this.customerIdService.getCustomerId(), Validators.required],
+    customerId: [this.custIdService.getCustomerId(), Validators.required],
     description: ['', Validators.required],
     startDate: ['', Validators.required],
     endDate: ['', Validators.required],

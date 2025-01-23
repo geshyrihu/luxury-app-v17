@@ -14,10 +14,10 @@ import { environment } from 'src/environments/environment';
 })
 export default class GeneralAnualMantenimientoComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
 
   data: any[] = [];
-  customerId$: Observable<number> = this.customerIdService.getCustomerId$();
+  customerId$: Observable<number> = this.custIdService.getCustomerId$();
   cb_providers: ISelectItem[] = [];
   providerId = '';
   pathImg = '';
@@ -25,22 +25,22 @@ export default class GeneralAnualMantenimientoComponent implements OnInit {
   ngOnInit() {
     this.onLoadData();
     this.onLoadProveedores();
-    this.pathImg = `${environment.base_urlImg}customers/${this.customerIdService.customerId}/machinery/`;
+    this.pathImg = `${environment.base_urlImg}customers/${this.custIdService.customerId}/machinery/`;
     this.customerId$.subscribe((resp) => {
-      this.pathImg = `${environment.base_urlImg}customers/${this.customerIdService.customerId}/machinery/`;
+      this.pathImg = `${environment.base_urlImg}customers/${this.custIdService.customerId}/machinery/`;
       this.onLoadData();
     });
   }
   onLoadProveedores() {
     this.cb_providers = [];
-    const url = `MaintenanceCalendars/ProveedoresCalendario/${this.customerIdService.customerId}`;
+    const url = `MaintenanceCalendars/ProveedoresCalendario/${this.custIdService.customerId}`;
     this.apiRequestService.onGetList(url).then((result: any) => {
       this.cb_providers = result;
     });
   }
   onLoadData() {
     this.data = [];
-    const url = `MaintenanceCalendars/GeneralMantenimiento/${this.customerIdService.customerId}/${this.providerId}`;
+    const url = `MaintenanceCalendars/GeneralMantenimiento/${this.custIdService.customerId}/${this.providerId}`;
     this.apiRequestService.onGetList(url).then((result: any) => {
       this.data = result;
     });

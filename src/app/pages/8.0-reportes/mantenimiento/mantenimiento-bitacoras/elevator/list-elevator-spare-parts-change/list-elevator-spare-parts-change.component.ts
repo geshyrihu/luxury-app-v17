@@ -16,12 +16,12 @@ import AddOrEditElevatorSparePartsChangeComponent from '../add-or-edit-elevator-
 export default class ListElevatorSparePartsChangeComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
 
   data: any[] = [];
   ref: DynamicDialogRef; // Referencia a un cuadro de diálogo modal
 
-  customerId$: Observable<number> = this.customerIdService.getCustomerId$();
+  customerId$: Observable<number> = this.custIdService.getCustomerId$();
 
   ngOnInit(): void {
     this.onLoadData();
@@ -31,7 +31,7 @@ export default class ListElevatorSparePartsChangeComponent implements OnInit {
   }
 
   onLoadData() {
-    const urlApi = `ElevatorSparePartsChange/list/${this.customerIdService.customerId}`;
+    const urlApi = `ElevatorSparePartsChange/list/${this.custIdService.customerId}`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
@@ -51,7 +51,7 @@ export default class ListElevatorSparePartsChangeComponent implements OnInit {
         AddOrEditElevatorSparePartsChangeComponent,
         {
           id: data.id,
-          customerId: this.customerIdService.customerId,
+          customerId: this.custIdService.customerId,
         },
         data.title,
         this.dialogHandlerService.dialogSizeMd

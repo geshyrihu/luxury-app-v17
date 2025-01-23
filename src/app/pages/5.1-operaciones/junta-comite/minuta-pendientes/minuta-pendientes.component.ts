@@ -1,22 +1,22 @@
-import { Component, OnInit, inject } from "@angular/core";
-import LuxuryAppComponentsModule from "app/shared/luxuryapp-components.module";
-import { Observable } from "rxjs";
-import { EStatusPipe } from "src/app/core/pipes/status.pipe";
-import { ApiRequestService } from "src/app/core/services/api-request.service";
-import { CustomerIdService } from "src/app/core/services/customer-id.service";
+import { Component, OnInit, inject } from '@angular/core';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
+import { Observable } from 'rxjs';
+import { EStatusPipe } from 'src/app/core/pipes/status.pipe';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 
 @Component({
-  selector: "app-minuta-pendientes",
-  templateUrl: "./minuta-pendientes.component.html",
+  selector: 'app-minuta-pendientes',
+  templateUrl: './minuta-pendientes.component.html',
   standalone: true,
   imports: [LuxuryAppComponentsModule, EStatusPipe],
 })
 export default class MinutaPendientesComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
   data: any[] = [];
   todoElSeguimiento: boolean = true;
-  customerId$: Observable<number> = this.customerIdService.getCustomerId$();
+  customerId$: Observable<number> = this.custIdService.getCustomerId$();
 
   ngOnInit(): void {
     this.onLoadData();
@@ -25,7 +25,7 @@ export default class MinutaPendientesComponent implements OnInit {
     });
   }
   onLoadData() {
-    const urlApi = `Meetings/MinutaAllPendientes/${this.customerIdService.getCustomerId()}`;
+    const urlApi = `Meetings/MinutaAllPendientes/${this.custIdService.getCustomerId()}`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });

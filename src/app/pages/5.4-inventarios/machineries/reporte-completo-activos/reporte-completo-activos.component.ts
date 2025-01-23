@@ -12,7 +12,7 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
   imports: [LuxuryAppComponentsModule],
 })
 export default class ReporteCompletoActivosComponent implements OnInit {
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
   apiRequestService = inject(ApiRequestService);
   messageService = inject(MessageService); // private reporteActivosPdfService: ReporteActivosPdfService
 
@@ -20,14 +20,14 @@ export default class ReporteCompletoActivosComponent implements OnInit {
   titulo: string = '';
 
   customerId: number;
-  customerId$: Observable<number> = this.customerIdService.getCustomerId$();
+  customerId$: Observable<number> = this.custIdService.getCustomerId$();
 
   ngOnInit(): void {
-    this.customerId$ = this.customerIdService.getCustomerId$();
-    this.customerId = this.customerIdService.getCustomerId();
+    this.customerId$ = this.custIdService.getCustomerId$();
+    this.customerId = this.custIdService.getCustomerId();
     this.onLoadData();
     this.customerId$.subscribe((resp) => {
-      this.customerId = this.customerIdService.getCustomerId();
+      this.customerId = this.custIdService.getCustomerId();
       this.onLoadData();
     });
   }

@@ -34,13 +34,13 @@ export default class VerticalComponent implements OnInit {
   authS = inject(AuthService);
   location = inject(Location);
   router = inject(Router);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
 
   cb_customer: any[] = [];
-  customerId = this.customerIdService.customerId;
+  customerId = this.custIdService.customerId;
 
   selectCustomer(customerId: number) {
-    this.customerIdService.setCustomerId(customerId);
+    this.custIdService.setCustomerId(customerId);
   }
 
   constructor() {

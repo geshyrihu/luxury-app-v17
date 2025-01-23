@@ -21,7 +21,7 @@ export default class BirthdayComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
   authS = inject(AuthService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
 
   url = base_urlImg;
   selectedMonth: number | null = null;
@@ -56,12 +56,12 @@ export default class BirthdayComponent implements OnInit {
 
   data: any[] = [];
   ref: DynamicDialogRef;
-  customerId$: Observable<number> = this.customerIdService.getCustomerId$();
+  customerId$: Observable<number> = this.custIdService.getCustomerId$();
 
   onLoadData() {
     this.apiRequestService
       .onGetList(
-        `Employees/Birthday/${this.customerIdService.customerId}/${this.selectedMonth}`
+        `Employees/Birthday/${this.custIdService.customerId}/${this.selectedMonth}`
       )
       .then((result: any) => {
         this.data = result;

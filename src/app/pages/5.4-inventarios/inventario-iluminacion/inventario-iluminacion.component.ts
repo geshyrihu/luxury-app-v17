@@ -17,17 +17,17 @@ import AddoreditInventarioIluminacionComponent from './addoredit-inventario-ilum
 export default class InventarioIluminacionComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   authS = inject(AuthService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
   dialogHandlerService = inject(DialogHandlerService);
   dialogService = inject(DialogService);
 
   data: any[] = [];
 
   ref: DynamicDialogRef;
-  customerId$: Observable<number> = this.customerIdService.getCustomerId$();
+  customerId$: Observable<number> = this.custIdService.getCustomerId$();
 
   ngOnInit(): void {
-    this.customerId$ = this.customerIdService.getCustomerId$();
+    this.customerId$ = this.custIdService.getCustomerId$();
     this.onLoadData();
     this.customerId$.subscribe(() => {
       this.onLoadData();
@@ -37,7 +37,7 @@ export default class InventarioIluminacionComponent implements OnInit {
   onLoadData() {
     this.apiRequestService
       .onGetList(
-        'InventarioIluminacion/GetAll/' + this.customerIdService.getCustomerId()
+        'InventarioIluminacion/GetAll/' + this.custIdService.getCustomerId()
       )
       .then((result: any) => {
         this.data = result;

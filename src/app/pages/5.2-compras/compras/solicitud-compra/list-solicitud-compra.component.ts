@@ -17,7 +17,7 @@ import { SolicitudCompraService } from 'src/app/core/services/solicitud-compra.s
 export default class ListSolicitudCompraComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   authS = inject(AuthService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
   router = inject(Router);
   solicitudCompraService = inject(SolicitudCompraService);
 
@@ -26,7 +26,7 @@ export default class ListSolicitudCompraComponent implements OnInit {
   subRef$: Subscription;
   statusCompra: number = this.solicitudCompraService.onGetStatusFiltro();
 
-  customerId$: Observable<number> = this.customerIdService.getCustomerId$();
+  customerId$: Observable<number> = this.custIdService.getCustomerId$();
   ngOnInit(): void {
     this.onLoadData();
     this.customerId$.subscribe(() => {
@@ -38,7 +38,7 @@ export default class ListSolicitudCompraComponent implements OnInit {
     this.apiRequestService
       .onGetList(
         `SolicitudCompra/Solicitudes/${
-          this.customerIdService.customerId
+          this.custIdService.customerId
         }/${this.solicitudCompraService.onGetStatusFiltro()}`
       )
       .then((result: any) => {

@@ -13,7 +13,7 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 export default class ReportClientComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   rutaActiva = inject(ActivatedRoute);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
 
   data: any = [];
 

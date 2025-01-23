@@ -24,7 +24,7 @@ const base_urlImg = environment.base_urlImg;
 })
 export default class ReportTicketComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
   customToastService = inject(CustomToastService);
   dateService = inject(DateService);
   periodoMonthService = inject(PeriodoMonthService);
@@ -34,7 +34,7 @@ export default class ReportTicketComponent implements OnInit {
   dataCargaTicket: any;
   ref: DynamicDialogRef;
 
-  customerId$: Observable<number> = this.customerIdService.getCustomerId$();
+  customerId$: Observable<number> = this.custIdService.getCustomerId$();
   url = base_urlImg;
   periodoInicial$: Observable<Date> =
     this.periodoMonthService.getPeriodoInicial$();
@@ -53,18 +53,18 @@ export default class ReportTicketComponent implements OnInit {
     const periodo = this.dateService.getDateFormat(
       this.periodoMonthService.getPeriodoInicio
     );
-    const urlApi = `MaintenanceReport/ticket/${this.customerIdService.customerId}/${periodo}`;
+    const urlApi = `MaintenanceReport/ticket/${this.custIdService.customerId}/${periodo}`;
 
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
 
-    const urlApi2 = `MaintenanceReport/TicketResponsable/${this.customerIdService.customerId}/${periodo}`;
+    const urlApi2 = `MaintenanceReport/TicketResponsable/${this.custIdService.customerId}/${periodo}`;
     this.apiRequestService.onGetList(urlApi2).then((result: any) => {
       this.dataResponsable = result;
     });
 
-    const urlApi3 = `MaintenanceReport/CargaTicket/${this.customerIdService.customerId}/${periodo}`;
+    const urlApi3 = `MaintenanceReport/CargaTicket/${this.custIdService.customerId}/${periodo}`;
     this.apiRequestService.onGetList(urlApi3).then((result: any) => {
       this.dataCargaTicket = result;
     });

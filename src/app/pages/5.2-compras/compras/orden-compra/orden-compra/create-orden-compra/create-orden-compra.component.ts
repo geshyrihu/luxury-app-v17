@@ -23,7 +23,7 @@ export default class CreateOrdenCompraComponent implements OnInit {
 
   authS = inject(AuthService);
   config = inject(DynamicDialogConfig);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
   dateService = inject(DateService);
   formBuilder = inject(FormBuilder);
   ref = inject(DynamicDialogRef);
@@ -57,7 +57,7 @@ export default class CreateOrdenCompraComponent implements OnInit {
     }
     this.form = this.formBuilder.group({
       id: [0, Validators.required],
-      customerId: [this.customerIdService.getCustomerId(), Validators.required],
+      customerId: [this.custIdService.getCustomerId(), Validators.required],
       folio: [''],
       fechaSolicitud: [this.date, Validators.required],
       folioSolicitudCompra: [''],

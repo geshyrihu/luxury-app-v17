@@ -18,7 +18,7 @@ export default class FormGastosFijosPresupuestoComponent implements OnInit {
   ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);
   catalogoGastosFijosService = inject(CatalogoGastosFijosService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
 
   data: any[] = [];
   presupuestoAgregados: any[] = [];
@@ -35,7 +35,7 @@ export default class FormGastosFijosPresupuestoComponent implements OnInit {
   }
 
   onLoadPresupuesto() {
-    const urlApi = `OrdenCompraPresupuesto/GetAllForGastosFijos/${this.customerIdService.customerId}/${this.cedulaId}/${this.catalogoGastosFijosId}`;
+    const urlApi = `OrdenCompraPresupuesto/GetAllForGastosFijos/${this.custIdService.customerId}/${this.cedulaId}/${this.catalogoGastosFijosId}`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.data = result;
       this.onLoadPresupuestoAgregados();
@@ -84,7 +84,7 @@ export default class FormGastosFijosPresupuestoComponent implements OnInit {
   }
 
   onLoadCedulas() {
-    const urlApi = `CedulaPresupuestal/GetCedulas/${this.customerIdService.getCustomerId()}`;
+    const urlApi = `CedulaPresupuestal/GetCedulas/${this.custIdService.getCustomerId()}`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       if (result) {
         this.cedulaId = result[0].value;

@@ -83,11 +83,4 @@ export default [
     canActivate: [AuthGuard], // Se agregó canActivate aquí
     data: { title: 'Mis Proveedores' },
   },
-  {
-    path: 'comites',
-    loadComponent: () =>
-      import('src/app/pages/6.1-directorios/comites/comites.component'),
-    canActivate: [AuthGuard], // Se agregó canActivate aquí
-    data: { title: 'Mis Proveedores' },
-  },
 ] as Routes;

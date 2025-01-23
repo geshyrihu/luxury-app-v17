@@ -23,7 +23,7 @@ export default class StatusRequestSalaryModificationComponent
 {
   private statusSolicitudVacanteService = inject(StatusSolicitudVacanteService);
   apiRequestService = inject(ApiRequestService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
   dialogHandlerService = inject(DialogHandlerService);
   router = inject(Router);
   authS = inject(AuthService);

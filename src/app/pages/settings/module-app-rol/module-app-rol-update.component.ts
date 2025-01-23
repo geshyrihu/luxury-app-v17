@@ -13,7 +13,7 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 export default class ModuleAppRolUpdateComponent {
   apiRequestService = inject(ApiRequestService);
   activatedRoute = inject(ActivatedRoute);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
 
   // Declaración e inicialización de variables
   data: any[] = [];
@@ -49,9 +49,7 @@ export default class ModuleAppRolUpdateComponent {
     };
 
     this.apiRequestService.onPost(urlApi, data).then((result: any) => {
-      this.customerIdService.onLoadDataCustomer(
-        this.customerIdService.customerId
-      );
+      this.custIdService.onLoadDataCustomer(this.custIdService.customerId);
     });
   }
 }

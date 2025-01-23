@@ -20,14 +20,14 @@ export default class AddOrEditCondominosComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   authS = inject(AuthService);
   config = inject(DynamicDialogConfig);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
   formBuilder = inject(FormBuilder);
   ref = inject(DynamicDialogRef);
 
   submitting: boolean = false;
 
   id: number = 0;
-  customerId: number = this.customerIdService.customerId;
+  customerId: number = this.custIdService.customerId;
   cb_directory_condominium: any[] = [];
   cb_enviarMails: ISelectItem[] = [
     {
@@ -56,11 +56,11 @@ export default class AddOrEditCondominosComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    this.customerId = this.customerIdService.customerId;
+    this.customerId = this.custIdService.customerId;
 
     this.apiRequestService
       .onGetSelectItem(
-        `DirectoryCondominium/${this.customerIdService.getCustomerId()}`
+        `DirectoryCondominium/${this.custIdService.getCustomerId()}`
       )
       .then((response: any) => {
         this.cb_directory_condominium = response;

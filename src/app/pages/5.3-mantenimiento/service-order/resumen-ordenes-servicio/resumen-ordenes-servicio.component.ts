@@ -14,7 +14,7 @@ import ResumenOrdenesServicioGraficoComponent from '../resumen-ordenes-servicio-
 })
 export default class ResumenOrdenesServicioComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
   dateService = inject(DateService);
   reporteOrdenesServicioService = inject(ReporteOrdenesServicioService);
 
@@ -29,7 +29,7 @@ export default class ResumenOrdenesServicioComponent implements OnInit {
   customerId: Number;
 
   ngOnInit(): void {
-    this.customerId = this.customerIdService.getCustomerId();
+    this.customerId = this.custIdService.getCustomerId();
     this.onLoadData();
   }
 

@@ -25,7 +25,7 @@ export default class AddOrEditRadioComunicacionComponent implements OnInit {
   ref = inject(DynamicDialogRef);
   dateService = inject(DateService);
   authS = inject(AuthService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
 
   submitting: boolean = false;
 
@@ -121,7 +121,7 @@ export default class AddOrEditRadioComunicacionComponent implements OnInit {
     formData.append('bateria', dto.bateria);
 
     if (this.id == 0) {
-      formData.append('customerId', String(this.customerIdService.customerId));
+      formData.append('customerId', String(this.custIdService.customerId));
     } else {
       formData.append('customerId', String(dto.customerId));
     }
@@ -140,9 +140,7 @@ export default class AddOrEditRadioComunicacionComponent implements OnInit {
 
   onLoadSelectItem() {
     this.apiRequestService
-      .onGetSelectItem(
-        `ApplicationUser/${this.customerIdService.getCustomerId()}`
-      )
+      .onGetSelectItem(`ApplicationUser/${this.custIdService.getCustomerId()}`)
       .then((response: any) => {
         this.cb_application_user = response;
       });

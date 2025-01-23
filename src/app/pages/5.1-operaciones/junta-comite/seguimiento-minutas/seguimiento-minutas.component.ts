@@ -20,13 +20,13 @@ export default class SeguimientoMinutaComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
   authS = inject(AuthService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
 
   data: any[] = [];
   ref: DynamicDialogRef;
 
   statusFiltro: number = 0;
-  customerId$: Observable<number> = this.customerIdService.getCustomerId$();
+  customerId$: Observable<number> = this.custIdService.getCustomerId$();
 
   ngOnInit() {
     this.onLoadData(this.statusFiltro);
@@ -36,7 +36,7 @@ export default class SeguimientoMinutaComponent implements OnInit {
   }
 
   onLoadData(filtro: number) {
-    const urlApi = `Meetings/SeguimientoMinutas/${this.customerIdService.customerId}/${filtro}`;
+    const urlApi = `Meetings/SeguimientoMinutas/${this.custIdService.customerId}/${filtro}`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });

@@ -18,7 +18,7 @@ export default class AddProductosAlmacenComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
   authS = inject(AuthService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
 
   ref = inject(DynamicDialogRef);
 
@@ -55,14 +55,14 @@ export default class AddProductosAlmacenComponent implements OnInit {
   }
 
   onLoadData() {
-    const urlApi = `InventarioProducto/GetProductoDropdownDto/${this.customerIdService.customerId}`;
+    const urlApi = `InventarioProducto/GetProductoDropdownDto/${this.custIdService.customerId}`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
   }
   onSubmit(item: IProductoListAdd) {
     item.applicationUserId = this.authS.applicationUserId;
-    item.customerId = this.customerIdService.customerId;
+    item.customerId = this.custIdService.customerId;
 
     if (
       item.existencia < 0 ||

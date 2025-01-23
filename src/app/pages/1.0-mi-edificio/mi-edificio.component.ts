@@ -14,12 +14,12 @@ import FichaTecnicaActivoComponent from '../5.4-inventarios/machineries/ficha-te
 })
 export default class MiEdificioComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
   dialogHandlerService = inject(DialogHandlerService);
 
   data: any;
 
-  customerId$: Observable<number> = this.customerIdService.getCustomerId$();
+  customerId$: Observable<number> = this.custIdService.getCustomerId$();
 
   // bread crumb items
   breadCrumbItems!: Array<{}>;
@@ -27,14 +27,14 @@ export default class MiEdificioComponent implements OnInit {
   zoom: number = 15;
 
   ngOnInit(): void {
-    this.customerId$ = this.customerIdService.getCustomerId$();
+    this.customerId$ = this.custIdService.getCustomerId$();
     this.onLoadData();
     this.customerId$.subscribe((resp) => {
       this.onLoadData();
     });
   }
   onLoadData() {
-    const customerId = this.customerIdService.getCustomerId();
+    const customerId = this.custIdService.getCustomerId();
     const urlApi = `MiEdificio/Caratula/${customerId}`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.data = result;

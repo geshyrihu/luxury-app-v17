@@ -13,7 +13,7 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 export default class CustomerModulEditComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   activatedRoute = inject(ActivatedRoute);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
 
   // Declaración e inicialización de variables
   data: any[] = [];
@@ -48,10 +48,9 @@ export default class CustomerModulEditComponent implements OnInit {
       isAssigned: item.isAssigned,
     };
 
+    const customerId = this.custIdService.customerId;
     this.apiRequestService.onPost(urlApi, data).then((_) => {
-      this.customerIdService.onLoadDataCustomer(
-        this.customerIdService.customerId
-      );
+      this.custIdService.onLoadDataCustomer(customerId);
     });
   }
 }

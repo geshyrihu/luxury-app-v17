@@ -22,12 +22,12 @@ import AddOrEditVacanteComponent from '../list-solicitudes/list-solicitud-vacant
 export default class ListSolicitudesPorClienteComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
   statusSolicitudVacanteService = inject(StatusSolicitudVacanteService);
   router = inject(Router);
   authS = inject(AuthService);
 
-  customerId$: Observable<number> = this.customerIdService.getCustomerId$();
+  customerId$: Observable<number> = this.custIdService.getCustomerId$();
   // Declaración e inicialización de variables
   data: any[] = [];
   ref: DynamicDialogRef; // Referencia a un cuadro de diálogo modal
@@ -44,7 +44,7 @@ export default class ListSolicitudesPorClienteComponent implements OnInit {
   onLoadData() {
     const urlApi =
       'SolicitudesReclutamiento/solicitudesporcliente/' +
-      this.customerIdService.getCustomerId() +
+      this.custIdService.getCustomerId() +
       '/' +
       this.authS.infoUserAuthDto.applicationUserId;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {

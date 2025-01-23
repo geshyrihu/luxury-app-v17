@@ -15,14 +15,14 @@ import { PeriodoMonthService } from 'src/app/core/services/periodo-month.service
 })
 export default class ResumenMantenimientosComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
   customToastService = inject(CustomToastService);
   dateService = inject(DateService);
   periodoMonthService = inject(PeriodoMonthService);
 
   data: any;
   dataProvider: any = [];
-  customerId$: Observable<number> = this.customerIdService.getCustomerId$();
+  customerId$: Observable<number> = this.custIdService.getCustomerId$();
 
   periodoInicial$: Observable<Date> =
     this.periodoMonthService.getPeriodoInicial$();
@@ -39,7 +39,7 @@ export default class ResumenMantenimientosComponent implements OnInit {
   }
   onLoadData() {
     const urlApi = `MaintenanceReport/resumen/${
-      this.customerIdService.customerId
+      this.custIdService.customerId
     }/${this.dateService.getDateFormat(
       this.periodoMonthService.getPeriodoInicio
     )}`;
@@ -47,7 +47,7 @@ export default class ResumenMantenimientosComponent implements OnInit {
       this.data = result;
     });
     const urlApi2 = `MaintenanceReport/proveedor/${
-      this.customerIdService.customerId
+      this.custIdService.customerId
     }/${this.dateService.getDateFormat(
       this.periodoMonthService.getPeriodoInicio
     )}`;

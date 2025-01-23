@@ -23,7 +23,7 @@ export default class ListEmployeeProviderCustomerComponent implements OnInit {
   employeeAddOrEditService = inject(EmployeeAddOrEditService);
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
   rutaActiva = inject(ActivatedRoute);
   router = inject(Router);
 
@@ -34,7 +34,7 @@ export default class ListEmployeeProviderCustomerComponent implements OnInit {
 
   url = base_urlImg;
 
-  customerId$: Observable<number> = this.customerIdService.getCustomerId$();
+  customerId$: Observable<number> = this.custIdService.getCustomerId$();
 
   ngOnInit(): void {
     this.onLoadData();
@@ -49,7 +49,7 @@ export default class ListEmployeeProviderCustomerComponent implements OnInit {
   }
 
   onLoadData() {
-    const urlApi = `ApplicationUserEmployee/Externo/List/${this.customerIdService.customerId}/${this.activo}`;
+    const urlApi = `ApplicationUserEmployee/Externo/List/${this.custIdService.customerId}/${this.activo}`;
 
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.data = result;

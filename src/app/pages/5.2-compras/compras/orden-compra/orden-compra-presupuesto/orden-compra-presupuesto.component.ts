@@ -18,7 +18,7 @@ export default class OrdenCompraPresupuestoComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   authS = inject(AuthService);
   config = inject(DynamicDialogConfig);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
   ordenCompraService = inject(OrdenCompraService);
   ref = inject(DynamicDialogRef);
 
@@ -33,7 +33,7 @@ export default class OrdenCompraPresupuestoComponent implements OnInit {
   submitting: boolean = false;
 
   ngOnInit(): void {
-    this.onLoadCedulasCustomer(this.customerIdService.getCustomerId());
+    this.onLoadCedulasCustomer(this.custIdService.getCustomerId());
     this.total = this.ordenCompraService.getTotalPorCubrir();
     this.ordenCompraId = this.config.data.ordenCompraId;
   }

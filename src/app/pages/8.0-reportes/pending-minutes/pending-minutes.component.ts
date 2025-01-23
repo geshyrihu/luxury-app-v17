@@ -12,14 +12,14 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 })
 export default class PendingMinutesComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
 
   data: any;
   customerData: any;
   administrador: any;
 
-  customerId$: Observable<number> = this.customerIdService.getCustomerId$();
-  customerId = this.customerIdService.getCustomerId();
+  customerId$: Observable<number> = this.custIdService.getCustomerId$();
+  customerId = this.custIdService.getCustomerId();
   ngOnInit(): void {
     this.onLoadData(this.customerId);
     this.customerId$.subscribe((customerId) => {

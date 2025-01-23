@@ -19,14 +19,14 @@ import OrdenesCompraCedulaComponent from './ordenes-compra-cedula/ordenes-compra
 export default class CedulaClienteComponent implements OnInit {
   dialogHandlerService = inject(DialogHandlerService);
   apiRequestService = inject(ApiRequestService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
 
   id: number = 0;
   data: any[] = [];
   listCustomer: any[] = [];
   today = new Date();
   titulo = '';
-  customerId$: Observable<number> = this.customerIdService.getCustomerId$();
+  customerId$: Observable<number> = this.custIdService.getCustomerId$();
   presupuestoMensual: string = '';
   presupuestoEjercido: string = '';
   presupuestoDisponible: string = '';
@@ -35,19 +35,19 @@ export default class CedulaClienteComponent implements OnInit {
 
   ngOnInit() {
     this.onLoadData();
-    this.customerId$ = this.customerIdService.getCustomerId$();
-    this.onLoadCedulasCustomer(this.customerIdService.customerId);
+    this.customerId$ = this.custIdService.getCustomerId$();
+    this.onLoadCedulasCustomer(this.custIdService.customerId);
     this.customerId$.subscribe((resp) => {
       this.id = 0;
       this.onLoadData();
-      this.onLoadCedulasCustomer(this.customerIdService.customerId);
+      this.onLoadCedulasCustomer(this.custIdService.customerId);
     });
   }
 
   onLoadData() {
     this.apiRequestService
       .onGetList(
-        `CedulaPresupuestal/GetCedulaPresupuestal/${this.customerIdService.customerId}/${this.id}`
+        `CedulaPresupuestal/GetCedulaPresupuestal/${this.custIdService.customerId}/${this.id}`
       )
       .then((result: any) => {
         if (result !== null) {
@@ -136,8 +136,7 @@ export default class CedulaClienteComponent implements OnInit {
         this.dialogHandlerService.dialogSizeMd
       )
       .then((result: boolean) => {
-        if (result)
-          this.onLoadCedulasCustomer(this.customerIdService.customerId);
+        if (result) this.onLoadCedulasCustomer(this.custIdService.customerId);
       });
   }
 }

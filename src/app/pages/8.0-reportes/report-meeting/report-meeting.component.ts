@@ -14,7 +14,7 @@ import { environment } from 'src/environments/environment';
 export default class ReportMeetingComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   rutaActiva = inject(ActivatedRoute);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
 
   formattedDate: Date | null = null;
 

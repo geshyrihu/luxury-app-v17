@@ -15,7 +15,7 @@ export default class OrdenesServicioReporteProveedorComponent
   implements OnInit
 {
   config = inject(DynamicDialogConfig);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
   messageService = inject(MessageService);
   apiRequestService = inject(ApiRequestService);
   ref = inject(DynamicDialogRef);
@@ -28,7 +28,7 @@ export default class OrdenesServicioReporteProveedorComponent
     if (this.id !== 0) this.onLoadData();
   }
   onLoadData() {
-    const customerId = this.customerIdService.getCustomerId();
+    const customerId = this.custIdService.getCustomerId();
     const urlApi = `ServiceOrders/OrdenesServicioReporteProveedor/${this.id}/${customerId}`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       // Actualizamos el valor del signal con los datos recibidos

@@ -1,16 +1,16 @@
-import { Component, OnInit, inject } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import LuxuryAppComponentsModule from "app/shared/luxuryapp-components.module";
-import { DynamicDialogConfig, DynamicDialogRef } from "primeng/dynamicdialog";
-import { ISelectItem } from "src/app/core/interfaces/select-Item.interface";
-import { ApiRequestService } from "src/app/core/services/api-request.service";
-import { AuthService } from "src/app/core/services/auth.service";
-import { CustomerIdService } from "src/app/core/services/customer-id.service";
-import CustomInputModule from "src/app/custom-components/custom-input-form/custom-input.module";
+import { Component, OnInit, inject } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
+import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: "app-form-control-prestamo-herramienta",
-  templateUrl: "./form-control-prestamo-herramienta.component.html",
+  selector: 'app-form-control-prestamo-herramienta',
+  templateUrl: './form-control-prestamo-herramienta.component.html',
   standalone: true,
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
@@ -20,27 +20,25 @@ export default class FormControlPrestamoHerramientaComponent implements OnInit {
   ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);
   authS = inject(AuthService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
 
   submitting: boolean = false;
 
   id: number = 0;
   cb_applicationUser: ISelectItem[] = [];
   cb_tool: any[] = [];
-  today: string = "";
+  today: string = '';
   form: FormGroup;
 
   ngOnInit(): void {
     this.apiRequestService
-      .onGetSelectItem(
-        `ApplicationUser/${this.customerIdService.getCustomerId()}`
-      )
+      .onGetSelectItem(`ApplicationUser/${this.custIdService.getCustomerId()}`)
       .then((response: any) => {
         this.cb_applicationUser = response;
       });
 
     this.apiRequestService
-      .onGetSelectItem(`tool/${this.customerIdService.getCustomerId()}`)
+      .onGetSelectItem(`tool/${this.custIdService.getCustomerId()}`)
       .then((response: any) => {
         this.cb_tool = response;
       });
@@ -48,13 +46,13 @@ export default class FormControlPrestamoHerramientaComponent implements OnInit {
     this.today = new Date().toISOString().slice(0, 16);
     this.form = this.formBuilder.group({
       id: { value: this.id, disabled: true },
-      customerId: [this.customerIdService.customerId],
+      customerId: [this.custIdService.customerId],
       fechaSalida: [this.today, Validators.required],
       fechaRegreso: [],
-      applicationUserId: ["", Validators.required],
-      applicationUser: ["", Validators.required],
-      toolId: ["", Validators.required],
-      tool: ["", Validators.required],
+      applicationUserId: ['', Validators.required],
+      applicationUser: ['', Validators.required],
+      toolId: ['', Validators.required],
+      tool: ['', Validators.required],
       observaciones: [],
       applicationUserResponsableId: [this.authS.applicationUserId],
     });

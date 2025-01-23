@@ -20,11 +20,11 @@ export default class ListCondominosComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
   authS = inject(AuthService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
 
   data: IListCondomino[] = [];
   ref: DynamicDialogRef;
-  customerId$: Observable<number> = this.customerIdService.getCustomerId$();
+  customerId$: Observable<number> = this.custIdService.getCustomerId$();
 
   ngOnInit(): void {
     this.onLoadData();
@@ -34,7 +34,7 @@ export default class ListCondominosComponent implements OnInit {
   }
 
   onLoadData() {
-    const urlApi = `ListCondomino/GetAllAsync/${this.customerIdService.customerId}`;
+    const urlApi = `ListCondomino/GetAllAsync/${this.custIdService.customerId}`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });

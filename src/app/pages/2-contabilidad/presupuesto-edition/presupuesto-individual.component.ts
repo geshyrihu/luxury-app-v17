@@ -1,28 +1,28 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { DynamicDialogRef } from 'primeng/dynamicdialog';
-import { ApiRequestService } from 'src/app/core/services/api-request.service';
-import { AuthService } from 'src/app/core/services/auth.service';
-import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
-import EditPartidaCedulaComponent from 'src/app/pages/2-contabilidad/presupuesto/edit-partida-cedula.component';
-import OrdenesCompraCedulaComponent from '../../5.2-compras/compras/cedula-presupuestal/ordenes-compra-cedula/ordenes-compra-cedula.component';
-import AddPartidaCedulaComponent from '../presupuesto/add-partida-cedula.component';
-import InfoCuentaComponent from './info-cuenta/info-cuenta.component';
-import MantenimientosProgramadosComponent from './mantenimientos-programados/mantenimientos-programados.component';
-import PresupuestoDetalleEdicionHistorialComponent from './presupuesto-detalle-edicion-historial/presupuesto-detalle-edicion-historial.component';
-import PresupuestoEditionFileComponent from './presupuesto-edition-file/presupuesto-edition-file.component';
+import { Component, OnInit, inject } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
+import LuxuryAppComponentsModule from "app/shared/luxuryapp-components.module";
+import { DynamicDialogRef } from "primeng/dynamicdialog";
+import { ApiRequestService } from "src/app/core/services/api-request.service";
+import { AuthService } from "src/app/core/services/auth.service";
+import { CustomerIdService } from "src/app/core/services/customer-id.service";
+import { DialogHandlerService } from "src/app/core/services/dialog-handler.service";
+import EditPartidaCedulaComponent from "src/app/pages/2-contabilidad/presupuesto/edit-partida-cedula.component";
+import OrdenesCompraCedulaComponent from "../../5.2-compras/compras/cedula-presupuestal/ordenes-compra-cedula/ordenes-compra-cedula.component";
+import AddPartidaCedulaComponent from "../presupuesto/add-partida-cedula.component";
+import InfoCuentaComponent from "./info-cuenta/info-cuenta.component";
+import MantenimientosProgramadosComponent from "./mantenimientos-programados/mantenimientos-programados.component";
+import PresupuestoDetalleEdicionHistorialComponent from "./presupuesto-detalle-edicion-historial/presupuesto-detalle-edicion-historial.component";
+import PresupuestoEditionFileComponent from "./presupuesto-edition-file/presupuesto-edition-file.component";
 
 @Component({
-  selector: 'app-presupuesto-individual',
-  templateUrl: './presupuesto-individual.component.html',
+  selector: "app-presupuesto-individual",
+  templateUrl: "./presupuesto-individual.component.html",
   standalone: true,
   imports: [LuxuryAppComponentsModule],
 })
 export default class PresupuestoIndividualComponent implements OnInit {
   authS = inject(AuthService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
   private activatedRoute = inject(ActivatedRoute);
@@ -54,7 +54,7 @@ export default class PresupuestoIndividualComponent implements OnInit {
         {
           idBudgetCard: this.id,
         },
-        'Agregar Partida',
+        "Agregar Partida",
         this.dialogHandlerService.dialogSizeMd
       )
       .then((result: boolean) => {
@@ -79,7 +79,7 @@ export default class PresupuestoIndividualComponent implements OnInit {
       {
         id,
       },
-      'Historial de movimientos',
+      "Historial de movimientos",
       this.dialogHandlerService.dialogSizeMd
     );
   }
@@ -89,7 +89,7 @@ export default class PresupuestoIndividualComponent implements OnInit {
       {
         id: this.id,
       },
-      'Consideraciones',
+      "Consideraciones",
       this.dialogHandlerService.dialogSizeMd
     );
   }
@@ -116,7 +116,7 @@ export default class PresupuestoIndividualComponent implements OnInit {
       {
         cuentaId: cuentaId,
       },
-      'Mantenimientos programados',
+      "Mantenimientos programados",
       this.dialogHandlerService.dialogSizeMd
     );
   }
@@ -128,7 +128,7 @@ export default class PresupuestoIndividualComponent implements OnInit {
         {
           id: id,
         },
-        'Soporte documentos',
+        "Soporte documentos",
         this.dialogHandlerService.dialogSizeMd
       )
       .then((result: boolean) => {
@@ -175,7 +175,7 @@ export default class PresupuestoIndividualComponent implements OnInit {
     if (item.percentageIncrease > 100) return;
     // Obtén el valor original de monthlyBudget (asegúrate de que sea un número)
     const monthlyBudgetOriginal = parseFloat(
-      item.monthlyBudgetFormet.replace(/,/g, '')
+      item.monthlyBudgetFormet.replace(/,/g, "")
     );
 
     // Obtén el porcentaje de aumento (asegúrate de que sea un número)
@@ -211,7 +211,7 @@ export default class PresupuestoIndividualComponent implements OnInit {
           this.data.budgetDetailDto[index] = {
             ...this.data.budgetDetailDto[index],
             monthlyBudget: newmonthlyBudget.toLocaleString(),
-            percentageIncrease: percentageIncrease.toFixed(2) + '%',
+            percentageIncrease: percentageIncrease.toFixed(2) + "%",
             totalBudget: (
               this.data.duracion * newmonthlyBudget
             ).toLocaleString(),
@@ -231,7 +231,7 @@ export default class PresupuestoIndividualComponent implements OnInit {
           partidaPresupuestalId: presupuestoAnteriorDetalleId,
           cedulaPresupuestalId: presupuestoAnteriorId,
         },
-        'Ordenes de Compra',
+        "Ordenes de Compra",
         this.dialogHandlerService.dialogSizeFull
       )
       .then((result: boolean) => {
@@ -244,21 +244,21 @@ export default class PresupuestoIndividualComponent implements OnInit {
     originalValor: string | null
   ): string {
     // Elimina comas de los valores y convierte a números
-    const nuevoValorNumero = parseFloat(nuevoValor.replace(/,/g, ''));
+    const nuevoValorNumero = parseFloat(nuevoValor.replace(/,/g, ""));
 
-    const originalValorNumero = parseFloat(originalValor.replace(/,/g, ''));
+    const originalValorNumero = parseFloat(originalValor.replace(/,/g, ""));
 
     if (
       isNaN(nuevoValorNumero) ||
       isNaN(originalValorNumero) ||
       originalValorNumero === 0
     ) {
-      return 'N/A'; // Maneja valores no válidos o cero
+      return "N/A"; // Maneja valores no válidos o cero
     }
 
     const aumento = nuevoValorNumero - originalValorNumero;
     const porcentajeAumento = (aumento / originalValorNumero) * 100;
 
-    return porcentajeAumento.toFixed(2) + '%';
+    return porcentajeAumento.toFixed(2) + "%";
   }
 }

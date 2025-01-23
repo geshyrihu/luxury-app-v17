@@ -11,7 +11,7 @@ import { environment } from 'src/environments/environment';
 })
 export default class CabeceraSolicitudPagoPdfComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
 
   data: any;
 
@@ -28,7 +28,7 @@ export default class CabeceraSolicitudPagoPdfComponent implements OnInit {
   }
 
   onloadData() {
-    const urlApi = 'Customers/' + this.customerIdService.getCustomerId();
+    const urlApi = 'Customers/' + this.custIdService.getCustomerId();
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });

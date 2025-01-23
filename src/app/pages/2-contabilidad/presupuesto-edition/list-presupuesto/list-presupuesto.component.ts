@@ -21,25 +21,25 @@ export default class ListPresupuestoComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
   authS = inject(AuthService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
   customToastService = inject(CustomToastService);
   router = inject(Router);
 
   data: any[] = [];
   ref: DynamicDialogRef;
 
-  customerId$: Observable<number> = this.customerIdService.getCustomerId$();
+  customerId$: Observable<number> = this.custIdService.getCustomerId$();
 
   ngOnInit() {
     this.onLoadData();
-    this.customerId$ = this.customerIdService.getCustomerId$();
+    this.customerId$ = this.custIdService.getCustomerId$();
     this.customerId$.subscribe(() => {
       this.onLoadData();
     });
   }
   onLoadData() {
     this.apiRequestService
-      .onGetList(`Presupuesto/GetList/${this.customerIdService.customerId}`)
+      .onGetList(`Presupuesto/GetList/${this.custIdService.customerId}`)
       .then((result: any) => {
         this.data = result;
       });

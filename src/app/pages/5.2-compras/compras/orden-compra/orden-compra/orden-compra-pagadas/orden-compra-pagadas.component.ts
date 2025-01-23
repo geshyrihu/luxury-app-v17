@@ -19,25 +19,25 @@ import OrdenCompraComponent from '../orden-compra.component';
 export default class OrdenCompraPagadasComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
   router = inject(Router);
   ordenCompraService = inject(OrdenCompraService);
 
   data: any[] = [];
-  customerId$: Observable<number> = this.customerIdService.getCustomerId$();
+  customerId$: Observable<number> = this.custIdService.getCustomerId$();
   tipo = 1;
   ref: DynamicDialogRef;
 
   ngOnInit(): void {
     this.onLoadData(1);
-    this.customerId$ = this.customerIdService.getCustomerId$();
+    this.customerId$ = this.custIdService.getCustomerId$();
     this.customerId$.subscribe((resp) => {
       this.onLoadData(1);
     });
   }
 
   onLoadData(type: any) {
-    const urlApi = `OrdenCompra/Pagadas/${this.customerIdService.customerId}/${type}`;
+    const urlApi = `OrdenCompra/Pagadas/${this.custIdService.customerId}/${type}`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });

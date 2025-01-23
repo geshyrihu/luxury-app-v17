@@ -1,0 +1,188 @@
+<div class="row align-items-center">
+  <!-- Información del Cliente -->
+  <div class="col-md-4 text-start">
+    <img
+      *ngIf="photoPath"
+      [src]="photoPath"
+      alt="Logo del cliente"
+      class="img-fluid border mb-2"
+      style="max-width: 80px"
+    />
+
+    <!-- <p class="text-muted">{{ customerData.nameCustomer }}</p> -->
+  </div>
+
+  <!-- Título del Reporte -->
+  <div class="col-md-4 text-center" *ngIf="nameCustomer">
+    <h5>{{ nameCustomer }}</h5>
+  </div>
+
+  <!-- Información de los Administradores -->
+  <div class="col-md-4 text-end"></div>
+</div>
+<div class="card" *ngIf="minutas">
+  <!-- Tabla de solicitudes pendientes -->
+  <table *ngIf="minutas" class="custom-table-report">
+    <tr>
+      <th scope="col" colspan="6" class="text-center">
+        <div class="row align-items-center">
+          <div class="col-md-4 text-end"></div>
+          <!-- Título del Reporte -->
+          <div class="col-md-4 text-center">
+            <i class="fa-solid fa-x fa-lg text-danger me-2"></i>
+            SOLICITUDES PENDIENTES MINUTAS
+          </div>
+
+          <!-- Información de los Administradores -->
+          <div class="col-md-4 text-end"></div>
+        </div>
+      </th>
+    </tr>
+    <tr>
+      <th scope="col" class="text-center" style="width: 5%">N°</th>
+      <th scope="col" class="text-center" style="width: 10%">FOLIO</th>
+      <th scope="col" class="text-center" style="width: 10%">FECHA SOL.</th>
+      <th scope="col" class="text-center" style="width: 40%">SOLICITUD</th>
+      <!-- <th scope="col" class="text-center" style="width: 5%">DIAS</th> -->
+      <th scope="col" class="text-center" style="width: 40%">SEGUIMIENTO</th>
+    </tr>
+
+    <tr *ngFor="let ticket of minutas; let rowIndex = index">
+      <td class="text-center">{{ rowIndex + 1 }}</td>
+      <td class="text-center">{{ ticket.folio }}</td>
+      <td class="text-center">{{ ticket.date }}</td>
+      <td>
+        <strong>
+          {{ ticket.title }}
+        </strong>
+        <br />{{ ticket.requestService }}
+      </td>
+      <!-- <td class="text-center">{{ ticket.dias }}</td> -->
+      <td>{{ ticket.fechaUltimoSeguimiento }} - {{ ticket.seguimiento }}</td>
+    </tr>
+  </table>
+</div>
+<div class="card" *ngIf="tickets">
+  <!-- Tabla de solicitudes pendientes -->
+  @for (item of tickets; track $index) {
+  <div class="table-container">
+    <table *ngIf="tickets" class="custom-table-report">
+      <tr>
+        <th scope="col" colspan="6" class="text-center">
+          <div class="row align-items-center">
+            <div class="col-md-4 text-end"></div>
+            <!-- Título del Reporte -->
+            <div class="col-md-4 text-center">
+              <i class="fa-solid fa-x fa-lg text-danger me-2"></i>
+              SOLICITUDES PENDIENTES {{ item.category }}
+            </div>
+
+            <!-- Información de los Administradores -->
+            <div class="col-md-4 text-end"></div>
+          </div>
+        </th>
+      </tr>
+      <tr>
+        <th scope="col" class="text-center" style="width: 5%">N°</th>
+        <th scope="col" class="text-center" style="width: 10%">FOLIO</th>
+        <th scope="col" class="text-center" style="width: 10%">FECHA SOL.</th>
+        <th scope="col" class="text-center" style="width: 40%">SOLICITUD</th>
+        <!-- <th scope="col" class="text-center" style="width: 5%">DIAS</th> -->
+        <th scope="col" class="text-center" style="width: 40%">SEGUIMIENTO</th>
+      </tr>
+
+      <tr *ngFor="let ticket of item.tickets; let rowIndex = index">
+        <td class="text-center">{{ rowIndex + 1 }}</td>
+        <td class="text-center">{{ ticket.folio }}</td>
+        <td class="text-center">{{ ticket.date }}</td>
+        <td>
+          <strong>
+            {{ ticket.title }}
+          </strong>
+          <br />{{ ticket.description }}
+        </td>
+        <!-- <td class="text-center">{{ ticket.dias }}</td> -->
+        <td>{{ ticket.fechaUltimoSeguimiento }} - {{ ticket.seguimiento }}</td>
+      </tr>
+    </table>
+  </div>
+  }
+</div>
+
+<div class="card" *ngIf="pendingLegal">
+  <!-- Tabla de solicitudes pendientes -->
+  <table *ngIf="pendingLegal" class="custom-table-report">
+    <tr>
+      <th scope="col" colspan="6" class="text-center">
+        <div class="row align-items-center">
+          <div class="col-md-4 text-end"></div>
+          <!-- Título del Reporte -->
+          <div class="col-md-4 text-center">
+            <i class="fa-solid fa-x fa-lg text-danger me-2"></i>
+            SOLICITUDES PENDIENTES LEGAL
+          </div>
+
+          <!-- Información de los Administradores -->
+          <div class="col-md-4 text-end"></div>
+        </div>
+      </th>
+    </tr>
+    <tr>
+      <th scope="col" class="text-center" style="width: 5%">N°</th>
+      <th scope="col" class="text-center" style="width: 10%">FOLIO</th>
+      <th scope="col" class="text-center" style="width: 10%">FECHA SOL.</th>
+      <th scope="col" class="text-center" style="width: 40%">SOLICITUD</th>
+      <!-- <th scope="col" class="text-center" style="width: 5%">DIAS</th> -->
+      <th scope="col" class="text-center" style="width: 40%">SEGUIMIENTO</th>
+    </tr>
+
+    <tr *ngFor="let ticket of pendingLegal; let rowIndex = index">
+      <td class="text-center">{{ rowIndex + 1 }}</td>
+      <td class="text-center">{{ ticket.folio }}</td>
+      <td class="text-center">{{ ticket.date }}</td>
+      <td>
+        <strong>
+          {{ ticket.title }}
+        </strong>
+        <br />{{ ticket.description }}
+      </td>
+      <!-- <td class="text-center">{{ ticket.dias }}</td> -->
+      <td>
+        {{ ticket.fechaUltimoSeguimiento }} - {{ ticket.ultimoSeguimiento }}
+      </td>
+    </tr>
+  </table>
+</div>
+<div class="card">
+  <!-- Tabla de solicitudes pendientes -->
+  <table class="custom-table-report">
+    <tr>
+      <th scope="col" colspan="6" class="text-center">
+        <div class="row align-items-center">
+          <div class="col-md-4 text-end"></div>
+          <!-- Título del Reporte -->
+          <div class="col-md-4 text-center">
+            <i class="fa-solid fa-x fa-lg text-danger me-2"></i>
+            ENVIO DE ESTADOS FINANCIEROS
+          </div>
+
+          <!-- Información de los Administradores -->
+          <div class="col-md-4 text-end"></div>
+        </div>
+      </th>
+    </tr>
+    <tr>
+      <th scope="col" class="text-center" style="width: 10%">N°</th>
+      <th scope="col" class="text-center" style="width: 10%">PERIODO</th>
+      <th scope="col" class="text-center" style="width: 40%">CONTADOR</th>
+      <th scope="col" class="text-center" style="width: 40%">FECHA DE ENVIO</th>
+    </tr>
+
+    <tr *ngFor="let ticket of envioFinancieros; let rowIndex = index">
+      <td class="text-center">{{ rowIndex + 1 }}</td>
+      <td class="text-center">{{ ticket.period }}</td>
+      <td class="text-center">{{ ticket.fullName }}</td>
+      <td class="text-center">{{ ticket.sendDate }}</td>
+    </tr>
+  </table>
+</div>

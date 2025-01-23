@@ -1,5 +1,52 @@
 <p-toast position="top-right" [baseZIndex]="99999"></p-toast>
 
+<header id="page-topbar" class="transparent-topbar">
+  <div class="navbar-header">
+    <div class="d-flex align-items-center">
+      <app-navigation-icon />
+      <app-customer-selection />
+      <app-current-title />
+    </div>
+    <div class="d-flex align-items-center">
+      <app-search />
+      <app-user-profile />
+      <app-notifications />
+    </div>
+  </div>
+</header>
+<style>
+  /* Fondo negro transparente */
+  .transparent-topbar {
+    background-color: rgba(0, 0, 0, 0.8); /* Negro con 80% de opacidad */
+    color: #fff; /* Texto en blanco para contraste */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); /* Sombra para efecto elegante */
+    position: fixed; /* Fijar la barra en la parte superior */
+    width: 100%; /* Asegurar que cubra todo el ancho */
+    z-index: 1030; /* Asegurar que esté sobre otros elementos */
+  }
+
+  /* Estilo para los elementos internos */
+  .navbar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1.5rem; /* Espaciado interno */
+  }
+
+  #page-topbar .d-flex > * {
+    margin: 0 0.5rem; /* Separación entre elementos */
+  }
+
+  /* Personalización para el título */
+  .transparent-topbar app-current-title {
+    flex-grow: 1;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #fff;
+  }
+</style>
+
 <!-- <header id="page-topbar">
   <div class="navbar-header navbar-white bg-white">
     <div class="d-flex">
@@ -56,49 +103,3 @@
     align-items: center;
   }
 </style> -->
-<header id="page-topbar" class="transparent-topbar">
-  <div class="navbar-header">
-    <div class="d-flex align-items-center">
-      <app-navigation-icon />
-      <app-customer-selection />
-      <app-current-title />
-    </div>
-    <div class="d-flex align-items-center">
-      <app-search />
-      <app-user-profile />
-      <app-notifications />
-    </div>
-  </div>
-</header>
-<style>
-  /* Fondo negro transparente */
-  .transparent-topbar {
-    background-color: rgba(0, 0, 0, 0.8); /* Negro con 80% de opacidad */
-    color: #fff; /* Texto en blanco para contraste */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); /* Sombra para efecto elegante */
-    position: fixed; /* Fijar la barra en la parte superior */
-    width: 100%; /* Asegurar que cubra todo el ancho */
-    z-index: 1030; /* Asegurar que esté sobre otros elementos */
-  }
-
-  /* Estilo para los elementos internos */
-  .navbar-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.75rem 1.5rem; /* Espaciado interno */
-  }
-
-  #page-topbar .d-flex > * {
-    margin: 0 0.5rem; /* Separación entre elementos */
-  }
-
-  /* Personalización para el título */
-  .transparent-topbar app-current-title {
-    flex-grow: 1;
-    text-align: center;
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #fff;
-  }
-</style>

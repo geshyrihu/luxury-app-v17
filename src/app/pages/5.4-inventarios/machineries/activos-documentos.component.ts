@@ -17,7 +17,7 @@ export default class ActivosDocumentosComponent implements OnInit {
   dialogHandlerService = inject(DialogHandlerService);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
 
   data: any[] = [];
   machineryId: number = 0;

@@ -25,7 +25,7 @@ export default class BitacoraMantenimientoComponent implements OnInit {
 
   dateService = inject(DateService);
   authServide = inject(AuthService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
   rangoCalendarioService = inject(FiltroCalendarService);
 
   customerList: any[] = [];
@@ -40,7 +40,7 @@ export default class BitacoraMantenimientoComponent implements OnInit {
   data: any[];
   ref: DynamicDialogRef;
 
-  customerId$: Observable<number> = this.customerIdService.getCustomerId$();
+  customerId$: Observable<number> = this.custIdService.getCustomerId$();
 
   ngOnInit(): void {
     this.onLoadData();
@@ -54,7 +54,7 @@ export default class BitacoraMantenimientoComponent implements OnInit {
     });
   }
   onLoadData() {
-    const urlApi = `BitacoraMantenimiento/GetAll/${this.customerIdService.customerId}/${this.fechaInicial}/${this.fechaFinal}`;
+    const urlApi = `BitacoraMantenimiento/GetAll/${this.custIdService.customerId}/${this.fechaInicial}/${this.fechaFinal}`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });

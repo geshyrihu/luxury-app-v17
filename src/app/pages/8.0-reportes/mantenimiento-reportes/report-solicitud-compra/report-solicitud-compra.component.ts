@@ -16,7 +16,7 @@ import PagetitleReportComponent from 'src/app/shared/cabeceras/pagetitlereport/p
 })
 export default class ReportSolicitudCompraComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
   dateService = inject(DateService);
   periodoMonthService = inject(PeriodoMonthService);
 
@@ -26,7 +26,7 @@ export default class ReportSolicitudCompraComponent implements OnInit {
   dataProvider: any = [];
   ref: DynamicDialogRef;
 
-  customerId$: Observable<number> = this.customerIdService.getCustomerId$();
+  customerId$: Observable<number> = this.custIdService.getCustomerId$();
 
   periodoInicial$: Observable<Date> =
     this.periodoMonthService.getPeriodoInicial$();
@@ -43,7 +43,7 @@ export default class ReportSolicitudCompraComponent implements OnInit {
   }
   onLoadData() {
     const urlApi = `MaintenanceReport/solicitudinsumos/${
-      this.customerIdService.customerId
+      this.custIdService.customerId
     }/${this.dateService.getDateFormat(
       this.periodoMonthService.getPeriodoInicio
     )}`;

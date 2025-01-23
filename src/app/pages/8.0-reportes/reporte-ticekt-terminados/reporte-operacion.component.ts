@@ -22,7 +22,7 @@
 //   public ticketFilterService = inject(TicketFilterService);
 //   dataService = inject(DataConnectorService);
 //   apiRequestService = inject(ApiRequestService);
-//   customerIdService = inject(CustomerIdService);
+//   custIdService = inject(CustomerIdService);
 //   urlImg = '';
 //   data: any[] = [];
 //   customerId: number;
@@ -33,7 +33,7 @@
 //   fechaInicial = '';
 //   fechaFinal = '';
 
-//   customerId$: Observable<number> = this.customerIdService.getCustomerId$();
+//   customerId$: Observable<number> = this.custIdService.getCustomerId$();
 
 //   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
@@ -41,9 +41,9 @@
 //     this.fechaInicial = this.ticketFilterService.filterTicket.finishedStart;
 //     this.fechaFinal = this.ticketFilterService.filterTicket.finishedEnd;
 //     this.onLoadData();
-//     this.customerId$ = this.customerIdService.getCustomerId$();
+//     this.customerId$ = this.custIdService.getCustomerId$();
 //     this.customerId$.subscribe((resp) => {
-//       this.ticketFilterService.setIdCustomer(this.customerIdService.customerId);
+//       this.ticketFilterService.setIdCustomer(this.custIdService.customerId);
 //       this.onLoadData();
 //     });
 //   }

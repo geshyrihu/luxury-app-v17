@@ -15,14 +15,14 @@ import { PeriodoMonthService } from 'src/app/core/services/periodo-month.service
 })
 export default class ReportEntradaAlmacenComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
   dateService = inject(DateService);
   periodoMonthService = inject(PeriodoMonthService);
 
   data: any[] = [];
   ref: DynamicDialogRef;
 
-  customerId$: Observable<number> = this.customerIdService.getCustomerId$();
+  customerId$: Observable<number> = this.custIdService.getCustomerId$();
 
   periodoInicial$: Observable<Date> =
     this.periodoMonthService.getPeriodoInicial$();
@@ -39,7 +39,7 @@ export default class ReportEntradaAlmacenComponent implements OnInit {
   }
   onLoadData() {
     const urlApi = `MaintenanceReport/entradaproducto/${
-      this.customerIdService.customerId
+      this.custIdService.customerId
     }/${this.dateService.getDateFormat(
       this.periodoMonthService.getPeriodoInicio
     )}`;

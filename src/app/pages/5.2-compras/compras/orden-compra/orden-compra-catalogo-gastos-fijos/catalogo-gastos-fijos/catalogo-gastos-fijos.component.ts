@@ -23,17 +23,17 @@ export default class CatalogoGastosFijosComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
   authS = inject(AuthService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
   catalogoGastosFijosService = inject(CatalogoGastosFijosService);
 
   data: any = [];
   ref: DynamicDialogRef;
-  customerId$: Observable<number> = this.customerIdService.getCustomerId$();
+  customerId$: Observable<number> = this.custIdService.getCustomerId$();
   fechaSolicitud: string = '';
 
   ngOnInit(): void {
     flatpickrFactory();
-    this.customerId$ = this.customerIdService.getCustomerId$();
+    this.customerId$ = this.custIdService.getCustomerId$();
     this.fechaSolicitud = date.toISOString().slice(0, 10);
     this.onLoadData();
     this.customerId$.subscribe(() => {
@@ -43,7 +43,7 @@ export default class CatalogoGastosFijosComponent implements OnInit {
 
   onLoadData() {
     const urlApi =
-      'CatalogoGastosFijos/GetAll/' + this.customerIdService.customerId;
+      'CatalogoGastosFijos/GetAll/' + this.custIdService.customerId;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
@@ -80,7 +80,7 @@ export default class CatalogoGastosFijosComponent implements OnInit {
   }
 
   createOrdenesCompra() {
-    const urlApi = `OrdenCompra/GenerarOrdenCompraFijos/${this.fechaSolicitud}/${this.customerIdService.customerId}`;
+    const urlApi = `OrdenCompra/GenerarOrdenCompraFijos/${this.fechaSolicitud}/${this.custIdService.customerId}`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {});
   }
 }

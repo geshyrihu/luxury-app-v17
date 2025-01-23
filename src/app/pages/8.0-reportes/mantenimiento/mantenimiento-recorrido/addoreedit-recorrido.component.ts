@@ -20,7 +20,7 @@ export default class RecorridoAddOrEditComponent implements OnInit {
   formBuilder = inject(FormBuilder);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
 
   submitting: boolean = false;
 
@@ -33,7 +33,7 @@ export default class RecorridoAddOrEditComponent implements OnInit {
   onLoadSelectItem() {
     this.apiRequestService
       .onGetSelectItem(
-        `MachineriesGetAll/${this.customerIdService.getCustomerId()}`
+        `MachineriesGetAll/${this.custIdService.getCustomerId()}`
       )
       .then((response: any) => {
         this.cb_machinery = response;

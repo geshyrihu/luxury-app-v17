@@ -25,7 +25,7 @@ export default class StatusRequestDismissalComponent implements OnInit {
 
   statusSolicitudVacanteService = inject(StatusSolicitudVacanteService);
   authS = inject(AuthService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
   router = inject(Router);
 
   workPositionId = this.statusSolicitudVacanteService.getworkPositionId();

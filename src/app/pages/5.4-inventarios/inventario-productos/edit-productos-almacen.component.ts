@@ -18,7 +18,7 @@ export default class EditProductosAlmacenComponent implements OnInit {
   formBuilder = inject(FormBuilder);
   authS = inject(AuthService);
   config = inject(DynamicDialogConfig);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
   ref = inject(DynamicDialogRef);
 
   submitting: boolean = false;
@@ -28,7 +28,7 @@ export default class EditProductosAlmacenComponent implements OnInit {
   // stokMaximo: 0;
   form: FormGroup = this.formBuilder.group({
     id: { value: this.id, disabled: true },
-    customerId: [this.customerIdService.customerId, Validators.required],
+    customerId: [this.custIdService.customerId, Validators.required],
     productoId: ['', Validators.required],
     producto: [''],
     existencia: [0, Validators.required],

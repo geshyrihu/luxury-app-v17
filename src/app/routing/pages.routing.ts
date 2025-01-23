@@ -1,12 +1,30 @@
 import { Routes } from '@angular/router';
-import { AuthGuard } from '../core/guards/auth.guard';
+import { AuthGuard } from 'src/app/core/guards/auth.guard';
 
 export default [
   {
     path: '',
-    loadComponent: () => import('src/app/pages/dashboard/dashboard.component'),
+    loadComponent: () => import('src/app/pages/home/home.component'),
     canActivate: [AuthGuard],
-    data: { title: 'Dashboard' },
+    data: { title: 'Inicio' },
+  },
+  {
+    path: 'almacen',
+    loadChildren: () => import('./almacen.routing'),
+    canActivate: [AuthGuard],
+    data: { title: 'Almacén' },
+  },
+  {
+    path: 'calendars',
+    loadChildren: () => import('./calendars.routing'),
+    canActivate: [AuthGuard],
+    data: { title: 'Calendario' },
+  },
+  {
+    path: 'contabilidad',
+    loadChildren: () => import('./contabilidad.routing'),
+    canActivate: [AuthGuard],
+    data: { title: 'Contabilidad' },
   },
   {
     path: 'dashboard',
@@ -15,22 +33,37 @@ export default [
     data: { title: 'Dashboard' },
   },
   {
-    path: 'settings-home',
-    loadComponent: () =>
-      import('src/app/pages/settings/settings-home/settings-home.component'),
+    path: 'directory',
+    loadChildren: () => import('./directory.routing'),
     canActivate: [AuthGuard],
-    data: { title: 'Settings' },
+    data: { title: 'Directorio' },
+  },
+  {
+    path: 'documento',
+    loadChildren: () => import('./documents.routing'),
+    data: { title: 'Documento' },
+  },
+  {
+    path: 'entrega-recepcion',
+    loadChildren: () => import('./entrega-recepcion.routing'),
+    canActivate: [AuthGuard],
   },
   {
     path: 'home',
     loadComponent: () => import('src/app/pages/home/home.component'),
     canActivate: [AuthGuard],
-    data: { title: 'Dashboard' },
+    data: { title: 'Inicio' },
   },
   {
-    path: 'home-ticket',
+    path: 'home-anuncios',
     loadComponent: () =>
-      import('src/app/pages/home/jefe-mantenimiento/home-tickets.component'),
+      import('src/app/pages/home/jefe-mantenimiento/home-anuncios.component'),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'home-attendance',
+    loadComponent: () =>
+      import('src/app/pages/home/jefe-mantenimiento/home-attendance.component'),
     canActivate: [AuthGuard],
   },
   {
@@ -40,82 +73,9 @@ export default [
     canActivate: [AuthGuard],
   },
   {
-    path: 'home-inventory',
-    loadComponent: () =>
-      import('src/app/pages/home/jefe-mantenimiento/home-inventory.component'),
-    canActivate: [AuthGuard],
-  },
-  {
     path: 'home-calendar',
     loadComponent: () =>
       import('src/app/pages/home/jefe-mantenimiento/home-calendar.component'),
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'home-documents',
-    loadComponent: () =>
-      import('src/app/pages/home/jefe-mantenimiento/home-documents.component'),
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'home-notification',
-    loadComponent: () =>
-      import(
-        'src/app/pages/home/jefe-mantenimiento/home-notification.component'
-      ),
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'home-anuncios',
-    loadComponent: () =>
-      import('src/app/pages/home/jefe-mantenimiento/home-anuncios.component'),
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'home-compras',
-    loadComponent: () =>
-      import('src/app/pages/home/jefe-mantenimiento/home-compras.component'),
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'home-reports',
-    loadComponent: () =>
-      import('src/app/pages/home/jefe-mantenimiento/home-reports.component'),
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'home-attendance',
-    loadComponent: () =>
-      import('src/app/pages/home/jefe-mantenimiento/home-attendance.component'),
-    canActivate: [AuthGuard],
-  },
-
-  {
-    path: 'home-warehouses',
-    loadComponent: () =>
-      import('src/app/pages/home/jefe-mantenimiento/home-warehouses.component'),
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'home-inspection',
-    loadComponent: () =>
-      import('src/app/pages/home/jefe-mantenimiento/home-inspection.component'),
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'home-directorios',
-    loadComponent: () =>
-      import(
-        'src/app/pages/home/jefe-mantenimiento/home-directorios.component'
-      ),
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'home-juntas-comite',
-    loadComponent: () =>
-      import(
-        'src/app/pages/home/jefe-mantenimiento/home-juntas-comite.component'
-      ),
     canActivate: [AuthGuard],
   },
   {
@@ -127,23 +87,94 @@ export default [
     canActivate: [AuthGuard],
   },
   {
-    path: 'catalog',
-    loadChildren: () => import('./catalog.routing'),
+    path: 'home-compras',
+    loadComponent: () =>
+      import('src/app/pages/home/jefe-mantenimiento/home-compras.component'),
     canActivate: [AuthGuard],
-    data: { title: 'Catalog' },
-  },
-
-  {
-    path: 'contabilidad',
-    loadChildren: () => import('./contabilidad.routing'),
-    canActivate: [AuthGuard],
-    data: { title: 'Contabilidad' },
   },
   {
-    path: 'supervision',
-    loadChildren: () => import('./supervision.routing'),
+    path: 'home-directorios',
+    loadComponent: () =>
+      import(
+        'src/app/pages/home/jefe-mantenimiento/home-directorios.component'
+      ),
     canActivate: [AuthGuard],
-    data: { title: 'Supervision' },
+  },
+  {
+    path: 'home-documents',
+    loadComponent: () =>
+      import('src/app/pages/home/jefe-mantenimiento/home-documents.component'),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'home-inspection',
+    loadComponent: () =>
+      import('src/app/pages/home/jefe-mantenimiento/home-inspection.component'),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'home-inventory',
+    loadComponent: () =>
+      import('src/app/pages/home/jefe-mantenimiento/home-inventory.component'),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'home-juntas-comite',
+    loadComponent: () =>
+      import(
+        'src/app/pages/home/jefe-mantenimiento/home-juntas-comite.component'
+      ),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'home-notification',
+    loadComponent: () =>
+      import(
+        'src/app/pages/home/jefe-mantenimiento/home-notification.component'
+      ),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'home-reports',
+    loadComponent: () =>
+      import('src/app/pages/home/jefe-mantenimiento/home-reports.component'),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'home-ticket',
+    loadComponent: () =>
+      import('src/app/pages/home/jefe-mantenimiento/home-tickets.component'),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'home-warehouses',
+    loadComponent: () =>
+      import('src/app/pages/home/jefe-mantenimiento/home-warehouses.component'),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'inspections',
+    loadChildren: () => import('./inspection.routing'),
+    canActivate: [AuthGuard],
+    data: { title: 'Inspecciones' },
+  },
+  {
+    path: 'legal',
+    loadChildren: () => import('./legal.routing'),
+    canActivate: [AuthGuard],
+    data: { title: 'Legal' },
+  },
+  {
+    path: 'logbook',
+    loadChildren: () => import('./logbook.routing'),
+    canActivate: [AuthGuard],
+    data: { title: 'Bitácora' },
+  },
+  {
+    path: 'menu',
+    loadChildren: () => import('./menu-movil.routing'),
+    canActivate: [AuthGuard],
+    data: { title: 'Menu' },
   },
   {
     path: 'mantenimiento',
@@ -152,10 +183,13 @@ export default [
     data: { title: 'Mantenimiento' },
   },
   {
-    path: 'reclutamiento',
-    loadChildren: () => import('./reclutamiento.routing'),
+    path: 'movil-options',
+    loadComponent: () =>
+      import(
+        'src/app/layouts/cell-phone-option/cell-phone-menu/cell-phone-menu.component'
+      ),
     canActivate: [AuthGuard],
-    data: { title: 'Reclutamiento' },
+    data: { title: 'Actualizar Perfil' },
   },
   {
     path: 'operaciones',
@@ -164,49 +198,10 @@ export default [
     data: { title: 'Operaciones' },
   },
   {
-    path: 'menu',
-    loadChildren: () => import('./menu-movil.routing'),
+    path: 'reclutamiento',
+    loadChildren: () => import('./reclutamiento.routing'),
     canActivate: [AuthGuard],
-    data: { title: 'Menu' },
-  },
-
-  {
-    path: 'documento',
-    loadChildren: () => import('./documents.routing'),
-    data: { title: 'Documento' },
-  },
-  {
-    path: 'sistemas',
-    loadChildren: () => import('./sistemas.routing'),
-    data: { title: 'Sistemas' },
-  },
-
-  {
-    path: 'utilidades',
-    loadChildren: () => import('./utillidades.routing'),
-    data: { title: 'Utilidades' },
-  },
-
-  {
-    path: 'legal',
-    loadChildren: () => import('./legal.routing'),
-    data: { title: 'Legal' },
-  },
-
-  // Nuevas rutas validadas
-
-  // Rutas con hijos
-  {
-    path: 'tickets',
-    loadChildren: () => import('src/app/routing/tickets.routing'),
-    canActivate: [AuthGuard],
-    data: { title: 'Luxury Chat' },
-  },
-  {
-    path: 'settings',
-    loadChildren: () => import('./settings.routing'),
-    canActivate: [AuthGuard],
-    data: { title: 'Settings' },
+    data: { title: 'Reclutamiento' },
   },
   {
     path: 'report',
@@ -214,52 +209,29 @@ export default [
     canActivate: [AuthGuard],
     data: { title: 'Reportes' },
   },
-  // {
-  //   path: 'report',
-  //   loadChildren: () => import('./finales/report.routing'),
-  //   data: { title: 'Reporte' },
-  // },
   {
-    path: 'almacen',
-    loadChildren: () => import('./almacen.routing'),
+    path: 'settings',
+    loadChildren: () => import('./settings.routing'),
     canActivate: [AuthGuard],
-    data: { title: 'Almacén' },
-  },
-
-  {
-    path: 'calendars',
-    loadChildren: () => import('./calendars.routing'),
-    canActivate: [AuthGuard],
-    data: { title: 'Calendario' },
-  },
-
-  {
-    path: 'logbook',
-    loadChildren: () => import('./logbook.routing'),
-    canActivate: [AuthGuard],
-    data: { title: 'Bitácora' },
+    data: { title: 'Configuración del sistema' },
   },
   {
-    path: 'entrega-recepcion',
-    loadChildren: () => import('./entrega-recepcion.routing'),
+    path: 'sistemas',
+    loadChildren: () => import('./sistemas.routing'),
     canActivate: [AuthGuard],
-  },
-  // Rutas directas
-  {
-    path: 'directory',
-    loadChildren: () => import('./directory.routing'),
-    canActivate: [AuthGuard],
-    data: { title: 'Directorio' },
+    data: { title: 'Sistemas' },
   },
   {
+    path: 'supervision',
+    loadChildren: () => import('./supervision.routing'),
     canActivate: [AuthGuard],
-    path: 'accounts',
-    loadComponent: () =>
-      import(
-        'src/app/pages/application-user/list-application-user/list-application-user.component'
-      ),
-    title: 'Cuentas de Acceso',
-    data: { title: 'Cuentas de Acceso' },
+    data: { title: 'Supervision' },
+  },
+  {
+    path: 'tickets',
+    loadChildren: () => import('src/app/routing/tickets.routing'),
+    canActivate: [AuthGuard],
+    data: { title: 'Luxury Chat' },
   },
   {
     path: 'update-user-profile',
@@ -270,21 +242,10 @@ export default [
     canActivate: [AuthGuard],
     data: { title: 'Actualizar Perfil' },
   },
-
   {
-    path: 'movil-options',
-    loadComponent: () =>
-      import(
-        'src/app/layouts/cell-phone-option/cell-phone-menu/cell-phone-menu.component'
-      ),
+    path: 'utilidades',
+    loadChildren: () => import('./utillidades.routing'),
     canActivate: [AuthGuard],
-    data: { title: 'Actualizar Perfil' },
-  },
-
-  {
-    path: 'inspections',
-    loadChildren: () => import('./inspection.routing'),
-    canActivate: [AuthGuard],
-    data: { title: 'Inspecciones' },
+    data: { title: 'Utilidades' },
   },
 ] as Routes;

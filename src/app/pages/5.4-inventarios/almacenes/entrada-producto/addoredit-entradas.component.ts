@@ -19,7 +19,7 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 export default class AddOrEditEntradasComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   formBuilder = inject(FormBuilder);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
   dateService = inject(DateService);
   authS = inject(AuthService);
   config = inject(DynamicDialogConfig);
@@ -30,7 +30,7 @@ export default class AddOrEditEntradasComponent implements OnInit {
   form: FormGroup = this.formBuilder.group({
     id: { value: 0, disabled: true },
     providerId: ['', Validators.required],
-    customerId: [this.customerIdService.customerId, Validators.required],
+    customerId: [this.custIdService.customerId, Validators.required],
     fechaEntrada: [this.dateService.getDateNow(), Validators.required],
     productoId: [0, Validators.required],
     cantidad: ['', Validators.required],

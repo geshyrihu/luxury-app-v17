@@ -20,7 +20,7 @@ import { environment } from 'src/environments/environment';
 export class EmployeeProviderAddOrEditComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   config = inject(DynamicDialogConfig);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
   dateService = inject(DateService);
   formBuilder = inject(FormBuilder);
   ref = inject(DynamicDialogRef);
@@ -83,10 +83,7 @@ export class EmployeeProviderAddOrEditComponent implements OnInit {
     const formData = new FormData();
 
     formData.append('email', model.email);
-    formData.append(
-      'customerId',
-      String(this.customerIdService.getCustomerId())
-    );
+    formData.append('customerId', String(this.custIdService.getCustomerId()));
     formData.append('firstName', model.firstName);
     formData.append('birth', this.dateService.getDateFormat(model.birth));
     formData.append('lastName', model.lastName);

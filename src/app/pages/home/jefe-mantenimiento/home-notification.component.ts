@@ -5,7 +5,7 @@ import { SimplebarAngularModule } from 'simplebar-angular';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { SignalRService } from 'src/app/core/services/signal-r.service';
-import { TicketGroupService } from '../../5.3-tickets/ticket.service';
+import { TicketGroupService } from '../../tickets/ticket.service';
 
 @Component({
   selector: 'app-home-notification',

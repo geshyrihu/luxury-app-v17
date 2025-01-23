@@ -18,7 +18,7 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 export default class AddOrEditComiteVigilanciaComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   config = inject(DynamicDialogConfig);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
   formBuilder = inject(FormBuilder);
   ref = inject(DynamicDialogRef);
 
@@ -37,15 +37,13 @@ export default class AddOrEditComiteVigilanciaComponent implements OnInit {
 
   ngOnInit(): void {
     this.apiRequestService
-      .onGetSelectItem(
-        `listcondomino/${this.customerIdService.getCustomerId()}`
-      )
+      .onGetSelectItem(`listcondomino/${this.custIdService.getCustomerId()}`)
       .then((response: any) => {
         this.cb_condomino = response;
       });
 
     this.form.patchValue({
-      customerId: this.customerIdService.getCustomerId(),
+      customerId: this.custIdService.getCustomerId(),
     });
 
     this.id = this.config.data.id;

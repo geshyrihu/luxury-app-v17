@@ -17,21 +17,21 @@ import SummaryTicketsComponent from '../summary-tickets/summary-tickets.componen
 export default class DashboardTicketsComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
 
   data: any[] = [];
-  customerId$: Observable<number> = this.customerIdService.getCustomerId$();
+  customerId$: Observable<number> = this.custIdService.getCustomerId$();
   ref: DynamicDialogRef;
 
   ngOnInit(): void {
-    // this.customerId$ = this.customerIdService.getCustomerId$();
+    // this.customerId$ = this.custIdService.getCustomerId$();
     this.onLoadData();
     this.customerId$.subscribe(() => {
       this.onLoadData();
     });
   }
   onLoadData() {
-    const urlApi = `Dashboard/TicketPending/${this.customerIdService.getCustomerId()}`;
+    const urlApi = `Dashboard/TicketPending/${this.custIdService.getCustomerId()}`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });

@@ -19,11 +19,11 @@ export default class ListComiteVigilanciaComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
   authS = inject(AuthService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
 
   data: IComiteVigilancia[] = [];
   ref: DynamicDialogRef;
-  customerId$: Observable<number> = this.customerIdService.getCustomerId$();
+  customerId$: Observable<number> = this.custIdService.getCustomerId$();
 
   ngOnInit(): void {
     this.onLoadData();
@@ -34,7 +34,7 @@ export default class ListComiteVigilanciaComponent implements OnInit {
 
   onLoadData() {
     const urlApi =
-      'ComiteVigilancia/GetAll/' + this.customerIdService.getCustomerId();
+      'ComiteVigilancia/GetAll/' + this.custIdService.getCustomerId();
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });

@@ -13,7 +13,7 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 export default class LegalSummaryComponent {
   apiRequestService = inject(ApiRequestService);
   config = inject(DynamicDialogConfig);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
   data: any[] = [];
 
   status: number = 0;
@@ -24,7 +24,7 @@ export default class LegalSummaryComponent {
   }
 
   onLoadData() {
-    const urlApi = `Dashboard/LegalSummary/${this.customerIdService.getCustomerId()}/${
+    const urlApi = `Dashboard/LegalSummary/${this.custIdService.getCustomerId()}/${
       this.status
     }`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {

@@ -24,14 +24,14 @@ export default class PresentacionJuntaComiteComponent implements OnInit {
   dialogHandlerService = inject(DialogHandlerService);
   authS = inject(AuthService);
   confirmationService = inject(ConfirmationService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
   dateService = inject(DateService);
 
   ref: DynamicDialogRef;
-  urlBase = `${environment.base_urlImg}/customers/${this.customerIdService.customerId}/presentacion/`;
+  urlBase = `${environment.base_urlImg}/customers/${this.custIdService.customerId}/presentacion/`;
   applicationUserId: string =
     this.authS.userTokenDto.infoUserAuthDto.applicationUserId;
-  customerId$: Observable<number> = this.customerIdService.getCustomerId$();
+  customerId$: Observable<number> = this.custIdService.getCustomerId$();
   data: PresentacionJuntaComiteDto[] = [];
   supervisorContable: boolean = false;
 
@@ -48,7 +48,7 @@ export default class PresentacionJuntaComiteComponent implements OnInit {
   }
 
   onLoadData(): void {
-    const urlApi = `PresentacionJuntaComite/GetAll/${this.customerIdService.getCustomerId()}`;
+    const urlApi = `PresentacionJuntaComite/GetAll/${this.custIdService.getCustomerId()}`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });

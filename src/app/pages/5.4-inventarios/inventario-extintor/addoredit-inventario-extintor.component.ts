@@ -20,7 +20,7 @@ export default class AddoreditInventarioExtintorComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   authS = inject(AuthService);
   config = inject(DynamicDialogConfig);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
   formBuilder = inject(FormBuilder);
   ref = inject(DynamicDialogRef);
 
@@ -33,7 +33,7 @@ export default class AddoreditInventarioExtintorComponent implements OnInit {
 
   form: FormGroup = this.formBuilder.group({
     id: { value: this.id, disabled: true },
-    customerId: [this.customerIdService.getCustomerId(), Validators.required],
+    customerId: [this.custIdService.getCustomerId(), Validators.required],
     eExtintor: ['', Validators.required],
     ubicacion: ['', Validators.required],
     photo: [''],

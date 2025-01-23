@@ -21,14 +21,14 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 })
 export default class AddOrEditCustomerProviderComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
   formBuilder = inject(FormBuilder);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
 
   cb_providers: ISelectItem[] = [];
   cb_categories: ISelectItem[] = [];
-  customerId: number = this.customerIdService.customerId;
+  customerId: number = this.custIdService.customerId;
 
   submitting: boolean = false;
 

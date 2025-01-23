@@ -31,7 +31,7 @@ export default class SolicitudBajaComponent implements OnInit {
   formBuilder = inject(FormBuilder);
   authS = inject(AuthService);
   config = inject(DynamicDialogConfig);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
   dateService = inject(DateService);
   ref = inject(DynamicDialogRef);
 
@@ -115,7 +115,7 @@ export default class SolicitudBajaComponent implements OnInit {
     this.apiRequestService
       .onPost(
         `SolicitudesReclutamiento/SolicitudBaja/
-          ${this.customerIdService.getCustomerId()}/${this.employeeId}/${
+          ${this.custIdService.getCustomerId()}/${this.employeeId}/${
           this.authS.infoUserAuthDto.applicationUserId
         }`,
         model

@@ -22,7 +22,7 @@ export default class AddOrEditPiscinaComponent implements OnInit {
   formBuilder = inject(FormBuilder);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
 
   submitting: boolean = false;
 
@@ -50,7 +50,7 @@ export default class AddOrEditPiscinaComponent implements OnInit {
       pathImage: [''],
       typePiscina: [0, Validators.required],
       applicationUserId: [this.authS.applicationUserId],
-      customerId: [this.customerIdService.getCustomerId()],
+      customerId: [this.custIdService.getCustomerId()],
     });
   }
 
@@ -90,7 +90,7 @@ export default class AddOrEditPiscinaComponent implements OnInit {
     formData.append('ubication', dto.ubication);
     formData.append('volumen', dto.volumen);
     formData.append('typePiscina', String(dto.typePiscina));
-    formData.append('customerId', String(this.customerIdService.customerId));
+    formData.append('customerId', String(this.custIdService.customerId));
     formData.append('applicationUserId', String(this.authS.applicationUserId));
     formData.append('customerId', String(dto.customerId));
     if (dto.pathImage) {

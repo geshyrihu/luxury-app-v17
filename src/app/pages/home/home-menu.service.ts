@@ -42,7 +42,7 @@ export class HomeMenuService {
     {
       icon: 'fa-solid fa-users', // Ícono de almacén
       name: 'Usuarios',
-      routerLink: '/accounts',
+      routerLink: '/settings/application-user',
       isAutorized: this.authS.onValidateRoles(['SuperUsuario']),
     },
     {

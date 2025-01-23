@@ -23,16 +23,16 @@ export default class ListOrdenCompraComponent implements OnInit {
   authS = inject(AuthService);
   router = inject(Router);
   ordenCompraService = inject(OrdenCompraService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
   data: any[] = [];
   ref: DynamicDialogRef;
 
   statusCompra: number;
-  customerId$: Observable<number> = this.customerIdService.getCustomerId$();
+  customerId$: Observable<number> = this.custIdService.getCustomerId$();
 
   ngOnInit(): void {
     this.onLoadData();
-    this.customerId$ = this.customerIdService.getCustomerId$();
+    this.customerId$ = this.custIdService.getCustomerId$();
     this.customerId$.subscribe(() => {
       this.onLoadData();
     });
@@ -41,7 +41,7 @@ export default class ListOrdenCompraComponent implements OnInit {
   onLoadData() {
     this.statusCompra = this.ordenCompraService.getStatusCompras();
 
-    const url = `OrdenCompra/GetAll/${this.customerIdService.customerId}/${this.statusCompra}`;
+    const url = `OrdenCompra/GetAll/${this.custIdService.customerId}/${this.statusCompra}`;
     this.apiRequestService.onGetList(url).then((result: any) => {
       this.data = result;
     });

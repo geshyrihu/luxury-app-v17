@@ -16,7 +16,7 @@ import { environment } from 'src/environments/environment';
 })
 export default class AddoreditDocumentoComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
   authS = inject(AuthService);
   formBuilder = inject(FormBuilder);
   config = inject(DynamicDialogConfig);
@@ -34,7 +34,7 @@ export default class AddoreditDocumentoComponent implements OnInit {
   file: File;
   form: FormGroup = this.formBuilder.group({
     id: { value: this.id, disabled: true },
-    customerId: [this.customerIdService.getCustomerId(), Validators.required],
+    customerId: [this.custIdService.getCustomerId(), Validators.required],
     document: ['', Validators.required],
     categoriaDocumento: [true, Validators.required],
     nameDocument: ['', Validators.required],

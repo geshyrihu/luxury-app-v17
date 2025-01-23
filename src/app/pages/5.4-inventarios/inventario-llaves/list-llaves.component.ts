@@ -18,7 +18,7 @@ import FormInventarioLlaveComponent from './form-inventario-llave.component';
 export default class ListLlavesComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   authS = inject(AuthService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
   dialogHandlerService = inject(DialogHandlerService);
 
   data: IInventarioLlave[] = [];
@@ -26,18 +26,18 @@ export default class ListLlavesComponent implements OnInit {
   ref: DynamicDialogRef;
 
   customerId: number;
-  customerId$: Observable<number> = this.customerIdService.getCustomerId$();
+  customerId$: Observable<number> = this.custIdService.getCustomerId$();
 
   ngOnInit(): void {
     this.onLoadData();
-    this.customerId$ = this.customerIdService.getCustomerId$();
+    this.customerId$ = this.custIdService.getCustomerId$();
     this.customerId$.subscribe(() => {
       this.onLoadData();
     });
   }
 
   onLoadData() {
-    const urlApi = `InventarioLlave/GetAll/${this.customerIdService.customerId}`;
+    const urlApi = `InventarioLlave/GetAll/${this.custIdService.customerId}`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });

@@ -29,7 +29,7 @@ export default class ServiceOrderAddOrEditComponent implements OnInit {
   formBuilder = inject(FormBuilder);
   config = inject(DynamicDialogConfig);
   dateService = inject(DateService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
   ref = inject(DynamicDialogRef);
 
   submitting: boolean = false;
@@ -74,7 +74,7 @@ export default class ServiceOrderAddOrEditComponent implements OnInit {
 
   ngOnInit(): void {
     flatpickrFactory();
-    this.customerId = this.customerIdService.getCustomerId();
+    this.customerId = this.custIdService.getCustomerId();
     this.id = this.config.data.id;
     this.idMachinery = this.config.data.machineryId;
     this.idProvider = this.config.data.providerId;
@@ -86,7 +86,7 @@ export default class ServiceOrderAddOrEditComponent implements OnInit {
   onLoadSelectItem() {
     this.apiRequestService
       .onGetSelectItem(
-        `MachineriesGetAll/${this.customerIdService.getCustomerId()}`
+        `MachineriesGetAll/${this.custIdService.getCustomerId()}`
       )
       .then((response: any) => {
         this.cb_machinery = response;

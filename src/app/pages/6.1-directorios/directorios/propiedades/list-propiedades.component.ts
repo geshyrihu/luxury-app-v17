@@ -18,12 +18,12 @@ import AddOrEditPropiedadesComponent from './addoredit-propiedades.component';
 export default class ListPropiedadesComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   authS = inject(AuthService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
   dialogHandlerService = inject(DialogHandlerService);
 
   data: IDirectoryCondominium[] = [];
   ref: DynamicDialogRef;
-  customerId$: Observable<number> = this.customerIdService.getCustomerId$();
+  customerId$: Observable<number> = this.custIdService.getCustomerId$();
 
   ngOnInit(): void {
     this.onLoadData();
@@ -33,7 +33,7 @@ export default class ListPropiedadesComponent implements OnInit {
   }
 
   onLoadData() {
-    const urlApi = `DirectoryCondominium/GetAllAsync/${this.customerIdService.customerId}`;
+    const urlApi = `DirectoryCondominium/GetAllAsync/${this.custIdService.customerId}`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });

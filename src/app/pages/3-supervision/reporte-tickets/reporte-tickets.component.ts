@@ -16,14 +16,14 @@ export default class ReporteTicketsComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   dateService = inject(DateService);
   periodoMonthService = inject(PeriodoMonthService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
 
   data: any[] = [];
-  customerId$: Observable<number> = this.customerIdService.getCustomerId$();
+  customerId$: Observable<number> = this.custIdService.getCustomerId$();
 
   ngOnInit(): void {
     this.onLoadData();
-    this.customerId$ = this.customerIdService.getCustomerId$();
+    this.customerId$ = this.custIdService.getCustomerId$();
     this.customerId$.subscribe((resp) => {
       this.onLoadData();
     });
@@ -36,7 +36,7 @@ export default class ReporteTicketsComponent implements OnInit {
 
   onLoadData() {
     const urlApi = `ResumenGeneral/ReporteResumenTicket/${
-      this.customerIdService.customerId
+      this.custIdService.customerId
     }/${this.dateService.getDateFormat(
       this.periodoMonthService.getPeriodoInicio
     )}/${this.dateService.getDateFormat(

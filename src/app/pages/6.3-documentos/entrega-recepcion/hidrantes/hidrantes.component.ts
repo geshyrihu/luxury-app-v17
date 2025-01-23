@@ -13,11 +13,11 @@ import { environment } from 'src/environments/environment';
 })
 export default class HidrantesComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
 
   data: any[] = [];
 
-  customerId$: Observable<number> = this.customerIdService.getCustomerId$();
+  customerId$: Observable<number> = this.custIdService.getCustomerId$();
   base_urlImg = environment.base_urlImg;
 
   ngOnInit() {
@@ -27,7 +27,7 @@ export default class HidrantesComponent implements OnInit {
     });
   }
   onLoadData() {
-    const urlApi = `EntregaRecepcion/Extintores/${this.customerIdService.customerId}`;
+    const urlApi = `EntregaRecepcion/Extintores/${this.custIdService.customerId}`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });

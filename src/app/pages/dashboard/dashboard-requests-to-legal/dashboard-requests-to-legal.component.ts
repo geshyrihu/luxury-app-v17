@@ -17,17 +17,17 @@ import LegalSummaryComponent from '../summary-request-to-legal/legal-summary.com
 export default class DashboardRequestsToLegalComponent {
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
 
   // Declaración e inicialización de variables
   data: any;
   ref: DynamicDialogRef; // Referencia a un cuadro de diálogo modal
-  customerId$: Observable<number> = this.customerIdService.getCustomerId$();
+  customerId$: Observable<number> = this.custIdService.getCustomerId$();
 
   ngOnInit(): void {
-    this.onLoadData(this.customerIdService.getCustomerId());
+    this.onLoadData(this.custIdService.getCustomerId());
     this.customerId$.subscribe((resp) => {
-      this.onLoadData(this.customerIdService.getCustomerId());
+      this.onLoadData(this.custIdService.getCustomerId());
     });
   }
   onLoadData(customerId: number) {

@@ -18,7 +18,7 @@ export default class MaintenanceReportsComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   dateService = inject(DateService);
   periodoMonthService = inject(PeriodoMonthService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
   menu: any;
   periodoInicial$: Observable<Date> =
     this.periodoMonthService.getPeriodoInicial$();

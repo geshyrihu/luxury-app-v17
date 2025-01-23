@@ -27,7 +27,7 @@ export default class AddoreditToolsComponent implements OnInit {
   dateService = inject(DateService);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
 
   submitting: boolean = false;
 
@@ -60,7 +60,7 @@ export default class AddoreditToolsComponent implements OnInit {
       observations: [''],
       categoryId: ['', [Validators.required]],
       applicationUserId: [this.authS.applicationUserId, [Validators.required]],
-      customerId: [this.customerIdService.getCustomerId()],
+      customerId: [this.custIdService.getCustomerId()],
     });
   }
 
@@ -80,7 +80,7 @@ export default class AddoreditToolsComponent implements OnInit {
       );
       this.urlBaseImg = `${
         environment.base_urlImg
-      }customers/${this.customerIdService.getCustomerId()}/tools/${
+      }customers/${this.custIdService.getCustomerId()}/tools/${
         this.model.photoPath
       }`;
       this.form.patchValue(result);

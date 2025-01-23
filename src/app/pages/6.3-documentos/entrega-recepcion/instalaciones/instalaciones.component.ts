@@ -13,11 +13,11 @@ import { environment } from 'src/environments/environment';
 })
 export default class InstalacionesComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
 
   data: any[] = [];
 
-  customerId$: Observable<number> = this.customerIdService.getCustomerId$();
+  customerId$: Observable<number> = this.custIdService.getCustomerId$();
   base_urlImg = environment.base_urlImg;
 
   ngOnInit() {
@@ -27,7 +27,7 @@ export default class InstalacionesComponent implements OnInit {
     });
   }
   onLoadData() {
-    const urlApi = `EntregaRecepcion/InventarioInstalaciones/${this.customerIdService.customerId}`;
+    const urlApi = `EntregaRecepcion/InventarioInstalaciones/${this.custIdService.customerId}`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });

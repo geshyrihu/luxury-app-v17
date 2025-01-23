@@ -7,10 +7,10 @@ import { CustomerIdService } from './customer-id.service';
 })
 export class TicketFilterService {
   authS = inject(AuthService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
 
   filterTicket: IFilterTicket = {
-    customer: this.customerIdService.customerId,
+    customer: this.custIdService.customerId,
     status: 0,
     responsible: '',
     request: '',

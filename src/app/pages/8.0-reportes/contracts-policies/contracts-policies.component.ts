@@ -14,10 +14,10 @@ import { environment } from 'src/environments/environment';
 })
 export default class ContractsPoliciesComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
   data: any[] = [];
 
-  customerId$: Observable<number> = this.customerIdService.getCustomerId$();
+  customerId$: Observable<number> = this.custIdService.getCustomerId$();
   urlBase = environment.base_urlImg;
 
   ngOnInit(): void {
@@ -28,7 +28,7 @@ export default class ContractsPoliciesComponent implements OnInit {
   }
 
   onLoadData() {
-    const urlApi = `ContratoPoliza/GetAll/${this.customerIdService.getCustomerId()}`;
+    const urlApi = `ContratoPoliza/GetAll/${this.custIdService.getCustomerId()}`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });

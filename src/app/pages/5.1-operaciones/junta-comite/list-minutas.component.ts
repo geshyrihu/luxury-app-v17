@@ -26,7 +26,7 @@ export default class ListMinutasComponent implements OnInit {
   dialogHandlerService = inject(DialogHandlerService);
   authS = inject(AuthService);
   confirmationService = inject(ConfirmationService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
   reportService = inject(ReportService);
   route = inject(Router);
 
@@ -34,7 +34,7 @@ export default class ListMinutasComponent implements OnInit {
   tipoJunta: string = 'Comité';
   ref: DynamicDialogRef;
 
-  customerId$: Observable<number> = this.customerIdService.getCustomerId$();
+  customerId$: Observable<number> = this.custIdService.getCustomerId$();
 
   emailAccount: boolean = false;
 
@@ -45,7 +45,7 @@ export default class ListMinutasComponent implements OnInit {
     });
   }
   onLoadData(tipoJunta: string) {
-    const urlApi = `Meetings/GetAll/${this.customerIdService.customerId}/${this.tipoJunta}`;
+    const urlApi = `Meetings/GetAll/${this.custIdService.customerId}/${this.tipoJunta}`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
@@ -76,7 +76,7 @@ export default class ListMinutasComponent implements OnInit {
         AddOrEditMeetingComponent,
         {
           id: data.id,
-          customerId: this.customerIdService.customerId,
+          customerId: this.custIdService.customerId,
         },
         data.title,
         this.dialogHandlerService.dialogSizeLg
@@ -117,10 +117,7 @@ export default class ListMinutasComponent implements OnInit {
   onGeneretePDF(id: number) {
     // this.reportService.setIdMinuta(id);
     this.route.navigate([
-      'publico/reporte-minuta/' +
-        this.customerIdService.getCustomerId() +
-        '/' +
-        id,
+      'publico/reporte-minuta/' + this.custIdService.getCustomerId() + '/' + id,
     ]);
   }
   resumenMinuta(id: number) {
@@ -128,7 +125,7 @@ export default class ListMinutasComponent implements OnInit {
     this.route.navigate(['operaciones/junta-comite/resumen-minuta/' + id]);
   }
   onSendEmailResponsible(id: number, eAreaMinutasDetalles: number) {
-    const urlApi = `Meetings/SendEmailResponsible/${id}/${this.customerIdService.getCustomerId()}/${eAreaMinutasDetalles}/${
+    const urlApi = `Meetings/SendEmailResponsible/${id}/${this.custIdService.getCustomerId()}/${eAreaMinutasDetalles}/${
       this.authS.infoUserAuthDto.applicationUserId
     }`;
     this.apiRequestService.onGetItem(urlApi).then((_) => {});

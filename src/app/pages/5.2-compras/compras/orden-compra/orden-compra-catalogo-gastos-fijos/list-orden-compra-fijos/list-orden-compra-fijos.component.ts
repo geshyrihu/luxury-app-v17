@@ -22,18 +22,18 @@ export default class ListOrdenCompraFijosComponent implements OnInit {
   dialogHandlerService = inject(DialogHandlerService);
   authS = inject(AuthService);
   router = inject(Router);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
   ordenCompraService = inject(OrdenCompraService);
 
   data: any[] = [];
   ref: DynamicDialogRef;
 
   statusCompra: number;
-  customerId$: Observable<number> = this.customerIdService.getCustomerId$();
+  customerId$: Observable<number> = this.custIdService.getCustomerId$();
 
   ngOnInit(): void {
     this.onLoadData();
-    this.customerId$ = this.customerIdService.getCustomerId$();
+    this.customerId$ = this.custIdService.getCustomerId$();
     this.customerId$.subscribe(() => {
       this.onLoadData();
     });
@@ -42,7 +42,7 @@ export default class ListOrdenCompraFijosComponent implements OnInit {
   onLoadData() {
     this.statusCompra = this.ordenCompraService.getStatusCompras();
 
-    const urlApi = `OrdenCompra/OrdenesCompraGastosFijos/${this.customerIdService.customerId}/${this.statusCompra}`;
+    const urlApi = `OrdenCompra/OrdenesCompraGastosFijos/${this.custIdService.customerId}/${this.statusCompra}`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });

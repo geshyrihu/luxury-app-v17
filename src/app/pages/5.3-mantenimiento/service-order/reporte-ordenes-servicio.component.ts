@@ -13,7 +13,7 @@ import { PeriodoMonthService } from 'src/app/core/services/periodo-month.service
 })
 export default class ReporteOrdenesServicioComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
   dateService = inject(DateService);
   periodoMonthService = inject(PeriodoMonthService);
 
@@ -31,7 +31,7 @@ export default class ReporteOrdenesServicioComponent implements OnInit {
   }
   //TODO: Centralizar obtener ifno de customer...
   onLoadDataCustomer() {
-    const urlApi = 'Customers/' + this.customerIdService.customerId;
+    const urlApi = 'Customers/' + this.custIdService.customerId;
 
     this.apiRequestService.onGetItem(urlApi).then((result: any) => {
       this.dataCustomer = result;
@@ -41,7 +41,7 @@ export default class ReporteOrdenesServicioComponent implements OnInit {
   }
 
   onLoadData() {
-    const customerId = this.customerIdService.customerId;
+    const customerId = this.custIdService.customerId;
     const periodo = `${this.dateService.getDateFormat(
       this.periodoMonthService.getPeriodoInicio
     )}-01`;

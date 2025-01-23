@@ -20,11 +20,11 @@ export default class EntregaRecepcionClienteComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
   authS = inject(AuthService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
 
   public route = inject(Router);
 
-  customerId$: Observable<number> = this.customerIdService.getCustomerId$();
+  customerId$: Observable<number> = this.custIdService.getCustomerId$();
   data: any[] = [];
   cb_departamento = [
     { value: 'JURIDICO' },
@@ -64,7 +64,7 @@ export default class EntregaRecepcionClienteComponent implements OnInit {
 
     const urlApi =
       'EntregaRecepcionCliente/' +
-      this.customerIdService.customerId +
+      this.custIdService.customerId +
       '/' +
       this.departamento;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
@@ -87,7 +87,7 @@ export default class EntregaRecepcionClienteComponent implements OnInit {
   navigateToPdf(url: string) {
     const urlFinal = `${
       environment.base_urlImg
-    }/customers/${this.customerIdService.getCustomerId()}/entregarecepcion/${url}`;
+    }/customers/${this.custIdService.getCustomerId()}/entregarecepcion/${url}`;
 
     window.open(urlFinal, '_blank');
   }

@@ -17,17 +17,17 @@ import AddoreditInventarioPinturaComponent from './addoredit-inventario-pintura.
 export default class InventarioPinturaComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
 
   urlImg: string = '';
   data: any[] = [];
 
   ref: DynamicDialogRef;
 
-  customerId$: Observable<number> = this.customerIdService.getCustomerId$();
+  customerId$: Observable<number> = this.custIdService.getCustomerId$();
 
   ngOnInit(): void {
-    this.customerId$ = this.customerIdService.getCustomerId$();
+    this.customerId$ = this.custIdService.getCustomerId$();
     this.onLoadData();
     this.customerId$.subscribe((resp) => {
       this.onLoadData();
@@ -36,7 +36,7 @@ export default class InventarioPinturaComponent implements OnInit {
 
   onLoadData() {
     const urlApi =
-      'InventarioPintura/GetAll/' + this.customerIdService.getCustomerId();
+      'InventarioPintura/GetAll/' + this.custIdService.getCustomerId();
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });

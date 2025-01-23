@@ -19,14 +19,14 @@ import ServiceHistoryMachineryComponent from '../machineries/service-history-mac
 export default class InventoryEngineSystemComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
 
   // Declaración e inicialización de variables
   data: any[] = [];
   filteredData: any[] = [];
 
   ref: DynamicDialogRef; // Referencia a un cuadro de diálogo modal
-  customerId$: Observable<number> = this.customerIdService.getCustomerId$();
+  customerId$: Observable<number> = this.custIdService.getCustomerId$();
 
   ngOnInit(): void {
     this.onLoadData();
@@ -36,7 +36,7 @@ export default class InventoryEngineSystemComponent implements OnInit {
   }
 
   onLoadData() {
-    const urlApi = `InventoryEngineSystem/List/${this.customerIdService.customerId}`;
+    const urlApi = `InventoryEngineSystem/List/${this.custIdService.customerId}`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.data = result;
       this.filteredData = result;

@@ -36,7 +36,7 @@ export default class SolicitudCompraComponent implements OnInit {
   formBuilder = inject(FormBuilder);
   routeActive = inject(ActivatedRoute);
   router = inject(Router);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
 
   submitting: boolean = false;
 
@@ -72,7 +72,7 @@ export default class SolicitudCompraComponent implements OnInit {
   createForm() {
     return (this.form = this.formBuilder.group({
       id: { value: this.id, disabled: true },
-      customerId: [this.customerIdService.getCustomerId()],
+      customerId: [this.custIdService.getCustomerId()],
       fechaSolicitud: [],
       solicita: ['', Validators.required],
       equipoOInstalacion: ['', Validators.required],

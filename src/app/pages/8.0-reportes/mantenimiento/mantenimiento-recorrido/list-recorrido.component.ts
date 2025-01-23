@@ -22,7 +22,7 @@ import RecorridoAddOrEditComponent from './addoreedit-recorrido.component';
 export default class ListRecorridoComponent implements OnInit {
   authS = inject(AuthService);
   confirmationService = inject(ConfirmationService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
 
@@ -30,12 +30,12 @@ export default class ListRecorridoComponent implements OnInit {
   data: any[] = [];
 
   ref: DynamicDialogRef;
-  customerId$: Observable<number> = this.customerIdService.getCustomerId$();
+  customerId$: Observable<number> = this.custIdService.getCustomerId$();
   value: number = 0;
   filterValue: string = ' ';
 
   ngOnInit(): void {
-    this.customerId$ = this.customerIdService.getCustomerId$();
+    this.customerId$ = this.custIdService.getCustomerId$();
     this.onLoadData(this.value);
     this.customerId$.subscribe((resp) => {
       this.onLoadData(this.value);
@@ -56,7 +56,7 @@ export default class ListRecorridoComponent implements OnInit {
   }
 
   onLoadData(value: number) {
-    const urlApi = `Routes/GetAll/${this.customerIdService.getCustomerId()}/${value}/${
+    const urlApi = `Routes/GetAll/${this.custIdService.getCustomerId()}/${value}/${
       this.filterValue
     }`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {

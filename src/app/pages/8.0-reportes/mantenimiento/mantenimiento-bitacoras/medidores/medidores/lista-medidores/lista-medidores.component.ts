@@ -1,19 +1,19 @@
-import { Component, OnInit, inject } from '@angular/core';
-import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import * as FileSaver from 'file-saver';
-import { DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Observable } from 'rxjs';
-import { IMedidor } from 'src/app/core/interfaces/medidor.interface';
-import { ApiRequestService } from 'src/app/core/services/api-request.service';
-import { AuthService } from 'src/app/core/services/auth.service';
-import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
-import FormMedidorLecturaComponent from '../../medidores-lectura/form-medidor-lectura/form-medidor-lectura.component';
-import FormMedidorComponent from '../form-medidor/form-medidor.component';
+import { Component, OnInit, inject } from "@angular/core";
+import LuxuryAppComponentsModule from "app/shared/luxuryapp-components.module";
+import * as FileSaver from "file-saver";
+import { DynamicDialogRef } from "primeng/dynamicdialog";
+import { Observable } from "rxjs";
+import { IMedidor } from "src/app/core/interfaces/medidor.interface";
+import { ApiRequestService } from "src/app/core/services/api-request.service";
+import { AuthService } from "src/app/core/services/auth.service";
+import { CustomerIdService } from "src/app/core/services/customer-id.service";
+import { DialogHandlerService } from "src/app/core/services/dialog-handler.service";
+import FormMedidorLecturaComponent from "../../medidores-lectura/form-medidor-lectura/form-medidor-lectura.component";
+import FormMedidorComponent from "../form-medidor/form-medidor.component";
 
 @Component({
-  selector: 'app-lista-medidores',
-  templateUrl: './lista-medidores.component.html',
+  selector: "app-lista-medidores",
+  templateUrl: "./lista-medidores.component.html",
   standalone: true,
   imports: [LuxuryAppComponentsModule],
 })
@@ -21,11 +21,11 @@ export default class ListMedidorComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
   authS = inject(AuthService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
 
   data: IMedidor[] = [];
   ref: DynamicDialogRef;
-  customerId$: Observable<number> = this.customerIdService.getCustomerId$();
+  customerId$: Observable<number> = this.custIdService.getCustomerId$();
 
   ngOnInit(): void {
     this.onLoadData();
@@ -35,7 +35,7 @@ export default class ListMedidorComponent implements OnInit {
   }
 
   onLoadData() {
-    const urlApi = `Medidor/GetAll/${this.customerIdService.customerId}`;
+    const urlApi = `Medidor/GetAll/${this.custIdService.customerId}`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
@@ -85,24 +85,24 @@ export default class ListMedidorComponent implements OnInit {
   }
 
   generate() {
-    import('xlsx').then((xlsx) => {
+    import("xlsx").then((xlsx) => {
       const worksheet = xlsx.utils.json_to_sheet(this.datosExcel);
       const workbook = {
         Sheets: { data: worksheet },
-        SheetNames: ['data'],
+        SheetNames: ["data"],
       };
       const excelBuffer: any = xlsx.write(workbook, {
-        bookType: 'xlsx',
-        type: 'array',
+        bookType: "xlsx",
+        type: "array",
       });
-      this.saveAsExcelFile(excelBuffer, 'lecturas');
+      this.saveAsExcelFile(excelBuffer, "lecturas");
     });
   }
 
   saveAsExcelFile(buffer: any, fileName: string): void {
     let EXCEL_TYPE =
-      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
-    let EXCEL_EXTENSION = '.xlsx';
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
+    let EXCEL_EXTENSION = ".xlsx";
     const data: Blob = new Blob([buffer], {
       type: EXCEL_TYPE,
     });

@@ -1,16 +1,16 @@
-import { Component, OnInit, inject } from "@angular/core";
-import LuxuryAppComponentsModule from "app/shared/luxuryapp-components.module";
-import { DynamicDialogRef } from "primeng/dynamicdialog";
-import { Observable } from "rxjs";
-import { ApiRequestService } from "src/app/core/services/api-request.service";
-import { AuthService } from "src/app/core/services/auth.service";
-import { CustomerIdService } from "src/app/core/services/customer-id.service";
-import { DialogHandlerService } from "src/app/core/services/dialog-handler.service";
-import FormControlPrestamoHerramientaComponent from "./form-control-prestamo-herramienta.component";
+import { Component, OnInit, inject } from '@angular/core';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { Observable } from 'rxjs';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
+import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
+import FormControlPrestamoHerramientaComponent from './form-control-prestamo-herramienta.component';
 
 @Component({
-  selector: "app-control-prestamo-herramientas",
-  templateUrl: "./control-prestamo-herramientas.component.html",
+  selector: 'app-control-prestamo-herramientas',
+  templateUrl: './control-prestamo-herramientas.component.html',
   standalone: true,
   imports: [LuxuryAppComponentsModule],
 })
@@ -18,12 +18,12 @@ export default class ControlPrestamoHerramientasComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
   authS = inject(AuthService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
 
   data: any[] = [];
   ref: DynamicDialogRef;
 
-  customerId$: Observable<number> = this.customerIdService.getCustomerId$();
+  customerId$: Observable<number> = this.custIdService.getCustomerId$();
 
   ngOnInit(): void {
     this.onLoadData();
@@ -32,7 +32,7 @@ export default class ControlPrestamoHerramientasComponent implements OnInit {
     });
   }
   onLoadData() {
-    const urlApi = `ControlPrestamoHerramientas/GetAll/${this.customerIdService.customerId}`;
+    const urlApi = `ControlPrestamoHerramientas/GetAll/${this.custIdService.customerId}`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });

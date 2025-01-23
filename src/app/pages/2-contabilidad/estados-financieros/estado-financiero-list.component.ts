@@ -16,14 +16,14 @@ import AddFileEstadoFinancieroComponent from './add-file-estado-financiero/add-f
 })
 export default class EstadoFinancieroListComponent implements OnInit {
   private authS = inject(AuthService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
   dialogHandlerService = inject(DialogHandlerService);
   apiRequestService = inject(ApiRequestService);
 
   data: any[] = [];
   ref: DynamicDialogRef;
 
-  customerId$: Observable<number> = this.customerIdService.getCustomerId$();
+  customerId$: Observable<number> = this.custIdService.getCustomerId$();
 
   ngOnInit(): void {
     this.onLoadData();
@@ -33,7 +33,7 @@ export default class EstadoFinancieroListComponent implements OnInit {
   }
 
   onLoadData(): void {
-    const urlApi = `EstadoFinanciero/ToCustomer/${this.customerIdService.customerId}/`;
+    const urlApi = `EstadoFinanciero/ToCustomer/${this.custIdService.customerId}/`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });

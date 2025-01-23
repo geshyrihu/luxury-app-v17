@@ -12,12 +12,12 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 })
 export default class DepuracionComponent {
   apiRequestService = inject(ApiRequestService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
   customToastService = inject(CustomToastService);
 
   MigrateAmenities(path: string) {
     const urlApi =
-      'UpdateDataBase/' + path + '/' + this.customerIdService.customerId;
+      'UpdateDataBase/' + path + '/' + this.custIdService.customerId;
     this.apiRequestService.onGetList(urlApi).then(() => {
       this.customToastService.onShowSuccess();
       this.customToastService.onClose();

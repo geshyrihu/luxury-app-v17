@@ -23,7 +23,7 @@ export default class FormBitacoraMantenimientoComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   formBuilder = inject(FormBuilder);
   authS = inject(AuthService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
   ref = inject(DynamicDialogRef);
   customToastService = inject(CustomToastService);
 
@@ -45,7 +45,7 @@ export default class FormBitacoraMantenimientoComponent implements OnInit {
     this.userId = this.authS.userTokenDto.infoUserAuthDto.applicationUserId;
     this.onLoadMachinery();
     this.form = this.formBuilder.group({
-      customerId: [this.customerIdService.getCustomerId(), Validators.required],
+      customerId: [this.custIdService.getCustomerId(), Validators.required],
       machineryId: ['', Validators.required],
       machinery: ['', Validators.required],
       descripcion: ['', Validators.required],
@@ -76,7 +76,7 @@ export default class FormBitacoraMantenimientoComponent implements OnInit {
   }
 
   onLoadMachinery() {
-    const urlApi = `SelectItem/ListadoInstalaciones/${this.customerIdService.getCustomerId()}`;
+    const urlApi = `SelectItem/ListadoInstalaciones/${this.custIdService.getCustomerId()}`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.maquinarias = result;
     });

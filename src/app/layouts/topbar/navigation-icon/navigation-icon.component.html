@@ -1,33 +1,85 @@
-<custom-button
-  ngbTooltip="Inicio"
-  customClass="header-item"
-  icon="fa-house fa-2x text-white"
-  (clicked)="onHome()"
-/>
-<custom-button
-  ngbTooltip="Anterior"
-  customClass="header-item"
-  icon="fa-angle-left fa-2x text-white"
-  (clicked)="onBack()"
-/>
-<custom-button
-  ngbTooltip="Siguiente"
-  customClass="header-item"
-  icon="fa-angle-right fa-2x text-white"
-  (clicked)="onNext()"
-/>
-<custom-button
-  ngbTooltip="Recargar"
-  customClass="header-item"
-  icon="fa-arrows-rotate fa-2x text-white"
-  (clicked)="onRefresh()"
-/>
-@if (authS.onValidateRoles(['SuperUsuario'])) {
+<div class="icon-group d-none d-md-flex">
+  <button
+    class="header-item"
+    ngbTooltip="Inicio"
+    style="background-color: transparent"
+    (click)="onHome()"
+  >
+    <i class="fa-thin fa-house fa-2x text-white"></i>
+  </button>
 
-<custom-button
-  ngbTooltip="Configuración"
-  customClass="header-item"
-  icon="fa-gear fa-2x text-white"
-  (clicked)="onSetting()"
-/>
-}
+  <button
+    class="header-item"
+    ngbTooltip="Anterior"
+    style="background-color: transparent"
+    (click)="onBack()"
+  >
+    <i class="fa-thin fa-angle-left fa-2x text-white"></i>
+  </button>
+  <button
+    class="header-item"
+    ngbTooltip="Siguiente"
+    style="background-color: transparent"
+    (click)="onNext()"
+  >
+    <i class="fa-thin fa-angle-right fa-2x text-white"></i>
+  </button>
+  <button
+    class="header-item"
+    ngbTooltip="Recargar"
+    style="background-color: transparent"
+    (click)="onRefresh()"
+  >
+    <i class="fa-thin fa-arrows-rotate fa-2x text-white"></i>
+  </button>
+  <button
+    *ngIf="authS.onValidateRoles(['SuperUsuario'])"
+    class="header-item"
+    ngbTooltip="Configuración"
+    style="background-color: transparent"
+    (click)="onSetting()"
+  >
+    <i class="fa-thin fa-gear fa-2x text-white"></i>
+  </button>
+</div>
+
+<!-- Menú desplegable para pantallas pequeñas -->
+<div class="dropdown d-flex d-md-none">
+  <button
+    class="btn btn-secondary dropdown-toggle"
+    type="button"
+    id="dropdownMenuButton"
+    data-bs-toggle="dropdown"
+    aria-expanded="false"
+  >
+    Opciones
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <li>
+      <a class="dropdown-item" (click)="onHome()">Inicio</a>
+    </li>
+    <li>
+      <a class="dropdown-item" (click)="onBack()">Anterior</a>
+    </li>
+    <li>
+      <a class="dropdown-item" (click)="onNext()">Siguiente</a>
+    </li>
+    <li>
+      <a class="dropdown-item" (click)="onRefresh()">Recargar</a>
+    </li>
+    <li *ngIf="authS.onValidateRoles(['SuperUsuario'])">
+      <a class="dropdown-item" (click)="onSetting()">Configuración</a>
+    </li>
+  </ul>
+</div>
+<style>
+  /* Asegura que los íconos y el menú se ajusten correctamente */
+  .icon-group {
+    gap: 0.5rem; /* Espaciado entre botones */
+  }
+
+  .dropdown .dropdown-menu {
+    background-color: rgba(0, 0, 0, 0.9);
+    color: white;
+  }
+</style>

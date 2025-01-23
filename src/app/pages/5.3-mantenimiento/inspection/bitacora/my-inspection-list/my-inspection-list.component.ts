@@ -17,16 +17,16 @@ import { DialogHandlerService } from 'src/app/core/services/dialog-handler.servi
 export default class MyInspectionListComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
 
-  customerId$: Observable<number> = this.customerIdService.getCustomerId$();
+  customerId$: Observable<number> = this.custIdService.getCustomerId$();
 
   // Método para actualizar la fecha seleccionada
   data: any = [];
   ngOnInit(): void {
     flatpickrFactory();
     this.onLoadData();
-    this.customerId$ = this.customerIdService.getCustomerId$();
+    this.customerId$ = this.custIdService.getCustomerId$();
     this.customerId$.subscribe(() => {
       this.onLoadData();
     });
@@ -43,7 +43,7 @@ export default class MyInspectionListComponent implements OnInit {
 
       const formattedDate = `${year}-${month}-${day}`; // yyyy-MM-dd
 
-      const urlApi = `InspectionResult/GetInspectionsByCustomer/${this.customerIdService.customerId}/${formattedDate}`;
+      const urlApi = `InspectionResult/GetInspectionsByCustomer/${this.custIdService.customerId}/${formattedDate}`;
 
       this.apiRequestService.onGetList(urlApi).then((result: any) => {
         this.data = result;

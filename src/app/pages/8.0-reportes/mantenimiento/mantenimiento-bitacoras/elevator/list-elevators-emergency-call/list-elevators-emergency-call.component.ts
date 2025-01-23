@@ -16,12 +16,12 @@ import AddOrEditElevatorsEmergencyCallComponent from '../add-or-edit-elevators-e
 export default class ListElevatorsEmergencyCallComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
 
   data: any[] = [];
   ref: DynamicDialogRef; // Referencia a un cuadro de diálogo modal
 
-  customerId$: Observable<number> = this.customerIdService.getCustomerId$();
+  customerId$: Observable<number> = this.custIdService.getCustomerId$();
 
   ngOnInit(): void {
     this.onLoadData();
@@ -31,7 +31,7 @@ export default class ListElevatorsEmergencyCallComponent implements OnInit {
   }
 
   onLoadData() {
-    const urlApi = `ElevatorsEmergencyCall/list/${this.customerIdService.customerId}`;
+    const urlApi = `ElevatorsEmergencyCall/list/${this.custIdService.customerId}`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
@@ -51,7 +51,7 @@ export default class ListElevatorsEmergencyCallComponent implements OnInit {
         AddOrEditElevatorsEmergencyCallComponent,
         {
           id: data.id,
-          customerId: this.customerIdService.customerId,
+          customerId: this.custIdService.customerId,
         },
         data.title,
         this.dialogHandlerService.dialogSizeMd

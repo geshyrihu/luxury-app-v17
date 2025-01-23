@@ -23,7 +23,7 @@ export default class EditSalidasComponent implements OnInit {
   ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);
   authS = inject(AuthService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
 
   submitting: boolean = false;
 
@@ -52,7 +52,7 @@ export default class EditSalidasComponent implements OnInit {
     return this.form.controls;
   }
   onLoadExistencia() {
-    const urlApi = `InventarioProducto/GetExistenciaProducto/${this.customerIdService.customerId}/${this.config.data.idProducto}`;
+    const urlApi = `InventarioProducto/GetExistenciaProducto/${this.custIdService.customerId}/${this.config.data.idProducto}`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       if (result !== null) {
         this.existenciaAlmacen = result.existencia;
@@ -77,7 +77,7 @@ export default class EditSalidasComponent implements OnInit {
 
     this.form = this.formBuilder.group({
       id: { value: 0, disabled: true },
-      customerId: [this.customerIdService.customerId, Validators.required],
+      customerId: [this.custIdService.customerId, Validators.required],
       fechaSalida: [this.dateService.getDateNow(), Validators.required],
       productoId: [this.idProducto, Validators.required],
       cantidad: [0, Validators.required],

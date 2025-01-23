@@ -1,6 +1,4 @@
 <div class="card" *ngIf="data">
-  <!-- Encabezado del reporte -->
-
   <!-- Tabla de solicitudes pendientes -->
   <p-table *ngIf="data" [value]="data" styleClass="custom-table-report">
     <ng-template pTemplate="header">
@@ -47,4 +45,3 @@
     </ng-template>
   </p-table>
 </div>
-

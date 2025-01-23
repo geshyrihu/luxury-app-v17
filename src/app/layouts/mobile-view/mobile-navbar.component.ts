@@ -8,7 +8,7 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { ProfielServiceService } from 'src/app/core/services/profiel-service.service';
-import { TicketGroupService } from 'src/app/pages/5.3-tickets/ticket.service';
+import { TicketGroupService } from 'src/app/pages/tickets/ticket.service';
 
 @Component({
   selector: 'app-mobile-navbar',
@@ -25,7 +25,7 @@ export default class MobileNavbarComponent implements OnInit, OnDestroy {
   apiRequestService = inject(ApiRequestService);
   authS = inject(AuthService);
   router = inject(Router);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
   profielServiceService = inject(ProfielServiceService);
 
   location = inject(Location);
@@ -65,7 +65,7 @@ export default class MobileNavbarComponent implements OnInit, OnDestroy {
     // Cargar de listado de clientes a los que se tiene acceso
     this.onLoadCustomerAccess();
     // Suscribirse a cambios en customerId
-    const customerSubscription = this.customerIdService
+    const customerSubscription = this.custIdService
       .getCustomerId$()
       .subscribe(() => {
         this.updateCustomerData();
@@ -85,9 +85,9 @@ export default class MobileNavbarComponent implements OnInit, OnDestroy {
    * Actualiza las propiedades del componente con los datos actuales del servicio.
    */
   private updateCustomerData(): void {
-    this.customerId = this.customerIdService.customerId;
-    this.nameCustomer = this.customerIdService.nameCustomer;
-    this.photoPath = this.customerIdService.photoPath;
+    this.customerId = this.custIdService.customerId;
+    this.nameCustomer = this.custIdService.nameCustomer;
+    this.photoPath = this.custIdService.photoPath;
   }
 
   /**
@@ -95,7 +95,7 @@ export default class MobileNavbarComponent implements OnInit, OnDestroy {
    * @param customerId ID del cliente seleccionado
    */
   selectCustomer(customerId: number): void {
-    this.customerIdService.setCustomerId(customerId);
+    this.custIdService.setCustomerId(customerId);
   }
   onLoadCustomerAccess() {
     this.cb_customer = this.authS.customerAccess;

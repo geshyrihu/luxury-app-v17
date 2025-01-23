@@ -16,10 +16,10 @@ import InspectionsAddoreditComponent from '../inspections-addoredit/inspections-
 export default class InspectionsListComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
 
   customerId: number;
-  customerId$: Observable<number> = this.customerIdService.getCustomerId$();
+  customerId$: Observable<number> = this.custIdService.getCustomerId$();
 
   areasResponsables: string[] = []; // Para almacenar las áreas responsables
   inspeccionesOriginales: any[] = []; // Inspecciones completas desde el backend
@@ -27,14 +27,14 @@ export default class InspectionsListComponent implements OnInit {
 
   ngOnInit() {
     this.onLoadData();
-    this.customerId$ = this.customerIdService.getCustomerId$();
+    this.customerId$ = this.custIdService.getCustomerId$();
     this.customerId$.subscribe(() => {
       this.onLoadData();
     });
   }
 
   onLoadData() {
-    const urlApi = `inspection/list/${this.customerIdService.customerId}`;
+    const urlApi = `inspection/list/${this.custIdService.customerId}`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.inspeccionesOriginales = result;
 

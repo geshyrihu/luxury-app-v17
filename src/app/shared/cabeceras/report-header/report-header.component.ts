@@ -12,7 +12,7 @@ import { environment } from 'src/environments/environment';
 })
 export default class ReportHeaderComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
   filterReportOperationService = inject(TicketFilterService);
 
   logoLuxury = `${environment.base_urlImg}logo2.jpg`;
@@ -21,20 +21,20 @@ export default class ReportHeaderComponent implements OnInit {
   @Input()
   logoCustomer: string = '';
 
-  customerId$: Observable<number> = this.customerIdService.getCustomerId$();
+  customerId$: Observable<number> = this.custIdService.getCustomerId$();
 
   ngOnInit(): void {
     this.onLoadData();
-    this.customerId$ = this.customerIdService.getCustomerId$();
+    this.customerId$ = this.custIdService.getCustomerId$();
     this.customerId$.subscribe((resp) => {
       this.filterReportOperationService.setIdCustomer(
-        this.customerIdService.customerId
+        this.custIdService.customerId
       );
       this.onLoadData();
     });
   }
   onLoadData() {
-    const urlApi = `Customers/${this.customerIdService.customerId}`;
+    const urlApi = `Customers/${this.custIdService.customerId}`;
     this.apiRequestService.onGetItem(urlApi).then((result: any) => {
       this.nameCustomer = result.nameCustomer;
       this.logoCustomer = `${environment.base_urlImg}Administration/customer/${result.photoPath}`;

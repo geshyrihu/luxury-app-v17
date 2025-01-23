@@ -16,11 +16,11 @@ import AddoreditDocumentoComponent from './addoredit-documento.component';
 export default class ListDocumentoComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
 
   data: any[] = [];
 
-  customerId$: Observable<number> = this.customerIdService.getCustomerId$();
+  customerId$: Observable<number> = this.custIdService.getCustomerId$();
   urlBase = environment.base_urlImg;
 
   items = [
@@ -38,7 +38,7 @@ export default class ListDocumentoComponent implements OnInit {
   }
 
   onLoadData() {
-    const urlApi = `DocumentoCustomer/GetAll/${this.customerIdService.getCustomerId()}`;
+    const urlApi = `DocumentoCustomer/GetAll/${this.custIdService.getCustomerId()}`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });

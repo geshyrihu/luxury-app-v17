@@ -18,12 +18,12 @@ import AddoreditMaintenancePreventiveComponent from 'src/app/pages/5.6-calendar/
 })
 export default class GastosMantenimientoComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
-  customerIdService = inject(CustomerIdService);
+  custIdService = inject(CustomerIdService);
   dialogHandlerService = inject(DialogHandlerService);
 
   data: any[] = [];
   resumenGastos: any[] = [];
-  customerId$: Observable<number> = this.customerIdService.getCustomerId$();
+  customerId$: Observable<number> = this.custIdService.getCustomerId$();
   totalGasto: number = 0;
   ref: DynamicDialogRef;
 
@@ -34,13 +34,13 @@ export default class GastosMantenimientoComponent implements OnInit {
     });
   }
   onLoadData() {
-    const urlApi = `MaintenanceCalendars/SummaryOfExpenses/${this.customerIdService.getCustomerId()}`;
+    const urlApi = `MaintenanceCalendars/SummaryOfExpenses/${this.custIdService.getCustomerId()}`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.data = result.items;
       this.totalGasto = result.totalGastos;
     });
 
-    const urlApi2 = `MaintenanceCalendars/Resumengastos/${this.customerIdService.getCustomerId()}`;
+    const urlApi2 = `MaintenanceCalendars/Resumengastos/${this.custIdService.getCustomerId()}`;
     this.apiRequestService.onGetList(urlApi2).then((result: any) => {
       this.resumenGastos = result;
     });
