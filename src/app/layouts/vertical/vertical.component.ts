@@ -5,10 +5,9 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import FooterComponent from '../footer/footer.component';
+import HomeComponent from '../home-celular/home.component';
 import MobileMainViewComponent from '../mobile-view/mobile-main.component';
 import SidebarComponent from '../sidebar/sidebar.component';
-import CustomerSelectionComponent from '../topbar/customer-selection/customer-selection.component';
 import { TopbarComponent } from '../topbar/topbar.component';
 
 @Component({
@@ -18,12 +17,11 @@ import { TopbarComponent } from '../topbar/topbar.component';
   imports: [
     LuxuryAppComponentsModule,
     CommonModule,
-    CustomerSelectionComponent,
     RouterModule,
     SidebarComponent,
     TopbarComponent,
-    FooterComponent,
     MobileMainViewComponent,
+    HomeComponent,
   ],
 })
 /**
@@ -39,13 +37,13 @@ export default class VerticalComponent implements OnInit {
   cb_customer: any[] = [];
   customerId = this.custIdService.customerId;
 
-  selectCustomer(customerId: number) {
-    this.custIdService.setCustomerId(customerId);
-  }
+  // selectCustomer(customerId: number) {
+  //   this.custIdService.setCustomerId(customerId);
+  // }
 
-  constructor() {
-    this.cb_customer = this.authS.customerAccess;
-  }
+  // constructor() {
+  //   this.cb_customer = this.authS.customerAccess;
+  // }
   onBack() {
     this.location.back();
   }
@@ -54,8 +52,6 @@ export default class VerticalComponent implements OnInit {
     this.location.forward();
   }
   onRefresh() {
-    // window.location.href = window.location.href; // Reasignar la URL actual para recargar la página
-
     const currentUrl = this.router.url;
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
       this.router.navigate([currentUrl]);
@@ -77,6 +73,7 @@ export default class VerticalComponent implements OnInit {
     window.addEventListener('resize', () => {
       this.checkScreenSize();
     });
+
     document.body.setAttribute('data-layout', 'vertical'); // Establecer un atributo en el body del documento
   }
 
@@ -113,15 +110,6 @@ export default class VerticalComponent implements OnInit {
   onSettingsButtonClicked() {
     document.body.classList.toggle('right-bar-enabled'); // Alternar la clase 'right-bar-enabled' en el body
   }
-
-  onOcultarBarra() {
-    if (window.innerWidth <= 992) {
-      /** Aquí deberías proporcionar una descripción de lo que hace esta función, ya que no está claro en el código. */
-      this.onSettingsButtonClicked(); // Llamar a la función onSettingsButtonClicked
-      this.onToggleMobileMenu(); // Llamar a la función onToggleMobileMenu
-    }
-  }
-
   checkScreenSize() {
     if (window.innerWidth <= 768) {
       // Cambia el valor 768 según tu criterio de tamaño para dispositivos móviles

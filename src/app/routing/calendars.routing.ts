@@ -4,9 +4,7 @@ export default [
   {
     path: 'fiestas-judias',
     loadComponent: () =>
-      import(
-        'src/app/pages/5.6-calendar/fiestas-judias/fiestas-judias.component'
-      ),
+      import('src/app/pages/calendar/fiestas-judias/fiestas-judias.component'),
     title: 'Fiestas Judías',
     data: { title: 'Fiestas Judías' },
   },
@@ -14,7 +12,7 @@ export default [
     path: 'fiestas-cristianas',
     loadComponent: () =>
       import(
-        'src/app/pages/5.6-calendar/fiestas-cristianas/fiestas-cristianas.component'
+        'src/app/pages/calendar/fiestas-cristianas/fiestas-cristianas.component'
       ),
     title: 'Fiestas Cristianas',
     data: { title: 'Fiestas Cristianas' },
@@ -22,7 +20,7 @@ export default [
   {
     path: 'cumpleanos',
     loadComponent: () =>
-      import('src/app/pages/5.6-calendar/cumpleanos/birthday.component'),
+      import('src/app/pages/calendar/cumpleanos/birthday.component'),
     title: 'Fiestas Cumpleaños',
     data: { title: 'Fiestas Cumpleaños' },
   },
@@ -30,7 +28,7 @@ export default [
     path: 'mantenimiento-master',
     loadComponent: () =>
       import(
-        'src/app/pages/5.5-capacitacion/maintenance-calendar-master/calendario-maestro.component'
+        'src/app/pages/capacitacion/maintenance-calendar-master/calendario-maestro-list.component'
       ),
     title: 'Mantenimiento Maestro', // Añadido título
     data: { title: 'Mantenimiento Maestro' },
@@ -38,7 +36,7 @@ export default [
   {
     path: 'fondeos',
     loadComponent: () =>
-      import('src/app/pages/5.6-calendar/fondeos/fondeos.component'),
+      import('src/app/pages/calendar/fondeos/fondeos.component'),
     title: 'Fondeos', // Añadido título
     data: { title: 'Fondeos' },
   },
@@ -46,44 +44,17 @@ export default [
     path: 'calendario-maestro-equipo',
     loadComponent: () =>
       import(
-        'src/app/pages/1.1-catalogos/1.1.16-calendario-maestro-equipo/calendario-maestro-equipo.component'
+        'src/app/pages/settings/catalogos/calendario-maestro-equipo/calendario-maestro-equipo.component'
       ),
     title: 'Calendario Maestro Equipo', // Añadido título
     data: { title: 'Calendario Maestro Equipo' },
   },
-  // {
-  //   path: 'custom-calendar-events',
-  //   loadComponent: () =>
-  //     import(
-  //       'src/app/pages/5.6-calendar/custom-calendar/custom-calendar-events/custom-calendar-events.component'
-  //     ),
-  //   title: 'Eventos Personalizados del Calendario', // Añadido título
-  //   data: { title: 'Eventos Personalizados del Calendario' },
-  // },
 
-  {
-    path: 'list',
-    loadComponent: () =>
-      import(
-        'src/app/pages/5.11-calendars/calendar-list/calendar-list.component'
-      ),
-    title: 'Calendario',
-    data: { title: 'Calendarios' },
-  },
-  {
-    path: 'detail/:id',
-    loadComponent: () =>
-      import(
-        'src/app/pages/5.11-calendars/calendar-detail/calendar-detail.component'
-      ),
-    title: 'Calendario',
-    data: { title: 'Calendarios' },
-  },
   {
     path: 'reuniones-comite',
     loadComponent: () =>
       import(
-        'src/app/pages/5.11-calendars/reuniones-comite/reuniones-comite.component'
+        'src/app/pages/calendars/reuniones-comite/reuniones-comite.component'
       ),
   },
 ] as Routes;

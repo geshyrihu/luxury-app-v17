@@ -5,7 +5,7 @@ export default [
     path: 'general',
     loadComponent: () =>
       import(
-        'src/app/pages/6.3-documentos/entrega-recepcion/entrega-recepcion-cliente/entrega-recepcion-cliente.component'
+        'src/app/pages/documentos/entrega-recepcion-cliente/entrega-recepcion-cliente.component'
       ),
     data: {
       title: 'Entrega Recepción - General',
@@ -15,7 +15,7 @@ export default [
     path: 'equipos',
     loadComponent: () =>
       import(
-        'src/app/pages/6.3-documentos/entrega-recepcion/equipos/equipos.component'
+        'src/app/pages/documentos/entrega-recepcion/equipos/equipos.component'
       ),
     data: {
       title: 'Entrega Recepción - Equipos',
@@ -26,7 +26,7 @@ export default [
     path: 'instalaciones',
     loadComponent: () =>
       import(
-        'src/app/pages/6.3-documentos/entrega-recepcion/instalaciones/instalaciones.component'
+        'src/app/pages/documentos/entrega-recepcion/instalaciones/instalaciones.component'
       ),
     data: {
       title: 'Entrega Recepción - Instalaciones',
@@ -37,7 +37,7 @@ export default [
     path: 'herramientas',
     loadComponent: () =>
       import(
-        'src/app/pages/6.3-documentos/entrega-recepcion/herramientas/herramientas.component'
+        'src/app/pages/documentos/entrega-recepcion/herramientas/herramientas.component'
       ),
     data: {
       title: 'Entrega Recepción - Herramientas',
@@ -48,7 +48,7 @@ export default [
     path: 'insumos',
     loadComponent: () =>
       import(
-        'src/app/pages/6.3-documentos/entrega-recepcion/insumos/insumos.component'
+        'src/app/pages/documentos/entrega-recepcion/insumos/insumos.component'
       ),
     data: {
       title: 'Entrega Recepción - Insumos',
@@ -59,7 +59,7 @@ export default [
     path: 'mantenimientos',
     loadComponent: () =>
       import(
-        'src/app/pages/6.3-documentos/entrega-recepcion/mantenimientos/mantenimientos.component'
+        'src/app/pages/documentos/entrega-recepcion/mantenimientos/mantenimientos.component'
       ),
     data: {
       title: 'Entrega Recepción - Mantenimientos',
@@ -70,7 +70,7 @@ export default [
     path: 'organigrama',
     loadComponent: () =>
       import(
-        'src/app/pages/6.3-documentos/entrega-recepcion/organigrama/organigrama.component'
+        'src/app/pages/documentos/entrega-recepcion/organigrama/organigrama.component'
       ),
     data: {
       title: 'Entrega Recepción - Organigrama',
@@ -81,7 +81,7 @@ export default [
     path: 'llaves',
     loadComponent: () =>
       import(
-        'src/app/pages/6.3-documentos/entrega-recepcion/llaves/llaves.component'
+        'src/app/pages/documentos/entrega-recepcion/llaves/llaves.component'
       ),
     data: {
       title: 'Entrega Recepción - Llaves',
@@ -92,7 +92,7 @@ export default [
     path: 'hidrantes',
     loadComponent: () =>
       import(
-        'src/app/pages/6.3-documentos/entrega-recepcion/hidrantes/hidrantes.component'
+        'src/app/pages/documentos/entrega-recepcion/hidrantes/hidrantes.component'
       ),
     data: {
       title: 'Entrega Recepción - Hidrantes',
@@ -103,7 +103,7 @@ export default [
     path: 'mantenimientos-pendientes',
     loadComponent: () =>
       import(
-        'src/app/pages/6.3-documentos/entrega-recepcion/mantenimientos-pendientes/mantenimientos-pendientes.component'
+        'src/app/pages/documentos/entrega-recepcion/mantenimientos-pendientes/mantenimientos-pendientes.component'
       ),
     data: {
       title: 'Entrega Recepción - Mantenimientos Pendientes',

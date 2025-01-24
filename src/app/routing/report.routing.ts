@@ -9,7 +9,7 @@ export default [
     path: 'report-supervision',
     loadComponent: () =>
       import(
-        'src/app/pages/8.0-reportes/report-supervision/report-supervision.component'
+        'src/app/pages/reportes/report-supervision/report-supervision.component'
       ),
     data: { title: 'Reporte Supervisión' },
   },
@@ -28,7 +28,7 @@ export default [
     path: 'resumen-ordenes-servicio',
     loadComponent: () =>
       import(
-        'src/app/pages/5.3-mantenimiento/service-order/resumen-ordenes-servicio/resumen-ordenes-servicio.component'
+        'src/app/pages/bitacoras/service-order/resumen-ordenes-servicio/resumen-ordenes-servicio.component'
       ),
     data: { title: 'Resumen Órdenes de Servicio' },
   },
@@ -37,7 +37,7 @@ export default [
     path: 'pending-minutes',
     loadComponent: () =>
       import(
-        'src/app/pages/8.0-reportes/pending-minutes/pending-minutes.component'
+        'src/app/pages/reportes/pending-minutes/pending-minutes.component'
       ),
     data: { title: 'Reporte de minutas pendientes' },
   },
@@ -45,13 +45,13 @@ export default [
     path: 'estados-financieros',
     loadComponent: () =>
       import(
-        'src/app/pages/8.0-reportes/estados-financieros/estados-financieros.component'
+        'src/app/pages/reportes/estados-financieros/estados-financieros.component'
       ),
     data: { title: 'Reporte estados-financieros' },
   },
-  // {
-  //   path: 'maintenance-report',
-  //   loadChildren: () => import('./mantenimiento.routing'),
-  //   data: { title: 'Reportes de mantenimiento ' },
-  // },
+  {
+    path: 'maintenance-report',
+    loadChildren: () => import('./mantenimiento.routing'),
+    data: { title: 'Reportes de mantenimiento ' },
+  },
 ] as Routes;

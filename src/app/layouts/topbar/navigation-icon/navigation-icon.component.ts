@@ -24,15 +24,13 @@ export default class NavigationIconComponent {
   }
 
   onRefresh() {
-    // window.location.href = window.location.href; // Reasignar la URL actual para recargar la página
-
     const currentUrl = this.router.url;
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
       this.router.navigate([currentUrl]);
     });
   }
   onHome() {
-    this.router.navigateByUrl('/home');
+    this.router.navigateByUrl('/dashboard');
   }
   onSetting() {
     this.router.navigateByUrl('/settings/home');

@@ -1,0 +1,365 @@
+<div class="card">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-sm-12 text-end">
+        <button
+          (click)="onDeleteProvider()"
+          class="btn btn-outline-danger me-1 mt-3 float-end"
+        >
+          <i class="me-2 font-size-14 fa-light fa-trash-can"></i>Eliminar
+          cotizacion
+        </button>
+        @if (cotizacionesRelacionadas.length !== 3) {
+        <button
+          (click)="onModalCreateOrdenCompra()"
+          class="btn btn-outline-info me-1 mt-3 float-end"
+        >
+          <i class="me-2 font-size-14 fa-light fa-cart-arrow-down"></i>Crear
+          Orden de compra
+        </button>
+        } @if (cotizacionesRelacionadas.length === 3) {
+        <button disabled class="btn btn-outline-info me-1 mt-3 float-end">
+          <i class="me-2 font-size-14 fa-light fa-cart-arrow-down"
+            >Ya hay 3 Ordenes</i
+          >
+        </button>
+        }
+      </div>
+      <div class="col-12 mt-2">
+        <div class="row">
+          <div class="col-sm-3">
+            <label>Proveedor</label>
+            <input
+              class="form-control"
+              [(ngModel)]="nameProvider"
+              type="text"
+              (change)="onUpdateProvider()"
+            />
+          </div>
+          <div class="col-sm-3">
+            <label>Garantia</label>
+            <input
+              class="form-control"
+              [(ngModel)]="garantia"
+              type="text"
+              (change)="onUpdateProvider()"
+            />
+          </div>
+          <div class="col-sm-3">
+            <label>Tiempo de entrega</label>
+            <input
+              class="form-control"
+              [(ngModel)]="entrega"
+              type="text"
+              (change)="onUpdateProvider()"
+            />
+          </div>
+          <div class="col-sm-3">
+            <label>Politica de pago</label>
+            <input
+              class="form-control"
+              [(ngModel)]="politicaPago"
+              type="text"
+              (change)="onUpdateProvider()"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <br />
+    <ng-container>
+      <table class="table table-sm">
+        <caption></caption>
+        <thead>
+          <tr>
+            <th scope="col" class="font-weight-light" style="width: 40%">
+              Descripción
+            </th>
+            <th scope="col" class="font-weight-light" style="width: 6%">
+              Cantidad
+            </th>
+            <th scope="col" class="font-weight-light" style="width: 6%">
+              Unidad
+            </th>
+            <th scope="col" class="font-weight-light" style="width: 8%">
+              Precio
+            </th>
+            <th scope="col" class="font-weight-light" style="width: 8%">
+              Descuento
+            </th>
+            <th scope="col" class="font-weight-light" style="width: 8%">
+              Iva Aplicado
+            </th>
+            <th scope="col" class="font-weight-light" style="width: 8%">
+              Subtotal
+            </th>
+            <th scope="col" class="font-weight-light" style="width: 8%">Iva</th>
+            <th scope="col" class="font-weight-light" style="width: 8%">
+              Total
+            </th>
+          </tr>
+        </thead>
+        @if (posicionCotizacion === 1) {
+        <tbody>
+          @for (item of solicitudCompraDetalle; track item) {
+          <tr>
+            <td>
+              <input
+                readonly
+                type="text"
+                class="form-control form-control-sm bg-white"
+                [value]="item.producto"
+              />
+              <!-- [(ngModel)]="item.producto.nombreProducto" -->
+            </td>
+            <td>
+              <input
+                disabled
+                type="text"
+                class="form-control form-control-sm bg-white"
+                [(ngModel)]="item.cantidad"
+              />
+            </td>
+            <td>
+              <input
+                disabled
+                type="text"
+                class="form-control form-control-sm bg-white"
+                [(ngModel)]="item.unidadMedida"
+              />
+            </td>
+            <td>
+              <input
+                type="number"
+                class="form-control form-control-sm bg-white"
+                [(ngModel)]="item.precio"
+                (keyup.enter)="onChange(item)"
+                (blur)="onChange(item)"
+              />
+            </td>
+            <td>
+              <input
+                type="number"
+                class="form-control form-control-sm bg-white"
+                [(ngModel)]="item.descuento"
+                (keyup.enter)="onChange(item)"
+                (blur)="onChange(item)"
+                min="0"
+                max="100"
+              />
+            </td>
+            <td>
+              <input
+                type="number"
+                class="form-control form-control-sm bg-white"
+                [(ngModel)]="item.ivaAplicado"
+                (keyup.enter)="onChange(item)"
+                (blur)="onChange(item)"
+                min="0"
+                max="100"
+              />
+            </td>
+            <td>
+              <input
+                disabled
+                type="text"
+                class="form-control form-control-sm bg-white"
+                [value]="item.subTotal | number"
+              />
+            </td>
+            <td>
+              <input
+                disabled
+                type="text"
+                class="form-control form-control-sm bg-white"
+                [(ngModel)]="item.iva"
+              />
+            </td>
+            <td>
+              <input
+                disabled
+                type="text"
+                class="form-control form-control-sm bg-white"
+                [value]="item.total | number"
+              />
+            </td>
+          </tr>
+          }
+        </tbody>
+        } @if (posicionCotizacion === 2) {
+        <tbody>
+          @for (item of solicitudCompraDetalle; track item) {
+          <tr>
+            <td>
+              <input
+                readonly
+                type="text"
+                class="form-control form-control-sm bg-white"
+                [(ngModel)]="item.producto"
+              />
+            </td>
+            <td>
+              <input
+                disabled
+                type="text"
+                class="form-control form-control-sm bg-white"
+                [(ngModel)]="item.cantidad"
+              />
+            </td>
+            <td>
+              <input
+                disabled
+                type="text"
+                class="form-control form-control-sm bg-white"
+                [(ngModel)]="item.unidadMedida"
+              />
+            </td>
+            <td>
+              <input
+                type="number"
+                class="form-control form-control-sm bg-white"
+                [(ngModel)]="item.precio2"
+                (keyup.enter)="onChange(item)"
+                (blur)="onChange(item)"
+              />
+            </td>
+            <td>
+              <input
+                type="number"
+                class="form-control form-control-sm bg-white"
+                [(ngModel)]="item.descuento2"
+                (keyup.enter)="onChange(item)"
+                (blur)="onChange(item)"
+                min="0"
+                max="100"
+              />
+            </td>
+            <td>
+              <input
+                type="number"
+                class="form-control form-control-sm bg-white"
+                [(ngModel)]="item.ivaAplicado2"
+                (keyup.enter)="onChange(item)"
+                (blur)="onChange(item)"
+                min="0"
+                max="100"
+              />
+            </td>
+            <td>
+              <input
+                disabled
+                type="text"
+                class="form-control form-control-sm bg-white"
+                [value]="item.subTotal2 | number"
+              />
+            </td>
+            <td>
+              <input
+                disabled
+                type="text"
+                class="form-control form-control-sm bg-white"
+                [(ngModel)]="item.iva2"
+              />
+            </td>
+            <td>
+              <input
+                disabled
+                type="text"
+                class="form-control form-control-sm bg-white"
+                [value]="item.total2 | number"
+              />
+            </td>
+          </tr>
+          }
+        </tbody>
+        } @if (posicionCotizacion === 3) {
+        <tbody>
+          @for (item of solicitudCompraDetalle; track item) {
+          <tr>
+            <td>
+              <input
+                readonly
+                type="text"
+                class="form-control form-control-sm bg-white"
+                [(ngModel)]="item.producto"
+              />
+            </td>
+            <td>
+              <input
+                disabled
+                type="text"
+                class="form-control form-control-sm bg-white"
+                [(ngModel)]="item.cantidad"
+              />
+            </td>
+            <td>
+              <input
+                disabled
+                type="text"
+                class="form-control form-control-sm bg-white"
+                [(ngModel)]="item.unidadMedida"
+              />
+            </td>
+            <td>
+              <input
+                type="number"
+                class="form-control form-control-sm bg-white"
+                [(ngModel)]="item.precio3"
+                (keyup.enter)="onChange(item)"
+                (blur)="onChange(item)"
+              />
+            </td>
+            <td>
+              <input
+                type="number"
+                class="form-control form-control-sm bg-white"
+                [(ngModel)]="item.descuento3"
+                (keyup.enter)="onChange(item)"
+                (blur)="onChange(item)"
+                min="0"
+                max="100"
+              />
+            </td>
+            <td>
+              <input
+                type="number"
+                class="form-control form-control-sm bg-white"
+                [(ngModel)]="item.ivaAplicado3"
+                (keyup.enter)="onChange(item)"
+                (blur)="onChange(item)"
+                min="0"
+                max="100"
+              />
+            </td>
+            <td>
+              <input
+                disabled
+                type="text"
+                class="form-control form-control-sm bg-white"
+                [value]="item.subTotal3 | number"
+              />
+            </td>
+            <td>
+              <input
+                disabled
+                type="text"
+                class="form-control form-control-sm bg-white"
+                [(ngModel)]="item.iva3"
+              />
+            </td>
+            <td>
+              <input
+                disabled
+                type="text"
+                class="form-control form-control-sm bg-white"
+                [value]="item.total3 | number"
+              />
+            </td>
+          </tr>
+          }
+        </tbody>
+        }
+      </table>
+    </ng-container>
+  </div>
+</div>

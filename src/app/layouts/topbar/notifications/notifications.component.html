@@ -10,15 +10,17 @@
   >
     <i
       *ngIf="messageInNotRead === 0"
-      class="text-success fa-solid fa-bell fa-2x ms-2 me-2"
+      class="fa-thin fa-bell fa-xl ms-2 me-2"
     ></i>
     <i
       *ngIf="messageInNotRead !== 0"
-      class="text-danger fa-solid fa-bell-ring fa-2x ms-2 me-2"
+      class="text-danger fa-thin fa-bell-ring fa-xl ms-2 me-2"
     ></i>
-    <span class="badge bg-light rounded-pill font-size-12">{{
-      messageInNotRead
-    }}</span>
+    <span
+      *ngIf="messageInNotRead !== 0"
+      class="badge bg-light rounded-pill font-size-12"
+      >{{ messageInNotRead }}</span
+    >
   </button>
   <div
     class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
@@ -27,7 +29,7 @@
   >
     <ngx-simplebar style="max-height: 230px" *ngIf="messageInNotRead === 0">
       <a
-        [routerLink]="['/tickets/my-tickets']"
+        [routerLink]="['/tickets/my-assignments']"
         class="text-reset notification-item"
       >
         <div class="d-flex card">

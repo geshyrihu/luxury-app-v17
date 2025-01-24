@@ -1,0 +1,107 @@
+<!-- Contenido para pantallas medianas y grandes (md en adelante) -->
+<div class="d-none d-md-block">
+  <div class="container mt-1">
+    <div class="row g-2">
+      <ng-container *ngFor="let item of menuItems; let i = index">
+        <div *ngIf="item.visible" class="col-md-4 col-lg-3">
+          <div
+            class="card text-center shadow-lg border-0 h-100 border-primary custom-card"
+            (click)="handleCardClick(item)"
+          >
+            <div class="card-body p-4">
+              <i
+                class="fa-solid fa-3x text-primary mb-2"
+                [class]="item.icon"
+              ></i>
+              <h5 class="card-title fw-bold text-uppercase text-dark">
+                {{ item.label }}
+              </h5>
+              <ng-container *ngIf="!item.items">
+                <a class="stretched-link" [routerLink]="item.routerLink"></a>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+
+      <!-- PrimeNG Dialog -->
+      <p-dialog
+        [(visible)]="display"
+        [modal]="true"
+        [closable]="true"
+        [responsive]="true"
+        [style]="{ width: '800px' }"
+        [header]="selectedItem?.name"
+      >
+        <ul class="list-group">
+          <li
+            *ngFor="let subItem of selectedItem?.items"
+            class="list-group-item"
+            [class.disabled]="!subItem.visible"
+          >
+            <a
+              *ngIf="subItem.routerLink"
+              [routerLink]="subItem.routerLink"
+              class="text-decoration-none"
+              [class.text-muted]="!subItem.visible"
+            >
+              {{ subItem.label }}
+            </a>
+            <span *ngIf="!subItem.routerLink" class="text-muted">{{
+              subItem.label
+            }}</span>
+          </li>
+        </ul>
+      </p-dialog>
+    </div>
+  </div>
+</div>
+
+<!-- Contenido para pantallas pequeñas (sm y menores) -->
+<div class="d-block d-md-none">
+  <div class="container mt-4">
+    <div class="row g-3">
+      <ng-container *ngFor="let item of data; let i = index">
+        <!-- <div *ngIf="item.isAutorized" class="col-6"> -->
+        <div class="col-6">
+          <div class="card text-center shadow-sm h-100">
+            <div class="card-body">
+              <i
+                class="fa-solid fa-2x text-secondary mb-2"
+                [class]="item.icon"
+              ></i>
+              <h6 class="card-title fw-bold">{{ item.name }}</h6>
+              <a class="stretched-link" [routerLink]="item.routerLink"></a>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>
+
+<style>
+  .custom-card {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .custom-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 5px; /* Ajusta el ancho según lo necesites */
+    height: 100%;
+    background-color: #0d3b66;
+  }
+  .list-group-item.disabled {
+    pointer-events: none;
+    background-color: #f8f9fa;
+    color: #6c757d;
+  }
+  /* Puedes agregar algunos estilos si lo necesitas */
+  .custom-card {
+    cursor: pointer;
+  }
+</style>

@@ -1,105 +1,70 @@
+<!-- Notificaciones en la esquina superior derecha -->
 <p-toast position="top-right" [baseZIndex]="99999"></p-toast>
 
-<header id="page-topbar" class="transparent-topbar">
-  <div class="navbar-header">
-    <div class="d-flex align-items-center">
-      <app-navigation-icon />
-      <app-customer-selection />
-      <app-current-title />
-    </div>
-    <div class="d-flex align-items-center">
-      <app-search />
-      <app-user-profile />
-      <app-notifications />
-    </div>
-  </div>
-</header>
-<style>
-  /* Fondo negro transparente */
-  .transparent-topbar {
-    background-color: rgba(0, 0, 0, 0.8); /* Negro con 80% de opacidad */
-    color: #fff; /* Texto en blanco para contraste */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); /* Sombra para efecto elegante */
-    position: fixed; /* Fijar la barra en la parte superior */
-    width: 100%; /* Asegurar que cubra todo el ancho */
-    z-index: 1030; /* Asegurar que esté sobre otros elementos */
-  }
-
-  /* Estilo para los elementos internos */
-  .navbar-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.75rem 1.5rem; /* Espaciado interno */
-  }
-
-  #page-topbar .d-flex > * {
-    margin: 0 0.5rem; /* Separación entre elementos */
-  }
-
-  /* Personalización para el título */
-  .transparent-topbar app-current-title {
-    flex-grow: 1;
-    text-align: center;
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #fff;
-  }
-</style>
-
-<!-- <header id="page-topbar">
-  <div class="navbar-header navbar-white bg-white">
+<!-- Encabezado de la página -->
+<header id="page-topbar">
+  <!-- Contenedor principal del encabezado -->
+  <div class="navbar-header navbar-dark bg-dark">
+    <!-- Sección izquierda del encabezado -->
     <div class="d-flex">
+      <!-- Logo y nombre del cliente -->
       <div class="navbar-brand-box d-none d-lg-block">
-        <a routerLink="/" class="logo logo-ligth">
-          <span class="logo-sm">LA</span>
-          <span class="logo-lg">
-            <span class="logo-txt">Luxury App</span>
+        <div class="logo logo-ligth">
+          <!-- Versión pequeña del logo -->
+          <span class="logo-sm">
+            <img
+              class="me-2 rounded avatar-sm"
+              [src]="customerPhotoPath"
+              alt="img"
+            />
           </span>
-        </a>
+          <!-- Versión grande del logo -->
+          <span class="logo-lg">
+            <div class="d-flex align-items-center">
+              <img
+                class="me-2 rounded avatar-sm"
+                [src]="customerPhotoPath"
+                alt="img"
+              />
+              <!-- Nombre del cliente con truncamiento si es muy largo -->
+              <span class="small text-white">
+                {{
+                  customerName.length > 15
+                    ? customerName.substring(0, 15) + "..."
+                    : customerName
+                }}
+              </span>
+            </div>
+          </span>
+        </div>
       </div>
 
+      <!-- Botón para alternar el menú lateral en dispositivos móviles -->
       <button
         type="button"
         class="btn btn-sm px-3 font-size-16 header-item"
         id="vertical-menu-btn"
         (click)="toggleMobileMenu($event)"
       >
-        <i class="fa fa-fw fa-bars"></i>
+        <i class="fa-thin fa-bars fa-xl"></i>
       </button>
 
-      <app-navigation-icon />
+      <!-- Íconos de navegación -->
+      <app-navigation-icon class="me-3"></app-navigation-icon>
 
-      <app-customer-selection />
-
-      <app-search />
+      <!-- Barra de búsqueda -->
+      <app-search></app-search>
     </div>
-    <div class="d-flex">
-      <app-user-profile />
-      <app-notifications />
-    </div>
-  </div>
-</header> -->
 
-<!-- <header id="page-topbar">
-  <div class="navbar-header navbar-white bg-white">
+    <!-- Sección derecha del encabezado -->
     <div class="d-flex">
-      <app-customer-selection />
-      <app-navigation-icon />
-
-      <app-search />
-      <app-current-title />
-    </div>
-    <div class="d-flex">
-      <app-user-profile />
-      <app-notifications />
+      <!-- Perfil del usuario -->
+      <app-user-profile></app-user-profile>
+      <!-- Notificaciones -->
+      <app-notifications></app-notifications>
     </div>
   </div>
 </header>
 <style>
-  .text-center {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-</style> -->
+  /* Ajustar el margen y ancho del topbar para que coincida con el sidebar */
+</style>

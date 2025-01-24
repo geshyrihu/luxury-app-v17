@@ -19,16 +19,13 @@
 
     <div class="d-flex align-items-center">
       <div class="dropdown d-inline-block">
-        <button
-          type="button"
-          class="btn header-item"
+        <i
           id="page-header-notifications-dropdown"
           data-bs-toggle="dropdown"
           aria-haspopup="true"
           aria-expanded="false"
-        >
-          <i class="fa-regular fa-ellipsis-vertical fa-2x text-dark"></i>
-        </button>
+          class="fa-regular fa-ellipsis-vertical fa-2x text-dark"
+        ></i>
 
         <div
           class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-2"
@@ -54,7 +51,7 @@
           <div
             *ngIf="cb_customer.length > 1"
             class="mb-3"
-            style="cursor: default; width: 300px"
+            style="cursor: default; width: 240px"
           >
             <label for="user-options" class="form-label text-muted">
               Condominios
@@ -73,7 +70,7 @@
           <div *ngIf="cb_customer.length === 1" class="mb-3">
             <div
               class="d-flex align-items-center bg-light-subtle border rounded h-100 me-2"
-              style="cursor: default; width: 300px"
+              style="cursor: default; width: 240px"
             >
               <img
                 class="ms-2 rounded avatar-md"

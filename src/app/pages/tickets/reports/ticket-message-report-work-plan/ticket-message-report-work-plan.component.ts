@@ -6,7 +6,7 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
-import CardEmployeeComponent from 'src/app/pages/6.1-directorios/employee/card-employee/card-employee.component';
+import CardEmployeeComponent from 'src/app/pages/directorios/employee-internal/card-employee.component';
 import TicketMessageAddOrEditComponent from '../../messages/ticket-message-add-or-edit/ticket-message-add-or-edit.component';
 import { TicketMessageModule } from '../../ticket-message.module';
 import { TicketGroupService } from '../../ticket.service';

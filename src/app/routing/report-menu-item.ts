@@ -10,6 +10,17 @@ export const reportMenu = (authS: AuthService) => [
         visible: authS.onValidateRoles([
           'SuperUsuario',
           'SupervisionOperativa',
+          'Administrador',
+          'JefeMantenimiento',
+        ]),
+        label: 'Reporte mensual mantenimiento',
+        routerLink: '/report/maintenance-report/panel',
+        name: 'Reporte mensual mantenimiento',
+      },
+      {
+        visible: authS.onValidateRoles([
+          'SuperUsuario',
+          'SupervisionOperativa',
         ]),
         label: 'Reporte Supervisión',
         routerLink: '/report/report-supervision',

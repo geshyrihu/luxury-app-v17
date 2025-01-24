@@ -12,8 +12,15 @@ export const settingMenu = (authS: AuthService) => [
     group: 'Permisos',
     visible: authS.onValidateRoles(['SuperUsuario']),
     label: 'Administración Roles Modulos',
-    icon: 'fa-duotone fa-solid fa-layer-group',
+    icon: 'fa-duotone fa-solid fa-key',
     routerLink: '/settings/module-app-rol',
+  },
+  {
+    group: 'Permisos',
+    visible: authS.onValidateRoles(['SuperUsuario']),
+    label: 'Clientes (Condominios)',
+    icon: 'fa-duotone fa-solid fa-building',
+    routerLink: '/settings/clientes',
   },
   {
     group: 'Permisos',

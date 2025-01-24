@@ -14,6 +14,9 @@ export class TopbarComponent {
 
   @Output() settingsButtonClicked = new EventEmitter();
 
+  customerName = this.authS.infoUserAuthDto.customer;
+  customerPhotoPath = this.authS.infoUserAuthDto.customerPhotoPath;
+
   valueset: any;
   toggleRightSidebar() {
     this.settingsButtonClicked.emit();

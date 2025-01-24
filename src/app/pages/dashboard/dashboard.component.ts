@@ -2,10 +2,10 @@ import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { AuthService } from 'src/app/core/services/auth.service';
-import DashboardPreventiveMaintenanceComponent from './dashboard-preventive-maintenance/dashboard-preventive-maintenance.component';
-import DashboardRequestsToLegalComponent from './dashboard-requests-to-legal/dashboard-requests-to-legal.component';
-import DashboardTicketCommitteeMeetingComponent from './dashboard-ticket-committee-meeting/dashboard-ticket-committee-meeting.component';
-import DashboardTicketsComponent from './dashboard-tickets/dashboard-tickets.component';
+import DashboardPreventiveMaintenanceComponent from './dashboard-preventive-maintenance.component';
+import DashboardRequestsToLegalComponent from './dashboard-requests-to-legal.component';
+import DashboardTicketCommitteeMeetingComponent from './dashboard-ticket-committee-meeting.component';
+import DashboardTicketsComponent from './dashboard-tickets.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -31,9 +31,9 @@ export default class DashboardComponent implements OnInit {
   ]);
 
   ngOnInit(): void {
-    // Si no es Administrador, redirigir a /tickets/my-tickets
+    // Si no es Administrador, redirigir a /tickets/my-assignments
     if (!this.isAutorized) {
-      this.router.navigate(['/tickets/my-tickets']);
+      this.router.navigate(['/tickets/my-assignments']);
     }
 
     // Si no es ninguno, el componente se cargará

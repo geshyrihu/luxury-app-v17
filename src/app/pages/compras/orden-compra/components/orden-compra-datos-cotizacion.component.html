@@ -1,0 +1,58 @@
+<button
+  ngbTooltip="Modificar dsatos de cotizacion"
+  placement="bottom"
+  [disabled]="bloqueada"
+  (click)="onModalOrdenCompra()"
+  type="button"
+  class="btn btn-info mb-2 p-1 w-100"
+>
+  DATOS COTIZACIÓN
+</button>
+<table class="table table-sm">
+  <tbody>
+    <tr>
+      <td style="width: 40%">Folio</td>
+      <td style="width: 60%">
+        {{ ordenCompra.folio }}
+      </td>
+    </tr>
+    @if (ordenCompra.folioSolicitudCompra) {
+    <tr>
+      <td style="width: 40%">Solicitud Compra</td>
+      <td style="width: 60%" class="pointer">
+        <a [routerLink]="['//compras/solicitud-compra/', solicitudCompraId]">
+          {{ ordenCompra.folioSolicitudCompra }}
+        </a>
+      </td>
+    </tr>
+    }
+    <tr>
+      <td style="width: 40%">Fecha de Solicitud</td>
+      <td style="width: 70%">
+        {{ ordenCompra.fechaSolicitud }}
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 40%">Donde se ocupa</td>
+      <td style="width: 70%">
+        {{ ordenCompra.equipoOInstalacion }}
+      </td>
+    </tr>
+    <tr>
+      <td class="text-justify" style="width: 40%">Justificación</td>
+      <td class="text-justify" style="width: 70%">
+        {{ ordenCompra.justificacionGasto }}
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 40%">LuxuryCloud</td>
+      <td style="width: 60%">
+        @if (ordenCompra.urlFile) {
+        <a [href]="ordenCompra.urlFile" target="_blank" class="pointer">
+          <i class="text-dark fa-light fa-cloud" aria-hidden="true"></i>
+        </a>
+        }
+      </td>
+    </tr>
+  </tbody>
+</table>

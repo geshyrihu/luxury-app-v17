@@ -5,7 +5,7 @@ export default [
     path: 'inventory-engine-system',
     loadComponent: () =>
       import(
-        'src/app/pages/5.4-inventarios/inventory-engine-system/inventory-engine-system.component'
+        'src/app/pages/inventarios/inventory-engine-system/inventory-engine-system.component'
       ),
     data: {
       title: 'Sistema de Inventario',
@@ -14,9 +14,7 @@ export default [
   {
     path: 'equipos/:categoria',
     loadComponent: () =>
-      import(
-        'src/app/pages/5.4-inventarios/machineries/list-equipos.component'
-      ),
+      import('src/app/pages/inventarios/machineries/list-equipos.component'),
     data: {
       title: 'Equipos por Categoría',
     },
@@ -24,9 +22,7 @@ export default [
   {
     path: 'gimnasio',
     loadComponent: () =>
-      import(
-        'src/app/pages/5.4-inventarios/machineries/list-equipos.component'
-      ),
+      import('src/app/pages/inventarios/machineries/list-equipos.component'),
     data: {
       title: 'Equipos de Gimnasio',
     },
@@ -34,9 +30,7 @@ export default [
   {
     path: 'herramienta',
     loadComponent: () =>
-      import(
-        'src/app/pages/8.0-reportes/mantenimiento/mantenimiento-inventarios/herramientas/list-herramientas.component'
-      ),
+      import('src/app/pages/almacen/herramientas/list-herramientas.component'),
     data: {
       title: 'Herramientas',
     },
@@ -45,7 +39,7 @@ export default [
     path: 'pintura',
     loadComponent: () =>
       import(
-        'src/app/pages/5.4-inventarios/inventario-pintura/inventario-pintura.component'
+        'src/app/pages/inventarios/inventario-pintura/inventario-pintura.component'
       ),
     data: {
       title: 'Inventario de Pintura',
@@ -55,7 +49,7 @@ export default [
     path: 'llaves',
     loadComponent: () =>
       import(
-        'src/app/pages/5.4-inventarios/inventario-llaves/list-llaves.component'
+        'src/app/pages/inventarios/inventario-llaves/list-llaves.component'
       ),
     data: {
       title: 'Inventario de Llaves',
@@ -65,7 +59,7 @@ export default [
     path: 'reporte-equipos',
     loadComponent: () =>
       import(
-        'src/app/pages/5.4-inventarios/machineries/reporte-completo-activos/reporte-completo-activos.component'
+        'src/app/pages/inventarios/machineries/reporte-completo-activos.component'
       ),
     data: {
       title: 'Reporte de Equipos',
@@ -75,7 +69,7 @@ export default [
     path: 'reporte-herramientas',
     loadComponent: () =>
       import(
-        'src/app/pages/8.0-reportes/mantenimiento/mantenimiento-inventarios/herramientas/informe-herramienta-pdf.component'
+        'src/app/pages/almacen/herramientas/informe-herramienta-pdf.component'
       ),
     data: {
       title: 'Reporte de Herramientas',
@@ -85,7 +79,7 @@ export default [
     path: 'radios',
     loadComponent: () =>
       import(
-        'src/app/pages/5.4-inventarios/radio-comunicacion/radio-comunicacion.component'
+        'src/app/pages/inventarios/radio-comunicacion/radio-comunicacion.component'
       ),
     data: {
       title: 'Radio Comunicación',
@@ -95,10 +89,30 @@ export default [
     path: 'cedula-anual-mantenimientos',
     loadComponent: () =>
       import(
-        'src/app/pages/8.0-reportes/mantenimiento/mantenimiento-presupuesto/gastos-mantenimiento.component'
+        'src/app/pages/reportes/mantenimiento-presupuesto/gastos-mantenimiento.component'
       ),
     data: {
       title: 'Cédula Anual de Mantenimientos',
+    },
+  },
+  {
+    path: 'extintores',
+    loadComponent: () =>
+      import(
+        'src/app/pages/inventarios/inventario-extintor/inventario-extintor.component'
+      ),
+    data: {
+      title: 'Extintores',
+    },
+  },
+  {
+    path: 'extintores-group',
+    loadComponent: () =>
+      import(
+        'src/app/pages/inventarios/inventario-extintor/inventario-extintor-group.component'
+      ),
+    data: {
+      title: 'Extintores Grupos',
     },
   },
 ] as Routes;

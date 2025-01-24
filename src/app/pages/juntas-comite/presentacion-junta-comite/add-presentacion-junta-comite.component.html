@@ -1,0 +1,22 @@
+<form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
+  <input type="text" hidden formControlName="id" />
+  <div class="mb-2">
+    <custom-input-date
+      [control]="form.get('fechaCorrespondiente')"
+      formControlName="fechaCorrespondiente"
+      label="Periodo"
+      placeholder="Periodo"
+    />
+  </div>
+  <div class="mb-2">
+    <custom-input-date
+      [control]="form.get('fechaJunta')"
+      formControlName="fechaJunta"
+      label="Fecha de Junta"
+      placeholder="Fecha de Junta"
+    />
+  </div>
+
+  <btn-submit [disabled]="this.form.invalid || submitting" />
+  <hr />
+</form>

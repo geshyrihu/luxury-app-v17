@@ -6,9 +6,11 @@
       <!-- Left Menu Start -->
       <ul class="metismenu list-unstyled" id="side-menu">
         <ng-container>
-          @for(item of menuItems;track item){
+          <!-- Iterar sobre los elementos del menú -->
+          @for (item of menuItems; track item) {
           <li>
-            @if( hasItems(item) && item.visible){
+            <!-- Si el elemento tiene subelementos y es visible -->
+            @if (hasItems(item) && item.visible) {
             <a
               class="is-parent"
               [ngClass]="{
@@ -16,24 +18,36 @@
                 'has-dropdown': item.badge
               }"
             >
+              <!-- Icono y etiqueta del elemento -->
               <i class="{{ item.icon }}"></i>
-              <span> {{ item.label }}</span>
+              <span style="font-size: 16px">{{
+                item.label.length > 20
+                  ? item.label.substring(0, 20) + "..."
+                  : item.label
+              }}</span>
             </a>
-            } @if (!hasItems(item) && item.visible) {
+            }
+            <!-- Si el elemento no tiene subelementos y es visible -->
+            @if (!hasItems(item) && item.visible) {
             <a
               [routerLink]="item.routerLink"
               class="side-nav-link-ref"
               routerLinkActive="active"
             >
+              <!-- Mostrar icono si existe -->
               @if (item.icon) {
               <i class="{{ item.icon }}"></i>
               }
-              <span> {{ item.label }}</span>
+              <span>{{ item.label }}</span>
             </a>
-            } @if (hasItems(item)) {
+            }
+            <!-- Si el elemento tiene submenús -->
+            @if (hasItems(item)) {
             <ul class="sub-menu" aria-expanded="false">
+              <!-- Iterar sobre los subelementos -->
               @for (subitem of item.items; track subitem) {
               <li>
+                <!-- Si el subelemento no tiene submenús y es visible -->
                 @if (!hasItems(subitem) && subitem.visible) {
                 <a
                   [routerLink]="subitem.routerLink"
@@ -42,16 +56,20 @@
                 >
                   {{ subitem.label }}
                 </a>
-                } @if (hasItems(subitem)) {
+                }
+                <!-- Si el subelemento tiene submenús -->
+                @if (hasItems(subitem)) {
                 <a class="side-nav-link-a-ref has-arrow">
                   {{ subitem.label }}
                 </a>
-                } @if (hasItems(subitem)) {
+                }
+                <!-- Mostrar los submenús del subelemento -->
+                @if (hasItems(subitem)) {
                 <ul class="sub-menu mm-collapse" aria-expanded="false">
                   @for (subSubitem of subitem.items; track subSubitem) {
                   <li>
+                    <!-- Mostrar solo si el subelemento es visible -->
                     @if (subSubitem.visible) {
-                    <!-- [attr.data-parent]="subSubitem.parentId" -->
                     <a
                       [routerLink]="subSubitem.routerLink"
                       routerLinkActive="active"
@@ -60,7 +78,6 @@
                       {{ subSubitem.label }}
                     </a>
                     }
-                    <!-- (click)="onOcultarBarra()" -->
                   </li>
                   }
                 </ul>

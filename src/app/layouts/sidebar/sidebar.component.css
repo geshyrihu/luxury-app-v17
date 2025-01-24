@@ -1,0 +1,49 @@
+/* Ancho del sidebar */
+.vertical-menu {
+  width: 300px;
+  /* Puedes ajustar el valor */
+  background-color: #2c3e50; /* Fondo del sidebar */
+}
+
+/* Estilo general del texto del sidebar */
+.vertical-menu ul.metismenu {
+  font-family: "Montserrat", sans-serif; /* Cambiar la fuente */
+}
+
+/* Estilo para los ítems */
+.vertical-menu ul.metismenu li a {
+  display: flex;
+  align-items: center;
+  padding: 5px 15px; /* Espaciado interno */
+  color: #bdc3c7; /* Color del texto de los ítems */
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+/* Estilo del ítem seleccionado */
+.vertical-menu ul.metismenu li a.active {
+  background-color: #ffffff; /* Fondo del ítem seleccionado */
+  border-radius: 2px;
+}
+
+/* Hover en los ítems */
+.vertical-menu ul.metismenu li a:hover {
+  background-color: #34495e; /* Fondo en hover */
+  color: #ffffff; /* Texto en hover */
+}
+
+/* Submenús */
+.vertical-menu ul.metismenu ul.sub-menu {
+  padding-left: 20px; /* Aumentar espaciado en submenús */
+}
+
+.vertical-menu ul.metismenu ul.sub-menu li a {
+  font-size: 13px; /* Tamaño menor para los submenús */
+  color: #ecf0f1; /* Color del texto de submenús */
+}
+
+/* Íconos dentro del sidebar */
+.vertical-menu ul.metismenu li a i {
+  margin-right: px; /* Espaciado entre el ícono y el texto */
+  font-size: 16px; /* Tamaño del ícono */
+}

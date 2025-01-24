@@ -1,0 +1,35 @@
+<div *ngIf="data && data.length > 0" class="card">
+  <div class="p-2">
+    <custom-table-caption
+      title="COMITES DE VIGILANCIA"
+      [showAdd]="false"
+      [showSearch]="false"
+    />
+  </div>
+
+  <table class="custom-table-report mb-3" *ngFor="let customerGroup of data">
+    <thead class="table-light">
+      <tr>
+        <th class="text-center" colspan="4">
+          <strong>{{ customerGroup.customer.nombreCorto }}</strong>
+        </th>
+      </tr>
+      <tr>
+        <th>Cargo</th>
+        <th>Nombre</th>
+        <th>Email</th>
+        <th>Teléfono</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Itera sobre los miembros del comité para cada cliente -->
+      <tr *ngFor="let member of customerGroup.committeeMembers">
+        <!-- Celda vacía debajo del nombre del cliente -->
+        <td>{{ member.ePosicionComite }}</td>
+        <td>{{ member.fullName }}</td>
+        <td>{{ member.email }}</td>
+        <td>{{ member.phoneNumber }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

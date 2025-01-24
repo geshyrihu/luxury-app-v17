@@ -1,0 +1,199 @@
+<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
+<p-table
+  [(selection)]="data"
+  #dt
+  styleClass="custom-table"
+  [tableStyle]="{ 'min-width': '50rem' }"
+  [value]="data"
+  [rows]="100"
+  [paginator]="true"
+  [rowHover]="true"
+  currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+  [showCurrentPageReport]="true"
+  [rowsPerPageOptions]="[75, 100]"
+  [globalFilterFields]="[
+    'fechaSolicitud',
+    'folio',
+    'proveedor',
+    'equipoOInstalacion',
+    'justificacionGasto',
+    'revisadoPorResidente'
+  ]"
+  [autoLayout]="true"
+>
+  <ng-template pTemplate="caption">
+    <custom-table-caption
+      [title]="'Ordenes de Compra Variables'"
+      (add)="onModalAdd()"
+      [dt]="dt"
+      [rolAuth]="
+        authS.onValidateRoles([
+          'Asistente',
+          'JefeMantenimiento',
+          'Administrador',
+          'SuperUsuario'
+        ])
+      "
+    />
+    <div class="row mt-1">
+      <div class="col-12">
+        <custom-button
+          (clicked)="onSelectStatus(2)"
+          (clicked)="statusCompra = 2"
+          [customNgClass]="{
+            'btn-outline-danger': statusCompra !== 2,
+            'btn-danger': statusCompra === 2
+          }"
+          customClass="float-end"
+          label="Pendientes"
+        >
+        </custom-button>
+        <custom-button
+          (clicked)="onSelectStatus(0)"
+          (clicked)="statusCompra = 0"
+          [customNgClass]="{
+            'btn-outline-success': statusCompra !== 0,
+            'btn-success': statusCompra === 0
+          }"
+          customClass="float-end"
+          label="Autorizadas"
+        >
+        </custom-button>
+        <custom-button
+          (clicked)="onSelectStatus(1)"
+          (clicked)="statusCompra = 1"
+          [customNgClass]="{
+            'btn-outline-secondary': statusCompra !== 1,
+            'btn-secondary': statusCompra === 1
+          }"
+          customClass="float-end"
+          label="Denegadas"
+        >
+        </custom-button>
+      </div>
+    </div>
+    <div class="col text-left"></div>
+  </ng-template>
+  <ng-template pTemplate="header">
+    <tr>
+      <th scope="col" style="width: 7%" pSortableColumn="folio">
+        Folio
+        <p-sortIcon field="folio"></p-sortIcon>
+      </th>
+      <th scope="col" style="width: 7%" pSortableColumn="fechaSolicitud">
+        Solicitud
+        <p-sortIcon field="fechaSolicitud"></p-sortIcon>
+      </th>
+      <th scope="col" style="width: 20%" pSortableColumn="equipoOInstalacion">
+        Área, equipo o instalación
+        <p-sortIcon field="equipoOInstalacion"></p-sortIcon>
+      </th>
+      <th scope="col" style="width: 20%" pSortableColumn="justificacionGasto">
+        Justificación
+        <p-sortIcon field="justificacionGasto"></p-sortIcon>
+      </th>
+      <th scope="col" style="width: 15%" pSortableColumn="proveedor">
+        Proveedor
+        <p-sortIcon field="proveedor"></p-sortIcon>
+      </th>
+      @if (statusCompra === 1) {
+      <th
+        scope="col"
+        style="width: 15%"
+        pSortableColumn="ordenCompraAuth.observaciones"
+      >
+        Observaciones
+        <p-sortIcon field="ordenCompraAuth.observaciones"></p-sortIcon>
+      </th>
+      } @if (this.statusCompra === 0) {
+      <th
+        scope="col"
+        style="width: 15%"
+        pSortableColumn="ordenCompraAuth.fullName"
+      >
+        Autoriza
+        <p-sortIcon field="ordenCompraAuth.fullName"></p-sortIcon>
+      </th>
+      }
+      <th scope="col" style="width: 15%" pSortableColumn="revisadoPorResidente">
+        Revisada por
+        <p-sortIcon field="revisadoPorResidente"></p-sortIcon>
+      </th>
+      <th scope="col" style="width: 5%" class="text-small">Opciones</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-item>
+    <tr>
+      <td>
+        {{ item.folio }}
+      </td>
+      <td>
+        {{ item.fechaSolicitud | date }}
+      </td>
+      <td>
+        {{ item.equipoOInstalacion }}
+      </td>
+      <td>
+        {{ item.justificacionGasto }}
+      </td>
+      <td>
+        {{ item.proveedor }}
+      </td>
+      @if (statusCompra === 1) {
+      <td>
+        {{ item.observaciones }}
+      </td>
+      } @if (this.statusCompra === 0) {
+      <td>
+        {{ item.fullName }} <br />
+        {{ item.fechaAutorizacion | date : "short" }}
+      </td>
+      }
+      <td>
+        {{ item.revisadoPorResidente }}
+      </td>
+      <td class="p-column-title">
+        <div class="d-flex justify-content-center">
+          @if (statusCompra === 0) {
+          <a
+            class="btn btn-sm btn-outline-danger me-1"
+            target="_blank"
+            ngbTooltip="Solicitud de Pago pdf"
+            placement="top"
+            [routerLink]="['//compras/solicitud-pago-pdf/', item.id]"
+          >
+            <i class="fa-light fa-file-pdf"></i>
+          </a>
+          } @if (statusCompra === 0) {
+          <a
+            class="btn btn-sm btn-outline-danger me-1"
+            target="_blank"
+            ngbTooltip="Orden de Compra pdf"
+            placement="top"
+            [routerLink]="['//compras/orden-compra-pdf/', item.id]"
+          >
+            <i class="fa-light fa-file-pdf"></i>
+          </a>
+          } @if ( authS.onValidateRoles([ 'Asistente', 'JefeMantenimiento',
+          'Administrador' ]) ) {
+          <btn-edit (edit)="onAddOrEdit(item.id)" />
+          }
+          <custom-button
+            customClass="btn-soft-primary waves-effect waves-light  bg-gradient me-1"
+            ngbTooltip="Ver en modal"
+            icon="icon-edit"
+            (clicked)="onOrdenCompraModal(item.id)"
+          />
+
+          @if ( statusCompra === 2 && authS.onValidateRoles(['Administrador']) )
+          {
+          <btn-delete (OnConfirm)="onDelete(item.id)" />
+          }
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="paginatorleft">
+    <table-footer [data]="data" />
+  </ng-template>
+</p-table>

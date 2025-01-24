@@ -1,28 +1,25 @@
 import { Routes } from '@angular/router';
-import { AuthGuard } from '../core/guards/auth.guard';
-
+import { AuthGuard } from 'src/app/core/guards/auth.guard';
 export default [
   {
     path: 'proveedor',
     loadComponent: () =>
       import(
-        'src/app/pages/6.1-directorios/directorios/proveedor/dashboard-proveedor/dashboard-proveedor.component'
+        'src/app/pages/directorios/proveedor/dashboard-proveedor.component'
       ),
     data: { title: 'Proveedor' },
   },
   {
     path: 'condominos',
     loadComponent: () =>
-      import(
-        'src/app/pages/6.1-directorios/list-condominos/list-condominos.component'
-      ),
+      import('src/app/pages/directorios/condominos/condominos-list.component'),
     data: { title: 'Condominos' },
   },
   {
     path: 'propiedades',
     loadComponent: () =>
       import(
-        'src/app/pages/6.1-directorios/directorios/propiedades/list-propiedades.component'
+        'src/app/pages/directorios/propiedades/propiedades-list.component'
       ),
     data: { title: 'Propiedades' },
   },
@@ -30,7 +27,7 @@ export default [
     path: 'comite-vigilancia',
     loadComponent: () =>
       import(
-        'src/app/pages/6.1-directorios/directorios/comite-vigilancia/list-comite-vigilancia.component'
+        'src/app/pages/directorios/comite-vigilancia/comite-vigilancia-list.component'
       ),
     data: { title: 'Comité de Vigilancia' },
   },
@@ -38,7 +35,7 @@ export default [
     path: 'personal-interno',
     loadComponent: () =>
       import(
-        'src/app/pages/6.1-directorios/employee/list-employee-customer/list-employee-customer.component'
+        'src/app/pages/directorios/employee-internal/employee-list.component'
       ),
     data: { title: 'Personal Interno' },
   },
@@ -46,7 +43,7 @@ export default [
     path: 'personal-externo',
     loadComponent: () =>
       import(
-        'src/app/pages/6.1-directorios/employee-provider/list-employee-provider-customer.component'
+        'src/app/pages/directorios/employee-external/employee-external-list.component'
       ),
     data: { title: 'Personal Externo' },
   },
@@ -54,7 +51,7 @@ export default [
     path: 'empleado',
     loadComponent: () =>
       import(
-        'src/app/pages/6.1-directorios/employee/employee-add-or-edit/employee-add-or-edit.component'
+        'src/app/pages/directorios/employee-internal/employee-add-or-edit.component'
       ),
     data: { title: 'Empleado' },
   },
@@ -62,7 +59,7 @@ export default [
     path: 'telefonos-emergencia',
     loadComponent: () =>
       import(
-        'src/app/pages/6.1-directorios/directorios/telefonos-emergencia/telefonos-emergencia.component'
+        'src/app/pages/directorios/telefonos-emergencia/telefonos-emergencia.component'
       ),
     data: { title: 'Teléfonos de Emergencia' },
   },
@@ -70,16 +67,14 @@ export default [
     path: 'organigrama-interno',
     loadComponent: () =>
       import(
-        'src/app/pages/6.1-directorios/directorios/organigrama-interno/organigrama-interno.component'
+        'src/app/pages/directorios/organigrama-interno/organigrama-interno.component'
       ),
     data: { title: 'Organigrama Interno' },
   },
   {
     path: 'mis-proveedores',
     loadComponent: () =>
-      import(
-        'src/app/pages/6.1-directorios/directorios/proveedor/mis-proveedores/mis-proveedores.component'
-      ),
+      import('src/app/pages/directorios/proveedor/mis-proveedores.component'),
     canActivate: [AuthGuard], // Se agregó canActivate aquí
     data: { title: 'Mis Proveedores' },
   },

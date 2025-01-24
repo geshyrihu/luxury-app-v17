@@ -4,13 +4,13 @@ import { AuthGuard } from 'src/app/core/guards/auth.guard';
 export default [
   {
     path: '',
-    loadComponent: () => import('src/app/pages/home/home.component'),
+    loadComponent: () => import('src/app/layouts/home-celular/home.component'),
     canActivate: [AuthGuard],
     data: { title: 'Inicio' },
   },
   {
     path: 'almacen',
-    loadChildren: () => import('./almacen.routing'),
+    loadChildren: () => import('./aprobate/almacen.routing'),
     canActivate: [AuthGuard],
     data: { title: 'Almacén' },
   },
@@ -48,119 +48,28 @@ export default [
     loadChildren: () => import('./entrega-recepcion.routing'),
     canActivate: [AuthGuard],
   },
-  {
-    path: 'home',
-    loadComponent: () => import('src/app/pages/home/home.component'),
-    canActivate: [AuthGuard],
-    data: { title: 'Inicio' },
-  },
-  {
-    path: 'home-anuncios',
-    loadComponent: () =>
-      import('src/app/pages/home/jefe-mantenimiento/home-anuncios.component'),
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'home-attendance',
-    loadComponent: () =>
-      import('src/app/pages/home/jefe-mantenimiento/home-attendance.component'),
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'home-bitacoras',
-    loadComponent: () =>
-      import('src/app/pages/home/jefe-mantenimiento/home-bitacoras.component'),
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'home-calendar',
-    loadComponent: () =>
-      import('src/app/pages/home/jefe-mantenimiento/home-calendar.component'),
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'home-calendar-juntas-comite',
-    loadComponent: () =>
-      import(
-        'src/app/pages/home/jefe-mantenimiento/home-calendar-juntas-comite.component'
-      ),
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'home-compras',
-    loadComponent: () =>
-      import('src/app/pages/home/jefe-mantenimiento/home-compras.component'),
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'home-directorios',
-    loadComponent: () =>
-      import(
-        'src/app/pages/home/jefe-mantenimiento/home-directorios.component'
-      ),
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'home-documents',
-    loadComponent: () =>
-      import('src/app/pages/home/jefe-mantenimiento/home-documents.component'),
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'home-inspection',
-    loadComponent: () =>
-      import('src/app/pages/home/jefe-mantenimiento/home-inspection.component'),
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'home-inventory',
-    loadComponent: () =>
-      import('src/app/pages/home/jefe-mantenimiento/home-inventory.component'),
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'home-juntas-comite',
-    loadComponent: () =>
-      import(
-        'src/app/pages/home/jefe-mantenimiento/home-juntas-comite.component'
-      ),
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'home-notification',
-    loadComponent: () =>
-      import(
-        'src/app/pages/home/jefe-mantenimiento/home-notification.component'
-      ),
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'home-reports',
-    loadComponent: () =>
-      import('src/app/pages/home/jefe-mantenimiento/home-reports.component'),
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'home-ticket',
-    loadComponent: () =>
-      import('src/app/pages/home/jefe-mantenimiento/home-tickets.component'),
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'home-warehouses',
-    loadComponent: () =>
-      import('src/app/pages/home/jefe-mantenimiento/home-warehouses.component'),
-    canActivate: [AuthGuard],
-  },
+
   {
     path: 'inspections',
-    loadChildren: () => import('./inspection.routing'),
+    loadChildren: () => import('./aprobate/inspection.routing'),
     canActivate: [AuthGuard],
     data: { title: 'Inspecciones' },
   },
   {
+    path: 'junta-comite',
+    loadChildren: () => import('./aprobate/juntas-comite.routing'),
+    canActivate: [AuthGuard],
+    data: { title: 'Juntas con comite' },
+  },
+  {
+    path: 'compras',
+    loadChildren: () => import('./aprobate/compras.routing'),
+    canActivate: [AuthGuard],
+    data: { title: 'Compras' },
+  },
+  {
     path: 'legal',
-    loadChildren: () => import('./legal.routing'),
+    loadChildren: () => import('./aprobate/legal.routing'),
     canActivate: [AuthGuard],
     data: { title: 'Legal' },
   },
@@ -170,27 +79,21 @@ export default [
     canActivate: [AuthGuard],
     data: { title: 'Bitácora' },
   },
+
   {
-    path: 'menu',
-    loadChildren: () => import('./menu-movil.routing'),
+    path: 'inventario',
+    loadChildren: () => import('./inventarios.routing'),
     canActivate: [AuthGuard],
-    data: { title: 'Menu' },
+    data: { title: 'Inventario' },
   },
+
   {
     path: 'mantenimiento',
     loadChildren: () => import('./mantenimiento.routing'),
     canActivate: [AuthGuard],
     data: { title: 'Mantenimiento' },
   },
-  {
-    path: 'movil-options',
-    loadComponent: () =>
-      import(
-        'src/app/layouts/cell-phone-option/cell-phone-menu/cell-phone-menu.component'
-      ),
-    canActivate: [AuthGuard],
-    data: { title: 'Actualizar Perfil' },
-  },
+
   {
     path: 'operaciones',
     loadChildren: () => import('./operaciones.routing'),
@@ -229,16 +132,14 @@ export default [
   },
   {
     path: 'tickets',
-    loadChildren: () => import('src/app/routing/tickets.routing'),
+    loadChildren: () => import('src/app/routing/aprobate/tickets.routing'),
     canActivate: [AuthGuard],
     data: { title: 'Luxury Chat' },
   },
   {
     path: 'update-user-profile',
     loadComponent: () =>
-      import(
-        'src/app/pages/application-user/update-profile/update-profile.component'
-      ),
+      import('src/app/pages/update-profile/update-profile.component'),
     canActivate: [AuthGuard],
     data: { title: 'Actualizar Perfil' },
   },
@@ -247,5 +148,126 @@ export default [
     loadChildren: () => import('./utillidades.routing'),
     canActivate: [AuthGuard],
     data: { title: 'Utilidades' },
+  },
+
+  {
+    path: 'home',
+    loadComponent: () => import('src/app/layouts/home-celular/home.component'),
+    canActivate: [AuthGuard],
+    data: { title: 'Inicio' },
+  },
+  {
+    path: 'home-anuncios',
+    loadComponent: () =>
+      import(
+        'src/app/layouts/home-celular/home-moduls/home-anuncios.component'
+      ),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'home-attendance',
+    loadComponent: () =>
+      import(
+        'src/app/layouts/home-celular/home-moduls/home-attendance.component'
+      ),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'home-bitacoras',
+    loadComponent: () =>
+      import(
+        'src/app/layouts/home-celular/home-moduls/home-bitacoras.component'
+      ),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'home-calendar',
+    loadComponent: () =>
+      import(
+        'src/app/layouts/home-celular/home-moduls/home-calendar.component'
+      ),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'home-calendar-juntas-comite',
+    loadComponent: () =>
+      import(
+        'src/app/layouts/home-celular/home-moduls/home-calendar-juntas-comite.component'
+      ),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'home-compras',
+    loadComponent: () =>
+      import('src/app/layouts/home-celular/home-moduls/home-compras.component'),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'home-directorios',
+    loadComponent: () =>
+      import(
+        'src/app/layouts/home-celular/home-moduls/home-directorios.component'
+      ),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'home-documents',
+    loadComponent: () =>
+      import(
+        'src/app/layouts/home-celular/home-moduls/home-documents.component'
+      ),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'home-inspection',
+    loadComponent: () =>
+      import(
+        'src/app/layouts/home-celular/home-moduls/home-inspection.component'
+      ),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'home-inventory',
+    loadComponent: () =>
+      import(
+        'src/app/layouts/home-celular/home-moduls/home-inventory.component'
+      ),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'home-juntas-comite',
+    loadComponent: () =>
+      import(
+        'src/app/layouts/home-celular/home-moduls/home-juntas-comite.component'
+      ),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'home-notification',
+    loadComponent: () =>
+      import(
+        'src/app/layouts/home-celular/home-moduls/home-notification.component'
+      ),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'home-reports',
+    loadComponent: () =>
+      import('src/app/layouts/home-celular/home-moduls/home-reports.component'),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'home-ticket',
+    loadComponent: () =>
+      import('src/app/layouts/home-celular/home-moduls/home-tickets.component'),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'home-warehouses',
+    loadComponent: () =>
+      import(
+        'src/app/layouts/home-celular/home-moduls/home-warehouses.component'
+      ),
+    canActivate: [AuthGuard],
   },
 ] as Routes;

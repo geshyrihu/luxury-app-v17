@@ -1,15 +1,11 @@
-<div
-  class="d-flex align-items-center bg-light-subtle border rounded h-100 me-2"
-  style="cursor: default; width: 300px"
->
-  <img
-    class="ms-2 rounded avatar-md"
-    [src]="customerPhotoPath"
-    alt="Customer Image"
-    style="width: 50px; height: 50px; object-fit: cover"
-  />
-  <span class="ms-2 fw-medium text-dark" style="flex-grow: 1">
-    {{ customerName }}
+<div class="d-flex align-items-center">
+  <img class="me-2 rounded avatar-sm" [src]="customerPhotoPath" alt="img" />
+  <span class="small text-white">
+    {{
+      customerName.length > 15
+        ? customerName.substring(0, 15) + "..."
+        : customerName
+    }}
   </span>
 </div>
 

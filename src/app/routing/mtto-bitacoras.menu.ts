@@ -2,14 +2,37 @@ import { AuthService } from 'src/app/core/services/auth.service';
 
 export const mttoBitacorasMenu = (authS: AuthService) => [
   {
-    visible: authS.canRead('5.7 MTTOBITACORAS'),
-    label: '5.7 Mtto Bitacoras',
+    visible: authS.onValidateRoles([
+      'SuperUsuario',
+      'SupervisionOperativa',
+      'Administrador',
+      'JefeMantenimiento',
+      'AuxiliarMantenimiento',
+    ]),
+    label: 'Bitacoras de Mantenimiento',
     icon: 'fa-duotone fa-solid fa-book',
-    name: 'Mtto Bitacoras',
+    name: 'Bitacoras de Mantenimiento',
     items: [
       {
-        visible: authS.canRead('5.7 MTTOBITACORAS'),
-        label: '5.7.1 Recorrido equipos',
+        visible: authS.onValidateRoles([
+          'SuperUsuario',
+          'SupervisionOperativa',
+          'Administrador',
+          'JefeMantenimiento',
+        ]),
+        label: 'Ordenes de mantenimiento',
+        routerLink: '/logbook/ordenes-mantenimiento',
+        name: 'ordenes-mantenimiento',
+      },
+      {
+        visible: authS.onValidateRoles([
+          'SuperUsuario',
+          'SupervisionOperativa',
+          'Administrador',
+          'JefeMantenimiento',
+          'AuxiliarMantenimiento',
+        ]),
+        label: 'Recorrido equipos',
         routerLink: '/logbook/equipos',
         name: 'Equipos recorrido diario',
       },

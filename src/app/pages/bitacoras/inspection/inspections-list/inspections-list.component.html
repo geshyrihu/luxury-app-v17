@@ -1,0 +1,157 @@
+<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
+<!-- Contenido para pantallas medianas y grandes (md en adelante) -->
+<div class="d-none d-md-block"></div>
+<!-- Contenido para pantallas pequeñas (sm y menores) -->
+<div class="d-block d-md-none"></div>
+<div class="container-fluid py-3">
+  <div class="d-flex justify-content-between align-items-center mb-1">
+    <h4 class="page-title-box">
+      <!-- Titulo de page -->
+      Listado de Inspecciones
+    </h4>
+    <custom-button
+      ngbTooltip="Agregar"
+      customClass="btn-soft-primary waves-effect waves-light  bg-gradient"
+      icon="fa-plus"
+      (clicked)="onModalAddOrEdit({ title: 'Agregar Inspección', id: '' })"
+    />
+  </div>
+
+  <div class="d-flex align-items-center">
+    <select
+      class="form-select"
+      [(ngModel)]="selectedArea"
+      (change)="onFilterChange()"
+    >
+      <option value="">Todas las Áreas</option>
+      <option [value]="item" *ngFor="let item of areasResponsables">
+        {{ item }}
+      </option>
+    </select>
+
+    <select
+      class="form-select"
+      [(ngModel)]="selectedRecurrence"
+      (change)="onFilterChange()"
+    >
+      <option value="">Todas las Recurrencias</option>
+      <option value="Diario">Diario</option>
+      <option value="Semanal">Semanal</option>
+      <option value="Mensual">Mensual</option>
+    </select>
+
+    <i
+      class="fa-light fa-book"
+      routerLink="/inspections/inspection-report-list"
+    ></i>
+  </div>
+
+  <!-- <div class="mb-3 d-flex justify-content-between mt-1 mb-1">
+      <input
+        type="text"
+        placeholder="Ingresa texto para buscar..."
+        class="form-control w-100"
+        [(ngModel)]="searchText"
+        (input)="onSearch()"
+      />
+    </div> -->
+
+  <div class="d-flex align-items-center mb-1"></div>
+  <!-- Lista de inspecciones filtradas -->
+
+  @if (inspeccionesFiltradas.length) {
+
+  <div class="list-group mt-1">
+    <div *ngFor="let group of inspeccionesFiltradas">
+      <h4>{{ group.areaResponsable }}</h4>
+      <div
+        *ngFor="let item of group.inspecciones"
+        class="list-group-item d-flex align-items-center justify-content-between py-1"
+      >
+        <div class="d-flex align-items-center">
+          <div>
+            <div class="card-text">{{ item.nombre }}</div>
+            <small class="text-muted">{{ item.recurrencia }}</small>
+          </div>
+        </div>
+        <div class="d-flex align-items-center">
+          <div class="dropdown">
+            <button
+              class="btn btn-soft-primary waves-effect waves-light bg-gradient btn-sm dropdown-toggle"
+              type="button"
+              id="dropdownMenuButton"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+              title="Opciones"
+            >
+              <i class="fa-solid fa-ellipsis-vertical"></i>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <li>
+                <button
+                  class="dropdown-item border"
+                  (click)="
+                    onModalAddOrEdit({
+                      title: 'Editar Inspección',
+                      id: item.id
+                    })
+                  "
+                >
+                  Editar Inspección
+                </button>
+              </li>
+
+              <li>
+                <button
+                  class="dropdown-item border"
+                  [routerLink]="['/inspections/details', item.id]"
+                >
+                  Detalles
+                </button>
+              </li>
+              <li>
+                <button
+                  class="dropdown-item border"
+                  (click)="onDelete(item.id)"
+                >
+                  Eliminar Inspección
+                </button>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  } @else{
+  <p>No hay inspecciones disponibles.</p>
+  }
+
+  <style>
+    .list-group-item {
+      background: #f9f9f9;
+      border: 1px solid #e0e0e0;
+      border-radius: 3px;
+      margin-bottom: 5px;
+      transition: box-shadow 0.3s;
+    }
+
+    .list-group-item:hover {
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .rounded-circle {
+      object-fit: cover;
+    }
+    /* Estilo para el icono */
+    .fa-book {
+      font-size: 1.2rem; /* Ajusta el tamaño del icono */
+      height: 30px; /* Establece la altura del icono (igual a los selectores) */
+      width: auto; /* Mantiene la proporción del ancho del icono */
+      display: flex; /* Hace que el icono sea un elemento de tipo flex */
+      align-items: center; /* Alinea el icono verticalmente */
+      margin-left: 10px; /* Espacio entre los selectores y el icono */
+      cursor: pointer; /* Pone el cursor como puntero */
+    }
+  </style>
+</div>

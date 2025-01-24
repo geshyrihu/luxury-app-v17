@@ -11,7 +11,7 @@ export const routes: Routes = [
   },
   {
     canActivate: [AuthGuard],
-    loadChildren: () => import('src/app/routing/compras.routing'),
+    loadChildren: () => import('src/app/routing/aprobate/compras.routing'),
     path: 'compras',
   },
   {

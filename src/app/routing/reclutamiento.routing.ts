@@ -4,16 +4,14 @@ export default [
   {
     path: 'plantilla-interna',
     loadComponent: () =>
-      import(
-        'src/app/pages/7.0-reclutamiento/plantilla/list-plantilla-components/list-plantilla.component'
-      ),
+      import('src/app/pages/reclutamiento/plantilla/list-plantilla.component'),
     data: { title: 'Plantilla Interna' },
   },
   {
     path: 'departamentos',
     loadComponent: () =>
       import(
-        'src/app/pages/1.1-catalogos/1.1.8-departamento-de-trabajo/list-area-responsable.component'
+        'src/app/pages/settings/catalogos/departamento-de-trabajo/list-area-responsable.component'
       ),
     data: { title: 'Áreas Responsables' },
   },
@@ -21,7 +19,7 @@ export default [
     path: 'solicitudes',
     loadComponent: () =>
       import(
-        'src/app/pages/7.0-reclutamiento/list-solicitudes/reclutamiento-solicitudes-router.component'
+        'src/app/pages/reclutamiento/list-solicitudes/reclutamiento-solicitudes-router.component'
       ),
     loadChildren: () => import('./reclutamiento-solicitudes.routing'),
     data: { title: 'Solicitudes' },
@@ -30,7 +28,7 @@ export default [
     path: 'status-solicitud-baja',
     loadComponent: () =>
       import(
-        'src/app/pages/7.0-reclutamiento/status-requests/status-request-dismissal/status-request-dismissal.component'
+        'src/app/pages/reclutamiento/status-requests/status-request-dismissal/status-request-dismissal.component'
       ),
     data: { title: 'Status Solicitud Baja' },
   },
@@ -38,7 +36,7 @@ export default [
     path: 'status-solicitud-modificacion-salario',
     loadComponent: () =>
       import(
-        'src/app/pages/7.0-reclutamiento/status-requests/status-request-salary-modification/status-request-salary-modification.component'
+        'src/app/pages/reclutamiento/status-requests/status-request-salary-modification/status-request-salary-modification.component'
       ),
     data: { title: 'Status Solicitud Modificación de Salario' },
   },
@@ -46,7 +44,7 @@ export default [
     path: 'solicitudes_cliente',
     loadComponent: () =>
       import(
-        'src/app/pages/7.0-reclutamiento/list-solicitudes-por-cliente/list-solicitudes-por-cliente.component'
+        'src/app/pages/reclutamiento/list-solicitudes-por-cliente/list-solicitudes-por-cliente.component'
       ),
     data: { title: 'Solicitudes por Cliente' },
   },
@@ -54,7 +52,7 @@ export default [
     path: 'solicitudes-baja',
     loadComponent: () =>
       import(
-        'src/app/pages/7.0-reclutamiento/list-solicitudes/list-solicitud-baja/list-solicitud-baja.component'
+        'src/app/pages/reclutamiento/list-solicitudes/solicitud-baja/list-solicitud-baja.component'
       ),
     data: { title: 'Solicitudes de Baja' },
   },

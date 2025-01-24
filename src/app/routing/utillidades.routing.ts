@@ -4,9 +4,7 @@ export default [
   {
     path: 'calcular-iva',
     loadComponent: () =>
-      import(
-        'src/app/pages/6.2-utilidades/calculadoras/calculadoras.component'
-      ),
+      import('src/app/pages/utilidades/calculadoras.component'),
     data: { title: 'Calcular IVA' },
   },
 ] as Routes;

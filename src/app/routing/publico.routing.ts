@@ -4,32 +4,28 @@ export default [
   {
     path: 'reporte-operacion/:customer/:inicio/:final',
     loadComponent: () =>
-      import(
-        'src/app/pages/8.0-reportes/report-client/report-client.component'
-      ),
+      import('src/app/pages/reportes/report-client/report-client.component'),
     data: { title: 'Reporte Operación' },
   },
   {
     path: 'operation-report-client/:customer/:inicio/:final',
     loadComponent: () =>
       import(
-        'src/app/pages/8.0-reportes/operation-report-client/operation-report-client.component'
+        'src/app/pages/reportes/operation-report-client/operation-report-client.component'
       ),
     data: { title: 'Reporte Cliente Operación' },
   },
   {
     path: 'reporte-minuta/:customer/:id',
     loadComponent: () =>
-      import(
-        'src/app/pages/8.0-reportes/report-meeting/report-meeting.component'
-      ),
+      import('src/app/pages/reportes/report-meeting/report-meeting.component'),
     data: { title: 'Reporte de Minuta' },
   },
   {
     path: 'reporte-ticket-pendientes-proveedor/:customerId/:departamentId',
     loadComponent: () =>
       import(
-        'src/app/pages/8.0-reportes/reporte-ticket-pendientes-proveedor/reporte-ticket-pendientes-proveedor.component'
+        'src/app/pages/reportes/reporte-ticket-pendientes-proveedor/reporte-ticket-pendientes-proveedor.component'
       ),
     data: { title: 'Reporte de Tickets Pendientes Proveedor' },
   },

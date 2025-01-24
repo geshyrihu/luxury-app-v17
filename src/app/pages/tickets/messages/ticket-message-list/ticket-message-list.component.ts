@@ -8,7 +8,7 @@ import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import Swal from 'sweetalert2';
-import CardEmployeeComponent from '../../../6.1-directorios/employee/card-employee/card-employee.component';
+import CardEmployeeComponent from '../../../directorios/employee-internal/card-employee.component';
 import TicketMessageFollowupComponent from '../../folloups/ticket-message-followup/ticket-message-followup.component';
 import { TicketResult } from '../../interfaces/ticket-message-list';
 import SendOperationReportComponent from '../../send-operation-report/send-operation-report.component';

@@ -1,0 +1,23 @@
+<form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
+  <custom-input-text
+    [control]="form.get('nameProvider')"
+    formControlName="nameProvider"
+    label="Proveedor"
+    placeholder="nombre de proveedor"
+  />
+  <custom-input-date
+    [control]="form.get('fechaCotizacion')"
+    formControlName="fechaCotizacion"
+    label="Fecha de cotización"
+    placeholder="fecha de cotización"
+  />
+
+  <custom-input-number
+    [control]="form.get('numeroCotizacion')"
+    formControlName="numeroCotizacion"
+    label="Número de cotización"
+    placeholder="Número de cotización"
+  />
+
+  <btn-submit [disabled]="this.form.invalid || submitting" />
+</form>
