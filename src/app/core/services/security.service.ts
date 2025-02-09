@@ -7,7 +7,6 @@ import { StorageService } from './storage.service';
 })
 export class SecurityService {
   private storeService = inject(StorageService);
-
   private authSource = new Subject<boolean>();
   authChallenge$ = this.authSource.asObservable();
 

@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
-import { environment } from 'src/environments/environment';
 import AddoreditDocumentoComponent from './addoredit-documento.component';
 
 @Component({
@@ -21,14 +20,6 @@ export default class ListDocumentoComponent implements OnInit {
   data: any[] = [];
 
   customerId$: Observable<number> = this.custIdService.getCustomerId$();
-  urlBase = environment.base_urlImg;
-
-  items = [
-    {
-      label: 'Editar',
-      // command: () => this.onModalAddOrEdit(this.produc),
-    },
-  ];
 
   ngOnInit(): void {
     this.onLoadData();

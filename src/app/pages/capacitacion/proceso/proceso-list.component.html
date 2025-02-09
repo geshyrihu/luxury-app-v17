@@ -1,4 +1,4 @@
-<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
+<p-toast position="top-right" [baseZIndex]="99999" />
 <div class="card">
   <p-table
     #dt
@@ -23,11 +23,11 @@
     <ng-template pTemplate="header">
       <tr>
         <th scope="col" style="width: 30%" pSortableColumn="descripcion">
-          Descripción <p-sortIcon field="descripcion"></p-sortIcon>
+          Descripción <p-sortIcon field="descripcion" />
         </th>
         <th scope="col" style="width: 30%" pSortableColumn="pathFormato">
           Archivo
-          <p-sortIcon field="pathFormato"></p-sortIcon>
+          <p-sortIcon field="pathFormato" />
         </th>
         @if (authS.onValidateRoles(['SuperUsuario'])) {
         <th scope="col" style="width: 10%">Opciones</th>
@@ -40,17 +40,10 @@
           {{ item.descripcion | uppercase }}
         </td>
         <td class="p-column-title">
-          <a
-            [href]="filePath + item.pathFormato"
-            target="_blank"
-            [download]="item.folio"
+          <btn-download-file
             ngbTooltip="Descargar"
-            placement="top"
-            class="btn btn-soft-danger btn-sm w-xs waves-effect btn-label waves-light me-1"
-          >
-            <i class="fa-light fa-download label-icon fa-2x pointer"></i>
-            Formato
-          </a>
+            [urlFile]="item.pathFormato"
+          />
         </td>
         <!-- Opciones -->
         @if (authS.onValidateRoles(['SuperUsuario'])) {

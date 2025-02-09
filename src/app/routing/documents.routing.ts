@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 
 export default [
   {
-    path: 'documento',
+    path: 'edificio',
     loadComponent: () =>
       import('src/app/pages/documentos/documento/list-documento.component'),
     data: { title: 'Documentos' },

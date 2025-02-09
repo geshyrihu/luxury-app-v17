@@ -1,8 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { AuthService } from 'src/app/core/services/auth.service';
-import HomeListGroupComponent, {
-  IHomeListGroupComponent,
-} from '../home-list-group/home-list-group.component';
+import { IMenuItem } from '../../sidebar/menu.model';
+import HomeListGroupComponent from '../home-list-group/home-list-group.component';
 
 @Component({
   selector: 'app-home-inventory',
@@ -12,12 +11,12 @@ import HomeListGroupComponent, {
 })
 export default class HomeInventoryComponent {
   authS = inject(AuthService);
-  data: IHomeListGroupComponent[] = [
+  data: IMenuItem[] = [
     {
-      name: 'Amenidades',
+      label: 'Amenidades',
       icon: 'fa-solid fa-spa',
       routerLink: '/inventario/equipos/2',
-      isAutorized: this.authS.onValidateRoles([
+      visible: this.authS.onValidateRoles([
         'SuperUsuario',
         'SupervisionOperativa',
         'Administrador',
@@ -26,10 +25,10 @@ export default class HomeInventoryComponent {
       ]),
     },
     {
-      name: 'Equipos',
+      label: 'Equipos',
       icon: 'fa-solid fa-cogs',
       routerLink: '/inventario/equipos/1',
-      isAutorized: this.authS.onValidateRoles([
+      visible: this.authS.onValidateRoles([
         'SuperUsuario',
         'SupervisionOperativa',
         'Administrador',
@@ -38,10 +37,10 @@ export default class HomeInventoryComponent {
       ]),
     },
     {
-      name: 'Áreas comunes',
+      label: 'Áreas comunes',
       icon: 'fa-solid fa-tree',
       routerLink: '/inventario/equipos/8',
-      isAutorized: this.authS.onValidateRoles([
+      visible: this.authS.onValidateRoles([
         'SuperUsuario',
         'SupervisionOperativa',
         'Administrador',
@@ -50,10 +49,10 @@ export default class HomeInventoryComponent {
       ]),
     },
     {
-      name: 'Cuartos de máquinas',
+      label: 'Cuartos de máquinas',
       icon: 'fa-solid fa-toolbox',
       routerLink: '/inventario/equipos/7',
-      isAutorized: this.authS.onValidateRoles([
+      visible: this.authS.onValidateRoles([
         'SuperUsuario',
         'SupervisionOperativa',
         'Administrador',
@@ -62,10 +61,10 @@ export default class HomeInventoryComponent {
       ]),
     },
     {
-      name: 'Mobiliario',
+      label: 'Mobiliario',
       icon: 'fa-solid fa-chair',
       routerLink: '/inventario/equipos/3',
-      isAutorized: this.authS.onValidateRoles([
+      visible: this.authS.onValidateRoles([
         'SuperUsuario',
         'SupervisionOperativa',
         'Administrador',
@@ -74,10 +73,10 @@ export default class HomeInventoryComponent {
       ]),
     },
     {
-      name: 'Llaves',
+      label: 'Llaves',
       icon: 'fa-solid fa-key',
       routerLink: '/inventario/llaves',
-      isAutorized: this.authS.onValidateRoles([
+      visible: this.authS.onValidateRoles([
         'SuperUsuario',
         'SupervisionOperativa',
         'Administrador',
@@ -86,10 +85,10 @@ export default class HomeInventoryComponent {
       ]),
     },
     {
-      name: 'Herramientas',
+      label: 'Herramientas',
       icon: 'fa-solid fa-wrench',
       routerLink: '/inventario/herramienta',
-      isAutorized: this.authS.onValidateRoles([
+      visible: this.authS.onValidateRoles([
         'SuperUsuario',
         'SupervisionOperativa',
         'Administrador',
@@ -98,10 +97,10 @@ export default class HomeInventoryComponent {
       ]),
     },
     {
-      name: 'Radios',
+      label: 'Radios',
       icon: 'fa-solid fa-broadcast-tower',
       routerLink: '/inventario/radios',
-      isAutorized: this.authS.onValidateRoles([
+      visible: this.authS.onValidateRoles([
         'SuperUsuario',
         'SupervisionOperativa',
         'Administrador',
@@ -110,10 +109,10 @@ export default class HomeInventoryComponent {
       ]),
     },
     {
-      name: 'Cómputo y CCTV',
+      label: 'Cómputo y CCTV',
       icon: 'fa-solid fa-desktop',
       routerLink: '/inventario/equipos/6',
-      isAutorized: this.authS.onValidateRoles([
+      visible: this.authS.onValidateRoles([
         'SuperUsuario',
         'SupervisionOperativa',
         'Administrador',
@@ -122,10 +121,10 @@ export default class HomeInventoryComponent {
       ]),
     },
     {
-      name: 'Gimnasio',
+      label: 'Gimnasio',
       icon: 'fa-solid fa-dumbbell',
       routerLink: '/inventario/equipos/5',
-      isAutorized: this.authS.onValidateRoles([
+      visible: this.authS.onValidateRoles([
         'SuperUsuario',
         'SupervisionOperativa',
         'Administrador',
@@ -134,10 +133,10 @@ export default class HomeInventoryComponent {
       ]),
     },
     {
-      name: 'Extintores',
+      label: 'Extintores',
       icon: 'fa-solid fa-fire-extinguisher',
       routerLink: '/inventario/extintores',
-      isAutorized: this.authS.onValidateRoles([
+      visible: this.authS.onValidateRoles([
         'SuperUsuario',
         'SupervisionOperativa',
         'Administrador',

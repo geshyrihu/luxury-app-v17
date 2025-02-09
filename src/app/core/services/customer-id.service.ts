@@ -105,7 +105,7 @@ export class CustomerIdService implements OnDestroy {
       });
   }
   onLoadPermissions(customerId: number): void {
-    const urlApi = `CustomerModul/${customerId}/Permissions`;
+    const urlApi = `ModuleAppCustomer/${customerId}/Permissions`;
     this.dataService
       .get(urlApi) // Realiza la petición HTTP
       .pipe(takeUntil(this.destroy$)) // Gestiona la suscripción para evitar fugas de memoria

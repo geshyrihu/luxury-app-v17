@@ -1,4 +1,4 @@
-<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
+<p-toast position="top-right" [baseZIndex]="99999" />
 @if (filteredData) {
 <!-- Contenido para pantallas medianas y grandes (md en adelante) -->
 <div class="d-none d-md-block">
@@ -43,6 +43,7 @@
           <div class="col-sm-2">
             <select
               class="form-select"
+              [(ngModel)]="typePerson"
               (change)="onSelectTypePerson($event.target.value)"
             >
               <option *ngFor="let item of cb_typePerson" [value]="item.value">
@@ -80,7 +81,7 @@
             scope="col"
             pSortableColumn="userName"
           >
-            USUARIO <p-sortIcon field="userName"></p-sortIcon>
+            USUARIO <p-sortIcon field="userName" />
           </th>
           <th
             class="bg-gradient"
@@ -88,7 +89,7 @@
             scope="col"
             pSortableColumn="fullName"
           >
-            NOMBRE <p-sortIcon field="fullName"></p-sortIcon>
+            NOMBRE <p-sortIcon field="fullName" />
           </th>
           <th
             class="bg-gradient"
@@ -97,7 +98,7 @@
             pSortableColumn="email"
           >
             CORREO
-            <p-sortIcon field="email"></p-sortIcon>
+            <p-sortIcon field="email" />
           </th>
           <th class="bg-gradient" scope="col" style="width: 10%">TÉLEFONO</th>
           <th class="bg-gradient" scope="col" style="width: 10%"></th>
@@ -193,6 +194,7 @@
       </select>
       <select
         class="form-select form-select-sm w-50"
+        [(ngModel)]="typePerson"
         (change)="onSelectTypePerson($event.target.value)"
       >
         <option *ngFor="let item of cb_typePerson" [value]="item.value">

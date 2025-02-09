@@ -2,11 +2,10 @@ import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { ETurnoTrabajo } from 'src/app/core/enums/turno-trabajo.enum';
-import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { EnumSelectService } from 'src/app/core/services/enum-select.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
@@ -14,6 +13,7 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   templateUrl: './solicitud-vacante.component.html',
   standalone: true,
   imports: [LuxuryAppComponentsModule, CustomInputModule],
+  providers: [EnumSelectService],
 })
 export default class SolicitudVacanteComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
@@ -21,6 +21,7 @@ export default class SolicitudVacanteComponent implements OnInit {
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
   authS = inject(AuthService);
+  enumSelectService = inject(EnumSelectService);
 
   workPositionId: number = this.config.data.workPositionId;
 
@@ -29,13 +30,13 @@ export default class SolicitudVacanteComponent implements OnInit {
 
   id: number = 0;
 
-  cb_turnoTrabajo: ISelectItem[] = onGetSelectItemFromEnum(ETurnoTrabajo);
+  cb_turnoTrabajo: ISelectItem[] = [];
   form: FormGroup = this.formBuilder.group({
     id: [this.config.data.workPositionId],
     professionName: [, Validators.required],
     sueldo: ['', [Validators.required, Validators.minLength(4)]],
     sueldoBase: ['', [Validators.required, Validators.minLength(4)]],
-    turnoTrabajo: [0],
+    turnoTrabajo: [null, Validators.required],
     lunesEntrada: [''],
     lunesSalida: [''],
     martesEntrada: [''],
@@ -53,7 +54,8 @@ export default class SolicitudVacanteComponent implements OnInit {
     additionalInformation: [''],
   });
 
-  ngOnInit(): void {
+  async ngOnInit() {
+    this.cb_turnoTrabajo = await this.enumSelectService.turnoTrabajo();
     this.onLoadData();
   }
 

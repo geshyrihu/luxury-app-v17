@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { DialogModule } from 'primeng/dialog';
-import { IMenuItem } from 'src/app/layouts/sidebar/menu.model';
+import { IMenuItem, ISubMenuItem } from 'src/app/layouts/sidebar/menu.model';
 @Component({
   selector: 'app-home-menu',
   standalone: true,
@@ -10,8 +10,7 @@ import { IMenuItem } from 'src/app/layouts/sidebar/menu.model';
   templateUrl: './home-menu.component.html',
 })
 export default class HomeMenuComponent {
-  @Input() data: IHomeMenu[] = [];
-  @Input() menuItems: IMenuItem[] = [];
+  @Input() menuItems: ISubMenuItem[] = [];
 
   selectedItem: IMenuItem | null = null;
   display: boolean = false; // Variable para controlar si el modal se muestra
@@ -24,9 +23,4 @@ export default class HomeMenuComponent {
       // Navegación directa si no tiene subelementos.
     }
   }
-}
-export interface IHomeMenu {
-  icon: string;
-  name: string;
-  routerLink: string;
 }

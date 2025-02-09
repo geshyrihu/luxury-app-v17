@@ -3,10 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { EMonth } from 'src/app/core/enums/month.enum';
-import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { EnumSelectService } from 'src/app/core/services/enum-select.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
@@ -14,17 +13,19 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   templateUrl: './calendario-maestro-addoredit.component.html',
   standalone: true,
   imports: [LuxuryAppComponentsModule, NgSelectModule, CustomInputModule],
+  providers: [EnumSelectService],
 })
 export default class CalendarioMaestroAddOrEditComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   formBuilder = inject(FormBuilder);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
+  enumSelectService = inject(EnumSelectService);
 
   proveedoresSeleccionados: ISelectItem[] = [];
   cb_equipoCalendarioMaestro: ISelectItem[] = [];
   cb_providers: ISelectItem[] = [];
-  cb_meses: ISelectItem[] = onGetSelectItemFromEnum(EMonth);
+  cb_meses: ISelectItem[] = [];
 
   id: number = 0;
   submitting: boolean = false;
@@ -38,7 +39,8 @@ export default class CalendarioMaestroAddOrEditComponent implements OnInit {
     proveedores: [[]],
   });
 
-  ngOnInit(): void {
+  async ngOnInit() {
+    this.cb_meses = await this.enumSelectService.month(false);
     this.onLoadSelectItem();
     this.id = this.config.data.id;
     if (this.id !== 0) this.onLoadData(this.id);

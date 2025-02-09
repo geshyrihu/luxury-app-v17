@@ -7,11 +7,15 @@
       [value]="data.items"
       styleClass="custom-table"
       [tableStyle]="{ 'min-width': '50rem' }"
-      [rows]="100"
       [paginator]="true"
+      [rows]="rows"
+      [first]="first"
+      [totalRecords]="totalRecords"
+      [lazy]="true"
+      (onLazyLoad)="loadDataLazy($event)"
+      [rowsPerPageOptions]="[30, 50, 200, 300, 500]"
       currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
       [showCurrentPageReport]="true"
-      [rowsPerPageOptions]="[100, 200, 300, 500]"
       [globalFilterFields]="[
         'userCreate',
         'createdAtFilter',
@@ -24,21 +28,43 @@
       ]"
     >
       <ng-template pTemplate="caption">
-        <div class="row">
-          <div class="col-lg-10">
-            <custom-table-caption
-              [title]="data.nameGroup"
-              (add)="
-                onModalAddOrEdit({
-                  id: '',
-                  title: 'Nuevo Registro'
-                })
-              "
-              [dt]="dt"
-            />
-          </div>
-          <div class="col-lg-2">
-            <app-ticket-message-status (statusChange)="onLoadData($event)" />
+        <div class="d-none d-md-block">
+          <div class="row">
+            <div class="col-sm-5">
+              <div
+                class="page-title-box d-sm-flex align-items-center justify-content-between"
+              >
+                <h4 class="mb-sm-0">
+                  {{ data.nameGroup }}
+                </h4>
+              </div>
+            </div>
+            <div class="col-sm-2 no-print">
+              <input
+                type="text"
+                [(ngModel)]="searchTerm"
+                (input)="applyFilter()"
+                placeholder="Buscar..."
+                class="form-control w-100"
+              />
+            </div>
+            <div class="col-sm-2 no-print">
+              <custom-button
+                ngbTooltip="Agregar"
+                customClass="btn-soft-primary waves-effect waves-light bg-gradient w-100"
+                icon="fa-plus me-2"
+                label="Agregar"
+                (clicked)="
+                  onModalAddOrEdit({
+                    id: '',
+                    title: 'Nuevo Registro'
+                  })
+                "
+              />
+            </div>
+            <div class="col-3">
+              <app-ticket-message-status (statusChange)="onLoadData($event)" />
+            </div>
           </div>
         </div>
 
@@ -114,7 +140,7 @@
             pSortableColumn="createdAtFilter"
           >
             SOLICITA
-            <p-sortIcon field="createdAtFilter"></p-sortIcon>
+            <p-sortIcon field="createdAtFilter" />
           </th>
           <th
             scope="col"
@@ -123,7 +149,7 @@
             pSortableColumn="createdAtFilter"
           >
             FECHA SOL.
-            <p-sortIcon field="createdAtFilter"></p-sortIcon>
+            <p-sortIcon field="createdAtFilter" />
           </th>
 
           <th
@@ -133,7 +159,7 @@
             pSortableColumn="description"
           >
             SOLICITUD
-            <p-sortIcon field="description"></p-sortIcon>
+            <p-sortIcon field="description" />
           </th>
           <th scope="col" class="font-size-12">EVIDENCIA</th>
           <th
@@ -143,10 +169,7 @@
             pSortableColumn="priority"
           >
             PRIORIDAD
-            <p-sortIcon
-              field="priority"
-              icon="fa-solid fa-user-tag "
-            ></p-sortIcon>
+            <p-sortIcon field="priority" icon="fa-solid fa-user-tag " />
           </th>
           <th
             scope="col"
@@ -155,7 +178,7 @@
             pSortableColumn="status"
           >
             STATUS
-            <p-sortIcon field="status"></p-sortIcon>
+            <p-sortIcon field="status" />
           </th>
           <th
             scope="col"
@@ -164,7 +187,7 @@
             pSortableColumn="responsableNombre"
           >
             ASIGNADO A
-            <p-sortIcon field="responsableNombre"></p-sortIcon>
+            <p-sortIcon field="responsableNombre" />
           </th>
 
           <th
@@ -174,7 +197,7 @@
             pSortableColumn="scheduledAtFilter"
           >
             PROGRAMADO
-            <p-sortIcon field="scheduledAtFilter"></p-sortIcon>
+            <p-sortIcon field="scheduledAtFilter" />
           </th>
           <th
             scope="col"
@@ -183,7 +206,7 @@
             pSortableColumn="closedAtFilter"
           >
             CIERRE
-            <p-sortIcon field="closedAtFilter"></p-sortIcon>
+            <p-sortIcon field="closedAtFilter" />
           </th>
           <th class="font-size-12">Evidencia</th>
           <th
@@ -193,7 +216,7 @@
             pSortableColumn="daysDifference"
           >
             DIAS
-            <p-sortIcon field="daysDifference"></p-sortIcon>
+            <p-sortIcon field="daysDifference" />
           </th>
 
           <th
@@ -203,7 +226,7 @@
             pSortableColumn="isRelevant"
           >
             Reporte Semanal
-            <p-sortIcon field="isRelevant"></p-sortIcon>
+            <p-sortIcon field="isRelevant" />
           </th>
           <th></th>
         </tr>
@@ -223,8 +246,7 @@
             />
           </td>
           <td>
-            {{ item.createdAtDate }} <br />
-            {{ item.createdAtHour }}
+            {{ item.createdAtDate }}
           </td>
           <td>
             <strong class="mb-0">{{ item.title }}</strong>
@@ -557,8 +579,7 @@
                     }"
                   ></i>
                   <span class="ms-2">
-                    {{ item.folio }} | {{ item.createdAtDate }} |
-                    {{ item.createdAtHour }}
+                    {{ item.folio }} | {{ item.createdAtDate }}
                   </span>
                   <i class="fa-solid fa-calendar-days ms-4">
                     {{ item.daysDifference }}

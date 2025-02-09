@@ -10,7 +10,7 @@
       <th scope="col" style="width: 2%" class="small">#</th>
       <th scope="col" style="width: 15%" class="small" pSortableColumn="title">
         Titulo
-        <p-sortIcon field="title"></p-sortIcon>
+        <p-sortIcon field="title" />
       </th>
       <th
         scope="col"
@@ -19,11 +19,11 @@
         pSortableColumn="requestService"
       >
         Asunto
-        <p-sortIcon field="requestService"></p-sortIcon>
+        <p-sortIcon field="requestService" />
       </th>
       <th scope="col" style="width: 7%" class="small" pSortableColumn="status">
         Estatus
-        <p-sortIcon field="status"></p-sortIcon>
+        <p-sortIcon field="status" />
       </th>
       <th
         scope="col"
@@ -32,7 +32,7 @@
         pSortableColumn="deliveryDateFiltro"
       >
         Entrega
-        <p-sortIcon field="deliveryDateFiltro"></p-sortIcon>
+        <p-sortIcon field="deliveryDateFiltro" />
       </th>
       <th scope="col" style="width: 25%" class="small">Seguimiento</th>
     </tr>
@@ -73,7 +73,7 @@
             'badge-secondary': detalle.status == 2
           }"
         >
-          {{ detalle.status | eStatus | uppercase }}</span
+          {{ detalle.status }}</span
         >
       </td>
       <td class="small">{{ detalle.deliveryDate }}</td>

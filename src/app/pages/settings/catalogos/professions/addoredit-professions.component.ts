@@ -20,27 +20,23 @@ export default class AddOrEditProfessionsComponent implements OnInit {
 
   submitting: boolean = false;
   id: number = 0;
-  cb_area_responsable: ISelectItem[] = [];
+  cb_departament: ISelectItem[] = [];
 
   form: FormGroup = this.formBuilder.group({
     id: { value: this.id, disabled: true },
+    departament: [null, [Validators.required]],
     nameProfession: ['', [Validators.required, Validators.minLength(5)]],
-    ecompanyDepartments: ['', [Validators.required]],
+    professionIdIndex: ['', [Validators.required]],
     description: ['', [Validators.required]],
-    hierarchy: ['', [Validators.required]],
     requirements: ['', [Validators.required]],
     responsibilities: ['', [Validators.required]],
-    professionkey: ['', [Validators.required]],
   });
 
   onLoadSelectItem() {
-    this.cb_area_responsable = [
-      { value: 0, label: 'Administrativa' },
-      { value: 1, label: 'Legal' },
-      { value: 2, label: 'Operaciones' },
-      { value: 3, label: 'Mantenimiento' },
-      { value: 4, label: 'Servicio' },
-    ];
+    const urlApi = `EDepartament`;
+    this.apiRequestService.onGetEnumSelectItem(urlApi).then((result: any) => {
+      this.cb_departament = result;
+    });
   }
 
   ngOnInit(): void {

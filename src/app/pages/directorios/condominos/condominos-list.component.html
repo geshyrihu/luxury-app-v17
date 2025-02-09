@@ -1,4 +1,4 @@
-<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
+<p-toast position="top-right" [baseZIndex]="99999" />
 <p-table
   #dt
   styleClass="custom-table"
@@ -38,33 +38,33 @@
         [sortFunction]="customSort.bind(this)"
       >
         Propiedad
-        <p-sortIcon field="property"></p-sortIcon>
+        <p-sortIcon field="property" />
       </th>
       <!-- <th scope="col" style="width: 10%" pSortableColumn="property">
         Propiedad
-        <p-sortIcon field="property"></p-sortIcon>
+        <p-sortIcon field="property"/>
       </th> -->
       <th scope="col" style="width: 10%" pSortableColumn="habitant">
         Habitante
-        <p-sortIcon field="habitant"></p-sortIcon>
+        <p-sortIcon field="habitant" />
       </th>
       <th scope="col" style="width: 10%" pSortableColumn="fullName">
         Nombre
-        <p-sortIcon field="fullName"></p-sortIcon>
+        <p-sortIcon field="fullName" />
       </th>
 
       <th scope="col" style="width: 10%" pSortableColumn="fixedPhone">
         Télefono fijo
-        <p-sortIcon field="fixedPhone"></p-sortIcon>
+        <p-sortIcon field="fixedPhone" />
       </th>
       <th scope="col" style="width: 10%" pSortableColumn="extencion">
         Extensión
-        <p-sortIcon field="extencion"></p-sortIcon>
+        <p-sortIcon field="extencion" />
       </th>
       <th scope="col" style="width: 10%">Télefono</th>
       <th scope="col" style="width: 10%" pSortableColumn="email">
         Email
-        <p-sortIcon field="email"></p-sortIcon>
+        <p-sortIcon field="email" />
       </th>
       <th
         scope="col"
@@ -73,7 +73,7 @@
         class="no-print"
       >
         Enviar Info
-        <p-sortIcon field="mail"></p-sortIcon>
+        <p-sortIcon field="mail" />
       </th>
       @if ( authS.onValidateRoles([ 'Asistente', 'Administrador', 'SuperUsuario'
       ]) ) {

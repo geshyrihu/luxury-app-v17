@@ -30,7 +30,7 @@ export default class TicketProgressButtonComponent {
       cancelButtonText: 'Cancelar',
     }).then((result) => {
       if (result.isConfirmed) {
-        const urlApi = `TicketMessage/InProgress/${this.item.id}/${this.authS.applicationUserId}`;
+        const urlApi = `Tickets/InProgress/${this.item.id}/${this.authS.applicationUserId}`;
 
         this.apiRequestService.onGetItem(urlApi).then(() => {
           this.progressCompleted.emit(); // Emitir el evento de finalización

@@ -109,7 +109,7 @@ export default class TicketMessageOperationReportComponent {
 
   // Actualizar si el item es relevante o no
   onUpdateStateTicket(item: any) {
-    const urlApi = `TicketMessage/UpdateRelevance/${item.id}`;
+    const urlApi = `Tickets/UpdateRelevance/${item.id}`;
     this.apiRequestService.onGetItem(urlApi).then((result: any) => {
       this.customToastService.onCloseToSuccess();
     });

@@ -1,4 +1,4 @@
-<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
+<p-toast position="top-right" [baseZIndex]="99999" />
 <p-table
   [(selection)]="data"
   #dt
@@ -50,9 +50,7 @@
         pSortableColumn="cedulaPresupuestalDetalle.cuenta.descripcion"
       >
         Descripción
-        <p-sortIcon
-          field="cedulaPresupuestalDetalle.cuenta.descripcion"
-        ></p-sortIcon>
+        <p-sortIcon field="cedulaPresupuestalDetalle.cuenta.descripcion" />
       </th>
       <th
         style="width: 10%"
@@ -60,9 +58,7 @@
         pSortableColumn="cedulaPresupuestalDetalle.presupuestoMensual"
       >
         Pres. Mensual
-        <p-sortIcon
-          field="cedulaPresupuestalDetalle.presupuestoMensual"
-        ></p-sortIcon>
+        <p-sortIcon field="cedulaPresupuestalDetalle.presupuestoMensual" />
       </th>
       <th
         style="width: 10%"
@@ -71,7 +67,7 @@
       >
         Ejercido<p-sortIcon
           field="cedulaPresupuestalDetalle.presupuestoEjercido"
-        ></p-sortIcon>
+        />
       </th>
       <th
         style="width: 10%"
@@ -80,7 +76,7 @@
       >
         Disponible<p-sortIcon
           field="cedulaPresupuestalDetalle.presupuestoDisponible"
-        ></p-sortIcon>
+        />
       </th>
       <th style="width: 10%" scope="col">Gasto a realizar</th>
       <th style="width: 10%" scope="col">Monto a Afectar</th>

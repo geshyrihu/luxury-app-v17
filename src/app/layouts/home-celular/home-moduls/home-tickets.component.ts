@@ -1,8 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { AuthService } from 'src/app/core/services/auth.service';
-import HomeListGroupComponent, {
-  IHomeListGroupComponent,
-} from '../home-list-group/home-list-group.component';
+import { IMenuItem } from '../../sidebar/menu.model';
+import HomeListGroupComponent from '../home-list-group/home-list-group.component';
 
 @Component({
   selector: 'app-home-tickets',
@@ -12,12 +11,16 @@ import HomeListGroupComponent, {
 })
 export default class HomeTicketsComponent {
   authS = inject(AuthService);
-  data: IHomeListGroupComponent[] = [
+
+  constructor() {
+    console.log('🚀 ~ HomeTicketsComponent data:', this.data);
+  }
+  data: IMenuItem[] = [
     {
-      name: 'Grupos de trabajo',
+      label: 'Grupos de trabajo',
       icon: 'fa-duotone fa-solid fa-users',
-      routerLink: '/tickets/list',
-      isAutorized: this.authS.onValidateRoles([
+      routerLink: '/tickets/groups-list',
+      visible: this.authS.onValidateRoles([
         'SuperUsuario',
         'SupervisionOperativa',
         'Administrador',
@@ -26,10 +29,10 @@ export default class HomeTicketsComponent {
       ]),
     },
     {
-      name: 'Mis asignaciones',
+      label: 'Mis asignaciones',
       icon: 'fa-duotone fa-solid fa-tasks',
       routerLink: '/tickets/my-assignments',
-      isAutorized: this.authS.onValidateRoles([
+      visible: this.authS.onValidateRoles([
         'SuperUsuario',
         'SupervisionOperativa',
         'Administrador',
@@ -42,10 +45,10 @@ export default class HomeTicketsComponent {
       ]),
     },
     {
-      name: 'Mis solicitudes',
+      label: 'Mis solicitudes',
       icon: 'fa-duotone fa-solid fa-envelope-open-text',
       routerLink: '/tickets/my-requests',
-      isAutorized: true,
+      visible: true,
     },
   ];
 }

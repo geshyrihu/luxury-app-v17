@@ -36,7 +36,7 @@ export default class MyTicketMessageProgramComponent implements OnInit {
   }
 
   onLoadData() {
-    const urlApi = `TicketMessage/Programation/${this.id}`;
+    const urlApi = `Tickets/Programation/${this.id}`;
     this.apiRequestService.onGetItem(urlApi).then((result: any) => {
       this.form.patchValue({
         assigneeId: result.assigneeId,
@@ -48,7 +48,7 @@ export default class MyTicketMessageProgramComponent implements OnInit {
     this.submitting = true;
 
     this.apiRequestService
-      .onPost(`TicketMessage/Programation/${this.id}`, this.form.value)
+      .onPost(`Tickets/MyTicket/Programation/${this.id}`, this.form.value)
       .then((result: boolean) => {
         result ? this.ref.close(true) : (this.submitting = false);
       });

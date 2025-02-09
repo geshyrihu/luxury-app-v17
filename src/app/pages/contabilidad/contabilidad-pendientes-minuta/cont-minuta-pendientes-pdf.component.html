@@ -1,4 +1,4 @@
-<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
+<p-toast position="top-right" [baseZIndex]="99999" />
 <div class="p-card p-mb-5">
   <p-table
     [(selection)]="data"
@@ -18,14 +18,14 @@
           <p-sortIcon
             field="numeroCliente
             "
-          ></p-sortIcon>
+          />
         </th>
         <th scope="col" style="width: 8%" pSortableColumn="dateFiltro">
-          Fecha<p-sortIcon field="dateFiltro"></p-sortIcon>
+          Fecha<p-sortIcon field="dateFiltro" />
         </th>
         <th scope="col" style="width: 30%">Asunto</th>
         <th scope="col" style="width: 30%" pSortableColumn="pendiente">
-          Seguimiento<p-sortIcon field="pendiente"></p-sortIcon>
+          Seguimiento<p-sortIcon field="pendiente" />
         </th>
       </tr>
     </ng-template>

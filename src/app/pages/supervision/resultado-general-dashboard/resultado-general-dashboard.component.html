@@ -106,7 +106,7 @@
       <tr [hidden]="false">
         <th scope="col" pSortableColumn="numeroCliente" style="width: 20%">
           Cliente
-          <p-sortIcon field="numeroCliente"></p-sortIcon>
+          <p-sortIcon field="numeroCliente" />
           <p-columnFilter
             field="customer"
             matchMode="in"
@@ -140,7 +140,7 @@
         @if (mostrar) {
         <th scope="col" pSortableColumn="solicitudesTotal" style="width: 20%">
           Solicitudes
-          <p-sortIcon field="solicitudesTotal"></p-sortIcon>
+          <p-sortIcon field="solicitudesTotal" />
         </th>
         } @if (mostrar) {
         <th
@@ -149,7 +149,7 @@
           style="width: 20%"
         >
           Atendidas
-          <p-sortIcon field="solicitudesAtendidas"></p-sortIcon>
+          <p-sortIcon field="solicitudesAtendidas" />
         </th>
         } @if (mostrar) {
         <th
@@ -158,7 +158,7 @@
           style="width: 20%"
         >
           Pendientes
-          <p-sortIcon field="solicitudesPendientes"></p-sortIcon>
+          <p-sortIcon field="solicitudesPendientes" />
         </th>
         }
         <th
@@ -167,7 +167,7 @@
           style="width: 20%"
         >
           Cumplimiento
-          <p-sortIcon field="porcentajeEjecucionValue"></p-sortIcon>
+          <p-sortIcon field="porcentajeEjecucionValue" />
         </th>
       </tr>
     </ng-template>

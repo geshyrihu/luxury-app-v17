@@ -1,4 +1,4 @@
-<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
+<p-toast position="top-right" [baseZIndex]="99999" />
 
 <div>
   <!-- Contenido para pantallas medianas y grandes (md en adelante) -->
@@ -75,8 +75,7 @@
                 />
               </td>
               <td>
-                {{ item.createdAtDate }} <br />
-                {{ item.createdAtHour }}
+                {{ item.createdAtDate }}
               </td>
               <td>
                 <strong class="card-text">
@@ -245,8 +244,7 @@
             'text-success': item.priority === 'Low',
           }"
               ></i>
-              {{ item.folio }} | {{ item.createdAtDate }} |
-              {{ item.createdAtHour }}
+              {{ item.folio }} | {{ item.createdAtDate }}
             </small>
             <span class="badge bg-primary-subtle text-primary">{{
               item.daysDifference

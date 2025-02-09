@@ -19,7 +19,7 @@ export class SignalRService {
 
   constructor() {
     this.hubConnection = new HubConnectionBuilder()
-      .withUrl(environment.base_signalr)
+      .withUrl(environment.API_BASE_SIGNALR)
       .build();
 
     this.hubConnection

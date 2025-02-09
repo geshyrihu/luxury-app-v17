@@ -1,4 +1,4 @@
-<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
+<p-toast position="top-right" [baseZIndex]="99999" />
 <app-filter-requests
   apiUrl="RequestPosition/ExportRequestToExcel"
   nameFile="Reporte de vacantes.xlsx"
@@ -26,23 +26,23 @@
     <ng-template pTemplate="header">
       <tr>
         <th scope="col" pSortableColumn="folio">
-          FOLIO <p-sortIcon field="folio"></p-sortIcon>
+          FOLIO <p-sortIcon field="folio" />
         </th>
         <th scope="col" pSortableColumn="requestDateFilter">
           FECHA DE SOLICITUD
-          <p-sortIcon field="requestDateFilter"></p-sortIcon>
+          <p-sortIcon field="requestDateFilter" />
         </th>
 
         <th scope="col">CLIENTE</th>
         <th scope="col" pSortableColumn="profession">
           PUESTO
-          <p-sortIcon field="profession"></p-sortIcon>
+          <p-sortIcon field="profession" />
         </th>
         <th scope="col">SUELDO MENSUAL LIBRE</th>
         <th scope="col">DIAS TRANSCURRIDOS</th>
         <th scope="col" pSortableColumn="status">
           ESTATUS
-          <p-sortIcon field="status"></p-sortIcon>
+          <p-sortIcon field="status" />
         </th>
         <th scope="col">FECHA DE SELECCION</th>
         <th scope="col">CANDIDATO</th>

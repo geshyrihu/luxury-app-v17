@@ -2,7 +2,6 @@ import { Component, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { EAreaMinutasDetallesPipe } from 'src/app/core/pipes/area-minuta-detalles.pipe';
-import { EStatusPipe } from 'src/app/core/pipes/status.pipe';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { DateService } from 'src/app/core/services/date.service';
 
@@ -10,7 +9,7 @@ import { DateService } from 'src/app/core/services/date.service';
   selector: 'app-addoredit-meeting-detail',
   templateUrl: './addoredit-meeting-detail.component.html',
   standalone: true,
-  imports: [LuxuryAppComponentsModule, EAreaMinutasDetallesPipe, EStatusPipe],
+  imports: [LuxuryAppComponentsModule, EAreaMinutasDetallesPipe],
 })
 export default class AddOrEditMeetingDetailComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);

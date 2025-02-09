@@ -1,4 +1,4 @@
-<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
+<p-toast position="top-right" [baseZIndex]="99999" />
 @if (data) {
 <p-table
   [(selection)]="data"
@@ -40,23 +40,23 @@
     <tr>
       <th scope="col" pSortableColumn="nombreProducto">
         Imagen
-        <p-sortIcon field="nombreProducto"></p-sortIcon>
+        <p-sortIcon field="nombreProducto" />
       </th>
       <th scope="col" pSortableColumn="nombreProducto">
         Nombre
-        <p-sortIcon field="nombreProducto"></p-sortIcon>
+        <p-sortIcon field="nombreProducto" />
       </th>
       <th scope="col" pSortableColumn="category">
         Categoria
-        <p-sortIcon field="category"></p-sortIcon>
+        <p-sortIcon field="category" />
       </th>
       <th scope="col" pSortableColumn="marca">
         Marca
-        <p-sortIcon field="marca"></p-sortIcon>
+        <p-sortIcon field="marca" />
       </th>
       <th scope="col" pSortableColumn="modelo">
         Modelo
-        <p-sortIcon field="modelo"></p-sortIcon>
+        <p-sortIcon field="modelo" />
       </th>
       @if ( authS.onValidateRoles([ 'Asistente', 'JefeMantenimiento',
       'SuperUsuario', 'Administrador' ]) ) {
@@ -68,7 +68,7 @@
     <tr>
       <td class="p-column-title text-center">
         <img
-          [src]="urlBaseImg + item.urlImagen"
+          [src]="item.urlImagen"
           alt="."
           width="80px"
           height="70px"

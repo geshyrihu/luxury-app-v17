@@ -1,4 +1,4 @@
-<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
+<p-toast position="top-right" [baseZIndex]="99999" />
 
 <div class="card">
   <p-table
@@ -60,11 +60,11 @@
           pSortableColumn="fullName"
         >
           COLABORADOR
-          <p-sortIcon field="fullName"></p-sortIcon>
+          <p-sortIcon field="fullName" />
         </th>
         <th scope="col" style="width: 20%" pSortableColumn="workPositionFolio">
           PUESTO DE TRABAJO
-          <p-sortIcon field="workPositionFolio"></p-sortIcon>
+          <p-sortIcon field="workPositionFolio" />
         </th>
         <th
           scope="col"
@@ -73,7 +73,7 @@
           class="no-print"
         >
           USUARIO APP
-          <p-sortIcon field="userName"></p-sortIcon>
+          <p-sortIcon field="userName" />
         </th>
 
         <th
@@ -83,11 +83,11 @@
           class="no-print"
         >
           TÉLEFONO
-          <p-sortIcon field="celularPersonal"></p-sortIcon>
+          <p-sortIcon field="celularPersonal" />
         </th>
         <th scope="col" style="width: 30%" pSortableColumn="email">
           EMAIL
-          <p-sortIcon field="email"></p-sortIcon>
+          <p-sortIcon field="email" />
         </th>
         @if ( authS.onValidateRoles([ 'Asistente', 'Administrador',
         'SuperUsuario' ,'Reclutamiento' ]) ) {
@@ -102,7 +102,7 @@
         </td>
         <td class="p-column-title text-center">
           <img
-            [src]="url + item.photoPath"
+            [src]="item.photoPath"
             alt=""
             class="rounded avatar-md pointer"
             (click)="onCardEmployee(item.applicationUserId)"

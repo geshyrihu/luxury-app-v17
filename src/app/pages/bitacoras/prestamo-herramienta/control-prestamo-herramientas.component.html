@@ -1,4 +1,4 @@
-<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
+<p-toast position="top-right" [baseZIndex]="99999" />
 @if (data) {
 <p-table
   [(selection)]="data"
@@ -26,20 +26,20 @@
   <ng-template pTemplate="header">
     <tr>
       <th scope="col" pSortableColumn="fechaSalida">
-        Fecha de Salida <p-sortIcon field="fechaSalida"></p-sortIcon>
+        Fecha de Salida <p-sortIcon field="fechaSalida" />
       </th>
       <th scope="col" pSortableColumn="tool">
         Herramienta
-        <p-sortIcon field="tool"></p-sortIcon>
+        <p-sortIcon field="tool" />
       </th>
       <th scope="col" pSortableColumn="person">
-        Colaborador<p-sortIcon field="person"></p-sortIcon>
+        Colaborador<p-sortIcon field="person" />
       </th>
       <th scope="col" pSortableColumn="fechaEntrega">
-        Fecha de Entrega<p-sortIcon field="fechaEntrega"></p-sortIcon>
+        Fecha de Entrega<p-sortIcon field="fechaEntrega" />
       </th>
       <th scope="col" pSortableColumn="observaciones">
-        Observaciones<p-sortIcon field="observaciones"></p-sortIcon>
+        Observaciones<p-sortIcon field="observaciones" />
       </th>
       @if (authS.onValidateRoles(['SuperUsuario', 'JefeMantenimiento'])) {
       <th scope="col" style="width: 5%">Opciones</th>

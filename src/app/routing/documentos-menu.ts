@@ -23,7 +23,7 @@ export const libraryMenu = (authS: AuthService) => [
           'Asistente',
         ]),
         label: 'Documentos del edificio',
-        routerLink: '/documento/documento',
+        routerLink: '/documento/edificio',
         name: 'Documentos del edificio',
       },
       {

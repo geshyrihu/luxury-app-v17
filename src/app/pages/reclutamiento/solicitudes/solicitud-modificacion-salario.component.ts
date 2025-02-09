@@ -8,19 +8,20 @@ import {
 import { FileUploadModule, FileUploadValidators } from '@iplab/ngx-file-upload';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { cb_ESiNo } from 'src/app/core/enums/si-no.enum';
 import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DateService } from 'src/app/core/services/date.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
+import { EnumSelectService } from '../../../core/services/enum-select.service';
 
 @Component({
   selector: 'app-solicitud-modificacion-salario',
   templateUrl: './solicitud-modificacion-salario.component.html',
   standalone: true,
   imports: [LuxuryAppComponentsModule, CustomInputModule, FileUploadModule],
+  providers: [EnumSelectService],
 })
 export default class SolicitudModificacionSalarioComponent {
   apiRequestService = inject(ApiRequestService);
@@ -30,6 +31,7 @@ export default class SolicitudModificacionSalarioComponent {
   dateService = inject(DateService);
   ref = inject(DynamicDialogRef);
   authS = inject(AuthService);
+  enumSelectService = inject(EnumSelectService);
 
   workPositionId: number = this.config.data.workPositionId;
   data: any;
@@ -38,7 +40,7 @@ export default class SolicitudModificacionSalarioComponent {
   id: number = 0;
 
   cb_profession: ISelectItem[] = [];
-  cb_si_no: ISelectItem[] = cb_ESiNo;
+  cb_si_no: ISelectItem[] = [];
 
   form: FormGroup = this.formBuilder.group({
     employeeId: ['', Validators.required],
@@ -54,7 +56,8 @@ export default class SolicitudModificacionSalarioComponent {
     additionalInformation: [''],
   });
 
-  ngOnInit(): void {
+  async ngOnInit() {
+    this.cb_si_no = await this.enumSelectService.boolYesNo();
     this.apiRequestService
       .onGetSelectItem(`Professions`)
       .then((response: any) => {

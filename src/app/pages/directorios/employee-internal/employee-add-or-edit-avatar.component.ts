@@ -26,7 +26,7 @@ export default class EmployeeAddOrEditAvatarComponent implements OnInit {
   }
 
   onLoadData() {
-    const urlApi = `ApplicationUserEmployee/PhotoPath/${this.applicationUserId}`;
+    const urlApi = `EmployeeInternal/PhotoPath/${this.applicationUserId}`;
     this.apiRequestService.onGetItem(urlApi).then((result: any) => {
       this.photoPath = result.photoPath;
     });
@@ -55,10 +55,7 @@ export default class EmployeeAddOrEditAvatarComponent implements OnInit {
     formData.append('file', this.imgUpload);
 
     this.apiRequestService
-      .onPut(
-        'ApplicationUserEmployee/UpdateImage/' + this.applicationUserId,
-        formData
-      )
+      .onPut('EmployeeInternal/UpdateImage/' + this.applicationUserId, formData)
       .then((result: any) => {
         if (result) this.photoPath = result.photoPath;
       });

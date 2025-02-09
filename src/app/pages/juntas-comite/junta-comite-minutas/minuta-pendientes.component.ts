@@ -1,7 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { Observable } from 'rxjs';
-import { EStatusPipe } from 'src/app/core/pipes/status.pipe';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 
@@ -9,7 +8,7 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
   selector: 'app-minuta-pendientes',
   templateUrl: './minuta-pendientes.component.html',
   standalone: true,
-  imports: [LuxuryAppComponentsModule, EStatusPipe],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class MinutaPendientesComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);

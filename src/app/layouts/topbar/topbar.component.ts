@@ -1,6 +1,8 @@
-import { Component, EventEmitter, Output, inject } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, inject } from '@angular/core';
 import { AuthService } from 'src/app/core/services/auth.service';
 
+import { Observable } from 'rxjs';
+import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { TopbarModule } from './topbar.module';
 
 @Component({
@@ -9,15 +11,39 @@ import { TopbarModule } from './topbar.module';
   standalone: true,
   imports: [TopbarModule],
 })
-export class TopbarComponent {
+export class TopbarComponent implements OnInit {
   authS = inject(AuthService);
+  custIdService = inject(CustomerIdService);
 
   @Output() settingsButtonClicked = new EventEmitter();
+
+  customerId: number;
+  customerId$: Observable<number> = this.custIdService.getCustomerId$();
 
   customerName = this.authS.infoUserAuthDto.customer;
   customerPhotoPath = this.authS.infoUserAuthDto.customerPhotoPath;
 
   valueset: any;
+
+  ngOnInit() {
+    this.onReloadDataCustomer();
+    this.customerId$.subscribe((resp) => {
+      this.onReloadDataCustomer();
+
+      console.log('Cambiando de cliente en el sidebar menu');
+    });
+  }
+
+  onReloadDataCustomer() {
+    if (this.authS.customerAccess.length == 1) {
+      this.customerName = this.authS.infoUserAuthDto.customer;
+      this.customerPhotoPath = this.authS.infoUserAuthDto.customerPhotoPath;
+    } else {
+      this.customerName = this.custIdService.nameCustomer;
+      this.customerPhotoPath = this.custIdService.photoPath;
+    }
+  }
+
   toggleRightSidebar() {
     this.settingsButtonClicked.emit();
   }

@@ -5,7 +5,6 @@ import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
-import { environment } from 'src/environments/environment';
 import AddoreditProveedorComponent from './addoredit-proveedor.component';
 import CalificacionProveedorComponent from './calificacion-proveedor.component';
 import TarjetaProveedorComponent from './tarjeta-proveedor.component';
@@ -22,7 +21,6 @@ export default class BuscadorProvedorComponent implements OnInit {
   authS = inject(AuthService);
 
   incluirInactivos: boolean = false;
-  url_img = `${environment.base_urlImg}providers/`;
 
   ref: DynamicDialogRef;
 

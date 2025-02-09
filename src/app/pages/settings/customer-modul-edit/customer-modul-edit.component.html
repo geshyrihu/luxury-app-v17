@@ -1,38 +1,60 @@
 <div class="container">
   <!-- Título del cliente -->
-  <h3>MODULOS DE {{ customerName }}</h3>
+  <ngb-alert [dismissible]="false" type="primary" class="mb-3">
+    MODULOS DE {{ customerName }}
+  </ngb-alert>
 
   <div *ngIf="data.length === 0">
     <p>No se encontraron módulos.</p>
   </div>
 
   <!-- Mostrar los módulos -->
-  <div class="container">
-    <div class="row">
-      <div
-        class="col-sm-4 pointer"
-        *ngFor="let item of data"
+  <ul class="list-group">
+    <li
+      *ngFor="let item of data"
+      class="list-group-item pointer"
+      [class.active]="item.isAssigned"
+      (click)="toggleModuleActivation(item)"
+    >
+      <input
+        class="form-check-input me-2"
+        type="checkbox"
+        [(ngModel)]="item.isAssigned"
+        [id]="item.moduleAppId"
+      />
+      <label
+        [for]="item.moduleAppId"
+        class="form-check-label pointer"
         (click)="toggleModuleActivation(item)"
+        >{{ item.moduleAppName | uppercase }}</label
       >
-        <div class="card mb-3">
-          <div class="card-body">
-            <!-- Nombre del módulo -->
-            <h5 class="card-title">{{ item.moduleAppName }}</h5>
-
-            <!-- Estado del módulo -->
-            <div class="d-flex justify-content-between align-items-center">
-              <div class="form-check form-switch form-switch-md mb-3" dir="ltr">
-                <input
-                  type="checkbox"
-                  class="form-check-input"
-                  [(ngModel)]="item.isAssigned"
-                  (change)="toggleModuleActivation(item)"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+    </li>
+  </ul>
 </div>
+
+<style>
+  .pointer {
+    cursor: pointer;
+  }
+
+  .list-group-item {
+    margin-top: 2px; /* Reduce el margen superior */
+    margin-bottom: 2px; /* Reduce el margen inferior */
+    padding: 0.5rem; /* Ajusta el relleno si es necesario */
+  }
+
+  .list-group-item.active {
+    background-color: #0d3b66; /* Color de fondo activo */
+    color: white; /* Color del texto activo */
+    font-weight: bold;
+  }
+
+  .form-check {
+    margin-top: 2px; /* Reduce el margen entre los checkboxes */
+    margin-bottom: 2px;
+  }
+
+  .form-check-label {
+    margin-left: 5px; /* Espaciado entre el checkbox y el texto */
+  }
+</style>

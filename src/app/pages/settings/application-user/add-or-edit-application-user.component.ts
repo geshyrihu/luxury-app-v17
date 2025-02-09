@@ -2,10 +2,9 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { ETypePerson } from 'src/app/core/enums/type-person.enum';
-import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { EnumSelectService } from 'src/app/core/services/enum-select.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
@@ -13,28 +12,31 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   templateUrl: './add-or-edit-application-user.component.html',
   standalone: true,
   imports: [LuxuryAppComponentsModule, CustomInputModule],
+  providers: [EnumSelectService],
 })
 export default class AddOrEditApplicationUserComponent implements OnInit {
   formBuilder = inject(FormBuilder);
   apiRequestService = inject(ApiRequestService);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
+  enumSelectService = inject(EnumSelectService);
 
   submitting: boolean = false;
   applicationUserId: string = '';
   cb_customer: ISelectItem[] = [];
-  cb_typePerson: ISelectItem[] = onGetSelectItemFromEnum(ETypePerson);
+  cb_typePerson: ISelectItem[] = [];
 
   form: FormGroup = this.formBuilder.group({
     email: [''],
     phoneNumber: [''],
     customerId: ['', Validators.required],
-    typePerson: ['', Validators.required],
+    typePerson: [null, Validators.required],
     firstName: ['', Validators.required],
     lastName: ['', Validators.required],
   });
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.cb_typePerson = await this.enumSelectService.typePerson();
     this.onLoadSelectItem();
     this.applicationUserId = this.config.data.applicationUserId;
     if (this.applicationUserId !== '') this.onLoadData();
@@ -69,7 +71,11 @@ export default class AddOrEditApplicationUserComponent implements OnInit {
       this.apiRequestService
         .onPut(`Auth/EditAccount/${this.applicationUserId}`, this.form.value)
         .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+          if (result) {
+            this.ref.close(true);
+          } else {
+            this.submitting = false;
+          }
         });
     }
   }

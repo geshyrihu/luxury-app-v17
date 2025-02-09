@@ -5,7 +5,6 @@ import { IBusquedaProveedor } from 'src/app/core/interfaces/busqueda-proveedor.i
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
-import { environment } from 'src/environments/environment';
 import AddoreditProveedorComponent from './addoredit-proveedor.component';
 import ProviderUseComponent from './provider-use.component';
 import TarjetaProveedorComponent from './tarjeta-proveedor.component';
@@ -23,8 +22,6 @@ export default class ListProviderComponent implements OnInit {
 
   data: IBusquedaProveedor[] = [];
   ref: DynamicDialogRef;
-
-  url_img = `${environment.base_urlImg}providers/`;
 
   ngOnInit(): void {
     this.onLoadData();

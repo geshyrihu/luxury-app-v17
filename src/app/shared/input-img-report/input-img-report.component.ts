@@ -1,7 +1,6 @@
 import {} from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { imageToBase64 } from 'src/app/core/helpers/enumeration';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-input-img-report',
@@ -9,14 +8,10 @@ import { environment } from 'src/environments/environment';
   standalone: true,
 })
 export default class InputImgReportComponent {
-  imgBase64: string = '';
-
-  //Ruta de Imagen por defecto
-  noImg = `${environment.base_urlImg}no-img.png`;
-
+  imgBase64: string | null = null;
   //Ingresamos la imagen actual
   @Input()
-  urlImgCurrent: string = '';
+  urlImgCurrent: string | null = null;
 
   @Input()
   title: string = '';

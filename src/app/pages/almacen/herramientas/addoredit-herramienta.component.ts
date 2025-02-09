@@ -1,18 +1,14 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import LuxuryAppComponentsModule, {
-  flatpickrFactory,
-} from 'app/shared/luxuryapp-components.module';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { EState } from 'src/app/core/enums/state.enum';
-import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
+import { flatpickrFactory } from 'src/app/core/helpers/flatpickr-factory';
 import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DateService } from 'src/app/core/services/date.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-addoredit-herramienta',
@@ -38,7 +34,7 @@ export default class AddoreditToolsComponent implements OnInit {
   photoFileUpdate: boolean = false;
 
   cb_category: any[] = [{}];
-  optionActive: ISelectItem[] = onGetSelectItemFromEnum(EState);
+  optionActive: ISelectItem[] = [];
   form: FormGroup;
 
   ngOnInit(): void {
@@ -54,7 +50,7 @@ export default class AddoreditToolsComponent implements OnInit {
       serie: [''],
       model: [''],
       photoPath: [''],
-      state: [0, [Validators.required]],
+      state: [null, [Validators.required]],
       dateOfPurchase: [this.dateService.getDateNow(), [Validators.required]],
       technicalSpecifications: [''],
       observations: [''],
@@ -65,6 +61,10 @@ export default class AddoreditToolsComponent implements OnInit {
   }
 
   onLoadSelectItem() {
+    this.apiRequestService.onGetEnumSelectItem(`EState`).then((result: any) => {
+      this.optionActive = result;
+    });
+
     this.apiRequestService
       .onGetSelectItem(`Categories`)
       .then((response: any) => {
@@ -78,11 +78,7 @@ export default class AddoreditToolsComponent implements OnInit {
       result.dateOfPurchase = this.dateService.getDateFormat(
         result.dateOfPurchase
       );
-      this.urlBaseImg = `${
-        environment.base_urlImg
-      }customers/${this.custIdService.getCustomerId()}/tools/${
-        this.model.photoPath
-      }`;
+      this.urlBaseImg = this.model.photoPath;
       this.form.patchValue(result);
     });
   }

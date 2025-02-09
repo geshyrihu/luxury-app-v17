@@ -1,4 +1,4 @@
-<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
+<p-toast position="top-right" [baseZIndex]="99999" />
 <div class="card">
   <p-table
     #dt
@@ -32,11 +32,11 @@
         <th>Id</th>
         <th scope="col" style="width: 30%" pSortableColumn="numeroCuenta">
           CUENTA
-          <p-sortIcon field="numeroCuenta"></p-sortIcon>
+          <p-sortIcon field="numeroCuenta" />
         </th>
         <th scope="col" style="width: 65%" pSortableColumn="descripcion">
           DESCRIPCIÓN DE LA CUENTA
-          <p-sortIcon field="descripcion"></p-sortIcon>
+          <p-sortIcon field="descripcion" />
         </th>
         @if (authS.onValidateRoles(['SuperUsuario'])) {
         <th scope="col" style="width: 5%"></th>

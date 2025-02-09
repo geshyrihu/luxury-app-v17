@@ -2,7 +2,6 @@ import { Component, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-tarjeta-producto',
@@ -16,7 +15,6 @@ export default class TarjetaProductoComponent implements OnInit {
 
   productoId: number = this.config.data.productoId;
   producto: any;
-  urlImg: string = `${environment.base_urlImg}Administration/products/`;
 
   ngOnInit(): void {
     const urlApi = `Productos/${this.productoId}`;

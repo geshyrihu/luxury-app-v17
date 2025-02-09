@@ -53,10 +53,7 @@ export default class UpdatePhotoApplicationUserComponent implements OnInit {
     formData.append('file', this.imgUpload);
 
     this.apiRequestService
-      .onPut(
-        'ApplicationUserEmployee/UpdateImage/' + this.applicationUserId,
-        formData
-      )
+      .onPut('EmployeeInternal/UpdateImage/' + this.applicationUserId, formData)
       .then((result: any) => {
         if (result) {
           this.infoEmployeeDto.photoPath = result.photoPath;

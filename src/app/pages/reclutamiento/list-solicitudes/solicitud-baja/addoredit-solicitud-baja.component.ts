@@ -9,12 +9,9 @@ import {
 } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { cb_ESiNo } from 'src/app/core/enums/si-no.enum';
-import { EStatus } from 'src/app/core/enums/status.enum';
-import { ETypeOfDeparture } from 'src/app/core/enums/type-of-departure.enum';
-import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { EnumSelectService } from 'src/app/core/services/enum-select.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
@@ -22,29 +19,31 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   templateUrl: './addoredit-solicitud-baja.component.html',
   standalone: true,
   imports: [LuxuryAppComponentsModule, CustomInputModule],
+  providers: [EnumSelectService],
 })
 export default class AddoreditSolicitudBajaComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   formBuilder = inject(FormBuilder);
   ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);
+  enumSelectService = inject(EnumSelectService);
 
   submitting: boolean = false;
 
-  cb_status: ISelectItem[] = onGetSelectItemFromEnum(EStatus);
-  cb_tipo_baja: ISelectItem[] = onGetSelectItemFromEnum(ETypeOfDeparture);
-  cb_si_no: ISelectItem[] = cb_ESiNo;
+  cb_status: ISelectItem[] = [];
+  cb_tipo_baja: ISelectItem[] = [];
+  cb_si_no: ISelectItem[] = [];
 
   id: number = 0;
 
   form: FormGroup = this.formBuilder.group({
     id: { value: this.id, disabled: true },
     reasonForLeaving: [],
-    tipoBaja: [],
+    tipoBaja: [null],
     executionDate: [],
-    lawyerAssistance: [],
-    employeeInformed: [],
-    status: [],
+    lawyerAssistance: [null],
+    employeeInformed: [null],
+    status: [null],
     discounts: this.formBuilder.array([]),
     applicationUserId: [],
     employeeId: [],
@@ -53,7 +52,10 @@ export default class AddoreditSolicitudBajaComponent implements OnInit {
     workPositionId: [],
   });
 
-  ngOnInit(): void {
+  async ngOnInit() {
+    this.cb_si_no = await this.enumSelectService.boolYesNo();
+    this.cb_status = await this.enumSelectService.status();
+    this.cb_tipo_baja = await this.enumSelectService.tipoBaja(false);
     this.id = this.config.data.id;
     if (this.id !== 0) this.onLoadData();
   }

@@ -1,4 +1,4 @@
-<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
+<p-toast position="top-right" [baseZIndex]="99999" />
 <div class="d-flex justify-content-start">
   <custom-button
     [customClass]="' mb-1'"
@@ -65,24 +65,24 @@
     <ng-template pTemplate="header">
       <tr>
         <th scope="col" style="width: 8%" pSortableColumn="code">
-          FOLIO <p-sortIcon field="code"></p-sortIcon>
+          FOLIO <p-sortIcon field="code" />
         </th>
         <th scope="col" style="width: 11%" pSortableColumn="cliente">
           CLIENTE
-          <p-sortIcon field="cliente"></p-sortIcon>
+          <p-sortIcon field="cliente" />
         </th>
         <th
           scope="col"
           style="width: 30%"
           pSortableColumn="fechaSolicitudFiltro"
         >
-          SOLICITUD<p-sortIcon field="fechaSolicitudFiltro"></p-sortIcon>
+          SOLICITUD<p-sortIcon field="fechaSolicitudFiltro" />
         </th>
         <th scope="col" style="width: 35%" pSortableColumn="pendiente">
-          SEGUIMIENTO<p-sortIcon field="pendiente"></p-sortIcon>
+          SEGUIMIENTO<p-sortIcon field="pendiente" />
         </th>
         <th scope="col" style="width: 8%" pSortableColumn="status">
-          ESTATUS<p-sortIcon field="status"></p-sortIcon>
+          ESTATUS<p-sortIcon field="status" />
         </th>
         <th scope="col" style="width: 8%" style="width: 5%">OP</th>
       </tr>

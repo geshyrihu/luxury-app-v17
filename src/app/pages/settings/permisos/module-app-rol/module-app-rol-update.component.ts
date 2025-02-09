@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
@@ -10,7 +10,7 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
   imports: [LuxuryAppComponentsModule],
   templateUrl: './module-app-rol-update.component.html',
 })
-export default class ModuleAppRolUpdateComponent {
+export default class ModuleAppRolUpdateComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   activatedRoute = inject(ActivatedRoute);
   custIdService = inject(CustomerIdService);
@@ -51,5 +51,13 @@ export default class ModuleAppRolUpdateComponent {
     this.apiRequestService.onPost(urlApi, data).then((result: any) => {
       this.custIdService.onLoadDataCustomer(this.custIdService.customerId);
     });
+  }
+  checkIfTwoDigitsAndSpace(moduleAppName: string): boolean {
+    if (!moduleAppName) return false;
+
+    // Expresión regular para verificar si después de dos dígitos hay un espacio
+    const regex = /^\d{2} /;
+    const result = regex.test(moduleAppName);
+    return result;
   }
 }

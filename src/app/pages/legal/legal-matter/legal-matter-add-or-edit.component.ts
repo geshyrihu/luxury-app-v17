@@ -1,8 +1,9 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
-import { LuxuryAppService } from 'src/app/core/services/luxury-app.service';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
@@ -10,11 +11,13 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   standalone: true,
   imports: [LuxuryAppComponentsModule, CustomInputModule],
   templateUrl: './legal-matter-add-or-edit.component.html',
-  providers: [LuxuryAppService],
+  providers: [],
 })
 export default class LegalMatterCategoryComponent {
-  appService = inject(LuxuryAppService);
+  apiRequestService = inject(ApiRequestService);
+  config = inject(DynamicDialogConfig);
   formBuilder = inject(FormBuilder);
+  ref = inject(DynamicDialogRef);
 
   id: string = '';
   submitting: boolean = false;
@@ -39,12 +42,12 @@ export default class LegalMatterCategoryComponent {
 
   ngOnInit(): void {
     this.onCategories();
-    this.id = this.appService.config.data.id;
+    this.id = this.config.data.id;
     if (this.id !== '') this.onLoadData();
   }
   onLoadData() {
     const urlApi = `LegalMatter/${this.id}`;
-    this.appService.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
       this.form.patchValue(result);
     });
   }
@@ -52,25 +55,25 @@ export default class LegalMatterCategoryComponent {
 
   onCategories() {
     const urlApi = `LegalMatter/Categories`;
-    this.appService.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.cb_categories = result;
     });
   }
   onSubmit() {
-    if (!this.appService.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestService.validateForm(this.form)) return;
     this.submitting = true;
 
     if (this.id === '') {
-      this.appService.apiRequestService
+      this.apiRequestService
         .onPost(`LegalMatter`, this.form.value)
         .then((result: boolean) => {
-          result ? this.appService.ref.close(true) : (this.submitting = false);
+          result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.appService.apiRequestService
+      this.apiRequestService
         .onPut(`LegalMatter/${this.id}`, this.form.value)
         .then((result: boolean) => {
-          result ? this.appService.ref.close(true) : (this.submitting = false);
+          result ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }

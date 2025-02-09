@@ -3,11 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FlatpickrModule } from 'angularx-flatpickr';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { cb_ESiNo } from 'src/app/core/enums/si-no.enum';
-import { EStatus } from 'src/app/core/enums/status.enum';
-import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { EnumSelectService } from 'src/app/core/services/enum-select.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
@@ -15,17 +13,19 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   templateUrl: './addoredit-modificacion-salario.component.html',
   standalone: true,
   imports: [LuxuryAppComponentsModule, FlatpickrModule, CustomInputModule],
+  providers: [EnumSelectService],
 })
 export default class AddoreditModificacionSalarioComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   formBuilder = inject(FormBuilder);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
+  enumSelectService = inject(EnumSelectService);
 
   submitting: boolean = false;
 
-  cb_status: ISelectItem[] = onGetSelectItemFromEnum(EStatus);
-  cb_si_no: ISelectItem[] = cb_ESiNo;
+  cb_status: ISelectItem[] = [];
+  cb_si_no: ISelectItem[] = [];
   id: number = 0;
 
   form: FormGroup = this.formBuilder.group({
@@ -40,12 +40,15 @@ export default class AddoreditModificacionSalarioComponent implements OnInit {
     professionCurrentId: [, Validators.required],
     professionNewId: [, Validators.required],
     requestDate: [, Validators.required],
-    retroactive: [, Validators.required],
+    retroactive: [false, Validators.required],
     soport: [],
-    status: [, Validators.required],
+    status: [null, Validators.required],
     workPositionId: [, Validators.required],
   });
-  ngOnInit(): void {
+
+  async ngOnInit() {
+    this.cb_si_no = await this.enumSelectService.boolYesNo();
+    this.cb_status = await this.enumSelectService.status();
     this.id = this.config.data.id;
     if (this.id !== 0) this.onLoadData();
   }

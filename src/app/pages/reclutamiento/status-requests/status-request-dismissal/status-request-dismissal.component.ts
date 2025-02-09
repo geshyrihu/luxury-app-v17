@@ -9,7 +9,6 @@ import { DialogHandlerService } from 'src/app/core/services/dialog-handler.servi
 import { StatusSolicitudVacanteService } from 'src/app/core/services/status-solicitud-vacante.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import CardEmployeeComponent from 'src/app/pages/directorios/employee-internal/card-employee.component';
-import { environment } from 'src/environments/environment';
 import AddoreditSolicitudBajaComponent from '../../list-solicitudes/solicitud-baja/addoredit-solicitud-baja.component';
 import AddOrEditStatusRequestDismissalDiscountComponent from './addoredit-status-request-dismissal-discount.component';
 
@@ -33,7 +32,6 @@ export default class StatusRequestDismissalComponent implements OnInit {
 
   data: any;
   noCandidates: boolean = true;
-  pahtBaseImg = environment.base_urlImg + 'Administration/accounts/';
   applicationUserId: string = this.authS.infoUserAuthDto.applicationUserId;
   ngOnInit() {
     if (this.workPositionId === null) {

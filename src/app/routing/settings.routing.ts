@@ -30,6 +30,14 @@ export default [
     data: { title: 'Administración Roles-Modulos' },
   },
   {
+    path: 'roles',
+    title: 'RolesApp',
+    loadComponent: () =>
+      import('src/app/pages/settings/permisos/roles/roles-list.component'),
+    canActivate: [AuthGuard],
+    data: { title: 'RolesApp' },
+  },
+  {
     title: 'Actualizar modulos a Role',
     data: { title: 'Actualizar modulos a Role' },
     path: 'module-app-rol-update/:roleId/:roleName',
@@ -147,7 +155,7 @@ export default [
     path: 'roles',
     loadComponent: () =>
       import(
-        'src/app/pages/settings/catalogos/roles/roles-add-or-edit.component'
+        'src/app/pages/settings/permisos/roles/roles-add-or-edit.component'
       ),
   },
   {

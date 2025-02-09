@@ -4,7 +4,6 @@ import { TreeNode } from 'primeng/api';
 import { Observable } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-organigrama',
@@ -19,7 +18,6 @@ export default class OrganigramaComponent implements OnInit {
   data: TreeNode[];
 
   customerId$: Observable<number> = this.custIdService.getCustomerId$();
-  base_urlImg = `${environment.base_urlImg}Administration/accounts/`;
 
   ngOnInit() {
     this.onLoadData();

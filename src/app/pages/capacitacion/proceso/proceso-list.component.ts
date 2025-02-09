@@ -4,7 +4,6 @@ import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
-import { environment } from 'src/environments/environment';
 import ProcesoAddOrEditComponent from './proceso-addoredit.component';
 
 @Component({
@@ -20,8 +19,6 @@ export default class ProcesoListComponent implements OnInit {
 
   data: any[] = [];
   ref: DynamicDialogRef;
-
-  filePath: string = environment.base_urlImg + 'Administration/procesos/';
 
   ngOnInit(): void {
     this.onLoadData();

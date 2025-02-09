@@ -1,4 +1,4 @@
-<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
+<p-toast position="top-right" [baseZIndex]="99999" />
 <p-table
   [(selection)]="data"
   #dt
@@ -78,23 +78,23 @@
     <tr>
       <th scope="col" style="width: 7%" pSortableColumn="folio">
         Folio
-        <p-sortIcon field="folio"></p-sortIcon>
+        <p-sortIcon field="folio" />
       </th>
       <th scope="col" style="width: 7%" pSortableColumn="fechaSolicitud">
         Solicitud
-        <p-sortIcon field="fechaSolicitud"></p-sortIcon>
+        <p-sortIcon field="fechaSolicitud" />
       </th>
       <th scope="col" style="width: 20%" pSortableColumn="equipoOInstalacion">
         Área, equipo o instalación
-        <p-sortIcon field="equipoOInstalacion"></p-sortIcon>
+        <p-sortIcon field="equipoOInstalacion" />
       </th>
       <th scope="col" style="width: 20%" pSortableColumn="justificacionGasto">
         Justificación
-        <p-sortIcon field="justificacionGasto"></p-sortIcon>
+        <p-sortIcon field="justificacionGasto" />
       </th>
       <th scope="col" style="width: 15%" pSortableColumn="proveedor">
         Proveedor
-        <p-sortIcon field="proveedor"></p-sortIcon>
+        <p-sortIcon field="proveedor" />
       </th>
       @if (statusCompra === 1) {
       <th
@@ -103,7 +103,7 @@
         pSortableColumn="ordenCompraAuth.observaciones"
       >
         Observaciones
-        <p-sortIcon field="ordenCompraAuth.observaciones"></p-sortIcon>
+        <p-sortIcon field="ordenCompraAuth.observaciones" />
       </th>
       } @if (this.statusCompra === 0) {
       <th
@@ -112,12 +112,12 @@
         pSortableColumn="ordenCompraAuth.fullName"
       >
         Autoriza
-        <p-sortIcon field="ordenCompraAuth.fullName"></p-sortIcon>
+        <p-sortIcon field="ordenCompraAuth.fullName" />
       </th>
       }
       <th scope="col" style="width: 15%" pSortableColumn="revisadoPorResidente">
         Revisada por
-        <p-sortIcon field="revisadoPorResidente"></p-sortIcon>
+        <p-sortIcon field="revisadoPorResidente" />
       </th>
       <th scope="col" style="width: 5%" class="text-small">Opciones</th>
     </tr>

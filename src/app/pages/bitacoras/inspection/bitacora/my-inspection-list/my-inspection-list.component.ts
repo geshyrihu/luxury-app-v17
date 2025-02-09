@@ -1,10 +1,10 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FlatpickrModule } from 'angularx-flatpickr';
-import LuxuryAppComponentsModule, {
-  flatpickrFactory,
-} from 'app/shared/luxuryapp-components.module';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { Observable } from 'rxjs';
+import { flatpickrFactory } from 'src/app/core/helpers/flatpickr-factory';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 
@@ -15,6 +15,7 @@ import { DialogHandlerService } from 'src/app/core/services/dialog-handler.servi
   templateUrl: './my-inspection-list.component.html',
 })
 export default class MyInspectionListComponent implements OnInit {
+  authService = inject(AuthService);
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
   custIdService = inject(CustomerIdService);
@@ -26,7 +27,6 @@ export default class MyInspectionListComponent implements OnInit {
   ngOnInit(): void {
     flatpickrFactory();
     this.onLoadData();
-    this.customerId$ = this.custIdService.getCustomerId$();
     this.customerId$.subscribe(() => {
       this.onLoadData();
     });
@@ -43,7 +43,7 @@ export default class MyInspectionListComponent implements OnInit {
 
       const formattedDate = `${year}-${month}-${day}`; // yyyy-MM-dd
 
-      const urlApi = `InspectionResult/GetInspectionsByCustomer/${this.custIdService.customerId}/${formattedDate}`;
+      const urlApi = `InspectionResult/GetInspectionsByCustomer/${this.authService.applicationUserId}/${this.custIdService.customerId}/${formattedDate}`;
 
       this.apiRequestService.onGetList(urlApi).then((result: any) => {
         this.data = result;

@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
+import { DataConnectorService } from 'src/app/core/services/data.service';
 
 @Component({
   selector: 'app-customer-modul-edit',
@@ -14,7 +15,7 @@ export default class CustomerModulEditComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   activatedRoute = inject(ActivatedRoute);
   custIdService = inject(CustomerIdService);
-
+  dataService = inject(DataConnectorService);
   // Declaración e inicialización de variables
   data: any[] = [];
 
@@ -29,7 +30,7 @@ export default class CustomerModulEditComponent implements OnInit {
   }
 
   onLoadData(customerId: number): void {
-    const urlApi = `CustomerModul/Customer/${customerId}`;
+    const urlApi = `ModuleAppCustomer/Customer/${customerId}`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
@@ -41,7 +42,7 @@ export default class CustomerModulEditComponent implements OnInit {
   }
 
   updateModuleStatus(item: any): void {
-    const urlApi = 'CustomerModul/UpdateModuleStatus';
+    const urlApi = 'ModuleAppCustomer/UpdateModuleStatus';
     const data = {
       customerId: this.customerId,
       moduleAppId: item.moduleAppId,
@@ -49,8 +50,13 @@ export default class CustomerModulEditComponent implements OnInit {
     };
 
     const customerId = this.custIdService.customerId;
-    this.apiRequestService.onPost(urlApi, data).then((_) => {
-      this.custIdService.onLoadDataCustomer(customerId);
+
+    this.dataService.post(urlApi, data).subscribe((_) => {
+      // this.custIdService.onLoadDataCustomer(customerId);
     });
+
+    // this.apiRequestService.onPost(urlApi, data).then((_) => {
+    //   this.custIdService.onLoadDataCustomer(customerId);
+    // });
   }
 }

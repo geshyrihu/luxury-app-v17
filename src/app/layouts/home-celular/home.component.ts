@@ -1,39 +1,53 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { ModulePermissionService } from 'src/app/core/services/module-permission.service';
 import { IMenuItem } from 'src/app/layouts/sidebar/menu.model';
 import { SidebarService } from 'src/app/layouts/sidebar/sidebar.service';
-import { IHomeListGroupComponent } from './home-list-group/home-list-group.component';
+import { ApiRequestService } from './../../core/services/api-request.service';
 import { HomeMenuService } from './home-menu.service';
 import HomeMenuComponent from './home-menu/home-menu.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterModule, HomeMenuComponent],
+  imports: [LuxuryAppComponentsModule, RouterModule, HomeMenuComponent],
   templateUrl: './home.component.html',
 })
 export default class HomeComponent implements OnInit {
   private sidebarService = inject(SidebarService);
+  private apiRequestService = inject(ApiRequestService);
+  authS = inject(AuthService);
   private custIdService = inject(CustomerIdService);
   modulePermissionService = inject(ModulePermissionService);
 
-  authS = inject(AuthService);
   homeMenuService = inject(HomeMenuService);
 
   customerId: number;
   customerId$: Observable<number> = this.custIdService.getCustomerId$();
 
-  menu: any;
+  // menu: any;
   menuItems: IMenuItem[] = [];
 
-  data: IHomeListGroupComponent[] = this.homeMenuService.onLoadMenu;
-
   ngOnInit(): void {
+    // this.onLoadMenu();
+    // this.customerId$.subscribe((_) => {
+    //   this.onLoadMenu();
+    // });
     // Cargar elementos del menú desde el servicio de la barra lateral
-    this.menuItems = this.sidebarService.onLoadMenu;
+    this.menuItems = this.homeMenuService.onLoadMenu;
+  }
+
+  onLoadMenu() {
+    const applicationUserId =
+      this.authS.userTokenDto.infoUserAuthDto.applicationUserId;
+    const customerId = this.custIdService.getCustomerId();
+    const urlApi = `MenuItems/Mobil/${customerId}/${applicationUserId}`;
+    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      this.menuItems = result;
+    });
   }
 }

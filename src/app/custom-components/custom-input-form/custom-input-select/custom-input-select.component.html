@@ -12,10 +12,12 @@
         'is-invalid': control.invalid && (control.dirty || control.touched)
       }"
     >
-      <option *ngIf="selectDefaulOption" value="">{{ placeholder }}</option>
+      <option *ngIf="selectDefaulOption" [value]="valueDefault">
+        {{ placeholder }}
+      </option>
       <option
         *ngFor="let item of data; trackBy: trackByFn"
-        [value]="item.value"
+        [ngValue]="parseValue(item.value)"
       >
         {{ item.label }}
       </option>
@@ -36,8 +38,13 @@
       'is-invalid': control.invalid && (control.dirty || control.touched)
     }"
   >
-    <option *ngIf="selectDefaulOption" value="">{{ placeholder }}</option>
-    <option *ngFor="let item of data; trackBy: trackByFn" [value]="item.value">
+    <option *ngIf="selectDefaulOption" [value]="valueDefault">
+      {{ placeholder }}
+    </option>
+    <option
+      *ngFor="let item of data; trackBy: trackByFn"
+      [ngValue]="parseValue(item.value)"
+    >
       {{ item.label }}
     </option>
   </select>

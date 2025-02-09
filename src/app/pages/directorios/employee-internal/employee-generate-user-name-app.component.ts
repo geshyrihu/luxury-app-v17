@@ -32,16 +32,21 @@ export default class EmployeeGenerateUserNameAppComponent implements OnInit {
   userName: string = '';
   checked = false;
   applicationUserState: boolean = false;
-  // rolesUpdate: IRoles[] = [];
+  roles: IRoles[] = [];
+  rolesSuperUser: IRoles[] = RolesSuperUser;
+  rolesAdmin: IRoles[] = RolesAdmin;
+
   getRoles() {
     this.apiRequestService
       .onGetList('ApplicationUser/GetRole/' + this.applicationUserId)
       .then((result: IRoles[]) => {
-        // Filtra los roles que se encuentran en rolesSuperUser
-        this.rolesSuperUser = this.filterRoles(this.rolesSuperUser, result);
-
-        // Filtra los roles que se encuentran en rolesAdmin
-        this.rolesAdmin = this.filterRoles(this.rolesAdmin, result);
+        if (this.authS.onValidateRoles(['SuperUsuario'])) {
+          // Filtra los roles que se encuentran en rolesSuperUser
+          this.roles = this.filterRoles(this.rolesSuperUser, result);
+        } else {
+          // Filtra los roles que se encuentran en rolesAdmin
+          this.roles = this.filterRoles(this.rolesAdmin, result);
+        }
       });
   }
 
@@ -57,9 +62,7 @@ export default class EmployeeGenerateUserNameAppComponent implements OnInit {
       return predefinedRole;
     });
   }
-  roles: IRoles[] = [];
-  rolesSuperUser: IRoles[] = RolesSuperUser;
-  rolesAdmin: IRoles[] = RolesAdmin;
+
   ngOnInit(): void {
     this.onLoadData();
     this.getRoles();
@@ -67,7 +70,7 @@ export default class EmployeeGenerateUserNameAppComponent implements OnInit {
   onLoadData() {
     this.apiRequestService
       .onGetItem(
-        `ApplicationUserEmployee/DataForRecoveryPassword/${this.applicationUserId}`
+        `EmployeeInternal/DataForRecoveryPassword/${this.applicationUserId}`
       )
       .then((result: any) => {
         if (result) {
@@ -79,9 +82,7 @@ export default class EmployeeGenerateUserNameAppComponent implements OnInit {
       });
 
     this.apiRequestService
-      .onGetItem(
-        `ApplicationUserEmployee/OnValidateState/${this.applicationUserId}`
-      )
+      .onGetItem(`EmployeeInternal/OnValidateState/${this.applicationUserId}`)
       .then((result: any) => {
         this.applicationUserState = result;
       });
@@ -106,13 +107,20 @@ export default class EmployeeGenerateUserNameAppComponent implements OnInit {
         this.customToastService.onShowSuccess();
       });
   }
-  updateRole(roles: any): void {
+
+  selectRole(selectedRole: IRoles): void {
+    // Deseleccionar todos los roles
+    this.roles.forEach((role) => (role.isSelected = false));
+
+    // Seleccionar el rol actual
+    selectedRole.isSelected = true;
+
+    // Enviar al backend
     this.apiRequestService.onPost(
       `ApplicationUser/AddRoleToUser/${this.applicationUserId}`,
-      roles
+      selectedRole
     );
   }
-
   onToBlockAccount() {
     this.apiRequestService
       .onGetList(`ApplicationUser/ToBlockAccount/${this.applicationUserId}`)

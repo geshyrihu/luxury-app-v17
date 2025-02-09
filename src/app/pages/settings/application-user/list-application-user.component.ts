@@ -2,11 +2,11 @@ import { Component, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ETypePerson } from 'src/app/core/enums/type-person.enum';
-import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { IApplicationUserDto } from 'src/app/core/interfaces/account-dto.interface';
 import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
+import { EnumSelectService } from 'src/app/core/services/enum-select.service';
 import CardEmployeeComponent from 'src/app/pages/directorios/employee-internal/card-employee.component';
 import ModuleAppPermissionComponent from '../permisos/module-app-permission/module-app-permission.component';
 import AddOrEditApplicationUserComponent from './add-or-edit-application-user.component';
@@ -17,10 +17,12 @@ import MdEditAccountComponent from './md-edit-account.component';
   templateUrl: './list-application-user.component.html',
   standalone: true,
   imports: [LuxuryAppComponentsModule],
+  providers: [EnumSelectService],
 })
 export default class ListApplicationUserComponent implements OnInit {
   dialogHandlerService = inject(DialogHandlerService);
   apiRequestService = inject(ApiRequestService);
+  enumSelectService = inject(EnumSelectService);
 
   data: IApplicationUserDto[] = [];
   filteredData: IApplicationUserDto[] = []; // Para almacenar la data filtrada
@@ -32,11 +34,12 @@ export default class ListApplicationUserComponent implements OnInit {
   ref: DynamicDialogRef;
   state: boolean = true;
   title: string = '';
-  // urlImgApi = environment.base_urlImg + 'Administration/accounts/';
   applicationUserState: boolean = true;
-  cb_typePerson: ISelectItem[] = onGetSelectItemFromEnum(ETypePerson);
-  typePerson: ETypePerson = ETypePerson.Empleado;
-  ngOnInit(): void {
+  cb_typePerson: ISelectItem[] = [];
+  typePerson: number = 0;
+
+  async ngOnInit() {
+    this.cb_typePerson = await this.enumSelectService.typePerson(false);
     this.onLoadData(true, this.typePerson);
   }
 

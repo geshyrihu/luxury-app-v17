@@ -29,7 +29,7 @@ export default class InspectionsAddoreditComponent implements OnInit {
   customerService = inject(CustomerIdService);
 
   submitting: boolean = false;
-  cb_area_responsable: ISelectItem[] = [];
+  cb_departament: ISelectItem[] = [];
   id: string = this.config.data.id;
 
   form: FormGroup = this.fb.group(
@@ -38,7 +38,7 @@ export default class InspectionsAddoreditComponent implements OnInit {
       name: [''],
       departamentId: [0, Validators.required],
       customerId: [this.customerService.customerId, Validators.required],
-      departamentName: [''],
+      departament: [''],
       frequency: [0, Validators.required],
       isActive: [true, Validators.required],
       dayOfMonth: [null],
@@ -184,19 +184,9 @@ export default class InspectionsAddoreditComponent implements OnInit {
   }
 
   onLoadSelectItem() {
-    this.apiRequestService
-      .onGetSelectItem(`ResponsibleArea`)
-      .then((response: any) => {
-        this.cb_area_responsable = response;
-      });
-  }
-  public saveAreResponsableId(e: any): void {
-    let find = this.cb_area_responsable.find(
-      (x) => x?.label === e.target.value
-    );
-    this.form.patchValue({
-      departamentId: find?.value,
-      departamentName: find?.label,
+    const urlApi = `EDepartament`;
+    this.apiRequestService.onGetEnumSelectItem(urlApi).then((result: any) => {
+      this.cb_departament = result;
     });
   }
 }

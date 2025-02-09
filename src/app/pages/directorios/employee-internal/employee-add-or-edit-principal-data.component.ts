@@ -34,7 +34,7 @@ export default class EmployeeAddOrEditPrincipalDataComponent implements OnInit {
   }
 
   onLoadData() {
-    const urlApi = `ApplicationUserEmployee/PrincipalData/${this.applicationUserId}`;
+    const urlApi = `EmployeeInternal/PrincipalData/${this.applicationUserId}`;
     this.apiRequestService.onGetItem(urlApi).then((result: any) => {
       this.form.patchValue(result);
     });
@@ -46,7 +46,7 @@ export default class EmployeeAddOrEditPrincipalDataComponent implements OnInit {
     this.submitting = true;
     this.apiRequestService
       .onPut(
-        `ApplicationUserEmployee/UpdatePrincipalData/${this.applicationUserId}`,
+        `EmployeeInternal/UpdatePrincipalData/${this.applicationUserId}`,
         this.form.value
       )
       .then((result: boolean) => {

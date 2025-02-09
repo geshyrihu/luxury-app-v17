@@ -123,7 +123,7 @@ export default class CuadroComparativoListComponent implements OnInit {
         }
       }
       this.onEvaluationPriceTotal();
-      this.ontotalPreciosMenores(this.solicitudCompraDetalle);
+      this.onTotalPreciosMenores(this.solicitudCompraDetalle);
     });
   }
 
@@ -262,44 +262,42 @@ export default class CuadroComparativoListComponent implements OnInit {
   totalMejorPrecioTotal: number = 0;
   evaluarPrecioIndependiente = false;
 
-  ontotalPreciosMenores(solicitudCompraDetalle: any[]): void {
+  onTotalPreciosMenores(solicitudCompraDetalle: any[]): void {
+    // Restablece los valores antes de calcular nuevos totales
     this.onResetMejorPrecio();
-    if (this.solicitudCompra.cotizacionProveedor.length === 3) {
-      for (let n of solicitudCompraDetalle) {
-        if (n.total < n.total2 && n.total < n.total3) {
-          this.mejorPrecioTotal1 += n.total;
-        }
-      }
-      for (let n of solicitudCompraDetalle) {
-        if (n.total2 < n.total && n.total2 < n.total3) {
-          this.mejorPrecioTotal2 += n.total2;
-        }
-      }
-      for (let n of solicitudCompraDetalle) {
-        if (n.total3 < n.total && n.total3 < n.total2) {
-          this.mejorPrecioTotal3 += n.total3;
-        }
-      }
-      this.totalMejorPrecioTotal =
-        this.mejorPrecioTotal1 +
-        this.mejorPrecioTotal2 +
-        this.mejorPrecioTotal3;
-    }
-    if (this.solicitudCompra.cotizacionProveedor.length === 2) {
-      for (let n of solicitudCompraDetalle) {
-        if (n.total < n.total2) {
-          this.mejorPrecioTotal1 += n.total;
-        }
-      }
-      for (let n of solicitudCompraDetalle) {
-        if (n.total2 < n.total) {
-          this.mejorPrecioTotal2 += n.total2;
-        }
-      }
 
-      this.totalMejorPrecioTotal =
-        this.mejorPrecioTotal1 + this.mejorPrecioTotal2;
+    // Inicializa los acumuladores en 0
+    this.mejorPrecioTotal1 = 0;
+    this.mejorPrecioTotal2 = 0;
+    this.mejorPrecioTotal3 = 0;
+
+    // Itera sobre los detalles de la solicitud de compra
+    for (let n of solicitudCompraDetalle) {
+      // Filtra precios válidos (mayores a 0)
+      const preciosValidos = [
+        { total: n.total, index: 1 },
+        { total: n.total2, index: 2 },
+        { total: n.total3, index: 3 },
+      ].filter((p) => p.total > 0);
+
+      if (preciosValidos.length === 0) continue; // Si todos los valores son 0, omitir este detalle
+
+      // Encuentra el menor precio válido
+      const mejorPrecio = Math.min(...preciosValidos.map((p) => p.total));
+
+      // Sumar el menor precio al total correspondiente
+      const mejorOpcion = preciosValidos.find((p) => p.total === mejorPrecio);
+
+      if (mejorOpcion) {
+        if (mejorOpcion.index === 1) this.mejorPrecioTotal1 += mejorPrecio;
+        if (mejorOpcion.index === 2) this.mejorPrecioTotal2 += mejorPrecio;
+        if (mejorOpcion.index === 3) this.mejorPrecioTotal3 += mejorPrecio;
+      }
     }
+
+    // Calcula el total del mejor precio
+    this.totalMejorPrecioTotal =
+      this.mejorPrecioTotal1 + this.mejorPrecioTotal2 + this.mejorPrecioTotal3;
   }
 
   onResetMejorPrecio() {

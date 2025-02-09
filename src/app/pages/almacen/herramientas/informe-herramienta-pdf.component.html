@@ -14,12 +14,7 @@
     @for (item of data; track item) {
     <tr>
       <td>
-        <img
-          [src]="base_urlImg + item.photoPath"
-          alt=""
-          width="100px"
-          height="80px"
-        />
+        <img [src]="item.photoPath" alt="" width="100px" height="80px" />
       </td>
       <td>
         <p class="mb-0">{{ item.nameTool }}</p>

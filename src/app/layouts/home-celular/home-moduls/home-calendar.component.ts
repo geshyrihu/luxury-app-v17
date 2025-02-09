@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { IHomeListGroupComponent } from '../home-list-group/home-list-group.component';
+import { IMenuItem } from '../../sidebar/menu.model';
 import HomeMenuComponent from '../home-menu/home-menu.component';
 
 @Component({
@@ -11,12 +11,12 @@ import HomeMenuComponent from '../home-menu/home-menu.component';
 })
 export default class HomeCalendarComponent {
   authS = inject(AuthService);
-  data: IHomeListGroupComponent[] = [
+  data: IMenuItem[] = [
     {
-      name: 'Mantenimiento',
+      label: 'Mantenimiento',
       icon: 'fa-duotone fa-tools', // Ícono para herramientas y mantenimiento
       routerLink: '/mantenimiento/calendario-anual',
-      isAutorized: this.authS.onValidateRoles([
+      visible: this.authS.onValidateRoles([
         'SuperUsuario',
         'SupervisionOperativa',
         'Administrador',
@@ -25,10 +25,10 @@ export default class HomeCalendarComponent {
       ]),
     },
     {
-      name: 'Reservaciones',
+      label: 'Reservaciones',
       icon: 'fa-duotone fa-calendar-check', // Ícono para calendario y reservas
       routerLink: '/mantenimiento/calendario-anual',
-      isAutorized: this.authS.onValidateRoles([
+      visible: this.authS.onValidateRoles([
         'SuperUsuario',
         'SupervisionOperativa',
         'Administrador',
@@ -40,10 +40,10 @@ export default class HomeCalendarComponent {
       ]),
     },
     {
-      name: 'Juntas de comité',
+      label: 'Juntas de comité',
       icon: 'fa-duotone fa-users', // Ícono para reuniones de grupo o juntas
       routerLink: '/home-calendar-juntas-comite',
-      isAutorized: this.authS.onValidateRoles([
+      visible: this.authS.onValidateRoles([
         'SuperUsuario',
         'SupervisionOperativa',
         'Administrador',

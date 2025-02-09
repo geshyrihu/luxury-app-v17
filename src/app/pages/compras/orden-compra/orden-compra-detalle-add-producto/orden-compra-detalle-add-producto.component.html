@@ -1,4 +1,4 @@
-<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
+<p-toast position="top-right" [baseZIndex]="99999" />
 @if (mensajeError == true) {
 <p class="small text-danger text-left font-italic">
   Seleccione producto y unidad
@@ -30,19 +30,19 @@
     <tr>
       <th scope="col" pSortableColumn="nombreProducto">
         Imagen
-        <p-sortIcon field="nombreProducto"></p-sortIcon>
+        <p-sortIcon field="nombreProducto" />
       </th>
       <th scope="col" pSortableColumn="nombreProducto">
         Descripción
-        <p-sortIcon field="nombreProducto"></p-sortIcon>
+        <p-sortIcon field="nombreProducto" />
       </th>
       <th scope="col" pSortableColumn="category">
         Cantidad
-        <p-sortIcon field="category"></p-sortIcon>
+        <p-sortIcon field="category" />
       </th>
       <th scope="col" pSortableColumn="marca">
         Unidad
-        <p-sortIcon field="marca"></p-sortIcon>
+        <p-sortIcon field="marca" />
       </th>
       <th scope="col" style="width: 5%">Agregar</th>
     </tr>

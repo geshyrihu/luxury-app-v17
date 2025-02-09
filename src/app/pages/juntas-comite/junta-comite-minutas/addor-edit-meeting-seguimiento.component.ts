@@ -1,17 +1,16 @@
-import { Component, OnInit, inject } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import LuxuryAppComponentsModule, {
-  flatpickrFactory,
-} from "app/shared/luxuryapp-components.module";
-import { DynamicDialogConfig, DynamicDialogRef } from "primeng/dynamicdialog";
-import { ApiRequestService } from "src/app/core/services/api-request.service";
-import { AuthService } from "src/app/core/services/auth.service";
-import { DateService } from "src/app/core/services/date.service";
-import CustomInputModule from "src/app/custom-components/custom-input-form/custom-input.module";
+import { Component, OnInit, inject } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { flatpickrFactory } from 'src/app/core/helpers/flatpickr-factory';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { DateService } from 'src/app/core/services/date.service';
+import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: "app-addor-edit-meeting-seguimiento",
-  templateUrl: "./addor-edit-meeting-seguimiento.component.html",
+  selector: 'app-addor-edit-meeting-seguimiento',
+  templateUrl: './addor-edit-meeting-seguimiento.component.html',
   standalone: true,
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
@@ -30,8 +29,8 @@ export default class AddorEditMeetingSeguimientoComponent implements OnInit {
   form: FormGroup = this.formBuilder.group({
     id: { value: this.id, disabled: true },
     meetingDetailsId: [this.config.data.meetingDetailsId, Validators.required],
-    fecha: ["", Validators.required],
-    seguimiento: ["", Validators.required],
+    fecha: ['', Validators.required],
+    seguimiento: ['', Validators.required],
     applicationUserId: [this.authS.applicationUserId, Validators.required],
   });
 

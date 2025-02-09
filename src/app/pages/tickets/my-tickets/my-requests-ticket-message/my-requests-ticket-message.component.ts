@@ -35,7 +35,7 @@ export default class MyRequestsTicketMessageComponent implements OnInit {
   }
 
   onLoadData(status: any) {
-    const urlApi = `TicketMessage/MyRequestTicketMessage/${this.authS.applicationUserId}/${status}/${this.custIdService.customerId}`;
+    const urlApi = `Tickets/MyRequest/${this.authS.applicationUserId}/${status}/${this.custIdService.customerId}`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.data = result;
       this.status = status;
@@ -85,7 +85,7 @@ export default class MyRequestsTicketMessageComponent implements OnInit {
       });
   }
   onUpdatePriority(id: string) {
-    const urlApi = `TicketMessage/UpdatePriority/${id}/${this.authS.applicationUserId}`;
+    const urlApi = `Tickets/UpdatePriority/${id}/${this.authS.applicationUserId}`;
     this.apiRequestService.onGetItem(urlApi).then((result: any) => {
       if (result) {
         // Encuentra el índice del ítem con el ID proporcionado

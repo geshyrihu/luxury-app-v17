@@ -2,12 +2,11 @@ import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { EHabitant } from 'src/app/core/enums/habitant.enum';
-import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
+import { EnumSelectService } from 'src/app/core/services/enum-select.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
@@ -15,8 +14,10 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   templateUrl: './condominos-addoredit.component.html',
   standalone: true,
   imports: [LuxuryAppComponentsModule, CustomInputModule],
+  providers: [EnumSelectService],
 })
 export default class CondominosAddOrEditComponent implements OnInit {
+  enumSelectService = inject(EnumSelectService);
   apiRequestService = inject(ApiRequestService);
   authS = inject(AuthService);
   config = inject(DynamicDialogConfig);
@@ -39,7 +40,7 @@ export default class CondominosAddOrEditComponent implements OnInit {
       value: false,
     },
   ];
-  cb_Habitant: ISelectItem[] = onGetSelectItemFromEnum(EHabitant);
+  cb_Habitant: ISelectItem[] = [];
   form: FormGroup = this.formBuilder.group({
     id: { value: this.id, disabled: true },
     customerId: [this.customerId],
@@ -48,14 +49,13 @@ export default class CondominosAddOrEditComponent implements OnInit {
     directoryCondominium: ['', Validators.required],
     extencion: [''],
     fixedPhone: [''],
-    habitant: ['', Validators.required],
+    habitant: [null, Validators.required],
     email: [''],
     firstName: ['', Validators.required],
     lastName: ['', Validators.required],
     enviarMails: [],
   });
-
-  ngOnInit(): void {
+  async ngOnInit() {
     this.customerId = this.custIdService.customerId;
 
     this.apiRequestService
@@ -70,6 +70,7 @@ export default class CondominosAddOrEditComponent implements OnInit {
     if (this.id !== 0) {
       this.getImem();
     }
+    this.cb_Habitant = await this.enumSelectService.typeHabitant();
   }
 
   public savePropiedadId(e): void {

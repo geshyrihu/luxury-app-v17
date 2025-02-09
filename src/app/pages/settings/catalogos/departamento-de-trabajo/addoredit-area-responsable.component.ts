@@ -2,8 +2,6 @@ import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { ECompanyArea } from 'src/app/core/enums/company-area.enum';
-import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
@@ -24,12 +22,19 @@ export default class AddOrEditAreaResponsableComponent implements OnInit {
   id: number = 0;
 
   form: FormGroup;
-  cb_area_empresa: ISelectItem[] = onGetSelectItemFromEnum(ECompanyArea);
+  cb_area_empresa: ISelectItem[] = [];
 
   ngOnInit(): void {
     this.onLoadForm();
     this.id = this.config.data.id;
     if (this.id !== 0) this.onLoadData(this.id);
+  }
+
+  onLoadEnumSelectItem() {
+    const urlApi = `ECompanyArea`;
+    this.apiRequestService.onGetEnumSelectItem(urlApi).then((result: any) => {
+      this.cb_area_empresa = result;
+    });
   }
 
   onLoadData(id: number) {

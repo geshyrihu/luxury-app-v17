@@ -17,6 +17,7 @@ export default class BtnDownloadFileComponent {
   @Input() download: string = 'dile.pdf';
   @Input() placement: string = 'top';
   @Input() urlFile: string = ''; // URL del archivo a descargar
+  @Input() iconClass: string = 'fa-solid icon-pdf-download'; // URL del archivo a descargar
 
   onClick(event: any) {
     // Llamamos a la función para descargar el archivo

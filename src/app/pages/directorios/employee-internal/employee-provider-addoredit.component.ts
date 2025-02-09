@@ -9,7 +9,6 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DateService } from 'src/app/core/services/date.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-employee-provider-addoredit',
@@ -27,7 +26,6 @@ export class EmployeeProviderAddOrEditComponent implements OnInit {
 
   submitting: boolean = false;
 
-  noImg = `${environment.base_urlImg}no-img.png`;
   imgBase64: string = '';
   typePerson: ETypePerson = this.config.data.typePerson;
 

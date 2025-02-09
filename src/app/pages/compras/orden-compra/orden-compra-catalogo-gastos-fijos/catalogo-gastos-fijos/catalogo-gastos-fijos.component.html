@@ -1,4 +1,4 @@
-<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
+<p-toast position="top-right" [baseZIndex]="99999" />
 <div class="p-card p-mb-5">
   <p-table
     #dt
@@ -63,19 +63,17 @@
           <small>Seleccionar</small>
         </th>
         <th scope="col" pSortableColumn="code" style="width: 20%">
-          <small>Encabezado</small> <p-sortIcon field="code"></p-sortIcon>
+          <small>Encabezado</small> <p-sortIcon field="code" />
         </th>
         <th scope="col" pSortableColumn="shortName" style="width: 15%">
           <small>Datos de pago</small>
-          <p-sortIcon field="shortName"></p-sortIcon>
+          <p-sortIcon field="shortName" />
         </th>
         <th scope="col" pSortableColumn="largeName" style="width: 30%">
-          <small>Producto o Servicio</small
-          ><p-sortIcon field="largeName"></p-sortIcon>
+          <small>Producto o Servicio</small><p-sortIcon field="largeName" />
         </th>
         <th scope="col" pSortableColumn="largeName" style="width: 30%">
-          <small>Partida Presupuestal</small
-          ><p-sortIcon field="largeName"></p-sortIcon>
+          <small>Partida Presupuestal</small><p-sortIcon field="largeName" />
         </th>
         <th scope="col" style="width: 5%"><small>Opciones</small></th>
       </tr>

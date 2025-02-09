@@ -1,4 +1,4 @@
-<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
+<p-toast position="top-right" [baseZIndex]="99999" />
 <div class="card">
   <p-table
     #dt
@@ -27,18 +27,18 @@
     <ng-template pTemplate="header">
       <tr>
         <th scope="col" style="width: 20%" pSortableColumn="fechaPublicacion">
-          Publicación <p-sortIcon field="fechaPublicacion"></p-sortIcon>
+          Publicación <p-sortIcon field="fechaPublicacion" />
         </th>
         <th scope="col" style="width: 20%" pSortableColumn="responsibleArea">
           Area
-          <p-sortIcon field="responsibleArea"></p-sortIcon>
+          <p-sortIcon field="responsibleArea" />
         </th>
         <th scope="col" style="width: 20%" pSortableColumn="folioComunicado">
           Folio
-          <p-sortIcon field="folioComunicado"></p-sortIcon>
+          <p-sortIcon field="folioComunicado" />
         </th>
         <th scope="col" style="width: 20%" pSortableColumn="nombreComunicado">
-          Comunicado<p-sortIcon field="nombreComunicado"></p-sortIcon>
+          Comunicado<p-sortIcon field="nombreComunicado" />
         </th>
         <th scope="col" style="width: 20%">Archivo</th>
         @if (authS.onValidateRoles(['SuperUsuario'])) {
@@ -61,17 +61,10 @@
           {{ item.nombreComunicado }}
         </td>
         <td class="p-column-title">
-          <a
-            [href]="filePath + item.comunicadoPath"
-            target="_blank"
-            [download]="item.comunicadoPath"
+          <btn-download-file
             ngbTooltip="Descargar"
-            placement="top"
-            class="btn btn-soft-danger btn-sm w-xs waves-effect btn-label waves-light me-1"
-          >
-            <i class="fa-light fa-download label-icon fa-2x pointer"></i>
-            Pdf
-          </a>
+            [urlFile]="item.comunicadoPath"
+          />
         </td>
         <!-- Opciones -->
         @if (authS.onValidateRoles(['SuperUsuario'])) {

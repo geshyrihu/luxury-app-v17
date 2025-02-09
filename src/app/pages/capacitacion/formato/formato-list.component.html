@@ -1,4 +1,4 @@
-<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
+<p-toast position="top-right" [baseZIndex]="99999" />
 <div class="card">
   <p-table
     #dt
@@ -24,14 +24,14 @@
       <tr>
         <th scope="col" style="width: 30%" pSortableColumn="folio">
           Folio
-          <p-sortIcon field="folio"></p-sortIcon>
+          <p-sortIcon field="folio" />
         </th>
         <th scope="col" style="width: 30%" pSortableColumn="descripcion">
-          Descripción <p-sortIcon field="descripcion"></p-sortIcon>
+          Descripción <p-sortIcon field="descripcion" />
         </th>
         <th scope="col" style="width: 30%" pSortableColumn="pathFormato">
           Archivo
-          <p-sortIcon field="pathFormato"></p-sortIcon>
+          <p-sortIcon field="pathFormato" />
         </th>
         @if (authS.onValidateRoles(['SuperUsuario'])) {
         <th scope="col" style="width: 10%">Opciones</th>
@@ -47,23 +47,10 @@
           {{ item.descripcion | uppercase }}
         </td>
         <td class="p-column-title text-center">
-          <a
-            href="javascript:void(0)"
-            (click)="onDownloadFile(item.id, item.folio)"
+          <btn-download-file
             ngbTooltip="Descargar"
-            placement="top"
-            class="btn btn-soft-secondary btn-sm w-xs"
-          >
-            <i
-              [ngClass]="
-                getIconAndColor(getFileExtension(item.pathFormato)).icon
-              "
-              [ngStyle]="{
-                color: getIconAndColor(getFileExtension(item.pathFormato)).color
-              }"
-              class="fa-solid fa-2x pointer"
-            ></i>
-          </a>
+            [urlFile]="item.pathFormato"
+          />
         </td>
         <!-- Opciones -->
         @if (authS.onValidateRoles(['SuperUsuario'])) {

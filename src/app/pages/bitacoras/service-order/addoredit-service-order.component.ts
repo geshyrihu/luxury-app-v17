@@ -1,13 +1,9 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import LuxuryAppComponentsModule, {
-  flatpickrFactory,
-} from 'app/shared/luxuryapp-components.module';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { SelectItem } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { EStatusTask } from 'src/app/core/enums/estatus-task.enum';
-import { ETypeMaintance } from 'src/app/core/enums/type-maintance.enum';
-import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
+import { flatpickrFactory } from 'src/app/core/helpers/flatpickr-factory';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DateService } from 'src/app/core/services/date.service';
@@ -36,8 +32,8 @@ export default class ServiceOrderAddOrEditComponent implements OnInit {
 
   cb_machinery: any[] = [];
   cb_providers: any[] = [];
-  cb_Status: SelectItem[] = onGetSelectItemFromEnum(EStatusTask);
-  cb_TypeMaintance: SelectItem[] = onGetSelectItemFromEnum(ETypeMaintance);
+  cb_Status: SelectItem[] = [];
+  cb_TypeMaintance: SelectItem[] = [];
   cb_applicationUser: SelectItem[] = [];
 
   form: FormGroup;
@@ -55,13 +51,13 @@ export default class ServiceOrderAddOrEditComponent implements OnInit {
       machinery: ['', Validators.required],
       activity: ['', [Validators.required]],
       requestDate: ['', Validators.required],
-      status: ['', [Validators.required]],
+      status: [null, [Validators.required]],
       providerId: ['', Validators.required],
       provider: ['', Validators.required],
       price: ['', [Validators.required]],
       employeeResponsableId: ['', Validators.required],
       employeeResponsable: ['', Validators.required],
-      typeMaintance: ['', Validators.required],
+      typeMaintance: [null, Validators.required],
       executionDate: [''],
       observations: [''],
       cumplimientoActividades: [false, Validators.required],
@@ -102,6 +98,18 @@ export default class ServiceOrderAddOrEditComponent implements OnInit {
       .onGetSelectItem(`UserFromCustomer/${this.customerId}`)
       .then((response: any) => {
         this.cb_applicationUser = response;
+      });
+
+    this.apiRequestService
+      .onGetEnumSelectItem(`EStatus`)
+      .then((result: any) => {
+        this.cb_Status = result;
+      });
+
+    this.apiRequestService
+      .onGetEnumSelectItem(`ETypeMaintance`)
+      .then((result: any) => {
+        this.cb_TypeMaintance = result;
       });
   }
 

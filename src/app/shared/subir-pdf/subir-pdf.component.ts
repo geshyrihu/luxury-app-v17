@@ -20,7 +20,7 @@ export default class SubirPdfComponent implements OnInit {
   pathUrl: string = '';
   ngOnInit(): void {
     this.pathUrl = this.config.data.pathUrl;
-    this.url = `${environment.base_url}${this.pathUrl}${this.config.data.serviceOrderId}`;
+    this.url = `${environment.API_BASE_URL}${this.pathUrl}${this.config.data.serviceOrderId}`;
   }
 
   onUpload(event: any) {

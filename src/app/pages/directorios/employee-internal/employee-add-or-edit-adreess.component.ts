@@ -38,7 +38,7 @@ export default class EmployeeAddOrEditAdreessComponent implements OnInit {
     this.onLoadData();
   }
   onLoadData() {
-    const urlApi = `ApplicationUserEmployee/AddressData/${this.employeeId}`;
+    const urlApi = `EmployeeInternal/AddressData/${this.employeeId}`;
     this.apiRequestService.onGetItem(urlApi).then((result: any) => {
       this.form.patchValue(result);
       this.addressId = result.id;
@@ -49,7 +49,7 @@ export default class EmployeeAddOrEditAdreessComponent implements OnInit {
     if (!this.apiRequestService.validateForm(this.form)) return;
     this.submitting = true;
 
-    const urlApi = `ApplicationUserEmployee/UpdateAddressData/${this.addressId}`;
+    const urlApi = `EmployeeInternal/UpdateAddressData/${this.addressId}`;
     this.apiRequestService
       .onPut(urlApi, this.form.value)
       .then((result: any) => {

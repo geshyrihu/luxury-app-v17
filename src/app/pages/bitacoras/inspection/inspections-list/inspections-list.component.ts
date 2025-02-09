@@ -27,7 +27,6 @@ export default class InspectionsListComponent implements OnInit {
 
   ngOnInit() {
     this.onLoadData();
-    this.customerId$ = this.custIdService.getCustomerId$();
     this.customerId$.subscribe(() => {
       this.onLoadData();
     });

@@ -2,14 +2,12 @@ import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { ETypeContractRegister } from 'src/app/core/enums/type-contract-register.enum';
-import { ETypeContract } from 'src/app/core/enums/type-contract.enum';
-import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { DataConnectorService } from 'src/app/core/services/data.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
+import { EnumSelectService } from 'src/app/core/services/enum-select.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
@@ -17,7 +15,7 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   templateUrl: './solicitud-alta.component.html',
   standalone: true,
   imports: [LuxuryAppComponentsModule, CustomInputModule],
-  providers: [DataConnectorService],
+  providers: [DataConnectorService, EnumSelectService],
 })
 export default class SolicitudAltaComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
@@ -26,12 +24,13 @@ export default class SolicitudAltaComponent implements OnInit {
   authS = inject(AuthService);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
+  enumSelectService = inject(EnumSelectService);
 
   requestPositionCandidateId: number = 0;
   data: any;
   submitting: boolean = false;
 
-  cb_typeContractRegister = onGetSelectItemFromEnum(ETypeContractRegister);
+  cb_typeContractRegister = [];
   cb_vacantes: ISelectItem[] = [];
 
   employeeId = this.config.data.employeeId;
@@ -42,12 +41,14 @@ export default class SolicitudAltaComponent implements OnInit {
     boss: ['', Validators.required],
     candidateName: ['', Validators.required],
     customerAddress: ['', Validators.required],
-    typeContractRegister: [ETypeContract.Interno, Validators.required],
+    typeContractRegister: [0, Validators.required],
     employeeId: [this.config.data.employeeId, Validators.required],
     additionalInformation: [],
   });
 
-  ngOnInit(): void {
+  async ngOnInit() {
+    this.cb_typeContractRegister =
+      await this.enumSelectService.typeContractRegister();
     this.onLoadDataVacante();
     this.onLoadData();
   }

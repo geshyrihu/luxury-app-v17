@@ -1,9 +1,8 @@
 import { Component, OnInit, inject } from '@angular/core';
-import LuxuryAppComponentsModule, {
-  flatpickrFactory,
-} from 'app/shared/luxuryapp-components.module';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable } from 'rxjs';
+import { flatpickrFactory } from 'src/app/core/helpers/flatpickr-factory';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CatalogoGastosFijosService } from 'src/app/core/services/catalogo-gastos-fijos.service';

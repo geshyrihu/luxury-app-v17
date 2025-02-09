@@ -3,7 +3,6 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
-import { environment } from 'src/environments/environment';
 import AddOrEditTelefonosEmergenciaComponent from './addoredit-telefonos-emergencia.component';
 
 @Component({
@@ -19,7 +18,6 @@ export default class TelefonosEmergenciaComponent {
   authS = inject(AuthService);
 
   data: any[] = [];
-  urlImg = `${environment.base_urlImg}Administration/tel-emergencia/`;
 
   ngOnInit(): void {
     this.onLoadData();

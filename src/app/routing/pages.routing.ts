@@ -9,6 +9,12 @@ export default [
     data: { title: 'Inicio' },
   },
   {
+    path: 'missing',
+    loadComponent: () => import('src/app/pages/auth/missing/missing.component'),
+    canActivate: [AuthGuard],
+    data: { title: 'Sin permiso' },
+  },
+  {
     path: 'almacen',
     loadChildren: () => import('./aprobate/almacen.routing'),
     canActivate: [AuthGuard],

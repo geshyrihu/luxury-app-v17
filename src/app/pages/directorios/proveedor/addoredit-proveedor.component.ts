@@ -7,7 +7,6 @@ import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-addoredit-proveedor',
@@ -40,7 +39,6 @@ export default class AddoreditProveedorComponent implements OnInit {
   cb_bancos: any[] = [];
   form: FormGroup;
 
-  urlBaseImg = `${environment.base_urlImg}providers/`;
   model: any;
   photoFileUpdate: boolean = false;
   urlLogo = '';
@@ -115,7 +113,7 @@ export default class AddoreditProveedorComponent implements OnInit {
         this.form.patchValue(result);
         this.form.patchValue({ bankId: result.bankId });
         this.form.patchValue({ bankName: result.bankName });
-        this.urlLogo = `${this.urlBaseImg}${result.pathPhoto}`;
+        this.urlLogo = result.pathPhoto;
       });
   }
   onSubmit() {
@@ -178,8 +176,6 @@ export default class AddoreditProveedorComponent implements OnInit {
     }
     return formData;
   }
-
-  // onSelectCategorias() {}
 
   // ...Recibiendo archivo emitido
   uploadFile(file: File) {

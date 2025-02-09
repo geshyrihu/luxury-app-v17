@@ -1,8 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { AuthService } from 'src/app/core/services/auth.service';
-import HomeListGroupComponent, {
-  IHomeListGroupComponent,
-} from '../home-list-group/home-list-group.component';
+import { IMenuItem } from '../../sidebar/menu.model';
+import HomeListGroupComponent from '../home-list-group/home-list-group.component';
 @Component({
   selector: 'app-home-compras',
   standalone: true,
@@ -11,12 +10,12 @@ import HomeListGroupComponent, {
 })
 export default class HomeComprasComponent {
   authS = inject(AuthService);
-  data: IHomeListGroupComponent[] = [
+  data: IMenuItem[] = [
     {
-      name: 'Productos y Servicios',
+      label: 'Productos y Servicios',
       icon: 'fa-solid fa-cogs', // Representa productos y servicios, como engranajes o herramientas.
       routerLink: '/catalog/products-services',
-      isAutorized: this.authS.onValidateRoles([
+      visible: this.authS.onValidateRoles([
         'SuperUsuario',
         'SupervisionOperativa',
         'Administrador',
@@ -25,10 +24,10 @@ export default class HomeComprasComponent {
       ]),
     },
     {
-      name: 'Solicitud de compra',
+      label: 'Solicitud de compra',
       icon: 'fa-solid fa-file-invoice', // Representa solicitudes o facturas (una opción más apropiada para compras).
       routerLink: '//compras/solicitudes-compra',
-      isAutorized: this.authS.onValidateRoles([
+      visible: this.authS.onValidateRoles([
         'SuperUsuario',
         'SupervisionOperativa',
         'Administrador',
@@ -37,10 +36,10 @@ export default class HomeComprasComponent {
       ]),
     },
     {
-      name: 'Ordenes de compra',
+      label: 'Ordenes de compra',
       icon: 'fa-solid fa-shopping-cart', // Ícono adecuado para ordenes de compra (carrito de compras).
       routerLink: '//compras/ordenes-compra',
-      isAutorized: this.authS.onValidateRoles([
+      visible: this.authS.onValidateRoles([
         'SuperUsuario',
         'SupervisionOperativa',
         'Administrador',

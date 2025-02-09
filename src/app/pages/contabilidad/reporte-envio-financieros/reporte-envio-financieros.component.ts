@@ -32,7 +32,7 @@ export default class ReporteEnvioFinancierosComponent implements OnInit {
   onLoadData() {
     this.apiRequestService
       .onGetList(
-        `estadofinanciero/reporteenviomensual/${this.dateService.getDateFormat(
+        `EstadoFinanciero/reporteenviomensual/${this.dateService.getDateFormat(
           this.periodoMonthService.getPeriodoInicio
         )}`
       )

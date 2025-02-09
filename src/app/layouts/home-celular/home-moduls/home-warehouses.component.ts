@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { IHomeListGroupComponent } from '../home-list-group/home-list-group.component';
+import { IMenuItem } from '../../sidebar/menu.model';
 import HomeMenuComponent from '../home-menu/home-menu.component';
 
 @Component({
@@ -11,12 +11,12 @@ import HomeMenuComponent from '../home-menu/home-menu.component';
 })
 export default class HomeWarehousesComponent {
   authS = inject(AuthService);
-  data: IHomeListGroupComponent[] = [
+  data: IMenuItem[] = [
     {
-      name: 'Herramienta',
+      label: 'Herramienta',
       icon: 'fa-duotone fa-tools', // Ícono para herramientas y mantenimiento
-      routerLink: '/mantenimiento/calendario-anual',
-      isAutorized: this.authS.onValidateRoles([
+      routerLink: '/almacen/prestamo-herramienta',
+      visible: this.authS.onValidateRoles([
         'SuperUsuario',
         'SupervisionOperativa',
         'Administrador',
@@ -25,10 +25,10 @@ export default class HomeWarehousesComponent {
       ]),
     },
     {
-      name: 'Almacen 1',
+      label: 'Productos',
       icon: 'fa-duotone fa-boxes-stacked', // Ícono para herramientas y mantenimiento
-      routerLink: '/mantenimiento/calendario-anual',
-      isAutorized: this.authS.onValidateRoles([
+      routerLink: '/almacen/inventario-productos',
+      visible: this.authS.onValidateRoles([
         'SuperUsuario',
         'SupervisionOperativa',
         'Administrador',
@@ -37,10 +37,10 @@ export default class HomeWarehousesComponent {
       ]),
     },
     {
-      name: 'Almacen 2',
+      label: 'Almacen 2',
       icon: 'fa-duotone fa-boxes-stacked', // Ícono para calendario y reservas
       routerLink: '/mantenimiento/calendario-anual',
-      isAutorized: this.authS.onValidateRoles([
+      visible: this.authS.onValidateRoles([
         'SuperUsuario',
         'SupervisionOperativa',
         'Administrador',
@@ -49,10 +49,10 @@ export default class HomeWarehousesComponent {
       ]),
     },
     {
-      name: 'Almacen 3',
+      label: 'Almacen 3',
       icon: 'fa-duotone fa-boxes-stacked', // Ícono para reuniones de grupo o juntas
       routerLink: '/mantenimiento/calendario-anual',
-      isAutorized: this.authS.onValidateRoles([
+      visible: this.authS.onValidateRoles([
         'SuperUsuario',
         'SupervisionOperativa',
         'Administrador',

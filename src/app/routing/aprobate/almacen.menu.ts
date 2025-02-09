@@ -20,6 +20,18 @@ export const almacenMenu = (authS: AuthService) => [
           'Asistente',
           'JefeMantenimiento',
         ]),
+        label: 'Almacenes',
+        routerLink: '/almacen/listado-almacenes',
+        name: 'Listado de Almacenes',
+      },
+      {
+        visible: authS.onValidateRoles([
+          'SuperUsuario',
+          'SupervisionOperativa',
+          'Administrador',
+          'Asistente',
+          'JefeMantenimiento',
+        ]),
         label: 'Inventario productos',
         routerLink: '/almacen/inventario-productos',
         name: 'Inventarios-Entradas de insumos',

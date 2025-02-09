@@ -3,7 +3,6 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { Observable } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-organigrama-interno',
@@ -18,7 +17,6 @@ export default class OrganigramaInternoComponent implements OnInit {
   nameCustomer: string = '';
   logoCustomer: string = '';
   data: any[] = [];
-  baseUrlImg = environment.base_urlImg;
   customerId$: Observable<number> = this.custIdService.getCustomerId$();
 
   ngOnInit() {
@@ -41,7 +39,6 @@ export default class OrganigramaInternoComponent implements OnInit {
       .onGetItem(`Customers/${this.custIdService.customerId}`)
       .then((result: any) => {
         this.nameCustomer = result.nameCustomer;
-        this.logoCustomer = `${environment.base_urlImg}Administration/customer/${result.photoPath}`;
       });
   }
 }

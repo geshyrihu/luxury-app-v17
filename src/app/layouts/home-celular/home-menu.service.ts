@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { IHomeListGroupComponent } from './home-list-group/home-list-group.component';
+import { IMenuItem } from '../sidebar/menu.model';
 
 @Injectable({
   providedIn: 'root',
@@ -38,24 +38,24 @@ export class HomeMenuService {
   get onLoadMenu() {
     return this.menu;
   }
-  menu: IHomeListGroupComponent[] = [
+  menu: IMenuItem[] = [
     {
       icon: 'fa-solid fa-users', // Ícono de almacén
-      name: 'Usuarios',
+      label: 'Usuarios',
       routerLink: '/settings/application-user',
-      isAutorized: this.authS.onValidateRoles(['SuperUsuario']),
+      visible: this.authS.onValidateRoles(['SuperUsuario']),
     },
     {
       icon: 'fa-duotone fa-tickets',
-      name: 'Tickets',
+      label: 'Tickets',
       routerLink: '/home-ticket',
-      isAutorized: true,
+      visible: true,
     },
     {
       icon: 'fa-solid fa-search', // O cualquier otro ícono relacionado con inspecciones
-      name: 'Inspecciones',
+      label: 'Inspecciones',
       routerLink: '/home-inspection',
-      isAutorized: this.authS.onValidateRoles([
+      visible: this.authS.onValidateRoles([
         'SuperUsuario',
         'SupervisionOperativa',
         'Administrador',
@@ -69,9 +69,9 @@ export class HomeMenuService {
 
     {
       icon: 'fa-solid fa-clipboard-list',
-      name: 'Bitacoras',
+      label: 'Bitacoras',
       routerLink: '/home-bitacoras',
-      isAutorized: this.authS.onValidateRoles([
+      visible: this.authS.onValidateRoles([
         'SuperUsuario',
         'SupervisionOperativa',
         'Administrador',
@@ -82,9 +82,9 @@ export class HomeMenuService {
     },
     {
       icon: 'fa-duotone fa-warehouse-full',
-      name: 'Inventarios',
+      label: 'Inventarios',
       routerLink: '/home-inventory',
-      isAutorized: this.authS.onValidateRoles([
+      visible: this.authS.onValidateRoles([
         'SuperUsuario',
         'SupervisionOperativa',
         'Administrador',
@@ -94,9 +94,9 @@ export class HomeMenuService {
     },
     {
       icon: 'fa-duotone fa-calendar',
-      name: 'Calendarios',
+      label: 'Calendarios',
       routerLink: '/home-calendar',
-      isAutorized: this.authS.onValidateRoles([
+      visible: this.authS.onValidateRoles([
         'SuperUsuario',
         'SupervisionOperativa',
         'Administrador',
@@ -109,9 +109,9 @@ export class HomeMenuService {
     },
     {
       icon: 'fa-solid fa-warehouse', // Ícono de almacén
-      name: 'Almacenes',
+      label: 'Almacenes',
       routerLink: '/home-warehouses',
-      isAutorized: this.authS.onValidateRoles([
+      visible: this.authS.onValidateRoles([
         'SuperUsuario',
         'SupervisionOperativa',
         'Administrador',
@@ -121,9 +121,9 @@ export class HomeMenuService {
     },
     {
       icon: 'fa-solid fa-users-viewfinder', // Ícono de usuarios o reuniones
-      name: 'Juntas con comité',
+      label: 'Juntas con comité',
       routerLink: '/home-juntas-comite',
-      isAutorized: this.authS.onValidateRoles([
+      visible: this.authS.onValidateRoles([
         'SuperUsuario',
         'SupervisionOperativa',
         'Administrador',
@@ -133,9 +133,9 @@ export class HomeMenuService {
 
     {
       icon: 'fa-duotone fa-books',
-      name: 'Biblioteca de documentos',
+      label: 'Biblioteca de documentos',
       routerLink: '/home-documents',
-      isAutorized: this.authS.onValidateRoles([
+      visible: this.authS.onValidateRoles([
         'SuperUsuario',
         'Condomino',
         'SupervisionOperativa',
@@ -146,9 +146,9 @@ export class HomeMenuService {
     },
     {
       icon: 'fa-duotone fa-address-book', // Ícono para un directorio de contactos
-      name: 'Directorios',
+      label: 'Directorios',
       routerLink: '/home-directorios',
-      isAutorized: this.authS.onValidateRoles([
+      visible: this.authS.onValidateRoles([
         'SuperUsuario',
         'Condomino',
         'SupervisionOperativa',
@@ -160,9 +160,9 @@ export class HomeMenuService {
 
     {
       icon: 'fa-solid fa-cart-shopping', // Ícono de carrito de compras
-      name: 'Compras',
+      label: 'Compras',
       routerLink: '/home-compras',
-      isAutorized: this.authS.onValidateRoles([
+      visible: this.authS.onValidateRoles([
         'SuperUsuario',
         'SupervisionOperativa',
         'Administrador',
@@ -172,9 +172,9 @@ export class HomeMenuService {
     },
     {
       icon: 'fa-solid fa-chart-bar', // Ícono de gráfico de barras
-      name: 'Reportes',
+      label: 'Reportes',
       routerLink: '/home-reports',
-      isAutorized: this.authS.onValidateRoles([
+      visible: this.authS.onValidateRoles([
         'SuperUsuario',
         'SupervisionOperativa',
         'Administrador',
@@ -184,9 +184,9 @@ export class HomeMenuService {
     },
     {
       icon: 'fa-solid fa-qrcode', // Ícono de código QR
-      name: 'Pase QR',
+      label: 'Pase QR',
       routerLink: '/home-reports',
-      isAutorized: this.authS.onValidateRoles([
+      visible: this.authS.onValidateRoles([
         'SuperUsuario',
         'Condomino',
         'Administrador',
@@ -195,9 +195,9 @@ export class HomeMenuService {
     },
     {
       icon: 'fa-solid fa-calendar-days', // Ícono de calendario para reservaciones
-      name: 'Reservaciones',
+      label: 'Reservaciones',
       routerLink: '/home-reports',
-      isAutorized: this.authS.onValidateRoles([
+      visible: this.authS.onValidateRoles([
         'SuperUsuario',
         'Condomino',
         'Administrador',
@@ -206,9 +206,9 @@ export class HomeMenuService {
     },
     {
       icon: 'fa-solid fa-box', // Ícono de paquete para paquetería
-      name: 'Paqueteria',
+      label: 'Paqueteria',
       routerLink: '/home-reports',
-      isAutorized: this.authS.onValidateRoles([
+      visible: this.authS.onValidateRoles([
         'SuperUsuario',
         'Condomino',
         'Administrador',
@@ -217,9 +217,9 @@ export class HomeMenuService {
     },
     {
       icon: 'fa-solid fa-id-badge', // Ícono de credencial para permisos de personal
-      name: 'Permisos de personal',
+      label: 'Permisos de personal',
       routerLink: '/home-reports',
-      isAutorized: this.authS.onValidateRoles([
+      visible: this.authS.onValidateRoles([
         'SuperUsuario',
         'Condomino',
         'Administrador',

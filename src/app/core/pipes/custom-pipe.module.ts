@@ -7,8 +7,6 @@ import { CelularNumberPipe } from './celular-number.pipe';
 import { CurrencyMexicoPipe } from './currencyMexico.pipe';
 import PhoneFormatPipe from './phone-format.pipe';
 import { SanitizeHtmlPipe } from './sanitize-html.pipe';
-import { EStatusOrdenCompraPipe } from './status-orden-compra.pipe';
-import { EStatusPipe } from './status.pipe';
 import { ETipoGastoPipe } from './tipo-gasto.pipe';
 
 @NgModule({
@@ -20,10 +18,10 @@ import { ETipoGastoPipe } from './tipo-gasto.pipe';
     CurrencyMexicoPipe,
     PhoneFormatPipe,
     SanitizeHtmlPipe,
-    EStatusOrdenCompraPipe,
+    // EStatusOrdenCompraPipe,
     StripTagsPipe,
     ETipoGastoPipe,
-    EStatusPipe,
+    // EStatusPipe,
   ],
   exports: [
     EAreaMinutasDetallesPipe,
@@ -33,10 +31,10 @@ import { ETipoGastoPipe } from './tipo-gasto.pipe';
     CurrencyMexicoPipe,
     PhoneFormatPipe,
     SanitizeHtmlPipe,
-    EStatusOrdenCompraPipe,
+    // EStatusOrdenCompraPipe,
     StripTagsPipe,
     ETipoGastoPipe,
-    EStatusPipe,
+    // EStatusPipe,
   ],
   declarations: [],
 })

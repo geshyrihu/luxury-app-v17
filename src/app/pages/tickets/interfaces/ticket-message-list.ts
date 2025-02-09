@@ -31,5 +31,6 @@ export interface TicketMessage {
 
 export interface TicketResult {
   nameGroup: string;
+  totalRecords: number;
   items: TicketMessage[];
 }

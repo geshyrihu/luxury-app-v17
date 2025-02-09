@@ -2,8 +2,6 @@ import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { ETypePiscina } from 'src/app/core/enums/type-piscina.enum';
-import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
@@ -32,10 +30,12 @@ export default class AddOrEditPiscinaComponent implements OnInit {
   model: any;
   photoFileUpdate: boolean = false;
 
-  cb_typePiscina: ISelectItem[] = onGetSelectItemFromEnum(ETypePiscina);
+  cb_typePiscina: ISelectItem[] = [];
   form: FormGroup;
 
   ngOnInit(): void {
+    this.onLoadEnumSelectItem();
+
     this.id = this.config.data.id;
     if (this.id !== 0) this.onLoadData();
 
@@ -48,7 +48,7 @@ export default class AddOrEditPiscinaComponent implements OnInit {
         [Validators.required, Validators.min(0), Validators.max(1000000)],
       ],
       pathImage: [''],
-      typePiscina: [0, Validators.required],
+      typePiscina: [null, Validators.required],
       applicationUserId: [this.authS.applicationUserId],
       customerId: [this.custIdService.getCustomerId()],
     });
@@ -102,5 +102,13 @@ export default class AddOrEditPiscinaComponent implements OnInit {
   uploadFile(file: File) {
     this.photoFileUpdate = true;
     this.form.patchValue({ pathImage: file });
+  }
+
+  onLoadEnumSelectItem() {
+    this.apiRequestService
+      .onGetEnumSelectItem(`ETypePiscina`)
+      .then((result: any) => {
+        this.cb_typePiscina = result;
+      });
   }
 }

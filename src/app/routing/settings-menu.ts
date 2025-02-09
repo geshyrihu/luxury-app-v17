@@ -4,20 +4,6 @@ export const settingMenu = (authS: AuthService) => [
   {
     group: 'Permisos',
     visible: authS.onValidateRoles(['SuperUsuario']),
-    label: 'Administración de Usuarios',
-    icon: 'fa-duotone fa-solid fa-user-tie',
-    routerLink: '/settings/application-user',
-  },
-  {
-    group: 'Permisos',
-    visible: authS.onValidateRoles(['SuperUsuario']),
-    label: 'Administración Roles Modulos',
-    icon: 'fa-duotone fa-solid fa-key',
-    routerLink: '/settings/module-app-rol',
-  },
-  {
-    group: 'Permisos',
-    visible: authS.onValidateRoles(['SuperUsuario']),
     label: 'Clientes (Condominios)',
     icon: 'fa-duotone fa-solid fa-building',
     routerLink: '/settings/clientes',
@@ -25,24 +11,40 @@ export const settingMenu = (authS: AuthService) => [
   {
     group: 'Permisos',
     visible: authS.onValidateRoles(['SuperUsuario']),
-    label: 'Modulos a Clientes',
-    routerLink: '/settings/customer-modul',
-    icon: 'fa-duotone fa-solid fa-layer-group',
+    label: 'Administración de Usuarios',
+    icon: 'fa-duotone fa-solid fa-user-tie',
+    routerLink: '/settings/application-user',
   },
   {
-    group: 'Catalogos de sistema',
+    group: 'Permisos',
     visible: authS.onValidateRoles(['SuperUsuario']),
     label: 'Catalogo de Modulos',
     routerLink: '/settings/module-app',
     icon: 'fa-duotone fa-solid fa-layer-group',
   },
   {
-    group: 'Catalogos de sistema',
+    group: 'Permisos',
     visible: authS.onValidateRoles(['SuperUsuario']),
     label: 'Roles',
     routerLink: '/settings/roles',
     icon: 'fa fa-users',
   },
+  {
+    group: 'Permisos',
+    visible: authS.onValidateRoles(['SuperUsuario']),
+    label: 'Administración Modulos-Roles',
+    icon: 'fa-duotone fa-solid fa-key',
+    routerLink: '/settings/module-app-rol',
+  },
+
+  {
+    group: 'Permisos',
+    visible: authS.onValidateRoles(['SuperUsuario']),
+    label: 'Administración Modulos-Clientes',
+    routerLink: '/settings/customer-modul',
+    icon: 'fa-duotone fa-solid fa-layer-group',
+  },
+
   {
     group: 'Catalogos de sistema',
     visible: authS.onValidateRoles(['SuperUsuario']),
@@ -138,7 +140,7 @@ export const settingMenu = (authS: AuthService) => [
     group: 'Catalogos de sistema',
     visible: authS.onValidateRoles(['SuperUsuario']),
     label: 'Calendario maestro mtto',
-    routerLink: '/calendario/calendario-maestro-equipo',
+    routerLink: '/calendars/mantenimiento-master',
     icon: 'fa fa-calendar-alt',
   },
 

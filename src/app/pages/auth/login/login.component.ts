@@ -67,16 +67,24 @@ export default class LoginComponent implements OnInit {
       )
       .subscribe({
         next: (resp: any) => {
+          console.log('🚀 ~ resp.body:', resp.body);
+          if (resp.body === null) {
+            // Captura el mensaje de error
+            const errorDescription = `Ha ocurrido un error inesperado.
+            Revisa con tu Administrador tengas los permisos correspondientes.`;
+
+            this.errorMessage = errorDescription;
+            return throwError(() => new Error(errorDescription));
+          }
+          console.log('🚀 ~ resp.body:', resp.body);
           if (resp.body.token != null) {
             this.onRemember(this.form.get('remember').value);
-            // var route = localStorage.getItem('currentUrl');
-            // this.router.navigateByUrl(localStorage.getItem('currentUrl'));
             this.securityService.setAuthData(resp.body.token);
             this.customToastService.onCloseToSuccess();
 
             // Redirigir a la URL original o a una predeterminada si no hay una
-            // const redirectUrl = this.authS.redirectUrl || '/dashboard';
-            const redirectUrl = this.authS.redirectUrl || '/home';
+            const redirectUrl = this.authS.redirectUrl || '/dashboard';
+            // const redirectUrl = this.authS.redirectUrl || '/home';
             this.router.navigateByUrl(redirectUrl);
 
             // Limpiar la URL de redirección

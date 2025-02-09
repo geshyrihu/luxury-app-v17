@@ -26,6 +26,9 @@ export default class UserProfileComponent implements OnInit {
 
   profileImageUrl: string = '';
 
+  customerName = this.authS.infoUserAuthDto.customer;
+  customerPhotoPath = this.authS.infoUserAuthDto.customerPhotoPath;
+
   cb_customer: any[] = [];
   customerId = this.custIdService.customerId;
 
@@ -48,9 +51,9 @@ export default class UserProfileComponent implements OnInit {
     localStorage.setItem('currentUrl', currentUrl);
     this.router.navigate(['/auth/login']);
 
-    this.apiRequestService
-      .onGetItem(`Auth/Logout/${this.authS.infoUserAuthDto.applicationUserId}`)
-      .then(() => {});
+    this.apiRequestService.onGetItem(
+      `Auth/Logout/${this.authS.infoUserAuthDto.applicationUserId}`
+    );
   }
 
   selectCustomer(customerId: number) {

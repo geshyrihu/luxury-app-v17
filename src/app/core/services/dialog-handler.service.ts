@@ -1,5 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { DialogService } from 'primeng/dynamicdialog';
+import { DialogSize } from '../enums/dialog-size';
 
 @Injectable({
   providedIn: 'root',
@@ -49,11 +50,4 @@ export class DialogHandlerService {
   dialogSizeMd: DialogSize = DialogSize.md;
   dialogSizeLg: DialogSize = DialogSize.lg;
   dialogSizeFull: DialogSize = DialogSize.full;
-}
-
-export enum DialogSize {
-  sm = 'modal-sm',
-  md = 'modal-md',
-  lg = 'modal-lg',
-  full = 'modal-w-100',
 }

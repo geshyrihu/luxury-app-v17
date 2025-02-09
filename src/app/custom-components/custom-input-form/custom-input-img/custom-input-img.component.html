@@ -1,46 +1,47 @@
+gasd asdfa asdfa
 <div
   class="p-1 card"
   (click)="fileInput.click()"
   [style]="{ cursor: 'pointer' }"
 >
-  @if (imgBase64) {
   <img
+    *ngIf="imgBase64; else noImage"
     class="img-fluid"
     [src]="imgBase64"
     alt="imgBase64"
     [ngStyle]="{
       width: contentWidth + 'px',
-      height: contentHeight + 'px',
-      'max-width': '100px',
-      'max-height': '100px'
+      height: contentHeight + 'px'
     }"
   />
-  } @if (!imgBase64 && onValidateImgCurrent()) {
-  <img
-    class="img-fluid"
-    src="assets/images/no-image.jpg"
-    alt="no-image"
-    [ngStyle]="{
-      width: contentWidth + 'px',
-      height: contentHeight + 'px',
-      'max-width': '100px',
-      'max-height': '100px'
-    }"
-  />
-  } @if (!imgBase64 && !onValidateImgCurrent()) {
-  <img
-    class="img-fluid"
-    [src]="urlImgCurrent"
-    alt=""
-    [ngStyle]="{
-      width: contentWidth + 'px',
-      height: contentHeight + 'px',
-      'max-width': '100px',
-      'max-height': '100px'
-    }"
-  />
-  }
+
+  <ng-template #noImage>
+    <img
+      *ngIf="onValidateImgCurrent(); else urlImage"
+      class="img-fluid"
+      src="assets/images/no-image.jpg"
+      alt="no-image"
+      [ngStyle]="{
+        width: contentWidth + 'px',
+        height: contentHeight + 'px'
+      }"
+    />
+  </ng-template>
+
+  <ng-template #urlImage>
+    <img
+      class="img-fluid"
+      [src]="urlImgCurrent"
+      alt=""
+      [ngStyle]="{
+        width: contentWidth + 'px',
+        height: contentHeight + 'px'
+      }"
+    />
+  </ng-template>
 </div>
+
+<!-- El input para seleccionar archivos -->
 <input
   type="file"
   hidden

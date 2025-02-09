@@ -38,4 +38,9 @@ export default class AccessCustomerComponent implements OnInit {
       roles
     );
   }
+
+  toggleCliente(item: IAddCustomerPermisoToUser): void {
+    item.isSelected = !item.isSelected; // Alternar selección
+    this.onUpdateAcceso(this.clientes); // Actualizar la lista
+  }
 }

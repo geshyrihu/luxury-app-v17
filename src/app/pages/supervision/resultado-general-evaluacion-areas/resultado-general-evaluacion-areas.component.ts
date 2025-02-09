@@ -1,7 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { EAreaMinutasDetalles } from 'src/app/core/enums/area-minutas-detalles.enum';
-import { EStatusTask } from 'src/app/core/enums/estatus-task.enum';
 import { IFechasFiltro } from 'src/app/core/interfaces/fechas-filtro.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { DateService } from 'src/app/core/services/date.service';
@@ -46,11 +44,7 @@ export default class EvaluacionAreasComponent implements OnInit {
     });
   }
 
-  onModalFiltroMinutasArea(
-    fecha: string,
-    area: EAreaMinutasDetalles,
-    status?: EStatusTask
-  ) {
+  onModalFiltroMinutasArea(fecha: string, area: number, status?: number) {
     this.dialogHandlerService.openDialog(
       ResultadoGeneralEvaluacionAreasDetalleComponent,
       {

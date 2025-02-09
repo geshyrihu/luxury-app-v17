@@ -1,4 +1,4 @@
-<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
+<p-toast position="top-right" [baseZIndex]="99999" />
 <!-- Contenido para pantallas medianas y grandes (md en adelante) -->
 <div class="d-none d-md-block"></div>
 <!-- Contenido para pantallas pequeñas (sm y menores) -->
@@ -63,15 +63,15 @@
 
   <div class="list-group mt-1">
     <div *ngFor="let group of inspeccionesFiltradas">
-      <h4>{{ group.areaResponsable }}</h4>
+      <h4>{{ group.departament }}</h4>
       <div
         *ngFor="let item of group.inspecciones"
         class="list-group-item d-flex align-items-center justify-content-between py-1"
       >
         <div class="d-flex align-items-center">
           <div>
-            <div class="card-text">{{ item.nombre }}</div>
-            <small class="text-muted">{{ item.recurrencia }}</small>
+            <div class="card-text">{{ item.name }}</div>
+            <small class="text-muted">{{ item.frequency }}</small>
           </div>
         </div>
         <div class="d-flex align-items-center">

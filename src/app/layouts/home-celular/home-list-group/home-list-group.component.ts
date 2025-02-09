@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { IMenuItem } from '../../sidebar/menu.model';
 
 @Component({
   selector: 'app-home-list-group',
@@ -10,14 +11,7 @@ import { RouterModule } from '@angular/router';
 })
 export default class HomeListGroupComponent {
   @Input()
-  data: IHomeListGroupComponent[] = [];
+  data: IMenuItem[] = [];
   @Input()
-  title: string = 'HomeListGroupComponent';
-}
-
-export interface IHomeListGroupComponent {
-  name: string;
-  icon: string;
-  routerLink: string;
-  isAutorized: boolean;
+  title: string = 'Titulo';
 }

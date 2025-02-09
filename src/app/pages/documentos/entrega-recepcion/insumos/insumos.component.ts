@@ -3,7 +3,6 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { Observable } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-insumos',
@@ -18,7 +17,6 @@ export default class InsumosComponent implements OnInit {
   data: any[] = [];
 
   customerId$: Observable<number> = this.custIdService.getCustomerId$();
-  base_urlImg = environment.base_urlImg;
 
   ngOnInit() {
     this.onLoadData();

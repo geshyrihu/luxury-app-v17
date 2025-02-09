@@ -21,10 +21,11 @@
         placeholder="descripción"
       />
       <custom-input-select
-        [control]="form.get('departamentId')"
-        formControlName="departamentId"
+        [control]="form.get('departament')"
+        formControlName="departament"
         label="Area"
         [data]="cb_departament"
+        [selectDefaulOption]="false"
       />
 
       <btn-submit [disabled]="this.form.invalid || submitting" />

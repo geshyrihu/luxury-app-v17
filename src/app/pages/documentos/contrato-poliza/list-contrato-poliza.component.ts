@@ -6,7 +6,6 @@ import { Observable } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
-import { environment } from 'src/environments/environment';
 import AddoreditContratoPolizaComponent from './addoredit-contrato-poliza.component';
 
 @Component({
@@ -25,7 +24,6 @@ export default class ListContratoPolizaComponent implements OnInit {
   ref: DynamicDialogRef;
 
   customerId$: Observable<number> = this.custIdService.getCustomerId$();
-  urlBase = environment.base_urlImg;
 
   ngOnInit(): void {
     this.onLoadData();

@@ -1,4 +1,4 @@
-<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
+<p-toast position="top-right" [baseZIndex]="99999" />
 <p-table
   [(selection)]="data"
   #dt
@@ -25,20 +25,20 @@
   <ng-template pTemplate="header">
     <tr>
       <th scope="col" pSortableColumn="nombreProducto" style="width: 35%">
-        Producto <p-sortIcon field="nombreProducto"></p-sortIcon>
+        Producto <p-sortIcon field="nombreProducto" />
       </th>
       <th scope="col" pSortableColumn="existencia">
         Existencia
-        <p-sortIcon field="existencia"></p-sortIcon>
+        <p-sortIcon field="existencia" />
       </th>
       <th scope="col" pSortableColumn="unidadDeMedidaId">
-        Unidad<p-sortIcon field="unidadDeMedidaId"></p-sortIcon>
+        Unidad<p-sortIcon field="unidadDeMedidaId" />
       </th>
       <th scope="col" pSortableColumn="stockMax">
-        Stok Max<p-sortIcon field="stockMax"></p-sortIcon>
+        Stok Max<p-sortIcon field="stockMax" />
       </th>
       <th scope="col" pSortableColumn="stockMin">
-        Stok Min<p-sortIcon field="stockMin"></p-sortIcon>
+        Stok Min<p-sortIcon field="stockMin" />
       </th>
       <th scope="col" style="width: 5%">Agregar</th>
     </tr>

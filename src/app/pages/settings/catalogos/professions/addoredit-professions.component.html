@@ -8,10 +8,11 @@
         [readonly]="true"
       />
       <custom-input-select
-        [control]="form.get('ecompanyDepartments')"
-        formControlName="ecompanyDepartments"
-        label="Area"
-        [data]="cb_area_responsable"
+        [control]="form.get('departament')"
+        formControlName="departament"
+        label="Departamento"
+        [selectDefaulOption]="false"
+        [data]="cb_departament"
       />
 
       <custom-input-text
@@ -22,17 +23,12 @@
       />
 
       <custom-input-text
-        [control]="form.get('professionkey')"
-        formControlName="professionkey"
+        [control]="form.get('professionIdIndex')"
+        formControlName="professionIdIndex"
         label="Id Profesión"
         placeholder="Id profesión"
       />
-      <custom-input-number
-        [control]="form.get('hierarchy')"
-        formControlName="hierarchy"
-        label="Jeraquía"
-        placeholder="Jeraquía"
-      />
+
       <custom-input-text-area
         [control]="form.get('description')"
         formControlName="description"

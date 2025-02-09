@@ -5,13 +5,12 @@
     <div id="sidebar-menu">
       <!-- Left Menu Start -->
       <ul class="metismenu list-unstyled" id="side-menu">
-        <ng-container>
+        <ng-container *ngIf="menuItems">
           <!-- Iterar sobre los elementos del menú -->
-          @for (item of menuItems; track item) {
-          <li>
+          <li *ngFor="let item of menuItems">
             <!-- Si el elemento tiene subelementos y es visible -->
-            @if (hasItems(item) && item.visible) {
             <a
+              *ngIf="hasItems(item)"
               class="is-parent"
               [ngClass]="{
                 'has-arrow': !item.badge,
@@ -21,73 +20,45 @@
               <!-- Icono y etiqueta del elemento -->
               <i class="{{ item.icon }}"></i>
               <span style="font-size: 16px">{{
-                item.label.length > 20
-                  ? item.label.substring(0, 20) + "..."
+                item.label.length > 25
+                  ? item.label.substring(0, 25) + ".."
                   : item.label
               }}</span>
             </a>
-            }
             <!-- Si el elemento no tiene subelementos y es visible -->
-            @if (!hasItems(item) && item.visible) {
             <a
+              *ngIf="!hasItems(item)"
               [routerLink]="item.routerLink"
               class="side-nav-link-ref"
               routerLinkActive="active"
             >
               <!-- Mostrar icono si existe -->
-              @if (item.icon) {
-              <i class="{{ item.icon }}"></i>
-              }
+              <i *ngIf="item.icon" class="{{ item.icon }}"></i>
               <span>{{ item.label }}</span>
             </a>
-            }
             <!-- Si el elemento tiene submenús -->
-            @if (hasItems(item)) {
-            <ul class="sub-menu" aria-expanded="false">
+            <ul *ngIf="hasItems(item)" class="sub-menu" aria-expanded="false">
               <!-- Iterar sobre los subelementos -->
-              @for (subitem of item.items; track subitem) {
-              <li>
+              <li *ngFor="let subitem of item.items">
                 <!-- Si el subelemento no tiene submenús y es visible -->
-                @if (!hasItems(subitem) && subitem.visible) {
                 <a
+                  *ngIf="!hasItems(subitem)"
                   [routerLink]="subitem.routerLink"
                   class="side-nav-link-ref"
                   routerLinkActive="active"
                 >
                   {{ subitem.label }}
                 </a>
-                }
                 <!-- Si el subelemento tiene submenús -->
-                @if (hasItems(subitem)) {
-                <a class="side-nav-link-a-ref has-arrow">
+                <a
+                  *ngIf="hasItems(subitem)"
+                  class="side-nav-link-a-ref has-arrow"
+                >
                   {{ subitem.label }}
                 </a>
-                }
-                <!-- Mostrar los submenús del subelemento -->
-                @if (hasItems(subitem)) {
-                <ul class="sub-menu mm-collapse" aria-expanded="false">
-                  @for (subSubitem of subitem.items; track subSubitem) {
-                  <li>
-                    <!-- Mostrar solo si el subelemento es visible -->
-                    @if (subSubitem.visible) {
-                    <a
-                      [routerLink]="subSubitem.routerLink"
-                      routerLinkActive="active"
-                      class="side-nav-link-ref"
-                    >
-                      {{ subSubitem.label }}
-                    </a>
-                    }
-                  </li>
-                  }
-                </ul>
-                }
               </li>
-              }
             </ul>
-            }
           </li>
-          }
         </ng-container>
       </ul>
     </div>
@@ -95,3 +66,85 @@
   </ngx-simplebar>
 </div>
 <!-- Left Sidebar End -->
+<ng-container *ngIf="false">
+  <!-- Iterar sobre los elementos del menú -->
+  @for (item of menuItems; track item) {
+  <li>
+    <!-- Si el elemento tiene subelementos y es visible -->
+    @if (hasItems(item) && item.visible) {
+    <a
+      class="is-parent"
+      [ngClass]="{
+        'has-arrow': !item.badge,
+        'has-dropdown': item.badge
+      }"
+    >
+      <!-- Icono y etiqueta del elemento -->
+      <i class="{{ item.icon }}"></i>
+      <span style="font-size: 16px">{{
+        item.label.length > 15 ? item.label.substring(0, 15) + ".." : item.label
+      }}</span>
+    </a>
+    }
+    <!-- Si el elemento no tiene subelementos y es visible -->
+    @if (!hasItems(item) && item.visible) {
+    <a
+      [routerLink]="item.routerLink"
+      class="side-nav-link-ref"
+      routerLinkActive="active"
+    >
+      <!-- Mostrar icono si existe -->
+      @if (item.icon) {
+      <i class="{{ item.icon }}"></i>
+      }
+      <span>{{ item.label }}</span>
+    </a>
+    }
+    <!-- Si el elemento tiene submenús -->
+    @if (hasItems(item)) {
+    <ul class="sub-menu" aria-expanded="false">
+      <!-- Iterar sobre los subelementos -->
+      @for (subitem of item.items; track subitem) {
+      <li>
+        <!-- Si el subelemento no tiene submenús y es visible -->
+        @if (!hasItems(subitem) && subitem.visible) {
+        <a
+          [routerLink]="subitem.routerLink"
+          class="side-nav-link-ref"
+          routerLinkActive="active"
+        >
+          {{ subitem.label }}
+        </a>
+        }
+        <!-- Si el subelemento tiene submenús -->
+        @if (hasItems(subitem)) {
+        <a class="side-nav-link-a-ref has-arrow">
+          {{ subitem.label }}
+        </a>
+        }
+        <!-- Mostrar los submenús del subelemento -->
+        @if (hasItems(subitem)) {
+        <ul class="sub-menu mm-collapse" aria-expanded="false">
+          @for (subSubitem of subitem.items; track subSubitem) {
+          <li>
+            <!-- Mostrar solo si el subelemento es visible -->
+            @if (subSubitem.visible) {
+            <a
+              [routerLink]="subSubitem.routerLink"
+              routerLinkActive="active"
+              class="side-nav-link-ref"
+            >
+              {{ subSubitem.label }}
+            </a>
+            }
+          </li>
+          }
+        </ul>
+        }
+      </li>
+      }
+    </ul>
+    }
+  </li>
+  }
+</ng-container>

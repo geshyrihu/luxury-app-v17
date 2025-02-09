@@ -7,12 +7,11 @@ import {
 } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { EPriorityLevel } from 'src/app/core/enums/priority-level.enum';
-import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
+import { EnumSelectService } from 'src/app/core/services/enum-select.service';
 import { SignalRService } from 'src/app/core/services/signal-r.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import { TicketGroupService } from '../../ticket.service';
@@ -22,6 +21,7 @@ import { TicketGroupService } from '../../ticket.service';
   templateUrl: './ticket-message-add-or-edit.component.html',
   standalone: true,
   imports: [LuxuryAppComponentsModule, CustomInputModule],
+  providers: [EnumSelectService],
 })
 export default class TicketMessageAddOrEditComponent implements OnInit {
   custIdService = inject(CustomerIdService);
@@ -32,11 +32,12 @@ export default class TicketMessageAddOrEditComponent implements OnInit {
   ref = inject(DynamicDialogRef);
   ticketGroupService = inject(TicketGroupService);
   notificationPushService = inject(SignalRService);
+  enumSelectService = inject(EnumSelectService);
 
   id: string = '';
   submitting: boolean = false;
 
-  cb_priority = onGetSelectItemFromEnum(EPriorityLevel);
+  cb_priority: ISelectItem[] = [];
   cb_ticket_group: ISelectItem[] = [];
   cb_user: any[] = [];
 
@@ -62,7 +63,8 @@ export default class TicketMessageAddOrEditComponent implements OnInit {
     closedDate: [null],
   });
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.cb_priority = await this.enumSelectService.priorityLevel();
     this.onLoadUsers();
     this.onLoadTicketGroup();
     this.id = this.config.data.id;
@@ -70,8 +72,8 @@ export default class TicketMessageAddOrEditComponent implements OnInit {
   }
 
   onLoadTicketGroup() {
-    const urlApi = `TicketGroup/SelectItem/${this.custIdService.getCustomerId()}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    const urlApi = `TicketGroupList/${this.custIdService.getCustomerId()}`;
+    this.apiRequestService.onGetSelectItem(urlApi).then((result: any) => {
       this.cb_ticket_group = result;
     });
   }
@@ -92,7 +94,7 @@ export default class TicketMessageAddOrEditComponent implements OnInit {
   }
 
   onLoadData() {
-    const urlApi = `TicketMessage/${this.id}`;
+    const urlApi = `Tickets/${this.id}`;
     this.apiRequestService.onGetItem(urlApi).then((result: any) => {
       this.form.patchValue(result);
       // Si las imágenes existen, carga las vistas previas
@@ -156,14 +158,14 @@ export default class TicketMessageAddOrEditComponent implements OnInit {
       // Verifica si es creación o actualización
       if (this.id === '') {
         this.apiRequestService
-          .onPost(`TicketMessage/Create`, formData)
+          .onPost(`Tickets/Create`, formData)
           .then((result: any) => {
             this.ref.close(result);
             this.submitting = false;
           });
       } else {
         this.apiRequestService
-          .onPut(`TicketMessage/Update/${this.id}`, formData)
+          .onPut(`Tickets/Update/${this.id}`, formData)
           .then((result: any) => {
             this.ref.close(result.value);
             this.submitting = false;
@@ -173,7 +175,7 @@ export default class TicketMessageAddOrEditComponent implements OnInit {
   }
 
   onLoadUsers() {
-    const urlApi = `TicketMessage/Participant/${this.config.data.ticketGroupId}`;
+    const urlApi = `Tickets/Participant/${this.config.data.ticketGroupId}`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.cb_user = result;
     });

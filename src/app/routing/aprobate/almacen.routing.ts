@@ -2,6 +2,13 @@ import { Routes } from '@angular/router';
 
 export default [
   {
+    path: 'listado-almacenes',
+    title: 'Listado de Almacenes',
+    data: { title: 'Listado de Almacenes' },
+    loadComponent: () =>
+      import('src/app/pages/almacen/almacenes-list/almacenes-list.component'),
+  },
+  {
     path: 'inventario-productos',
     title: 'Inventario Productos',
     data: { title: 'Inventario Productos' },

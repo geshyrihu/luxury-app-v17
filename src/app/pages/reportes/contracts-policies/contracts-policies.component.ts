@@ -4,7 +4,6 @@ import { differenceInDays } from 'date-fns'; // Utilidad para calcular la difere
 import { Observable } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-contracts-policies',
@@ -18,7 +17,6 @@ export default class ContractsPoliciesComponent implements OnInit {
   data: any[] = [];
 
   customerId$: Observable<number> = this.custIdService.getCustomerId$();
-  urlBase = environment.base_urlImg;
 
   ngOnInit(): void {
     this.onLoadData();

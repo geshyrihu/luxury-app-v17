@@ -7,9 +7,6 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
-import { environment } from 'src/environments/environment';
-
-const base_urlImg = environment.base_urlImg + 'Administration/accounts/';
 
 @Component({
   selector: 'app-birthday',
@@ -23,7 +20,6 @@ export default class BirthdayComponent implements OnInit {
   authS = inject(AuthService);
   custIdService = inject(CustomerIdService);
 
-  url = base_urlImg;
   selectedMonth: number | null = null;
   months: string[] = [
     'Enero',
@@ -51,7 +47,6 @@ export default class BirthdayComponent implements OnInit {
   onMonthSelect(month: number): void {
     this.selectedMonth = month;
     this.onLoadData();
-    // Aquí puedes hacer lo que necesites con el mes seleccionado
   }
 
   data: any[] = [];
@@ -61,7 +56,7 @@ export default class BirthdayComponent implements OnInit {
   onLoadData() {
     this.apiRequestService
       .onGetList(
-        `Employees/Birthday/${this.custIdService.customerId}/${this.selectedMonth}`
+        `Birthday/${this.custIdService.customerId}/${this.selectedMonth}`
       )
       .then((result: any) => {
         this.data = result;

@@ -3,7 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-report-meeting',
@@ -25,7 +24,6 @@ export default class ReportMeetingComponent implements OnInit {
   meetingId: number = 0;
   logoCustomer = '';
   nameCustomer = '';
-  imgBase = environment.base_urlImg + 'Administration/customer/';
 
   ngOnInit(): void {
     this.data = [];
@@ -53,7 +51,7 @@ export default class ReportMeetingComponent implements OnInit {
     const urlApi = `Customers/${this.customerId}`;
     this.apiRequestService.onGetItem(urlApi).then((result: any) => {
       this.nameCustomer = result.nameCustomer;
-      this.logoCustomer = `${this.imgBase}${result.photoPath}`;
+      this.logoCustomer = result.photoPath;
     });
   }
 }

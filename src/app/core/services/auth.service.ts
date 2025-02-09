@@ -4,7 +4,6 @@ import { catchError, map, of } from 'rxjs';
 import { IModelToken } from '../interfaces/model-token.interface';
 import {
   SelectItemCustomerAccessDto as CustomerAccessDto,
-  EPermission,
   IUserToken,
   InfoAccountAuthDto,
 } from '../interfaces/user-token.interface';
@@ -66,52 +65,19 @@ export class AuthService {
    * @param roles Roles a validar.
    * @returns True si el usuario tiene uno de los roles especificados, de lo contrario, false.
    */
-  // onValidateRoles(roles: string[]): boolean {
-  //   return this.userTokenDto.roles.some((item) => roles.includes(item));
-  // }
+
   onValidateRoles(roles: string[]): boolean {
-    // Verificar si userTokenDto o roles están indefinidos
+    // Validar que userTokenDto y sus roles existan
     if (!this.userTokenDto || !this.userTokenDto.roles) {
-      this.router.navigateByUrl('/auth/login'); // Redirigir al login
+      this.router.navigateByUrl('/auth/login');
       return false;
     }
 
     // Validar si el usuario tiene alguno de los roles especificados
-    return this.userTokenDto.roles.some((item) => roles.includes(item));
-  }
-
-  canCreate(moduleName: string): boolean {
-    return this.checkPermission(moduleName, EPermission.CanCreate);
-  }
-
-  canRead(moduleName: string): boolean {
-    return this.checkPermission(moduleName, EPermission.CanRead);
-  }
-
-  canUpdate(moduleName: string): boolean {
-    return this.checkPermission(moduleName, EPermission.CanUpdate);
-  }
-
-  canDelete(moduleName: string): boolean {
-    return this.checkPermission(moduleName, EPermission.CanDelete);
-  }
-  // Método genérico que verifica el permiso basado en el valor de EPermission
-  private checkPermission(
-    moduleName: string,
-    permission: EPermission
-  ): boolean {
-    if (this.userTokenDto && this.userTokenDto.permission) {
-      // Verificar el contenido de userTokenDto
-      const modulePermission = this.userTokenDto.permission.find(
-        (p: any) => p.moduleName === moduleName
-      );
-
-      if (modulePermission) {
-        const permissionKey = permission as keyof typeof modulePermission;
-        return Boolean(modulePermission[permissionKey]);
-      }
-    }
-    return false;
+    const hasPermission = this.userTokenDto.roles.some((item) =>
+      roles.includes(item)
+    );
+    return hasPermission;
   }
 
   redirectUrl: string | null = null; // URL a la que se redirigirá después de logear

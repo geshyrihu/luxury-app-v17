@@ -1,0 +1,102 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12 d-flex justify-content-between align-items-center">
+      <h1>Almacenes</h1>
+      <button
+        class="btn btn-primary"
+        data-bs-toggle="modal"
+        data-bs-target="#addWarehouseModal"
+      >
+        <i class="bi bi-plus-circle"></i> Agregar
+      </button>
+    </div>
+  </div>
+
+  <div class="row mt-4">
+    <div class="col-12">
+      <!-- Listado de almacenes -->
+      <div class="warehouse-item">
+        <h5>Herramientas</h5>
+        <p class="warehouse-location">Sotano 5</p>
+        <p class="small">Ricardo Marquez</p>
+      </div>
+      <div class="warehouse-item">
+        <h5>Almacén Central</h5>
+        <p class="warehouse-location">Ciudad Central, Calle 123</p>
+        <p class="small">Ricardo Marquez</p>
+      </div>
+      <div class="warehouse-item">
+        <h5>Almacén Norte</h5>
+        <p class="warehouse-location">Zona Norte, Av. 456</p>
+        <p class="small">Ricardo Marquez</p>
+      </div>
+      <div class="warehouse-item">
+        <h5>Almacén Sur</h5>
+        <p class="warehouse-location">Zona Sur, Calle 789</p>
+        <p class="small">Ricardo Marquez</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal para agregar almacén -->
+  <div
+    class="modal fade"
+    id="addWarehouseModal"
+    tabindex="-1"
+    aria-labelledby="addWarehouseModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addWarehouseModalLabel">
+            Agregar Almacén
+          </h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label for="warehouseName" class="form-label"
+                >Nombre del Almacén</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="warehouseName"
+                placeholder="Nombre del Almacén"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="warehouseLocation" class="form-label"
+                >Ubicación</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="warehouseLocation"
+                placeholder="Ubicación"
+              />
+            </div>
+            <button type="submit" class="btn btn-primary">Guardar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<style>
+  .warehouse-item {
+    border-bottom: 1px solid #ddd;
+    padding: 15px 0;
+  }
+  .warehouse-location {
+    font-size: 0.9rem;
+    color: #6c757d;
+  }
+</style>

@@ -1,8 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { AuthService } from 'src/app/core/services/auth.service';
-import HomeListGroupComponent, {
-  IHomeListGroupComponent,
-} from '../home-list-group/home-list-group.component';
+import { IMenuItem } from '../../sidebar/menu.model';
+import HomeListGroupComponent from '../home-list-group/home-list-group.component';
 
 @Component({
   selector: 'app-home-bitacoras',
@@ -12,12 +11,12 @@ import HomeListGroupComponent, {
 })
 export default class HomeBitacorasComponent {
   authS = inject(AuthService);
-  data: IHomeListGroupComponent[] = [
+  data: IMenuItem[] = [
     {
-      name: 'Lecturas consumos',
+      label: 'Lecturas consumos',
       icon: 'fa-duotone  fa-droplet',
       routerLink: '/logbook/lista-medidor',
-      isAutorized: this.authS.onValidateRoles([
+      visible: this.authS.onValidateRoles([
         'SuperUsuario',
         'SupervisionOperativa',
         'Administrador',
@@ -26,10 +25,10 @@ export default class HomeBitacorasComponent {
       ]),
     },
     {
-      name: 'Albercas',
+      label: 'Albercas',
       icon: 'fa-duotone  fa-water-ladder',
       routerLink: '/logbook/piscina',
-      isAutorized: this.authS.onValidateRoles([
+      visible: this.authS.onValidateRoles([
         'SuperUsuario',
         'SupervisionOperativa',
         'Administrador',
@@ -38,10 +37,10 @@ export default class HomeBitacorasComponent {
       ]),
     },
     {
-      name: 'Fallas elevadores',
+      label: 'Fallas elevadores',
       icon: 'fa-duotone  fa-elevator',
       routerLink: '/tickets/my-requests',
-      isAutorized: this.authS.onValidateRoles([
+      visible: this.authS.onValidateRoles([
         'SuperUsuario',
         'SupervisionOperativa',
         'Administrador',
@@ -50,10 +49,10 @@ export default class HomeBitacorasComponent {
       ]),
     },
     {
-      name: 'Refacciones elevadores',
+      label: 'Refacciones elevadores',
       icon: 'fa-duotone  fa-puzzle-piece',
       routerLink: '/logbook/elevator-spare-parts-change',
-      isAutorized: this.authS.onValidateRoles([
+      visible: this.authS.onValidateRoles([
         'SuperUsuario',
         'SupervisionOperativa',
         'Administrador',
@@ -63,9 +62,9 @@ export default class HomeBitacorasComponent {
     },
     {
       icon: 'fa-duotone fa-engine',
-      name: 'Mantenimiento equipos',
-      routerLink: '/operaciones/mantenimiento-preventivo',
-      isAutorized: this.authS.onValidateRoles([
+      label: 'Mantenimiento equipos',
+      routerLink: '/logbook/ordenes-mantenimiento',
+      visible: this.authS.onValidateRoles([
         'SuperUsuario',
         'SupervisionOperativa',
         'Administrador',
@@ -75,9 +74,9 @@ export default class HomeBitacorasComponent {
     },
     {
       icon: 'fa-duotone fa-engine',
-      name: 'Recorrido diario',
+      label: 'Recorrido diario',
       routerLink: '/logbook/recorrido',
-      isAutorized: this.authS.onValidateRoles([
+      visible: this.authS.onValidateRoles([
         'SuperUsuario',
         'SupervisionOperativa',
         'Administrador',

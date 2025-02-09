@@ -2,12 +2,9 @@ import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { cb_ESiNo } from 'src/app/core/enums/si-no.enum';
-import { ETurnoTrabajo } from 'src/app/core/enums/turno-trabajo.enum';
-import { ETypeOfDeparture } from 'src/app/core/enums/type-of-departure.enum';
-import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { EnumSelectService } from 'src/app/core/services/enum-select.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
@@ -15,6 +12,7 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   templateUrl: './addoredit-status-request-salary-modification.component.html',
   standalone: true,
   imports: [LuxuryAppComponentsModule, CustomInputModule],
+  providers: [EnumSelectService],
 })
 export default class AddOrEditStatusRequestSalaryModificationComponent
   implements OnInit
@@ -23,15 +21,14 @@ export default class AddOrEditStatusRequestSalaryModificationComponent
   apiRequestService = inject(ApiRequestService);
   ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);
+  enumSelectService = inject(EnumSelectService);
 
   submitting: boolean = false;
 
   id: number = 0;
 
   cb_profession: ISelectItem[] = [];
-  cb_status: ISelectItem[] = onGetSelectItemFromEnum(ETurnoTrabajo);
-  cb_type_departure: ISelectItem[] = onGetSelectItemFromEnum(ETypeOfDeparture);
-  cb_si_no: ISelectItem[] = cb_ESiNo;
+  cb_si_no: ISelectItem[] = [];
 
   form: FormGroup = this.formBuilder.group({
     id: { value: this.config.data.id, disabled: true },
@@ -46,12 +43,13 @@ export default class AddOrEditStatusRequestSalaryModificationComponent
     executionDate: ['', Validators.required],
     folio: ['', Validators.required],
     retroactive: ['', Validators.required],
-    status: ['', Validators.required],
+    status: [null, Validators.required],
     applicationUserId: ['', Validators.required],
     confirmationFinish: ['', Validators.required],
   });
 
-  ngOnInit(): void {
+  async ngOnInit() {
+    this.cb_si_no = await this.enumSelectService.boolYesNo();
     this.onProfessionSelectItem();
     this.id = this.config.data.id;
     if (this.id !== 0) this.onLoadData();

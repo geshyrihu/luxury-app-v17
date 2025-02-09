@@ -1,8 +1,6 @@
-import { EStatusTask } from '../enums/estatus-task.enum';
-
 export interface IFilterTicket {
   customer: any;
-  status: EStatusTask;
+  status: number;
   responsible: any;
   request: any;
   requestStart: any;

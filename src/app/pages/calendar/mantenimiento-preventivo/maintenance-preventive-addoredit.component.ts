@@ -3,13 +3,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { SelectItem } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { ERecurrence } from 'src/app/core/enums/recurrence.enum';
-import { ETypeMaintance } from 'src/app/core/enums/type-maintance.enum';
-import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
+import { EnumSelectService } from 'src/app/core/services/enum-select.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
@@ -17,6 +15,7 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   templateUrl: './maintenance-preventive-addoredit.component.html',
   standalone: true,
   imports: [LuxuryAppComponentsModule, CustomInputModule],
+  providers: [EnumSelectService],
 })
 export default class MaintenancePreventiveAddoreditComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
@@ -25,12 +24,13 @@ export default class MaintenancePreventiveAddoreditComponent implements OnInit {
   config = inject(DynamicDialogConfig);
   custIdService = inject(CustomerIdService);
   ref = inject(DynamicDialogRef);
+  enumSelectService = inject(EnumSelectService);
 
   cb_machinery: ISelectItem[] = [];
   cb_providers: ISelectItem[] = [];
-  cb_recurrencia: ISelectItem[] = onGetSelectItemFromEnum(ERecurrence);
+  cb_recurrencia: ISelectItem[] = [];
   cb_subCuentaId: ISelectItem[] = [];
-  cb_TypeMaintance: SelectItem[] = onGetSelectItemFromEnum(ETypeMaintance);
+  cb_TypeMaintance: SelectItem[] = [];
 
   submitting: boolean = false;
 
@@ -39,6 +39,35 @@ export default class MaintenancePreventiveAddoreditComponent implements OnInit {
   idMachinery: number = null;
   account_id = this.authS.userTokenDto.infoUserAuthDto.applicationUserId;
   fecha: string | undefined;
+
+  async ngOnInit() {
+    this.onLoadSelectItem();
+    switch (this.config.data.task) {
+      case 'create': {
+        this.onGetMachinerySelectItem();
+        break;
+      }
+      case 'edit': {
+        this.onLoadData();
+        break;
+      }
+      case 'copy': {
+        this.LoadCopy();
+        break;
+      }
+      default: {
+        break;
+      }
+    }
+    this.onLoadForm();
+    this.cb_recurrencia = await this.enumSelectService.recurrence();
+    this.cb_TypeMaintance = await this.enumSelectService.typeMaintance();
+
+    this.idMachinery = this.config.data.idMachinery;
+    if (this.config.data.fecha !== null) {
+      this.fecha = this.config.data.fecha;
+    }
+  }
 
   public saveMachineryId(e: any): void {
     let find = this.cb_machinery.find((x) => x?.label === e.target.value);
@@ -58,6 +87,7 @@ export default class MaintenancePreventiveAddoreditComponent implements OnInit {
       cuentaId: find?.value,
     });
   }
+
   get f() {
     return this.form.controls;
   }
@@ -94,37 +124,12 @@ export default class MaintenancePreventiveAddoreditComponent implements OnInit {
             machineryName: result.label,
           });
           this.form.patchValue({
-            typeMaintance: ETypeMaintance.Preventivo,
+            typeMaintance: 0,
           });
         });
     }
   }
 
-  ngOnInit(): void {
-    this.idMachinery = this.config.data.idMachinery;
-    if (this.config.data.fecha !== null) {
-      this.fecha = this.config.data.fecha;
-    }
-    this.onLoadSelectItem();
-    switch (this.config.data.task) {
-      case 'create': {
-        this.onGetMachinerySelectItem();
-        break;
-      }
-      case 'edit': {
-        this.onLoadData();
-        break;
-      }
-      case 'copy': {
-        this.LoadCopy();
-        break;
-      }
-      default: {
-        break;
-      }
-    }
-    this.onLoadForm();
-  }
   onLoadForm() {
     this.form = this.formBuilder.group({
       id: { value: this.id, disabled: true },
@@ -134,8 +139,8 @@ export default class MaintenancePreventiveAddoreditComponent implements OnInit {
       observation: [''],
       price: ['', Validators.required],
       providerId: ['', Validators.required],
-      recurrence: ['', Validators.required],
-      typeMaintance: ['', Validators.required],
+      recurrence: [null, Validators.required],
+      typeMaintance: [null, Validators.required],
       customerId: [this.custIdService.getCustomerId()],
       cuentaId: ['', Validators.required],
       // temp

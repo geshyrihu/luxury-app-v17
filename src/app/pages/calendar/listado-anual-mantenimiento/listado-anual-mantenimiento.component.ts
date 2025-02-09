@@ -2,8 +2,6 @@ import { Component, OnInit, inject } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable } from 'rxjs';
-import { EMonth } from 'src/app/core/enums/month.enum';
-import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import { CurrencyMexicoPipe } from 'src/app/core/pipes/currencyMexico.pipe';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
@@ -30,10 +28,10 @@ export default class ListadoAnualMantenimientoComponent implements OnInit {
 
   customerId$: Observable<number> = this.custIdService.getCustomerId$();
   month = date.getMonth();
-  months: ISelectItem[] = onGetSelectItemFromEnum(EMonth);
+  months: ISelectItem[] = [];
 
   ngOnInit() {
-    this.onLoadData();
+    this.onLoadEnumSelectItem();
     this.customerId$.subscribe(() => {
       this.onLoadData();
     });
@@ -84,5 +82,13 @@ export default class ListadoAnualMantenimientoComponent implements OnInit {
   selectMonth() {
     this.month = this.month;
     this.onLoadData();
+  }
+  onLoadEnumSelectItem() {
+    this.apiRequestService
+      .onGetEnumSelectItem(`EMonth/${false}`)
+      .then((result: any) => {
+        this.months = result;
+        this.months.sort((a, b) => a.value - b.value);
+      });
   }
 }

@@ -8,6 +8,8 @@ import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import Swal from 'sweetalert2';
+
+// Component imports
 import CardEmployeeComponent from '../../../directorios/employee-internal/card-employee.component';
 import TicketMessageFollowupComponent from '../../folloups/ticket-message-followup/ticket-message-followup.component';
 import { TicketResult } from '../../interfaces/ticket-message-list';
@@ -27,6 +29,7 @@ import TicketMessageReopenComponent from '../ticket-message-reopen/ticket-messag
   imports: [LuxuryAppComponentsModule, TicketMessageModule],
 })
 export default class TicketMessageListComponent implements OnInit {
+  // Dependencies injection
   activatedRoute = inject(ActivatedRoute);
   apiRequestService = inject(ApiRequestService);
   authS = inject(AuthService);
@@ -36,72 +39,148 @@ export default class TicketMessageListComponent implements OnInit {
   router = inject(Router);
   ticketGroupService = inject(TicketGroupService);
 
+  // User and Data Setup
   applicationUser = this.authS.applicationUserId;
-
   isSuperUser = this.authS.onValidateRoles(['SuperUsuario']);
-  data: TicketResult = {
-    nameGroup: '',
-    items: [],
-  };
+  ticketGroupId: string = this.activatedRoute.snapshot.params.ticketGroupId;
 
-  originalData: TicketResult = {
-    nameGroup: '',
-    items: [],
-  };
+  // Pagination Setup
+  rows = 30; // Cantidad de registros por página
+  first = 0;
+  totalRecords = 0;
+  page: number = 1;
+  pageSize: number = 30;
+  searchTerm: string = '';
+
+  // Data Structures
+  data: TicketResult = { nameGroup: '', totalRecords: 30, items: [] };
+  originalData: TicketResult = { nameGroup: '', totalRecords: 30, items: [] };
   assignee: string = null;
   cb_assignee: ISelectItem[] = [];
-  ticketGroupId: string = this.activatedRoute.snapshot.params.ticketGroupId;
   status: string = this.ticketGroupService.ticketGroupMessageStatus;
 
+  // Week Info
   year: number = this.ticketGroupService.year || 0;
   numeroSemana: number = this.ticketGroupService.numeroSemana || 0;
-  wekklyIsNullOrEmpty = true;
   weekInputValue: string = '';
-  ngOnInit(): void {
-    this.year = this.ticketGroupService.year || 0;
-    this.numeroSemana = this.ticketGroupService.numeroSemana || 0;
+  wekklyIsNullOrEmpty = true;
 
+  // Lifecycle Hook: on component initialization
+  ngOnInit(): void {
+    this.initializeWeekInfo();
+    this.onLoadData(
+      this.ticketGroupService.ticketGroupMessageStatus,
+      this.page,
+      this.pageSize
+    );
+  }
+  // Initialize week data based on year and week number
+  initializeWeekInfo(): void {
     if (this.year === 0 || this.numeroSemana === 0) {
       this.wekklyIsNullOrEmpty = true;
     } else {
       this.wekklyIsNullOrEmpty = false;
       const startOfWeek = this.getStartOfWeek(this.year, this.numeroSemana);
-      const inputValue = `${startOfWeek.getFullYear()}-W${
+      this.weekInputValue = `${startOfWeek.getFullYear()}-W${
         this.numeroSemana < 10 ? '0' : ''
       }${this.numeroSemana}`;
-      // Establecer el valor en el input
-      this.weekInputValue = inputValue; // Asegúrate de declarar esta propiedad
     }
-    this.onLoadData(this.status);
   }
+
+  applyFilter() {
+    this.onLoadDataOffLoading(
+      this.status,
+      this.page,
+      this.pageSize,
+      this.searchTerm
+    );
+  }
+
+  onLoadDataOffLoading(
+    status: any,
+    page: number = this.page,
+    pageSize: number = this.pageSize,
+    filter: string = ''
+  ) {
+    this.status = status;
+    const urlApi = `Tickets/List/${this.ticketGroupId}/${status}`;
+    const httpParams = { page, pageSize, filter };
+
+    this.apiRequestService
+      .onGetListOffLoading(urlApi, httpParams)
+      .then((result: TicketResult) => {
+        if (!result) return;
+
+        this.data = result;
+        this.totalRecords = result.totalRecords;
+        this.originalData = JSON.parse(JSON.stringify(result));
+
+        // Evitar duplicados en `cb_assignee`
+        const uniqueResponsibles = Array.from(
+          new Map(
+            this.originalData.items.map((item) => [item.assigneeId, item])
+          ).values()
+        );
+
+        this.cb_assignee = uniqueResponsibles.map((item) => ({
+          value: item.assigneeId,
+          label: item.assignee,
+        }));
+
+        this.cb_assignee.push({ value: null, label: 'Mostrar todos' });
+      });
+  }
+
   getStartOfWeek(year: number, weekNumber: number): Date {
     const januaryFirst = new Date(year, 0, 1);
     const daysToAdd = (weekNumber - 1) * 7 - (januaryFirst.getDay() || 7) + 1; // Ajustar para que inicie el lunes
     return new Date(year, 0, 1 + daysToAdd);
   }
 
-  onLoadData(status: any) {
+  loadDataLazy(event: any) {
+    this.page = Math.floor(event.first / event.rows) + 1;
+    this.pageSize = event.rows;
+
+    this.loadDataFromApi();
+  }
+
+  loadDataFromApi() {
+    this.onLoadData(this.status, this.page, this.pageSize);
+  }
+
+  onLoadData(
+    status: any,
+    page: number = this.page,
+    pageSize: number = this.pageSize,
+    filter: string = ''
+  ) {
     this.status = status;
-    const urlApi = `TicketMessage/List/${this.ticketGroupId}/${status}`;
-    this.apiRequestService.onGetList(urlApi).then((result: TicketResult) => {
-      this.data = result;
-      this.originalData = JSON.parse(JSON.stringify(result)); // Copia profunda
-      const uniqueResponsibles = Array.from(
-        new Map(
-          this.originalData.items.map((item) => [item.assigneeId, item])
-        ).values()
-      );
+    const urlApi = `Tickets/List/${this.ticketGroupId}/${status}`;
+    const httpParams = { page, pageSize, filter };
 
-      this.cb_assignee = uniqueResponsibles.map((item) => ({
-        value: item.assigneeId,
-        label: item.assignee,
-      }));
+    this.apiRequestService
+      .onGetList(urlApi, httpParams)
+      .then((result: TicketResult) => {
+        if (!result) return;
 
-      this.cb_assignee.push({
-        value: null,
-        label: 'Mostrar todos',
+        this.data = result;
+        this.totalRecords = result.totalRecords;
+        this.originalData = JSON.parse(JSON.stringify(result));
+
+        // Evitar duplicados en `cb_assignee`
+        const uniqueResponsibles = Array.from(
+          new Map(
+            this.originalData.items.map((item) => [item.assigneeId, item])
+          ).values()
+        );
+
+        this.cb_assignee = uniqueResponsibles.map((item) => ({
+          value: item.assigneeId,
+          label: item.assignee,
+        }));
+
+        this.cb_assignee.push({ value: null, label: 'Mostrar todos' });
       });
-    });
   }
 
   onResponsibleChange(event: any) {
@@ -187,7 +266,7 @@ export default class TicketMessageListComponent implements OnInit {
       cancelButtonText: 'Cancelar',
     }).then((result) => {
       if (result.value) {
-        const urlApi = `TicketMessage/InProgress/${id}/${this.authS.applicationUserId}`;
+        const urlApi = `Tickets/InProgress/${id}/${this.authS.applicationUserId}`;
 
         this.apiRequestService.onGetItem(urlApi).then((result: any) => {
           // Actualizamos el valor del signal con los datos recibidos
@@ -220,7 +299,7 @@ export default class TicketMessageListComponent implements OnInit {
 
   // Actualizar si el item es relevante o no
   onUpdateStateTicket(item: any) {
-    const urlApi = `TicketMessage/UpdateRelevance/${item.id}`;
+    const urlApi = `Tickets/UpdateRelevance/${item.id}`;
     this.apiRequestService.onGetItem(urlApi).then((result: any) => {
       this.customToastService.onCloseToSuccess();
     });
@@ -240,7 +319,7 @@ export default class TicketMessageListComponent implements OnInit {
   }
 
   onUpdatePriority(id: string) {
-    const urlApi = `TicketMessage/UpdatePriority/${id}/${this.authS.applicationUserId}`;
+    const urlApi = `Tickets/UpdatePriority/${id}/${this.authS.applicationUserId}`;
     this.apiRequestService.onGetItem(urlApi).then((result: any) => {
       if (result) {
         // Encuentra el índice del ítem con el ID proporcionado
@@ -261,7 +340,7 @@ export default class TicketMessageListComponent implements OnInit {
   // Funcion para eliminar un banco y refres
   onDelete(id: any) {
     this.apiRequestService
-      .onDelete(`TicketMessage/${id}/${this.custIdService.getCustomerId()}`)
+      .onDelete(`Tickets/${id}/${this.custIdService.getCustomerId()}`)
       .then((result: boolean) => {
         // Actualizamos el signal para eliminar el elemento de la lista
         if (result) {

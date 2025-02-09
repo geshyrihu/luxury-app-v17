@@ -2,8 +2,6 @@ import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { ERouteRecurrence } from 'src/app/core/enums/route-recurrence.enum';
-import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
@@ -28,7 +26,7 @@ export default class RecorridoAddOrEditComponent implements OnInit {
   id: number = 0;
   cb_machinery: ISelectItem[] = [];
   idMachinery: number = null;
-  cb_RouteRecurrence: ISelectItem[] = onGetSelectItemFromEnum(ERouteRecurrence);
+  cb_RouteRecurrence: ISelectItem[] = [];
 
   onLoadSelectItem() {
     this.apiRequestService
@@ -37,6 +35,11 @@ export default class RecorridoAddOrEditComponent implements OnInit {
       )
       .then((response: any) => {
         this.cb_machinery = response;
+      });
+    this.apiRequestService
+      .onGetEnumSelectItem(`ERouteRecurrence`)
+      .then((result: any) => {
+        this.cb_RouteRecurrence = result;
       });
   }
 

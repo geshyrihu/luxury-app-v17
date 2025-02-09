@@ -21,7 +21,7 @@ export default class PresupuestoEditionFileComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
 
   id = this.config.data.id;
-  url: string = `${environment.base_url}Cuentas/SetDocuments/${this.id}`;
+  url: string = `${environment.API_BASE_URL}Cuentas/SetDocuments/${this.id}`;
   uploadedFiles: any[] = [];
   data: any[] = [];
   description: string = '';

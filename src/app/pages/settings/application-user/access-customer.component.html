@@ -1,19 +1,53 @@
 <div class="card p-2">
-  <ngb-alert [dismissible]="false" type="primary">Acceso a clientes </ngb-alert>
-  @for (item of clientes; track item) {
-  <div class="form-check pointer">
-    <input
-      class="form-check-input pointer"
-      type="checkbox"
-      [ngModel]="item.isSelected"
-      [checked]="item.isSelected"
-      [id]="item.customerId"
-      (change)="item.isSelected = !item.isSelected"
-      (change)="onUpdateAcceso(clientes)"
-    />
-    <label class="form-check-label pointer" [for]="item.customerId">
-      {{ item.customerName }}
-    </label>
-  </div>
-  }
+  <ngb-alert [dismissible]="false" type="primary">Acceso a clientes</ngb-alert>
+
+  <ul class="list-group">
+    <li
+      *ngFor="let item of clientes"
+      class="list-group-item pointer"
+      [class.active]="item.isSelected"
+      (click)="toggleCliente(item)"
+    >
+      <input
+        class="form-check-input me-2"
+        type="checkbox"
+        [checked]="item.isSelected"
+        [id]="item.customerId"
+      />
+      <label
+        class="form-check-label pointer"
+        (click)="toggleCliente(item)"
+        [for]="item.customerId"
+      >
+        {{ item.customerName }}
+      </label>
+    </li>
+  </ul>
 </div>
+
+<style>
+  .pointer {
+    cursor: pointer;
+  }
+
+  .list-group-item {
+    margin-top: 2px; /* Reduce el margen superior */
+    margin-bottom: 2px; /* Reduce el margen inferior */
+    padding: 0.5rem; /* Ajusta el relleno si es necesario */
+  }
+
+  .list-group-item.active {
+    background-color: #0d3b66; /* Color de fondo activo */
+    color: white; /* Color del texto activo */
+    font-weight: bold;
+  }
+
+  .form-check {
+    margin-top: 2px; /* Reduce el margen entre los checkboxes */
+    margin-bottom: 2px;
+  }
+
+  .form-check-label {
+    margin-left: 5px; /* Espaciado entre el checkbox y el texto */
+  }
+</style>

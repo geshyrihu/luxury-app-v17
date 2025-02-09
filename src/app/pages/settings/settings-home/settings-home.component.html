@@ -2,13 +2,16 @@
   <div class="row g-4 ms-5 me-5">
     <ng-container *ngFor="let group of objectKeys(menuItemsGrouped)">
       <div *ngIf="menuItemsGrouped[group]?.length > 0">
+        <!-- Título del grupo -->
         <h4 class="text-center my-3">{{ group }}</h4>
-        <!-- Muestra el nombre del grupo -->
         <div class="row">
           <ng-container *ngFor="let item of menuItemsGrouped[group]">
-            <div *ngIf="item.visible" class="col-md-2 col-lg-2 mb-4">
+            <div
+              *ngIf="item.visible"
+              class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 mb-4"
+            >
               <div
-                class="card text-center shadow-lg border-0 h-100 border-primary custom-card mb-4"
+                class="card text-center shadow-lg border-0 h-100 border-primary custom-card"
                 (click)="handleCardClick(item)"
               >
                 <div class="card-body p-4">

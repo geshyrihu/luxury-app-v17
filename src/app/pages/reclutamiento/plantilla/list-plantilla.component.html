@@ -1,4 +1,4 @@
-<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
+<p-toast position="top-right" [baseZIndex]="99999" />
 
 <div class="card">
   <p-table
@@ -29,33 +29,33 @@
     <ng-template pTemplate="header">
       <tr>
         <th style="width: 19%" scope="col" pSortableColumn="folio">
-          CODIGO <p-sortIcon field="folio"></p-sortIcon>
+          CODIGO <p-sortIcon field="folio" />
         </th>
         <th
           style="width: 18%"
           scope="col"
           pSortableColumn="professionHierarchy"
         >
-          PUESTO <p-sortIcon field="professionHierarchy"></p-sortIcon>
+          PUESTO <p-sortIcon field="professionHierarchy" />
         </th>
         <th style="width: 10%" scope="col" pSortableColumn="turnoTrabajo">
           TURNO
-          <p-sortIcon field="turnoTrabajo"></p-sortIcon>
+          <p-sortIcon field="turnoTrabajo" />
         </th>
         @if ( authS.onValidateRoles([ 'Asistente', 'Reclutamiento',
         'Administrador', 'SuperUsuario', 'SupervisionOperativa' ]) ) {
         <th style="width: 10%" scope="col" pSortableColumn="sueldoBaseFiltro">
-          SUELDO PRESUPUESTADO<p-sortIcon field="sueldoBaseFiltro"></p-sortIcon>
+          SUELDO PRESUPUESTADO<p-sortIcon field="sueldoBaseFiltro" />
         </th>
         } @if ( authS.onValidateRoles([ 'Asistente', 'Reclutamiento',
         'Administrador', 'SuperUsuario', 'SupervisionOperativa' ]) ) {
         <th style="width: 10%" scope="col" pSortableColumn="sueldoFiltro">
-          SUELDO ACTUAL<p-sortIcon field="sueldoFiltro"></p-sortIcon>
+          SUELDO ACTUAL<p-sortIcon field="sueldoFiltro" />
         </th>
         }
         <th style="width: 35%" scope="col" pSortableColumn="applicationUser">
           COLABORADOR
-          <p-sortIcon field="applicationUser"></p-sortIcon>
+          <p-sortIcon field="applicationUser" />
         </th>
         @if ( authS.onValidateRoles([ 'Asistente', 'Reclutamiento',
         'Administrador', 'SuperUsuario', 'SupervisionOperativa' ]) ) {
@@ -93,7 +93,7 @@
           @if (item.applicationUserPhoto) {
           <img
             (click)="onCardEmployee(item.applicationUserId)"
-            [src]="pahtBaseImg + item.applicationUserPhoto"
+            [src]="item.applicationUserPhoto"
             class="rounded avatar-sm pointer me-3"
             alt="img"
           />

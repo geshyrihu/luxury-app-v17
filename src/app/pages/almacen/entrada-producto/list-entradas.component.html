@@ -1,4 +1,4 @@
-<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
+<p-toast position="top-right" [baseZIndex]="99999" />
 <p-table
   #dt
   [(selection)]="data"
@@ -24,23 +24,23 @@
   <ng-template pTemplate="header">
     <tr>
       <th scope="col" pSortableColumn="fechaEntrada">
-        Fecha Entrada <p-sortIcon field="fechaEntrada"></p-sortIcon>
+        Fecha Entrada <p-sortIcon field="fechaEntrada" />
       </th>
       <th scope="col" pSortableColumn="nombreProducto">
         Producto
-        <p-sortIcon field="nombreProducto"></p-sortIcon>
+        <p-sortIcon field="nombreProducto" />
       </th>
       <th scope="col" pSortableColumn="cantidad">
-        cantidad<p-sortIcon field="cantidad"></p-sortIcon>
+        cantidad<p-sortIcon field="cantidad" />
       </th>
       <th scope="col" pSortableColumn="unidadMedida">
-        Unidad<p-sortIcon field="unidadMedida"></p-sortIcon>
+        Unidad<p-sortIcon field="unidadMedida" />
       </th>
       <th scope="col" pSortableColumn="provider">
-        Proveedor<p-sortIcon field="provider"></p-sortIcon>
+        Proveedor<p-sortIcon field="provider" />
       </th>
       <th scope="col" pSortableColumn="numeroFactura">
-        Factura<p-sortIcon field="numeroFactura"></p-sortIcon>
+        Factura<p-sortIcon field="numeroFactura" />
       </th>
       @if (authS.onValidateRoles(['SuperUsuario'])) {
       <th scope="col" style="width: 5%">Opciones</th>

@@ -3,7 +3,7 @@ import { Injectable, OnDestroy, inject } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
-const urlBase = environment.base_url;
+const urlBase = environment.API_BASE_URL;
 
 @Injectable({
   providedIn: 'root',

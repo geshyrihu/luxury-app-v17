@@ -4,7 +4,6 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-addoredit-telefonos-emergencia',
@@ -49,7 +48,7 @@ export default class AddOrEditTelefonosEmergenciaComponent {
   onLoadData() {
     const urlApi = `TelefonosEmergencia/${this.id}`;
     this.apiRequestService.onGetItem(urlApi).then((result: any) => {
-      this.urlBaseImg = `${environment.base_urlImg}Administration/tel-emergencia/${result.logo}`;
+      this.urlBaseImg = result.logo;
       this.form.patchValue(result);
     });
   }

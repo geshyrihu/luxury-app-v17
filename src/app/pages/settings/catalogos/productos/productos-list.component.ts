@@ -4,7 +4,6 @@ import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
-import { environment } from 'src/environments/environment';
 import ProductosAddOrEditComponent from './productos-addoredit.component';
 
 @Component({
@@ -18,8 +17,6 @@ export default class ProductosListComponent implements OnInit {
   dialogHandlerService = inject(DialogHandlerService);
   apiRequestService = inject(ApiRequestService);
 
-  urlBaseImg = `${environment.base_urlImg}Administration/products/`;
-  urlBaseImgUser = `${environment.base_urlImg}Administration/accounts/`;
   data: any[] = [];
 
   ref: DynamicDialogRef;

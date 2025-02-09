@@ -16,12 +16,13 @@
             <app-input-img
               (fileSelected)="uploadFile($event)"
               [urlImgCurrent]="urlBaseImg"
-              [contentHeight]="'150'"
-              [contentWidth]="'250'"
+              [contentHeight]="15"
+              [contentWidth]="25"
             />
           </div>
         </div>
       </div>
+
       <custom-input-text
         [control]="form.get('nombreProducto')"
         formControlName="nombreProducto"

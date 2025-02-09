@@ -3,11 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FlatpickrModule } from 'angularx-flatpickr';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { EStatus } from 'src/app/core/enums/status.enum';
-import { ETypeContractRegister } from 'src/app/core/enums/type-contract-register.enum';
-import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { EnumSelectService } from 'src/app/core/services/enum-select.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
@@ -15,18 +13,20 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   templateUrl: './addoredit-solicitud-alta.component.html',
   standalone: true,
   imports: [LuxuryAppComponentsModule, FlatpickrModule, CustomInputModule],
+  providers: [EnumSelectService],
 })
 export default class AddOrEditSolicitudAltaComponent implements OnInit {
   formBuilder = inject(FormBuilder);
   apiRequestService = inject(ApiRequestService);
+  enumSelectService = inject(EnumSelectService);
 
   ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);
 
   submitting: boolean = false;
   empleados: ISelectItem[] = [];
-  cb_status = onGetSelectItemFromEnum(EStatus);
-  cb_typeContractRegister = onGetSelectItemFromEnum(ETypeContractRegister);
+  cb_status: ISelectItem[] = [];
+  cb_typeContractRegister: ISelectItem[] = [];
   id: number = 0;
 
   form: FormGroup = this.formBuilder.group({
@@ -43,7 +43,10 @@ export default class AddOrEditSolicitudAltaComponent implements OnInit {
     employeeId: [],
     employee: [],
   });
-  ngOnInit(): void {
+  async ngOnInit() {
+    this.cb_status = await this.enumSelectService.status();
+    this.cb_typeContractRegister =
+      await this.enumSelectService.typeContractRegister();
     this.id = this.config.data.id;
     if (this.id !== 0) this.onLoadData();
   }

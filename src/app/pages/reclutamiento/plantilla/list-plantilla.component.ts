@@ -11,11 +11,9 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import { StatusSolicitudVacanteService } from 'src/app/core/services/status-solicitud-vacante.service';
 import CardEmployeeComponent from 'src/app/pages/directorios/employee-internal/card-employee.component';
-import { environment } from 'src/environments/environment';
+import DescripcionPuestoComponent from 'src/app/pages/settings/catalogos/professions/descripcion-puesto.component';
 import SolicitudVacanteComponent from '../solicitudes/solicitud-vacante.component';
 import AddoreditPlantillaComponent from './addoredit-plantilla.component';
-// import EmployeeToWorkPositionComponent from '../employee-to-work-position/employee-to-work-position.component';
-import DescripcionPuestoComponent from 'src/app/pages/settings/catalogos/professions/descripcion-puesto.component';
 import HoursWorkPositionComponent from './hours-work-position.component';
 
 @Component({
@@ -39,7 +37,6 @@ export default class ListWorkPlantillaComponent implements OnInit {
 
   customerId$: Observable<number> = this.custIdService.getCustomerId$();
   data: any[] = [];
-  pahtBaseImg = environment.base_urlImg + 'Administration/accounts/';
   ref: DynamicDialogRef;
 
   state = 0;
@@ -72,7 +69,6 @@ export default class ListWorkPlantillaComponent implements OnInit {
     });
     this.ref.onClose.subscribe((resp: boolean) => {
       if (resp) {
-        this.customToastService.onShowSuccess();
         this.onLoadData();
       }
     });
@@ -92,7 +88,6 @@ export default class ListWorkPlantillaComponent implements OnInit {
     });
     this.ref.onClose.subscribe((resp: boolean) => {
       if (resp) {
-        this.customToastService.onShowSuccess();
         this.onLoadData();
       }
     });
@@ -112,32 +107,10 @@ export default class ListWorkPlantillaComponent implements OnInit {
     });
     this.ref.onClose.subscribe((resp: boolean) => {
       if (resp) {
-        this.customToastService.onShowSuccess();
         this.onLoadData();
       }
     });
   }
-  // Solicitar baja
-  // Editar empleado
-  // onModalAddEmployeeToWorkPosition(id: number) {
-  //   this.ref = this.dialogService.open(EmployeeToWorkPositionComponent, {
-  //     data: {
-  //       workPositionId: id,
-  //     },
-  //     header: 'Solicitud de vacante',
-  //     width: '100%',
-  //     height: '100%',
-  //     closeOnEscape: true,
-  //     baseZIndex: 10000,
-  //   });
-  //   this.ref.onClose.subscribe((resp: boolean) => {
-  //     if (resp) {
-  //       this.customToastService.onShowSuccess();
-  //       this.onLoadData();
-  //     }
-  //   });
-  // }
-
   //Ver tarjeta de Colaborador
   onCardEmployee(applicationUserId: string) {
     this.ref = this.dialogService.open(CardEmployeeComponent, {
@@ -190,7 +163,6 @@ export default class ListWorkPlantillaComponent implements OnInit {
     });
     this.ref.onClose.subscribe((resp: boolean) => {
       if (resp) {
-        this.customToastService.onShowSuccess();
         this.onLoadData();
       }
     });

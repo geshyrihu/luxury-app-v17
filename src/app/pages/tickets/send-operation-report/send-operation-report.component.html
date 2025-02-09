@@ -1,4 +1,4 @@
-<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
+<p-toast position="top-right" [baseZIndex]="99999" />
 <div class="d-flex flex-wrap align-items-center">
   <button class="btn btn-soft-primary me-2" (click)="onSelectAll()">
     Seleccionar Todos
@@ -115,7 +115,7 @@
       <div class="col">
         @for (item of destinatariosAdicionales; track item; let i = $index) {
         <span class="badge bg-info ms-1 p-2 position-relative">
-          {{ item.nivelPrivacidad }}/{{ item.emailResidente }}
+          {{ item.nivelPrivacidad }}/{{ item.email }}
           <span
             class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success"
             ><i
@@ -155,31 +155,31 @@
             <th style="width: 15%" scope="col" pSortableColumn="select">
               <p class="font-size-16">
                 Seleccionar
-                <p-sortIcon field="select"></p-sortIcon>
+                <p-sortIcon field="select" />
               </p>
             </th>
             <th style="width: 15%" scope="col" pSortableColumn="departamento">
               <p class="font-size-16">
                 Departamento
-                <p-sortIcon field="departamento"></p-sortIcon>
+                <p-sortIcon field="departamento" />
               </p>
             </th>
             <th style="width: 30%" scope="col" pSortableColumn="label">
               <p class="font-size-16">
                 Nombre
-                <p-sortIcon field="label"></p-sortIcon>
+                <p-sortIcon field="label" />
               </p>
             </th>
             <th style="width: 30%" scope="col" pSortableColumn="email">
               <p class="font-size-16">
                 Correo
-                <p-sortIcon field="email"></p-sortIcon>
+                <p-sortIcon field="email" />
               </p>
             </th>
             <th style="width: 10%" scope="col" pSortableColumn="figuraLegal">
               <p class="font-size-16">
                 Nombre
-                <p-sortIcon field="figuraLegal"></p-sortIcon>
+                <p-sortIcon field="figuraLegal" />
               </p>
             </th>
           </tr>

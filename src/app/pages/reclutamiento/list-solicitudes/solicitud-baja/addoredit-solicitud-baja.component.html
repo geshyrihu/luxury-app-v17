@@ -30,14 +30,12 @@
         formControlName="lawyerAssistance"
         label="Require abogado"
         [data]="cb_si_no"
-        [selectDefaulOption]="false"
       />
       <custom-input-select
         [control]="form.get('employeeInformed')"
         formControlName="employeeInformed"
         label="Colaborador enterado de su baja"
         [data]="cb_si_no"
-        [selectDefaulOption]="false"
       />
       <div formArrayName="discounts">
         <button

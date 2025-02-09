@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { TicketFilterService } from 'src/app/core/services/ticket-filter.service';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-haeder-customer',
@@ -36,7 +35,7 @@ export default class HaederCustomerComponent implements OnInit {
     const urlApi = `Customers/${this.custIdService.customerId}`;
     this.apiRequestService.onGetItem(urlApi).then((result: any) => {
       this.nameCustomer = result.nameCustomer;
-      this.logoCustomer = `${environment.base_urlImg}Administration/customer/${result.photoPath}`;
+      this.logoCustomer = result.photoPath;
     });
   }
 }

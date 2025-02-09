@@ -6,6 +6,7 @@ export const ticketsMenu = (authS: AuthService) => [
       'SuperUsuario',
       'SupervisionOperativa',
       'Administrador',
+      'Asistente',
       'JefeMantenimiento',
       'AuxiliarMantenimiento',
       'Seguridad',

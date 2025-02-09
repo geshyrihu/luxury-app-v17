@@ -3,7 +3,6 @@ import { Observable } from 'rxjs';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { TicketFilterService } from 'src/app/core/services/ticket-filter.service';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-report-header',
@@ -15,7 +14,7 @@ export default class ReportHeaderComponent implements OnInit {
   custIdService = inject(CustomerIdService);
   filterReportOperationService = inject(TicketFilterService);
 
-  logoLuxury = `${environment.base_urlImg}logo2.jpg`;
+  logoLuxury = ``;
   @Input()
   nameCustomer: string = '';
   @Input()
@@ -37,7 +36,7 @@ export default class ReportHeaderComponent implements OnInit {
     const urlApi = `Customers/${this.custIdService.customerId}`;
     this.apiRequestService.onGetItem(urlApi).then((result: any) => {
       this.nameCustomer = result.nameCustomer;
-      this.logoCustomer = `${environment.base_urlImg}Administration/customer/${result.photoPath}`;
+      this.logoCustomer = result.photoPath;
     });
   }
 }

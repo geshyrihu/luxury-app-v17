@@ -25,7 +25,7 @@ export default class CustomerModulListComponent implements OnInit {
   }
 
   onLoadData(state: boolean): void {
-    const urlApi = `CustomerModul/Customers/${state}`;
+    const urlApi = `ModuleAppCustomer/Customers/${state}`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
@@ -33,7 +33,7 @@ export default class CustomerModulListComponent implements OnInit {
 
   // Funcion para eliminar un banco y refres
   onDelete(id: number) {
-    this.apiRequestService.onDelete(`CustomerModul/${id}`).then((_) => {
+    this.apiRequestService.onDelete(`ModuleAppCustomer/${id}`).then((_) => {
       // Actualizamos el signal para eliminar el elemento de la lista
       this.data.filter((item) => item.id !== id);
     });

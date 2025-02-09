@@ -40,7 +40,7 @@ export default class TicketMessageProgramComponent implements OnInit {
   }
 
   onLoadData() {
-    const urlApi = `TicketMessage/Programation/${this.id}`;
+    const urlApi = `Tickets/Programation/${this.id}`;
     this.apiRequestService.onGetItem(urlApi).then((result: any) => {
       this.form.patchValue({
         assignee: result.assignee,
@@ -53,14 +53,14 @@ export default class TicketMessageProgramComponent implements OnInit {
     this.submitting = true;
 
     this.apiRequestService
-      .onPost(`TicketMessage/Programation/${this.id}`, this.form.value)
+      .onPost(`Tickets/Programation/${this.id}`, this.form.value)
       .then((result: boolean) => {
         result ? this.ref.close(true) : (this.submitting = false);
       });
   }
 
   onLoadUsers() {
-    const urlApi = `TicketMessage/Participant/${this.config.data.ticketGroupId}`;
+    const urlApi = `Tickets/Participant/${this.config.data.ticketGroupId}`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.cb_user = result;
     });

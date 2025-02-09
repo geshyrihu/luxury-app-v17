@@ -4,14 +4,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgbProgressbar } from '@ng-bootstrap/ng-bootstrap';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
-import { EStatusOrdenCompra } from 'src/app/core/enums/estatus-orden-compra.enum';
-import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DateService } from 'src/app/core/services/date.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
+import { EnumSelectService } from 'src/app/core/services/enum-select.service';
 import CreateOrdenCompraComponent from '../orden-compra/orden-compra/create-orden-compra/create-orden-compra.component';
 import AddProductModalComponent from './add-product-modal.component';
 import AddProductComponent from './add-product.component';
@@ -27,20 +26,22 @@ import SolicitudCompraDetalleComponent from './solicitud-compra-detalle/solicitu
     NgbProgressbar,
     SolicitudCompraDetalleComponent,
   ],
+  providers: [EnumSelectService],
 })
 export default class SolicitudCompraComponent implements OnInit {
+  enumSelectService = inject(EnumSelectService);
   apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
   authS = inject(AuthService);
+  custIdService = inject(CustomerIdService);
   dateService = inject(DateService);
+  dialogHandlerService = inject(DialogHandlerService);
   formBuilder = inject(FormBuilder);
   routeActive = inject(ActivatedRoute);
   router = inject(Router);
-  custIdService = inject(CustomerIdService);
 
   submitting: boolean = false;
 
-  statusCompra: ISelectItem[] = onGetSelectItemFromEnum(EStatusOrdenCompra);
+  statusCompra: ISelectItem[] = [];
   _cb_Status = [];
   id: number = 0;
   solicitudCompra: any;
@@ -55,7 +56,7 @@ export default class SolicitudCompraComponent implements OnInit {
   imprimir = false;
   cotizacionesRelacionadas: any[] = [];
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this.routeActive.params.subscribe((resp) => {
       this.id = resp['id'];
     });
@@ -64,6 +65,9 @@ export default class SolicitudCompraComponent implements OnInit {
       this.onLoadData();
       this.onCotizacionesRelacionadas();
     }
+    this.statusCompra = await this.enumSelectService.typeStatusOrdenCompra(
+      false
+    );
   }
   get f() {
     return this.form.controls;

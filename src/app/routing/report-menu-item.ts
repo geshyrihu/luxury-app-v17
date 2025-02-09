@@ -2,7 +2,12 @@ import { AuthService } from 'src/app/core/services/auth.service';
 
 export const reportMenu = (authS: AuthService) => [
   {
-    visible: authS.canRead('7.1 REPORTES'),
+    visible: authS.onValidateRoles([
+      'SuperUsuario',
+      'SupervisionOperativa',
+      'Administrador',
+      'JefeMantenimiento',
+    ]),
     label: 'Reportes',
     icon: 'fa-duotone fa-solid fa-file-chart-column',
     items: [
@@ -27,7 +32,12 @@ export const reportMenu = (authS: AuthService) => [
         name: 'Reporte Supervisión',
       },
       {
-        visible: authS.canRead('7.1 REPORTES'),
+        visible: authS.onValidateRoles([
+          'SuperUsuario',
+          'Administrador',
+          'JefeMantenimiento',
+          'SupervisionOperativa',
+        ]),
         label: '6.3.1 Cierre mensual mtto',
         routerLink: '/report/maintenance-report/panel',
         name: 'Reporte mensual mtto',

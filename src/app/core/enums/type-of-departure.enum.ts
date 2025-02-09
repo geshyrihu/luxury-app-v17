@@ -1,5 +1,5 @@
-﻿export enum ETypeOfDeparture {
-  Renuncia,
-  Despido,
-  Abandono,
-}
+﻿// export enum ETypeOfDeparture {
+//   Renuncia,
+//   Despido,
+//   Abandono,
+// }

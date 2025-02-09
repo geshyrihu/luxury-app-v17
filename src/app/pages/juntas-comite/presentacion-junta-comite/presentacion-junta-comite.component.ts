@@ -8,7 +8,6 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DateService } from 'src/app/core/services/date.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
-import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
 import AddPresentacionJuntaComiteComponent from './add-presentacion-junta-comite.component';
 import AddoreditPresentacionJuntaComiteComponent from './addoredit-presentacion-junta-comite.component';
@@ -28,7 +27,6 @@ export default class PresentacionJuntaComiteComponent implements OnInit {
   dateService = inject(DateService);
 
   ref: DynamicDialogRef;
-  urlBase = `${environment.base_urlImg}/customers/${this.custIdService.customerId}/presentacion/`;
   applicationUserId: string =
     this.authS.userTokenDto.infoUserAuthDto.applicationUserId;
   customerId$: Observable<number> = this.custIdService.getCustomerId$();

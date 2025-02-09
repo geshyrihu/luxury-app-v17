@@ -1,20 +1,49 @@
-<!-- <p-toast position="top-right"  [baseZIndex]="99999"></p-toast> -->
 <div class="card p-2">
   <ngb-alert [dismissible]="false" type="primary">Permisos</ngb-alert>
-  @for (item of roles; track item) {
-  <div class="form-check pointer">
-    <input
-      class="form-check-input pointer"
-      type="checkbox"
-      [ngModel]="item.isSelected"
-      [checked]="item.isSelected"
-      [id]="item.roleId"
-      (change)="item.isSelected = !item.isSelected"
-      (change)="updateRole(item)"
-    />
-    <label class="form-check-label font-ligth pointer" [for]="item.roleId">
-      {{ item.roleName | uppercase }}
-    </label>
-  </div>
-  }
+  <ul class="list-group">
+    <li
+      *ngFor="let item of roles"
+      class="list-group-item pointer"
+      [class.active]="item.isSelected"
+      (click)="selectRole(item)"
+    >
+      <!-- {{ item.roleName | uppercase }} -->
+      <input
+        class="form-check-input me-2"
+        type="checkbox"
+        [checked]="item.isSelected"
+        [id]="item.roleId"
+      />
+      <label class="form-check-label pointer" [for]="item.roleId">
+        {{ item.roleName }}
+      </label>
+    </li>
+  </ul>
 </div>
+
+<style>
+  .pointer {
+    cursor: pointer;
+  }
+
+  .list-group-item {
+    margin-top: 2px; /* Reduce el margen superior */
+    margin-bottom: 2px; /* Reduce el margen inferior */
+    padding: 0.5rem; /* Ajusta el relleno si es necesario */
+  }
+
+  .list-group-item.active {
+    background-color: #0d3b66; /* Color de fondo activo */
+    color: white; /* Color del texto activo */
+    font-weight: bold;
+  }
+
+  .form-check {
+    margin-top: 2px; /* Reduce el margen entre los checkboxes */
+    margin-bottom: 2px;
+  }
+
+  .form-check-label {
+    margin-left: 5px; /* Espaciado entre el checkbox y el texto */
+  }
+</style>

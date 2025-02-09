@@ -47,7 +47,7 @@ export default class TicketMessageReopenComponent implements OnInit {
     this.submitting = true;
 
     this.apiRequestService
-      .onPost(`TicketMessage/Reopen`, this.form.value)
+      .onPost(`Tickets/Reopen`, this.form.value)
       .then((result: boolean) => {
         result ? this.ref.close(true) : (this.submitting = false);
       });

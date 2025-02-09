@@ -2,7 +2,6 @@ import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-operation-report-client',
@@ -15,8 +14,6 @@ export default class OperationReportClientComponent implements OnInit {
   rutaActiva = inject(ActivatedRoute);
 
   data: any = [];
-  urlLogoCustomer = `${environment.base_urlImg}Administration/customer/`;
-  urlImage = environment.base_urlImg;
   customer: string = '';
   inicio: string = '';
   final: string = '';
@@ -25,8 +22,6 @@ export default class OperationReportClientComponent implements OnInit {
     this.customer = this.rutaActiva.snapshot.params.customer;
     this.inicio = this.rutaActiva.snapshot.params.inicio;
     this.final = this.rutaActiva.snapshot.params.final;
-
-    this.urlImage = `${environment.base_urlImg}customers/${this.customer}/report/`;
 
     this.onLoadData();
   }

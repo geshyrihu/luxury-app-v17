@@ -52,24 +52,4 @@ export default class ModuleAppListComponent {
         if (result) this.onLoadData();
       });
   }
-  onRowReorder(event: any) {
-    // Paso 4: Actualizar los índices de todos los elementos
-    this.data.forEach((item, index) => {
-      item.positionIndex = index + 1; // Los índices empiezan desde 1
-    });
-
-    // Llamar al servicio para actualizar los índices en el backend (si es necesario)
-    this.updateModuleIndices(this.data);
-  }
-
-  updateModuleIndices(data: any[]) {
-    // Crear un arreglo con los nuevos índices y otros datos necesarios
-    const updatedModules = data.map((item) => ({
-      Id: item.id,
-      PositionIndex: item.positionIndex,
-    }));
-    // Llamar a la API para actualizar el índice en el backend
-    const urlApi = 'ModuleApp/UpdatePositionIndex'; // La ruta del endpoint en tu API
-    this.apiRequestService.onPost(urlApi, updatedModules);
-  }
 }

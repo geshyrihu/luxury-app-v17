@@ -10,7 +10,6 @@ import CardEmployeeComponent from 'src/app/pages/directorios/employee-internal/c
 import AddOrEditStatusRequestSalaryModificationComponent from './addoredit-status-request-salary-modification.component';
 
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-status-request-salary-modification',
@@ -34,7 +33,6 @@ export default class StatusRequestSalaryModificationComponent
 
   data: any;
   noCandidates: boolean = true;
-  pahtBaseImg = environment.base_urlImg + 'Administration/accounts/';
   applicationUserId: string = this.authS.infoUserAuthDto.applicationUserId;
   ngOnInit() {
     if (this.workPositionId === null || this.employeeId === null) {

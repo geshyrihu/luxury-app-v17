@@ -1,5 +1,5 @@
 import { NgStyle } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { imageToBase64 } from 'src/app/core/helpers/enumeration';
 
@@ -9,7 +9,7 @@ import { imageToBase64 } from 'src/app/core/helpers/enumeration';
   standalone: true,
   imports: [LuxuryAppComponentsModule, NgStyle],
 })
-export default class CustomInputImgComponent implements OnInit {
+export default class CustomInputImgComponent {
   imgBase64: string = '';
 
   //Ruta de Imagen por defecto
@@ -20,15 +20,32 @@ export default class CustomInputImgComponent implements OnInit {
   urlImgCurrent: string = '';
   @Input()
   title: string = '';
+
+  private _contentHeight: number = 100; // Valor por defecto en píxeles
+  private _contentWidth: number = 150; // Valor por defecto en píxeles
+
   @Input()
-  contentHeight: string = '100px';
+  set contentHeight(value: string | number) {
+    this._contentHeight =
+      typeof value === 'string' ? parseInt(value, 10) : value;
+  }
+
   @Input()
-  contentWidth: string = '150px';
+  set contentWidth(value: string | number) {
+    this._contentWidth =
+      typeof value === 'string' ? parseInt(value, 10) : value;
+  }
+
+  get contentHeight() {
+    return this._contentHeight;
+  }
+
+  get contentWidth() {
+    return this._contentWidth;
+  }
 
   @Output()
   fileSelected: EventEmitter<File> = new EventEmitter<File>();
-
-  ngOnInit(): void {}
 
   change(event: any): void {
     if (event.target.files.length > 0) {
@@ -44,7 +61,6 @@ export default class CustomInputImgComponent implements OnInit {
 
   onValidateImgCurrent(): boolean {
     const url = this.urlImgCurrent;
-
     let result: boolean = false;
     if (url) {
       const parts = url.split('/');

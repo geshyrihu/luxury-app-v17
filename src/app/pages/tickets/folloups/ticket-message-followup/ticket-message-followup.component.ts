@@ -1,20 +1,26 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
-import { FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-
-import { LuxuryAppService } from 'src/app/core/services/luxury-app.service';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'app-ticket-message-followup',
   templateUrl: './ticket-message-followup.component.html',
   standalone: true,
   imports: [LuxuryAppComponentsModule],
-  providers: [LuxuryAppService],
+  providers: [],
 })
 export default class TicketMessageFollowupComponent
   implements OnInit, OnDestroy
 {
-  appService = inject(LuxuryAppService);
+  apiRequestService = inject(ApiRequestService);
+
+  authS = inject(AuthService);
+  config = inject(DynamicDialogConfig);
+  formBuilder = inject(FormBuilder);
+  ref = inject(DynamicDialogRef);
 
   description: any[] = [];
   submitting: boolean = false;
@@ -22,16 +28,13 @@ export default class TicketMessageFollowupComponent
   loading = false;
   seguimientoLenght: number = 200;
   seguimientoConst: string = '';
-  ticketMessageId: number = this.appService.config.data.id;
+  ticketMessageId: number = this.config.data.id;
   id: number = 0;
 
-  form: FormGroup = this.appService.formBuilder.group({
+  form: FormGroup = this.formBuilder.group({
     id: { value: this.id, disabled: true },
     ticketMessageId: [this.ticketMessageId, Validators.required],
-    applicationUserId: [
-      this.appService.authS.applicationUserId,
-      Validators.required,
-    ],
+    applicationUserId: [this.authS.applicationUserId, Validators.required],
     description: [
       '',
       [
@@ -61,7 +64,7 @@ export default class TicketMessageFollowupComponent
     this.loading = true;
 
     const urlApi = `TicketMessageFollowUp/List/${this.ticketMessageId}`;
-    this.appService.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.description = result;
       this.loading = false;
     });
@@ -70,11 +73,11 @@ export default class TicketMessageFollowupComponent
     return this.form.controls;
   }
   onSubmit() {
-    if (!this.appService.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestService.validateForm(this.form)) return;
 
     this.submitting = true;
 
-    this.appService.apiRequestService
+    this.apiRequestService
       .onPost(`TicketMessageFollowUp`, this.form.value)
       .then((_) => {
         this.onCargaListaseguimientos();
@@ -85,6 +88,6 @@ export default class TicketMessageFollowupComponent
       });
   }
   ngOnDestroy(): void {
-    this.appService.ref.close(true);
+    this.ref.close(true);
   }
 }

@@ -1,4 +1,4 @@
-<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
+<p-toast position="top-right" [baseZIndex]="99999" />
 <p-table
   #dt
   [value]="data"
@@ -32,11 +32,11 @@
       <th scope="col">Img</th>
       <th scope="col" pSortableColumn="nameTool">
         Nombre
-        <p-sortIcon field="nameTool"></p-sortIcon>
+        <p-sortIcon field="nameTool" />
       </th>
       <th scope="col" pSortableColumn="category">
         Categoria
-        <p-sortIcon field="category"></p-sortIcon>
+        <p-sortIcon field="category" />
       </th>
       @if (authS.onValidateRoles(['JefeMantenimiento', 'SuperUsuario'])) {
       <th scope="col" style="width: 10%">Opciones</th>

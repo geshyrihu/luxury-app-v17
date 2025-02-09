@@ -6,7 +6,6 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-addoredit-documento',
@@ -27,7 +26,6 @@ export default class AddoreditDocumentoComponent implements OnInit {
   id: number = 0;
   checked: boolean = false;
   cb_categoriaDocumento: boolean = true;
-  urlBaseImg = environment.base_urlImg;
   model: any;
   filteredProvider: any[];
   selectedProvider: any;

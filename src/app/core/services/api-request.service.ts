@@ -55,6 +55,26 @@ export class ApiRequestService implements OnDestroy {
     }
   }
   // Función para cargar datos de forma genérica
+  async onGetEnumSelectItem<T>(urlApi: string): Promise<T | null> {
+    // Mostrar un mensaje de carga
+    this.customToastService.onLoading();
+    try {
+      const responseData = await lastValueFrom(
+        this.dataService
+          .get<T>('EnumSelectItem/' + urlApi)
+          .pipe(takeUntil(this.destroy$))
+      );
+      // Cuando se completa la carga con éxito, mostrar un mensaje de éxito y resolver la promesa con los datos
+      this.customToastService.onClose();
+      console.log(`resp: ${urlApi}`, responseData.body);
+      return responseData.body;
+    } catch (error) {
+      // En caso de error, mostrar un mensaje de error y rechazar la promesa con null
+      this.customToastService.onCloseToError(error);
+      return null;
+    }
+  }
+  // Función para cargar datos de forma genérica
   async onGetList<T>(urlApi: string, httpParams?: any): Promise<T | null> {
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
@@ -67,6 +87,27 @@ export class ApiRequestService implements OnDestroy {
       );
       // Cuando se completa la carga con éxito, mostrar un mensaje de éxito y resolver la promesa con los datos
       this.customToastService.onClose();
+      console.log(`resp: ${urlApi}`, responseData.body);
+      return responseData.body;
+    } catch (error) {
+      // En caso de error, mostrar un mensaje de error y rechazar la promesa con null
+      this.customToastService.onCloseToError(error);
+      return null;
+    }
+  }
+
+  // Función para cargar datos de forma genérica
+  async onGetListOffLoading<T>(
+    urlApi: string,
+    httpParams?: any
+  ): Promise<T | null> {
+    try {
+      const responseData = await lastValueFrom(
+        this.dataService
+          .get<T>(urlApi, httpParams)
+          .pipe(takeUntil(this.destroy$))
+      );
+
       console.log(`resp: ${urlApi}`, responseData.body);
       return responseData.body;
     } catch (error) {

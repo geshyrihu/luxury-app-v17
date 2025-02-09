@@ -3,14 +3,12 @@ import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { EInventoryCategory } from 'src/app/core/enums/inventory-category.enum';
-import { EState } from 'src/app/core/enums/state.enum';
-import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DateService } from 'src/app/core/services/date.service';
+import { EnumSelectService } from 'src/app/core/services/enum-select.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
@@ -18,6 +16,7 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   templateUrl: './addoredit-activos.component.html',
   standalone: true,
   imports: [LuxuryAppComponentsModule, CustomInputModule, CommonModule],
+  providers: [EnumSelectService],
 })
 export default class AddOrEditActivosComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
@@ -28,6 +27,7 @@ export default class AddOrEditActivosComponent implements OnInit {
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
   custIdService = inject(CustomerIdService);
+  enumSelectService = inject(EnumSelectService);
 
   submitting: boolean = false;
 
@@ -41,10 +41,10 @@ export default class AddOrEditActivosComponent implements OnInit {
 
   form: FormGroup;
 
-  cb_inventoryCategory: ISelectItem[] =
-    onGetSelectItemFromEnum(EInventoryCategory);
-  optionActive: ISelectItem[] = onGetSelectItemFromEnum(EState);
-  ngOnInit(): void {
+  cb_inventoryCategory: ISelectItem[] = [];
+  optionActive: ISelectItem[] = [];
+  async ngOnInit() {
+    await this.onLoadEnum();
     this.onLoadEquipoClasificacion();
 
     this.category = this.config.data.inventoryCategory;
@@ -56,14 +56,14 @@ export default class AddOrEditActivosComponent implements OnInit {
       brand: [''],
       customerId: [this.customerId],
       dateOfPurchase: ['', [Validators.required]],
-      equipoClasificacionId: ['', Validators.required],
+      equipoClasificacionId: [null, Validators.required],
       inventoryCategory: [this.category, [Validators.required]],
       model: [''],
       nameMachinery: ['', [Validators.required, Validators.minLength(5)]],
       observations: [''],
       photoPath: [''],
       serie: [''],
-      state: ['', [Validators.required]],
+      state: [null, [Validators.required]],
       technicalSpecifications: [''],
       ubication: ['', [Validators.required]],
       applicationUserId: [this.authS.applicationUserId],
@@ -96,6 +96,13 @@ export default class AddOrEditActivosComponent implements OnInit {
       }
     });
   }
+
+  async onLoadEnum() {
+    this.cb_inventoryCategory =
+      await this.enumSelectService.inventoryCategory();
+    this.optionActive = await this.enumSelectService.state();
+  }
+
   onSubmit() {
     if (!this.apiRequestService.validateForm(this.form)) return;
 

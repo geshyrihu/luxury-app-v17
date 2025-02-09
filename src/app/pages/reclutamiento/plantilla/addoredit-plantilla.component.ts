@@ -2,13 +2,11 @@ import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { EState } from 'src/app/core/enums/state.enum';
-import { ETurnoTrabajo } from 'src/app/core/enums/turno-trabajo.enum';
-import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
+import { EnumSelectService } from 'src/app/core/services/enum-select.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
@@ -16,6 +14,7 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   templateUrl: './addoredit-plantilla.component.html',
   standalone: true,
   imports: [LuxuryAppComponentsModule, CustomInputModule],
+  providers: [EnumSelectService],
 })
 export default class AddoreditPlantillaComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
@@ -24,6 +23,7 @@ export default class AddoreditPlantillaComponent implements OnInit {
   config = inject(DynamicDialogConfig);
   custIdService = inject(CustomerIdService);
   ref = inject(DynamicDialogRef);
+  enumSelectService = inject(EnumSelectService);
 
   submitting: boolean = false;
 
@@ -31,8 +31,8 @@ export default class AddoreditPlantillaComponent implements OnInit {
   checked: boolean = false;
   cb_profession: ISelectItem[] = [];
   cb_employee: ISelectItem[] = [];
-  cb_turnoTrabajo: ISelectItem[] = onGetSelectItemFromEnum(ETurnoTrabajo);
-  cb_state: ISelectItem[] = onGetSelectItemFromEnum(EState);
+  cb_turnoTrabajo: ISelectItem[] = [];
+  cb_state: ISelectItem[] = [];
 
   form: FormGroup = this.formBuilder.group({
     id: { value: this.id, disabled: true },
@@ -43,10 +43,10 @@ export default class AddoreditPlantillaComponent implements OnInit {
     professionName: [''],
     sueldo: [0.0],
     sueldoBase: [0.0, Validators.required],
-    state: [0, Validators.required],
+    state: [null, Validators.required],
     employeeId: [null],
     employeeName: [''],
-    turnoTrabajo: [0],
+    turnoTrabajo: [null],
     lunesEntrada: [''],
     lunesSalida: [''],
     martesEntrada: [''],
@@ -64,7 +64,9 @@ export default class AddoreditPlantillaComponent implements OnInit {
     observationsWorkShift: [''],
   });
 
-  ngOnInit(): void {
+  async ngOnInit() {
+    this.cb_turnoTrabajo = await this.enumSelectService.turnoTrabajo();
+    this.cb_state = await this.enumSelectService.state();
     this.onProfessionSelectItem();
     this.onProfessionSelectItem();
     this.onLoadSelectItem();

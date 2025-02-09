@@ -30,12 +30,7 @@ export interface PermissionListDto {
   canUpdate: boolean;
   canDelete: boolean;
 }
-export enum EPermission {
-  CanCreate = 'canCreate',
-  CanRead = 'canRead',
-  CanUpdate = 'canUpdate',
-  CanDelete = 'canDelete',
-}
+
 export interface SelectItemCustomerAccessDto {
   label: string;
   value: number;

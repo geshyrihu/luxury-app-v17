@@ -7,47 +7,19 @@
           <input class="form-control" formControlName="id" />
         </div>
       </div>
-      <div class="form-group row mb-2">
-        <label class="font-weight-normal col-sm-3">Fecha</label>
-        <div class="col-sm-9 p-fluid">
-          <input
-            type="datetime-local"
-            class="form-control"
-            formControlName="date"
-            [class.is-invalid]="
-              f.date.invalid && (f.date.dirty || f.date.touched)
-            "
-          />
-          @if (f.date.invalid && (f.date.dirty || f.date.touched)) {
-          <div class="text-danger">
-            @if (f.date.errors.required) {
-            <small> Campo requerido </small>
-            }
-          </div>
-          }
-        </div>
-      </div>
-      <div class="form-group row mb-2">
-        <label class="font-weight-normal col-sm-3">Tipo de Junta</label>
-        <div class="col-sm-9 p-fluid">
-          <select formControlName="eTypeMeeting" class="form-control">
-            <option value="">Seleecion una opción</option>
-            @for (item of cb_typeMeeting; track item) {
-            <option [value]="item.value">
-              {{ item.label }}
-            </option>
-            }
-          </select>
-          @if ( f.eTypeMeeting.invalid && (f.eTypeMeeting.dirty ||
-          f.eTypeMeeting.touched) ) {
-          <div class="text-danger">
-            @if (f.eTypeMeeting.errors.required) {
-            <small> Campo requerido </small>
-            }
-          </div>
-          }
-        </div>
-      </div>
+
+      <custom-input-date
+        [control]="form.get('date')"
+        formControlName="date"
+        label="Fecha de entrada"
+        placeholder="fecha de entrada"
+      />
+      <custom-input-select
+        [control]="form.get('eTypeMeeting')"
+        formControlName="eTypeMeeting"
+        label="Unidad"
+        [data]="cb_typeMeeting"
+      />
     </div>
     <div class="mt-1 mb-2">
       <btn-submit [disabled]="this.form.invalid" />
@@ -60,10 +32,7 @@
   <div class="row">
     <div class="col-sm-4">
       <!-- Fomrulario comité -->
-      <app-addoredit-comite
-        [meetingId]="id"
-        [customerId]="customerId"
-      ></app-addoredit-comite>
+      <app-addoredit-comite [meetingId]="id" [customerId]="customerId" />
       <!-- Fomrulario comité -->
     </div>
     <div class="col-sm-4">
@@ -71,15 +40,12 @@
       <app-addoredit-list-administration
         [meetingId]="id"
         [customerId]="customerId"
-      ></app-addoredit-list-administration>
+      />
       <!-- Formulario Administración -->
     </div>
     <div class="col-sm-4">
       <!-- Formulario Administración -->
-      <app-addoredit-invited
-        [meetingId]="id"
-        [customerId]="customerId"
-      ></app-addoredit-invited>
+      <app-addoredit-invited [meetingId]="id" [customerId]="customerId" />
       <!-- Formulario Administración -->
     </div>
   </div>

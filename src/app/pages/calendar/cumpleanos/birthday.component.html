@@ -20,7 +20,7 @@
     <div class="col-12 col-md-6 col-lg-2 mb-3" *ngFor="let item of data">
       <div class="card">
         <div class="card-body">
-          <img [src]="url + item.photo" class="img-fluid" alt="..." />
+          <img [src]="item.photo" class="img-fluid" alt="..." />
           <h4 class="card-title text-center">{{ item.title }}</h4>
           <p class="card-text text-center">{{ item.profession }}</p>
           <p class="card-text text-center">{{ item.date }}</p>

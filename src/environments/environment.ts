@@ -1,10 +1,7 @@
 export const environment = {
   production: false,
-
-  base_public: 'http://localhost:4200/',
-
-  base_signalr: 'https://localhost:7069/notificationHub',
-  base_url: 'https://localhost:7069/api/',
-  base_urlImg: 'https://localhost:7069/img/',
-  url_account: `https://localhost:7069/img/Administration/accounts/`,
+  API_BASE_SIGNALR: 'https://localhost:7069/notificationHub',
+  API_BASE_URL: 'https://localhost:7069/api/',
+  // API_BASE_URL: 'http://luxurybuildingapp.com:8060/api/',
+  // API_BASE_URL: 'https://luxurybuildingapp.com/api/',
 };

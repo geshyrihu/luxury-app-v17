@@ -56,55 +56,68 @@
     [label]="'Generar y enviar datos de acceso por correo electrónico ' + email"
   />
 </div>
-} } @if (userName) {
+} }}
 <div class="card p-2">
-  <ngb-alert [dismissible]="false" type="primary">Asignar Permisos</ngb-alert>
+  <ngb-alert [dismissible]="false" type="primary">Permisos</ngb-alert>
+  <ul class="list-group">
+    <li
+      *ngFor="let item of roles"
+      class="list-group-item pointer"
+      [class.active]="item.isSelected"
+      (click)="selectRole(item)"
+    >
+      <!-- {{ item.roleName | uppercase }} -->
+      <input
+        class="form-check-input me-2"
+        type="checkbox"
+        [checked]="item.isSelected"
+        [id]="item.roleId"
+      />
+      <label class="form-check-label pointer" [for]="item.roleId">
+        {{ item.roleName }}
+      </label>
+    </li>
+  </ul>
 
-  <div *ngIf="this.authS.onValidateRoles(['SuperUsuario']); else adminRoles">
-    <ng-container *ngFor="let item of rolesSuperUser; trackBy: trackByRoleId">
-      <div class="form-check pointer">
-        <input
-          class="form-check-input pointer"
-          type="checkbox"
-          [(ngModel)]="item.isSelected"
-          [id]="item.roleId"
-          (change)="updateRole(item)"
-        />
-        <label class="form-check-label font-light pointer" [for]="item.roleId">
-          {{ item.roleName | uppercase }}
-        </label>
-      </div>
-    </ng-container>
-  </div>
-  <ng-template #adminRoles>
-    <ng-container *ngFor="let item of rolesAdmin; trackBy: trackByRoleId">
-      <div class="form-check pointer">
-        <input
-          class="form-check-input pointer"
-          type="checkbox"
-          [(ngModel)]="item.isSelected"
-          [id]="item.roleId"
-          (change)="updateRole(item)"
-        />
-        <label class="form-check-label font-light pointer" [for]="item.roleId">
-          {{ item.roleName | uppercase }}
-        </label>
-      </div>
-    </ng-container>
-  </ng-template>
-</div>
-} } @if(submitting) {
+  @if(submitting) {
 
-<div class="card">
-  <div class="card-body text-center">
-    <div>
-      <div class="spinner-border text-primary m-1" role="status">
-        <span class="sr-only">Loading...</span>
+  <div class="card">
+    <div class="card-body text-center">
+      <div>
+        <div class="spinner-border text-primary m-1" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
       </div>
     </div>
+    <!-- end card-body -->
   </div>
-  <!-- end card-body -->
-</div>
-<!-- end card -->
+  <!-- end card -->
 
-}
+  }
+  <style>
+    .pointer {
+      cursor: pointer;
+    }
+
+    .list-group-item {
+      margin-top: 2px; /* Reduce el margen superior */
+      margin-bottom: 2px; /* Reduce el margen inferior */
+      padding: 0.5rem; /* Ajusta el relleno si es necesario */
+    }
+
+    .list-group-item.active {
+      background-color: #0d3b66; /* Color de fondo activo */
+      color: white; /* Color del texto activo */
+      font-weight: bold;
+    }
+
+    .form-check {
+      margin-top: 2px; /* Reduce el margen entre los checkboxes */
+      margin-bottom: 2px;
+    }
+
+    .form-check-label {
+      margin-left: 5px; /* Espaciado entre el checkbox y el texto */
+    }
+  </style>
+</div>

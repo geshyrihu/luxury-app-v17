@@ -23,7 +23,6 @@ export default class ListerramientasComponent implements OnInit {
 
   public reporteHerramientasPdfService = inject(ReporteHerramientasPdfService);
 
-  base_urlImg = '';
   data: any[] = [];
 
   ref: DynamicDialogRef;

@@ -7,20 +7,12 @@ import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DateService } from 'src/app/core/services/date.service';
 import { PeriodoMonthService } from 'src/app/core/services/periodo-month.service';
-import ReporteTicketsComponent from 'src/app/pages/supervision/reporte-tickets/reporte-tickets.component';
-import PagetitleReportComponent from 'src/app/shared/cabeceras/pagetitlereport/pagetitlereport.component';
-import { environment } from 'src/environments/environment';
-const base_urlImg = environment.base_urlImg;
 
 @Component({
   selector: 'app-report-ticket',
   templateUrl: './report-ticket.component.html',
   standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    PagetitleReportComponent,
-    ReporteTicketsComponent,
-  ],
+  imports: [LuxuryAppComponentsModule],
 })
 export default class ReportTicketComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
@@ -35,7 +27,6 @@ export default class ReportTicketComponent implements OnInit {
   ref: DynamicDialogRef;
 
   customerId$: Observable<number> = this.custIdService.getCustomerId$();
-  url = base_urlImg;
   periodoInicial$: Observable<Date> =
     this.periodoMonthService.getPeriodoInicial$();
 

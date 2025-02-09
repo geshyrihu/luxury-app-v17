@@ -34,13 +34,13 @@ export default class GastosMantenimientoComponent implements OnInit {
     });
   }
   onLoadData() {
-    const urlApi = `MaintenanceCalendars/SummaryOfExpenses/${this.custIdService.getCustomerId()}`;
+    const urlApi = `PresupuestoMantenimiento/SummaryOfExpenses/${this.custIdService.getCustomerId()}`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.data = result.items;
       this.totalGasto = result.totalGastos;
     });
 
-    const urlApi2 = `MaintenanceCalendars/Resumengastos/${this.custIdService.getCustomerId()}`;
+    const urlApi2 = `PresupuestoMantenimiento/Resumengastos/${this.custIdService.getCustomerId()}`;
     this.apiRequestService.onGetList(urlApi2).then((result: any) => {
       this.resumenGastos = result;
     });

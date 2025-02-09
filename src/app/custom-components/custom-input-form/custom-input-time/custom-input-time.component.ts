@@ -8,13 +8,9 @@ import {
 } from '@angular/forms';
 import { FlatpickrModule } from 'angularx-flatpickr';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import flatpickr from 'flatpickr';
-import { Spanish } from 'flatpickr/dist/l10n/es';
+import { flatpickrFactory } from 'src/app/core/helpers/flatpickr-factory';
 import ValidationErrorsCustomInputComponent from '../validation-errors-custom-input/validation-errors-custom-input.component';
-export function flatpickrFactory() {
-  flatpickr.localize(Spanish);
-  return flatpickr;
-}
+
 @Component({
   selector: 'custom-input-time',
   templateUrl: './custom-input-time.component.html',

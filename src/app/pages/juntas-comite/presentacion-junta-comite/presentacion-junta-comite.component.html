@@ -1,4 +1,4 @@
-<p-toast position="top-right" [baseZIndex]="9999999"></p-toast>
+<p-toast position="top-right" [baseZIndex]="9999999" />
 
 @if (data) {
 <div class="card">
@@ -20,14 +20,14 @@
         class="btn btn-soft-primary me-1 mb-sm-1"
         pSortableColumn="fechaCorrespondienteFiltro"
       >
-        PERIODO <p-sortIcon field="fechaCorrespondienteFiltro"></p-sortIcon>
+        PERIODO <p-sortIcon field="fechaCorrespondienteFiltro" />
       </button>
       <button
         class="btn btn-soft-primary me-1 mb-sm-1"
         pSortableColumn="fechaJuntaFiltro"
       >
         FECHA DE JUNTA
-        <p-sortIcon field="fechaJuntaFiltro"></p-sortIcon>
+        <p-sortIcon field="fechaJuntaFiltro" />
       </button>
     </ng-template>
     <ng-template pTemplate="header">
@@ -45,7 +45,7 @@
         <td colspan="5">
           <div class="row">
             <div class="col-6 d-flex align-items-center">
-              @if (authS.onValidateRoles(['Administrador']) &&
+              @if (authS.onValidateRoles(['Administrador','SuperUsuario']) &&
               !item.archivoFinal) {
 
               <div class="me-2">
@@ -81,8 +81,8 @@
       <tr>
         <td>
           <!-- PORTADA -->
-          @if ( !item.archivoPortada && authS.onValidateRoles(['Administrador'])
-          ) {
+          @if ( !item.archivoPortada &&
+          authS.onValidateRoles(['Administrador','SuperUsuario']) ) {
           <div class="text-center">
             <custom-button
               ngbTooltip="Cargar archivo"
@@ -102,12 +102,10 @@
           <div class="mt-1 d-flex justify-content-between">
             <div class="d-flex align-items-start">
               @if (item.archivoPortada) {
-              <!-- <btn-download-file
-                [urlFile]="url + item.id + '/' + item.archivoPortada"
-              /> -->
+
               <btn-download-file
-                [urlFile]="urlBase + item.id + '/' + item.archivoPortada"
-                download="Portada.pdf"
+                ngbTooltip="Descargar"
+                [urlFile]="item.archivoPortada"
               />
               }
             </div>
@@ -157,13 +155,9 @@
           <div class="mt-1 d-flex justify-content-between">
             <div class="d-flex align-items-start">
               @if (item.archivoContable) {
-              <!-- <btn-download-file
-                [urlFile]="url + item.id + '/' + item.archivoContable"
-              /> -->
-
               <btn-download-file
-                [urlFile]="urlBase + item.id + '/' + item.archivoContable"
-                download="Contabilidad.pdf"
+                ngbTooltip="Descargar"
+                [urlFile]="item.archivoContable"
               />
               }
             </div>
@@ -213,8 +207,8 @@
               @if (item.archivoJunta) {
 
               <btn-download-file
-                [urlFile]="urlBase + item.id + '/' + item.archivoJunta"
-                download="Operaciones.pdf"
+                ngbTooltip="Descargar"
+                [urlFile]="item.archivoJunta"
               />
               }
             </div>
@@ -262,41 +256,22 @@
 
           <div class="mt-1 d-flex align-content-start">
             <btn-download-file
-              ngbTooltip="Visualizar Pdf"
-              [urlFile]="urlBase + item.id + '/' + item.archivoFinal"
-              download="Operaciones.pdf"
+              ngbTooltip="Descargar"
+              [urlFile]="item.archivoFinal"
             />
 
-            <!-- @if (authS.onValidateRoles(['SupervisionOperativa'])) {
-            <custom-button
-              ngbTooltip="Actualizar archivo"
-              customClass="btn-sm btn-soft-primary "
-              icon="fa-light fa-arrows-rotate"
-              (clicked)="onValidarPresentacion(item.id)"
-            />
-            } -->
             @if (authS.onValidateRoles(['SuperUsuario'])) {
             <btn-delete (OnConfirm)="onDelete(item, 'Final')" />
             }
-            <!-- @if (authS.onValidateRoles(['Administrador'])) {
-            <btn-confirmation
-              tooltipText="Enviar presentación a comité"
-              icon="fa-light fa-paper-plane"
-              classButton="btn-outline-secondary btn-sm me-1 waves-effect waves-light"
-              (OnConfirm)="enviarMailPresentacionComite(item.id)"
-            />
-            } -->
           </div>
           <p class="m-0">{{ item.applicationUserSupervisor }}</p>
           <p class="m-0">
             {{ item.fechaCargaSupervisor }}
           </p>
           }
-          <!-- FINAL -->
         </td>
       </tr>
     </ng-template>
   </p-table>
-  <!-- viewGeneralMinutas -->
 </div>
 }

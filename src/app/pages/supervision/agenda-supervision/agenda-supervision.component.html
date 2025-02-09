@@ -1,4 +1,4 @@
-<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
+<p-toast position="top-right" [baseZIndex]="99999" />
 <div class="h6">DEPTO : {{ depto }}</div>
 <div class="h6">NOMBRE : {{ nombre }}</div>
 <div class="h6">SEMANA : {{ semana }}</div>
@@ -55,7 +55,7 @@
       <tr>
         <th [width]="'15%'" class="ocultar center" pSortableColumn="name.label">
           SUPERVISOR
-          <p-sortIcon field="name.label"></p-sortIcon>
+          <p-sortIcon field="name.label" />
           <p-columnFilter
             field="name"
             matchMode="in"
@@ -92,11 +92,11 @@
         </th>
         <th [width]="'7%'" pSortableColumn="fechaSolicitud">
           SOLICITUD
-          <p-sortIcon field="fechaSolicitud"></p-sortIcon>
+          <p-sortIcon field="fechaSolicitud" />
         </th>
         <th [width]="'9%'" pSortableColumn="numeroCliente">
           CLIENTE
-          <p-sortIcon field="numeroCliente"></p-sortIcon>
+          <p-sortIcon field="numeroCliente" />
           <p-columnFilter
             field="customer"
             matchMode="in"
@@ -133,23 +133,23 @@
         </th>
         <th [width]="'20%'" pSortableColumn="problema">
           PROBLEMA/TEMA
-          <p-sortIcon field="problema"></p-sortIcon>
+          <p-sortIcon field="problema" />
         </th>
         <th [width]="'20%'" pSortableColumn="solucion">
           SOLUCION/SEGUIMIENTO
-          <p-sortIcon field="solucion"></p-sortIcon>
+          <p-sortIcon field="solucion" />
         </th>
         <th [width]="'9%'" pSortableColumn="fechaConclusion">
           CONCLUSION
-          <p-sortIcon field="fechaConclusion"></p-sortIcon>
+          <p-sortIcon field="fechaConclusion" />
         </th>
         <th pSortableColumn="duracion">
           DIAS
-          <p-sortIcon field="duracion"></p-sortIcon>
+          <p-sortIcon field="duracion" />
         </th>
         <th pSortableColumn="estatus">
           ESTATUS
-          <p-sortIcon field="estatus"></p-sortIcon>
+          <p-sortIcon field="estatus" />
           <p-columnFilter
             type="boolean"
             field="estatus"

@@ -1,0 +1,79 @@
+<div class="container py-3">
+  <!-- Input para cargar imágenes -->
+  <div class="d-flex justify-content-center gap-3 mb-3">
+    <!-- Botón para abrir la cámara -->
+    <label class="btn btn-outline-primary btn-lg shadow-sm rounded-circle">
+      <i class="fas fa-camera fa-lg"></i>
+      <input
+        type="file"
+        class="d-none"
+        (change)="onFileSelected($event)"
+        accept="image/*"
+        capture="environment"
+      />
+    </label>
+
+    <!-- Botón para abrir la galería -->
+    <label class="btn btn-outline-secondary btn-lg shadow-sm rounded-circle">
+      <i class="fas fa-image fa-lg"></i>
+      <input
+        type="file"
+        class="d-none"
+        (change)="onFileSelected($event)"
+        accept="image/*"
+        multiple
+      />
+    </label>
+  </div>
+
+  <!-- Imágenes seleccionadas antes de enviar -->
+  <h6 class="text-primary">📌 Nuevas imágenes:</h6>
+  <div class="row g-2">
+    <div
+      *ngFor="let image of newImages; let i = index"
+      class="col-sm-4 col-md-2 position-relative"
+    >
+      <img
+        [src]="image.url"
+        class="img-thumbnail rounded shadow-sm"
+        style="width: 100%; object-fit: cover"
+        alt="Imagen seleccionada"
+      />
+      <button
+        class="btn btn-danger btn-sm position-absolute top-0 end-0 rounded-circle"
+        (click)="removeNewImage(i)"
+      >
+        ✕
+      </button>
+    </div>
+  </div>
+
+  <!-- Imágenes ya almacenadas en el backend -->
+  <h6 class="text-success mt-3">📁 Imágenes almacenadas:</h6>
+  <div class="row g-2">
+    <div
+      *ngFor="let image of existingImages"
+      class="col-sm-4 col-md-2 position-relative"
+    >
+      <img
+        [src]="image.photoPath"
+        class="img-thumbnail rounded shadow-sm"
+        style="width: 100%; object-fit: cover"
+        alt="Imagen subida"
+      />
+      <button
+        class="btn btn-danger btn-sm position-absolute top-0 end-0 rounded-circle"
+        (click)="deleteExistingImage(image.id)"
+      >
+        ✕
+      </button>
+    </div>
+  </div>
+
+  <!-- Botón para guardar imágenes nuevas -->
+  <div class="text-center mt-4">
+    <button (click)="onSaveImages()" class="btn btn-primary btn-lg shadow-sm">
+      💾 Guardar imágenes
+    </button>
+  </div>
+</div>

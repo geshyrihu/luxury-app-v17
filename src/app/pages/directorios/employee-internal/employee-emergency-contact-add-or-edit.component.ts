@@ -2,10 +2,9 @@ import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { ERelationEmployee } from 'src/app/core/enums/relation-employee.enum';
-import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { EnumSelectService } from 'src/app/core/services/enum-select.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
@@ -13,6 +12,7 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   templateUrl: './employee-emergency-contact-add-or-edit.component.html',
   standalone: true,
   imports: [LuxuryAppComponentsModule, CustomInputModule],
+  providers: [EnumSelectService],
 })
 export default class EmployeeEmergencyContactAddOrEditComponent
   implements OnInit
@@ -21,20 +21,23 @@ export default class EmployeeEmergencyContactAddOrEditComponent
   formBuilder = inject(FormBuilder);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
+  enumSelectService = inject(EnumSelectService);
 
   id: string = '';
   submitting: boolean = false;
-  cb_relacion: ISelectItem[] = onGetSelectItemFromEnum(ERelationEmployee);
+  cb_relacion: ISelectItem[] = [];
 
   form: FormGroup = this.formBuilder.group({
     id: { value: this.id, disabled: true },
     employeeId: [this.config.data.employeeId],
     nameContact: ['', Validators.required],
     phoneNumber: ['', Validators.required],
-    relation: ['', Validators.required],
+    relation: [null, Validators.required],
     contacOfBeneficiary: [this.config.data.contacOfBeneficiary],
   });
-  ngOnInit(): void {
+  async ngOnInit() {
+    this.cb_relacion = await this.enumSelectService.relationEmployee();
+
     this.id = this.config.data.id;
 
     if (this.id !== '') this.onLoadData();

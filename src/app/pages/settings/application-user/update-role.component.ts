@@ -13,28 +13,31 @@ export default class UpdateRoleComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
 
   roles: IRoles[] = [];
-  rolesUpdate: IRoles[] = [];
-  checked = false;
-
-  @Input()
-  applicationUserId: string = '';
+  @Input() applicationUserId: string = '';
 
   ngOnInit(): void {
     this.getRoles();
   }
+
   getRoles() {
     this.apiRequestService
       .onGetList('ApplicationUser/GetRole/' + this.applicationUserId)
       .then((result: any) => {
         this.roles = result;
-        this.rolesUpdate = this.roles;
       });
   }
 
-  updateRole(roles: any): void {
+  selectRole(selectedRole: IRoles): void {
+    // Deseleccionar todos los roles
+    this.roles.forEach((role) => (role.isSelected = false));
+
+    // Seleccionar el rol actual
+    selectedRole.isSelected = true;
+
+    // Enviar al backend
     this.apiRequestService.onPost(
       `ApplicationUser/AddRoleToUser/${this.applicationUserId}`,
-      roles
+      selectedRole
     );
   }
 }

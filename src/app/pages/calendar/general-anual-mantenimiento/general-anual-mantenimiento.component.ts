@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-general-anual-mantenimiento',
@@ -20,14 +19,11 @@ export default class GeneralAnualMantenimientoComponent implements OnInit {
   customerId$: Observable<number> = this.custIdService.getCustomerId$();
   cb_providers: ISelectItem[] = [];
   providerId = '';
-  pathImg = '';
 
   ngOnInit() {
     this.onLoadData();
     this.onLoadProveedores();
-    this.pathImg = `${environment.base_urlImg}customers/${this.custIdService.customerId}/machinery/`;
     this.customerId$.subscribe((resp) => {
-      this.pathImg = `${environment.base_urlImg}customers/${this.custIdService.customerId}/machinery/`;
       this.onLoadData();
     });
   }

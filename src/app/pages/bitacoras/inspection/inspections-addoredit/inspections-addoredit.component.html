@@ -10,44 +10,49 @@
         placeholder="Nombre de la Inspección"
       />
 
-      <!-- Campo Área Responsable -->
-      <custom-input-datalist
-        (propagar)="saveAreResponsableId($event)"
-        [control]="form.get('departamentName')"
-        [data]="cb_area_responsable"
-        formControlName="departamentName"
-        label="Area"
-        dataListId="departamentNameDatalistOptions"
+      <custom-input-select
+        [control]="form.get('departament')"
+        formControlName="departament"
+        label="Departamento"
+        [selectDefaulOption]="false"
+        [data]="cb_departament"
       />
+      <!-- Campo Área Responsable -->
 
       <!-- Selector de Frecuencia -->
-      <div class="form-group mb-3">
-        <label for="frequency">Frecuencia</label>
-        <select
-          id="frequency"
-          class="form-select"
-          (change)="onFrequencyChange($event)"
-          formControlName="frequency"
-          required
-        >
-          <option value="" disabled selected>Seleccione una frecuencia</option>
-          <option value="daily">Diaria</option>
-          <option value="weekly">Semanal</option>
-          <option value="monthly">Mensual</option>
-        </select>
+      <div class="form-group mb-3 row">
+        <label for="frequency" class="col-sm-3">Frecuencia</label>
+        <div class="col-sm-9">
+          <select
+            id="frequency"
+            class="form-select"
+            (change)="onFrequencyChange($event)"
+            formControlName="frequency"
+            required
+          >
+            <option value="" disabled selected>
+              Seleccione una frecuencia
+            </option>
+            <option value="daily">Diaria</option>
+            <option value="weekly">Semanal</option>
+            <option value="monthly">Mensual</option>
+          </select>
+        </div>
       </div>
 
       <!-- Opciones de Frecuencia -->
-      <div *ngIf="selectedFrequency === 'weekly'" class="form-group">
-        <label>Días de la semana:</label>
-        <div *ngFor="let day of weekDays">
-          <input
-            type="checkbox"
-            [value]="day.value"
-            [checked]="weeklyDays.value.includes(day.value)"
-            (change)="onCheckboxChange($event)"
-          />
-          {{ day.label }}
+      <div *ngIf="selectedFrequency === 'weekly'" class="form-group row">
+        <label class="col-sm-3">Días de la semana:</label>
+        <div class="col-sm-9">
+          <div *ngFor="let day of weekDays">
+            <input
+              type="checkbox"
+              [value]="day.value"
+              [checked]="weeklyDays.value.includes(day.value)"
+              (change)="onCheckboxChange($event)"
+            />
+            {{ day.label }}
+          </div>
         </div>
       </div>
 
@@ -65,17 +70,20 @@
         />
       </div>
       <!-- Selector de Frecuencia -->
-      <div class="form-group mb-3">
-        <label for="frequency">Activa</label>
-        <select
-          id="isActive"
-          class="form-select"
-          formControlName="isActive"
-          required
-        >
-          <option [value]="true">Activa</option>
-          <option [value]="false">Inactiva</option>
-        </select>
+      <div class="form-group mb-3 row">
+        <label for="frequency" class="col-sm-3">Activa</label>
+
+        <div class="col-sm-9">
+          <select
+            id="isActive"
+            class="form-select"
+            formControlName="isActive"
+            required
+          >
+            <option [value]="true">Activa</option>
+            <option [value]="false">Inactiva</option>
+          </select>
+        </div>
       </div>
 
       <btn-submit [disabled]="this.form.invalid || submitting" />

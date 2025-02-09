@@ -38,7 +38,6 @@
       <hr />
 
       @if (cb_customer.length > 1) {
-      <!-- Start Aquí se agrega el select -->
 
       <div class="ps-2 pe-2 mb-3">
         <label for="user-options" class="form-label text-muted font-size-16"
@@ -55,9 +54,20 @@
           </option>
         </select>
       </div>
-      <!-- End Aquí se agrega el select -->
       }
+      <!-- @if (cb_customer.length < 2) {
 
+      <div class="ps-2 pe-2 mb-3">
+        <span class="logo-sm">
+          <img
+            class="me-2 rounded avatar-sm"
+            [src]="customerPhotoPath"
+            alt="img"
+          />
+        </span>
+        <p>{{ customerName }}</p>
+      </div>
+      } -->
       <!-- Opciones del usuario -->
       <a
         [routerLink]="['/update-user-profile']"

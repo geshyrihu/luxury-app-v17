@@ -1,4 +1,4 @@
-<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
+<p-toast position="top-right" [baseZIndex]="99999" />
 
 <p-table
   #dt
@@ -33,15 +33,15 @@
     <tr>
       <th scope="col" style="width: 5%">#</th>
       <th scope="col" style="width: 65%" pSortableColumn="nameArea">
-        NOMBRE DE AREA RESPONSABLE <p-sortIcon field="nameArea"></p-sortIcon>
+        NOMBRE DE AREA RESPONSABLE <p-sortIcon field="nameArea" />
       </th>
       <th scope="col" style="width: 20%" pSortableColumn="position">
         POSICIÓN
-        <p-sortIcon field="position"></p-sortIcon>
+        <p-sortIcon field="position" />
       </th>
       <th scope="col" colspan="2" style="width: 30%" pSortableColumn="position">
         JERARQUÍA
-        <p-sortIcon field="position"></p-sortIcon>
+        <p-sortIcon field="position" />
       </th>
     </tr>
   </ng-template>

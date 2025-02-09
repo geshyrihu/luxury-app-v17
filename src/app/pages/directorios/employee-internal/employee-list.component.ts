@@ -8,12 +8,9 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
-import { environment } from 'src/environments/environment';
 import CardEmployeeComponent from './card-employee.component';
 import { EmployeeAddOrEditService } from './employee-add-or-edit.service';
 import { EmployeeProviderAddOrEditComponent } from './employee-provider-addoredit.component';
-
-const base_urlImg = environment.base_urlImg + 'Administration/accounts/';
 
 @Component({
   selector: 'app-employee-list',
@@ -35,8 +32,6 @@ export default class EmployeeListComponent implements OnInit {
   getAllEmployeeActive: any = [];
   ref: DynamicDialogRef;
 
-  url = base_urlImg;
-
   customerId$: Observable<number> = this.custIdService.getCustomerId$();
 
   ngOnInit(): void {
@@ -52,7 +47,7 @@ export default class EmployeeListComponent implements OnInit {
   }
 
   onLoadData() {
-    const urlApi = `ApplicationUserEmployee/List/${this.custIdService.customerId}/${this.activo}`;
+    const urlApi = `EmployeeInternal/List/${this.custIdService.customerId}/${this.activo}`;
 
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.data = result;

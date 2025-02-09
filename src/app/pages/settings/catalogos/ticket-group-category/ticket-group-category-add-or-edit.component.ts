@@ -4,6 +4,7 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { EnumSelectService } from 'src/app/core/services/enum-select.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
@@ -11,12 +12,14 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   templateUrl: './ticket-group-category-add-or-edit.component.html',
   standalone: true,
   imports: [LuxuryAppComponentsModule, CustomInputModule],
+  providers: [EnumSelectService],
 })
 export default class TicketGroupCategoryAddOrEditComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   formBuilder = inject(FormBuilder);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
+  enumService = inject(EnumSelectService);
 
   id: number = 0;
   submitting: boolean = false;
@@ -27,18 +30,19 @@ export default class TicketGroupCategoryAddOrEditComponent implements OnInit {
     id: { value: this.id, disabled: true },
     name: ['', [Validators.required, Validators.maxLength(50)]],
     description: ['', [Validators.required, Validators.maxLength(150)], ,],
-    departamentId: ['', Validators.required],
+    departament: [null, Validators.required],
   });
 
-  onLoadDepartament() {
-    const urlApi = `responsiblearea`;
-    this.apiRequestService.onGetSelectItem(urlApi).then((result: any) => {
+  onLoadEnumSelectItem() {
+    const urlApi = `EDepartament`;
+    this.apiRequestService.onGetEnumSelectItem(urlApi).then((result: any) => {
       this.cb_departament = result;
     });
   }
 
-  ngOnInit(): void {
-    this.onLoadDepartament();
+  async ngOnInit() {
+    // this.onLoadEnumSelectItem();
+    this.cb_departament = await this.enumService.departament();
     this.id = this.config.data.id;
     if (this.id !== 0) this.onLoadData();
   }

@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   OnInit,
@@ -13,6 +15,8 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import MetisMenu from 'metismenujs';
 import { Observable } from 'rxjs';
 import { SimplebarAngularModule } from 'simplebar-angular';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { IMenuItem } from './menu.model';
 import { SidebarService } from './sidebar.service';
@@ -35,36 +39,64 @@ import { SidebarService } from './sidebar.service';
 /**
  * Sidebar Component
  */
-export default class SidebarComponent implements OnInit {
+export default class SidebarComponent implements OnInit, AfterViewInit {
+  authS = inject(AuthService);
   private sidebarService = inject(SidebarService);
   private custIdService = inject(CustomerIdService);
+  private apiRequestService = inject(ApiRequestService);
+  private cdr = inject(ChangeDetectorRef);
 
   @ViewChild('sideMenu') sideMenu!: ElementRef;
   menu: any;
   menuItems: IMenuItem[] = [];
-
-  customerId: number;
+  // customerId: number = this.custIdService.getCustomerId();
+  // menuItemss: IMenuItem[] = [];
   customerId$: Observable<number> = this.custIdService.getCustomerId$();
 
   ngOnInit(): void {
-    // Cargar elementos del menú desde el servicio de la barra lateral
-    this.menuItems = this.sidebarService.onLoadMenu;
-    this.menuItems.map((item) => {
-      return {
-        label: item.label,
-        visible: item.visible,
-      };
+    // this.menuItems = this.sidebarService.onLoadMenu;
+    this.onLoadItems();
+    this.customerId$.subscribe((_) => {
+      this.onLoadItems();
     });
+  }
+
+  onLoadItems() {
+    const applicationUserId =
+      this.authS.userTokenDto.infoUserAuthDto.applicationUserId;
+    const customerId = this.custIdService.getCustomerId();
+    const urlApi = `MenuItems/${customerId}/${applicationUserId}`;
+    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      this.menuItems = result;
+
+      this.cdr.detectChanges(); // Forzar actualización de la vista
+
+      this.onLoadMenuFunction();
+    });
+  }
+
+  // Cargar elementos del menú desde el servicio de la barra lateral
+  // console.log('🚀 ~ menu del sidebar:', this.sidebarService.onLoadMenu);
+
+  onLoadMenuFunction() {
+    setTimeout(() => {
+      if (this.menu) {
+        this.menu.dispose(); // Destruir instancia previa
+      }
+      this.menu = new MetisMenu('#side-menu');
+      this._activateMenuDropdown();
+    }, 1000);
   }
 
   /**
    * Activa el menú desplegable
    */
   ngAfterViewInit() {
-    this.menu = new MetisMenu('#side-menu');
-    this._activateMenuDropdown();
+    setTimeout(() => {
+      this.menu = new MetisMenu('#side-menu');
+      this._activateMenuDropdown();
+    }, 500);
   }
-
   /**
    * Comprueba si un elemento del menú tiene subelementos
    * @param item Elemento del menú

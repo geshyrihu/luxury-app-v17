@@ -4,13 +4,24 @@
   (click)="fileInput.click()"
   [style]="{ cursor: 'pointer' }"
 >
-  @if (imgBase64) {
-  <img class="card-img-top" [src]="imgBase64" alt="" />
-  } @if (!imgBase64 && urlImgCurrent === null) {
-  <img class="card-img-top" src="assets/images/no-image.jpg" alt="no-image" />
-  } @if (!imgBase64) {
-  <img class="card-img-top border-1" [src]="urlImgCurrent" alt="" />
-  }
+  <img
+    *ngIf="imgBase64; else checkUrl"
+    class="card-img-top"
+    [src]="imgBase64"
+    alt=""
+  />
+  <ng-template #checkUrl>
+    <img
+      *ngIf="urlImgCurrent; else noImage"
+      class="card-img-top border-1"
+      [src]="urlImgCurrent"
+      alt=""
+    />
+  </ng-template>
+  <ng-template #noImage>
+    <img class="card-img-top" src="assets/images/no-image.jpg" alt="no-image" />
+  </ng-template>
+
   <div class="card-body">
     <span> {{ title }}</span>
   </div>

@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import StripTagsPipe from 'src/app/core/pipes/StripTags.pipe';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-equipos',
@@ -19,7 +18,6 @@ export default class EquiposComponent implements OnInit {
   data: any[] = [];
 
   customerId$: Observable<number> = this.custIdService.getCustomerId$();
-  base_urlImg = environment.base_urlImg;
 
   ngOnInit() {
     this.onLoadData();

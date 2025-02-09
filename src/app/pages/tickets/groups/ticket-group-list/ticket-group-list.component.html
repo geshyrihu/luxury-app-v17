@@ -1,4 +1,4 @@
-<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
+<p-toast position="top-right" [baseZIndex]="99999" />
 <!-- Contenido para pantallas medianas y grandes (md en adelante) -->
 <div class="d-none d-md-block">
   <div class="container mt-4">
@@ -320,11 +320,12 @@
               <div>
                 <h5 class="mb-0">{{ item.nameGroup }}</h5>
                 <p class="text-muted">
-                  <span *ngIf="item.visibility === 'Public'"> Público </span>
+                  <span>{{ item.visibility }}</span>
+                  <!-- <span *ngIf="item.visibility === 'Public'"> Público </span>
                   <span *ngIf="item.visibility === 'Internal'"> Interno </span>
                   <span *ngIf="item.visibility === 'Condominiums'">
                     Cliente
-                  </span>
+                  </span> -->
                 </p>
               </div>
             </div>
@@ -333,7 +334,7 @@
                 class="badge bg-dark me-2 p-2 pointer"
                 (click)="onNavigateMessage(item.id, 0, item.nameGroup)"
               >
-                {{ item.open + item.inProgress + item.reopened }}</span
+                {{ item.totalPending }}</span
               >
               <div class="dropdown">
                 <button
@@ -443,27 +444,27 @@
     <tr>
       <th scope="col" pSortableColumn="isPublic">
         Acceso
-        <p-sortIcon field="isPublic"></p-sortIcon>
+        <p-sortIcon field="isPublic"/>
       </th>
       <th scope="col" pSortableColumn="nameGroup">
         Nombre
-        <p-sortIcon field="nameGroup"></p-sortIcon>
+        <p-sortIcon field="nameGroup"/>
       </th>
       <th scope="col" pSortableColumn="open">
         Pendientes
-        <p-sortIcon field="open"></p-sortIcon>
+        <p-sortIcon field="open"/>
       </th>
       <th scope="col" pSortableColumn="inProgress">
         En proceso
-        <p-sortIcon field="inProgress"></p-sortIcon>
+        <p-sortIcon field="inProgress"/>
       </th>
       <th scope="col" pSortableColumn="reopened">
         Reabierto
-        <p-sortIcon field="reopened"></p-sortIcon>
+        <p-sortIcon field="reopened"/>
       </th>
       <th scope="col" pSortableColumn="closed">
         Cerrado
-        <p-sortIcon field="closed"></p-sortIcon>
+        <p-sortIcon field="closed"/>
       </th>
       <th scope="col">Opciones</th>
     </tr>

@@ -1,14 +1,9 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { FlatpickrModule } from 'angularx-flatpickr';
-import flatpickr from 'flatpickr';
-import { Spanish } from 'flatpickr/dist/l10n/es';
+import { flatpickrFactory } from 'src/app/core/helpers/flatpickr-factory';
 import { DateRangeStorageService } from '../../services/date-range-storage.service';
 
-export function flatpickrFactory() {
-  flatpickr.localize(Spanish);
-  return flatpickr;
-}
 @Component({
   selector: 'app-ticket-date-range-selector',
   templateUrl: './ticket-date-range-selector.component.html',

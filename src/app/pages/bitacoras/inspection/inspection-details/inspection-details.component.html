@@ -23,7 +23,7 @@
 
   <hr />
 
-  @for (item of data. amenities; track $index) {
+  @for (item of data.amenities; track $index) {
 
   <ul class="list-group mb-3">
     <li
@@ -66,9 +66,15 @@
               Agregar Revisión
             </button>
           </li>
-
           <li>
-            <button class="dropdown-item">Eliminar Area</button>
+            <button
+              class="dropdown-item"
+              (click)="
+                onDeleteArea(item.inspectionCondominiumAssetId, data.amenities)
+              "
+            >
+              Eliminar Area
+            </button>
           </li>
         </ul>
       </div>
@@ -92,7 +98,10 @@
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
           <li>
-            <button class="dropdown-item" (click)="onDeleteReview(review.id)">
+            <button
+              class="dropdown-item"
+              (click)="onDeleteReview(review.id, item.reviews)"
+            >
               Eliminar revision
             </button>
           </li>

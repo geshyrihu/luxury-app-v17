@@ -48,7 +48,7 @@ export default class MyAssignedTicketsListComponent implements OnInit {
   searchText: string = ''; // Para almacenar el texto de búsqueda
 
   onLoadData(status: any) {
-    const urlApi = `TicketMessage/MyAssignedTickets/${this.authS.applicationUserId}/${status}/${this.custIdService.customerId}`;
+    const urlApi = `Tickets/MyAssignedTickets/${this.authS.applicationUserId}/${status}/${this.custIdService.customerId}`;
     this.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.data = result;
       this.filteredData = result; // Inicializa la data filtrada
@@ -166,7 +166,7 @@ export default class MyAssignedTicketsListComponent implements OnInit {
       cancelButtonText: 'Cancelar',
     }).then((result) => {
       if (result.value) {
-        const urlApi = `TicketMessage/InProgress/${id}/${this.authS.applicationUserId}`;
+        const urlApi = `Tickets/InProgress/${id}/${this.authS.applicationUserId}`;
 
         this.apiRequestService.onGetItem(urlApi).then((result: any) => {
           // Actualizamos el valor del signal con los datos recibidos

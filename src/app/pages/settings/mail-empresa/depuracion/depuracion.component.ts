@@ -16,11 +16,33 @@ export default class DepuracionComponent {
   customToastService = inject(CustomToastService);
 
   MigrateAmenities(path: string) {
-    const urlApi =
-      'UpdateDataBase/' + path + '/' + this.custIdService.customerId;
+    const urlApi = `UpdateDataBase/${path}`;
     this.apiRequestService.onGetList(urlApi).then(() => {
       this.customToastService.onShowSuccess();
       this.customToastService.onClose();
+    });
+  }
+  MigrateEquipos(path: string) {
+    const urlApi = `UpdateDataBase/${path}`;
+
+    this.apiRequestService.onGetList(urlApi).then(() => {
+      this.customToastService.onShowSuccess();
+      this.customToastService.onClose();
+    });
+  }
+  DeleteDuplicateModuleAppRol(path: string) {
+    const urlApi = `UpdateDataBase/${path}`;
+
+    this.apiRequestService.onGetList(urlApi).then(() => {
+      this.customToastService.onShowSuccess();
+      this.customToastService.onClose();
+    });
+  }
+  MyModuleApp(path: string) {
+    const urlApi = `UpdateDataBase/${path}`;
+
+    this.apiRequestService.onGetList(urlApi).then((resut) => {
+      console.log('🚀 ~ resut:', resut);
     });
   }
 }

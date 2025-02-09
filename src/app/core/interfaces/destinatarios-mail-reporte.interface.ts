@@ -1,4 +1,4 @@
 export interface IDestinatariosMailReporte {
   nivelPrivacidad: string;
-  emailResidente: string;
+  email: string;
 }

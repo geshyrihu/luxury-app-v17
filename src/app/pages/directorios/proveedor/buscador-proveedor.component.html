@@ -1,4 +1,4 @@
-<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
+<p-toast position="top-right" [baseZIndex]="99999" />
 <div class="row">
   <div class="col-sm-4">
     <input
@@ -24,7 +24,8 @@
       >
     </div>
   </div>
-  @if (authS.canCreate('CARGA-PROVEEDORES')) {
+  @if (authS.onValidateRoles([ 'Asistente', 'JefeMantenimiento',
+  'Administrador','SuperUsuario']) ) {
 
   <div class="col-sm-1">
     <custom-button
@@ -79,7 +80,7 @@
       <div class="card-body">
         <div class="row">
           <div class="col-sm-3 text-center">
-            <img [src]="url_img + item.pathPhoto" class="img-fluid" alt="" />
+            <img [src]="item.pathPhoto" class="img-fluid" alt="" />
           </div>
           <div class="col-sm-9">
             <div class="text-muted small">

@@ -1,4 +1,4 @@
-<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
+<p-toast position="top-right" [baseZIndex]="99999" />
 <app-filter-requests
   apiUrl="RequestEmployeeRegister/ExportRequestToExcel"
   nameFile="Reporte de altas.xlsx"
@@ -37,19 +37,19 @@
     <ng-template pTemplate="header">
       <tr>
         <th scope="col" pSortableColumn="folio">
-          FOLIO <p-sortIcon field="folio"></p-sortIcon>
+          FOLIO <p-sortIcon field="folio" />
         </th>
         <th scope="col" pSortableColumn="folioVacante">
           FOLIO VACANTE
-          <p-sortIcon field="folioVacante"></p-sortIcon>
+          <p-sortIcon field="folioVacante" />
         </th>
         <th scope="col" pSortableColumn="requestDateFilter">
           SOLICITUD
-          <p-sortIcon field="requestDateFilter"></p-sortIcon>
+          <p-sortIcon field="requestDateFilter" />
         </th>
         <th scope="col" pSortableColumn="numberCustomer">
           CLIENTE
-          <p-sortIcon field="numberCustomer"></p-sortIcon>
+          <p-sortIcon field="numberCustomer" />
         </th>
         <th scope="col">NOMBRE</th>
         <th scope="col">PUESTO</th>

@@ -47,7 +47,7 @@ export default class TicketMessageCloseComponent implements OnInit {
     this.onLoadData();
   }
   onLoadData() {
-    const urlApi = `TicketMessage/GetByClosed/${this.id}`;
+    const urlApi = `Tickets/GetByClosed/${this.id}`;
     this.apiRequestService.onGetItem(urlApi).then((result: any) => {
       this.form.patchValue(result);
       this.form.patchValue({
@@ -115,7 +115,7 @@ export default class TicketMessageCloseComponent implements OnInit {
         }
       });
       this.apiRequestService
-        .onPut(`TicketMessage/Closed/${this.id}`, formData)
+        .onPut(`Tickets/Closed/${this.id}`, formData)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
         });

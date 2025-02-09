@@ -17,7 +17,7 @@ export default class FormUploadImgComponent {
 
   uploadedFiles: HttpHeaders[] | any = [];
   maxFileSize: number = 30000000;
-  url: string = `${environment.base_url}ServiceOrders/SubirImg/${this.config.data.serviceOrderId}`;
+  url: string = `${environment.API_BASE_URL}ServiceOrders/SubirImg/${this.config.data.serviceOrderId}`;
 
   onUpload(event) {
     for (let file of event.files) {

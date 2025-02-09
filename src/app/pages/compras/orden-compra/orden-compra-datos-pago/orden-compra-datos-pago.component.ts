@@ -2,11 +2,10 @@ import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { ETipoGasto } from 'src/app/core/enums/tipo-gasto.enum';
-import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { EnumSelectService } from 'src/app/core/services/enum-select.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
@@ -14,6 +13,7 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   templateUrl: './orden-compra-datos-pago.component.html',
   standalone: true,
   imports: [LuxuryAppComponentsModule, CustomInputModule],
+  providers: [EnumSelectService],
 })
 export default class OrdenCompraDatosPagoComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
@@ -21,6 +21,7 @@ export default class OrdenCompraDatosPagoComponent implements OnInit {
   formBuilder = inject(FormBuilder);
   ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);
+  enumSelectService = inject(EnumSelectService);
 
   submitting: boolean = false;
 
@@ -29,7 +30,7 @@ export default class OrdenCompraDatosPagoComponent implements OnInit {
   cb_formaPago: ISelectItem[] = [];
   cb_payment_method: ISelectItem[] = [];
   cb_usoCfdi: ISelectItem[] = [];
-  cb_tipoGasto: ISelectItem[] = onGetSelectItemFromEnum(ETipoGasto);
+  cb_tipoGasto: ISelectItem[] = [];
   form: FormGroup = this.formBuilder.group({
     id: [0],
     ordenCompraId: [0],
@@ -37,7 +38,7 @@ export default class OrdenCompraDatosPagoComponent implements OnInit {
     metodoDePagoId: [0],
     providerId: [0, Validators.required],
     usoCFDIId: [0],
-    tipoGasto: [0],
+    tipoGasto: [null],
     provider: ['', Validators.required],
   });
 
@@ -49,7 +50,7 @@ export default class OrdenCompraDatosPagoComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this.ordenCompraDatosPagoId =
       this.config.data.ordenCompra.ordenCompraDatosPago.id;
 
@@ -78,6 +79,7 @@ export default class OrdenCompraDatosPagoComponent implements OnInit {
       .then((result: any) => {
         this.form.patchValue(result);
       });
+    this.cb_tipoGasto = await this.enumSelectService.tipoGasto();
   }
   onSubmit() {
     this.submitting = true;

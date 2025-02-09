@@ -3,15 +3,7 @@
     <form autocomplete="off" (ngSubmit)="onSubmit()" [formGroup]="form">
       <div class="row g-3">
         <h5 class="h5 text-center">Agregar</h5>
-        <!-- <div class="col-12 col-md-6">
-          <custom-input-text
-            [control]="form.get('id')"
-            formControlName="id"
-            label="Id"
-            placeholder="Id"
-            [hidden]="false"
-          ></custom-input-text>
-        </div> -->
+
         <div class="col-12 col-md-6">
           <custom-input-datalist
             (propagar)="onSelectUser($event)"
@@ -58,16 +50,26 @@
     <div class="d-flex align-items-center">
       <div>
         <h6 class="text-title mt-0">{{ item.applicationUser }}</h6>
-        <span class="badge bg-danger text-sm p-1" *ngIf="item.isAdmin">
-          <i class="fa-solid fa-user-tie"></i>
-          <small> Administrador </small>
-        </span>
-        <span class="badge bg-success text-sm p-1" *ngIf="!item.isAdmin">
-          <i class="fa-solid fa-user"></i>
-          <small> Participante </small>
+        <span
+          class="badge text-sm p-1"
+          [ngClass]="{
+            'bg-danger': item.isAdmin === 'Administrador',
+            'bg-success': item.isAdmin === 'Participante'
+          }"
+          *ngIf="item.isAdmin"
+        >
+          <i
+            class="fa-solid"
+            [ngClass]="{
+              'fa-user-tie': item.isAdmin === 'Administrador',
+              'fa-user': item.isAdmin === 'Participante'
+            }"
+          ></i>
+          <small>{{ item.isAdmin }}</small>
         </span>
       </div>
     </div>
+
     <div class="d-flex align-items-center">
       <div class="dropdown">
         <button

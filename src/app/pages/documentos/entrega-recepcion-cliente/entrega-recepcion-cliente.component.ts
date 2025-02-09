@@ -8,7 +8,6 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import CrudEntregaRecepcionClienteComponent from 'src/app/pages/settings/catalogos/entrega-recepcion/addoredit-entrega-recepcion-cliente/addoredit-entrega-recepcion-cliente.component';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-entrega-recepcion-cliente',
@@ -83,13 +82,6 @@ export default class EntregaRecepcionClienteComponent implements OnInit {
       .then((result: boolean) => {
         if (result) this.onLoadData();
       });
-  }
-  navigateToPdf(url: string) {
-    const urlFinal = `${
-      environment.base_urlImg
-    }/customers/${this.custIdService.getCustomerId()}/entregarecepcion/${url}`;
-
-    window.open(urlFinal, '_blank');
   }
 
   onValidarDocument(id: number) {

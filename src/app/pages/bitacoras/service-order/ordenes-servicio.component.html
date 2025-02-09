@@ -1,4 +1,4 @@
-<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
+<p-toast position="top-right" [baseZIndex]="99999" />
 <div class="card">
   <p-table
     #dt
@@ -59,18 +59,15 @@
           pSortableColumn="maintenanceCalendarId"
         >
           CL-ID
-          <p-sortIcon
-            field="maintenanceCalendarId"
-            class="no-print"
-          ></p-sortIcon>
+          <p-sortIcon field="maintenanceCalendarId" class="no-print" />
         </th>
         <th style="width: 20%" scope="col" pSortableColumn="machinery">
           Equipo
-          <p-sortIcon field="machinery" class="no-print"></p-sortIcon>
+          <p-sortIcon field="machinery" class="no-print" />
         </th>
         <th style="width: 10%" scope="col" pSortableColumn="typeMaintance">
           Servicio
-          <p-sortIcon field="typeMaintance" class="no-print"></p-sortIcon>
+          <p-sortIcon field="typeMaintance" class="no-print" />
         </th>
         <th
           style="width: 15%"
@@ -79,11 +76,11 @@
           pSortableColumn="provider"
         >
           Proveedor
-          <p-sortIcon field="provider" class="no-print"></p-sortIcon>
+          <p-sortIcon field="provider" class="no-print" />
         </th>
         <th style="width: 10%" scope="col" pSortableColumn="status">
           Estatus
-          <p-sortIcon field="status" class="no-print"></p-sortIcon>
+          <p-sortIcon field="status" class="no-print" />
         </th>
         <th
           style="width: 10%"
@@ -91,10 +88,7 @@
           pSortableColumn="serviceOrderImg.length"
         >
           Fotos
-          <p-sortIcon
-            field="serviceOrderImg.length"
-            class="no-print"
-          ></p-sortIcon>
+          <p-sortIcon field="serviceOrderImg.length" class="no-print" />
         </th>
         <th
           style="width: 10%"
@@ -102,10 +96,7 @@
           pSortableColumn="serviceOrderDocument.length"
         >
           Reporte
-          <p-sortIcon
-            field="serviceOrderDocument.length"
-            class="no-print"
-          ></p-sortIcon>
+          <p-sortIcon field="serviceOrderDocument.length" class="no-print" />
         </th>
         @if ( authS.onValidateRoles([ 'JefeMantenimiento', 'SuperUsuario',
         'Administrador' ]) ) {

@@ -3,7 +3,7 @@
     <div class="col-3 text-left">
       <img
         *ngIf="data?.minutaCliente?.customerLogo"
-        [src]="imgBase + data.minutaCliente.customerLogo"
+        [src]="data.minutaCliente.customerLogo"
         alt="Logo"
         class="img-fluid mb-2"
         style="max-height: 80px; max-width: 100%"
@@ -29,7 +29,7 @@
         class="text-muted mb-1 text-left"
         style="font-size: 0.9rem"
       >
-        {{ data.minuta.date | date : "dd-MMM-yyyy" }}
+        {{ data.minuta.date }}
       </p>
     </div>
     <div class="col-3"></div>

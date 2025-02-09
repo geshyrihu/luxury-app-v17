@@ -1,7 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { LuxuryAppService } from 'src/app/core/services/luxury-app.service';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
@@ -9,11 +10,13 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   templateUrl: './legal-matter-categorie-add-or-edit.component.html',
   standalone: true,
   imports: [LuxuryAppComponentsModule, CustomInputModule],
-  providers: [LuxuryAppService],
+  providers: [],
 })
 export default class LegalMatterCategorieAddOrEditComponent {
-  appService = inject(LuxuryAppService);
+  apiRequestService = inject(ApiRequestService);
+  config = inject(DynamicDialogConfig);
   formBuilder = inject(FormBuilder);
+  ref = inject(DynamicDialogRef);
 
   id: string = '';
   submitting: boolean = false;
@@ -24,31 +27,31 @@ export default class LegalMatterCategorieAddOrEditComponent {
   });
 
   ngOnInit(): void {
-    this.id = this.appService.config.data.id;
+    this.id = this.config.data.id;
     if (this.id !== '') this.onLoadData();
   }
   onLoadData() {
     const urlApi = `LegalMatter/Category/${this.id}`;
-    this.appService.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
       this.form.patchValue(result);
     });
   }
 
   onSubmit() {
-    if (!this.appService.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestService.validateForm(this.form)) return;
     this.submitting = true;
 
     if (this.id === '') {
-      this.appService.apiRequestService
+      this.apiRequestService
         .onPost(`LegalMatter/Category`, this.form.value)
         .then((result: boolean) => {
-          result ? this.appService.ref.close(true) : (this.submitting = false);
+          result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.appService.apiRequestService
+      this.apiRequestService
         .onPut(`LegalMatter/Category/${this.id}`, this.form.value)
         .then((result: boolean) => {
-          result ? this.appService.ref.close(true) : (this.submitting = false);
+          result ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }

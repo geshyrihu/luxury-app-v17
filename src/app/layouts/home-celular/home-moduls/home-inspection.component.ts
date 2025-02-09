@@ -1,8 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { AuthService } from 'src/app/core/services/auth.service';
-import HomeListGroupComponent, {
-  IHomeListGroupComponent,
-} from '../home-list-group/home-list-group.component';
+import { IMenuItem } from '../../sidebar/menu.model';
+import HomeListGroupComponent from '../home-list-group/home-list-group.component';
 
 @Component({
   selector: 'app-home-inspection',
@@ -12,12 +11,12 @@ import HomeListGroupComponent, {
 })
 export default class HomeInspectionComponent {
   authS = inject(AuthService);
-  data: IHomeListGroupComponent[] = [
+  data: IMenuItem[] = [
     {
-      name: 'Administrar inspecciones',
+      label: 'Administrar inspecciones',
       icon: 'fa-solid fa-tasks', // Ícono para tareas (también podrías usar fa-tools)
       routerLink: '/inspections/catalog',
-      isAutorized: this.authS.onValidateRoles([
+      visible: this.authS.onValidateRoles([
         'SuperUsuario',
         'SupervisionOperativa',
         'Administrador',
@@ -25,10 +24,10 @@ export default class HomeInspectionComponent {
       ]),
     },
     {
-      name: 'Ejecutar inspecciones',
+      label: 'Ejecutar inspecciones',
       icon: 'fa-solid fa-clipboard-check', // Ícono para verificación de inspección
       routerLink: '/inspections/my-inspection-list',
-      isAutorized: this.authS.onValidateRoles([
+      visible: this.authS.onValidateRoles([
         'SuperUsuario',
         'SupervisionOperativa',
         'Administrador',

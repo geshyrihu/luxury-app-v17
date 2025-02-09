@@ -34,12 +34,32 @@ export default class InspectionDetailsComponent implements OnInit {
       this.data = result;
     });
   }
-  onDeleteReview(reviewId) {
-    const urlApi = `InspectionCondominiumAsset/DeleteReview/${reviewId}`;
+  onDeleteArea(id: string, areas: any[]) {
+    const urlApi = `InspectionCondominiumAsset/DeleteArea/${id}`;
     this.apiRequestService.onDelete(urlApi).then((result: any) => {
-      this.data = result;
+      if (result) {
+        const index = areas.findIndex(
+          (item) => item.inspectionCondominiumAssetId === id
+        );
+        if (index !== -1) {
+          areas.splice(index, 1); // Elimina el área de la lista
+        }
+      }
     });
   }
+
+  onDeleteReview(reviewId: number, reviews: any[]) {
+    const urlApi = `InspectionCondominiumAsset/DeleteReview/${reviewId}`;
+    this.apiRequestService.onDelete(urlApi).then((result: any) => {
+      if (result) {
+        const index = reviews.findIndex((item) => item.id === reviewId);
+        if (index !== -1) {
+          reviews.splice(index, 1); // Elimina el elemento del array
+        }
+      }
+    });
+  }
+
   onModalInspectionCondominiumAssetAdd(data: any) {
     this.dialogHandlerService
       .openDialog(
@@ -51,7 +71,7 @@ export default class InspectionDetailsComponent implements OnInit {
         this.dialogHandlerService.dialogSizeMd
       )
       .then((result: boolean) => {
-        if (result) this.onLoadData();
+        this.onLoadData();
       });
   }
   onModalInspectionCondominiumAssetEdit(data: any) {

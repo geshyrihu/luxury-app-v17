@@ -1,8 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { AuthService } from 'src/app/core/services/auth.service';
-import HomeListGroupComponent, {
-  IHomeListGroupComponent,
-} from '../home-list-group/home-list-group.component';
+import { IMenuItem } from '../../sidebar/menu.model';
+import HomeListGroupComponent from '../home-list-group/home-list-group.component';
 
 @Component({
   selector: 'app-home-directorios',
@@ -12,12 +11,12 @@ import HomeListGroupComponent, {
 })
 export default class HomeDirectoriosComponent {
   authS = inject(AuthService);
-  data: IHomeListGroupComponent[] = [
+  data: IMenuItem[] = [
     {
-      name: 'Condominos',
+      label: 'Condominos',
       icon: 'fa-solid fa-building', // Representa edificios o viviendas
       routerLink: '/directory/condominos',
-      isAutorized: this.authS.onValidateRoles([
+      visible: this.authS.onValidateRoles([
         'SuperUsuario',
         'SupervisionOperativa',
         'Administrador',
@@ -26,10 +25,10 @@ export default class HomeDirectoriosComponent {
       ]),
     },
     {
-      name: 'Comité de Vigilancia',
+      label: 'Comité de Vigilancia',
       icon: 'fa-solid fa-shield-alt', // Representa seguridad o vigilancia
       routerLink: '/directory/comite-vigilancia',
-      isAutorized: this.authS.onValidateRoles([
+      visible: this.authS.onValidateRoles([
         'SuperUsuario',
         'SupervisionOperativa',
         'Administrador',
@@ -37,10 +36,10 @@ export default class HomeDirectoriosComponent {
       ]),
     },
     {
-      name: 'Personal Interno',
+      label: 'Personal Interno',
       icon: 'fa-solid fa-users', // Representa un grupo de personas
       routerLink: '/directory/personal-interno',
-      isAutorized: this.authS.onValidateRoles([
+      visible: this.authS.onValidateRoles([
         'SuperUsuario',
         'Condomino',
         'SupervisionOperativa',
@@ -50,10 +49,10 @@ export default class HomeDirectoriosComponent {
       ]),
     },
     {
-      name: 'Personal Externo',
+      label: 'Personal Externo',
       icon: 'fa-solid fa-user-tie', // Representa personas externas o profesionales
       routerLink: '/directory/personal-externo',
-      isAutorized: this.authS.onValidateRoles([
+      visible: this.authS.onValidateRoles([
         'SuperUsuario',
         'SupervisionOperativa',
         'Administrador',
@@ -62,10 +61,10 @@ export default class HomeDirectoriosComponent {
       ]),
     },
     {
-      name: 'Catalogo de Proveedores',
+      label: 'Catalogo de Proveedores',
       icon: 'fa-solid fa-box-open', // Representa inventario o proveedores
       routerLink: '/directory/proveedor',
-      isAutorized: this.authS.onValidateRoles([
+      visible: this.authS.onValidateRoles([
         'SuperUsuario',
         'SupervisionOperativa',
         'Administrador',
@@ -74,10 +73,10 @@ export default class HomeDirectoriosComponent {
       ]),
     },
     {
-      name: 'Telefonos de Emergencia',
+      label: 'Telefonos de Emergencia',
       icon: 'fa-solid fa-phone-alt', // Representa teléfonos o comunicación
       routerLink: '/directory/telefonos-emergencia',
-      isAutorized: this.authS.onValidateRoles([
+      visible: this.authS.onValidateRoles([
         'SuperUsuario',
         'SupervisionOperativa',
         'Administrador',

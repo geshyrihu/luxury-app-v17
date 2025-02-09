@@ -94,7 +94,7 @@ export default class SendOperationReportComponent {
         if (resp.select) {
           const correoFiltro = {
             nivelPrivacidad: resp.nivelPrivacidad,
-            emailResidente: resp.email,
+            email: resp.email,
           };
 
           correo = resp.email;
@@ -116,7 +116,7 @@ export default class SendOperationReportComponent {
     if (this.mostrarCco) nivelPrivacidad = 'CCO';
     const correoFiltro = {
       nivelPrivacidad: nivelPrivacidad,
-      emailResidente: this.form.get('email').value,
+      email: this.form.get('email').value,
     };
     this.form.patchValue({
       email: '',

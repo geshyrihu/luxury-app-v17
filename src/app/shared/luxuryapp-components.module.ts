@@ -10,8 +10,6 @@ import {
   NgbTooltipModule,
 } from '@ng-bootstrap/ng-bootstrap';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
-import flatpickr from 'flatpickr';
-import { Spanish } from 'flatpickr/dist/l10n/es';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
@@ -48,10 +46,6 @@ import CalendarRangeComponent from './rango-calendario-mes-anio/calendar-range.c
 import RangoCalendarioyyyymmddComponent from './rango-calendario-yyyymmdd/rango-calendario-yyyymmdd.component';
 import SubirPdfComponent from './subir-pdf/subir-pdf.component';
 import TablePrimeNgModule from './table-primeng.module';
-export function flatpickrFactory() {
-  flatpickr.localize(Spanish);
-  return flatpickr;
-}
 
 @NgModule({
   imports: [

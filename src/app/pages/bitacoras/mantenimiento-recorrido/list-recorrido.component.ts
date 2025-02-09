@@ -7,7 +7,6 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
-import { environment } from 'src/environments/environment';
 import BitacoraAddComponent from '../recorrido-mantenimiento/bitacora-add.component';
 import BitacoraIndividualComponent from '../recorrido-mantenimiento/bitacora-individual.component';
 import RecorridoTaskAddOrEditComponent from './addoredit-recorrido-task.component';
@@ -26,7 +25,6 @@ export default class ListRecorridoComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   dialogHandlerService = inject(DialogHandlerService);
 
-  pathImg = environment.base_urlImg;
   data: any[] = [];
 
   ref: DynamicDialogRef;

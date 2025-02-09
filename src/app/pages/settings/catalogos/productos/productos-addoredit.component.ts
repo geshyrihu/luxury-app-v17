@@ -7,19 +7,18 @@ import {
 } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { EProductClasificacion } from 'src/app/core/enums/product-clasificacion.enum';
-import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { EnumSelectService } from 'src/app/core/services/enum-select.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-productos-addoredit',
   templateUrl: './productos-addoredit.component.html',
   standalone: true,
   imports: [LuxuryAppComponentsModule, CustomInputModule],
+  providers: [EnumSelectService],
 })
 export default class ProductosAddOrEditComponent implements OnInit {
   authS = inject(AuthService);
@@ -27,6 +26,7 @@ export default class ProductosAddOrEditComponent implements OnInit {
   formBuilder = inject(FormBuilder);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
+  enumSelectService = inject(EnumSelectService);
 
   submitting: boolean = false;
 
@@ -35,11 +35,22 @@ export default class ProductosAddOrEditComponent implements OnInit {
   model: any;
   photoFileUpdate: boolean = false;
 
-  form: FormGroup;
+  form: FormGroup = this.formBuilder.group({
+    id: new FormControl({ value: this.id, disabled: true }),
+    category: ['', Validators.required],
+    categoryId: ['', Validators.required],
+    clasificacion: [null, Validators.required],
+    applicationUserId: [this.authS.applicationUserId],
+    marca: [''],
+    modelo: [''],
+    nombreProducto: [
+      '',
+      [Validators.required, Validators.maxLength(45), Validators.minLength(5)],
+    ],
+    urlImagen: [''],
+  });
   cb_category: ISelectItem[] = [];
-  cb_clasificacion: ISelectItem[] = onGetSelectItemFromEnum(
-    EProductClasificacion
-  );
+  cb_clasificacion: ISelectItem[] = [];
 
   onloadData() {
     this.apiRequestService.onGetSelectItem('Categories').then((result: any) => {
@@ -53,29 +64,13 @@ export default class ProductosAddOrEditComponent implements OnInit {
       categoryId: find?.value,
     });
   }
-  ngOnInit(): void {
+  async ngOnInit() {
+    this.cb_clasificacion = await this.enumSelectService.productClasificacion();
     this.onloadData();
     this.id = this.config.data.id;
     if (this.id !== 0) this.onLoadData();
 
-    this.form = this.formBuilder.group({
-      id: new FormControl({ value: this.id, disabled: true }),
-      category: ['', Validators.required],
-      categoryId: ['', Validators.required],
-      clasificacion: ['', Validators.required],
-      applicationUserId: [this.authS.applicationUserId],
-      marca: [''],
-      modelo: [''],
-      nombreProducto: [
-        '',
-        [
-          Validators.required,
-          Validators.maxLength(45),
-          Validators.minLength(5),
-        ],
-      ],
-      urlImagen: [''],
-    });
+    // this.form =
   }
 
   // ...Recibiendo archivo emitido
@@ -88,7 +83,7 @@ export default class ProductosAddOrEditComponent implements OnInit {
     this.apiRequestService
       .onGetItem(`Productos/${this.id}`)
       .then((result: any) => {
-        this.urlBaseImg = `${environment.base_urlImg}Administration/products/${result.urlImagen}`;
+        this.urlBaseImg = result.urlImagen;
         this.form.patchValue(result);
         this.form.patchValue({ category: result.category.nameCotegory });
       });

@@ -5,7 +5,7 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
-
+import MyInspectionAddImagesComponent from '../my-inspection-add-images/my-inspection-add-images.component';
 @Component({
   selector: 'app-my-inspection-ejecutar',
   standalone: true,
@@ -13,11 +13,11 @@ import { DialogHandlerService } from 'src/app/core/services/dialog-handler.servi
   templateUrl: './my-inspection-ejecutar.component.html',
 })
 export default class MyInspectionEjecutarComponent implements OnInit {
-  customerInspectionId: string | null = null;
   activatedRoute = inject(ActivatedRoute);
-  custIdService = inject(CustomerIdService);
-  autS = inject(AuthService);
   apiRequestService = inject(ApiRequestService);
+  autS = inject(AuthService);
+  custIdService = inject(CustomerIdService);
+  customerInspectionId: string | null = null;
   dialogHandlerService = inject(DialogHandlerService);
   data: any;
   applicationUserId = this.autS.applicationUserId;
@@ -43,6 +43,25 @@ export default class MyInspectionEjecutarComponent implements OnInit {
     });
   }
 
+  saveRevision(revision: any): void {
+    const urlApi = `InspectionResult/UpdateInspectionData/${this.customerInspectionId}/${this.applicationUserId}`;
+
+    const revisionData = {
+      id: revision.id,
+      state: revision.state,
+      observations: revision.observations || '',
+    };
+
+    this.apiRequestService
+      .onPost(urlApi, [revisionData]) // Se envía en un array para mantener compatibilidad con la API
+      .then((result: any) => {
+        console.log('Datos guardados exitosamente', result);
+      })
+      .catch((error) => {
+        console.error('Error al guardar revisión:', error);
+      });
+  }
+
   onSubmit(): void {
     if (!Array.isArray(this.data)) {
       console.error('Datos no son un arreglo:', this.data);
@@ -57,11 +76,6 @@ export default class MyInspectionEjecutarComponent implements OnInit {
       }))
     );
 
-    const data = {
-      id: 'sdfassddasd',
-      state: true,
-      observations: 'observations',
-    };
     // Enviar datos de inspección en formato JSON
     const urlApi = `InspectionResult/UpdateInspectionData/${this.customerInspectionId}/${this.applicationUserId}`;
     this.apiRequestService
@@ -75,75 +89,16 @@ export default class MyInspectionEjecutarComponent implements OnInit {
       });
   }
 
-  onSubmitImages(): void {
-    const formData = new FormData();
-
-    // Iterar sobre los datos de la inspección y agregar las imágenes
-    this.data.forEach((area: any) => {
-      area.items.forEach((revision: any) => {
-        revision.images.forEach((img: any) => {
-          if (img.photoPath) {
-            formData.append('images[]', img.photoPath, img.photoPath.name);
-          }
-        });
+  onModalAddImages(inspectionResultId: string) {
+    this.dialogHandlerService
+      .openDialog(
+        MyInspectionAddImagesComponent,
+        { inspectionResultId },
+        'Agregar imágenes',
+        this.dialogHandlerService.dialogSizeMd
+      )
+      .then(() => {
+        this.onLoadData(this.customerInspectionId);
       });
-    });
-
-    // Realizar POST para subir las imágenes
-    const urlApi = `InspectionResult/UpdateInspectionImages/${this.customerInspectionId}/${this.customerId}`;
-    this.apiRequestService.onPost(urlApi, formData).then((result: any) => {});
-  }
-
-  onAddImages(areaId: string, revisionId: string, images: File[]): void {
-    const area = this.data.find((area: any) => area.id === areaId);
-    if (!area) {
-      console.error(`Área con ID ${areaId} no encontrada`);
-      return;
-    }
-
-    const revision = area.items.find(
-      (revision: any) => revision.id === revisionId
-    );
-    if (!revision) {
-      console.error(`Revisión con ID ${revisionId} no encontrada`);
-      return;
-    }
-
-    // Asignamos las imágenes a la revisión específica
-    images.forEach((file: File) => {
-      const image = {
-        id: '', // Id vacío ya que es una nueva imagen
-        photoPath: file, // Se asigna el archivo de la imagen
-      };
-      revision.images.push(image); // Añadimos la imagen al array de imágenes de la revisión
-    });
-  }
-
-  onFileSelected(event: any, areaId: string, revisionId: string): void {
-    const files: File[] = Array.from(event.target.files);
-    this.onAddImages(areaId, revisionId, files);
-  }
-
-  onDeleteImage(imageId: string, areaId: string, revisionId: string): void {
-    const area = this.data.find((area: any) => area.id === areaId);
-    if (!area) {
-      console.error(`Área con ID ${areaId} no encontrada`);
-      return;
-    }
-
-    const revision = area.items.find(
-      (revision: any) => revision.id === revisionId
-    );
-    if (!revision) {
-      console.error(`Revisión con ID ${revisionId} no encontrada`);
-      return;
-    }
-
-    // Eliminar imagen de la revisión
-    revision.images = revision.images.filter((img: any) => img.id !== imageId);
-
-    // Llamar al API para eliminar la imagen del backend
-    const urlApi = `InspectionResult/DeleteInspectionImage/${imageId}/${this.customerId}`;
-    this.apiRequestService.onDelete(urlApi).then((result: any) => {});
   }
 }

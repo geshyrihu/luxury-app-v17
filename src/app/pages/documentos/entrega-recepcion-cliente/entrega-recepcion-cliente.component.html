@@ -1,4 +1,4 @@
-<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
+<p-toast position="top-right" [baseZIndex]="99999" />
 @if (authS.onValidateRoles(['SupervisionOperativa'])) { @for (item of
 cb_departamento; track item) {
 <custom-button
@@ -85,8 +85,7 @@ cb_departamento; track item) {
         <td class="p-column-title">
           <div class="d-flex justify-content-center">
             @if (item.archivo) {
-            <btn-download-file (clicked)="navigateToPdf(item.archivo)">
-            </btn-download-file>
+            <btn-download-file (clicked)="navigateToPdf(item.archivo)" />
             }
           </div>
         </td>

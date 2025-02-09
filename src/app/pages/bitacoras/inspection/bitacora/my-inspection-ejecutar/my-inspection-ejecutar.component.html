@@ -1,135 +1,134 @@
 <div class="container py-3">
-  <h4 class="mb-4">Ejecutar Inspección</h4>
+  <h4 class="h4 mb-4 text-center fw-bold text-primary">Ejecutar Inspección</h4>
 
   <!-- Iterar sobre las áreas -->
   <div *ngFor="let area of data" class="mb-4">
-    <div class="mb-2">
-      <h5>{{ area.condominiumAssetName }}</h5>
+    <div class="mb-3 text-center">
+      <h5 class="h5 fw-bold text-uppercase text-secondary">
+        {{ area.condominiumAssetName }}
+      </h5>
     </div>
 
-    <div class="list-group">
+    <div class="list-group shadow-sm rounded">
       <!-- Iterar sobre las revisiones dentro de cada área -->
       <div
         *ngFor="let revision of area.items"
-        class="list-group-item d-flex flex-column"
+        class="list-group-item p-3 border border-light-subtle"
       >
-        <div class="d-flex justify-content-between align-items-center mb-2">
-          <span class="fw-bold">{{ revision.inspectionDescription }}</span>
-          <!-- Switch para cambiar entre Bien y Mal -->
-          <div>
-            <label class="switch">
-              <input
-                type="checkbox"
-                [(ngModel)]="revision.state"
-                [ngClass]="{
-                  bien: revision.state === true,
-                  mal: revision.state === false
-                }"
-              />
-              <span class="slider"></span>
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <span class="fw-bold text-dark">{{
+            revision.inspectionDescription
+          }}</span>
+
+          <!-- Switch Mejorado -->
+          <div class="form-check form-switch">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              [(ngModel)]="revision.state"
+              id="switch-{{ revision.id }}"
+              (change)="saveRevision(revision)"
+            />
+            <label class="ms-2 text-muted" for="switch-{{ revision.id }}">
+              {{ revision.state ? "Bien" : "Mal" }}
             </label>
-            <span class="ms-2" *ngIf="revision.state === true">Bien</span>
-            <span class="ms-2" *ngIf="revision.state === false">Mal</span>
           </div>
         </div>
 
         <!-- Campo de texto para observaciones -->
         <textarea
-          class="form-control mb-2"
-          rows="3"
+          class="form-control mb-3"
+          rows="2"
           [(ngModel)]="revision.observations"
-          placeholder="Agregar observaciones"
+          placeholder="Agregar observaciones..."
+          (blur)="saveRevision(revision)"
         ></textarea>
 
-        <div class="d-flex align-items-center">
-          <!-- Botón para agregar imágenes -->
-          <input
-            type="file"
-            class="form-control form-control-sm"
-            (change)="onFileSelected($event, area.id, revision.id)"
-            multiple
-          />
-          <button
-            class="btn btn-sm btn-secondary ms-2"
-            (click)="onAddImages(area.id, revision.id, revision.newImages)"
-          >
-            Agregar Imágenes
-          </button>
-          <div class="ms-2">
-            <!-- Mostrar las imágenes añadidas -->
-            <span *ngFor="let image of revision.images">
-              <img
-                [src]="image.url"
-                class="img-thumbnail me-1"
-                style="width: 50px; height: 50px"
-                alt="Imagen subida"
-              />
-            </span>
+        <!-- Botón para agregar imágenes -->
+        <button
+          class="btn btn-sm btn-outline-primary w-100 d-flex align-items-center justify-content-center gap-2"
+          (click)="onModalAddImages(revision.id)"
+        >
+          <i class="bi bi-camera"></i> Agregar Imágenes
+        </button>
+
+        <!-- Contenedor de imágenes responsivo -->
+        <div class="row row-cols-4 g-2 mt-2">
+          <div *ngFor="let image of revision.images; let i = index" class="col">
+            <p-image
+              [src]="image.photoPath"
+              alt="img"
+              width="80"
+              height="auto"
+              class="me-2 border border-danger"
+              [preview]="true"
+            />
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="text-center">
-    <button class="btn btn-success" (click)="onSubmit()">
+  <div class="text-center mt-4">
+    <button
+      class="btn btn-lg btn-success shadow-sm fw-bold px-4"
+      (click)="onSubmit()"
+    >
       Finalizar Inspección
     </button>
   </div>
 </div>
 
 <style>
-  /* Estilo para el Switch */
-  .switch {
-    position: relative;
-    display: inline-block;
-    width: 60px;
-    height: 34px;
+  .img-thumbnail {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 8px;
   }
 
-  .switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-  }
-
-  .slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    transition: 0.4s;
-    border-radius: 34px;
-  }
-
-  .slider:before {
-    position: absolute;
-    content: "";
-    height: 26px;
-    width: 26px;
-    border-radius: 50%;
-    left: 4px;
-    bottom: 4px;
-    background-color: white;
-    transition: 0.4s;
-  }
-
-  input:checked + .slider {
+  /* Mejoras en el diseño del Switch */
+  .form-check-input:checked {
     background-color: #4caf50;
+    border-color: #4caf50;
   }
 
-  input:checked + .slider:before {
-    transform: translateX(26px);
-  }
-
-  .bien {
-    background-color: #4caf50;
-  }
-
-  .mal {
+  .form-check-input:not(:checked) {
     background-color: #f44336;
+    border-color: #f44336;
+  }
+
+  /* Sombra sutil en las tarjetas */
+  .list-group-item {
+    border-radius: 10px;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .list-group-item:hover {
+    background-color: #f8f9fa;
+    transform: scale(1.01);
+  }
+
+  /* Mejoras en los botones */
+  .btn-outline-primary {
+    border-width: 2px;
+    transition: all 0.3s ease;
+  }
+
+  .btn-outline-primary:hover {
+    background-color: #0d6efd;
+    color: white;
+  }
+
+  /* Botón Finalizar */
+  .btn-success {
+    background: linear-gradient(135deg, #28a745, #218838);
+    border: none;
+    transition: all 0.3s ease;
+  }
+
+  .btn-success:hover {
+    background: linear-gradient(135deg, #218838, #1e7e34);
+    transform: scale(1.05);
   }
 </style>

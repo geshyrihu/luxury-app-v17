@@ -1,4 +1,4 @@
-<p-toast position="top-right" [baseZIndex]="99999"></p-toast>
+<p-toast position="top-right" [baseZIndex]="99999" />
 <div class="card">
   @if (data) {
   <p-table
@@ -46,27 +46,27 @@
       <tr>
         <th scope="col" pSortableColumn="producto.nombreProducto">
           Producto
-          <p-sortIcon field="producto.nombreProducto"></p-sortIcon>
+          <p-sortIcon field="producto.nombreProducto" />
         </th>
         <th scope="col" pSortableColumn="existencia">
           Existencia
-          <p-sortIcon field="existencia"></p-sortIcon>
+          <p-sortIcon field="existencia" />
         </th>
         <th scope="col" pSortableColumn="unidadDeMedida.descripcion">
           Unidad
-          <p-sortIcon field="unidadDeMedida.descripcion"></p-sortIcon>
+          <p-sortIcon field="unidadDeMedida.descripcion" />
         </th>
         <th scope="col" pSortableColumn="stockMin">
           Stock Min
-          <p-sortIcon field="stockMin"></p-sortIcon>
+          <p-sortIcon field="stockMin" />
         </th>
         <th scope="col" pSortableColumn="stockMax">
           Stock Max
-          <p-sortIcon field="stockMax"></p-sortIcon>
+          <p-sortIcon field="stockMax" />
         </th>
         <th scope="col" pSortableColumn="compraRequerida">
           Compra Sugerida
-          <p-sortIcon field="compraRequerida"></p-sortIcon>
+          <p-sortIcon field="compraRequerida" />
         </th>
         @if ( authS.onValidateRoles([ 'Asistente', 'JefeMantenimiento',
         'Administrador', 'SuperUsuario' ]) ) {

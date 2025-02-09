@@ -1,16 +1,14 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import LuxuryAppComponentsModule, {
-  flatpickrFactory,
-} from 'app/shared/luxuryapp-components.module';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { flatpickrFactory } from 'src/app/core/helpers/flatpickr-factory';
 import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DateService } from 'src/app/core/services/date.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-addoredit-contrato-poliza',
@@ -30,7 +28,7 @@ export default class AddoreditContratoPolizaComponent implements OnInit {
   submitting: boolean = false;
 
   id: number = 0;
-  urlBaseImg = environment.base_urlImg;
+  urlBaseImg = '';
   model: any;
   cb_providers: ISelectItem[] = [];
   file: File;

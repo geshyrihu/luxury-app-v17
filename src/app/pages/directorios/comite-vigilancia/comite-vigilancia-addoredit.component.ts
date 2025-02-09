@@ -2,11 +2,10 @@ import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { EPosicionComite } from 'src/app/core/enums/position.comite.enum';
-import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
+import { EnumSelectService } from 'src/app/core/services/enum-select.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
@@ -14,28 +13,30 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   templateUrl: './comite-vigilancia-addoredit.component.html',
   standalone: true,
   imports: [LuxuryAppComponentsModule, CustomInputModule],
+  providers: [EnumSelectService],
 })
 export default class ComiteVigilanciaAddOrEditComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
   config = inject(DynamicDialogConfig);
   custIdService = inject(CustomerIdService);
+  enumSelectService = inject(EnumSelectService);
   formBuilder = inject(FormBuilder);
   ref = inject(DynamicDialogRef);
 
   submitting: boolean = false;
 
-  cb_position: ISelectItem[] = onGetSelectItemFromEnum(EPosicionComite);
+  cb_position: ISelectItem[] = [];
   cb_condomino: ISelectItem[] = [];
   id: number = 0;
   form: FormGroup = this.formBuilder.group({
     id: { value: this.id, disabled: true },
     listCondominoId: ['', Validators.required],
     nameDirectoryCondominium: ['', Validators.required],
-    ePosicionComite: [0, [Validators.required]],
+    ePosicionComite: [null, [Validators.required]],
     customerId: [],
   });
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this.apiRequestService
       .onGetSelectItem(`listcondomino/${this.custIdService.getCustomerId()}`)
       .then((response: any) => {
@@ -48,6 +49,8 @@ export default class ComiteVigilanciaAddOrEditComponent implements OnInit {
 
     this.id = this.config.data.id;
     if (this.id !== 0) this.onLoadData();
+
+    this.cb_position = await this.enumSelectService.typePosicionComite();
   }
 
   public saveCondominoId(e: any): void {

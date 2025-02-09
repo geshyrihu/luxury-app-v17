@@ -10,14 +10,12 @@ import {
 import { FileUploadModule, FileUploadValidators } from '@iplab/ngx-file-upload';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { cb_ESiNo } from 'src/app/core/enums/si-no.enum';
-import { ETipoBaja } from 'src/app/core/enums/tipo-baja.enum';
-import { onGetSelectItemFromEnum } from 'src/app/core/helpers/enumeration';
 import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DateService } from 'src/app/core/services/date.service';
+import { EnumSelectService } from 'src/app/core/services/enum-select.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
@@ -25,6 +23,7 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   templateUrl: './solicitud-baja.component.html',
   standalone: true,
   imports: [LuxuryAppComponentsModule, CustomInputModule, FileUploadModule],
+  providers: [EnumSelectService],
 })
 export default class SolicitudBajaComponent implements OnInit {
   apiRequestService = inject(ApiRequestService);
@@ -34,6 +33,7 @@ export default class SolicitudBajaComponent implements OnInit {
   custIdService = inject(CustomerIdService);
   dateService = inject(DateService);
   ref = inject(DynamicDialogRef);
+  enumSelectService = inject(EnumSelectService);
 
   data: any;
   id: number = 0;
@@ -41,9 +41,9 @@ export default class SolicitudBajaComponent implements OnInit {
 
   employeeId: number = this.config.data.employeeId;
 
-  cb_type_departure: ISelectItem[] = onGetSelectItemFromEnum(ETipoBaja);
-  cb_si_no: ISelectItem[] = cb_ESiNo;
-  tipobaja: ETipoBaja = ETipoBaja.Despido;
+  cb_type_departure: ISelectItem[] = [];
+  cb_si_no: ISelectItem[] = [];
+  tipobaja: number = 1;
   mensajeRenuncia =
     'Adjunta la renuncia firmada por el empleado, si no regreso a firmar se considera abandono de trabajo';
   form: FormGroup = this.formBuilder.group({
@@ -53,7 +53,7 @@ export default class SolicitudBajaComponent implements OnInit {
     profession: ['', Validators.required],
     professionKey: [],
     executionDate: ['', Validators.required],
-    typeOfDeparture: ['', Validators.required],
+    typeOfDeparture: [null, Validators.required],
     employee: ['', Validators.required],
     lastdayofwork: ['', Validators.required],
     phoneEmployee: ['', Validators.required],
@@ -72,7 +72,9 @@ export default class SolicitudBajaComponent implements OnInit {
     applicationUserRequestId: [this.authS.applicationUserId],
   });
 
-  ngOnInit(): void {
+  async ngOnInit() {
+    this.cb_si_no = await this.enumSelectService.boolYesNo();
+    this.cb_type_departure = await this.enumSelectService.tipoBaja();
     this.onLoadData();
     // Suscribirse a cambios en el control 'typeOfDeparture'
     this.form.get('typeOfDeparture').valueChanges.subscribe((newValue) => {
