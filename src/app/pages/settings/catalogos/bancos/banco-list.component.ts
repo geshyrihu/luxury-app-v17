@@ -1,7 +1,7 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
-import { UnitOfWork } from 'src/app/core/services/unit-of-work';
+import { SharedServices } from 'src/app/core/services/shared-services';
 import BancoAddOrEditComponent from './banco-addoredit.component';
 
 @Component({
@@ -9,15 +9,14 @@ import BancoAddOrEditComponent from './banco-addoredit.component';
   templateUrl: './banco-list.component.html',
   standalone: true,
   imports: [LuxuryAppComponentsModule],
-  providers: [UnitOfWork],
+  providers: [SharedServices],
 })
 export default class BancoListComponent implements OnInit {
-  uow = inject(UnitOfWork);
+  uow = inject(SharedServices);
 
   // Declaración e inicialización de variables
   dataSignal = signal<any>(null);
   ref: DynamicDialogRef; // Referencia a un cuadro de diálogo modal
-
   ngOnInit(): void {
     this.onLoadData();
   }

@@ -5,10 +5,7 @@ import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { ButtonModule } from 'primeng/button';
 import { Observable } from 'rxjs';
-import { ApiRequestService } from 'src/app/core/services/api-request.service';
-import { AuthService } from 'src/app/core/services/auth.service';
-import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
+import { SharedServices } from 'src/app/core/services/shared-services';
 import TicketGroupParticipantComponent from '../../participants/ticket-group-participant/ticket-group-participant.component';
 import { ETicketMessageStatus } from '../../ticket-message-status.enum';
 import { TicketGroupService } from '../../ticket.service';
@@ -19,17 +16,20 @@ import TicketGroupAddOrEditComponent from '../ticket-group-add-or-edit/ticket-gr
   templateUrl: './ticket-group-list.component.html',
   standalone: true,
   imports: [LuxuryAppComponentsModule, NgbDropdownModule, ButtonModule],
+  providers: [SharedServices],
 })
 export default class TicketGroupListComponent implements OnInit {
-  authService = inject(AuthService);
-  apiRequestService = inject(ApiRequestService);
-  custIdService = inject(CustomerIdService);
-  dialogHandlerService = inject(DialogHandlerService);
+  uow = inject(SharedServices);
+
+  // authService = inject(AuthService);
+  // apiRequestService = inject(ApiRequestService);
+  // custIdService = inject(CustomerIdService);
+  // dialogHandlerService = inject(DialogHandlerService);
   swPush = inject(SwPush);
   router = inject(Router); // Injectamos Router.
   ticketGroupService = inject(TicketGroupService);
 
-  customerId$: Observable<number> = this.custIdService.getCustomerId$();
+  customerId$: Observable<number> = this.uow.custIdService.getCustomerId$();
   error: string = '';
   dataSignal = signal<any>(null);
   ngOnInit() {
@@ -40,27 +40,27 @@ export default class TicketGroupListComponent implements OnInit {
   }
 
   onLoadData() {
-    const customerId = this.custIdService.getCustomerId();
-    const applicationUserId = this.authService.applicationUserId;
+    const customerId = this.uow.custIdService.getCustomerId();
+    const applicationUserId = this.uow.authS.applicationUserId;
 
     const urlApi = `ticketGroup/GetAllByClient/${customerId}/${applicationUserId}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.uow.apiRequestService.onGetList(urlApi).then((result: any) => {
       this.dataSignal.set(result);
     });
   }
   onToggleStatus(id: string) {
     const urlApi = `ticketGroup/toggle-status/${id}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.uow.apiRequestService.onGetItem(urlApi).then((result: any) => {
       this.onLoadData();
     });
   }
   onModalAddOrEdit(data: any) {
-    this.dialogHandlerService
+    this.uow.dialogHandlerService
       .openDialog(
         TicketGroupAddOrEditComponent,
         data,
         data.title,
-        this.dialogHandlerService.dialogSizeMd
+        this.uow.dialogHandlerService.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();
@@ -68,12 +68,12 @@ export default class TicketGroupListComponent implements OnInit {
   }
 
   onModalParticipants(data: any) {
-    this.dialogHandlerService
+    this.uow.dialogHandlerService
       .openDialog(
         TicketGroupParticipantComponent,
         data,
         'Integrantes del grupo',
-        this.dialogHandlerService.dialogSizeMd
+        this.uow.dialogHandlerService.dialogSizeMd
       )
       .then((result: boolean) => {
         this.onLoadData();
@@ -91,7 +91,7 @@ export default class TicketGroupListComponent implements OnInit {
   }
 
   onDelete(id: number) {
-    this.apiRequestService
+    this.uow.apiRequestService
       .onDelete(`ticketGroup/${id}`)
       .then((result: boolean) => {
         if (result)
