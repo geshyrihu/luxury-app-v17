@@ -41,8 +41,6 @@ export default class DepuracionComponent {
   MyModuleApp(path: string) {
     const urlApi = `UpdateDataBase/${path}`;
 
-    this.apiRequestService.onGetList(urlApi).then((resut) => {
-      console.log('🚀 ~ resut:', resut);
-    });
+    this.apiRequestService.onGetList(urlApi).then((resut) => {});
   }
 }

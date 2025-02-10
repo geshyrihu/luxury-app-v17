@@ -75,9 +75,6 @@ export default class SidebarComponent implements OnInit, AfterViewInit {
     });
   }
 
-  // Cargar elementos del menú desde el servicio de la barra lateral
-  // console.log('🚀 ~ menu del sidebar:', this.sidebarService.onLoadMenu);
-
   onLoadMenuFunction() {
     setTimeout(() => {
       if (this.menu) {

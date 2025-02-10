@@ -67,7 +67,6 @@ export default class LoginComponent implements OnInit {
       )
       .subscribe({
         next: (resp: any) => {
-          console.log('🚀 ~ resp.body:', resp.body);
           if (resp.body === null) {
             // Captura el mensaje de error
             const errorDescription = `Ha ocurrido un error inesperado.
@@ -76,7 +75,6 @@ export default class LoginComponent implements OnInit {
             this.errorMessage = errorDescription;
             return throwError(() => new Error(errorDescription));
           }
-          console.log('🚀 ~ resp.body:', resp.body);
           if (resp.body.token != null) {
             this.onRemember(this.form.get('remember').value);
             this.securityService.setAuthData(resp.body.token);

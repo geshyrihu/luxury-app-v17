@@ -18,9 +18,9 @@ export class AppComponent {
 
   requestNotificationPermission() {
     Notification.requestPermission().then((permission) => {
-      // if (permission === 'granted') {
-      //   console.log('Permiso para notificaciones concedido.');
-      // }
+      if (permission === 'granted') {
+        console.log('Permiso para notificaciones concedido.');
+      }
     });
   }
 }

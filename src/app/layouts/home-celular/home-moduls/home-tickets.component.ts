@@ -12,9 +12,6 @@ import HomeListGroupComponent from '../home-list-group/home-list-group.component
 export default class HomeTicketsComponent {
   authS = inject(AuthService);
 
-  constructor() {
-    console.log('🚀 ~ HomeTicketsComponent data:', this.data);
-  }
   data: IMenuItem[] = [
     {
       label: 'Grupos de trabajo',

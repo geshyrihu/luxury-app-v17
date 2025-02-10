@@ -150,11 +150,6 @@ export default class TicketMessageAddOrEditComponent implements OnInit {
         }
       });
 
-      // Verificar contenido de FormData
-      formData.forEach((value, key) => {
-        console.log(`${key}:`, value);
-      });
-
       // Verifica si es creación o actualización
       if (this.id === '') {
         this.apiRequestService
