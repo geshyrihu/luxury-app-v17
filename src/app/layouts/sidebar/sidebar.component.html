@@ -65,86 +65,50 @@
     <!-- Sidebar -->
   </ngx-simplebar>
 </div>
-<!-- Left Sidebar End -->
-<ng-container *ngIf="false">
-  <!-- Iterar sobre los elementos del menú -->
-  @for (item of menuItems; track item) {
-  <li>
-    <!-- Si el elemento tiene subelementos y es visible -->
-    @if (hasItems(item) && item.visible) {
-    <a
-      class="is-parent"
-      [ngClass]="{
-        'has-arrow': !item.badge,
-        'has-dropdown': item.badge
-      }"
-    >
-      <!-- Icono y etiqueta del elemento -->
-      <i class="{{ item.icon }}"></i>
-      <span style="font-size: 16px">{{
-        item.label.length > 15 ? item.label.substring(0, 15) + ".." : item.label
-      }}</span>
-    </a>
-    }
-    <!-- Si el elemento no tiene subelementos y es visible -->
-    @if (!hasItems(item) && item.visible) {
-    <a
-      [routerLink]="item.routerLink"
-      class="side-nav-link-ref"
-      routerLinkActive="active"
-    >
-      <!-- Mostrar icono si existe -->
-      @if (item.icon) {
-      <i class="{{ item.icon }}"></i>
-      }
-      <span>{{ item.label }}</span>
-    </a>
-    }
-    <!-- Si el elemento tiene submenús -->
-    @if (hasItems(item)) {
-    <ul class="sub-menu" aria-expanded="false">
-      <!-- Iterar sobre los subelementos -->
-      @for (subitem of item.items; track subitem) {
-      <li>
-        <!-- Si el subelemento no tiene submenús y es visible -->
-        @if (!hasItems(subitem) && subitem.visible) {
-        <a
-          [routerLink]="subitem.routerLink"
-          class="side-nav-link-ref"
-          routerLinkActive="active"
-        >
-          {{ subitem.label }}
-        </a>
-        }
-        <!-- Si el subelemento tiene submenús -->
-        @if (hasItems(subitem)) {
-        <a class="side-nav-link-a-ref has-arrow">
-          {{ subitem.label }}
-        </a>
-        }
-        <!-- Mostrar los submenús del subelemento -->
-        @if (hasItems(subitem)) {
-        <ul class="sub-menu mm-collapse" aria-expanded="false">
-          @for (subSubitem of subitem.items; track subSubitem) {
-          <li>
-            <!-- Mostrar solo si el subelemento es visible -->
-            @if (subSubitem.visible) {
-            <a
-              [routerLink]="subSubitem.routerLink"
-              routerLinkActive="active"
-              class="side-nav-link-ref"
-            >
-              {{ subSubitem.label }}
-            </a>
-            }
-          </li>
-          }
-        </ul>
-        }
-      </li>
-      }
-    </ul>
-    }
-  </li>
+
+<style>
+  .vertical-menu {
+    background: #2a2a2a; /* Fondo oscuro elegante */
+    padding: 10px 0;
   }
-</ng-container>
+
+  #side-menu li {
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Borde sutil */
+    border-radius: 6px; /* Bordes redondeados */
+    margin: 5px 10px; /* Espaciado entre elementos */
+    overflow: hidden;
+    transition: all 0.3s ease-in-out;
+  }
+
+  #side-menu li a {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    color: #fff;
+    text-decoration: none;
+    transition: background 0.3s ease-in-out;
+  }
+
+  #side-menu li:hover {
+    background: rgba(255, 255, 255, 0.1); /* Efecto hover sutil */
+  }
+
+  #side-menu li a i {
+    margin-right: 10px;
+    font-size: 18px;
+  }
+
+  .sub-menu {
+    padding-left: 15px;
+  }
+
+  .sub-menu li {
+    border-left: 2px solid rgba(255, 255, 255, 0.2); /* Borde para submenús */
+    margin: 5px 0;
+  }
+
+  .active {
+    background: rgba(255, 255, 255, 0.2) !important;
+    border-left: 4px solid #ff9800 !important; /* Destacar activo */
+  }
+</style>
