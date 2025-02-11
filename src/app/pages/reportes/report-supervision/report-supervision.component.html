@@ -8,17 +8,12 @@
       class="img-fluid border mb-2"
       style="max-width: 80px"
     />
-
-    <!-- <p class="text-muted">{{ customerData.nameCustomer }}</p> -->
   </div>
 
   <!-- Título del Reporte -->
   <div class="col-md-4 text-center" *ngIf="nameCustomer">
-    <h5>{{ nameCustomer }}</h5>
+    <h3 class="h3">{{ nameCustomer }}</h3>
   </div>
-
-  <!-- Información de los Administradores -->
-  <div class="col-md-4 text-end"></div>
 </div>
 <div class="card" *ngIf="minutas">
   <!-- Tabla de solicitudes pendientes -->
@@ -26,39 +21,50 @@
     <tr>
       <th scope="col" colspan="6" class="text-center">
         <div class="row align-items-center">
-          <div class="col-md-4 text-end"></div>
           <!-- Título del Reporte -->
-          <div class="col-md-4 text-center">
-            <i class="fa-solid fa-x fa-lg text-danger me-2"></i>
+          <div class="col-12 text-center h2">
             SOLICITUDES PENDIENTES MINUTAS
           </div>
-
-          <!-- Información de los Administradores -->
-          <div class="col-md-4 text-end"></div>
         </div>
       </th>
     </tr>
     <tr>
-      <th scope="col" class="text-center" style="width: 5%">N°</th>
-      <th scope="col" class="text-center" style="width: 10%">FOLIO</th>
-      <th scope="col" class="text-center" style="width: 10%">FECHA SOL.</th>
-      <th scope="col" class="text-center" style="width: 40%">SOLICITUD</th>
-      <!-- <th scope="col" class="text-center" style="width: 5%">DIAS</th> -->
-      <th scope="col" class="text-center" style="width: 40%">SEGUIMIENTO</th>
+      <th scope="col" class="text-center card-title" style="width: 5%">N°</th>
+      <th scope="col" class="text-center card-title" style="width: 10%">
+        FECHA SOL.
+      </th>
+      <th scope="col" class="text-center card-title" style="width: 45%">
+        SOLICITUD
+      </th>
+      <th scope="col" class="text-center card-title" style="width: 10%">
+        FECHA DE TERMINO
+      </th>
+      <th scope="col" class="text-center card-title" style="width: 40%">
+        SEGUIMIENTO
+      </th>
     </tr>
 
     <tr *ngFor="let ticket of minutas; let rowIndex = index">
-      <td class="text-center">{{ rowIndex + 1 }}</td>
-      <td class="text-center">{{ ticket.folio }}</td>
-      <td class="text-center">{{ ticket.date }}</td>
+      <td class="text-center fs-5">{{ rowIndex + 1 }}</td>
+      <td class="text-center fs-5">{{ ticket.date }}</td>
       <td>
-        <strong>
+        <span class="badge bg-light p-2 fs-5">
           {{ ticket.title }}
-        </strong>
-        <br />{{ ticket.requestService }}
+        </span>
+        <div class="fs-5">
+          {{ ticket.requestService }}
+        </div>
       </td>
-      <!-- <td class="text-center">{{ ticket.dias }}</td> -->
-      <td>{{ ticket.fechaUltimoSeguimiento }} - {{ ticket.seguimiento }}</td>
+      <td>
+        <div class="fs-5">
+          {{ ticket.deliveryDate }}
+        </div>
+      </td>
+      <td>
+        <div class="fs-5">
+          {{ ticket.fechaUltimoSeguimiento }} - {{ ticket.seguimiento }}
+        </div>
+      </td>
     </tr>
   </table>
 </div>
@@ -70,39 +76,50 @@
       <tr>
         <th scope="col" colspan="6" class="text-center">
           <div class="row align-items-center">
-            <div class="col-md-4 text-end"></div>
-            <!-- Título del Reporte -->
-            <div class="col-md-4 text-center">
-              <i class="fa-solid fa-x fa-lg text-danger me-2"></i>
+            <div class="col-12 text-center h2">
               SOLICITUDES PENDIENTES {{ item.category }}
             </div>
-
-            <!-- Información de los Administradores -->
-            <div class="col-md-4 text-end"></div>
           </div>
         </th>
       </tr>
       <tr>
-        <th scope="col" class="text-center" style="width: 5%">N°</th>
-        <th scope="col" class="text-center" style="width: 10%">FOLIO</th>
-        <th scope="col" class="text-center" style="width: 10%">FECHA SOL.</th>
-        <th scope="col" class="text-center" style="width: 40%">SOLICITUD</th>
-        <!-- <th scope="col" class="text-center" style="width: 5%">DIAS</th> -->
-        <th scope="col" class="text-center" style="width: 40%">SEGUIMIENTO</th>
+        <th scope="col" class="text-center card-title" style="width: 5%">N°</th>
+        <th scope="col" class="text-center card-title" style="width: 10%">
+          FECHA SOL.
+        </th>
+        <th scope="col" class="text-center card-title" style="width: 45%">
+          SOLICITUD
+        </th>
+        <th scope="col" class="text-center card-title" style="width: 10%">
+          FECHA DE TERMINO
+        </th>
+        <th scope="col" class="text-center card-title" style="width: 40%">
+          SEGUIMIENTO
+        </th>
       </tr>
 
       <tr *ngFor="let ticket of item.tickets; let rowIndex = index">
-        <td class="text-center">{{ rowIndex + 1 }}</td>
-        <td class="text-center">{{ ticket.folio }}</td>
-        <td class="text-center">{{ ticket.date }}</td>
+        <td class="text-center fs-5">{{ rowIndex + 1 }}</td>
+        <td class="text-center fs-5">{{ ticket.date }}</td>
         <td>
-          <strong>
+          <span class="badge bg-light p-2 fs-5">
             {{ ticket.title }}
-          </strong>
-          <br />{{ ticket.description }}
+          </span>
+          <div class="fs-5">
+            {{ ticket.description }}
+          </div>
+        </td>
+        <td>
+          <div class="fs-5">
+            {{ ticket.scheduledDate }}
+          </div>
         </td>
         <!-- <td class="text-center">{{ ticket.dias }}</td> -->
-        <td>{{ ticket.fechaUltimoSeguimiento }} - {{ ticket.seguimiento }}</td>
+        <td>
+          <div class="fs-5">
+            {{ ticket.fechaUltimoSeguimiento }} - {{ ticket.seguimiento }}
+          </div>
+        </td>
       </tr>
     </table>
   </div>
@@ -115,74 +132,82 @@
     <tr>
       <th scope="col" colspan="6" class="text-center">
         <div class="row align-items-center">
-          <div class="col-md-4 text-end"></div>
-          <!-- Título del Reporte -->
-          <div class="col-md-4 text-center">
-            <i class="fa-solid fa-x fa-lg text-danger me-2"></i>
-            SOLICITUDES PENDIENTES LEGAL
-          </div>
-
-          <!-- Información de los Administradores -->
-          <div class="col-md-4 text-end"></div>
+          <div class="col-12 text-center h2">SOLICITUDES PENDIENTES LEGAL</div>
         </div>
       </th>
     </tr>
     <tr>
-      <th scope="col" class="text-center" style="width: 5%">N°</th>
-      <th scope="col" class="text-center" style="width: 10%">FOLIO</th>
-      <th scope="col" class="text-center" style="width: 10%">FECHA SOL.</th>
-      <th scope="col" class="text-center" style="width: 40%">SOLICITUD</th>
-      <!-- <th scope="col" class="text-center" style="width: 5%">DIAS</th> -->
-      <th scope="col" class="text-center" style="width: 40%">SEGUIMIENTO</th>
+      <th scope="col" class="text-center card-title" style="width: 5%">N°</th>
+      <th scope="col" class="text-center card-title" style="width: 10%">
+        FECHA SOL.
+      </th>
+      <th scope="col" class="text-center card-title" style="width: 40%">
+        SOLICITUD
+      </th>
+      <th scope="col" class="text-center card-title" style="width: 40%">
+        SEGUIMIENTO
+      </th>
     </tr>
 
     <tr *ngFor="let ticket of pendingLegal; let rowIndex = index">
-      <td class="text-center">{{ rowIndex + 1 }}</td>
-      <td class="text-center">{{ ticket.folio }}</td>
-      <td class="text-center">{{ ticket.date }}</td>
+      <td class="text-center fs-5">{{ rowIndex + 1 }}</td>
+      <td class="text-center fs-5">{{ ticket.date }}</td>
       <td>
-        <strong>
+        <span class="badge bg-light p-2 fs-5">
           {{ ticket.title }}
-        </strong>
-        <br />{{ ticket.description }}
+        </span>
+        <div class="fs-5">
+          {{ ticket.description }}
+        </div>
       </td>
-      <!-- <td class="text-center">{{ ticket.dias }}</td> -->
       <td>
-        {{ ticket.fechaUltimoSeguimiento }} - {{ ticket.ultimoSeguimiento }}
+        <div class="fs-5">
+          {{ ticket.fechaUltimoSeguimiento }} - {{ ticket.ultimoSeguimiento }}
+        </div>
       </td>
     </tr>
   </table>
 </div>
 <div class="card">
-  <!-- Tabla de solicitudes pendientes -->
   <table class="custom-table-report">
     <tr>
       <th scope="col" colspan="6" class="text-center">
         <div class="row align-items-center">
-          <div class="col-md-4 text-end"></div>
-          <!-- Título del Reporte -->
-          <div class="col-md-4 text-center">
-            <i class="fa-solid fa-x fa-lg text-danger me-2"></i>
-            ENVIO DE ESTADOS FINANCIEROS
-          </div>
-
-          <!-- Información de los Administradores -->
-          <div class="col-md-4 text-end"></div>
+          <div class="col-12 text-center h2">ENVIO DE ESTADOS FINANCIEROS</div>
         </div>
       </th>
     </tr>
     <tr>
-      <th scope="col" class="text-center" style="width: 10%">N°</th>
-      <th scope="col" class="text-center" style="width: 10%">PERIODO</th>
-      <th scope="col" class="text-center" style="width: 40%">CONTADOR</th>
-      <th scope="col" class="text-center" style="width: 40%">FECHA DE ENVIO</th>
+      <th scope="col" class="text-center card-title" style="width: 10%">N°</th>
+      <th scope="col" class="text-center card-title" style="width: 10%">
+        PERIODO
+      </th>
+      <th scope="col" class="text-center card-title" style="width: 40%">
+        CONTADOR
+      </th>
+      <th scope="col" class="text-center card-title" style="width: 40%">
+        FECHA DE ENVIO
+      </th>
     </tr>
 
     <tr *ngFor="let ticket of envioFinancieros; let rowIndex = index">
-      <td class="text-center">{{ rowIndex + 1 }}</td>
-      <td class="text-center">{{ ticket.period }}</td>
-      <td class="text-center">{{ ticket.fullName }}</td>
-      <td class="text-center">{{ ticket.sendDate }}</td>
+      <td class="text-center fs-5">{{ rowIndex + 1 }}</td>
+      <td class="text-center fs-5">
+        <span
+          *ngIf="!ticket.fullName"
+          class="badge bg-danger-subtle text-danger p-2 fs-5 w-100"
+        >
+          {{ ticket.period | uppercase }}
+        </span>
+        <span
+          *ngIf="ticket.fullName"
+          class="badge bg-success-subtle text-success p-2 fs-5 w-100"
+        >
+          {{ ticket.period | uppercase }}
+        </span>
+      </td>
+      <td class="text-center fs-5">{{ ticket.fullName | uppercase }}</td>
+      <td class="text-center fs-5">{{ ticket.sendDate | uppercase }}</td>
     </tr>
   </table>
 </div>

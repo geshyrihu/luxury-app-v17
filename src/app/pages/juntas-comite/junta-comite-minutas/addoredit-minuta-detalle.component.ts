@@ -44,7 +44,7 @@ export default class AddoreditMinutaDetalleComponent implements OnInit {
 
   form: FormGroup = this.formBuilder.group({
     id: { value: this.id, disabled: true },
-    responsibleAreaId: [1, Validators.required],
+    deliveryDate: [, Validators.required],
     status: [0, Validators.required],
     eAreaMinutasDetalles: [
       this.config.data.areaResponsable,

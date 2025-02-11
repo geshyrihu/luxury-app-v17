@@ -331,7 +331,7 @@ export default class TicketMessageListComponent implements OnInit {
 
           // Alterna entre 'alta' y 'baja'
           this.data.items[itemIndex].priority =
-            currentPriority === 'Alta' ? 'Baja' : 'Alta';
+            currentPriority === 'High' ? 'Low' : 'High';
         }
       }
     });
