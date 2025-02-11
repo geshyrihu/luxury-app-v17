@@ -49,8 +49,8 @@ export default class EmployeeListComponent implements OnInit {
   onLoadData() {
     const urlApi = `EmployeeInternal/List/${this.customerIdS.customerId}/${this.activo}`;
 
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
     });
   }
 
@@ -81,8 +81,8 @@ export default class EmployeeListComponent implements OnInit {
         'Registrar Empleado.',
         this.dialogHandlerS.dialogSizeLg
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
 

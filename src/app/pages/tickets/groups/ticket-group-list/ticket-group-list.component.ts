@@ -44,13 +44,13 @@ export default class TicketGroupListComponent implements OnInit {
     const applicationUserId = this.authS.applicationUserId;
 
     const urlApi = `ticketGroup/GetAllByClient/${customerId}/${applicationUserId}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.dataSignal.set(result);
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.dataSignal.set(responseData);
     });
   }
   onToggleStatus(id: string) {
     const urlApi = `ticketGroup/toggle-status/${id}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
       this.onLoadData();
     });
   }
@@ -62,8 +62,8 @@ export default class TicketGroupListComponent implements OnInit {
         data.title,
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
 
@@ -75,7 +75,7 @@ export default class TicketGroupListComponent implements OnInit {
         'Integrantes del grupo',
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
+      .then((responseData: boolean) => {
         this.onLoadData();
       });
   }
@@ -91,9 +91,13 @@ export default class TicketGroupListComponent implements OnInit {
   }
 
   onDelete(id: number) {
-    this.apiRequestS.onDelete(`ticketGroup/${id}`).then((result: boolean) => {
-      if (result)
-        this.dataSignal.set(this.dataSignal().filter((item) => item.id !== id));
-    });
+    this.apiRequestS
+      .onDelete(`ticketGroup/${id}`)
+      .then((responseData: boolean) => {
+        if (responseData)
+          this.dataSignal.set(
+            this.dataSignal().filter((item) => item.id !== id)
+          );
+      });
   }
 }

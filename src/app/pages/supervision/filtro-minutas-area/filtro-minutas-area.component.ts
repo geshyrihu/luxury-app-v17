@@ -45,8 +45,8 @@ export default class FiltroMinutasAreaComponent implements OnInit {
   onLoadData() {
     const urlApi = `Dashboard/FiltroMinutasArea/${this.meetingId}/${this.area}/${this.estatus}`;
 
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
     });
   }
 }

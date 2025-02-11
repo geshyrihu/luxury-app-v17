@@ -28,8 +28,8 @@ export default class EmployeePermissionAppComponent implements OnInit {
   onLoadData() {
     this.apiRequestS
       .onGetItem(`Permission/PermissionUserAdmin/${this.applicationUserId}/`)
-      .then((result: any) => {
-        this.data = result;
+      .then((responseData: any) => {
+        this.data = responseData;
       });
   }
   onCheckboxChange(permission: PermissionDto, field: string, checked: boolean) {

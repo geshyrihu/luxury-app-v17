@@ -24,9 +24,9 @@ export default class ModuleAppRolComponent {
 
   onLoadData() {
     const urlApi = `ModuleAppRol/ListRole`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
       // Actualizamos el valor del signal con los datos recibidos
-      this.data = result;
+      this.data = responseData;
     });
   }
 

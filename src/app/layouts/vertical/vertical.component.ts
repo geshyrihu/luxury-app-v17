@@ -5,7 +5,6 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
-import HomeComponent from '../home-celular/home.component';
 import MobileMainViewComponent from '../mobile-view/mobile-main.component';
 import SidebarComponent from '../sidebar/sidebar.component';
 import { TopbarComponent } from '../topbar/topbar.component';
@@ -21,7 +20,6 @@ import { TopbarComponent } from '../topbar/topbar.component';
     SidebarComponent,
     TopbarComponent,
     MobileMainViewComponent,
-    HomeComponent,
   ],
 })
 /**
@@ -37,13 +35,6 @@ export default class VerticalComponent implements OnInit {
   cb_customer: any[] = [];
   customerId = this.customerIdS.customerId;
 
-  // selectCustomer(customerId: number) {
-  //   this.customerIdS.setCustomerId(customerId);
-  // }
-
-  // constructor() {
-  //   this.cb_customer = this.authS.customerAccess;
-  // }
   onBack() {
     this.location.back();
   }

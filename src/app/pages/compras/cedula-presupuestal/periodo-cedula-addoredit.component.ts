@@ -38,8 +38,8 @@ export default class PeriodoCedulaPresupuestalAddoreditComponent
   }
   onLoadItem() {
     const url = `CedulaPresupuestal/GetCedulaPresuppuestal/${this.id}`;
-    this.apiRequestS.onGetItem(url).then((result: any) => {
-      this.form.patchValue(result);
+    this.apiRequestS.onGetItem(url).then((responseData: any) => {
+      this.form.patchValue(responseData);
     });
   }
   onSubmit() {
@@ -48,14 +48,14 @@ export default class PeriodoCedulaPresupuestalAddoreditComponent
     if (this.id === 0) {
       this.apiRequestS
         .onPost(`CedulaPresupuestal`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
       this.apiRequestS
         .onPut(`CedulaPresupuestal/Actualizar/${this.id}`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }

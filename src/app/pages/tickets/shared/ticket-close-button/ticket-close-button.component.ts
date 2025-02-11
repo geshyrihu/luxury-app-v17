@@ -23,8 +23,8 @@ export default class TicketCloseButtonComponent {
         'Cerrar ticket',
         this.dialogHandlerS.dialogSizeLg
       )
-      .then((result: boolean) => {
-        if (result) {
+      .then((responseData: boolean) => {
+        if (responseData) {
           this.closedCompleted.emit();
         }
       });

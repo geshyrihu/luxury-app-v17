@@ -39,8 +39,8 @@ export default class CuadroComparativoAddProveedorComponent implements OnInit {
     this.submitting = true;
     this.apiRequestS
       .onPost(`cotizacionproveedor`, this.form.value)
-      .then((result: boolean) => {
-        result ? this.ref.close(true) : (this.submitting = false);
+      .then((responseData: boolean) => {
+        responseData ? this.ref.close(true) : (this.submitting = false);
       });
   }
 }

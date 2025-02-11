@@ -71,7 +71,7 @@ export default class SendOperationReportComponent {
     const urlApi = `SendEmail/OperationReport/${applicationUserId}/${customerId}/${this.year}/${this.numeroSemana}`;
     this.apiRequestS
       .onPost(urlApi, this.onFilterDestinatarios())
-      .then((result: boolean) => {});
+      .then((responseData: boolean) => {});
   }
   onSelectAll() {
     this.destinatarios.forEach((resp) => {

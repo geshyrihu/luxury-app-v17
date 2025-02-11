@@ -4,56 +4,43 @@
     <!--- Sidemenu -->
     <div id="sidebar-menu">
       <!-- Left Menu Start -->
-      <ul class="metismenu list-unstyled" id="side-menu">
-        <ng-container *ngIf="menuItems">
+      <ul class="list-unstyled" id="side-menu">
+        <ng-container *ngIf="menuItems?.length; else loading">
           <!-- Iterar sobre los elementos del menú -->
           <li *ngFor="let item of menuItems">
-            <!-- Si el elemento tiene subelementos y es visible -->
-            <a
-              *ngIf="hasItems(item)"
-              class="is-parent"
-              [ngClass]="{
-                'has-arrow': !item.badge,
-                'has-dropdown': item.badge
-              }"
-            >
-              <!-- Icono y etiqueta del elemento -->
-              <i class="{{ item.icon }}"></i>
-              <span style="font-size: 16px">{{
-                item.label.length > 25
-                  ? item.label.substring(0, 25) + ".."
-                  : item.label
-              }}</span>
+            <!-- Si hay submenus se activa -->
+            <a class="menu-item has-arrow me-2" *ngIf="hasItems(item)">
+              <div class="menu-text">
+                <i class="{{ item.icon }}"></i>
+                {{
+                  item.label.length > 25
+                    ? item.label.substring(0, 25) + ".."
+                    : item.label
+                }}
+              </div>
             </a>
-            <!-- Si el elemento no tiene subelementos y es visible -->
+            <!-- Si no hay Sub-Items -->
             <a
               *ngIf="!hasItems(item)"
               [routerLink]="item.routerLink"
               class="side-nav-link-ref"
               routerLinkActive="active"
             >
-              <!-- Mostrar icono si existe -->
               <i *ngIf="item.icon" class="{{ item.icon }}"></i>
               <span>{{ item.label }}</span>
             </a>
-            <!-- Si el elemento tiene submenús -->
-            <ul *ngIf="hasItems(item)" class="sub-menu" aria-expanded="false">
-              <!-- Iterar sobre los subelementos -->
+
+            <!-- Submenús -->
+            <ul *ngIf="hasItems(item)" class="sub-menu">
               <li *ngFor="let subitem of item.items">
-                <!-- Si el subelemento no tiene submenús y es visible -->
                 <a
                   *ngIf="!hasItems(subitem)"
                   [routerLink]="subitem.routerLink"
                   class="side-nav-link-ref"
-                  routerLinkActive="active"
                 >
                   {{ subitem.label }}
                 </a>
-                <!-- Si el subelemento tiene submenús -->
-                <a
-                  *ngIf="hasItems(subitem)"
-                  class="side-nav-link-a-ref has-arrow"
-                >
+                <a *ngIf="hasItems(subitem)" class="side-nav-link-a-ref">
                   {{ subitem.label }}
                 </a>
               </li>
@@ -61,54 +48,94 @@
           </li>
         </ng-container>
       </ul>
+
+      <!-- Loading -->
+      <ng-template #loading>
+        <div class="loading-container">
+          <div class="spinner"></div>
+          <p>Cargando menú...</p>
+        </div>
+      </ng-template>
     </div>
     <!-- Sidebar -->
   </ngx-simplebar>
 </div>
 
+<!-- ========== ESTILOS ========== -->
 <style>
+  /* Estilos generales para el menú vertical */
   .vertical-menu {
-    background: #2a2a2a; /* Fondo oscuro elegante */
-    padding: 10px 0;
+    background: #2a2a2a; /* Color de fondo oscuro */
   }
 
+  /* Estilo general del texto del sidebar */
+  .vertical-menu ul.metismenu {
+    font-family: "Open Sans", sans-serif !important; /* Cambiar la fuente */
+  }
+
+  /* Estilos para los elementos de la lista del menú lateral */
   #side-menu li {
-    border: 1px solid rgba(255, 255, 255, 0.1); /* Borde sutil */
-    border-radius: 6px; /* Bordes redondeados */
-    margin: 5px 10px; /* Espaciado entre elementos */
-    overflow: hidden;
-    transition: all 0.3s ease-in-out;
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Borde semi-transparente */
+    border-radius: 3px; /* Bordes redondeados */
+    margin: 5px 10px; /* Margen superior/inferior y lateral */
+    transition: all 0.3s ease-in-out; /* Transición suave en los cambios */
   }
 
+  /* Estilos para los enlaces dentro de los elementos de la lista */
   #side-menu li a {
-    display: flex;
-    align-items: center;
-    padding: 10px 15px;
-    color: #fff;
-    text-decoration: none;
-    transition: background 0.3s ease-in-out;
+    display: flex; /* Usa flexbox para alineación */
+    justify-content: flex-start; /* Alinea los elementos al inicio (izquierda) */
+    align-items: center; /* Centra verticalmente los elementos */
+    padding: 10px 15px; /* Espaciado interno */
+    color: #fff; /* Color del texto blanco */
+    text-decoration: none; /* Elimina el subrayado de los enlaces */
+    transition: background 0.3s ease-in-out; /* Transición suave en el fondo */
+    gap: 10px; /* Espaciado entre los elementos */
+    position: relative; /* Necesario para posicionar la flecha */
   }
 
+  /* Cambio de fondo al pasar el cursor sobre los elementos del menú */
   #side-menu li:hover {
-    background: rgba(255, 255, 255, 0.1); /* Efecto hover sutil */
+    background: rgba(255, 255, 255, 0.1);
   }
 
+  /* Estilos para los iconos dentro de los enlaces del menú */
   #side-menu li a i {
-    margin-right: 10px;
-    font-size: 18px;
+    margin-right: 10px; /* Espaciado entre icono y texto */
+    font-size: 18px; /* Tamaño del icono */
   }
 
+  /* Estilo para el contenedor del texto del menú */
+  .menu-text {
+    display: flex;
+    align-items: center; /* Alinea el texto verticalmente */
+    flex-grow: 1; /* Hace que el texto ocupe todo el espacio disponible */
+  }
+
+  /* Estilos para los submenús */
   .sub-menu {
-    padding-left: 15px;
+    padding-left: 15px; /* Indentación para distinguir el submenú */
   }
 
+  /* Estilos para los elementos de la lista dentro de los submenús */
   .sub-menu li {
-    border-left: 2px solid rgba(255, 255, 255, 0.2); /* Borde para submenús */
-    margin: 5px 0;
+    border-left: 2px solid rgba(255, 255, 255, 0.2); /* Línea indicadora del submenú */
+    margin: 5px 0; /* Espaciado entre elementos */
   }
 
+  /* Estilo para los elementos activos del menú */
   .active {
-    background: rgba(255, 255, 255, 0.2) !important;
-    border-left: 4px solid #ff9800 !important; /* Destacar activo */
+    background: rgba(255, 255, 255, 0.2) !important; /* Fondo más visible */
+    border-left: 5px solid #ff9800 !important; /* Línea de color para resaltar */
+  }
+
+  /* Animación de giro del spinner */
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg); /* Estado inicial */
+    }
+    100% {
+      transform: rotate(360deg); /* Estado final: un giro completo */
+    }
   }
 </style>

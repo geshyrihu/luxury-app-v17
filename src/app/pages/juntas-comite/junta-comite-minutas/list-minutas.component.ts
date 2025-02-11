@@ -46,8 +46,8 @@ export default class ListMinutasComponent implements OnInit {
   }
   onLoadData(tipoJunta: string) {
     const urlApi = `Meetings/GetAll/${this.customerIdS.customerId}/${this.tipoJunta}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
     });
     this.tipoJunta = tipoJunta;
   }
@@ -58,9 +58,11 @@ export default class ListMinutasComponent implements OnInit {
     this.apiRequestS.exportToExcel(urlApi, nombreDocumento);
   }
   onDelete(id: number) {
-    this.apiRequestS.onDelete(`Meetings/${id}`).then((result: boolean) => {
-      if (result) this.onLoadData(this.tipoJunta);
-    });
+    this.apiRequestS
+      .onDelete(`Meetings/${id}`)
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData(this.tipoJunta);
+      });
   }
 
   onSendEmailMeeting(meetingId: number) {
@@ -79,8 +81,8 @@ export default class ListMinutasComponent implements OnInit {
         data.title,
         this.dialogHandlerS.dialogSizeLg
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData(this.tipoJunta);
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData(this.tipoJunta);
       });
   }
   items: MenuItem[];
@@ -107,8 +109,8 @@ export default class ListMinutasComponent implements OnInit {
         data.header,
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData(this.tipoJunta);
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData(this.tipoJunta);
       });
   }
 
@@ -147,15 +149,15 @@ export default class ListMinutasComponent implements OnInit {
         'Seguimiento',
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData(this.tipoJunta);
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData(this.tipoJunta);
       });
   }
 
   onDeleteSeguimiento(id: number) {
     this.apiRequestS
       .onDelete(`MeetingDertailsSeguimiento/${id}`)
-      .then((result: boolean) => {
+      .then((responseData: boolean) => {
         this.onLoadData(this.tipoJunta);
       });
   }
@@ -163,7 +165,7 @@ export default class ListMinutasComponent implements OnInit {
   onDeleteMeetingDetail(id: number) {
     this.apiRequestS
       .onDelete(`MeetingsDetails/${id}`)
-      .then((result: boolean) => {
+      .then((responseData: boolean) => {
         this.onLoadData(this.tipoJunta);
       });
   }

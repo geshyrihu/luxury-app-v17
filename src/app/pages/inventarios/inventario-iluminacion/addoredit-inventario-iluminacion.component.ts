@@ -59,8 +59,8 @@ export default class AddoreditInventarioIluminacionComponent implements OnInit {
   onLoadData() {
     this.apiRequestS
       .onGetItem(`InventarioIluminacion/${this.id}`)
-      .then((result: any) => {
-        this.form.patchValue(result);
+      .then((responseData: any) => {
+        this.form.patchValue(responseData);
       });
   }
   onSubmit() {
@@ -71,14 +71,14 @@ export default class AddoreditInventarioIluminacionComponent implements OnInit {
     if (this.id === 0) {
       this.apiRequestS
         .onPost(`InventarioIluminacion`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
       this.apiRequestS
         .onPut(`InventarioIluminacion/${this.id}`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }
@@ -88,15 +88,15 @@ export default class AddoreditInventarioIluminacionComponent implements OnInit {
       .onGetList(
         'Machineries/GetAutocompeteInv/' + this.customerIdS.getCustomerId()
       )
-      .then((result: any) => {
-        this.cb_machinery = result;
+      .then((responseData: any) => {
+        this.cb_machinery = responseData;
       });
   }
   onLoadProducto() {
     this.apiRequestS
       .onGetList('Productos/GetAutoCompleteSelectItem/')
-      .then((result: any) => {
-        this.cb_producto = result;
+      .then((responseData: any) => {
+        this.cb_producto = responseData;
       });
   }
 }

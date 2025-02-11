@@ -23,15 +23,18 @@ export default class ListAreaResponsableComponent implements OnInit {
   onLoadData() {
     const urlApi = 'Departament/';
 
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
     });
   }
 
   onDelete(id: number) {
-    this.apiRequestS.onDelete(`Departament/${id}`).then((result: boolean) => {
-      if (result) this.data = this.data.filter((item) => item.id !== id);
-    });
+    this.apiRequestS
+      .onDelete(`Departament/${id}`)
+      .then((responseData: boolean) => {
+        if (responseData)
+          this.data = this.data.filter((item) => item.id !== id);
+      });
   }
 
   showModalAddOrEdit(data: any) {
@@ -42,8 +45,8 @@ export default class ListAreaResponsableComponent implements OnInit {
         data.title,
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
 }

@@ -53,15 +53,15 @@ export default class BitacoraAddComponent implements OnInit {
     });
     this.apiRequestS
       .onPost(`BitacoraMantenimiento`, this.form.value)
-      .then((result: boolean) => {
-        result ? this.ref.close(true) : (this.submitting = false);
+      .then((responseData: boolean) => {
+        responseData ? this.ref.close(true) : (this.submitting = false);
       });
   }
 
   onGetMachinerySelectItem(value: number) {
     const urlApi = `Machineries/GetMachinerySelectItem/${value}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-      this.machinery = result;
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+      this.machinery = responseData;
     });
   }
 }

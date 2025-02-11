@@ -38,8 +38,8 @@ export default class AddOrEditCalendarioMaestroEquipoComponent
 
   onLoadData(id: number) {
     const url = `CalendarioMaestroEquipo/${id}`;
-    this.apiRequestS.onGetItem(url).then((result: any) => {
-      this.form.patchValue(result);
+    this.apiRequestS.onGetItem(url).then((responseData: any) => {
+      this.form.patchValue(responseData);
     });
   }
   onSubmit() {
@@ -50,14 +50,14 @@ export default class AddOrEditCalendarioMaestroEquipoComponent
     if (this.id === 0) {
       this.apiRequestS
         .onPost(`CalendarioMaestroEquipo`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
       this.apiRequestS
         .onPut(`CalendarioMaestroEquipo/${this.id}`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }
@@ -65,8 +65,8 @@ export default class AddOrEditCalendarioMaestroEquipoComponent
   onLoadEquipoClasificacion() {
     this.apiRequestS
       .onGetList('EquipoClasificacion/SelectItem')
-      .then((result: any) => {
-        this.cb_equipoClasificacion = result;
+      .then((responseData: any) => {
+        this.cb_equipoClasificacion = responseData;
       });
   }
 }

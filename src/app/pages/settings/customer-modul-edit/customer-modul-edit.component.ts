@@ -31,8 +31,8 @@ export default class CustomerModulEditComponent implements OnInit {
 
   onLoadData(customerId: number): void {
     const urlApi = `ModuleAppCustomer/Customer/${customerId}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
     });
   }
 

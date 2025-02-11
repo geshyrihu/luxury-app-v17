@@ -26,8 +26,8 @@ export default class LegalListTicketComponent implements OnInit {
   onLoadData() {
     this.apiRequestS
       .onGetList(`TicketLegal/All/${this.customerIdS.getCustomerId()}`)
-      .then((result: any) => {
-        this.data = result;
+      .then((responseData: any) => {
+        this.data = responseData;
       });
   }
 
@@ -39,8 +39,8 @@ export default class LegalListTicketComponent implements OnInit {
         '',
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) {
+      .then((responseData: boolean) => {
+        if (responseData) {
           this.onLoadData();
         }
       });

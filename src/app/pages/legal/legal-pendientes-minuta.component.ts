@@ -32,8 +32,8 @@ export default class LegalPendientesMinutaComponent implements OnInit {
       .onGetList(
         `ContabilidadMinuta/ListaMinutaLegal/${this.authS.userTokenDto.infoUserAuthDto.applicationUserId}/${this.statusFiltro}`
       )
-      .then((result: any) => {
-        this.data = result;
+      .then((responseData: any) => {
+        this.data = responseData;
       });
   }
 
@@ -51,8 +51,8 @@ export default class LegalPendientesMinutaComponent implements OnInit {
         'Agregar Seguimiento',
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
 
@@ -67,16 +67,17 @@ export default class LegalPendientesMinutaComponent implements OnInit {
         data.header,
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
 
   onDeleteSeguimiento(id: number) {
     this.apiRequestS
       .onDelete(`MeetingDertailsSeguimiento/${id}`)
-      .then((result: boolean) => {
-        if (result) this.data = this.data.filter((item) => item.id !== id);
+      .then((responseData: boolean) => {
+        if (responseData)
+          this.data = this.data.filter((item) => item.id !== id);
       });
   }
 

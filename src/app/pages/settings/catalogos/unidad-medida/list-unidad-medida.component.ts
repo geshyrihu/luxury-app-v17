@@ -26,15 +26,18 @@ export default class ListUnidadMedidaComponent implements OnInit {
   }
 
   onLoadData() {
-    this.apiRequestS.onGetList('UnidadMedida').then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList('UnidadMedida').then((responseData: any) => {
+      this.data = responseData;
     });
   }
 
   onDelete(id: number) {
-    this.apiRequestS.onDelete(`unidadmedida/${id}`).then((result: boolean) => {
-      if (result) this.data = this.data.filter((item) => item.id !== id);
-    });
+    this.apiRequestS
+      .onDelete(`unidadmedida/${id}`)
+      .then((responseData: boolean) => {
+        if (responseData)
+          this.data = this.data.filter((item) => item.id !== id);
+      });
   }
 
   showModalAddOrEdit(data: any) {
@@ -45,8 +48,8 @@ export default class ListUnidadMedidaComponent implements OnInit {
         data.title,
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
 }

@@ -84,8 +84,8 @@ export default class SolicitudBajaComponent implements OnInit {
   }
   onLoadData() {
     const urlApi = `RequestDismissal/GetRequestDismissal/${this.employeeId}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-      this.form.patchValue(result);
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+      this.form.patchValue(responseData);
     });
   }
 
@@ -122,8 +122,8 @@ export default class SolicitudBajaComponent implements OnInit {
         }`,
         model
       )
-      .then((result: boolean) => {
-        result ? this.ref.close(true) : (this.submitting = false);
+      .then((responseData: boolean) => {
+        responseData ? this.ref.close(true) : (this.submitting = false);
       });
   }
   createFormData(form: any) {

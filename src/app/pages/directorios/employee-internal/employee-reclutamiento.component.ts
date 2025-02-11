@@ -33,12 +33,12 @@ export default class EmployeeReclutamientoComponent implements OnInit {
   // Solicitud de modificacion de salario
   onValidarSolicitudesAbiertas() {
     const urlApi = `employees/validarsolicitudesabiertas/${this.employeeId}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-      this.workPosition = result.workPosition;
-      this.solicitudAltaStatus = result.solicitudAlta;
-      this.solicitudBajaStatus = result.solicitudBaja;
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+      this.workPosition = responseData.workPosition;
+      this.solicitudAltaStatus = responseData.solicitudAlta;
+      this.solicitudBajaStatus = responseData.solicitudBaja;
       this.solicitudModificacionSalarioStatus =
-        result.solicitudModificacionSalario;
+        responseData.solicitudModificacionSalario;
     });
   }
 
@@ -53,8 +53,8 @@ export default class EmployeeReclutamientoComponent implements OnInit {
         'Solicitud de alta',
         this.dialogHandlerS.dialogSizeFull
       )
-      .then((result: boolean) => {
-        if (result) {
+      .then((responseData: boolean) => {
+        if (responseData) {
           this.onValidarSolicitudesAbiertas();
         }
       });
@@ -72,8 +72,8 @@ export default class EmployeeReclutamientoComponent implements OnInit {
         'Solicitud de baja',
         this.dialogHandlerS.dialogSizeFull
       )
-      .then((result: boolean) => {
-        if (result) this.onValidarSolicitudesAbiertas();
+      .then((responseData: boolean) => {
+        if (responseData) this.onValidarSolicitudesAbiertas();
       });
   }
 
@@ -89,8 +89,8 @@ export default class EmployeeReclutamientoComponent implements OnInit {
         'Solicitud de Modificación de salario',
         this.dialogHandlerS.dialogSizeFull
       )
-      .then((result: boolean) => {
-        if (result) this.onValidarSolicitudesAbiertas();
+      .then((responseData: boolean) => {
+        if (responseData) this.onValidarSolicitudesAbiertas();
       });
   }
 }

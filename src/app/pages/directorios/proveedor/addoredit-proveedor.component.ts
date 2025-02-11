@@ -105,12 +105,14 @@ export default class AddoreditProveedorComponent implements OnInit {
   }
 
   getItem() {
-    this.apiRequestS.onGetItem(`Proveedor/${this.id}`).then((result: any) => {
-      this.form.patchValue(result);
-      this.form.patchValue({ bankId: result.bankId });
-      this.form.patchValue({ bankName: result.bankName });
-      this.urlLogo = result.pathPhoto;
-    });
+    this.apiRequestS
+      .onGetItem(`Proveedor/${this.id}`)
+      .then((responseData: any) => {
+        this.form.patchValue(responseData);
+        this.form.patchValue({ bankId: responseData.bankId });
+        this.form.patchValue({ bankName: responseData.bankName });
+        this.urlLogo = responseData.pathPhoto;
+      });
   }
   onSubmit() {
     if (!this.apiRequestS.validateForm(this.form)) return;
@@ -119,14 +121,16 @@ export default class AddoreditProveedorComponent implements OnInit {
     this.submitting = true;
 
     if (this.id === 0) {
-      this.apiRequestS.onPost(`Proveedor/`, model).then((result: boolean) => {
-        result ? this.ref.close(true) : (this.submitting = false);
-      });
+      this.apiRequestS
+        .onPost(`Proveedor/`, model)
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
+        });
     } else {
       this.apiRequestS
         .onPut(`Proveedor/${this.id}`, model)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }
@@ -180,8 +184,8 @@ export default class AddoreditProveedorComponent implements OnInit {
   onValidarRFC() {
     this.apiRequestS
       .onGetList('Providers/ValidarRfc/' + this.valueRfc)
-      .then((result: any) => {
-        this.rfcCoincidente = result;
+      .then((responseData: any) => {
+        this.rfcCoincidente = responseData;
       });
   }
 

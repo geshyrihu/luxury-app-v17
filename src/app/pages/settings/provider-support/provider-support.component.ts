@@ -29,8 +29,8 @@ export default class providersupportComponent implements OnInit {
   }
   // Función para cargar los datos
   onLoadData() {
-    this.apiRequestS.onGetList('providersupport').then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList('providersupport').then((responseData: any) => {
+      this.data = responseData;
     });
   }
 
@@ -44,16 +44,17 @@ export default class providersupportComponent implements OnInit {
         data.title,
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
   // Función para eliminar
   onDelete(id: string) {
     this.apiRequestS
       .onDelete(`providersupport/${id}`)
-      .then((result: boolean) => {
-        if (result) this.data = this.data.filter((item) => item.id !== id);
+      .then((responseData: boolean) => {
+        if (responseData)
+          this.data = this.data.filter((item) => item.id !== id);
       });
   }
 }

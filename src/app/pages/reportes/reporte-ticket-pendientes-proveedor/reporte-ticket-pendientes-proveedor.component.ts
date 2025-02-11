@@ -36,8 +36,8 @@ export default class ReporteTicketPendientesProveedorComponent
   }
   onLoadData() {
     const urlApi = `ticket/getreportpendingprovider/${this.customerId}/${this.departamentId}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
     });
   }
 }

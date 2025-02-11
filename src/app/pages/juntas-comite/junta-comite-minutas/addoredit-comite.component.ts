@@ -29,14 +29,14 @@ export default class AddOrEditComiteComponent implements OnInit {
   }
   onLoadCB() {
     const urlApi = `SelectItem/GetListComiteMinuta/${this.customerId}/${this.meetingId}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.cb_ParticipantComite = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.cb_ParticipantComite = responseData;
     });
   }
 
   onSubmit() {
     const urlApi = `MeetingComite/AgregarParticipantesComite/${this.meetingId}/${this.comiteparticipante}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
       this.onLoadData();
       this.onLoadCB();
     });
@@ -44,7 +44,7 @@ export default class AddOrEditComiteComponent implements OnInit {
   onDelete(idParticipant: number): void {
     this.apiRequestS
       .onDelete(`MeetingComite/${idParticipant}`)
-      .then((result: boolean) => {
+      .then((responseData: boolean) => {
         this.onLoadData();
         this.onLoadCB();
       });
@@ -53,8 +53,8 @@ export default class AddOrEditComiteComponent implements OnInit {
   onLoadData() {
     this.comiteparticipante = '';
     const urlApi = `MeetingComite/ParticipantesComite/${this.meetingId}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.listaParticipantesComite = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.listaParticipantesComite = responseData;
     });
   }
 }

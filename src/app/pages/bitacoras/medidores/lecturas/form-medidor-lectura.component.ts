@@ -45,13 +45,13 @@ export default class FormMedidorLecturaComponent implements OnInit {
     this.medidorId = this.config.data.medidorId;
 
     const urlApi = `MedidorLectura/UltimaLectura/${this.medidorId}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-      if (result !== null) {
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+      if (responseData !== null) {
         this.dateStringUltimoRegistro = this.dateS.getDateFormat(
-          result.fechaRegistro
+          responseData.fechaRegistro
         );
         this.validarUltimaLectura();
-        this.ultimaLectura = result.lectura;
+        this.ultimaLectura = responseData.lectura;
       }
     });
 
@@ -67,8 +67,8 @@ export default class FormMedidorLecturaComponent implements OnInit {
   }
   onLoadData() {
     const urlApi = `MedidorLectura/${this.id}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-      this.form.patchValue(result);
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+      this.form.patchValue(responseData);
     });
   }
   onSubmit() {
@@ -80,14 +80,14 @@ export default class FormMedidorLecturaComponent implements OnInit {
     if (this.id === 0) {
       this.apiRequestS
         .onPost(`MedidorLectura`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
       this.apiRequestS
         .onPut(`MedidorLectura/${this.id}`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }

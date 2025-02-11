@@ -28,8 +28,8 @@ export default class TicketProgressButtonComponent {
       cancelButtonColor: '#9B1B30',
       confirmButtonText: 'Sí, en proceso!',
       cancelButtonText: 'Cancelar',
-    }).then((result) => {
-      if (result.isConfirmed) {
+    }).then((responseData) => {
+      if (responseData.isConfirmed) {
         const urlApi = `Tickets/InProgress/${this.item.id}/${this.authS.applicationUserId}`;
 
         this.apiRequestS.onGetItem(urlApi).then(() => {

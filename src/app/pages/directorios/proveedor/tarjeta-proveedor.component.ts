@@ -26,9 +26,9 @@ export default class TarjetaProveedorComponent implements OnInit {
   onLoadItem() {
     this.apiRequestS
       .onGetItem(`Proveedor/${this.providerId}`)
-      .then((result: any) => {
-        this.urlLogo = result.pathPhoto;
-        this.model = result;
+      .then((responseData: any) => {
+        this.urlLogo = responseData.pathPhoto;
+        this.model = responseData;
       });
   }
 }

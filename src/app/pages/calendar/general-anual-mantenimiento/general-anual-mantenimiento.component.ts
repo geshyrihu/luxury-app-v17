@@ -30,15 +30,15 @@ export default class GeneralAnualMantenimientoComponent implements OnInit {
   onLoadProveedores() {
     this.cb_providers = [];
     const url = `MaintenanceCalendars/ProveedoresCalendario/${this.customerIdS.customerId}`;
-    this.apiRequestS.onGetList(url).then((result: any) => {
-      this.cb_providers = result;
+    this.apiRequestS.onGetList(url).then((responseData: any) => {
+      this.cb_providers = responseData;
     });
   }
   onLoadData() {
     this.data = [];
     const url = `MaintenanceCalendars/GeneralMantenimiento/${this.customerIdS.customerId}/${this.providerId}`;
-    this.apiRequestS.onGetList(url).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(url).then((responseData: any) => {
+      this.data = responseData;
     });
   }
 }

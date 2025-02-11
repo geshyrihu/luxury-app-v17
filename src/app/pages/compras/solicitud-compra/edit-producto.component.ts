@@ -67,10 +67,10 @@ export default class EditProductoComponent implements OnInit {
   onLoadProduct() {
     this.apiRequestS
       .onGetItem(`solicitudcompradetalle/editproduct/${this.id}`)
-      .then((result: any) => {
-        this.data = result;
-        this.nombreProducto = result.nombreProducto;
-        this.form.patchValue(result);
+      .then((responseData: any) => {
+        this.data = responseData;
+        this.nombreProducto = responseData.nombreProducto;
+        this.form.patchValue(responseData);
       });
   }
 
@@ -88,8 +88,8 @@ export default class EditProductoComponent implements OnInit {
 
     this.apiRequestS
       .onPut(`SolicitudCompraDetalle/${this.id}`, this.data)
-      .then((result: boolean) => {
-        result ? this.ref.close(true) : (this.submitting = false);
+      .then((responseData: boolean) => {
+        responseData ? this.ref.close(true) : (this.submitting = false);
       });
   }
 }

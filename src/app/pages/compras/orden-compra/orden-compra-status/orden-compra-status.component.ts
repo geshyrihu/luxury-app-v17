@@ -38,9 +38,9 @@ export default class OrdenCompraStatusComponent implements OnInit {
   onLoadData() {
     this.apiRequestS
       .onGetItem(`OrdenCompraStatus/${this.ordenCompraId}`)
-      .then((result: any) => {
-        this.ordenCompraStatus = result;
-        this.form.patchValue(result);
+      .then((responseData: any) => {
+        this.ordenCompraStatus = responseData;
+        this.form.patchValue(responseData);
       });
   }
   onSubmit() {
@@ -48,8 +48,8 @@ export default class OrdenCompraStatusComponent implements OnInit {
 
     this.apiRequestS
       .onPut(`OrdenCompraStatus/${this.ordenCompraStatus.id}`, this.form.value)
-      .then((result: boolean) => {
-        result ? this.ref.close(true) : (this.submitting = false);
+      .then((responseData: boolean) => {
+        responseData ? this.ref.close(true) : (this.submitting = false);
       });
   }
 }

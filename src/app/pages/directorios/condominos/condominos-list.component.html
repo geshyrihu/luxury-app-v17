@@ -1,143 +1,232 @@
 <p-toast position="bottom-left" [baseZIndex]="99999" />
-<p-table
-  #dt
-  styleClass="custom-table"
-  [tableStyle]="{ 'min-width': '50rem' }"
-  [value]="data"
-  [globalFilterFields]="[
-    'phoneNumber',
-    'property',
-    'extencion',
-    'fixedPhone',
-    'habitant',
-    'email',
-    'fullName'
-  ]"
-  [autoLayout]="true"
-  [showCurrentPageReport]="true"
->
-  <ng-template pTemplate="caption">
-    <custom-table-caption
-      [title]="'Condominos...'"
-      (add)="showModalAddOrEdit({ id: 0, title: 'Nuevo Registro' })"
-      [dt]="dt"
-      [rolAuth]="
-        authS.onValidateRoles(['Asistente', 'Administrador', 'SuperUsuario'])
-      "
-    />
-    <div class="row">
-      <div class="col-sm-4"></div>
-    </div>
-  </ng-template>
-  <ng-template pTemplate="header">
-    <tr>
-      <th
-        scope="col"
-        style="width: 10%"
-        pSortableColumn="property"
-        [sortFunction]="customSort.bind(this)"
-      >
-        Propiedad
-        <p-sortIcon field="property" />
-      </th>
-      <!-- <th scope="col" style="width: 10%" pSortableColumn="property">
+<div class="d-none d-md-block">
+  <p-table
+    #dt
+    styleClass="custom-table"
+    [tableStyle]="{ 'min-width': '50rem' }"
+    [value]="data"
+    [globalFilterFields]="[
+      'phoneNumber',
+      'property',
+      'extencion',
+      'fixedPhone',
+      'habitant',
+      'email',
+      'fullName'
+    ]"
+    [autoLayout]="true"
+    [showCurrentPageReport]="true"
+  >
+    <ng-template pTemplate="caption">
+      <custom-table-caption
+        [title]="'Condominos...'"
+        (add)="showModalAddOrEdit({ id: 0, title: 'Nuevo Registro' })"
+        [dt]="dt"
+        [rolAuth]="
+          authS.onValidateRoles(['Asistente', 'Administrador', 'SuperUsuario'])
+        "
+      />
+      <div class="row">
+        <div class="col-sm-4"></div>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th
+          scope="col"
+          style="width: 10%"
+          pSortableColumn="property"
+          [sortFunction]="customSort.bind(this)"
+        >
+          Propiedad
+          <p-sortIcon field="property" />
+        </th>
+        <!-- <th scope="col" style="width: 10%" pSortableColumn="property">
         Propiedad
         <p-sortIcon field="property"/>
       </th> -->
-      <th scope="col" style="width: 10%" pSortableColumn="habitant">
-        Habitante
-        <p-sortIcon field="habitant" />
-      </th>
-      <th scope="col" style="width: 10%" pSortableColumn="fullName">
-        Nombre
-        <p-sortIcon field="fullName" />
-      </th>
+        <th scope="col" style="width: 10%" pSortableColumn="habitant">
+          Habitante
+          <p-sortIcon field="habitant" />
+        </th>
+        <th scope="col" style="width: 10%" pSortableColumn="fullName">
+          Nombre
+          <p-sortIcon field="fullName" />
+        </th>
 
-      <th scope="col" style="width: 10%" pSortableColumn="fixedPhone">
-        Télefono fijo
-        <p-sortIcon field="fixedPhone" />
-      </th>
-      <th scope="col" style="width: 10%" pSortableColumn="extencion">
-        Extensión
-        <p-sortIcon field="extencion" />
-      </th>
-      <th scope="col" style="width: 10%">Télefono</th>
-      <th scope="col" style="width: 10%" pSortableColumn="email">
-        Email
-        <p-sortIcon field="email" />
-      </th>
-      <th
-        scope="col"
-        style="width: 10%"
-        pSortableColumn="mail"
-        class="no-print"
-      >
-        Enviar Info
-        <p-sortIcon field="mail" />
-      </th>
-      @if ( authS.onValidateRoles([ 'Asistente', 'Administrador', 'SuperUsuario'
-      ]) ) {
-      <th scope="col" style="width: 5%" class="no-print">Opciones</th>
-      }
-    </tr>
-  </ng-template>
-  <ng-template pTemplate="body" let-item>
-    <tr>
-      <td>
-        {{ item.property }}
-      </td>
-      <td>
-        {{ item.habitant }}
-      </td>
-      <td>
-        {{ item.fullName }}
-      </td>
-      <td>
-        {{ item.fixedPhone }}
-      </td>
-      <td>
-        {{ item.extencion }}
-      </td>
-      <td>
-        {{ item.phoneNumber }}
-      </td>
-      <td>
-        {{ item.email }}
-      </td>
-      <td class="no-print">
-        @if (item.enviarMails) {
-        <i class="text-success fa-light fa-check-double"></i>
-        } @if (!item.enviarMails) {
-        <i class="text-danger fa-light fa-x"></i>
+        <th scope="col" style="width: 10%" pSortableColumn="fixedPhone">
+          Télefono fijo
+          <p-sortIcon field="fixedPhone" />
+        </th>
+        <th scope="col" style="width: 10%" pSortableColumn="extencion">
+          Extensión
+          <p-sortIcon field="extencion" />
+        </th>
+        <th scope="col" style="width: 10%">Télefono</th>
+        <th scope="col" style="width: 10%" pSortableColumn="email">
+          Email
+          <p-sortIcon field="email" />
+        </th>
+        <th
+          scope="col"
+          style="width: 10%"
+          pSortableColumn="mail"
+          class="no-print"
+        >
+          Enviar Info
+          <p-sortIcon field="mail" />
+        </th>
+        @if ( authS.onValidateRoles([ 'Asistente', 'Administrador',
+        'SuperUsuario' ]) ) {
+        <th scope="col" style="width: 5%" class="no-print">Opciones</th>
         }
-      </td>
-      @if ( authS.onValidateRoles([ 'Asistente', 'Administrador', 'SuperUsuario'
-      ]) ) {
-      <td class="p-column-title no-print">
-        <div class="d-flex justify-content-center">
-          <!-- Componente editar registro -->
-          <btn-edit
-            (edit)="showModalAddOrEdit({ id: item.id, title: 'Editar' })"
-          />
-          <!-- Componente editar registro -->
-          <!-- Componente eliminar registro -->
-          <btn-delete (OnConfirm)="onDelete(item.id)" />
-          <!-- Componente eliminar registro -->
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item>
+      <tr>
+        <td>
+          {{ item.property }}
+        </td>
+        <td>
+          {{ item.habitant }}
+        </td>
+        <td>
+          {{ item.fullName }}
+        </td>
+        <td>
+          {{ item.fixedPhone }}
+        </td>
+        <td>
+          {{ item.extencion }}
+        </td>
+        <td>
+          {{ item.phoneNumber }}
+        </td>
+        <td>
+          {{ item.email }}
+        </td>
+        <td class="no-print">
+          @if (item.enviarMails) {
+          <i class="text-success fa-light fa-check-double"></i>
+          } @if (!item.enviarMails) {
+          <i class="text-danger fa-light fa-x"></i>
+          }
+        </td>
+        @if ( authS.onValidateRoles([ 'Asistente', 'Administrador',
+        'SuperUsuario' ]) ) {
+        <td class="p-column-title no-print">
+          <div class="d-flex justify-content-center">
+            <!-- Componente editar registro -->
+            <btn-edit
+              (edit)="showModalAddOrEdit({ id: item.id, title: 'Editar' })"
+            />
+            <!-- Componente editar registro -->
+            <!-- Componente eliminar registro -->
+            <btn-delete (OnConfirm)="onDelete(item.id)" />
+            <!-- Componente eliminar registro -->
+          </div>
+        </td>
+        }
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="paginatorleft">
+      <div class="p-d-flex p-ai-center p-jc-between">
+        En total hay
+        {{ data ? data.length : 0 }} registros.
+      </div>
+    </ng-template>
+    <ng-template pTemplate="summary">
+      <div class="flex align-items-center justify-content-between">
+        En total hay
+        {{ data ? data.length : 0 }} registros.
+      </div>
+    </ng-template>
+  </p-table>
+</div>
+<!-- Contenedor principal para la tabla en móviles -->
+
+<div class="d-block d-md-none">
+  <ng-container *ngIf="data?.length; else loading">
+    <ul class="list-group">
+      <li
+        *ngFor="let item of data"
+        class="list-group-item my-2 p-3 shadow-sm rounded"
+      >
+        <div class="d-flex justify-content-between align-items-center">
+          <h5 class="mb-1">{{ item.fullName }}</h5>
+          <span class="badge bg-primary">{{ item.property }}</span>
         </div>
-      </td>
-      }
-    </tr>
-  </ng-template>
-  <ng-template pTemplate="paginatorleft">
-    <div class="p-d-flex p-ai-center p-jc-between">
-      En total hay
-      {{ data ? data.length : 0 }} registros.
+        <p class="text-muted mb-2">{{ item.habitant }}</p>
+        <div class="d-flex flex-column">
+          <span
+            ><i class="fa-solid fa-phone me-2"></i>{{ item.phoneNumber }}</span
+          >
+          <span
+            ><i class="fa-solid fa-phone-volume me-2"></i
+            >{{ item.fixedPhone }} (Ext. {{ item.extencion }})</span
+          >
+          <span><i class="fa-solid fa-envelope me-2"></i>{{ item.email }}</span>
+        </div>
+        <div class="mt-2 d-flex justify-content-between align-items-center">
+          <div class="dropdown">
+            <i
+              type="button"
+              id="dropdownMenuButton"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+              title="Opciones"
+              class="fa-solid fa-ellipsis-vertical fa-2x p-1 text-primary"
+            ></i>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <li
+                *ngIf="
+                  authS.onValidateRoles([
+                    'Asistente',
+                    'Administrador',
+                    'SuperUsuario'
+                  ])
+                "
+              >
+                <div class="d-flex gap-2">
+                  <btn-edit
+                    (edit)="
+                      showModalAddOrEdit({ id: item.id, title: 'Editar' })
+                    "
+                  ></btn-edit>
+                  <btn-delete (OnConfirm)="onDelete(item.id)"></btn-delete>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </ng-container>
+  <!-- Loading -->
+  <ng-template #loading>
+    <div class="loading-container">
+      <div class="spinner"></div>
+      <p>Cargando menú...</p>
     </div>
   </ng-template>
-  <ng-template pTemplate="summary">
-    <div class="flex align-items-center justify-content-between">
-      En total hay
-      {{ data ? data.length : 0 }} registros.
-    </div>
-  </ng-template>
-</p-table>
+</div>
+
+<style>
+  /* ======= Estilos de loading (carga) ======= */
+  .loading-container {
+    text-align: center; /* Centra el contenido */
+    padding: 20px; /* Espaciado interno */
+    color: #fff; /* Color del texto */
+  }
+
+  /* Spinner (animación de carga) */
+  .spinner {
+    width: 40px; /* Ancho del spinner */
+    height: 40px; /* Alto del spinner */
+    border: 4px solid rgba(255, 255, 255, 0.3); /* Borde semi-transparente */
+    border-top: 5px solid #ff9800; /* Borde superior en color de énfasis */
+    border-radius: 50%; /* Hace que el spinner sea circular */
+    animation: spin 1s linear infinite; /* Animación de rotación infinita */
+    margin: 0 auto 10px; /* Centra el spinner */
+  }
+</style>

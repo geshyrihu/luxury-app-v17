@@ -29,8 +29,8 @@ export default class AddOrEditListAdministrationComponent implements OnInit {
   }
   onLoadCB() {
     const urlApi = `SelectItem/GetListAdministracionMinuta/${this.customerId}/${this.meetingId}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.cb_Administration = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.cb_Administration = responseData;
     });
   }
 
@@ -38,7 +38,7 @@ export default class AddOrEditListAdministrationComponent implements OnInit {
     const urlApi = `MeetingAdministracion/AgregarParticipantesAdministracion/${
       this.meetingId
     }/${this.administrationparticipante}/${1}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
       this.onLoadData();
       this.onLoadCB();
     });
@@ -46,7 +46,7 @@ export default class AddOrEditListAdministrationComponent implements OnInit {
   onDelete(idParticipant: number): void {
     this.apiRequestS
       .onDelete(`MeetingAdministracion/${idParticipant}`)
-      .then((result: boolean) => {
+      .then((responseData: boolean) => {
         this.onLoadData();
         this.onLoadCB();
       });
@@ -54,8 +54,8 @@ export default class AddOrEditListAdministrationComponent implements OnInit {
 
   onLoadData() {
     const urlApi = `MeetingAdministracion/ParticipantesAdministracion/${this.meetingId}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.listaParticipantesAdministration = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.listaParticipantesAdministration = responseData;
     });
   }
 }

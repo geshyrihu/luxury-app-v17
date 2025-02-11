@@ -26,9 +26,9 @@ export default class TicketGroupCategoryListComponent implements OnInit {
 
   onLoadData() {
     const urlApi = `TicketGroupCategory`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
       // Actualizamos el valor del signal con los datos recibidos
-      this.dataSignal.set(result);
+      this.dataSignal.set(responseData);
     });
   }
 
@@ -36,7 +36,7 @@ export default class TicketGroupCategoryListComponent implements OnInit {
   onDelete(id: number) {
     this.apiRequestS
       .onDelete(`TicketGroupCategory/${id}`)
-      .then((result: boolean) => {
+      .then((responseData: boolean) => {
         // Actualizamos el signal para eliminar el elemento de la lista
         this.dataSignal.set(this.dataSignal().filter((item) => item.id !== id));
       });
@@ -51,8 +51,8 @@ export default class TicketGroupCategoryListComponent implements OnInit {
         data.title,
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
 }

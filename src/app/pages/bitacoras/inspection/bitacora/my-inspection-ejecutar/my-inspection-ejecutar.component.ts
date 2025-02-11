@@ -54,8 +54,8 @@ export default class MyInspectionEjecutarComponent implements OnInit {
 
     this.apiRequestS
       .onPost(urlApi, [revisionData]) // Se envía en un array para mantener compatibilidad con la API
-      .then((result: any) => {
-        console.log('Datos guardados exitosamente', result);
+      .then((responseData: any) => {
+        console.log('Datos guardados exitosamente', responseData);
       })
       .catch((error) => {
         console.error('Error al guardar revisión:', error);
@@ -80,7 +80,7 @@ export default class MyInspectionEjecutarComponent implements OnInit {
     const urlApi = `InspectionResult/UpdateInspectionData/${this.customerInspectionId}/${this.applicationUserId}`;
     this.apiRequestS
       .onPost(urlApi, inspectionUpdates)
-      .then((result: any) => {
+      .then((responseData: any) => {
         // this.onSubmitImages();
         // Luego de enviar los datos JSON, enviar las imágenes
       })

@@ -49,15 +49,15 @@ export default class CedulaClienteListComponent implements OnInit {
       .onGetList(
         `CedulaPresupuestal/GetCedulaPresupuestal/${this.customerIdS.customerId}/${this.id}`
       )
-      .then((result: any) => {
-        if (result !== null) {
-          this.titulo = `Cedula presupuestal ${result.periodo}`;
-          this.id = result.id;
-          this.data = result.detalle;
-          this.presupuestoMensual = result.cabPresupuestoMensual;
-          this.presupuestoEjercido = result.cabPresupuestoEjercido;
-          this.presupuestoDisponible = result.cabPresupuestoDisponible;
-          this.presupuestoAnual = result.cabPresupuestoAnual;
+      .then((responseData: any) => {
+        if (responseData !== null) {
+          this.titulo = `Cedula presupuestal ${responseData.periodo}`;
+          this.id = responseData.id;
+          this.data = responseData.detalle;
+          this.presupuestoMensual = responseData.cabPresupuestoMensual;
+          this.presupuestoEjercido = responseData.cabPresupuestoEjercido;
+          this.presupuestoDisponible = responseData.cabPresupuestoDisponible;
+          this.presupuestoAnual = responseData.cabPresupuestoAnual;
         } else {
           this.data = null;
         }
@@ -71,8 +71,8 @@ export default class CedulaClienteListComponent implements OnInit {
   onLoadCedulasCustomer(customerId: number) {
     this.apiRequestS
       .onGetList(`CedulaPresupuestal/GetCedulas/${customerId}`)
-      .then((result: any) => {
-        this.cb_cedulas = result;
+      .then((responseData: any) => {
+        this.cb_cedulas = responseData;
       });
   }
   onModalAdd() {
@@ -85,8 +85,8 @@ export default class CedulaClienteListComponent implements OnInit {
         'Agregar Partida',
         this.dialogHandlerS.dialogSizeLg
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
   onModalEditar(data: any) {
@@ -97,8 +97,8 @@ export default class CedulaClienteListComponent implements OnInit {
         data.title,
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
   onModalOrdenesCompraCedula(partidaPresupuestalId: number) {
@@ -112,16 +112,17 @@ export default class CedulaClienteListComponent implements OnInit {
         'Ordenes de Compra',
         this.dialogHandlerS.dialogSizeFull
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
 
   onDelete(id: number) {
     this.apiRequestS
       .onDelete(`CedulaPresupuestalDetalle/${id}`)
-      .then((result: boolean) => {
-        if (result) this.data = this.data.filter((item) => item.id !== id);
+      .then((responseData: boolean) => {
+        if (responseData)
+          this.data = this.data.filter((item) => item.id !== id);
       });
   }
 
@@ -135,8 +136,9 @@ export default class CedulaClienteListComponent implements OnInit {
         'Editar Periodo',
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadCedulasCustomer(this.customerIdS.customerId);
+      .then((responseData: boolean) => {
+        if (responseData)
+          this.onLoadCedulasCustomer(this.customerIdS.customerId);
       });
   }
 }

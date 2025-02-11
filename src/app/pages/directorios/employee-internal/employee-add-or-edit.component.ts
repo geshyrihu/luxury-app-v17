@@ -70,8 +70,8 @@ export default class EmployeeAddOrEditComponent implements OnInit {
     // ProfessionId Administrador= 5, Asistente = 6
     this.apiRequestS
       .onGetItem(`Employees/validaradminasis/${this.authS.applicationUserId}`)
-      .then((result: any) => {
-        this.tienePermiso = result;
+      .then((responseData: any) => {
+        this.tienePermiso = responseData;
       });
   }
 }

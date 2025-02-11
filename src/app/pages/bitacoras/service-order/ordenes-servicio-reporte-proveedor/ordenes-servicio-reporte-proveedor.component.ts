@@ -30,16 +30,16 @@ export default class OrdenesServicioReporteProveedorComponent
   onLoadData() {
     const customerId = this.customerIdS.getCustomerId();
     const urlApi = `ServiceOrders/OrdenesServicioReporteProveedor/${this.id}/${customerId}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
       // Actualizamos el valor del signal con los datos recibidos
-      this.data = result;
+      this.data = responseData;
     });
   }
 
   deleteDoc(id: number): void {
     const urlApi = `ServiceOrders/DeleteDocument/${id}`;
 
-    this.apiRequestS.onDelete(urlApi).then((result: boolean) => {
+    this.apiRequestS.onDelete(urlApi).then((responseData: boolean) => {
       this.onLoadData();
     });
   }

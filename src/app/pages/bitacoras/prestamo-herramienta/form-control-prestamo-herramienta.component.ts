@@ -77,19 +77,19 @@ export default class FormControlPrestamoHerramientaComponent implements OnInit {
   }
   onLoadData() {
     const urlApi = `controlprestamoherramientas/${this.id}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-      this.form.patchValue(result);
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+      this.form.patchValue(responseData);
       this.form.patchValue({
-        applicationUser: result.applicationUser,
+        applicationUser: responseData.applicationUser,
       });
       this.form.patchValue({
-        applicationUserId: result.applicationUserId,
+        applicationUserId: responseData.applicationUserId,
       });
       this.form.patchValue({
-        tool: result.tool,
+        tool: responseData.tool,
       });
       this.form.patchValue({
-        toolId: result.toolId,
+        toolId: responseData.toolId,
       });
     });
   }
@@ -100,14 +100,14 @@ export default class FormControlPrestamoHerramientaComponent implements OnInit {
     if (this.id === 0) {
       this.apiRequestS
         .onPost(`controlprestamoherramientas`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
       this.apiRequestS
         .onPut(`controlprestamoherramientas/${this.id}`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }

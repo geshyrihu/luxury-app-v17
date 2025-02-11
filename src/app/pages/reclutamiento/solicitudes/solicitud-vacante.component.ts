@@ -61,8 +61,8 @@ export default class SolicitudVacanteComponent implements OnInit {
 
   onLoadData() {
     const urlApi = `WorkPosition/${this.workPositionId}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-      this.form.patchValue(result);
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+      this.form.patchValue(responseData);
     });
   }
   onSubmit() {
@@ -75,8 +75,8 @@ export default class SolicitudVacanteComponent implements OnInit {
         `SolicitudesReclutamiento/SolicitudVacante/${this.authS.infoUserAuthDto.applicationUserId}`,
         this.form.value
       )
-      .then((result: boolean) => {
-        result ? this.ref.close(true) : (this.submitting = false);
+      .then((responseData: boolean) => {
+        responseData ? this.ref.close(true) : (this.submitting = false);
       });
   }
 }

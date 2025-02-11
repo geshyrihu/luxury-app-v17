@@ -64,8 +64,8 @@ export default class ListAlmacenProductosComponent implements OnInit {
   onLoadData() {
     const urlApi =
       'InventarioProducto/GetAsyncAll/' + this.customerIdS.customerId;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
       this.updateRowGroupMetaData();
     });
   }
@@ -73,8 +73,9 @@ export default class ListAlmacenProductosComponent implements OnInit {
   onDelete(id: number) {
     this.apiRequestS
       .onDelete(`InventarioProducto/${id}`)
-      .then((result: boolean) => {
-        if (result) this.data = this.data.filter((item) => item.id !== id);
+      .then((responseData: boolean) => {
+        if (responseData)
+          this.data = this.data.filter((item) => item.id !== id);
       });
   }
 
@@ -89,8 +90,8 @@ export default class ListAlmacenProductosComponent implements OnInit {
         data.title,
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
   addProductos(data: any) {
@@ -104,8 +105,8 @@ export default class ListAlmacenProductosComponent implements OnInit {
         data.title,
         this.dialogHandlerS.dialogSizeFull
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
 
@@ -121,8 +122,8 @@ export default class ListAlmacenProductosComponent implements OnInit {
         'Entrada de Productos',
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
   onAddSalida(data: any) {
@@ -138,8 +139,8 @@ export default class ListAlmacenProductosComponent implements OnInit {
         'Salida de Productos',
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
 

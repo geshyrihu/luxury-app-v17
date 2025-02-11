@@ -37,8 +37,8 @@ export class TicketGroupService {
 
   onLoadDataMessageInNotRead(): void {
     // const urlApi = `Tickets/MessageInNotRead/${this.authS.applicationUserId}`;
-    // this.apiRequestS.onGetList(urlApi).then((result: any) => {
-    //   this.messageInNotRead = result;
+    // this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+    //   this.messageInNotRead = responseData ;
     // });
   }
 }

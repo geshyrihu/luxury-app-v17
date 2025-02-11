@@ -61,47 +61,47 @@ export default class LegalReportsInternalComponent implements OnInit {
 
   onLoadReport(startDate: string, endDate: string) {
     const urlApi = `LegalReport/Results/${startDate}/${endDate}/${true}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.reportData = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.reportData = responseData;
     });
   }
   onRequestsAttended(startDate: string, endDate: string) {
     const urlApi = `LegalReport/RequestsAttended/${startDate}/${endDate}/${true}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.requestsAttended = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.requestsAttended = responseData;
     });
   }
   onRequestsPending() {
     const urlApi = `LegalReport/RequestsPending/${true}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.requestsPending = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.requestsPending = responseData;
     });
   }
 
   onLoadData(startDate: string, endDate: string) {
     const urlApi = `LegalReport/Summary/${startDate}/${endDate}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
     });
   }
 
   onLoadSummaryCustomer(startDate: string, endDate: string) {
     const urlApi = `LegalReport/SummaryCustomer/${startDate}/${endDate}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.summaryCustomer = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.summaryCustomer = responseData;
     });
   }
 
   onLoadDataSummaryIndividual(startDate: string, endDate: string) {
     const urlApi = `LegalReport/SummaryIndividual/${startDate}/${endDate}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.summaryIndividual = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.summaryIndividual = responseData;
     });
   }
   onLoadDataTotalRequests(startDate: string, endDate: string) {
     const urlApi = `LegalReport/TotalRequests/${startDate}/${endDate}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.totalRequests = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.totalRequests = responseData;
     });
   }
   onDateRangeSelected(event: { startDate: Date; endDate: Date }) {

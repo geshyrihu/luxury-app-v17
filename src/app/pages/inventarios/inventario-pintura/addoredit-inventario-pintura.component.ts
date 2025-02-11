@@ -58,19 +58,19 @@ export default class AddoreditInventarioPinturaComponent implements OnInit {
   }
   onLoadData() {
     const urlApi = `InventarioPintura/${this.id}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-      this.form.patchValue(result);
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+      this.form.patchValue(responseData);
       this.form.patchValue({
-        productoId: result.productoId,
+        productoId: responseData.productoId,
       });
       this.form.patchValue({
-        producto: result.producto,
+        producto: responseData.producto,
       });
       this.form.patchValue({
-        machineryId: result.machineryId,
+        machineryId: responseData.machineryId,
       });
       this.form.patchValue({
-        machinery: result.machinery,
+        machinery: responseData.machinery,
       });
     });
   }
@@ -81,28 +81,28 @@ export default class AddoreditInventarioPinturaComponent implements OnInit {
     if (this.id === 0) {
       this.apiRequestS
         .onPost(`InventarioPintura`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
       this.apiRequestS
         .onPut(`InventarioPintura/${this.id}`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }
   onLoadMachinery() {
     const urlApi =
       'Machineries/GetAutocompeteInv/' + this.customerIdS.getCustomerId();
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.cb_machinery = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.cb_machinery = responseData;
     });
   }
   onLoadProducto() {
     const urlApi = `productos/getautocompleteselectitem/`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.cb_producto = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.cb_producto = responseData;
     });
   }
 }

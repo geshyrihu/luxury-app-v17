@@ -44,8 +44,8 @@ export default class EmployeeEmergencyContactAddOrEditComponent
   }
   onLoadData() {
     const urlApi = `EmployeeEmergencyContact/${this.id}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.form.patchValue(result);
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.form.patchValue(responseData);
     });
   }
 
@@ -56,14 +56,14 @@ export default class EmployeeEmergencyContactAddOrEditComponent
     if (this.id === '') {
       this.apiRequestS
         .onPost(`EmployeeEmergencyContact`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
       this.apiRequestS
         .onPut(`EmployeeEmergencyContact/${this.id}`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }

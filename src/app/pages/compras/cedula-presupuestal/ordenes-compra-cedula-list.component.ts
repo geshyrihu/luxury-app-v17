@@ -32,8 +32,8 @@ export default class OrdenesCompraCedulaListComponent implements OnInit {
 
   onLoadData() {
     const urlApi = `OrdenCompra/compraspresupuesto/${this.partidaPresupuestalId}/${this.cedulaPresupuestalId}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
     });
   }
   pagadas() {

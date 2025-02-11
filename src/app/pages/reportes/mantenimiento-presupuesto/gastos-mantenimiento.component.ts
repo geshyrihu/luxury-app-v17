@@ -35,14 +35,14 @@ export default class GastosMantenimientoComponent implements OnInit {
   }
   onLoadData() {
     const urlApi = `PresupuestoMantenimiento/SummaryOfExpenses/${this.customerIdS.getCustomerId()}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result.items;
-      this.totalGasto = result.totalGastos;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData.items;
+      this.totalGasto = responseData.totalGastos;
     });
 
     const urlApi2 = `PresupuestoMantenimiento/Resumengastos/${this.customerIdS.getCustomerId()}`;
-    this.apiRequestS.onGetList(urlApi2).then((result: any) => {
-      this.resumenGastos = result;
+    this.apiRequestS.onGetList(urlApi2).then((responseData: any) => {
+      this.resumenGastos = responseData;
     });
   }
   onModalItem(item: any) {
@@ -57,8 +57,8 @@ export default class GastosMantenimientoComponent implements OnInit {
         'Editar regitro',
         this.dialogHandlerS.dialogSizeFull
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
 }

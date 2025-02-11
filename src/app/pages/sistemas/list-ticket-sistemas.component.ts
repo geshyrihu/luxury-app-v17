@@ -49,8 +49,8 @@
 
 //   onLoadData(status: EStatus, applicationUserId: string): void {
 //     const urlApi = `TicketsSistemas/List/${status}/${applicationUserId}`;
-//     this.apiRequestS.onGetList(urlApi).then((result: any) => {
-//       this.data = result;
+//     this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+//       this.data = responseData;
 //     });
 //   }
 //   onLoadSelectItem() {
@@ -91,7 +91,7 @@
 //         data.title,
 //         this.dialogHandlerS.dialogSizeLg
 //       )
-//       .then((result: any) => {
+//       .then((responseData: any) => {
 //         if (result !== undefined)
 //           this.onLoadData(this.status, this.responsableSistemas);
 //       });
@@ -100,8 +100,8 @@
 //   eliminarTiket(id: number) {
 //     this.apiRequestService
 //       .onDelete(`Ticket/DeleteFinal/${id}`)
-//       .then((result: boolean) => {
-//         if (result) this.data = this.data.filter((item) => item.id !== id);
+//       .then((responseData: boolean) => {
+//         if (responseData) this.data = this.data.filter((item) => item.id !== id);
 //       });
 //   }
 
@@ -122,8 +122,8 @@
 //         'Seguimientos',
 //         this.dialogHandlerS.dialogSizeLg
 //       )
-//       .then((result: boolean) => {
-//         if (result) this.onLoadData(this.status, this.responsableSistemas);
+//       .then((responseData: boolean) => {
+//         if (responseData) this.onLoadData(this.status, this.responsableSistemas);
 //       });
 //   }
 // }

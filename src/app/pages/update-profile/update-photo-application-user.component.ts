@@ -54,9 +54,9 @@ export default class UpdatePhotoApplicationUserComponent implements OnInit {
 
     this.apiRequestS
       .onPut('EmployeeInternal/UpdateImage/' + this.applicationUserId, formData)
-      .then((result: any) => {
-        if (result) {
-          this.infoEmployeeDto.photoPath = result.photoPath;
+      .then((responseData: any) => {
+        if (responseData) {
+          this.infoEmployeeDto.photoPath = responseData.photoPath;
           this.profielServiceService.actualizarImagenPerfil(
             this.infoEmployeeDto.photoPath
           );

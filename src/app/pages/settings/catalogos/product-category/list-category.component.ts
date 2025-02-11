@@ -25,15 +25,15 @@ export default class ListCategoryComponent implements OnInit {
 
   onLoadData() {
     const urlApi = `Categories`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
     });
   }
 
   onDelete(id: number) {
     const urlApi = `categories/${id}`;
-    this.apiRequestS.onDelete(urlApi).then((result: boolean) => {
-      if (result) this.data = this.data.filter((item) => item.id !== id);
+    this.apiRequestS.onDelete(urlApi).then((responseData: boolean) => {
+      if (responseData) this.data = this.data.filter((item) => item.id !== id);
     });
   }
 
@@ -45,8 +45,8 @@ export default class ListCategoryComponent implements OnInit {
         data.title,
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
 }

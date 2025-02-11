@@ -36,13 +36,13 @@ export default class ListMedidorComponent implements OnInit {
 
   onLoadData() {
     const urlApi = `Medidor/GetAll/${this.customerIdS.customerId}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
     });
   }
   onDelete(id: number) {
-    this.apiRequestS.onDelete(`Medidor/${id}`).then((result: boolean) => {
-      if (result) this.data = this.data.filter((item) => item.id !== id);
+    this.apiRequestS.onDelete(`Medidor/${id}`).then((responseData: boolean) => {
+      if (responseData) this.data = this.data.filter((item) => item.id !== id);
     });
   }
 
@@ -54,8 +54,8 @@ export default class ListMedidorComponent implements OnInit {
         data.title,
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
 
@@ -70,16 +70,16 @@ export default class ListMedidorComponent implements OnInit {
         data.title,
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
 
   datosExcel: any[] = [];
   exportExcel(id: number) {
     const urlApi = `MedidorLectura/ExportExcel/${id}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.datosExcel = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.datosExcel = responseData;
       this.generate();
     });
   }

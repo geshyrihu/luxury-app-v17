@@ -22,8 +22,8 @@ export default class UpdateRoleComponent implements OnInit {
   getRoles() {
     this.apiRequestS
       .onGetList('ApplicationUser/GetRole/' + this.applicationUserId)
-      .then((result: any) => {
-        this.roles = result;
+      .then((responseData: any) => {
+        this.roles = responseData;
       });
   }
 

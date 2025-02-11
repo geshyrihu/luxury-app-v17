@@ -37,15 +37,16 @@ export default class InventarioPinturaComponent implements OnInit {
   onLoadData() {
     const urlApi =
       'InventarioPintura/GetAll/' + this.customerIdS.getCustomerId();
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
     });
   }
   onDelete(id: number) {
     this.apiRequestS
       .onDelete(`InventarioPintura/${id}`)
-      .then((result: boolean) => {
-        if (result) this.data = this.data.filter((item) => item.id !== id);
+      .then((responseData: boolean) => {
+        if (responseData)
+          this.data = this.data.filter((item) => item.id !== id);
       });
   }
 
@@ -57,8 +58,8 @@ export default class InventarioPinturaComponent implements OnInit {
         data.title,
         this.dialogHandlerS.dialogSizeLg
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
 }

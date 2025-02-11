@@ -76,12 +76,12 @@ export default class AddOrEditActivosComponent implements OnInit {
   }
   onLoadData(id: number) {
     const urlApi = `Machineries/${id}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-      this.id = result.id;
-      result.dateOfPurchase = this.getdateService.getDateFormat(
-        result.dateOfPurchase
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+      this.id = responseData.id;
+      responseData.dateOfPurchase = this.getdateService.getDateFormat(
+        responseData.dateOfPurchase
       );
-      this.form.patchValue(result);
+      this.form.patchValue(responseData);
 
       const contenidoHTML = this.form.get('technicalSpecifications').value;
       if (contenidoHTML) {
@@ -110,14 +110,16 @@ export default class AddOrEditActivosComponent implements OnInit {
     this.submitting = true;
 
     if (this.id === 0) {
-      this.apiRequestS.onPost(`machineries`, model).then((result: boolean) => {
-        result ? this.ref.close(true) : (this.submitting = false);
-      });
+      this.apiRequestS
+        .onPost(`machineries`, model)
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
+        });
     } else {
       this.apiRequestS
         .onPut(`machineries/${this.id}`, model)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }
@@ -158,8 +160,8 @@ export default class AddOrEditActivosComponent implements OnInit {
 
   onLoadEquipoClasificacion() {
     const urlApi = `equipoclasificacion/selectitem`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.cb_equipoClasificacion = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.cb_equipoClasificacion = responseData;
     });
   }
 }

@@ -42,8 +42,8 @@ export default class CustomerAddressComponent implements OnInit {
   onLoadData() {
     this.apiRequestS
       .onGetItem(`customers/customeraddress/${this.customerId}`)
-      .then((result: any) => {
-        this.form.patchValue(result);
+      .then((responseData: any) => {
+        this.form.patchValue(responseData);
       });
   }
 
@@ -54,8 +54,8 @@ export default class CustomerAddressComponent implements OnInit {
 
     this.apiRequestS
       .onPut(`customers/updatecustomeraddress`, this.form.value)
-      .then((result: boolean) => {
-        result ? this.ref.close(true) : (this.submitting = false);
+      .then((responseData: boolean) => {
+        responseData ? this.ref.close(true) : (this.submitting = false);
       });
   }
 }

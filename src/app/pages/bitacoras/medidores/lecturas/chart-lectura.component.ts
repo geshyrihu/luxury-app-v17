@@ -76,8 +76,8 @@ export default class ChartLecturaComponent implements OnInit {
 
   onDataGraficoDiaria() {
     const urlApi = `MedidorLectura/DataGraficoDiaria/${this.medidorId}/${this.fechaInicial}/${this.fechaFinal}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
       this.onLoadChart(
         this.data.label,
         this.data.backgroundColor,
@@ -90,8 +90,8 @@ export default class ChartLecturaComponent implements OnInit {
 
   onDataGraficoMensual(fechaInicial: string, fechaFinal: string) {
     const urlApi = `MedidorLectura/DataGraficoMensual/${this.medidorId}/${fechaInicial}/${fechaFinal}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
       this.onLoadChart(
         this.data.label,
         this.data.backgroundColor,

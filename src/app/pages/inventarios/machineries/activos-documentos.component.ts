@@ -29,15 +29,16 @@ export default class ActivosDocumentosComponent implements OnInit {
   }
   onLoadData() {
     const urlApi = `MachineryDocument/GetAll/${this.machineryId}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
     });
   }
   onDelete(id: number) {
     this.apiRequestS
       .onDelete(`Machineries/DeleteDocument/${id}`)
-      .then((result: boolean) => {
-        if (result) this.data = this.data.filter((item) => item.id !== id);
+      .then((responseData: boolean) => {
+        if (responseData)
+          this.data = this.data.filter((item) => item.id !== id);
       });
   }
   onModalFormUploadDoc(id: number) {
@@ -51,8 +52,8 @@ export default class ActivosDocumentosComponent implements OnInit {
         'Cargar Documentos',
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
 }

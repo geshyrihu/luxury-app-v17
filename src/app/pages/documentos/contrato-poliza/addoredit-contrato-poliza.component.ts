@@ -63,14 +63,14 @@ export default class AddoreditContratoPolizaComponent implements OnInit {
 
   onLoadData() {
     const urlApi = `ContratoPoliza/${this.id}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-      this.id = result.id;
-      this.form.patchValue(result);
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+      this.id = responseData.id;
+      this.form.patchValue(responseData);
       this.form.patchValue({
-        providerId: result.providerId,
+        providerId: responseData.providerId,
       });
       this.form.patchValue({
-        providerName: result.providerName,
+        providerName: responseData.providerName,
       });
     });
   }
@@ -85,14 +85,14 @@ export default class AddoreditContratoPolizaComponent implements OnInit {
     if (this.id === 0) {
       this.apiRequestS
         .onPost(`ContratoPoliza`, formData)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
       this.apiRequestS
         .onPut(`ContratoPoliza/${this.id}`, formData)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }

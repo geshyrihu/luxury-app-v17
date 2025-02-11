@@ -25,8 +25,8 @@ export default class TicketMessageReportResumenComponent implements OnInit {
 
   onLoadData(startDate: string, endDate: string) {
     const urlApi = `TicketReport/GetTicketReport/${this.customerIdS.customerId}/${startDate}/${endDate}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
     });
   }
 

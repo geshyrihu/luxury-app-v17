@@ -23,27 +23,27 @@ export default class LegalReportsPendingComponent implements OnInit {
 
   onLoadDataExternal() {
     const urlApi = `LegalReport/Pending/1`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.dataExternal = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.dataExternal = responseData;
     });
   }
   onLoadDataInternal() {
     const urlApi = `LegalReport/Pending/0`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.dataInternal = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.dataInternal = responseData;
     });
   }
   onLoadUnassignedData() {
     // Your logic to load unassigned data goes here
     const urlApi = `LegalReport/PendingUnassignedData`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.unassignedData = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.unassignedData = responseData;
     });
   }
   sendReport() {
     const urlApi = `LegalReport/Report`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.dataInternal = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.dataInternal = responseData;
     });
   }
 }

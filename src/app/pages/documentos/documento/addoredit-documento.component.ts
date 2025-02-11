@@ -46,13 +46,13 @@ export default class AddoreditDocumentoComponent implements OnInit {
   }
   onLoadData() {
     const urlApi = `documentocustomer/${this.id}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
       this.form.patchValue({
-        id: result.id,
-        customerId: result.customerId,
+        id: responseData.id,
+        customerId: responseData.customerId,
         document: '',
-        categoriaDocumento: result.categoriaDocumento,
-        nameDocument: result.nameDocument,
+        categoriaDocumento: responseData.categoriaDocumento,
+        nameDocument: responseData.nameDocument,
       });
     });
   }
@@ -67,14 +67,14 @@ export default class AddoreditDocumentoComponent implements OnInit {
     if (this.id === 0) {
       this.apiRequestS
         .onPost(`DocumentoCustomer`, formData)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
       this.apiRequestS
         .onPut(`DocumentoCustomer/${this.id}`, formData)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }

@@ -50,14 +50,14 @@ export default class AddOrEditCatalogoDescripcionComponent implements OnInit {
   }
   onLoadData() {
     const urlApi = `CatalogoEntregaRecepcionDescripcion/${this.id}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-      this.form.patchValue(result);
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+      this.form.patchValue(responseData);
     });
   }
   onLoadGrupos() {
     const urlApi = `CatalogoEntregaRecepcionDescripcion/grupos`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.cb_grupo = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.cb_grupo = responseData;
     });
   }
   onSubmit() {
@@ -69,8 +69,8 @@ export default class AddOrEditCatalogoDescripcionComponent implements OnInit {
     if (this.id === 0) {
       this.apiRequestS
         .onPost(`CatalogoEntregaRecepcionDescripcion`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
       this.apiRequestS
@@ -78,8 +78,8 @@ export default class AddOrEditCatalogoDescripcionComponent implements OnInit {
           `CatalogoEntregaRecepcionDescripcion/${this.id}`,
           this.form.value
         )
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }

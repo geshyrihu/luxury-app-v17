@@ -31,8 +31,8 @@ export default class ReportConsumosComponent implements OnInit {
     const urlApi = `MaintenanceReport/DataGraficoMensual/${this.customerIdS.getCustomerId()}/${this.dateS.getDateFormat(
       this.periodoMonthService.getPeriodoInicio
     )}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.medidores = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.medidores = responseData;
     });
   }
 }

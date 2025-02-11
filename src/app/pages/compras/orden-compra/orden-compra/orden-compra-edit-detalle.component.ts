@@ -50,8 +50,8 @@ export default class OrdenCompraEditDetalleComponent implements OnInit {
   onLoadData() {
     this.apiRequestS
       .onGetItem(`OrdenCompraDetalle/${this.id}`)
-      .then((result: any) => {
-        this.form.patchValue(result);
+      .then((responseData: any) => {
+        this.form.patchValue(responseData);
       });
   }
   onSubmit() {
@@ -61,8 +61,8 @@ export default class OrdenCompraEditDetalleComponent implements OnInit {
 
     this.apiRequestS
       .onPut(`OrdenCompraDetalle/${this.id}`, this.form.value)
-      .then((result: boolean) => {
-        result ? this.ref.close(true) : (this.submitting = false);
+      .then((responseData: boolean) => {
+        responseData ? this.ref.close(true) : (this.submitting = false);
       });
   }
 }

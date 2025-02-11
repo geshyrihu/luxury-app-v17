@@ -39,8 +39,8 @@ export default class ResumenOrdenesServicioComponent implements OnInit {
       this.customerId +
       '/' +
       this.dateS.getDateFormat(this.reporteOrdenesServicioService.getDate());
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
     });
 
     const urlApi2 =
@@ -48,8 +48,8 @@ export default class ResumenOrdenesServicioComponent implements OnInit {
       this.customerId +
       '/' +
       this.dateS.getDateFormat(this.reporteOrdenesServicioService.getDate());
-    this.apiRequestS.onGetList(urlApi2).then((result: any) => {
-      this.dataGraficos = result;
+    this.apiRequestS.onGetList(urlApi2).then((responseData: any) => {
+      this.dataGraficos = responseData;
       this.reporteOrdenesServicioService.setDateGrafico(this.dataGraficos);
     });
   }

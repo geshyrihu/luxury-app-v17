@@ -51,8 +51,8 @@ export default class ListWorkPlantillaComponent implements OnInit {
     const urlApi = `workposition/getall/${this.customerIdS.getCustomerId()}/${
       this.state
     }`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
     });
   }
 
@@ -169,9 +169,12 @@ export default class ListWorkPlantillaComponent implements OnInit {
   }
   //Eliminar vacante workPosition
   onDelete(id: number) {
-    this.apiRequestS.onDelete(`WorkPosition/${id}`).then((result: boolean) => {
-      if (result) this.data = this.data.filter((item) => item.id !== id);
-    });
+    this.apiRequestS
+      .onDelete(`WorkPosition/${id}`)
+      .then((responseData: boolean) => {
+        if (responseData)
+          this.data = this.data.filter((item) => item.id !== id);
+      });
   }
 
   onValidateShowTIcket(professionId: number): boolean {

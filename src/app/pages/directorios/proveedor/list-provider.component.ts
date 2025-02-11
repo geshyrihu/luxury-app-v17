@@ -31,21 +31,23 @@ export default class ListProviderComponent implements OnInit {
   }
   onLoadData() {
     const urlApi = `proveedor/listadoproveedores`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
     });
   }
 
   onDelete(id: number) {
-    this.apiRequestS.onDelete(`providers/${id}`).then((result: boolean) => {
-      if (result)
-        this.data = this.data.filter((item) => item.providerId !== id);
-    });
+    this.apiRequestS
+      .onDelete(`providers/${id}`)
+      .then((responseData: boolean) => {
+        if (responseData)
+          this.data = this.data.filter((item) => item.providerId !== id);
+      });
   }
 
   onAutorizarProvider(providerId: number) {
     const urlApi = `Proveedor/Autorizar/${providerId}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
       this.onLoadData();
     });
   }
@@ -75,15 +77,15 @@ export default class ListProviderComponent implements OnInit {
         data.title,
         this.dialogHandlerS.dialogSizeFull
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
 
   onActivateProvider(data: any) {
     this.apiRequestS
       .onPut(`Providers/ChangeState/${data.providerId}/${data.state}`, null)
-      .then((result: boolean) => {
+      .then((responseData: boolean) => {
         this.onLoadData();
       });
   }

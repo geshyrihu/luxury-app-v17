@@ -49,9 +49,9 @@ export default class MyAssignedTicketsListComponent implements OnInit {
 
   onLoadData(status: any) {
     const urlApi = `Tickets/MyAssignedTickets/${this.authS.applicationUserId}/${status}/${this.customerIdS.customerId}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
-      this.filteredData = result; // Inicializa la data filtrada
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
+      this.filteredData = responseData; // Inicializa la data filtrada
       this.status = status;
     });
   }
@@ -75,8 +75,8 @@ export default class MyAssignedTicketsListComponent implements OnInit {
         'Programar actividad',
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData(this.status);
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData(this.status);
       });
   }
   onClosed(id: string) {
@@ -87,8 +87,8 @@ export default class MyAssignedTicketsListComponent implements OnInit {
         'Cerrar ticket',
         this.dialogHandlerS.dialogSizeLg
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData(this.status);
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData(this.status);
       });
   }
   onFollowUp(id: string) {
@@ -99,8 +99,8 @@ export default class MyAssignedTicketsListComponent implements OnInit {
         'Seguimiento',
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData(this.status);
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData(this.status);
       });
   }
 
@@ -112,8 +112,8 @@ export default class MyAssignedTicketsListComponent implements OnInit {
         data.title,
         this.dialogHandlerS.dialogSizeLg
       )
-      .then((result: boolean) => {
-        if (result) {
+      .then((responseData: boolean) => {
+        if (responseData) {
           this.onLoadData(this.status);
         }
       });
@@ -127,8 +127,8 @@ export default class MyAssignedTicketsListComponent implements OnInit {
         data.title,
         this.dialogHandlerS.dialogSizeLg
       )
-      .then((result: boolean) => {
-        if (result) {
+      .then((responseData: boolean) => {
+        if (responseData) {
           this.onLoadData(this.status);
         }
       });
@@ -141,8 +141,8 @@ export default class MyAssignedTicketsListComponent implements OnInit {
         'Re abrir ticket',
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData(this.status);
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData(this.status);
       });
   }
   onCardEmployee(applicationUserId: string) {
@@ -164,11 +164,11 @@ export default class MyAssignedTicketsListComponent implements OnInit {
       cancelButtonColor: '#9B1B30',
       confirmButtonText: 'Si, en proceso!',
       cancelButtonText: 'Cancelar',
-    }).then((result) => {
-      if (result.value) {
+    }).then((responseData) => {
+      if (responseData.value) {
         const urlApi = `Tickets/InProgress/${id}/${this.authS.applicationUserId}`;
 
-        this.apiRequestS.onGetItem(urlApi).then((result: any) => {
+        this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
           // Actualizamos el valor del signal con los datos recibidos
           this.onLoadData(this.status);
         });

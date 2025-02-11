@@ -27,8 +27,8 @@ export class TicketTrakingCustomerComponent implements OnInit {
   onCargaListaseguimientos() {
     this.apiRequestS
       .onGetItem(`TicketLegal/Traking/${this.ticketId}`)
-      .then((result: any) => {
-        this.seguimientos = result;
+      .then((responseData: any) => {
+        this.seguimientos = responseData;
       });
   }
 }

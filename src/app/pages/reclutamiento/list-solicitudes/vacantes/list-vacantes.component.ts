@@ -48,16 +48,17 @@ export default class ListVacantesComponent implements OnInit {
     const urlApi = `RequestPosition/`;
     this.apiRequestS
       .onGetList(urlApi, this.filterRequestsService.getParams())
-      .then((result: any) => {
-        this.data = result;
+      .then((responseData: any) => {
+        this.data = responseData;
       });
   }
 
   onDelete(id: number) {
     this.apiRequestS
       .onDelete(`RequestPosition/${id}`)
-      .then((result: boolean) => {
-        if (result) this.data = this.data.filter((item) => item.id !== id);
+      .then((responseData: boolean) => {
+        if (responseData)
+          this.data = this.data.filter((item) => item.id !== id);
       });
   }
 
@@ -71,8 +72,8 @@ export default class ListVacantesComponent implements OnInit {
         'Editar registro',
         this.dialogHandlerS.dialogSizeLg
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
 
@@ -87,8 +88,8 @@ export default class ListVacantesComponent implements OnInit {
         'Horario de trabajo',
         this.dialogHandlerS.dialogSizeLg
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
   //Modal para visualizar descripcion de puesto
@@ -102,8 +103,8 @@ export default class ListVacantesComponent implements OnInit {
         'Descripción del puesto',
         this.dialogHandlerS.dialogSizeLg
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
   onRouteEstatusSolicitud(id) {
@@ -121,8 +122,8 @@ export default class ListVacantesComponent implements OnInit {
         data.title,
         this.dialogHandlerS.dialogSizeFull
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
 }

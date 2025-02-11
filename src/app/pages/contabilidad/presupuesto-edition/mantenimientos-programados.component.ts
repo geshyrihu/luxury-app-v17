@@ -32,8 +32,8 @@ export default class MantenimientosProgramadosComponent implements OnInit {
           this.cuentaId
         }/${this.customerIdS.getCustomerId()}`
       )
-      .then((result: any) => {
-        this.data = result;
+      .then((responseData: any) => {
+        this.data = responseData;
       });
   }
 }

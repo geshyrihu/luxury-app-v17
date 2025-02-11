@@ -28,9 +28,9 @@ export default class ReportClientComponent implements OnInit {
     this.final = this.rutaActiva.snapshot.params.final;
     this.rutaFinal = `Tickets/GetReportClient/${this.customer}/${this.inicio}/${this.final}`;
 
-    this.apiRequestS.onGetList(this.rutaFinal).then((result: any) => {
+    this.apiRequestS.onGetList(this.rutaFinal).then((responseData: any) => {
       // Actualizamos el valor del signal con los datos recibidos
-      this.data = result;
+      this.data = responseData;
     });
   }
 }

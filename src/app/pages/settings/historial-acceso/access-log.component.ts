@@ -46,8 +46,8 @@ export default class AccessLogComponent implements OnInit {
   onLoadData(fechaInicial: string, fechaFinal: string): void {
     const urlApi = `AccessHistory/${this.customerIdS.customerId}/${fechaInicial}/${fechaFinal}`;
 
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
     });
   }
 }

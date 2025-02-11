@@ -37,9 +37,9 @@ export default class TicketMessageReportWorkPlanComponent implements OnInit {
 
   onLoadData() {
     const urlApi = `TicketWorkPlan/Pending/${this.customerIdS.customerId}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
-      this.originalData = JSON.parse(JSON.stringify(result)); // Copia profunda
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
+      this.originalData = JSON.parse(JSON.stringify(responseData)); // Copia profunda
       const uniqueResponsibles = Array.from(
         new Map(
           this.originalData.map((item) => [item.assigneeId, item])
@@ -83,8 +83,8 @@ export default class TicketMessageReportWorkPlanComponent implements OnInit {
         'Agregar',
         this.dialogHandlerS.dialogSizeLg
       )
-      .then((result: boolean) => {
-        if (result) {
+      .then((responseData: boolean) => {
+        if (responseData) {
           this.onLoadData();
         }
       });

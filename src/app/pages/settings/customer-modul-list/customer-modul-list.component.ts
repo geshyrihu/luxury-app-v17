@@ -26,8 +26,8 @@ export default class CustomerModulListComponent implements OnInit {
 
   onLoadData(state: boolean): void {
     const urlApi = `ModuleAppCustomer/Customers/${state}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
     });
   }
 

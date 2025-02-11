@@ -61,8 +61,8 @@ export class EmployeeProviderAddOrEditComponent implements OnInit {
     } else {
       urlApi = 'Employees/CreateEmployeeExternal';
     }
-    this.apiRequestS.onPost(urlApi, formData).then((result: boolean) => {
-      result ? this.ref.close(true) : (this.submitting = false);
+    this.apiRequestS.onPost(urlApi, formData).then((responseData: boolean) => {
+      responseData ? this.ref.close(true) : (this.submitting = false);
     });
   }
 
@@ -112,8 +112,8 @@ export class EmployeeProviderAddOrEditComponent implements OnInit {
     }
     this.existingPerson = [];
     const urlApi = 'Employees/SearchExistingPerson/' + fullName.target.value;
-    this.apiRequestS.onGetListNotLoading(urlApi).then((result: any) => {
-      this.existingPerson = result;
+    this.apiRequestS.onGetListNotLoading(urlApi).then((responseData: any) => {
+      this.existingPerson = responseData;
     });
   }
   existingPerson: any;
@@ -126,8 +126,8 @@ export class EmployeeProviderAddOrEditComponent implements OnInit {
     this.existingPhone = [];
 
     const urlApi = 'Employees/SearchExistingPhone/' + phone.target.value;
-    this.apiRequestS.onGetListNotLoading(urlApi).then((result: any) => {
-      this.existingPhone = result;
+    this.apiRequestS.onGetListNotLoading(urlApi).then((responseData: any) => {
+      this.existingPhone = responseData;
     });
   }
 }

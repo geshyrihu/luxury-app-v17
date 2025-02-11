@@ -37,8 +37,8 @@ export default class OrdenCompraEditPresupustoUtilizadoComponent
   onLoadData() {
     this.apiRequestS
       .onGetItem(`OrdenCompraPresupuesto/GetId/${this.id}`)
-      .then((result: any) => {
-        this.form.patchValue(result);
+      .then((responseData: any) => {
+        this.form.patchValue(responseData);
       });
   }
   onSubmit() {
@@ -47,8 +47,8 @@ export default class OrdenCompraEditPresupustoUtilizadoComponent
     this.submitting = true;
     this.apiRequestS
       .onPut(`OrdenCompraPresupuesto/${this.id}`, this.form.value)
-      .then((result: boolean) => {
-        result ? this.ref.close(true) : (this.submitting = false);
+      .then((responseData: boolean) => {
+        responseData ? this.ref.close(true) : (this.submitting = false);
       });
   }
 }

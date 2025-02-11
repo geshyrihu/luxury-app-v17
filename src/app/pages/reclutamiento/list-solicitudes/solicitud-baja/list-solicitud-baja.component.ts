@@ -34,8 +34,8 @@ export default class ListSolicitudBajaComponent implements OnInit {
   onLoadData() {
     const urlApi = `requestdismissal/list/`;
     const params = this.filterRequestsService.getParams();
-    this.apiRequestS.onGetList(urlApi, params).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi, params).then((responseData: any) => {
+      this.data = responseData;
     });
   }
   onModalAddOrEdit(data: any) {
@@ -48,15 +48,16 @@ export default class ListSolicitudBajaComponent implements OnInit {
         data.title,
         this.dialogHandlerS.dialogSizeFull
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
   onDelete(id: number) {
     this.apiRequestS
       .onDelete(`RequestDismissal/${id}`)
-      .then((result: boolean) => {
-        if (result) this.data = this.data.filter((item) => item.id !== id);
+      .then((responseData: boolean) => {
+        if (responseData)
+          this.data = this.data.filter((item) => item.id !== id);
       });
   }
 }

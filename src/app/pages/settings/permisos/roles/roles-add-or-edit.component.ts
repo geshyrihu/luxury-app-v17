@@ -34,8 +34,8 @@ export class RolesAddOrEditComponent {
   }
   onLoadData() {
     const urlApi = `Roles/${this.id}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-      this.form.patchValue(result);
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+      this.form.patchValue(responseData);
     });
   }
   onSubmit() {
@@ -45,14 +45,14 @@ export class RolesAddOrEditComponent {
     if (this.id === 0) {
       this.apiRequestS
         .onPost(`Roles`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
       this.apiRequestS
         .onPut(`Roles/${this.id}`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }

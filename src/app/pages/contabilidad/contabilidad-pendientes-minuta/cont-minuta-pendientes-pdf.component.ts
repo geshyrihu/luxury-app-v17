@@ -20,8 +20,8 @@ export default class ConMinutaPendientesPdfComponent implements OnInit {
   onLoadData() {
     this.apiRequestS
       .onGetList('ContabilidadMinuta/Pendientes/0')
-      .then((result: any) => {
-        this.data = result;
+      .then((responseData: any) => {
+        this.data = responseData;
       });
   }
 }

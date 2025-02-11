@@ -56,13 +56,13 @@ export default class ListApplicationUserComponent implements OnInit {
   onLoadData(applicationUserState: boolean, typePerson: ETypePerson): void {
     this.apiRequestS
       .onGetList(`ApplicationUser/List/${applicationUserState}/${typePerson}`)
-      .then((result: any) => {
-        this.data = result;
-        this.filteredData = result;
+      .then((responseData: any) => {
+        this.data = responseData;
+        this.filteredData = responseData;
 
         // Agrupar customers únicos para el select
         const uniqueCustomers = [
-          ...new Set(result.map((item: any) => item.customer)),
+          ...new Set(responseData.map((item: any) => item.customer)),
         ];
 
         // Crear opciones para el select
@@ -117,8 +117,9 @@ export default class ListApplicationUserComponent implements OnInit {
         title,
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: any) => {
-        if (result) this.onLoadData(this.applicationUserState, this.typePerson);
+      .then((responseData: any) => {
+        if (responseData)
+          this.onLoadData(this.applicationUserState, this.typePerson);
       });
   }
 
@@ -160,8 +161,8 @@ export default class ListApplicationUserComponent implements OnInit {
   onDelete(applicationUserId: string): void {
     this.apiRequestS
       .onDelete(`ApplicationUser/${applicationUserId}`)
-      .then((result: boolean) => {
-        if (result) {
+      .then((responseData: boolean) => {
+        if (responseData) {
           this.data = this.data.filter((item) => item.id !== applicationUserId);
           this.filteredData = this.filteredData.filter(
             (item) => item.id !== applicationUserId

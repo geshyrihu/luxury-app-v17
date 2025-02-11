@@ -58,8 +58,8 @@ export default class SolicitudAltaComponent implements OnInit {
   }
   onLoadData() {
     const urlApi = `RequestEmployeeRegister/GetEmployeeRegister/${this.employeeId}/${this.customerId}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.form.patchValue(result);
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.form.patchValue(responseData);
       this.form.patchValue({
         employeeId: this.config.data.employeeId,
         positionRequestId: '',
@@ -69,8 +69,8 @@ export default class SolicitudAltaComponent implements OnInit {
 
   onLoadDataVacante() {
     const urlApi = `requestemployeeregister/vacantes/${this.customerId}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.cb_vacantes = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.cb_vacantes = responseData;
     });
   }
   onSubmit() {
@@ -80,8 +80,10 @@ export default class SolicitudAltaComponent implements OnInit {
     // Mostrar un mensaje de carga
 
     var urlApi = `solicitudesreclutamiento/solicitudalta/${this.authS.applicationUserId}`;
-    this.apiRequestS.onPost(urlApi, this.form.value).then((result: boolean) => {
-      result ? this.ref.close(true) : (this.submitting = false);
-    });
+    this.apiRequestS
+      .onPost(urlApi, this.form.value)
+      .then((responseData: boolean) => {
+        responseData ? this.ref.close(true) : (this.submitting = false);
+      });
   }
 }

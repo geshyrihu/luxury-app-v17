@@ -48,15 +48,17 @@ export default class LegalTicketEditComponent implements OnInit {
     if (this.id !== '') this.onLoadData();
     this.apiRequestS
       .onGetItem(`TicketLegal/EmployeeLegal`)
-      .then((result: any) => {
-        this.applicationUserResponsible_cb = result;
+      .then((responseData: any) => {
+        this.applicationUserResponsible_cb = responseData;
       });
   }
   onLoadData() {
     this.onLegalMatter();
-    this.apiRequestS.onGetItem(`TicketLegal/${this.id}`).then((result: any) => {
-      this.form.patchValue(result);
-    });
+    this.apiRequestS
+      .onGetItem(`TicketLegal/${this.id}`)
+      .then((responseData: any) => {
+        this.form.patchValue(responseData);
+      });
   }
 
   onSubmit() {
@@ -66,15 +68,15 @@ export default class LegalTicketEditComponent implements OnInit {
 
     this.apiRequestS
       .onPut(`TicketLegal/${this.id}`, this.form.value)
-      .then((result: boolean) => {
-        result ? this.ref.close(true) : (this.submitting = false);
+      .then((responseData: boolean) => {
+        responseData ? this.ref.close(true) : (this.submitting = false);
       });
   }
   onLegalMatter() {
     const urlApi = `LegalMatter/SelectForAddTicket`;
 
-    this.apiRequestS.onGetList(urlApi).then((result: ISelectItem[]) => {
-      this.cb_legal_matter = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: ISelectItem[]) => {
+      this.cb_legal_matter = responseData;
     });
   }
 

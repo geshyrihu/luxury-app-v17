@@ -64,8 +64,8 @@ export default class TicketMessageFollowupComponent
     this.loading = true;
 
     const urlApi = `TicketMessageFollowUp/List/${this.ticketMessageId}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.description = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.description = responseData;
       this.loading = false;
     });
   }

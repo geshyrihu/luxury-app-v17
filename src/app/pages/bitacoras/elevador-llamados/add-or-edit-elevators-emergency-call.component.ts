@@ -50,16 +50,16 @@ export default class AddOrEditElevatorsEmergencyCallComponent
   }
   onLoadData() {
     const urlApi = `ElevatorsEmergencyCall/${this.id}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-      const requestDate = this.dateS.getDateFormat(result.requestDate);
-      result.requestDate = requestDate;
-      this.form.patchValue(result);
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+      const requestDate = this.dateS.getDateFormat(responseData.requestDate);
+      responseData.requestDate = requestDate;
+      this.form.patchValue(responseData);
     });
   }
   onLoadDataElevators() {
     const urlApi = `elevatorsparepartschange/elevators/${this.config.data.customerId}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-      this.cb_elevators = result;
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+      this.cb_elevators = responseData;
     });
   }
   onSubmit() {
@@ -77,14 +77,14 @@ export default class AddOrEditElevatorsEmergencyCallComponent
     if (this.id === "") {
       this.apiRequestS
         .onPost(`ElevatorsEmergencyCall`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
       this.apiRequestS
         .onPut(`ElevatorsEmergencyCall/${this.id}`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }

@@ -65,8 +65,8 @@ export default class CuadroComparativoListComponent implements OnInit {
         'Selecciona un proveedor',
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) {
+      .then((responseData: boolean) => {
+        if (responseData) {
           this.onResetTotal();
           this.onLoadData();
         }
@@ -80,9 +80,9 @@ export default class CuadroComparativoListComponent implements OnInit {
     this.provider3 = undefined;
     const urlApi = `solicitudcompra/cuadrocomparativo/${this.solicitudCompraId}`;
 
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-      this.folio = result.folio;
-      this.solicitudCompra = result;
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+      this.folio = responseData.folio;
+      this.solicitudCompra = responseData;
       this.cotizacionProveedor = this.solicitudCompra.cotizacionProveedor;
       this.solicitudCompraDetalle = this.solicitudCompra.solicitudCompraDetalle;
 
@@ -139,8 +139,8 @@ export default class CuadroComparativoListComponent implements OnInit {
         'Editar Cotización',
         this.dialogHandlerS.dialogSizeLg
       )
-      .then((result: boolean) => {
-        if (result) {
+      .then((responseData: boolean) => {
+        if (responseData) {
           this.onResetTotal();
           this.onLoadData();
         }

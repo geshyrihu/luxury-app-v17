@@ -163,8 +163,8 @@ export default class InspectionCondominiumAssetEditComponent implements OnInit {
     };
 
     const urlApi = `InspectionCondominiumAsset/${data.id}`;
-    this.apiRequestS.onPut(urlApi, data).then((result: any) => {
-      if (result) {
+    this.apiRequestS.onPut(urlApi, data).then((responseData: any) => {
+      if (responseData) {
         this.ref.close(true);
       } else {
         this.submitting = false;

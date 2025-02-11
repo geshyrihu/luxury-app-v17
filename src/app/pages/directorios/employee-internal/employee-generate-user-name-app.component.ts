@@ -39,13 +39,13 @@ export default class EmployeeGenerateUserNameAppComponent implements OnInit {
   getRoles() {
     this.apiRequestS
       .onGetList('ApplicationUser/GetRole/' + this.applicationUserId)
-      .then((result: IRoles[]) => {
+      .then((responseData: IRoles[]) => {
         if (this.authS.onValidateRoles(['SuperUsuario'])) {
           // Filtra los roles que se encuentran en rolesSuperUser
-          this.roles = this.filterRoles(this.rolesSuperUser, result);
+          this.roles = this.filterRoles(this.rolesSuperUser, responseData);
         } else {
           // Filtra los roles que se encuentran en rolesAdmin
-          this.roles = this.filterRoles(this.rolesAdmin, result);
+          this.roles = this.filterRoles(this.rolesAdmin, responseData);
         }
       });
   }
@@ -72,9 +72,9 @@ export default class EmployeeGenerateUserNameAppComponent implements OnInit {
       .onGetItem(
         `EmployeeInternal/DataForRecoveryPassword/${this.applicationUserId}`
       )
-      .then((result: any) => {
-        if (result) {
-          const { email, phoneNumber, userName } = result;
+      .then((responseData: any) => {
+        if (responseData) {
+          const { email, phoneNumber, userName } = responseData;
           this.email = email;
           this.phoneNumber = phoneNumber;
           this.userName = userName;
@@ -83,8 +83,8 @@ export default class EmployeeGenerateUserNameAppComponent implements OnInit {
 
     this.apiRequestS
       .onGetItem(`EmployeeInternal/OnValidateState/${this.applicationUserId}`)
-      .then((result: any) => {
-        this.applicationUserState = result;
+      .then((responseData: any) => {
+        this.applicationUserState = responseData;
       });
   }
 

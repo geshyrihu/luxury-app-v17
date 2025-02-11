@@ -52,8 +52,8 @@ export default class CalendarioMaestroAddOrEditComponent implements OnInit {
   onLoadData(id: number) {
     this.apiRequestS
       .onGetItem(`CalendarioMaestro/${id}`)
-      .then((result: any) => {
-        this.form.patchValue(result);
+      .then((responseData: any) => {
+        this.form.patchValue(responseData);
         this.form.patchValue({
           mes: this.config.data.mes,
         });
@@ -67,14 +67,14 @@ export default class CalendarioMaestroAddOrEditComponent implements OnInit {
     if (this.id === 0) {
       this.apiRequestS
         .onPost(`CalendarioMaestro`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
       this.apiRequestS
         .onPut(`CalendarioMaestro/${this.id}`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }

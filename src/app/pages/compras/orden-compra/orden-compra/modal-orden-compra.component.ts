@@ -47,9 +47,11 @@ export default class ModalOrdenCompraComponent implements OnInit {
   onLoadData() {
     this.apiRequestS
       .onGetItem(`OrdenCompra/GetForEdit/${this.ordenCompraId}`)
-      .then((result: any) => {
-        result.fechaSolicitud = this.dateS.getDateFormat(result.fechaSolicitud);
-        this.form.patchValue(result);
+      .then((responseData: any) => {
+        responseData.fechaSolicitud = this.dateS.getDateFormat(
+          responseData.fechaSolicitud
+        );
+        this.form.patchValue(responseData);
       });
   }
   onSubmit() {
@@ -57,8 +59,8 @@ export default class ModalOrdenCompraComponent implements OnInit {
 
     this.apiRequestS
       .onPut(`OrdenCompra/${this.ordenCompraId}`, this.form.value)
-      .then((result: boolean) => {
-        result ? this.ref.close(true) : (this.submitting = false);
+      .then((responseData: boolean) => {
+        responseData ? this.ref.close(true) : (this.submitting = false);
       });
   }
 }

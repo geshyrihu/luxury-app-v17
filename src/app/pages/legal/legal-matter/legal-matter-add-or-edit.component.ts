@@ -47,16 +47,16 @@ export default class LegalMatterCategoryComponent {
   }
   onLoadData() {
     const urlApi = `LegalMatter/${this.id}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-      this.form.patchValue(result);
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+      this.form.patchValue(responseData);
     });
   }
   cb_categories: ISelectItem[] = [];
 
   onCategories() {
     const urlApi = `LegalMatter/Categories`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.cb_categories = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.cb_categories = responseData;
     });
   }
   onSubmit() {
@@ -66,14 +66,14 @@ export default class LegalMatterCategoryComponent {
     if (this.id === '') {
       this.apiRequestS
         .onPost(`LegalMatter`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
       this.apiRequestS
         .onPut(`LegalMatter/${this.id}`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }

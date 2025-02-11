@@ -42,8 +42,8 @@
 
 //   onLoadData() {
 //     const urlApi = `MaintenanceCalendars/ListService/${this.idMachinery}`;
-//     this.apiRequestS.onGetList(urlApi).then((result: any) => {
-//       this.maintenanceCalendars = result;
+//     this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+//       this.maintenanceCalendars = responseData ;
 //     });
 //   }
 
@@ -56,7 +56,7 @@
 //         //confirm action
 
 //         const urlApi = `MaintenanceCalendars/${id}`;
-//         this.apiRequestS.onDelete(urlApi).then((result: boolean) => {
+//         this.apiRequestS.onDelete(urlApi).then((responseData: boolean) => {
 //           this.onLoadData();
 //         });
 //       },
@@ -77,8 +77,8 @@
 //         data.header,
 //         this.dialogHandlerS.dialogSizeMd
 //       )
-//       .then((result: boolean) => {
-//         if (result) this.onLoadData();
+//       .then((responseData: boolean) => {
+//         if (responseData) this.onLoadData();
 //       });
 //   }
 // }

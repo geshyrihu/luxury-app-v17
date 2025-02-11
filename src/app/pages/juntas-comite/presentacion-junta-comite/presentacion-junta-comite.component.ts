@@ -47,8 +47,8 @@ export default class PresentacionJuntaComiteComponent implements OnInit {
 
   onLoadData(): void {
     const urlApi = `PresentacionJuntaComite/GetAll/${this.customerIdS.getCustomerId()}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
     });
   }
 
@@ -63,8 +63,8 @@ export default class PresentacionJuntaComiteComponent implements OnInit {
         data.titulo,
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
   showModalAdd(data: any) {
@@ -77,30 +77,30 @@ export default class PresentacionJuntaComiteComponent implements OnInit {
         data.title,
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
 
   // Eliminar pdf
   onDelete(item: any, area: string) {
     const urlApi = `PresentacionJuntaComite/${item.id}/${area}`;
-    this.apiRequestS.onDelete(urlApi).then((result: boolean) => {
-      if (result) this.onLoadData();
+    this.apiRequestS.onDelete(urlApi).then((responseData: boolean) => {
+      if (responseData) this.onLoadData();
     });
   }
   // Eliminar registro completo
   onDeleteItem(item: any) {
     const urlApi = `PresentacionJuntaComite/${item.id}`;
-    this.apiRequestS.onDelete(urlApi).then((result: boolean) => {
-      if (result) this.onLoadData();
+    this.apiRequestS.onDelete(urlApi).then((responseData: boolean) => {
+      if (responseData) this.onLoadData();
     });
   }
 
   onValidarPresentacion(id: number) {
     const urlApi = `PresentacionJuntaComite/AutorizarPresentacion/${id}/${this.authS.applicationUserId}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: boolean) => {
-      if (result) {
+    this.apiRequestS.onGetItem(urlApi).then((responseData: boolean) => {
+      if (responseData) {
         this.enviarMailPresentacionComite(id);
         this.onLoadData();
       }
@@ -125,8 +125,8 @@ export default class PresentacionJuntaComiteComponent implements OnInit {
       cancelButtonColor: '#9B1B30',
       confirmButtonText: 'Sí, confirmo!',
       cancelButtonText: 'Cancelar',
-    }).then((result) => {
-      if (result.value) {
+    }).then((responseData) => {
+      if (responseData.value) {
         let urlApi = ``;
         if (employeeSupervisorContableId == null) {
           urlApi =
@@ -137,7 +137,7 @@ export default class PresentacionJuntaComiteComponent implements OnInit {
         } else {
           urlApi = 'PresentacionJuntaComite/RevocarContable/' + id;
         }
-        this.apiRequestS.onGetList(urlApi).then((result: any) => {
+        this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
           this.onLoadData();
         });
       }
@@ -154,7 +154,7 @@ export default class PresentacionJuntaComiteComponent implements OnInit {
 
   enviarMailPresentacionComite(idJunta: number) {
     const urlApi = `SendEmail/PresentacionFinalComite/${idJunta}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
       this.onLoadData();
     });
   }

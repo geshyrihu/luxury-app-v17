@@ -26,16 +26,17 @@ export default class ContMinutaSeguimientosComponent implements OnInit {
     // Mostrar un mensaje de carga
     this.apiRequestS
       .onGetList(`ContabilidadMinuta/ListaSeguimientos/${this.id}`)
-      .then((result: any) => {
-        this.data = result;
+      .then((responseData: any) => {
+        this.data = responseData;
       });
   }
 
   onDeleteSeguimiento(id: number) {
     this.apiRequestS
       .onDelete(`MeetingDertailsSeguimiento/${id}`)
-      .then((result: boolean) => {
-        if (result) this.data = this.data.filter((item) => item.id !== id);
+      .then((responseData: boolean) => {
+        if (responseData)
+          this.data = this.data.filter((item) => item.id !== id);
       });
   }
   onModalAddOrEditSeguimiento(idMeetingSeguimiento: any) {
@@ -48,8 +49,8 @@ export default class ContMinutaSeguimientosComponent implements OnInit {
         'Seguimiento',
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
 }

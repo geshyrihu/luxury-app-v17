@@ -40,9 +40,11 @@ export default class AddoreditFormaPagoComponent implements OnInit {
   }
 
   onLoadItem() {
-    this.apiRequestS.onGetItem(`FormaPago/${this.id}`).then((result: any) => {
-      this.form.patchValue(result);
-    });
+    this.apiRequestS
+      .onGetItem(`FormaPago/${this.id}`)
+      .then((responseData: any) => {
+        this.form.patchValue(responseData);
+      });
   }
 
   onSubmit() {
@@ -52,14 +54,14 @@ export default class AddoreditFormaPagoComponent implements OnInit {
     if (this.id === 0) {
       this.apiRequestS
         .onPost(`FormaPago`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
       this.apiRequestS
         .onPut(`FormaPago/${this.id}`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }

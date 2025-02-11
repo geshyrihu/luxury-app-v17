@@ -19,12 +19,11 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { IMenuItem } from './menu.model';
-import { SidebarService } from './sidebar.service';
 
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.scss'],
+  // styleUrls: ['./sidebar.component.css'],
   standalone: true,
   imports: [
     LuxuryAppComponentsModule,
@@ -41,7 +40,6 @@ import { SidebarService } from './sidebar.service';
  */
 export default class SidebarComponent implements OnInit, AfterViewInit {
   authS = inject(AuthService);
-  private sidebarService = inject(SidebarService);
   private customerIdS = inject(CustomerIdService);
   private apiRequestS = inject(ApiRequestService);
   private cdr = inject(ChangeDetectorRef);
@@ -49,8 +47,6 @@ export default class SidebarComponent implements OnInit, AfterViewInit {
   @ViewChild('sideMenu') sideMenu!: ElementRef;
   menu: any;
   menuItems: IMenuItem[] = [];
-  // customerId: number = this.customerIdS.getCustomerId();
-  // menuItemss: IMenuItem[] = [];
   customerId$: Observable<number> = this.customerIdS.getCustomerId$();
 
   ngOnInit(): void {
@@ -66,8 +62,8 @@ export default class SidebarComponent implements OnInit, AfterViewInit {
       this.authS.userTokenDto.infoUserAuthDto.applicationUserId;
     const customerId = this.customerIdS.getCustomerId();
     const urlApi = `MenuItems/${customerId}/${applicationUserId}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.menuItems = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.menuItems = responseData;
 
       this.cdr.detectChanges(); // Forzar actualización de la vista
 
@@ -80,8 +76,8 @@ export default class SidebarComponent implements OnInit, AfterViewInit {
       if (this.menu) {
         this.menu.dispose(); // Destruir instancia previa
       }
-      this.menu = new MetisMenu('#side-menu');
-      this._activateMenuDropdown();
+      this.menu = new MetisMenu('#side-menu'); // Inicializar MetisMenu
+      this._activateMenuDropdown(); // Activar el menú desplegable
     }, 1000);
   }
 
@@ -89,10 +85,11 @@ export default class SidebarComponent implements OnInit, AfterViewInit {
    * Activa el menú desplegable
    */
   ngAfterViewInit() {
-    setTimeout(() => {
-      this.menu = new MetisMenu('#side-menu');
-      this._activateMenuDropdown();
-    }, 500);
+    this.onLoadMenuFunction();
+    // setTimeout(() => {
+    //   this.menu = new MetisMenu('#side-menu');
+    //   this._activateMenuDropdown();
+    // }, 500);
   }
   /**
    * Comprueba si un elemento del menú tiene subelementos

@@ -49,8 +49,8 @@ export default class AddOrEditProviderSupportComponent {
   onLoadData() {
     this.apiRequestS
       .onGetItem(`providersupport/${this.id}`)
-      .then((result: any) => {
-        this.form.patchValue(result);
+      .then((responseData: any) => {
+        this.form.patchValue(responseData);
       });
   }
 
@@ -63,14 +63,14 @@ export default class AddOrEditProviderSupportComponent {
     if (this.id === '') {
       this.apiRequestS
         .onPost(`providersupport`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
       this.apiRequestS
         .onPut(`providersupport/${this.id}`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }

@@ -36,8 +36,8 @@ export default class AddOrEditStatusRequestDismissalDiscountComponent
   }
   onLoadData() {
     const urlApi = `RequestDismissalDiscount/${this.id}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-      this.form.patchValue(result);
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+      this.form.patchValue(responseData);
     });
   }
   onSubmit() {
@@ -49,14 +49,14 @@ export default class AddOrEditStatusRequestDismissalDiscountComponent
     if (this.id === 0) {
       this.apiRequestS
         .onPost(`RequestDismissalDiscount`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
       this.apiRequestS
         .onPut(`RequestDismissalDiscount/${this.id}`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }

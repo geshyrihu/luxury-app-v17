@@ -38,9 +38,11 @@ export default class FormatoAddOrEditComponent implements OnInit {
     this.onLoadSelectItem();
     this.form.patchValue({ area: this.config.data.titulo });
 
-    this.apiRequestS.onGetItem(`Formato/${this.id}`).then((result: any) => {
-      this.form.patchValue(result);
-    });
+    this.apiRequestS
+      .onGetItem(`Formato/${this.id}`)
+      .then((responseData: any) => {
+        this.form.patchValue(responseData);
+      });
   }
 
   public saveAreResponsableId(e: any): void {
@@ -58,14 +60,16 @@ export default class FormatoAddOrEditComponent implements OnInit {
     this.submitting = true;
 
     if (this.id === 0) {
-      this.apiRequestS.onPost(`Formato`, model).then((result: boolean) => {
-        result ? this.ref.close(true) : (this.submitting = false);
-      });
+      this.apiRequestS
+        .onPost(`Formato`, model)
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
+        });
     } else {
       this.apiRequestS
         .onPut(`Formato/${this.id}`, model)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }

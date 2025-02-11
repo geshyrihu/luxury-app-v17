@@ -61,8 +61,8 @@ export default class AddoreditToolsComponent implements OnInit {
   }
 
   onLoadSelectItem() {
-    this.apiRequestS.onGetEnumSelectItem(`EState`).then((result: any) => {
-      this.optionActive = result;
+    this.apiRequestS.onGetEnumSelectItem(`EState`).then((responseData: any) => {
+      this.optionActive = responseData;
     });
 
     this.apiRequestS.onGetSelectItem(`Categories`).then((response: any) => {
@@ -71,11 +71,13 @@ export default class AddoreditToolsComponent implements OnInit {
   }
   onLoadData() {
     const urlApi = `Tools/Get/${this.id}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-      this.model = result;
-      result.dateOfPurchase = this.dateS.getDateFormat(result.dateOfPurchase);
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+      this.model = responseData;
+      responseData.dateOfPurchase = this.dateS.getDateFormat(
+        responseData.dateOfPurchase
+      );
       this.urlBaseImg = this.model.photoPath;
-      this.form.patchValue(result);
+      this.form.patchValue(responseData);
     });
   }
 
@@ -86,14 +88,16 @@ export default class AddoreditToolsComponent implements OnInit {
     this.submitting = true;
 
     if (this.id === 0) {
-      this.apiRequestS.onPost(`Tools`, formDataDto).then((result: boolean) => {
-        result ? this.ref.close(true) : (this.submitting = false);
-      });
+      this.apiRequestS
+        .onPost(`Tools`, formDataDto)
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
+        });
     } else {
       this.apiRequestS
         .onPut(`Tools/${this.id}`, formDataDto)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }

@@ -42,8 +42,8 @@ export default class DashboardPreventiveMaintenanceComponent implements OnInit {
 
   onLoadOrdenServicio() {
     const urlApi = `Dashboard/OrdenesServicio/${this.customerIdS.getCustomerId()}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
     });
   }
 

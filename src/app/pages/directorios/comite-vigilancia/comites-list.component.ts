@@ -20,9 +20,9 @@ export default class ComitesListComponent implements OnInit {
 
   onLoadData() {
     const urlApi = `LegalDirectories/Committees`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
       // Actualizamos el valor del signal con los datos recibidos
-      this.data = result;
+      this.data = responseData;
     });
   }
 }

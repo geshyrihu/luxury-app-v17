@@ -27,8 +27,8 @@ export default class LegalSummaryComponent {
     const urlApi = `Dashboard/LegalSummary/${this.customerIdS.getCustomerId()}/${
       this.status
     }`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
     });
   }
 }

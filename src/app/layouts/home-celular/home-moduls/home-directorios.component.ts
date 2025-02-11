@@ -61,6 +61,18 @@ export default class HomeDirectoriosComponent {
       ]),
     },
     {
+      label: 'Mis Proveedores',
+      icon: 'fa-solid fa-box-open', // Representa inventario o proveedores
+      routerLink: '/directory/mis-proveedores',
+      visible: this.authS.onValidateRoles([
+        'SuperUsuario',
+        'SupervisionOperativa',
+        'Administrador',
+        'Asistente',
+        'JefeMantenimiento',
+      ]),
+    },
+    {
       label: 'Catalogo de Proveedores',
       icon: 'fa-solid fa-box-open', // Representa inventario o proveedores
       routerLink: '/directory/proveedor',

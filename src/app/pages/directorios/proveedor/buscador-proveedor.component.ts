@@ -54,8 +54,8 @@ export default class BuscadorProvedorComponent implements OnInit {
         'Calificar a ' + data.nameProvider,
         this.dialogHandlerS.dialogSizeSm
       )
-      .then((result: boolean) => {
-        if (result) this.buscar();
+      .then((responseData: boolean) => {
+        if (responseData) this.buscar();
       });
   }
 
@@ -69,8 +69,8 @@ export default class BuscadorProvedorComponent implements OnInit {
         data.title,
         this.dialogHandlerS.dialogSizeFull
       )
-      .then((result: boolean) => {
-        if (result) this.buscar();
+      .then((responseData: boolean) => {
+        if (responseData) this.buscar();
       });
   }
 
@@ -86,7 +86,7 @@ export default class BuscadorProvedorComponent implements OnInit {
   onActivateProvider(data: any) {
     this.apiRequestS
       .onPut(`Providers/ChangeState/${data.providerId}/${data.state}`, null)
-      .then((result: boolean) => {
+      .then((responseData: boolean) => {
         this.buscar();
       });
   }
@@ -97,15 +97,17 @@ export default class BuscadorProvedorComponent implements OnInit {
     this.loading = true;
 
     const urlApi = `proveedor/buscarProveedor/${this.incluirInactivos}/${this.filtro}`;
-    this.apiRequestS.onGetListNotLoading(urlApi).then((result: any) => {
-      this.resultados = result;
+    this.apiRequestS.onGetListNotLoading(urlApi).then((responseData: any) => {
+      this.resultados = responseData;
       this.loading = false;
     });
   }
 
   onDelete(id: number) {
-    this.apiRequestS.onDelete(`providers/${id}`).then((result: boolean) => {
-      if (result) this.buscar();
-    });
+    this.apiRequestS
+      .onDelete(`providers/${id}`)
+      .then((responseData: boolean) => {
+        if (responseData) this.buscar();
+      });
   }
 }

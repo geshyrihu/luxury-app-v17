@@ -35,8 +35,8 @@ export default class TicketGroupCategoryAddOrEditComponent implements OnInit {
 
   onLoadEnumSelectItem() {
     const urlApi = `EDepartament`;
-    this.apiRequestS.onGetEnumSelectItem(urlApi).then((result: any) => {
-      this.cb_departament = result;
+    this.apiRequestS.onGetEnumSelectItem(urlApi).then((responseData: any) => {
+      this.cb_departament = responseData;
     });
   }
 
@@ -48,8 +48,8 @@ export default class TicketGroupCategoryAddOrEditComponent implements OnInit {
   }
   onLoadData() {
     const urlApi = `TicketGroupCategory/${this.id}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-      this.form.patchValue(result);
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+      this.form.patchValue(responseData);
     });
   }
   onSubmit() {
@@ -59,14 +59,14 @@ export default class TicketGroupCategoryAddOrEditComponent implements OnInit {
     if (this.id === 0) {
       this.apiRequestS
         .onPost(`TicketGroupCategory`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
       this.apiRequestS
         .onPut(`TicketGroupCategory/${this.id}`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }

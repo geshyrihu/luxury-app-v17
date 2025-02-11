@@ -31,8 +31,8 @@ export default class MantenimientosPreventivosResumenComponent
   }
   onLoadData(status: any) {
     const urlApi = `Dashboard/ServiceOrderSummary/${this.customerIdS.getCustomerId()}/${status}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
     });
   }
 }

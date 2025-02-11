@@ -33,10 +33,10 @@ export default class ReporteOrdenesServicioComponent implements OnInit {
   onLoadDataCustomer() {
     const urlApi = 'Customers/' + this.customerIdS.customerId;
 
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-      this.dataCustomer = result;
-      this.nameCustomer = result.nameCustomer;
-      this.logoCustomer = result.photoPath;
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+      this.dataCustomer = responseData;
+      this.nameCustomer = responseData.nameCustomer;
+      this.logoCustomer = responseData.photoPath;
     });
   }
 
@@ -47,8 +47,8 @@ export default class ReporteOrdenesServicioComponent implements OnInit {
     )}-01`;
     const urlApi = `ServiceOrders/ReporteOrdenesServicio/${customerId}/${periodo}`;
 
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+      this.data = responseData;
       this.nameCarpetaFecha = this.data[0].nameFolder;
     });
   }

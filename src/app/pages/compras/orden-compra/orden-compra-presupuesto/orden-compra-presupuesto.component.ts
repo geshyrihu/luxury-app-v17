@@ -40,8 +40,8 @@ export default class OrdenCompraPresupuestoComponent implements OnInit {
   onLoadData() {
     const urlApi = `OrdenCompraPresupuesto/GetAll/${this.cedulaId}/${this.ordenCompraId}`;
 
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
       this.data.forEach(
         (x) => (
           (x.dineroUsado = this.total), (x.ordenCompraId = this.ordenCompraId)
@@ -54,11 +54,11 @@ export default class OrdenCompraPresupuestoComponent implements OnInit {
 
     this.apiRequestS
       .onPost(`OrdenCompraPresupuesto`, partidaPresupuestal)
-      .then((result: boolean) => {
+      .then((responseData: boolean) => {
         const valor =
           this.ordenCompraService.getTotalOrdenCompra() -
           partidaPresupuestal.gastoUsado;
-        result ? this.ref.close(true) : (this.submitting = false);
+        responseData ? this.ref.close(true) : (this.submitting = false);
       });
   }
   actualizarAnio() {
@@ -72,13 +72,13 @@ export default class OrdenCompraPresupuestoComponent implements OnInit {
 
   onLoadCedulasCustomer(customerId: number) {
     const urlApi = `CedulaPresupuestal/GetCedulas/${customerId}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      if (result) {
-        this.cedulaId = result[0].value;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      if (responseData) {
+        this.cedulaId = responseData[0].value;
         this.onLoadData();
       }
 
-      this.cb_cedulas = result;
+      this.cb_cedulas = responseData;
     });
   }
 }

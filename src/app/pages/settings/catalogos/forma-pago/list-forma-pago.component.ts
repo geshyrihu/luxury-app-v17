@@ -22,15 +22,18 @@ export default class ListFormaPagoComponent implements OnInit {
     this.onLoadData();
   }
   onLoadData() {
-    this.apiRequestS.onGetList('FormaPago').then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList('FormaPago').then((responseData: any) => {
+      this.data = responseData;
     });
   }
 
   onDelete(id: number) {
-    this.apiRequestS.onDelete(`FormaPago/${id}`).then((result: boolean) => {
-      if (result) this.data = this.data.filter((item) => item.id !== id);
-    });
+    this.apiRequestS
+      .onDelete(`FormaPago/${id}`)
+      .then((responseData: boolean) => {
+        if (responseData)
+          this.data = this.data.filter((item) => item.id !== id);
+      });
   }
 
   showModalAddOrEdit(data: any) {
@@ -41,8 +44,8 @@ export default class ListFormaPagoComponent implements OnInit {
         data.title,
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
 }

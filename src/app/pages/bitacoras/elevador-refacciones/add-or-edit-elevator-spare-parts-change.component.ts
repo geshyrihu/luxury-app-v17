@@ -51,16 +51,16 @@ export default class AddOrEditElevatorSparePartsChangeComponent
   }
   onLoadData() {
     const urlApi = `elevatorsparepartschange/${this.id}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-      const changeDate = this.dateS.getDateFormat(result.changeDate);
-      result.changeDate = changeDate;
-      this.form.patchValue(result);
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+      const changeDate = this.dateS.getDateFormat(responseData.changeDate);
+      responseData.changeDate = changeDate;
+      this.form.patchValue(responseData);
     });
   }
   onLoadDataElevators() {
     const urlApi = `elevatorsparepartschange/elevators/${this.config.data.customerId}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-      this.cb_elevators = result;
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+      this.cb_elevators = responseData;
     });
   }
   onSubmit() {
@@ -78,14 +78,14 @@ export default class AddOrEditElevatorSparePartsChangeComponent
     if (this.id === '') {
       this.apiRequestS
         .onPost(`elevatorsparepartschange`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
       this.apiRequestS
         .onPut(`elevatorsparepartschange/${this.id}`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }

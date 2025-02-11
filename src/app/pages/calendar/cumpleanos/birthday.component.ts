@@ -58,8 +58,8 @@ export default class BirthdayComponent implements OnInit {
       .onGetList(
         `Birthday/${this.customerIdS.customerId}/${this.selectedMonth}`
       )
-      .then((result: any) => {
-        this.data = result;
+      .then((responseData: any) => {
+        this.data = responseData;
       });
   }
 }

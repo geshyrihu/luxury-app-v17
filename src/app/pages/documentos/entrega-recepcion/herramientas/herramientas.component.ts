@@ -26,8 +26,8 @@ export default class HerramientasComponent implements OnInit {
   }
   onLoadData() {
     const urlApi = `EntregaRecepcion/InventarioHerramientas/${this.customerIdS.customerId}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
     });
   }
 

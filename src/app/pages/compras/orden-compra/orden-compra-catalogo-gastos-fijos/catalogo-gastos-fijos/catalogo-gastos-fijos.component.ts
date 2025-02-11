@@ -42,15 +42,16 @@ export default class CatalogoGastosFijosComponent implements OnInit {
 
   onLoadData() {
     const urlApi = 'CatalogoGastosFijos/GetAll/' + this.customerIdS.customerId;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
     });
   }
   onDelete(id: number) {
     this.apiRequestS
       .onDelete(`catalogogastosfijos/${id}`)
-      .then((result: boolean) => {
-        if (result) this.data = this.data.filter((item) => item.id !== id);
+      .then((responseData: boolean) => {
+        if (responseData)
+          this.data = this.data.filter((item) => item.id !== id);
       });
   }
 
@@ -79,6 +80,6 @@ export default class CatalogoGastosFijosComponent implements OnInit {
 
   createOrdenesCompra() {
     const urlApi = `OrdenCompra/GenerarOrdenCompraFijos/${this.fechaSolicitud}/${this.customerIdS.customerId}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {});
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {});
   }
 }

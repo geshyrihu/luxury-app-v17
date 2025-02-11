@@ -42,8 +42,8 @@ export default class PresupuestoIndividualComponent implements OnInit {
   onLoadData() {
     this.apiRequestS
       .onGetItem(`Presupuesto/GetById/${this.id}`)
-      .then((result: any) => {
-        this.data = result;
+      .then((responseData: any) => {
+        this.data = responseData;
       });
   }
 
@@ -57,8 +57,8 @@ export default class PresupuestoIndividualComponent implements OnInit {
         'Agregar Partida',
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
 
@@ -66,8 +66,8 @@ export default class PresupuestoIndividualComponent implements OnInit {
   onDelete(id: number) {
     this.apiRequestS
       .onDelete(`cedulapresupuestal/cedulapresupuestaldetalle/${id}`)
-      .then((result: boolean) => {
-        if (result) {
+      .then((responseData: boolean) => {
+        if (responseData) {
           this.data = this.data.filter((item: any) => item.id !== id);
         }
       });
@@ -105,8 +105,8 @@ export default class PresupuestoIndividualComponent implements OnInit {
         data.title,
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
 
@@ -131,8 +131,8 @@ export default class PresupuestoIndividualComponent implements OnInit {
         'Soporte documentos',
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
 
@@ -198,7 +198,7 @@ export default class PresupuestoIndividualComponent implements OnInit {
 
     this.apiRequestS
       .onPost(`Presupuesto/UpdateAccount/`, data)
-      .then((result: boolean) => {
+      .then((responseData: boolean) => {
         // Cuando se actualiza el elemento con éxito, buscar su índice en la matriz
         const index = this.data.budgetDetailDto.findIndex(
           (existingItem) => existingItem.id === data.id
@@ -232,8 +232,8 @@ export default class PresupuestoIndividualComponent implements OnInit {
         'Ordenes de Compra',
         this.dialogHandlerS.dialogSizeFull
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
 

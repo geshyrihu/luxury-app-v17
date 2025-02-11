@@ -24,8 +24,8 @@ export default class TicketProgramButtonComponent {
         'Programar actividad',
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) {
+      .then((responseData: boolean) => {
+        if (responseData) {
           // Emitir el evento cuando se completa la programación
           this.programCompleted.emit();
         }

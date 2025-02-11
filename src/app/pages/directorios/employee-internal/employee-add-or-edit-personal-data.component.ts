@@ -51,8 +51,8 @@ export default class EmployeeAddOrEditPersonalDataComponent implements OnInit {
   }
   onLoadData() {
     const urlApi = `EmployeeInternal/PersonalData/${this.employeeId}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-      this.form.patchValue(result);
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+      this.form.patchValue(responseData);
     });
   }
 
@@ -72,8 +72,8 @@ export default class EmployeeAddOrEditPersonalDataComponent implements OnInit {
         `EmployeeInternal/UpdatePersonalData/${this.employeeId}`,
         this.form.value
       )
-      .then((result: any) => {
-        this.form.patchValue(result);
+      .then((responseData: any) => {
+        this.form.patchValue(responseData);
         this.submitting = false;
       });
   }

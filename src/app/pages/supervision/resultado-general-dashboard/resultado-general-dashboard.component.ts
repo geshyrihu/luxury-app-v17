@@ -62,8 +62,8 @@ export default class ResultadoGeneralDashboardComponent implements OnInit {
       this.nivelReporte
     }`;
 
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
     });
   }
   onLoadDataMinutaFiltro(EAreaMinutasDetalles: number, reporteFiltro: string) {
@@ -73,8 +73,8 @@ export default class ResultadoGeneralDashboardComponent implements OnInit {
       this.periodoMonthService.getPeriodoFin
     )}/${EAreaMinutasDetalles}/${this.nivelReporte}`;
 
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
     });
   }
   onLoadDataPreventivos() {
@@ -82,8 +82,8 @@ export default class ResultadoGeneralDashboardComponent implements OnInit {
       this.periodoMonthService.getPeriodoInicio
     )}/${this.dateS.getDateFormat(this.periodoMonthService.getPeriodoFin)}`;
 
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
     });
   }
   onLoadDataTickets() {
@@ -91,8 +91,8 @@ export default class ResultadoGeneralDashboardComponent implements OnInit {
       this.periodoMonthService.getPeriodoInicio
     )}/${this.dateS.getDateFormat(this.periodoMonthService.getPeriodoFin)}`;
 
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
     });
   }
 

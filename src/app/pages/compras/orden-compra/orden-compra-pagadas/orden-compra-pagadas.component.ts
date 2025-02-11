@@ -38,8 +38,8 @@ export default class OrdenCompraPagadasComponent implements OnInit {
 
   onLoadData(type: any) {
     const urlApi = `OrdenCompra/Pagadas/${this.customerIdS.customerId}/${type}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
     });
   }
   onAddOrEdit(id: number) {
@@ -54,8 +54,8 @@ export default class OrdenCompraPagadasComponent implements OnInit {
         'Editar Orden de Compra',
         this.dialogHandlerS.dialogSizeFull
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData(this.tipo);
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData(this.tipo);
       });
   }
 }

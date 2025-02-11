@@ -42,9 +42,11 @@ export default class AddoreditMetodoPagoComponent implements OnInit {
   }
 
   onLoadData() {
-    this.apiRequestS.onGetItem(`MetodoPago/${this.id}`).then((result: any) => {
-      this.form.patchValue(result);
-    });
+    this.apiRequestS
+      .onGetItem(`MetodoPago/${this.id}`)
+      .then((responseData: any) => {
+        this.form.patchValue(responseData);
+      });
   }
 
   onSubmit() {
@@ -54,14 +56,14 @@ export default class AddoreditMetodoPagoComponent implements OnInit {
     if (this.id === 0) {
       this.apiRequestS
         .onPost(`MetodoPago`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
       this.apiRequestS
         .onPut(`MetodoPago/${this.id}`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }

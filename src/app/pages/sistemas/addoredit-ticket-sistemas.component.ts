@@ -67,8 +67,8 @@
 //   onLoadSelectItem() {
 //     this.apiRequestService
 //       .onGetSelectItem('AplicationUser')
-//       .then((result: any) => {
-//         this.cb_user = result;
+//       .then((responseData: any) => {
+//         this.cb_user = responseData ;
 //       });
 //     this.apiRequestService
 //       .onGetSelectItem(`responsableSistemas`)
@@ -79,8 +79,8 @@
 
 //   loadData(id: number) {
 //     const urlApi = `TicketsSistemas/${id}`;
-//     this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-//       this.form.patchValue(result);
+//     this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+//       this.form.patchValue(responseData);
 //     });
 //   }
 
@@ -90,14 +90,14 @@
 //     if (this.id === 0) {
 //       this.apiRequestService
 //         .onPost(`TicketsSistemas`, this.form.value)
-//         .then((result: boolean) => {
-//           result ? this.ref.close(true) : (this.submitting = false);
+//         .then((responseData: boolean) => {
+//           responseData ? this.ref.close(true) : (this.submitting = false);
 //         });
 //     } else {
 //       this.apiRequestService
 //         .onPut(`TicketsSistemas/${this.id}`, this.form.value)
-//         .then((result: boolean) => {
-//           result ? this.ref.close(true) : (this.submitting = false);
+//         .then((responseData: boolean) => {
+//           responseData ? this.ref.close(true) : (this.submitting = false);
 //         });
 //     }
 //   }

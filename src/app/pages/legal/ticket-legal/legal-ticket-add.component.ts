@@ -60,22 +60,24 @@ export default class LegalTicketAddComponent implements OnInit {
     if (this.id !== '') this.onLoadData();
     this.apiRequestS
       .onGetItem(`TicketLegal/EmployeeLegal`)
-      .then((result: any) => {
-        this.employee = result;
+      .then((responseData: any) => {
+        this.employee = responseData;
       });
   }
   onLegalMatter() {
     const urlApi = `LegalMatter/SelectForAddTicket`;
 
-    this.apiRequestS.onGetList(urlApi).then((result: ISelectItem[]) => {
-      this.cb_legal_matter = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: ISelectItem[]) => {
+      this.cb_legal_matter = responseData;
     });
   }
   onLoadData() {
-    this.apiRequestS.onGetItem(`TicketLegal/${this.id}`).then((result: any) => {
-      this.form.patchValue(result);
-      this.tipoSolicitud = result.tipoSolicitud;
-    });
+    this.apiRequestS
+      .onGetItem(`TicketLegal/${this.id}`)
+      .then((responseData: any) => {
+        this.form.patchValue(responseData);
+        this.tipoSolicitud = responseData.tipoSolicitud;
+      });
   }
   onSubmit() {
     this.form.removeControl('typeService');
@@ -85,8 +87,8 @@ export default class LegalTicketAddComponent implements OnInit {
 
     this.apiRequestS
       .onPost(`TicketLegal`, this.form.value)
-      .then((result: boolean) => {
-        result ? this.ref.close(true) : (this.submitting = false);
+      .then((responseData: boolean) => {
+        responseData ? this.ref.close(true) : (this.submitting = false);
       });
   }
   saveLegalMatter(e: any): void {

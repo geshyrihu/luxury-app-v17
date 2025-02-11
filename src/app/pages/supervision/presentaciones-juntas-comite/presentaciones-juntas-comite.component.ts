@@ -29,8 +29,8 @@ export default class PresentacionesJuntasComiteComponent implements OnInit {
   onLoadData(): void {
     let inicial = this.dateS.getDateFormat(new Date(this.periodo + '-' + 1));
     const urlApi = 'PresentacionJuntaComite/Generales/' + inicial + '/';
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
     });
   }
 

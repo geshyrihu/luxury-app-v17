@@ -37,15 +37,15 @@ export default class FormGastosFijosServiciosComponent implements OnInit {
   }
   onLoadProductsAgregados() {
     const urlApi = `CatalogoGastosFijosDetalles/DetallesOrdenCompraFijos/${this.catalogoGastosFijosId}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.productosAgregados = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.productosAgregados = responseData;
     });
   }
 
   deleteProductoAgregado(id: number) {
     this.apiRequestS
       .onDelete(`CatalogoGastosFijosDetalles/${id}`)
-      .then((result: boolean) => {
+      .then((responseData: boolean) => {
         this.onLoadProductsAgregados();
       });
   }
@@ -53,8 +53,8 @@ export default class FormGastosFijosServiciosComponent implements OnInit {
     const urlApi =
       'CatalogoGastosFijosDetalles/GetALLCatalogoGastosFijosProductoDto/' +
       this.catalogoGastosFijosId;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.productos = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.productos = responseData;
     });
   }
 
@@ -68,7 +68,7 @@ export default class FormGastosFijosServiciosComponent implements OnInit {
 
     this.apiRequestS
       .onPost(`CatalogoGastosFijosDetalles/`, item)
-      .then((result: boolean) => {
+      .then((responseData: boolean) => {
         this.mensajeError = false;
         this.onLoadProducts();
         this.onLoadProductsAgregados();
@@ -78,7 +78,7 @@ export default class FormGastosFijosServiciosComponent implements OnInit {
   onUpdateProductoAgregado(item: any) {
     this.apiRequestS
       .onPut(`CatalogoGastosFijosDetalles/${item.id}`, item)
-      .then((result: boolean) => {
+      .then((responseData: boolean) => {
         this.mensajeError = false;
         this.onLoadProducts();
         this.onLoadProductsAgregados();

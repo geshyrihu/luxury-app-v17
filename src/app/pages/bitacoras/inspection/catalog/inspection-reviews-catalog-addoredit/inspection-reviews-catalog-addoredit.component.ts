@@ -33,8 +33,8 @@ export default class InspectionReviewsCatalogAddoreditComponent
   }
   onLoadData() {
     const urlApi = `InspectionReviewsCatalog/${this.id}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-      this.form.patchValue(result);
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+      this.form.patchValue(responseData);
     });
   }
   onSubmit() {
@@ -44,14 +44,14 @@ export default class InspectionReviewsCatalogAddoreditComponent
     if (this.id === '') {
       this.apiRequestS
         .onPost(`InspectionReviewsCatalog`, this.form.value)
-        .then((result: any) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: any) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
       this.apiRequestS
         .onPut(`InspectionReviewsCatalog/${this.id}`, this.form.value)
-        .then((result: any) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: any) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }

@@ -107,8 +107,8 @@ export default class MobileNavbarComponent implements OnInit, OnDestroy {
     this.messageInNotRead = 0;
     this.notifications = [];
     const urlApi = `NotificationUser/GetAllUnread/${this.authS.applicationUserId}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.notifications = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.notifications = responseData;
       this.messageInNotRead = this.notifications.filter(
         (x: any) => !x.isRead
       ).length;

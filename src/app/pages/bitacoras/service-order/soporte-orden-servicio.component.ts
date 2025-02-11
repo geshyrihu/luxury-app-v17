@@ -32,17 +32,19 @@ export default class SoporteOrdenServicioComponent implements OnInit {
   }
   onLoadItem() {
     const urlApi = `ServiceOrders/SoporteOrdenServicio/${this.id}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.nameCarpetaFecha = this.dateS.getDateFormat(result.fechaSolicitud);
-      this.item = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.nameCarpetaFecha = this.dateS.getDateFormat(
+        responseData.fechaSolicitud
+      );
+      this.item = responseData;
     });
   }
   onLoadData() {
     const urlApi = `Customers/${this.customerIdS.customerId}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.dataCustomer = result;
-      this.nameCustomer = result.nameCustomer;
-      this.logoCustomer = result.photoPath;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.dataCustomer = responseData;
+      this.nameCustomer = responseData.nameCustomer;
+      this.logoCustomer = responseData.photoPath;
     });
   }
 }

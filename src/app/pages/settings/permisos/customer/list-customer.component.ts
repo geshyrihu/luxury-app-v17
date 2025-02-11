@@ -34,15 +34,18 @@ export default class ListCustomerComponent implements OnInit {
   onLoadData() {
     this.apiRequestS
       .onGetList(`Customers/GetAllAsync/${this.state}`)
-      .then((result: any) => {
-        this.data = result;
+      .then((responseData: any) => {
+        this.data = responseData;
       });
   }
 
   onDelete(id: number) {
-    this.apiRequestS.onDelete(`customers/${id}`).then((result: boolean) => {
-      if (result) this.data = this.data.filter((item) => item.id !== id);
-    });
+    this.apiRequestS
+      .onDelete(`customers/${id}`)
+      .then((responseData: boolean) => {
+        if (responseData)
+          this.data = this.data.filter((item) => item.id !== id);
+      });
   }
 
   onModalAddOrEdit(data: any) {
@@ -53,8 +56,8 @@ export default class ListCustomerComponent implements OnInit {
         data.title,
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
 
@@ -66,8 +69,8 @@ export default class ListCustomerComponent implements OnInit {
         'Actualizar Imagenes',
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
 
@@ -79,8 +82,8 @@ export default class ListCustomerComponent implements OnInit {
         'Actualizar Direccion',
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
 

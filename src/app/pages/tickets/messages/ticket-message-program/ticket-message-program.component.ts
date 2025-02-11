@@ -41,10 +41,10 @@ export default class TicketMessageProgramComponent implements OnInit {
 
   onLoadData() {
     const urlApi = `Tickets/Programation/${this.id}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
       this.form.patchValue({
-        assignee: result.assignee,
-        assigneeId: result.assigneeId,
+        assignee: responseData.assignee,
+        assigneeId: responseData.assigneeId,
       });
     });
   }
@@ -54,15 +54,15 @@ export default class TicketMessageProgramComponent implements OnInit {
 
     this.apiRequestS
       .onPost(`Tickets/Programation/${this.id}`, this.form.value)
-      .then((result: boolean) => {
-        result ? this.ref.close(true) : (this.submitting = false);
+      .then((responseData: boolean) => {
+        responseData ? this.ref.close(true) : (this.submitting = false);
       });
   }
 
   onLoadUsers() {
     const urlApi = `Tickets/Participant/${this.config.data.ticketGroupId}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.cb_user = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.cb_user = responseData;
     });
   }
 

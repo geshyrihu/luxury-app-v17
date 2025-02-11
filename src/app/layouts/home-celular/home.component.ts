@@ -6,7 +6,6 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { ModulePermissionService } from 'src/app/core/services/module-permission.service';
 import { IMenuItem } from 'src/app/layouts/sidebar/menu.model';
-import { SidebarService } from 'src/app/layouts/sidebar/sidebar.service';
 import { ApiRequestService } from './../../core/services/api-request.service';
 import { HomeMenuService } from './home-menu.service';
 import HomeMenuComponent from './home-menu/home-menu.component';
@@ -18,7 +17,6 @@ import HomeMenuComponent from './home-menu/home-menu.component';
   templateUrl: './home.component.html',
 })
 export default class HomeComponent implements OnInit {
-  private sidebarService = inject(SidebarService);
   private apiRequestS = inject(ApiRequestService);
   authS = inject(AuthService);
   private customerIdS = inject(CustomerIdService);
@@ -46,8 +44,8 @@ export default class HomeComponent implements OnInit {
       this.authS.userTokenDto.infoUserAuthDto.applicationUserId;
     const customerId = this.customerIdS.getCustomerId();
     const urlApi = `MenuItems/Mobil/${customerId}/${applicationUserId}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.menuItems = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.menuItems = responseData;
     });
   }
 }

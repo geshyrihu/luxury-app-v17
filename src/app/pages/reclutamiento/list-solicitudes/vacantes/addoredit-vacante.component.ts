@@ -47,8 +47,8 @@ export default class AddOrEditVacanteComponent implements OnInit {
   }
   onLoadData() {
     const urlApi = `RequestPosition/${this.id}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-      this.form.patchValue(result);
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+      this.form.patchValue(responseData);
     });
   }
 
@@ -62,14 +62,14 @@ export default class AddOrEditVacanteComponent implements OnInit {
     if (this.id === 0) {
       this.apiRequestS
         .onPost(`RequestPosition`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
       this.apiRequestS
         .onPut(`RequestPosition/${this.id}`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }

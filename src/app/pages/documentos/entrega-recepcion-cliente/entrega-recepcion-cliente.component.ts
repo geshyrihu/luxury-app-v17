@@ -57,7 +57,7 @@ export default class EntregaRecepcionClienteComponent implements OnInit {
   onLoadData() {
     // * Peticion para generar los items de entrega recepcion
     const urlApi1 = 'EntregaRecepcionCliente/GenerateData';
-    this.apiRequestS.onGetItem(urlApi1).then((result: any) => {});
+    this.apiRequestS.onGetItem(urlApi1).then((responseData: any) => {});
 
     // * Peticion para generar los items de entrega recepcion
 
@@ -66,8 +66,8 @@ export default class EntregaRecepcionClienteComponent implements OnInit {
       this.customerIdS.customerId +
       '/' +
       this.departamento;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
     });
   }
 
@@ -79,8 +79,8 @@ export default class EntregaRecepcionClienteComponent implements OnInit {
         data.title,
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
 
@@ -90,14 +90,14 @@ export default class EntregaRecepcionClienteComponent implements OnInit {
         `EntregaRecepcionCliente/ValidarArchivo/${this.authS.applicationUserId}/${id}`,
         null
       )
-      .then((result: boolean) => {
+      .then((responseData: boolean) => {
         this.onLoadData();
       });
   }
   onInvalidarDocument(id: number) {
     this.apiRequestS
       .onPut(`EntregaRecepcionCliente/InvalidarArchivo/${id}`, null)
-      .then((result: boolean) => {
+      .then((responseData: boolean) => {
         this.onLoadData();
       });
   }
@@ -105,7 +105,7 @@ export default class EntregaRecepcionClienteComponent implements OnInit {
   onDeleteFile(id: number) {
     this.apiRequestS
       .onDelete(`EntregaRecepcionCliente/DeleteFile/${id}`)
-      .then((result: boolean) => {
+      .then((responseData: boolean) => {
         this.onLoadData();
       });
   }

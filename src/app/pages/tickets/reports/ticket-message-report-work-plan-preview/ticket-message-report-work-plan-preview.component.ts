@@ -40,8 +40,8 @@ export default class TicketMessageReportWorkPlanPreviewComponent {
       this.year
     }/${this.numeroSemana}`;
 
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
     });
   }
 

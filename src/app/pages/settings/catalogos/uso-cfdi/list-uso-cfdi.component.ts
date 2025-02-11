@@ -25,14 +25,14 @@ export default class ListUsoCfdiComponent implements OnInit {
     this.onLoadData();
   }
   onLoadData() {
-    this.apiRequestS.onGetList('UsoCfdi').then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList('UsoCfdi').then((responseData: any) => {
+      this.data = responseData;
     });
   }
 
   onDelete(id: number) {
-    this.apiRequestS.onDelete(`UsoCfdi/${id}`).then((result: boolean) => {
-      if (result) this.data = this.data.filter((item) => item.id !== id);
+    this.apiRequestS.onDelete(`UsoCfdi/${id}`).then((responseData: boolean) => {
+      if (responseData) this.data = this.data.filter((item) => item.id !== id);
     });
   }
 
@@ -44,8 +44,8 @@ export default class ListUsoCfdiComponent implements OnInit {
         data.title,
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
 }

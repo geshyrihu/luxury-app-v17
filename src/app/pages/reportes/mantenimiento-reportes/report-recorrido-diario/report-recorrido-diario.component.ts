@@ -41,8 +41,8 @@ export default class ReportRecorridoDiarioComponent implements OnInit {
     const urlApi = `MaintenanceReport/bitacoradiaria/${
       this.customerIdS.customerId
     }/${this.dateS.getDateFormat(this.periodoMonthService.getPeriodoInicio)}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
     });
   }
 }

@@ -36,8 +36,8 @@ export default class DashboardTicketCommitteeMeetingComponent
 
   onLoadData(customerId: number) {
     const urlApi = `Dashboard/MinutasPendientes/${customerId}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
     });
   }
 

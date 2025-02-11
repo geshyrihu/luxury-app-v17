@@ -27,8 +27,8 @@ export default class InventarioExtintorGroupComponent implements OnInit {
   onLoadData() {
     const urlApi =
       'InventarioExtintor/GetAllGroup/' + this.customerIdS.getCustomerId();
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
     });
   }
 }

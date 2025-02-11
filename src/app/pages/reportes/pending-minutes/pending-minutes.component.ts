@@ -29,10 +29,10 @@ export default class PendingMinutesComponent implements OnInit {
 
   onLoadData(customerId: number) {
     const urlApi = `Reports/PendingMinutes/${customerId}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result.pendings;
-      this.customerData = result.customer;
-      this.administrador = result.administrador;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData.pendings;
+      this.customerData = responseData.customer;
+      this.administrador = responseData.administrador;
     });
   }
 }

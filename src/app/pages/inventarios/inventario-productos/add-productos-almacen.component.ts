@@ -49,15 +49,15 @@ export default class AddProductosAlmacenComponent implements OnInit {
         'Tarjeta de Producto',
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
 
   onLoadData() {
     const urlApi = `InventarioProducto/GetProductoDropdownDto/${this.customerIdS.customerId}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
     });
   }
   onSubmit(item: IProductoListAdd) {
@@ -77,7 +77,7 @@ export default class AddProductosAlmacenComponent implements OnInit {
 
     this.apiRequestS
       .onPost(`InventarioProducto/`, item)
-      .then((result: boolean) => {
+      .then((responseData: boolean) => {
         this.mensajeError = '';
         this.onLoadData();
       });

@@ -68,7 +68,7 @@ export default class FilterRequestsComponent {
   }
   onSendReportVacants() {
     const urlApi = `solicitudesreclutamiento/sendreportvacants`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
       this.onLoadData();
     });
   }

@@ -25,8 +25,8 @@ export default class ModuleAppPermissionComponent implements OnInit {
   onLoadData() {
     this.apiRequestS
       .onGetItem(`Permission/PermissionUser/${this.applicationUserId}`)
-      .then((result: any) => {
-        this.data = result;
+      .then((responseData: any) => {
+        this.data = responseData;
       });
   }
   onCheckboxChange(permission: PermissionDto, field: string, checked: boolean) {

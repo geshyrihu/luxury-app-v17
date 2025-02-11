@@ -26,8 +26,8 @@ export default class AccessCustomerComponent implements OnInit {
   onGetAccesCustomer() {
     this.apiRequestS
       .onGetList('AccesoCustomers/GetCustomers/' + this.applicationUserId)
-      .then((result: any[]) => {
-        this.clientes = result;
+      .then((responseData: any[]) => {
+        this.clientes = responseData;
         this.ActualizarClientes = this.clientes;
       });
   }

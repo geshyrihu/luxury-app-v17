@@ -73,8 +73,8 @@ export default class TicketMessageAddOrEditComponent implements OnInit {
 
   onLoadTicketGroup() {
     const urlApi = `TicketGroupList/${this.customerIdS.getCustomerId()}`;
-    this.apiRequestS.onGetSelectItem(urlApi).then((result: any) => {
-      this.cb_ticket_group = result;
+    this.apiRequestS.onGetSelectItem(urlApi).then((responseData: any) => {
+      this.cb_ticket_group = responseData;
     });
   }
 
@@ -95,16 +95,20 @@ export default class TicketMessageAddOrEditComponent implements OnInit {
 
   onLoadData() {
     const urlApi = `Tickets/${this.id}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-      this.form.patchValue(result);
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+      this.form.patchValue(responseData);
       // Si las imágenes existen, carga las vistas previas
       // Si las imágenes existen, establece las vistas previas con la URL completa
-      if (result.beforeWorkPreview) {
-        this.form.get('beforeWorkPreview')?.setValue(result.beforeWorkPreview);
+      if (responseData.beforeWorkPreview) {
+        this.form
+          .get('beforeWorkPreview')
+          ?.setValue(responseData.beforeWorkPreview);
       }
 
-      if (result.afterWorkPreview) {
-        this.form.get('afterWorkPreview')?.setValue(result.afterWorkPreview);
+      if (responseData.afterWorkPreview) {
+        this.form
+          .get('afterWorkPreview')
+          ?.setValue(responseData.afterWorkPreview);
       }
       this.form.patchValue({
         applicationUserId: this.authS.applicationUserId,
@@ -154,15 +158,15 @@ export default class TicketMessageAddOrEditComponent implements OnInit {
       if (this.id === '') {
         this.apiRequestS
           .onPost(`Tickets/Create`, formData)
-          .then((result: any) => {
-            this.ref.close(result);
+          .then((responseData: any) => {
+            this.ref.close(responseData);
             this.submitting = false;
           });
       } else {
         this.apiRequestS
           .onPut(`Tickets/Update/${this.id}`, formData)
-          .then((result: any) => {
-            this.ref.close(result.value);
+          .then((responseData: any) => {
+            this.ref.close(responseData.value);
             this.submitting = false;
           });
       }
@@ -171,8 +175,8 @@ export default class TicketMessageAddOrEditComponent implements OnInit {
 
   onLoadUsers() {
     const urlApi = `Tickets/Participant/${this.config.data.ticketGroupId}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.cb_user = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.cb_user = responseData;
     });
   }
 

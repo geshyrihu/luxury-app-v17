@@ -69,22 +69,25 @@ export default class InspectionsAddoreditComponent implements OnInit {
 
   onLoadData() {
     const urlApi = `inspection/${this.id}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-      this.form.patchValue(result);
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+      this.form.patchValue(responseData);
 
       // Limpiar el FormArray antes de llenarlo
       const weeklyDaysArray = this.form.get('weeklyDays') as FormArray;
       weeklyDaysArray.clear();
 
       // Llenar los días seleccionados si la frecuencia es semanal
-      if (result.frequency === 'weekly' && result.weeklyDays?.length) {
-        result.weeklyDays.forEach((day: number) => {
+      if (
+        responseData.frequency === 'weekly' &&
+        responseData.weeklyDays?.length
+      ) {
+        responseData.weeklyDays.forEach((day: number) => {
           weeklyDaysArray.push(new FormControl(day));
         });
       }
 
       // Validar la frecuencia para mostrar/ocultar opciones
-      this.onValidateFrequency(result.frequency);
+      this.onValidateFrequency(responseData.frequency);
     });
   }
 
@@ -162,14 +165,14 @@ export default class InspectionsAddoreditComponent implements OnInit {
     if (this.id === '') {
       this.apiRequestS
         .onPost('Inspection', this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
       this.apiRequestS
         .onPut(`Inspection/${this.id}`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }
@@ -185,8 +188,8 @@ export default class InspectionsAddoreditComponent implements OnInit {
 
   onLoadSelectItem() {
     const urlApi = `EDepartament`;
-    this.apiRequestS.onGetEnumSelectItem(urlApi).then((result: any) => {
-      this.cb_departament = result;
+    this.apiRequestS.onGetEnumSelectItem(urlApi).then((responseData: any) => {
+      this.cb_departament = responseData;
     });
   }
 }

@@ -136,8 +136,8 @@ export default class InspectionCondominiumAssetAddComponent implements OnInit {
     };
 
     const urlApi = `InspectionCondominiumAsset`;
-    this.apiRequestS.onPost(urlApi, data).then((result: any) => {
-      if (result) {
+    this.apiRequestS.onPost(urlApi, data).then((responseData: any) => {
+      if (responseData) {
         this.ref.close(true);
       } else {
         this.submitting = false;

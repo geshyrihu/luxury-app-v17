@@ -55,14 +55,14 @@ export default class CrudEntregaRecepcionClienteComponent implements OnInit {
         }/${this.customerIdS.getCustomerId()}`,
         model
       )
-      .then((result: boolean) => {
-        result ? this.ref.close(true) : (this.submitting = false);
+      .then((responseData: boolean) => {
+        responseData ? this.ref.close(true) : (this.submitting = false);
       });
   }
   onLoadData() {
     const urlApi = `EntregaRecepcionDescripcion/${this.id}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-      this.form.patchValue(result);
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+      this.form.patchValue(responseData);
     });
   }
   change(file: any) {

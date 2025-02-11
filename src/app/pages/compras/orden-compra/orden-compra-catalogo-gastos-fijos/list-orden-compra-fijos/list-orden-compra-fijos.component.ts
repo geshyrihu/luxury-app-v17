@@ -43,8 +43,8 @@ export default class ListOrdenCompraFijosComponent implements OnInit {
     this.statusCompra = this.ordenCompraService.getStatusCompras();
 
     const urlApi = `OrdenCompra/OrdenesCompraGastosFijos/${this.customerIdS.customerId}/${this.statusCompra}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
     });
   }
   onModalAdd() {
@@ -55,15 +55,18 @@ export default class ListOrdenCompraFijosComponent implements OnInit {
         'Nueva Orden de  b',
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
 
   onDelete(id: number) {
-    this.apiRequestS.onDelete(`ordencompra/${id}`).then((result: boolean) => {
-      if (result) this.data = this.data.filter((item) => item.id !== id);
-    });
+    this.apiRequestS
+      .onDelete(`ordencompra/${id}`)
+      .then((responseData: boolean) => {
+        if (responseData)
+          this.data = this.data.filter((item) => item.id !== id);
+      });
   }
 
   onAddOrEdit(id: number) {
@@ -87,8 +90,8 @@ export default class ListOrdenCompraFijosComponent implements OnInit {
         'Editar Orden de Compra',
         this.dialogHandlerS.dialogSizeFull
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
 }

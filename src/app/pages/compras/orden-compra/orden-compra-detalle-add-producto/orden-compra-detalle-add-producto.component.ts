@@ -40,8 +40,8 @@ export default class OrdenCompraDetalleAddProductoComponent implements OnInit {
 
   onLoadProduct() {
     var urlApi = `OrdenCompraDetalle/AddProductoToOrder/${this.ordenCompraId}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
     });
   }
 
@@ -56,7 +56,7 @@ export default class OrdenCompraDetalleAddProductoComponent implements OnInit {
 
     this.apiRequestS
       .onPost(`OrdenCompraDetalle/`, item)
-      .then((result: boolean) => {
+      .then((responseData: boolean) => {
         this.mensajeError = false;
         this.onLoadProduct();
       });

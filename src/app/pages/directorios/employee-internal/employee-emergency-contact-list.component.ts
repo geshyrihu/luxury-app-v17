@@ -38,16 +38,16 @@ export default class EmployeeEmergencyContactListComponent implements OnInit {
     const urlApi = `EmployeeEmergencyContact/ListEmployeeContact/${
       this.employeeId
     }/${0}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-      this.dataEmergencyContact = result;
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+      this.dataEmergencyContact = responseData;
     });
   }
   onLoadDataBeneficiary() {
     const urlApi = `EmployeeEmergencyContact/ListEmployeeContact/${
       this.employeeId
     }/${1}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-      this.dataBeneficiary = result;
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+      this.dataBeneficiary = responseData;
     });
   }
 
@@ -59,8 +59,8 @@ export default class EmployeeEmergencyContactListComponent implements OnInit {
         data.title,
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) {
+      .then((responseData: boolean) => {
+        if (responseData) {
           this.onLoadDataBeneficiary();
           this.onLoadDataEmergencyContact();
         }
@@ -70,8 +70,8 @@ export default class EmployeeEmergencyContactListComponent implements OnInit {
   onDelete(id: string, typeContact: number) {
     this.apiRequestS
       .onDelete(`EmployeeEmergencyContact/${id}`)
-      .then((result: any) => {
-        if (result) {
+      .then((responseData: any) => {
+        if (responseData) {
           if (typeContact === 0) {
             this.dataEmergencyContact = this.dataEmergencyContact.filter(
               (item) => item.id !== id

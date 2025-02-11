@@ -27,14 +27,14 @@ export default class ResumenMinutaComponent implements OnInit {
 
   onLoadData() {
     const urlApi1 = `MeetingDertailsSeguimiento/ResumenMinutasPresentacion/${this.activatedRoute.snapshot.params.meetingId}`;
-    this.apiRequestS.onGetList(urlApi1).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi1).then((responseData: any) => {
+      this.data = responseData;
     });
 
     const urlApi = `MeetingDertailsSeguimiento/ResumenMinutasGraficoPresentacion/${this.activatedRoute.snapshot.params.meetingId}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.dataGrafico = result;
-      this.reportService.setDataGrafico(result);
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.dataGrafico = responseData;
+      this.reportService.setDataGrafico(responseData);
     });
   }
 }

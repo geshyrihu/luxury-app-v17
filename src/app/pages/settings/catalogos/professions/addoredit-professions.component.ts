@@ -34,8 +34,8 @@ export default class AddOrEditProfessionsComponent implements OnInit {
 
   onLoadSelectItem() {
     const urlApi = `EDepartament`;
-    this.apiRequestS.onGetEnumSelectItem(urlApi).then((result: any) => {
-      this.cb_departament = result;
+    this.apiRequestS.onGetEnumSelectItem(urlApi).then((responseData: any) => {
+      this.cb_departament = responseData;
     });
   }
 
@@ -47,8 +47,8 @@ export default class AddOrEditProfessionsComponent implements OnInit {
 
   onLoadData(id: number) {
     const urlApi = `Professions/${id}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-      this.form.patchValue(result);
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+      this.form.patchValue(responseData);
     });
   }
 
@@ -60,14 +60,14 @@ export default class AddOrEditProfessionsComponent implements OnInit {
     if (this.id === 0) {
       this.apiRequestS
         .onPost(`Professions`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
       this.apiRequestS
         .onPut(`Professions/${this.id}`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }

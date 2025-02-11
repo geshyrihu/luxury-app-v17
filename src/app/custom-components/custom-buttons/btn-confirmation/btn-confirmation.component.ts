@@ -48,8 +48,8 @@ export default class BtnConfirmationComponent {
       cancelButtonColor: '#9B1B30',
       confirmButtonText: this.confirmButtonText,
       cancelButtonText: 'Cancelar',
-    }).then((result) => {
-      if (result.value) {
+    }).then((responseData) => {
+      if (responseData.value) {
         return this.OnConfirm.emit(event);
       }
     });

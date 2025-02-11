@@ -47,8 +47,8 @@ export default class AddProductModalComponent implements OnInit, OnDestroy {
       .onGetList(
         `SolicitudCompraDetalle/AddProductoToSolicitudDto/${this.solicitudCompraId}`
       )
-      .then((result: any) => {
-        this.data = result;
+      .then((responseData: any) => {
+        this.data = responseData;
       });
   }
 
@@ -65,7 +65,7 @@ export default class AddProductModalComponent implements OnInit, OnDestroy {
     item.applicationUserId = this.authS.applicationUserId;
     this.apiRequestS
       .onPost(`solicitudcompradetalle/`, item)
-      .then((result: boolean) => {
+      .then((responseData: boolean) => {
         this.mensajeError = false;
         this.onLoadProduct();
       });

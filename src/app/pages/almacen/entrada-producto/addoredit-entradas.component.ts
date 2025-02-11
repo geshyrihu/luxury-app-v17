@@ -82,18 +82,18 @@ export default class AddOrEditEntradasComponent implements OnInit {
   }
   onLoadData() {
     const urlApi = `EntradaProducto/${this.id}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-      this.nombreProducto = result.nombreProducto;
-      this.cantidadActual = result.cantidad;
-      this.form.patchValue(result);
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+      this.nombreProducto = responseData.nombreProducto;
+      this.cantidadActual = responseData.cantidad;
+      this.form.patchValue(responseData);
       this.form.patchValue({
-        fechaEntrada: this.dateS.getDateFormat(result.fechaEntrada),
+        fechaEntrada: this.dateS.getDateFormat(responseData.fechaEntrada),
       });
       this.form.patchValue({
-        providerId: result.providerId,
+        providerId: responseData.providerId,
       });
       this.form.patchValue({
-        providerName: result.provider,
+        providerName: responseData.provider,
       });
     });
   }
@@ -108,8 +108,8 @@ export default class AddOrEditEntradasComponent implements OnInit {
     if (this.id === 0) {
       this.apiRequestS
         .onPost(`EntradaProducto`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
       this.apiRequestS
@@ -117,8 +117,8 @@ export default class AddOrEditEntradasComponent implements OnInit {
           `EntradaProducto/${this.id}/${this.cantidadActual}`,
           this.form.value
         )
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }

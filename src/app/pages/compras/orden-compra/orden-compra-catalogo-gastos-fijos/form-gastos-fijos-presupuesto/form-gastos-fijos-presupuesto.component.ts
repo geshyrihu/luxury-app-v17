@@ -36,8 +36,8 @@ export default class FormGastosFijosPresupuestoComponent implements OnInit {
 
   onLoadPresupuesto() {
     const urlApi = `OrdenCompraPresupuesto/GetAllForGastosFijos/${this.customerIdS.customerId}/${this.cedulaId}/${this.catalogoGastosFijosId}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
       this.onLoadPresupuestoAgregados();
     });
   }
@@ -52,7 +52,7 @@ export default class FormGastosFijosPresupuestoComponent implements OnInit {
 
     this.apiRequestS
       .onPost(`CatalogoGastosFijosPresupuesto`, model)
-      .then((result: boolean) => {
+      .then((responseData: boolean) => {
         this.onLoadPresupuestoAgregados();
         this.onLoadPresupuesto();
       });
@@ -61,15 +61,15 @@ export default class FormGastosFijosPresupuestoComponent implements OnInit {
   onLoadPresupuestoAgregados() {
     const urlApi = `CatalogoGastosFijosPresupuesto/PresupuestoOrdenCompraFijos/${this.catalogoGastosFijosId}`;
 
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.presupuestoAgregados = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.presupuestoAgregados = responseData;
     });
   }
 
   deletePresupuestoAgregado(id: number) {
     this.apiRequestS
       .onDelete(`CatalogoGastosFijosPresupuesto/${id}`)
-      .then((result: boolean) => {
+      .then((responseData: boolean) => {
         this.onLoadPresupuesto();
         this.onLoadPresupuestoAgregados();
       });
@@ -78,18 +78,18 @@ export default class FormGastosFijosPresupuestoComponent implements OnInit {
   onUpdatePresupuestoAgregado(item: any) {
     this.apiRequestS
       .onPut(`CatalogoGastosFijosPresupuesto/${item.id}`, item)
-      .then((result: boolean) => {
+      .then((responseData: boolean) => {
         this.onLoadPresupuestoAgregados();
       });
   }
 
   onLoadCedulas() {
     const urlApi = `CedulaPresupuestal/GetCedulas/${this.customerIdS.getCustomerId()}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      if (result) {
-        this.cedulaId = result[0].value;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      if (responseData) {
+        this.cedulaId = responseData[0].value;
       }
-      this.cb_cedulas = result;
+      this.cb_cedulas = responseData;
     });
   }
 }

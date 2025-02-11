@@ -34,9 +34,9 @@ export default class ReporteCompletoActivosComponent implements OnInit {
 
   onLoadData() {
     const urlApi = 'Machineries/InventarioCompleto/' + this.customerId;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
       // Actualizamos el valor del signal con los datos recibidos
-      this.data = result;
+      this.data = responseData;
     });
   }
 }

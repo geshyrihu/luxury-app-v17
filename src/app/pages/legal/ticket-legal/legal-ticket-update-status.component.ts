@@ -27,15 +27,15 @@ export default class LegalTicketUpdateStatusComponent implements OnInit {
   onLoadData() {
     this.apiRequestS
       .onGetList(`TicketLegal/status/${this.id}`)
-      .then((result: any) => {
-        this.status = result.status;
+      .then((responseData: any) => {
+        this.status = responseData.status;
       });
   }
   onSubmit() {
     this.apiRequestS
       .onGetItem(`TicketLegal/UpdateStatus/${this.id}/${this.status}`)
-      .then((result: any) => {
-        if (result) {
+      .then((responseData: any) => {
+        if (responseData) {
           this.ref.close(true);
         }
       });

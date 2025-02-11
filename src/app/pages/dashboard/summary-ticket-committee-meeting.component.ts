@@ -29,8 +29,8 @@ export default class SummaryTicketCommitteeMeetingComponent implements OnInit {
     const urlApi = `Dashboard/MinutasPendientesResumen/${this.customerIdS.getCustomerId()}/${
       this.eAreaMinutasDetalles
     }`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
     });
   }
 }

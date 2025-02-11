@@ -24,15 +24,16 @@ export default class ProcesoListComponent implements OnInit {
     this.onLoadData();
   }
   onLoadData() {
-    this.apiRequestS.onGetList('FormatoProceso').then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList('FormatoProceso').then((responseData: any) => {
+      this.data = responseData;
     });
   }
   onDelete(id: number): void {
     this.apiRequestS
       .onDelete(`formatoproceso/${id}`)
-      .then((result: boolean) => {
-        if (result) this.data = this.data.filter((item) => item.id !== id);
+      .then((responseData: boolean) => {
+        if (responseData)
+          this.data = this.data.filter((item) => item.id !== id);
       });
   }
 
@@ -44,8 +45,8 @@ export default class ProcesoListComponent implements OnInit {
         data.title,
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
 }

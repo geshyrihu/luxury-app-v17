@@ -57,14 +57,14 @@ export default class ListRecorridoComponent implements OnInit {
     const urlApi = `Routes/GetAll/${this.customerIdS.getCustomerId()}/${value}/${
       this.filterValue
     }`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
     });
   }
 
   onDelete(id: number) {
-    this.apiRequestS.onDelete(`Routes/${id}`).then((result: boolean) => {
-      if (result) {
+    this.apiRequestS.onDelete(`Routes/${id}`).then((responseData: boolean) => {
+      if (responseData) {
         this.data = this.data.filter((item) => item.id !== id);
         this.onLoadData(this.value);
       }
@@ -73,7 +73,7 @@ export default class ListRecorridoComponent implements OnInit {
 
   onDeleteTask(taskId: number) {
     const urlApi = `RouteTask/${taskId}`;
-    this.apiRequestS.onDelete(urlApi).then((result: boolean) => {
+    this.apiRequestS.onDelete(urlApi).then((responseData: boolean) => {
       this.onLoadData(this.value);
     });
   }
@@ -88,8 +88,8 @@ export default class ListRecorridoComponent implements OnInit {
         data.title,
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData(this.value);
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData(this.value);
       });
   }
   onModalAddTask(data: any) {
@@ -103,14 +103,14 @@ export default class ListRecorridoComponent implements OnInit {
         'Agregar revisión a recorrido',
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData(this.value);
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData(this.value);
       });
   }
 
   eliminarRecorrido(id: number) {
     const urlApi = `Routes/${id}`;
-    this.apiRequestS.onDelete(urlApi).then((result: boolean) => {
+    this.apiRequestS.onDelete(urlApi).then((responseData: boolean) => {
       this.onLoadData(this.value);
     });
   }
@@ -135,8 +135,8 @@ export default class ListRecorridoComponent implements OnInit {
         'Bitacora',
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData(this.value);
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData(this.value);
       });
   }
 }

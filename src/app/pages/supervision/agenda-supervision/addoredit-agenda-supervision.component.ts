@@ -59,10 +59,14 @@ export default class AddOrEditAgendaSupervisionComponent implements OnInit {
 
   onLoadData() {
     const urlApi = `AgendaSupervision/${this.id}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-      result.fechaConclusion = this.dateS.getDateFormat(result.fechaConclusion);
-      result.fechaSolicitud = this.dateS.getDateFormat(result.fechaSolicitud);
-      this.form.patchValue(result);
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+      responseData.fechaConclusion = this.dateS.getDateFormat(
+        responseData.fechaConclusion
+      );
+      responseData.fechaSolicitud = this.dateS.getDateFormat(
+        responseData.fechaSolicitud
+      );
+      this.form.patchValue(responseData);
     });
   }
 
@@ -74,14 +78,14 @@ export default class AddOrEditAgendaSupervisionComponent implements OnInit {
     if (this.id === 0) {
       this.apiRequestS
         .onPost(`AgendaSupervision`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
       this.apiRequestS
         .onPut(`AgendaSupervision/${this.id}`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }

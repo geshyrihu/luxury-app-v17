@@ -80,12 +80,14 @@ export default class FormCatalogoGastosFijosComponent implements OnInit {
   onLoadData() {
     this.apiRequestS
       .onGetItem(`CatalogoGastosFijos/${this.id}`)
-      .then((result: any) => {
-        this.catalogoGastosFijosService.setCatalogoGastosFijosId(result.id);
+      .then((responseData: any) => {
+        this.catalogoGastosFijosService.setCatalogoGastosFijosId(
+          responseData.id
+        );
 
-        this.form.patchValue(result);
+        this.form.patchValue(responseData);
         this.form.patchValue({
-          providerName: result.provider,
+          providerName: responseData.provider,
         });
       });
   }
@@ -98,14 +100,14 @@ export default class FormCatalogoGastosFijosComponent implements OnInit {
     if (this.id === 0) {
       this.apiRequestS
         .onPost(`CatalogoGastosFijos`, this.form.value)
-        .then((result: any) => {
-          this.id = result.id;
+        .then((responseData: any) => {
+          this.id = responseData.id;
           this.onLoadData();
         });
     } else {
       this.apiRequestS
         .onPut(`CatalogoGastosFijos/${this.id}`, this.form.value)
-        .then((result: boolean) => {
+        .then((responseData: boolean) => {
           this.onLoadData();
         });
     }

@@ -22,8 +22,8 @@ export default class InfoCuentaComponent implements OnInit {
   onLoadData() {
     this.apiRequestS
       .onGetList(`Cuentas/Info/${this.id}`)
-      .then((result: any) => {
-        this.info = result.information;
+      .then((responseData: any) => {
+        this.info = responseData.information;
       });
   }
 }

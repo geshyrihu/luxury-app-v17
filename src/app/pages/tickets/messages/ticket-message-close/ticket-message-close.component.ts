@@ -48,19 +48,23 @@ export default class TicketMessageCloseComponent implements OnInit {
   }
   onLoadData() {
     const urlApi = `Tickets/GetByClosed/${this.id}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-      this.form.patchValue(result);
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+      this.form.patchValue(responseData);
       this.form.patchValue({
         closedById: this.authS.applicationUserId,
       });
       // Si las imágenes existen, carga las vistas previas
       // Si las imágenes existen, establece las vistas previas con la URL completa
-      if (result.beforeWorkPreview) {
-        this.form.get('beforeWorkPreview')?.setValue(result.beforeWorkPreview);
+      if (responseData.beforeWorkPreview) {
+        this.form
+          .get('beforeWorkPreview')
+          ?.setValue(responseData.beforeWorkPreview);
       }
 
-      if (result.afterWorkPreview) {
-        this.form.get('afterWorkPreview')?.setValue(result.afterWorkPreview);
+      if (responseData.afterWorkPreview) {
+        this.form
+          .get('afterWorkPreview')
+          ?.setValue(responseData.afterWorkPreview);
       }
     });
   }
@@ -116,8 +120,8 @@ export default class TicketMessageCloseComponent implements OnInit {
       });
       this.apiRequestS
         .onPut(`Tickets/Closed/${this.id}`, formData)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }

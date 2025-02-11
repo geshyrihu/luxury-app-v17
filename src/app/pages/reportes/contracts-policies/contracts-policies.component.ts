@@ -27,8 +27,8 @@ export default class ContractsPoliciesComponent implements OnInit {
 
   onLoadData() {
     const urlApi = `ContratoPoliza/GetAll/${this.customerIdS.getCustomerId()}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
     });
   }
   // Suponiendo que 'item.endDate' es una fecha en formato ISO o de tipo Date

@@ -28,8 +28,8 @@ export default class ListCustomerDataCompanyComponent implements OnInit {
     const urlApi = `CustomerDataCompany`;
     this.apiRequestS
       .onGetList(urlApi)
-      .then((result: CustomerDataCompanyDto[]) => {
-        this.data = result;
+      .then((responseData: CustomerDataCompanyDto[]) => {
+        this.data = responseData;
       });
   }
 
@@ -37,8 +37,9 @@ export default class ListCustomerDataCompanyComponent implements OnInit {
   onDelete(id: string) {
     this.apiRequestS
       .onDelete(`CustomerDataCompany/${id}`)
-      .then((result: boolean) => {
-        if (result) this.data = this.data.filter((item) => item.id !== id);
+      .then((responseData: boolean) => {
+        if (responseData)
+          this.data = this.data.filter((item) => item.id !== id);
       });
   }
 
@@ -51,8 +52,8 @@ export default class ListCustomerDataCompanyComponent implements OnInit {
         data.title,
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
 }

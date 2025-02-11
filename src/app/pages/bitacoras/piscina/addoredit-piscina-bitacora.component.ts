@@ -54,9 +54,9 @@ export default class AddoreditPiscinaBitacoraComponent implements OnInit {
 
   onLoadData() {
     const urlApi = `piscinabitacora/${this.id}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-      this.model = result;
-      this.form.patchValue(result);
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+      this.model = responseData;
+      this.form.patchValue(responseData);
     });
   }
 
@@ -71,14 +71,14 @@ export default class AddoreditPiscinaBitacoraComponent implements OnInit {
     if (this.id === 0) {
       this.apiRequestS
         .onPost(`piscinabitacora`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
       this.apiRequestS
         .onPut(`piscinabitacora/${this.id}`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }

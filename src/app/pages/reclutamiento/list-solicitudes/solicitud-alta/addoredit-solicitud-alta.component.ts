@@ -54,10 +54,12 @@ export default class AddOrEditSolicitudAltaComponent implements OnInit {
     this.onLoadEmpleados();
 
     const urlApi = `RequestEmployeeRegister/${this.id}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-      this.form.patchValue(result);
-      if (result.employeeId !== null) {
-        let find = this.empleados.find((x) => x?.value === result.employeeId);
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+      this.form.patchValue(responseData);
+      if (responseData.employeeId !== null) {
+        let find = this.empleados.find(
+          (x) => x?.value === responseData.employeeId
+        );
 
         this.form.patchValue({
           employee: find?.label,
@@ -68,8 +70,8 @@ export default class AddOrEditSolicitudAltaComponent implements OnInit {
 
   onLoadEmpleados() {
     const urlApi = `Employees/EmployeeTemp`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.empleados = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.empleados = responseData;
     });
   }
 
@@ -86,14 +88,14 @@ export default class AddOrEditSolicitudAltaComponent implements OnInit {
     if (this.id === 0) {
       this.apiRequestS
         .onPost(`RequestEmployeeRegister`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
       this.apiRequestS
         .onPut(`RequestEmployeeRegister/${this.id}`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }

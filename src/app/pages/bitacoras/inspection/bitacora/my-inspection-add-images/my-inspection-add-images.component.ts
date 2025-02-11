@@ -40,8 +40,8 @@ export default class MyInspectionAddImagesComponent {
       this.inspectionResultId
     }/${this.customerIdService.getCustomerId()}`;
 
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-      this.existingImages = result; // Guardamos las imágenes recuperadas
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+      this.existingImages = responseData; // Guardamos las imágenes recuperadas
     });
   }
 
@@ -82,7 +82,7 @@ export default class MyInspectionAddImagesComponent {
       this.inspectionResultId
     }?customerId=${this.customerIdService.getCustomerId()}`;
 
-    this.apiRequestS.onPost(urlApi, formData).then((result: any) => {
+    this.apiRequestS.onPost(urlApi, formData).then((responseData: any) => {
       this.loadExistingImages();
     });
   }

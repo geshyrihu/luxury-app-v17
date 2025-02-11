@@ -66,8 +66,8 @@ export default class SolicitudModificacionSalarioComponent {
   }
   onLoadData() {
     const urlApi = `RequestSalaryModification/GetDataForModificacionSalario/${this.workPositionId}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-      this.form.patchValue(result);
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+      this.form.patchValue(responseData);
     });
   }
 
@@ -85,8 +85,8 @@ export default class SolicitudModificacionSalarioComponent {
         } `,
         model
       )
-      .then((result: boolean) => {
-        result ? this.ref.close(true) : (this.submitting = false);
+      .then((responseData: boolean) => {
+        responseData ? this.ref.close(true) : (this.submitting = false);
       });
   }
   createFormData(form: any) {

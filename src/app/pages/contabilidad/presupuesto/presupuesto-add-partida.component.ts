@@ -30,8 +30,8 @@ export default class PresupuestoAddPartidaComponent implements OnInit {
       .onGetList(
         `SelectItem/AddCuentaCedulaPresupuestal/${this.config.data.idBudgetCard}`
       )
-      .then((result: any) => {
-        this.data = result.map(function (cuenta: any) {
+      .then((responseData: any) => {
+        this.data = responseData.map(function (cuenta: any) {
           return {
             id: cuenta.id,
             numeroCuenta: cuenta.numeroCuenta,

@@ -85,14 +85,14 @@ export default class TicketMessageViewComponent implements OnInit {
 
   UpdateToRead() {
     const urlApi = `NotificationUser/UpdateToRead/${this.applicationUserId}/${this.notificationUserId}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
       this.notificationPushService.emitNotificationUpdate();
     });
   }
   onLoadTicketGroup() {
     const urlApi = `TicketGroupList/${this.customerIdS.getCustomerId()}`;
-    this.apiRequestS.onGetSelectItem(urlApi).then((result: any) => {
-      this.cb_ticket_group = result;
+    this.apiRequestS.onGetSelectItem(urlApi).then((responseData: any) => {
+      this.cb_ticket_group = responseData;
     });
   }
 
@@ -113,16 +113,20 @@ export default class TicketMessageViewComponent implements OnInit {
 
   onLoadData() {
     const urlApi = `Tickets/${this.id}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-      this.form.patchValue(result);
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+      this.form.patchValue(responseData);
       // Si las imágenes existen, carga las vistas previas
       // Si las imágenes existen, establece las vistas previas con la URL completa
-      if (result.beforeWorkPreview) {
-        this.form.get('beforeWorkPreview')?.setValue(result.beforeWorkPreview);
+      if (responseData.beforeWorkPreview) {
+        this.form
+          .get('beforeWorkPreview')
+          ?.setValue(responseData.beforeWorkPreview);
       }
 
-      if (result.afterWorkPreview) {
-        this.form.get('afterWorkPreview')?.setValue(result.afterWorkPreview);
+      if (responseData.afterWorkPreview) {
+        this.form
+          .get('afterWorkPreview')
+          ?.setValue(responseData.afterWorkPreview);
       }
       this.form.patchValue({
         applicationUserId: this.authS.applicationUserId,
@@ -192,17 +196,17 @@ export default class TicketMessageViewComponent implements OnInit {
       if (this.id !== '') {
         this.apiRequestS
           .onPut(`Tickets/Update/${this.id}`, formData)
-          .then((result: any) => {
-            if (result.beforeWorkPreview) {
+          .then((responseData: any) => {
+            if (responseData.beforeWorkPreview) {
               this.form
                 .get('beforeWorkPreview')
-                ?.setValue(result.beforeWorkPreview);
+                ?.setValue(responseData.beforeWorkPreview);
             }
 
-            if (result.afterWorkPreview) {
+            if (responseData.afterWorkPreview) {
               this.form
                 .get('afterWorkPreview')
-                ?.setValue(result.afterWorkPreview);
+                ?.setValue(responseData.afterWorkPreview);
             }
             this.form.patchValue({
               applicationUserId: this.authS.applicationUserId,
@@ -217,8 +221,8 @@ export default class TicketMessageViewComponent implements OnInit {
 
   onLoadUsers() {
     const urlApi = `Tickets/Participant/${this.ticketGroupId}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.cb_user = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.cb_user = responseData;
     });
   }
 

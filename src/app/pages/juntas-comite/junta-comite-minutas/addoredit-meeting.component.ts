@@ -78,14 +78,14 @@ export default class AddOrEditMeetingComponent implements OnInit {
     if (this.id === 0) {
       this.apiRequestS
         .onPost(`Meetings`, this.form.value)
-        .then((result: any) => {
-          this.id = result.id;
+        .then((responseData: any) => {
+          this.id = responseData.id;
           this.onLoadData();
         });
     } else {
       this.apiRequestS
         .onPut(`Meetings/${this.id}`, this.form.value)
-        .then((result: any) => {
+        .then((responseData: any) => {
           this.onLoadData();
         });
     }
@@ -93,8 +93,8 @@ export default class AddOrEditMeetingComponent implements OnInit {
 
   onLoadData() {
     const urlApi = `Meetings/${this.id}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-      this.form.patchValue(result);
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+      this.form.patchValue(responseData);
     });
   }
 }

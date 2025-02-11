@@ -70,15 +70,15 @@ export default class BitacoraMantenimientoFormComponent implements OnInit {
     });
     this.apiRequestS
       .onPost(`BitacoraMantenimiento`, this.form.value)
-      .then((result: boolean) => {
-        result ? this.ref.close(true) : (this.submitting = false);
+      .then((responseData: boolean) => {
+        responseData ? this.ref.close(true) : (this.submitting = false);
       });
   }
 
   onLoadMachinery() {
     const urlApi = `SelectItem/ListadoInstalaciones/${this.customerIdS.getCustomerId()}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.maquinarias = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.maquinarias = responseData;
     });
   }
 }

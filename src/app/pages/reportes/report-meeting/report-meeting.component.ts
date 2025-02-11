@@ -41,17 +41,17 @@ export default class ReportMeetingComponent implements OnInit {
 
   loadMeetingData() {
     const urlApi = `Meetings/MeetingReportPdf/${this.meetingId}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
-      this.detalles = result.asuntos;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
+      this.detalles = responseData.asuntos;
     });
   }
 
   onLoadCustomer() {
     const urlApi = `Customers/${this.customerId}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-      this.nameCustomer = result.nameCustomer;
-      this.logoCustomer = result.photoPath;
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+      this.nameCustomer = responseData.nameCustomer;
+      this.logoCustomer = responseData.photoPath;
     });
   }
 }

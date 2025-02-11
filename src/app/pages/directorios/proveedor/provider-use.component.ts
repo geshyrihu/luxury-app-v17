@@ -23,8 +23,8 @@ export default class ProviderUseComponent implements OnInit {
 
   onLoadData(providerId: number) {
     const urlApi = `providers/coincidencias/${providerId}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
     });
   }
 }

@@ -30,8 +30,8 @@ export default class ModuleAppRolUpdateComponent implements OnInit {
 
   onLoadData(roleId: string): void {
     const urlApi = `ModuleAppRol/Assignments/${roleId}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
     });
   }
 
@@ -48,7 +48,7 @@ export default class ModuleAppRolUpdateComponent implements OnInit {
       isAssigned: item.isAssigned,
     };
 
-    this.apiRequestS.onPost(urlApi, data).then((result: any) => {
+    this.apiRequestS.onPost(urlApi, data).then((responseData: any) => {
       this.customerIdS.onLoadDataCustomer(this.customerIdS.customerId);
     });
   }

@@ -25,8 +25,8 @@ export default class LlavesComponent implements OnInit {
   }
   onLoadData() {
     const urlApi = `EntregaRecepcion/InventarioLlaves/${this.customerIdS.customerId}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
     });
   }
 

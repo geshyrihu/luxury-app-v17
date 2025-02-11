@@ -25,8 +25,8 @@ export default class TicketTrakingRequestDetailComponent implements OnInit {
   onLoadData() {
     this.apiRequestS
       .onGetList(`TicketLegal/requestDetail/${this.id}`)
-      .then((result: any) => {
-        this.data = result.request;
+      .then((responseData: any) => {
+        this.data = responseData.request;
       });
   }
 }

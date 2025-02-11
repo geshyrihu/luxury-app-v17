@@ -27,8 +27,8 @@ export default class PresupuestoDetalleEdicionHistorialComponent
   onLoadData() {
     this.apiRequestS
       .onGetList(`Presupuesto/HistorialToEdition/${this.id}`)
-      .then((result: any) => {
-        this.data = result;
+      .then((responseData: any) => {
+        this.data = responseData;
       });
   }
 }

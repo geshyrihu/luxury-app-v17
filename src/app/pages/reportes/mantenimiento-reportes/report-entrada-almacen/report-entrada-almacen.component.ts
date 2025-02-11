@@ -41,8 +41,8 @@ export default class ReportEntradaAlmacenComponent implements OnInit {
     const urlApi = `MaintenanceReport/entradaproducto/${
       this.customerIdS.customerId
     }/${this.dateS.getDateFormat(this.periodoMonthService.getPeriodoInicio)}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
     });
   }
 }

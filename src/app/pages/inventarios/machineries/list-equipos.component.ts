@@ -74,8 +74,8 @@ export default class ListEquiposComponent implements OnInit {
 
     const urlApi = `Machineries/GetAll/${this.customerIdS.customerId}/${this.inventoryCategoryId}/${this.state}`;
 
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
       this.OnChageTitle();
     });
   }
@@ -84,9 +84,12 @@ export default class ListEquiposComponent implements OnInit {
     this.onLoadData();
   }
   onDelete(id: number) {
-    this.apiRequestS.onDelete(`Machineries/${id}`).then((result: boolean) => {
-      if (result) this.data = this.data.filter((item) => item.id !== id);
-    });
+    this.apiRequestS
+      .onDelete(`Machineries/${id}`)
+      .then((responseData: boolean) => {
+        if (responseData)
+          this.data = this.data.filter((item) => item.id !== id);
+      });
   }
 
   showModalFichatecnica(data: any) {
@@ -97,8 +100,8 @@ export default class ListEquiposComponent implements OnInit {
         'Ficha Técnica',
         this.dialogHandlerS.dialogSizeFull
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
   showModalAddoredit(data: any) {
@@ -113,8 +116,8 @@ export default class ListEquiposComponent implements OnInit {
         data.title,
         this.dialogHandlerS.dialogSizeFull
       )
-      .then((result: any) => {
-        if (result) this.onLoadData();
+      .then((responseData: any) => {
+        if (responseData) this.onLoadData();
       });
   }
   showModalMaintenanceCalendar(data: any) {
@@ -129,8 +132,8 @@ export default class ListEquiposComponent implements OnInit {
         data.title,
         this.dialogHandlerS.dialogSizeFull
       )
-      .then((result: any) => {
-        if (result) this.onLoadData();
+      .then((responseData: any) => {
+        if (responseData) this.onLoadData();
       });
   }
 
@@ -157,8 +160,8 @@ export default class ListEquiposComponent implements OnInit {
         data.title,
         this.dialogHandlerS.dialogSizeFull
       )
-      .then((result: any) => {
-        if (result) this.onLoadData();
+      .then((responseData: any) => {
+        if (responseData) this.onLoadData();
       });
   }
   onDocumentos(machineryId: number) {
@@ -202,7 +205,7 @@ export default class ListEquiposComponent implements OnInit {
   onDeleteOrder(id: number) {
     this.apiRequestS
       .onDelete(`maintenancecalendars/${id}`)
-      .then((result: any) => {
+      .then((responseData: any) => {
         this.onLoadData();
       });
   }

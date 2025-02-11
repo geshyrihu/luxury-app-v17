@@ -53,9 +53,9 @@ export default class AddoreditInventarioExtintorComponent implements OnInit {
   }
   onLoadData() {
     const urlApi = `InventarioExtintor/${this.id}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-      this.urlBaseImg = result.currentPhoto;
-      this.form.patchValue(result);
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+      this.urlBaseImg = responseData.currentPhoto;
+      this.form.patchValue(responseData);
     });
   }
   onSubmit() {
@@ -67,14 +67,14 @@ export default class AddoreditInventarioExtintorComponent implements OnInit {
     if (this.id === 0) {
       this.apiRequestS
         .onPost(`InventarioExtintor`, formData)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
       this.apiRequestS
         .onPut(`InventarioExtintor/${this.id}`, formData)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }

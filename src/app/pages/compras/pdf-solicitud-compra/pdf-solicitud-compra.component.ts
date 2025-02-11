@@ -24,9 +24,9 @@ export default class PdfSolicitudCompraComponent implements OnInit {
       .onGetItem(
         `SolicitudCompra/GetSolicitudCompraIndividual/${this.idSolicituCompra}`
       )
-      .then((result: any) => {
-        this.folioCotizacion = result.folio;
-        this.model = result.solicitudCompraDetalle;
+      .then((responseData: any) => {
+        this.folioCotizacion = responseData.folio;
+        this.model = responseData.solicitudCompraDetalle;
       });
   }
 }

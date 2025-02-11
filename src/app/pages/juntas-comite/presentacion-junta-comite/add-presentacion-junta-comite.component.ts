@@ -43,12 +43,14 @@ export default class AddPresentacionJuntaComiteComponent implements OnInit {
     flatpickrFactory();
 
     const urlApi = `PresentacionJuntaComite/Get/${this.id}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-      result.fechaCorrespondiente = this.dateS.getDateFormat(
-        result.fechaCorrespondiente
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+      responseData.fechaCorrespondiente = this.dateS.getDateFormat(
+        responseData.fechaCorrespondiente
       );
-      result.fechaJunta = this.dateS.getDateFormat(result.fechaJunta);
-      this.form.patchValue(result);
+      responseData.fechaJunta = this.dateS.getDateFormat(
+        responseData.fechaJunta
+      );
+      this.form.patchValue(responseData);
     });
   }
 
@@ -60,14 +62,14 @@ export default class AddPresentacionJuntaComiteComponent implements OnInit {
     if (this.id === 0) {
       this.apiRequestS
         .onPost(`PresentacionJuntaComite/AddFecha`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
       this.apiRequestS
         .onPut(`PresentacionJuntaComite/AddFecha/${this.id}`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }

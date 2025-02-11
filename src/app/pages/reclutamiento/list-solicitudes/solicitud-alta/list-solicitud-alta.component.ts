@@ -40,8 +40,8 @@ export default class ListSolicitudAltaComponent implements OnInit {
         `RequestEmployeeRegister/GetList/`,
         this.filterRequestsService.getParams()
       )
-      .then((result: any) => {
-        this.data = result;
+      .then((responseData: any) => {
+        this.data = responseData;
       });
   }
 
@@ -55,16 +55,17 @@ export default class ListSolicitudAltaComponent implements OnInit {
         'Editar registro',
         this.dialogHandlerS.dialogSizeFull
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
 
   onDelete(id: number) {
     this.apiRequestS
       .onDelete(`RequestEmployeeRegister/${id}`)
-      .then((result: boolean) => {
-        if (result) this.data = this.data.filter((item) => item.id !== id);
+      .then((responseData: boolean) => {
+        if (responseData)
+          this.data = this.data.filter((item) => item.id !== id);
       });
   }
 }

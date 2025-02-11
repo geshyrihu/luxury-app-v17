@@ -40,17 +40,17 @@ export default class ListPresupuestoComponent implements OnInit {
   onLoadData() {
     this.apiRequestS
       .onGetList(`Presupuesto/GetList/${this.customerIdS.customerId}`)
-      .then((result: any) => {
-        this.data = result;
+      .then((responseData: any) => {
+        this.data = responseData;
       });
   }
 
   onFinished(cedulaId: number, finished: boolean) {
     this.apiRequestS
       .onGetItem(`Presupuesto/Finished/${cedulaId}/${finished}`)
-      .then((result: any) => {
+      .then((responseData: any) => {
         // Actualiza solo el registro afectado en lugar de toda la lista
-        const updatedRecord = result;
+        const updatedRecord = responseData;
         const recordIndex = this.data.findIndex(
           (record) => record.id === updatedRecord.id
         );
@@ -71,8 +71,8 @@ export default class ListPresupuestoComponent implements OnInit {
         'Agregar presupuesto',
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
 
@@ -86,8 +86,8 @@ export default class ListPresupuestoComponent implements OnInit {
         'Editar Periodo',
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
   onGetPresupuestoDetalle(id: number) {
@@ -96,8 +96,11 @@ export default class ListPresupuestoComponent implements OnInit {
 
   // Función para eliminar
   onDelete(id: number) {
-    this.apiRequestS.onDelete(`presupuesto/${id}`).then((result: boolean) => {
-      if (result) this.data = this.data.filter((item) => item.id !== id);
-    });
+    this.apiRequestS
+      .onDelete(`presupuesto/${id}`)
+      .then((responseData: boolean) => {
+        if (responseData)
+          this.data = this.data.filter((item) => item.id !== id);
+      });
   }
 }

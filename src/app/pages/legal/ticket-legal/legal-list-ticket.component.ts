@@ -34,9 +34,11 @@ export default class LegalListTicketComponent implements OnInit {
   }
 
   onLoadData() {
-    this.apiRequestS.onGetList('TicketLegal/AllLegal').then((result: any) => {
-      this.data = result;
-    });
+    this.apiRequestS
+      .onGetList('TicketLegal/AllLegal')
+      .then((responseData: any) => {
+        this.data = responseData;
+      });
   }
 
   // clearInput() {
@@ -47,8 +49,8 @@ export default class LegalListTicketComponent implements OnInit {
   // onFilter(mesanio: any) {
   //   this.apiRequestService
   //     .onGetList('TicketLegal/AllLegal/' + mesanio)
-  //     .then((result: any) => {
-  //       this.data = result;
+  //     .then((responseData: any) => {
+  //       this.data = responseData;
   //     });
   // }
   onModalEdit(data: any) {
@@ -59,8 +61,8 @@ export default class LegalListTicketComponent implements OnInit {
         '',
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) {
+      .then((responseData: boolean) => {
+        if (responseData) {
           this.onLoadData();
         }
       });
@@ -74,8 +76,8 @@ export default class LegalListTicketComponent implements OnInit {
         '',
         this.dialogHandlerS.dialogSizeLg
       )
-      .then((result: boolean) => {
-        if (result) {
+      .then((responseData: boolean) => {
+        if (responseData) {
           this.onLoadData();
         }
       });
@@ -89,8 +91,8 @@ export default class LegalListTicketComponent implements OnInit {
         '',
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) {
+      .then((responseData: boolean) => {
+        if (responseData) {
           this.onLoadData();
         }
       });
@@ -104,8 +106,8 @@ export default class LegalListTicketComponent implements OnInit {
         data.title,
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) {
+      .then((responseData: boolean) => {
+        if (responseData) {
           this.onLoadData();
         }
       });
@@ -122,9 +124,11 @@ export default class LegalListTicketComponent implements OnInit {
 
   // Funcion para eliminar un banco y refres
   onDelete(id: number) {
-    this.apiRequestS.onDelete(`TicketLegal/${id}`).then((result: boolean) => {
-      if (result) this.onLoadData();
-    });
+    this.apiRequestS
+      .onDelete(`TicketLegal/${id}`)
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
+      });
   }
 
   // PendingEmail() {

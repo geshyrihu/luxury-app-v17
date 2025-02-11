@@ -71,20 +71,20 @@ export default class CreateOrdenCompraComponent implements OnInit {
 
   onLoadSelectItemProvider() {
     const url = 'providers';
-    this.apiRequestS.onGetSelectItem(url).then((result: any) => {
-      this.cb_providers = result;
+    this.apiRequestS.onGetSelectItem(url).then((responseData: any) => {
+      this.cb_providers = responseData;
     });
   }
 
   onLoadSolicitudCompra() {
     const urlApi = `SolicitudCompra/${this.solicitudCompraId}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-      this.solicitudCompra = result;
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+      this.solicitudCompra = responseData;
       this.form.controls['equipoOInstalacion'].setValue(
-        result.equipoOInstalacion
+        responseData.equipoOInstalacion
       );
       this.form.controls['justificacionGasto'].setValue(
-        result.justificacionGasto
+        responseData.justificacionGasto
       );
       this.form.controls['folioSolicitudCompra'].setValue(
         this.config.data.folioSolicitudCompra
@@ -103,17 +103,21 @@ export default class CreateOrdenCompraComponent implements OnInit {
           `ordencompra/${this.providerId}/${this.posicionCotizacion}`,
           this.form.value
         )
-        .then((result: any) => {
-          if (result) {
-            this.router.navigateByUrl(`/compras/orden-compra/${result.id}`);
+        .then((responseData: any) => {
+          if (responseData) {
+            this.router.navigateByUrl(
+              `/compras/orden-compra/${responseData.id}`
+            );
             this.submitting = false;
           }
         });
     } else {
       this.apiRequestS
         .onPut(`OrdenCompra/${this.ordenCompraId}`, this.form.value)
-        .then((result: any) => {
-          result ? this.ref.close(result.id) : (this.submitting = false);
+        .then((responseData: any) => {
+          responseData
+            ? this.ref.close(responseData.id)
+            : (this.submitting = false);
         });
     }
   }

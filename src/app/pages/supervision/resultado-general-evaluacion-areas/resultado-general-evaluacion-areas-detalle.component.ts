@@ -29,8 +29,8 @@ export default class ResultadoGeneralEvaluacionAreasDetalleComponent
 
   onLoadData(fecha: string, area: number, status?: number) {
     const urlApi = `ResumenGeneral/EvaluacionAreasDetalle/${fecha}/${area}/${status}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
     });
   }
 }

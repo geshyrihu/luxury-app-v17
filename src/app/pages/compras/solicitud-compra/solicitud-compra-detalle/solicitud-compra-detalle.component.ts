@@ -37,8 +37,8 @@ export default class SolicitudCompraDetalleComponent {
         'Editar Producto',
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onUpdateData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onUpdateData();
       });
   }
   onUpdateData() {

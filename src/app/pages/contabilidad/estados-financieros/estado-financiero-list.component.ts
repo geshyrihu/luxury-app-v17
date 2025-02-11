@@ -34,8 +34,8 @@ export default class EstadoFinancieroListComponent implements OnInit {
 
   onLoadData(): void {
     const urlApi = `EstadoFinanciero/ToCustomer/${this.customerIdS.customerId}/`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
     });
   }
 
@@ -48,8 +48,8 @@ export default class EstadoFinancieroListComponent implements OnInit {
         data.title,
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) {
+      .then((responseData: boolean) => {
+        if (responseData) {
           this.onLoadData();
         }
       });

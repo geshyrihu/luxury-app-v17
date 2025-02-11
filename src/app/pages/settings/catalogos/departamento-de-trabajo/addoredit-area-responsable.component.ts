@@ -32,15 +32,15 @@ export default class AddOrEditAreaResponsableComponent implements OnInit {
 
   onLoadEnumSelectItem() {
     const urlApi = `ECompanyArea`;
-    this.apiRequestS.onGetEnumSelectItem(urlApi).then((result: any) => {
-      this.cb_area_empresa = result;
+    this.apiRequestS.onGetEnumSelectItem(urlApi).then((responseData: any) => {
+      this.cb_area_empresa = responseData;
     });
   }
 
   onLoadData(id: number) {
     const urlApi = `Departament/${id}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-      this.form.patchValue(result);
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+      this.form.patchValue(responseData);
     });
   }
   onLoadForm() {
@@ -60,14 +60,14 @@ export default class AddOrEditAreaResponsableComponent implements OnInit {
     if (this.id === 0) {
       this.apiRequestS
         .onPost(`Departament`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
       this.apiRequestS
         .onPut(`Departament/${this.id}`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }

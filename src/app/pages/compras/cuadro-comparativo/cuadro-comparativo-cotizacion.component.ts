@@ -54,19 +54,19 @@ export default class CuadroComparativoCotizacionComponent
 
   onGetCotizacioProveedor() {
     const url = `CotizacionProveedor/GetPosicionCotizacion/${this.solicitudCompraId}/${this.posicionCotizacion}`;
-    this.apiRequestS.onGetItem(url).then((result: any) => {
-      this.cotizacionProveedor = result;
-      this.garantia = result.garantia;
-      this.entrega = result.entrega;
-      this.politicaPago = result.politicaPago;
-      this.nameProvider = result.nameProvider;
+    this.apiRequestS.onGetItem(url).then((responseData: any) => {
+      this.cotizacionProveedor = responseData;
+      this.garantia = responseData.garantia;
+      this.entrega = responseData.entrega;
+      this.politicaPago = responseData.politicaPago;
+      this.nameProvider = responseData.nameProvider;
     });
   }
   onLoadData() {
     const urlApi = `solicitudcompra/${this.solicitudCompraId}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-      this.solicitudCompra = result;
-      this.solicitudCompraDetalle = result.solicitudCompraDetalle;
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+      this.solicitudCompra = responseData;
+      this.solicitudCompraDetalle = responseData.solicitudCompraDetalle;
     });
   }
 
@@ -81,7 +81,7 @@ export default class CuadroComparativoCotizacionComponent
         `CotizacionProveedor/UpdateProvider/${this.cotizacionProveedor.id}`,
         this.cotizacionProveedor
       )
-      .then((result: boolean) => {});
+      .then((responseData: boolean) => {});
   }
 
   onChange(item: any) {
@@ -114,8 +114,8 @@ export default class CuadroComparativoCotizacionComponent
 
     this.apiRequestS
       .onPut(`SolicitudCompraDetalle/UpdatePrice/${item.id}`, data)
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
 
@@ -124,8 +124,8 @@ export default class CuadroComparativoCotizacionComponent
       .onDelete(
         `solicitudCompra/deleteprovider/${this.solicitudCompraId}/${this.cotizacionProveedorId}`
       )
-      .then((result: boolean) => {
-        if (result) this.ref.close(true);
+      .then((responseData: boolean) => {
+        if (responseData) this.ref.close(true);
       });
   }
   onModalCreateOrdenCompra() {
@@ -144,8 +144,8 @@ export default class CuadroComparativoCotizacionComponent
 
   onCotizacionesRelacionadas() {
     const urlApi = `OrdenCompra/CotizacionesRelacionadas/${this.solicitudCompraId}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.cotizacionesRelacionadas = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.cotizacionesRelacionadas = responseData;
     });
   }
   ngOnDestroy(): void {

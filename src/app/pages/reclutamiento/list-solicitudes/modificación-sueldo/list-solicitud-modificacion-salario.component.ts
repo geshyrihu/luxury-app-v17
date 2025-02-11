@@ -37,16 +37,17 @@ export default class ListSolicitudModificacionSalarioComponent
     const urlApi = `RequestSalaryModification`;
     this.apiRequestS
       .onGetList(urlApi, this.filterRequestsService.getParams())
-      .then((result: any) => {
-        this.data = result;
+      .then((responseData: any) => {
+        this.data = responseData;
       });
   }
 
   onDelete(id: number) {
     this.apiRequestS
       .onDelete(`RequestSalaryModification/${id}`)
-      .then((result: boolean) => {
-        if (result) this.data = this.data.filter((item) => item.id !== id);
+      .then((responseData: boolean) => {
+        if (responseData)
+          this.data = this.data.filter((item) => item.id !== id);
       });
   }
 
@@ -60,8 +61,8 @@ export default class ListSolicitudModificacionSalarioComponent
         'Editar registro',
         this.dialogHandlerS.dialogSizeFull
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
 }

@@ -61,11 +61,11 @@ export default class CustomerAddOrEditComponent implements OnInit {
   onLoadData() {
     this.apiRequestS
       .onGetItem<ICustomerAddOrEdit>(`Customers/${this.id}`)
-      .then((result: any) => {
-        this.model = result;
-        const register = this.dateS.getDateFormat(result.register);
+      .then((responseData: any) => {
+        this.model = responseData;
+        const register = this.dateS.getDateFormat(responseData.register);
         this.model.register = register;
-        this.form.patchValue(result);
+        this.form.patchValue(responseData);
       });
   }
 
@@ -77,14 +77,16 @@ export default class CustomerAddOrEditComponent implements OnInit {
     this.submitting = true;
 
     if (this.id === 0) {
-      this.apiRequestS.onPost('Customers', formData).then((result: boolean) => {
-        result ? this.ref.close(true) : (this.submitting = false);
-      });
+      this.apiRequestS
+        .onPost('Customers', formData)
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
+        });
     } else {
       this.apiRequestS
         .onPut(`Customers/${this.id}`, formData)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }

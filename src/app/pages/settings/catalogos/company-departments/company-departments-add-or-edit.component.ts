@@ -37,8 +37,8 @@ export default class CompanyDepartmentsAddOrEditComponent implements OnInit {
 
   onLoadData(id: number) {
     const urlApi = `CompanyDepartment/${this.id}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-      this.form.patchValue(result);
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+      this.form.patchValue(responseData);
     });
   }
   onLoadForm() {
@@ -57,14 +57,14 @@ export default class CompanyDepartmentsAddOrEditComponent implements OnInit {
     if (this.id === 0) {
       this.apiRequestS
         .onPost(`CompanyDepartment`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
       this.apiRequestS
         .onPut(`CompanyDepartment/${this.id}`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     }
     // Mostrar un mensaje de carga

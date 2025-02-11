@@ -25,8 +25,8 @@ export default class SummaryTicketsComponent implements OnInit {
 
   onLoadData() {
     const urlApi = `Dashboard/TicketPendientesResumen/${this.groupId}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
     });
   }
 }

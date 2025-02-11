@@ -45,10 +45,10 @@ export default class AddOrEditEmailDataComponent implements OnInit {
   onLoadData() {
     this.apiRequestS
       .onGetList<IEmailDataAddOrEdit>(`EmailData/${this.id}`)
-      .then((result: any) => {
-        if (result !== null) {
-          this.form.patchValue(result);
-          this.id = result.id;
+      .then((responseData: any) => {
+        if (responseData !== null) {
+          this.form.patchValue(responseData);
+          this.id = responseData.id;
         }
       });
   }
@@ -60,14 +60,14 @@ export default class AddOrEditEmailDataComponent implements OnInit {
     if (this.id === '') {
       this.apiRequestS
         .onPost(`EmailData`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
       this.apiRequestS
         .onPut(`EmailData/${this.id}`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }
@@ -76,8 +76,8 @@ export default class AddOrEditEmailDataComponent implements OnInit {
 
     var urlApi = `SendEmail/TestEmail/${this.id}`;
 
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.testEmailMessage = result.message;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.testEmailMessage = responseData.message;
       this.submitting = false;
     });
   }

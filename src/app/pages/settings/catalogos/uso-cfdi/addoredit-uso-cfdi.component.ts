@@ -37,9 +37,11 @@ export default class AddoreditUsoCFDIComponent implements OnInit {
   }
 
   onLoadData() {
-    this.apiRequestS.onGetItem(`UsoCfdi/${this.id}`).then((result: any) => {
-      this.form.patchValue(result);
-    });
+    this.apiRequestS
+      .onGetItem(`UsoCfdi/${this.id}`)
+      .then((responseData: any) => {
+        this.form.patchValue(responseData);
+      });
   }
 
   onSubmit() {
@@ -49,14 +51,14 @@ export default class AddoreditUsoCFDIComponent implements OnInit {
     if (this.id === 0) {
       this.apiRequestS
         .onPost(`UsoCfdi`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
       this.apiRequestS
         .onPut(`UsoCfdi/${this.id}`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }

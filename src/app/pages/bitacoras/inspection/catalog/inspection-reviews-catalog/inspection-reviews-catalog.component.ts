@@ -25,9 +25,9 @@ export default class InspectionReviewsCatalogComponent {
 
   onLoadData() {
     const urlApi = `InspectionReviewsCatalog`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
       // Actualizamos el valor del signal con los datos recibidos
-      this.dataSignal.set(result);
+      this.dataSignal.set(responseData);
     });
   }
 
@@ -35,7 +35,7 @@ export default class InspectionReviewsCatalogComponent {
   onDelete(id: number) {
     this.apiRequestS
       .onDelete(`InspectionReviewsCatalog/${id}`)
-      .then((result: boolean) => {
+      .then((responseData: boolean) => {
         // Actualizamos el signal para eliminar el elemento de la lista
         this.dataSignal.set(this.dataSignal().filter((item) => item.id !== id));
       });
@@ -50,8 +50,8 @@ export default class InspectionReviewsCatalogComponent {
         data.title,
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
 }

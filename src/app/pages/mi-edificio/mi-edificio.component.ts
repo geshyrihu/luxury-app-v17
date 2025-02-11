@@ -36,8 +36,8 @@ export default class MiEdificioComponent implements OnInit {
   onLoadData() {
     const customerId = this.customerIdS.getCustomerId();
     const urlApi = `MiEdificio/Caratula/${customerId}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
     });
   }
 
@@ -49,8 +49,8 @@ export default class MiEdificioComponent implements OnInit {
         'Ficha Técnica',
         this.dialogHandlerS.dialogSizeFull
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
 }

@@ -49,8 +49,8 @@ export default class AddoreditPresentacionJuntaComiteComponent
 
     this.apiRequestS
       .onPost(`PresentacionJuntaComite/AddFile`, model)
-      .then((result: boolean) => {
-        result ? this.ref.close(true) : (this.submitting = false);
+      .then((responseData: boolean) => {
+        responseData ? this.ref.close(true) : (this.submitting = false);
       });
   }
 

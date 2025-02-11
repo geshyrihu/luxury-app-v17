@@ -46,8 +46,8 @@ export default class FormInventarioLlaveComponent implements OnInit {
 
   onLoadData() {
     const urlApi = `InventarioLlave/${this.id}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-      this.form.patchValue(result);
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+      this.form.patchValue(responseData);
     });
   }
   onSubmit() {
@@ -59,22 +59,22 @@ export default class FormInventarioLlaveComponent implements OnInit {
     if (this.id === 0) {
       this.apiRequestS
         .onPost(`InventarioLlave`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
       this.apiRequestS
         .onPut(`InventarioLlave/${this.id}`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }
 
   onLoadEquipoClasificacion() {
     const urlApi = 'EquipoClasificacion/SelectItem';
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.cb_equipoClasificacion = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.cb_equipoClasificacion = responseData;
     });
   }
 }

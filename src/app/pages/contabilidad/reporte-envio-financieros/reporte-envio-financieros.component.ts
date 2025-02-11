@@ -36,8 +36,8 @@ export default class ReporteEnvioFinancierosComponent implements OnInit {
           this.periodoMonthService.getPeriodoInicio
         )}`
       )
-      .then((result: any) => {
-        this.data = result;
+      .then((responseData: any) => {
+        this.data = responseData;
       });
   }
 

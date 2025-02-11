@@ -57,15 +57,15 @@ export default class TicketGroupAddOrEditComponent implements OnInit {
   }
   onLoadData() {
     const urlApi = `ticketGroup/${this.id}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-      this.form.patchValue(result);
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+      this.form.patchValue(responseData);
     });
   }
 
   onLoadTicketGroupCategory() {
     const urlApi = `TicketGroupCategory/${this.customerIdS.customerId}`;
-    this.apiRequestS.onGetSelectItem(urlApi).then((result: any) => {
-      this.cb_ticketGroupCategory = result;
+    this.apiRequestS.onGetSelectItem(urlApi).then((responseData: any) => {
+      this.cb_ticketGroupCategory = responseData;
     });
   }
   onSubmit() {
@@ -75,14 +75,14 @@ export default class TicketGroupAddOrEditComponent implements OnInit {
     if (this.id === '') {
       this.apiRequestS
         .onPost(`ticketGroup`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
       this.apiRequestS
         .onPut(`ticketGroup/${this.id}`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }

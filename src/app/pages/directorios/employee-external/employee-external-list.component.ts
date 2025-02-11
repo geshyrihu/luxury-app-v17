@@ -47,8 +47,8 @@ export default class EmployeeExternalListComponent implements OnInit {
   onLoadData() {
     const urlApi = `EmployeeExternal/List/${this.customerIdS.customerId}/${this.activo}`;
 
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
     });
   }
 
@@ -60,14 +60,17 @@ export default class EmployeeExternalListComponent implements OnInit {
         'Agregar externo',
         this.dialogHandlerS.dialogSizeLg
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
   onDelete(id: number) {
-    this.apiRequestS.onDelete(`Employees/${id}`).then((result: boolean) => {
-      if (result) this.data = this.data.filter((item) => item.id !== id);
-    });
+    this.apiRequestS
+      .onDelete(`Employees/${id}`)
+      .then((responseData: boolean) => {
+        if (responseData)
+          this.data = this.data.filter((item) => item.id !== id);
+      });
   }
 
   onCardEmployee(applicationUserId: string) {

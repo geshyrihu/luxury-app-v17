@@ -30,8 +30,8 @@ export default class BtnDeleteSpanComponent {
       cancelButtonColor: '#9B1B30',
       confirmButtonText: 'Sí, eliminar',
       cancelButtonText: 'Cancelar',
-    }).then((result) => {
-      if (result.value) {
+    }).then((responseData) => {
+      if (responseData.value) {
         return this.OnConfirm.emit(event);
       }
     });

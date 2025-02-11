@@ -49,8 +49,8 @@ export default class CrudSalidasComponent implements OnInit {
       });
 
     const urlApi = `InventarioProducto/GetExistenciaProducto/${this.customerIdS.customerId}/${this.config.data.idProducto}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-      if (result) this.existenciaActual = result.existencia;
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+      if (responseData) this.existenciaActual = responseData.existencia;
     });
 
     // ...para obtener la cantidad actual de producto existentes
@@ -84,11 +84,13 @@ export default class CrudSalidasComponent implements OnInit {
   }
   onLoadData() {
     const urlApi = `salidaproductos/${this.id}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-      this.nombreProducto = result.producto;
-      this.cantidadActual = result.cantidad;
-      result.fechaSalida = this.dateS.getDateFormat(result.fechaSalida);
-      this.form.patchValue(result);
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+      this.nombreProducto = responseData.producto;
+      this.cantidadActual = responseData.cantidad;
+      responseData.fechaSalida = this.dateS.getDateFormat(
+        responseData.fechaSalida
+      );
+      this.form.patchValue(responseData);
     });
   }
 
@@ -100,8 +102,8 @@ export default class CrudSalidasComponent implements OnInit {
     if (this.id === 0) {
       this.apiRequestS
         .onPost('SalidaProductos', this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
       this.apiRequestS
@@ -109,8 +111,8 @@ export default class CrudSalidasComponent implements OnInit {
           `SalidaProductos/${this.id}/${this.cantidadActual}`,
           this.form.value
         )
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }

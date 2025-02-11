@@ -59,23 +59,23 @@ export default class PresupuestoAddComponent implements OnInit {
     if (this.id === 0) {
       this.apiRequestS
         .onPost(`Presupuesto/Create`, this.periodo)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
       this.apiRequestS
         .onPut(`Presupuesto/UpdatePresupuesto/${this.id}`, this.periodo)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }
   onLoadData() {
-    this.apiRequestS.onGetList('banks').then((result: any) => {
+    this.apiRequestS.onGetList('banks').then((responseData: any) => {
       this.periodo = {
         customerId: this.customerIdS.customerId,
-        from: result.fechaInicio,
-        to: result.fechaFinal,
+        from: responseData.fechaInicio,
+        to: responseData.fechaFinal,
       };
     });
   }

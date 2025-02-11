@@ -41,9 +41,9 @@ export default class PagetitleReportComponent {
   }
   onLoadData() {
     const urlApi = `Customers/${this.customerIdS.customerId}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-      this.nameCustomer = result.nameCustomer;
-      this.logoCustomer = result.photoPath;
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+      this.nameCustomer = responseData.nameCustomer;
+      this.logoCustomer = responseData.photoPath;
     });
   }
 }

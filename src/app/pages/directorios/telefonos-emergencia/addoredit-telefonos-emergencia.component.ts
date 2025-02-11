@@ -47,9 +47,9 @@ export default class AddOrEditTelefonosEmergenciaComponent {
 
   onLoadData() {
     const urlApi = `TelefonosEmergencia/${this.id}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-      this.urlBaseImg = result.logo;
-      this.form.patchValue(result);
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+      this.urlBaseImg = responseData.logo;
+      this.form.patchValue(responseData);
     });
   }
 
@@ -62,14 +62,14 @@ export default class AddOrEditTelefonosEmergenciaComponent {
     if (this.id === 0) {
       this.apiRequestS
         .onPost('TelefonosEmergencia', formData)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
       this.apiRequestS
         .onPut(`TelefonosEmergencia/${this.id}`, formData)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }

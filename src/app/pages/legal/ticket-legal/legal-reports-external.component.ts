@@ -49,20 +49,20 @@ export default class LegalReportsExternalComponent {
 
   onLoadReport(startDate: string, endDate: string) {
     const urlApi = `LegalReport/Results/${startDate}/${endDate}/${false}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.reportData = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.reportData = responseData;
     });
   }
   onRequestsAttended(startDate: string, endDate: string) {
     const urlApi = `LegalReport/RequestsAttended/${startDate}/${endDate}/${false}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.requestsAttended = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.requestsAttended = responseData;
     });
   }
   onRequestsPending() {
     const urlApi = `LegalReport/RequestsPending/${false}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.requestsPending = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.requestsPending = responseData;
     });
   }
 

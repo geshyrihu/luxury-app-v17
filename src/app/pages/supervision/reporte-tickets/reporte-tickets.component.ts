@@ -40,8 +40,8 @@ export default class ReporteTicketsComponent implements OnInit {
     }/${this.dateS.getDateFormat(
       this.periodoMonthService.getPeriodoInicio
     )}/${this.dateS.getDateFormat(this.periodoMonthService.getPeriodoFin)}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
     });
   }
 

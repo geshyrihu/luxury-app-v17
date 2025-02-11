@@ -41,9 +41,9 @@ export default class AddorEditMeetingSeguimientoComponent implements OnInit {
   }
   onLoadData() {
     const urlApi = `MeetingDertailsSeguimiento/${this.id}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-      result.fecha = this.dateS.getDateFormat(result.fecha);
-      this.form.patchValue(result);
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+      responseData.fecha = this.dateS.getDateFormat(responseData.fecha);
+      this.form.patchValue(responseData);
     });
   }
   onSubmit() {
@@ -55,14 +55,14 @@ export default class AddorEditMeetingSeguimientoComponent implements OnInit {
     if (this.id === 0) {
       this.apiRequestS
         .onPost(`MeetingDertailsSeguimiento`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
       this.apiRequestS
         .onPut(`MeetingDertailsSeguimiento/${this.id}`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }

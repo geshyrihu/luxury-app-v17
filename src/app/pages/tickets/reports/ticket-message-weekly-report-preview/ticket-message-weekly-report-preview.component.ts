@@ -31,8 +31,8 @@ export default class TicketMessageWeeklyReportPreviewComponent
 
   onLoadData() {
     const urlApi = `TicketReport/WeeklyReportPreview/${this.customerIdS.customerId}/${this.year}/${this.numeroSemana}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
     });
   }
 }

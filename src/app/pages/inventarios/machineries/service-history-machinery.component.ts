@@ -27,8 +27,8 @@ export default class ServiceHistoryMachineryComponent implements OnInit {
 
   onLoadData() {
     const urlApi = `Machineries/ServiceHistory/${this.config.data.id}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
     });
   }
 
@@ -44,8 +44,8 @@ export default class ServiceHistoryMachineryComponent implements OnInit {
         data.title,
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
 }

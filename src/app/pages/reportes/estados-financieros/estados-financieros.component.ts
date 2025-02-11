@@ -29,9 +29,9 @@ export default class EstadosFinancierosComponent {
 
   onLoadData(customerId: number) {
     const urlApi = `Reports/EstadosFinancieros/${customerId}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result.estadosFinancieros;
-      this.customerData = result.customer;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData.estadosFinancieros;
+      this.customerData = responseData.customer;
     });
   }
 }

@@ -52,8 +52,8 @@ export default class AddOrEditApplicationUserComponent implements OnInit {
 
   onLoadData() {
     const urlApi = `Auth/${this.applicationUserId}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-      this.form.patchValue(result);
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+      this.form.patchValue(responseData);
     });
   }
   onSubmit() {
@@ -64,14 +64,14 @@ export default class AddOrEditApplicationUserComponent implements OnInit {
     if (this.applicationUserId === '') {
       this.apiRequestS
         .onPost('Auth/CreateAccount', this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
       this.apiRequestS
         .onPut(`Auth/EditAccount/${this.applicationUserId}`, this.form.value)
-        .then((result: boolean) => {
-          if (result) {
+        .then((responseData: boolean) => {
+          if (responseData) {
             this.ref.close(true);
           } else {
             this.submitting = false;

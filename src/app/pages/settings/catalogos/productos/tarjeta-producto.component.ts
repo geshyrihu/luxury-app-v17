@@ -18,8 +18,8 @@ export default class TarjetaProductoComponent implements OnInit {
 
   ngOnInit(): void {
     const urlApi = `Productos/${this.productoId}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-      this.producto = result;
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+      this.producto = responseData;
     });
   }
 }

@@ -27,8 +27,8 @@ export default class CardEmployeeComponent implements OnInit {
   onLoadData() {
     this.apiRequestS
       .onGetItem(`Auth/CardUser/${this.applicationUserId}`)
-      .then((result: any) => {
-        this.applicationUser = result;
+      .then((responseData: any) => {
+        this.applicationUser = responseData;
         this.urlImage = this.applicationUser.photoPath;
       });
   }

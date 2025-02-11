@@ -29,14 +29,14 @@ export default class OrdenesServicioFotosComponent implements OnInit {
   onLoadData() {
     const customerId = this.customerIdS.customerId;
     const urlApi = `ServiceOrders/OrdenesServicioFotos/${this.id}/${customerId}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
     });
   }
 
   deleteImg(id: number): void {
     const urlApi = `ServiceOrders/DeleteImg/${id}`;
-    this.apiRequestS.onDelete(urlApi).then((result: any) => {
+    this.apiRequestS.onDelete(urlApi).then((responseData: any) => {
       this.onLoadData();
     });
   }

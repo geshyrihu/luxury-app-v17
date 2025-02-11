@@ -32,9 +32,9 @@ export default class DashboardRequestsToLegalComponent {
   }
   onLoadData(customerId: number) {
     const urlApi = `Dashboard/RequestsToLegal/${customerId}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
       // Actualizamos el valor del signal con los datos recibidos
-      this.data = result;
+      this.data = responseData;
     });
   }
 

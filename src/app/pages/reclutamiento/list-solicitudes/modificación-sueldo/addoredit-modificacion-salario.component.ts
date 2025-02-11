@@ -54,8 +54,8 @@ export default class AddoreditModificacionSalarioComponent implements OnInit {
   }
   onLoadData() {
     const urlApi = `requestsalarymodification/getbyid/${this.id}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-      this.form.patchValue(result);
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+      this.form.patchValue(responseData);
     });
   }
 
@@ -68,8 +68,8 @@ export default class AddoreditModificacionSalarioComponent implements OnInit {
 
     this.apiRequestS
       .onPut(`requestsalarymodification/${this.id}`, this.form.value)
-      .then((result: boolean) => {
-        result ? this.ref.close(true) : (this.submitting = false);
+      .then((responseData: boolean) => {
+        responseData ? this.ref.close(true) : (this.submitting = false);
       });
   }
 }

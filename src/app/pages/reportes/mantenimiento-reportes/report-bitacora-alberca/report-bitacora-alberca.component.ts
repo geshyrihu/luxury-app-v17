@@ -35,8 +35,8 @@ export default class ReportBitacoraAlbercaComponent implements OnInit {
     const urlApi = `MaintenanceReport/bitacoraalbercaparametros/${this.customerIdS.getCustomerId()}/${this.dateS.getDateFormat(
       this.periodoMonthService.getPeriodoInicio
     )}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.medidores = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.medidores = responseData;
     });
   }
 }

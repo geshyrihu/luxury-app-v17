@@ -87,8 +87,8 @@ export default class SolicitudCompraComponent implements OnInit {
   onCotizacionesRelacionadas() {
     this.apiRequestS
       .onGetList(`OrdenCompra/CotizacionesRelacionadas/${this.id}`)
-      .then((result: any) => {
-        this.cotizacionesRelacionadas = result;
+      .then((responseData: any) => {
+        this.cotizacionesRelacionadas = responseData;
       });
   }
 
@@ -106,11 +106,13 @@ export default class SolicitudCompraComponent implements OnInit {
   onLoadData() {
     this.apiRequestS
       .onGetItem(`SolicitudCompra/GetSolicitudCompraIndividual/${this.id}`)
-      .then((result: any) => {
-        this.solicitudCompra = result;
-        this.onSetTipe(result.estatus);
-        result.fechaSolicitud = this.dateS.getDateFormat(result.fechaSolicitud);
-        this.form.patchValue(result);
+      .then((responseData: any) => {
+        this.solicitudCompra = responseData;
+        this.onSetTipe(responseData.estatus);
+        responseData.fechaSolicitud = this.dateS.getDateFormat(
+          responseData.fechaSolicitud
+        );
+        this.form.patchValue(responseData);
         this.SolicitudCompraDetalle =
           this.solicitudCompra.solicitudCompraDetalle;
       });
@@ -123,9 +125,9 @@ export default class SolicitudCompraComponent implements OnInit {
     if (Number(this.id) === 0) {
       this.apiRequestS
         .onPost(`SolicitudCompra`, this.form.value)
-        .then((result: any) => {
-          if (result) {
-            this.id = Number(result.id);
+        .then((responseData: any) => {
+          if (responseData) {
+            this.id = Number(responseData.id);
             this.onLoadData();
             this.submitting = false;
           }
@@ -133,8 +135,8 @@ export default class SolicitudCompraComponent implements OnInit {
     } else {
       this.apiRequestS
         .onPut(`SolicitudCompra/${this.id}`, this.form.value)
-        .then((result: boolean) => {
-          if (result) {
+        .then((responseData: boolean) => {
+          if (responseData) {
             this.onLoadData();
             this.submitting = false;
           }
@@ -152,8 +154,8 @@ export default class SolicitudCompraComponent implements OnInit {
         'Agregar',
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
   addProductModal(data: any) {

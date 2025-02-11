@@ -71,8 +71,8 @@ export default class CronogramaAnualMantenimientoComponent {
         ? `MaintenanceCalendars/CronogramaAnual/${this.customerIdS.customerId}`
         : `MaintenanceCalendars/CronogramaAnual/${this.customerIdS.customerId}/${this.filtroId}`;
 
-    this.apiRequestS.onGetItem(endpoint).then((result: any) => {
-      this.cronogramaAnual = result;
+    this.apiRequestS.onGetItem(endpoint).then((responseData: any) => {
+      this.cronogramaAnual = responseData;
     });
   }
 
@@ -82,8 +82,8 @@ export default class CronogramaAnualMantenimientoComponent {
       .onGetItem(
         `MaintenanceCalendars/ExportCalendar/${this.customerIdS.customerId}`
       )
-      .then((result: any) => {
-        dataCalendar = result;
+      .then((responseData: any) => {
+        dataCalendar = responseData;
         import('xlsx').then((xlsx) => {
           const worksheet = xlsx.utils.json_to_sheet(dataCalendar);
           const workbook = {
@@ -125,8 +125,8 @@ export default class CronogramaAnualMantenimientoComponent {
         'Editar regitro',
         this.dialogHandlerS.dialogSizeLg
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
 }

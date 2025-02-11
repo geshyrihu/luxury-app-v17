@@ -24,8 +24,8 @@ export default class FichaTecnicaActivoComponent implements OnInit {
 
   onLoadData() {
     const urlApi = `Machineries/Fichatecnica/${this.id}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
     });
   }
 }

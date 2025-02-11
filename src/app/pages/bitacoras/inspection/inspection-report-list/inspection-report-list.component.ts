@@ -36,8 +36,8 @@ export default class InspectionReportListComponent implements OnInit {
   }
   onLoadData(inspectionResultId: string, date: string): void {
     const urlApi = `InspectionResult/Report/${inspectionResultId}/${date}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
     });
   }
   onReload() {
@@ -46,8 +46,8 @@ export default class InspectionReportListComponent implements OnInit {
 
   onLoadInspectionReport() {
     const urlApi = `CustomerInspections/${this.customerIdService.getCustomerId()}`;
-    this.apiRequestS.onGetSelectItem(urlApi).then((result: any) => {
-      this.inspectionResult = result;
+    this.apiRequestS.onGetSelectItem(urlApi).then((responseData: any) => {
+      this.inspectionResult = responseData;
     });
   }
 

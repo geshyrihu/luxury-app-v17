@@ -23,14 +23,17 @@ export default class ListEmailDataComponent {
   }
 
   onLoadData() {
-    this.apiRequestS.onGetList('EmailData/List').then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList('EmailData/List').then((responseData: any) => {
+      this.data = responseData;
     });
   }
   onDelete(id: number) {
-    this.apiRequestS.onDelete(`emaildata/${id}`).then((result: boolean) => {
-      if (result) this.data = this.data.filter((item) => item.id !== id);
-    });
+    this.apiRequestS
+      .onDelete(`emaildata/${id}`)
+      .then((responseData: boolean) => {
+        if (responseData)
+          this.data = this.data.filter((item) => item.id !== id);
+      });
   }
 
   onModalAddOrEdit(data: any) {
@@ -41,8 +44,8 @@ export default class ListEmailDataComponent {
         data.title,
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
 

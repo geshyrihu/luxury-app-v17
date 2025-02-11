@@ -72,8 +72,8 @@ export default class MyTicketMessageAddEditComponent implements OnInit {
 
   onLoadTicketGroup() {
     const urlApi = `TicketGroupList/${this.customerIdS.getCustomerId()}`;
-    this.apiRequestS.onGetSelectItem(urlApi).then((result: any) => {
-      this.cb_ticket_group = result;
+    this.apiRequestS.onGetSelectItem(urlApi).then((responseData: any) => {
+      this.cb_ticket_group = responseData;
     });
   }
 
@@ -94,16 +94,20 @@ export default class MyTicketMessageAddEditComponent implements OnInit {
 
   onLoadData() {
     const urlApi = `Tickets/${this.id}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-      this.form.patchValue(result);
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+      this.form.patchValue(responseData);
       // Si las imágenes existen, carga las vistas previas
       // Si las imágenes existen, establece las vistas previas con la URL completa
-      if (result.beforeWorkPreview) {
-        this.form.get('beforeWorkPreview')?.setValue(result.beforeWorkPreview);
+      if (responseData.beforeWorkPreview) {
+        this.form
+          .get('beforeWorkPreview')
+          ?.setValue(responseData.beforeWorkPreview);
       }
 
-      if (result.afterWorkPreview) {
-        this.form.get('afterWorkPreview')?.setValue(result.afterWorkPreview);
+      if (responseData.afterWorkPreview) {
+        this.form
+          .get('afterWorkPreview')
+          ?.setValue(responseData.afterWorkPreview);
       }
 
       this.form.patchValue({
@@ -158,14 +162,14 @@ export default class MyTicketMessageAddEditComponent implements OnInit {
       if (this.id === '') {
         this.apiRequestS
           .onPost(`Tickets/Create`, formData)
-          .then((result: boolean) => {
-            result ? this.ref.close(true) : (this.submitting = false);
+          .then((responseData: boolean) => {
+            responseData ? this.ref.close(true) : (this.submitting = false);
           });
       } else {
         this.apiRequestS
           .onPut(`Tickets/Update/${this.id}`, formData)
-          .then((result: boolean) => {
-            result ? this.ref.close(true) : (this.submitting = false);
+          .then((responseData: boolean) => {
+            responseData ? this.ref.close(true) : (this.submitting = false);
           });
       }
     }

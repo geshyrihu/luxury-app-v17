@@ -59,8 +59,8 @@ export default class AddOrEditRadioComunicacionComponent implements OnInit {
     const urlApi = `RadioComunicacion/${this.id}`;
     this.apiRequestS
       .onGetItem<IRadioComunicacionAddOrEdit>(urlApi)
-      .then((result: IRadioComunicacionAddOrEdit) => {
-        this.form.patchValue(result);
+      .then((responseData: IRadioComunicacionAddOrEdit) => {
+        this.form.patchValue(responseData);
       });
   }
 
@@ -79,14 +79,14 @@ export default class AddOrEditRadioComunicacionComponent implements OnInit {
     if (this.id === 0) {
       this.apiRequestS
         .onPost('RadioComunicacion', formData)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
       this.apiRequestS
         .onPut(`RadioComunicacion/${this.id}`, formData)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }

@@ -33,8 +33,8 @@ export default class AddOrEditMeetingDetailComponent implements OnInit {
   }
   onLoadData() {
     const urlApi = `MeetingsDetails/DetallesFiltro/${this.meetingId}/${this.status}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
     });
   }
 

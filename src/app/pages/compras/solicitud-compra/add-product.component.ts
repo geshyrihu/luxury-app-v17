@@ -69,8 +69,8 @@ export default class AddProductComponent implements OnInit {
       .onGetList(
         `SolicitudCompraDetalle/AddProductoToSolicitudDto/${this.solicitudCompraId}`
       )
-      .then((result: any) => {
-        this.products = result;
+      .then((responseData: any) => {
+        this.products = responseData;
       });
   }
 
@@ -83,7 +83,7 @@ export default class AddProductComponent implements OnInit {
     });
     this.apiRequestS
       .onPost(`SolicitudCompraDetalle`, this.form.value)
-      .then((result: boolean) => {
+      .then((responseData: boolean) => {
         this.onUpdateData();
         this.onLoadProduct();
         this.form.reset();

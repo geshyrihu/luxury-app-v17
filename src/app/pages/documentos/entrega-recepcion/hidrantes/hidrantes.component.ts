@@ -26,8 +26,8 @@ export default class HidrantesComponent implements OnInit {
   }
   onLoadData() {
     const urlApi = `EntregaRecepcion/Extintores/${this.customerIdS.customerId}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
     });
   }
 

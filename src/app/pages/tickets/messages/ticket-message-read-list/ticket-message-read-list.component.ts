@@ -23,8 +23,8 @@ export default class TicketMessageReadListComponent implements OnInit {
     this.loading = true;
 
     const urlApi = `TicketMessageRead/List/${this.ticketMessageId}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
       this.loading = false;
     });
   }

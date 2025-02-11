@@ -90,24 +90,24 @@ export default class CondominosAddOrEditComponent implements OnInit {
     if (this.id === 0) {
       this.apiRequestS
         .onPost(`ListCondomino`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
       this.apiRequestS
         .onPut(`ListCondomino/${this.id}`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }
   getImem() {
     this.apiRequestS
       .onGetItem(`ListCondomino/${this.id}`)
-      .then((result: any) => {
-        this.form.patchValue(result);
+      .then((responseData: any) => {
+        this.form.patchValue(responseData);
         this.form.patchValue({
-          directoryCondominium: result.directoryCondominium,
+          directoryCondominium: responseData.directoryCondominium,
         });
       });
   }

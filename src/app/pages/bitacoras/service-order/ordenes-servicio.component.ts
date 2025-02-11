@@ -85,8 +85,8 @@ export default class OrdenesServicioComponentComponent
         'Cargar Imagenes',
         this.dialogHandlerS.dialogSizeFull
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
   onModalFormUploadDoc(id: number) {
@@ -100,8 +100,8 @@ export default class OrdenesServicioComponentComponent
         'Cargar Documentos',
         this.dialogHandlerS.dialogSizeFull
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
   onModalFotos(id: number) {
@@ -114,8 +114,8 @@ export default class OrdenesServicioComponentComponent
         'Soporte Fotografico',
         this.dialogHandlerS.dialogSizeFull
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
   onModalRpeorteProveedor(id: number) {
@@ -128,8 +128,8 @@ export default class OrdenesServicioComponentComponent
         'Reportes de proveedor',
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
 
@@ -140,8 +140,8 @@ export default class OrdenesServicioComponentComponent
     const urlApi = `ServiceOrders/GetAllPintura/${
       this.customerIdS.customerId
     }/${this.dateS.getDateFormat(converToDate)}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
       this.reporteOrdenesServicioService.setData(this.data);
 
       if (this.data.length !== 0) {
@@ -158,8 +158,8 @@ export default class OrdenesServicioComponentComponent
     const urlApi = `ServiceOrders/GetAll/${
       this.customerIdS.customerId
     }/${this.dateS.getDateFormat(converToDate)}/${this.filtroId}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
       this.reporteOrdenesServicioService.setData(this.data);
 
       if (this.data.length !== 0) {
@@ -182,15 +182,18 @@ export default class OrdenesServicioComponentComponent
         data.title,
         this.dialogHandlerS.dialogSizeFull
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
 
   onDelete(id: number) {
-    this.apiRequestS.onDelete(`ServiceOrders/${id}`).then((result: boolean) => {
-      if (result) this.data = this.data.filter((item) => item.id !== id);
-    });
+    this.apiRequestS
+      .onDelete(`ServiceOrders/${id}`)
+      .then((responseData: boolean) => {
+        if (responseData)
+          this.data = this.data.filter((item) => item.id !== id);
+      });
   }
 
   ngOnChanges() {

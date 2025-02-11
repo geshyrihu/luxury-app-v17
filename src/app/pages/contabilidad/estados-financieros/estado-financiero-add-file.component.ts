@@ -45,8 +45,8 @@ export default class EstadoFinancieroAddFileComponent implements OnInit {
         `EstadoFinanciero/UploadFile/${this.id}/${this.authS.applicationUserId}`,
         model
       )
-      .then((result: boolean) => {
-        result ? this.ref.close(true) : (this.submitting = false);
+      .then((responseData: boolean) => {
+        responseData ? this.ref.close(true) : (this.submitting = false);
       });
   }
 

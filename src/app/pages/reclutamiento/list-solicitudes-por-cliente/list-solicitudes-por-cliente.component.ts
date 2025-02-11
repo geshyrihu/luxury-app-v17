@@ -47,8 +47,8 @@ export default class ListSolicitudesPorClienteComponent implements OnInit {
       this.customerIdS.getCustomerId() +
       '/' +
       this.authS.infoUserAuthDto.applicationUserId;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
     });
   }
 
@@ -66,8 +66,8 @@ export default class ListSolicitudesPorClienteComponent implements OnInit {
         'Editar Registro',
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
 
@@ -81,8 +81,8 @@ export default class ListSolicitudesPorClienteComponent implements OnInit {
         'Editar Registro',
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
 
@@ -96,8 +96,8 @@ export default class ListSolicitudesPorClienteComponent implements OnInit {
         'Editar Registro',
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
 
@@ -111,8 +111,8 @@ export default class ListSolicitudesPorClienteComponent implements OnInit {
         'Editar Registro',
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
 }

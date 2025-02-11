@@ -46,8 +46,8 @@ export class ModuleAppAddOrEditComponent {
   }
   onLoadData() {
     const urlApi = `ModuleApp/${this.id}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-      this.form.patchValue(result);
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+      this.form.patchValue(responseData);
     });
   }
   onSubmit() {
@@ -57,22 +57,22 @@ export class ModuleAppAddOrEditComponent {
     if (this.id === '') {
       this.apiRequestS
         .onPost(`ModuleApp`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
       this.apiRequestS
         .onPut(`ModuleApp/${this.id}`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }
 
   onLoadModuleApp() {
     const urlApi = `ModuleApp`;
-    this.apiRequestS.onGetSelectItem(urlApi).then((result: any) => {
-      this.cb_pathParent = result;
+    this.apiRequestS.onGetSelectItem(urlApi).then((responseData: any) => {
+      this.cb_pathParent = responseData;
     });
   }
 }

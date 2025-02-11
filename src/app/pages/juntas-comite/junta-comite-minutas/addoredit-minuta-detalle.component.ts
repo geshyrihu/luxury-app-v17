@@ -63,8 +63,8 @@ export default class AddoreditMinutaDetalleComponent implements OnInit {
   }
   onLoadData() {
     const urlApi = `MeetingsDetails/${this.id}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-      this.form.patchValue(result);
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+      this.form.patchValue(responseData);
       const contenidoHTML = this.form.get('requestService').value;
       const contenidoSinHTML = contenidoHTML.replace(/<[^>]*>|&nbsp;/g, '');
       this.form.get('requestService').patchValue(contenidoSinHTML);
@@ -79,14 +79,14 @@ export default class AddoreditMinutaDetalleComponent implements OnInit {
     if (this.id === 0) {
       this.apiRequestS
         .onPost(`MeetingsDetails`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
       this.apiRequestS
         .onPut(`MeetingsDetails/${this.id}`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }

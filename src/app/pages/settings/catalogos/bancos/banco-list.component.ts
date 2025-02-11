@@ -24,15 +24,15 @@ export default class BancoListComponent implements OnInit {
 
   onLoadData() {
     const urlApi = `banks`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
       // Actualizamos el valor del signal con los datos recibidos
-      this.dataSignal.set(result);
+      this.dataSignal.set(responseData);
     });
   }
 
   // Funcion para eliminar un banco y refres
   onDelete(id: number) {
-    this.apiRequestS.onDelete(`banks/${id}`).then((result: boolean) => {
+    this.apiRequestS.onDelete(`banks/${id}`).then((responseData: boolean) => {
       // Actualizamos el signal para eliminar el elemento de la lista
       this.dataSignal.set(this.dataSignal().filter((item) => item.id !== id));
     });
@@ -47,8 +47,8 @@ export default class BancoListComponent implements OnInit {
         data.title,
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
 }

@@ -72,8 +72,8 @@ export default class OrdenCompraDatosPagoComponent implements OnInit {
 
     this.apiRequestS
       .onGetItem(`OrdenCompraDatosPago/${this.ordenCompraDatosPagoId}`)
-      .then((result: any) => {
-        this.form.patchValue(result);
+      .then((responseData: any) => {
+        this.form.patchValue(responseData);
       });
     this.cb_tipoGasto = await this.enumSelectS.tipoGasto();
   }
@@ -85,8 +85,8 @@ export default class OrdenCompraDatosPagoComponent implements OnInit {
         `OrdenCompraDatosPago/${this.ordenCompraDatosPagoId}`,
         this.form.value
       )
-      .then((result: boolean) => {
-        result ? this.ref.close(true) : (this.submitting = false);
+      .then((responseData: boolean) => {
+        responseData ? this.ref.close(true) : (this.submitting = false);
       });
   }
 }

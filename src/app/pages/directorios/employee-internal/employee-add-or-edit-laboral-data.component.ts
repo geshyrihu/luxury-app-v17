@@ -73,8 +73,8 @@ export default class EmployeeAddOrEditLaboralDataComponent implements OnInit {
   }
   onLoadData() {
     const urlApi = `EmployeeInternal/LaboralData/${this.applicationUserId}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-      this.form.patchValue(result);
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+      this.form.patchValue(responseData);
     });
   }
 
@@ -87,8 +87,8 @@ export default class EmployeeAddOrEditLaboralDataComponent implements OnInit {
         `EmployeeInternal/UpdateLaboralData/${this.applicationUserId}`,
         this.form.value
       )
-      .then((result: any) => {
-        this.form.patchValue(result);
+      .then((responseData: any) => {
+        this.form.patchValue(responseData);
         this.submitting = false;
       });
   }

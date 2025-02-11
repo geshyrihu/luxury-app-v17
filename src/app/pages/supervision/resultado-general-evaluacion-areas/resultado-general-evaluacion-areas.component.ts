@@ -39,8 +39,8 @@ export default class EvaluacionAreasComponent implements OnInit {
   }
   onLoadData(fechaInicio: string, fechaFinal: string) {
     const urlApi = `ResumenGeneral/EvaluacionAreas/${fechaInicio}/${fechaFinal}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
     });
   }
 

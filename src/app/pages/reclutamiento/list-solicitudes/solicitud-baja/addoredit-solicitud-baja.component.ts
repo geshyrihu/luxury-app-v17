@@ -61,10 +61,10 @@ export default class AddoreditSolicitudBajaComponent implements OnInit {
   }
   onLoadData() {
     const urlApi = `RequestDismissal/GetById/${this.id}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-      this.form.patchValue(result);
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+      this.form.patchValue(responseData);
       // Luego, recorre el arreglo de discounts y agrégalo al formArray 'discounts'
-      result.discounts.forEach((discount: any) => {
+      responseData.discounts.forEach((discount: any) => {
         this.discounts.push(
           this.formB.group({
             description: discount.description,
@@ -86,14 +86,14 @@ export default class AddoreditSolicitudBajaComponent implements OnInit {
     if (this.id === 0) {
       this.apiRequestS
         .onPost(`RequestDismissal`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
       this.apiRequestS
         .onPut(`RequestDismissal/${this.id}`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }
@@ -116,7 +116,7 @@ export default class AddoreditSolicitudBajaComponent implements OnInit {
 
   removeDiscountDescription(index: number, id: number) {
     const urlApi = `RequestDismissalDiscount/${id}`;
-    this.apiRequestS.onDelete(urlApi).then((result: boolean) => {
+    this.apiRequestS.onDelete(urlApi).then((responseData: boolean) => {
       this.discounts.removeAt(index);
     });
   }

@@ -76,6 +76,7 @@
               [(ngModel)]="assignee"
               (change)="onResponsibleChange($event)"
             >
+              <option [value]="null">--Mostrar Todos--</option>
               <option *ngFor="let item of cb_assignee" [value]="item.value">
                 {{ item.label }}
               </option>

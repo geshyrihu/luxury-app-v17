@@ -114,10 +114,10 @@ export default class MaintenancePreventiveAddoreditComponent implements OnInit {
         .onGetList(
           `Machineries/GetMachinerySelectItem/${this.config.data.idMachinery}`
         )
-        .then((result: any) => {
+        .then((responseData: any) => {
           this.form.patchValue({
-            machineryId: result.value,
-            machineryName: result.label,
+            machineryId: responseData.value,
+            machineryName: responseData.label,
           });
           this.form.patchValue({
             typeMaintance: 0,
@@ -149,38 +149,38 @@ export default class MaintenancePreventiveAddoreditComponent implements OnInit {
   LoadCopy() {
     this.apiRequestS
       .onGetItem(`MaintenanceCalendars/Get/${this.config.data.id}`)
-      .then((result: any) => {
+      .then((responseData: any) => {
         this.id = 0;
-        this.onPathForm(result);
+        this.onPathForm(responseData);
       });
   }
   onLoadData() {
     this.apiRequestS
       .onGetItem(`MaintenanceCalendars/Get/${this.config.data.id}`)
-      .then((result: any) => {
-        this.id = result.id;
-        this.onPathForm(result);
+      .then((responseData: any) => {
+        this.id = responseData.id;
+        this.onPathForm(responseData);
       });
   }
-  onPathForm(result: any) {
-    this.form.patchValue(result);
+  onPathForm(responseData: any) {
+    this.form.patchValue(responseData);
     this.form.patchValue({
-      machineryId: result.machineryId.value,
+      machineryId: responseData.machineryId.value,
     });
     this.form.patchValue({
-      machineryName: result.machineryId.label,
+      machineryName: responseData.machineryId.label,
     });
     this.form.patchValue({
-      providerId: result.providerId.value,
+      providerId: responseData.providerId.value,
     });
     this.form.patchValue({
-      providerName: result.providerId.label,
+      providerName: responseData.providerId.label,
     });
     this.form.patchValue({
-      cuentaId: result.cuenta.value,
+      cuentaId: responseData.cuenta.value,
     });
     this.form.patchValue({
-      cuentaName: result.cuenta.label,
+      cuentaName: responseData.cuenta.label,
     });
     const contenidoHTML = this.form.get('activity').value;
     const contenidoSinHTML = contenidoHTML.replace(/<[^>]*>|&nbsp;/g, '');
@@ -200,14 +200,14 @@ export default class MaintenancePreventiveAddoreditComponent implements OnInit {
     if (this.id === 0) {
       this.apiRequestS
         .onPost(`MaintenanceCalendars`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
       this.apiRequestS
         .onPut(`MaintenanceCalendars/${this.id}`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }

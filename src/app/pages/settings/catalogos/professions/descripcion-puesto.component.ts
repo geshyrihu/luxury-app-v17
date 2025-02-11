@@ -22,8 +22,8 @@ export default class DescripcionPuestoComponent implements OnInit {
 
   onLoadData() {
     const urlApi = 'Professions/' + this.config.data.id;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-      this.profesion = result;
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+      this.profesion = responseData;
     });
   }
 }

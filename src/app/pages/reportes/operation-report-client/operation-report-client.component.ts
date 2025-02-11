@@ -28,9 +28,9 @@ export default class OperationReportClientComponent implements OnInit {
 
   onLoadData() {
     const urlApi = `TicketReport/GetReportClient/${this.customer}/${this.inicio}/${this.final}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
       // Actualizamos el valor del signal con los datos recibidos
-      this.data = result;
+      this.data = responseData;
     });
   }
 }

@@ -26,9 +26,9 @@ export default class CompanyDepartmentListComponent implements OnInit {
 
   onLoadData() {
     const urlApi = `CompanyDepartment/List`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
       // Actualizamos el valor del signal con los datos recibidos
-      this.data = result;
+      this.data = responseData;
     });
   }
 
@@ -36,7 +36,7 @@ export default class CompanyDepartmentListComponent implements OnInit {
   onDelete(id: number) {
     this.apiRequestS
       .onDelete(`CompanyDepartment/${id}`)
-      .then((result: boolean) => {
+      .then((responseData: boolean) => {
         this.onLoadData();
       });
   }
@@ -50,8 +50,8 @@ export default class CompanyDepartmentListComponent implements OnInit {
         data.title,
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
 }

@@ -45,9 +45,11 @@ export default class AddOrEditCategoryComponent implements OnInit {
 
   onLoadData() {
     const urlApi = `Categories/${this.id}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: ICategoryAddOrEdit) => {
-      this.form.patchValue(result);
-    });
+    this.apiRequestS
+      .onGetItem(urlApi)
+      .then((responseData: ICategoryAddOrEdit) => {
+        this.form.patchValue(responseData);
+      });
   }
 
   onSubmit() {
@@ -58,14 +60,14 @@ export default class AddOrEditCategoryComponent implements OnInit {
     if (this.id === 0) {
       this.apiRequestS
         .onPost(`Categories`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
       this.apiRequestS
         .onPut(`Categories/${this.id}`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }

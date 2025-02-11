@@ -57,17 +57,17 @@ export default class TicketGroupParticipantComponent
     const urlApi = `TicketGroupParticipant/Participants/${this.customerIdS.getCustomerId()}/${
       this.config.data.id
     }`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.cb_application_user = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.cb_application_user = responseData;
     });
   }
 
   onLoadExistingParticipants() {
     this.loading_existing_participant = true;
     const urlApi = `TicketGroupParticipant/ExistingParticipants/${this.config.data.id}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
       this.loading_existing_participant = false;
-      this.cb_existing_Participant = result;
+      this.cb_existing_Participant = responseData;
     });
   }
 
@@ -87,13 +87,13 @@ export default class TicketGroupParticipantComponent
     if (this.id === '') {
       this.apiRequestS
         .onPost(`TicketGroupParticipant`, this.form.value)
-        .then((result: boolean) => {
+        .then((responseData: boolean) => {
           this.onCleanForm();
         });
     } else {
       this.apiRequestS
         .onPut(`TicketGroupParticipant/${this.id}`, this.form.value)
-        .then((result: boolean) => {
+        .then((responseData: boolean) => {
           this.onCleanForm();
         });
     }
@@ -113,8 +113,8 @@ export default class TicketGroupParticipantComponent
   onDelete(id: number) {
     this.apiRequestS
       .onDelete(`TicketGroupParticipant/${id}`)
-      .then((result: boolean) => {
-        if (result)
+      .then((responseData: boolean) => {
+        if (responseData)
           this.cb_existing_Participant = this.cb_existing_Participant.filter(
             (item: any) => item.id !== id
           );

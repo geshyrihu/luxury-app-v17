@@ -42,8 +42,8 @@ export default class AddOrEditCustomerProviderComponent implements OnInit {
   onLoadData() {
     this.apiRequestS
       .onGetItem(`customerprovider/getById/${this.config.data.id}`)
-      .then((result: any) => {
-        this.form.patchValue(result);
+      .then((responseData: any) => {
+        this.form.patchValue(responseData);
       });
   }
 
@@ -84,14 +84,14 @@ export default class AddOrEditCustomerProviderComponent implements OnInit {
     if (this.id === '') {
       this.apiRequestS
         .onPost(`customerprovider`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
       this.apiRequestS
         .onPut(`customerprovider/${this.id}`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }

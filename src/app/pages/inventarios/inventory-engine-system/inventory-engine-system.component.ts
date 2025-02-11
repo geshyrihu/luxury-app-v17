@@ -37,9 +37,9 @@ export default class InventoryEngineSystemComponent implements OnInit {
 
   onLoadData() {
     const urlApi = `InventoryEngineSystem/List/${this.customerIdS.customerId}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
-      this.filteredData = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
+      this.filteredData = responseData;
     });
   }
 
@@ -51,8 +51,8 @@ export default class InventoryEngineSystemComponent implements OnInit {
         'Ficha Técnica',
         this.dialogHandlerS.dialogSizeFull
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
   onBitacoraIndividual(machineryId: number) {
@@ -85,8 +85,8 @@ export default class InventoryEngineSystemComponent implements OnInit {
   //       'Servicios de Mantenimiento',
   //       this.dialogHandlerS.dialogSizeFull
   //     )
-  //     .then((result: any) => {
-  //       if (result) this.onLoadData();
+  //     .then((responseData: any) => {
+  //       if (responseData) this.onLoadData();
   //     });
   // }
 
@@ -102,8 +102,8 @@ export default class InventoryEngineSystemComponent implements OnInit {
         data.title,
         this.dialogHandlerS.dialogSizeFull
       )
-      .then((result: any) => {
-        if (result) this.onLoadData();
+      .then((responseData: any) => {
+        if (responseData) this.onLoadData();
       });
   }
 

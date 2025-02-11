@@ -41,14 +41,14 @@ export default class ResumenMantenimientosComponent implements OnInit {
     const urlApi = `MaintenanceReport/resumen/${
       this.customerIdS.customerId
     }/${this.dateS.getDateFormat(this.periodoMonthService.getPeriodoInicio)}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
     });
     const urlApi2 = `MaintenanceReport/proveedor/${
       this.customerIdS.customerId
     }/${this.dateS.getDateFormat(this.periodoMonthService.getPeriodoInicio)}`;
-    this.apiRequestS.onGetList(urlApi2).then((result: any) => {
-      this.dataProvider = result;
+    this.apiRequestS.onGetList(urlApi2).then((responseData: any) => {
+      this.dataProvider = responseData;
     });
   }
 }

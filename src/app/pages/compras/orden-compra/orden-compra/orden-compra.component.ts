@@ -169,8 +169,8 @@ export default class OrdenCompraComponent implements OnInit {
     const urlApi =
       'OrdenCompra/ValidarOrdenesCompraMismoFolioSolicituCompra/' +
       this.ordenCompraId;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-      this.totalRelacionadoConOtrasOrdenes = result;
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+      this.totalRelacionadoConOtrasOrdenes = responseData;
     });
   }
 
@@ -179,8 +179,8 @@ export default class OrdenCompraComponent implements OnInit {
     // Mostrar un mensaje de carga
 
     const urlApi = `OrdenCompra/${this.ordenCompraId}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.ordenCompra = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.ordenCompra = responseData;
       if (this.ordenCompra.ordenCompraDatosPago.tipoGasto === 0) {
         this.esGastoFijo = true;
       }
@@ -194,8 +194,8 @@ export default class OrdenCompraComponent implements OnInit {
           .onGetList(
             `SolicitudCompra/GetIdSolicitudCompra/${this.ordenCompra.folioSolicitudCompra}/${this.ordenCompra.customerId}`
           )
-          .then((result: any) => {
-            this.solicitudCompraId = result;
+          .then((responseData: any) => {
+            this.solicitudCompraId = responseData;
           });
       }
       if (this.ordenCompra.ordenCompraAuth.revisadoPorResidente?.length > 0) {
@@ -233,14 +233,14 @@ export default class OrdenCompraComponent implements OnInit {
 
   autorizarCompra() {
     const urlApi = `OrdenCompraAuth/Autorizar/${this.ordenCompraId}/${this.authS.applicationUserId}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
       this.onLoadData();
     });
   }
 
   deautorizarCompra() {
     const urlApi = `OrdenCompraAuth/Desautorizar/${this.ordenCompraId}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
       this.nombreAutorizador = '';
       this.onLoadData();
     });
@@ -256,7 +256,7 @@ export default class OrdenCompraComponent implements OnInit {
         'Actualizar presupuesto utilizado',
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
+      .then((responseData: boolean) => {
         this.onLoadData();
       });
   }
@@ -268,8 +268,8 @@ export default class OrdenCompraComponent implements OnInit {
         'Actualizar ' + this.ordenCompraDetalleSeleccionado.producto,
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
 
@@ -283,8 +283,8 @@ export default class OrdenCompraComponent implements OnInit {
         'Actualizar información',
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
   onModalOrdenCompraDatosPago() {
@@ -297,8 +297,8 @@ export default class OrdenCompraComponent implements OnInit {
         'Autorizar Datos de pago',
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
   onModalOrdenCompraStatus() {
@@ -311,8 +311,8 @@ export default class OrdenCompraComponent implements OnInit {
         'Autorizar Status de Orden de compra',
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
   onModalOrdenCompraPresupuesto() {
@@ -325,8 +325,8 @@ export default class OrdenCompraComponent implements OnInit {
         'Selecciona partida presupuestal',
         this.dialogHandlerS.dialogSizeFull
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
   onModalAgregarproducto() {
@@ -339,8 +339,8 @@ export default class OrdenCompraComponent implements OnInit {
         'Agregar producto o Servicio',
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
   onModalcompraNoAutorizada() {
@@ -354,8 +354,8 @@ export default class OrdenCompraComponent implements OnInit {
         'Denegar Orden de Compra',
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
   //... Fin Modales
@@ -366,20 +366,20 @@ export default class OrdenCompraComponent implements OnInit {
   onEditOrdenCompraPresupuesto(item: any): void {
     this.apiRequestS
       .onPut(`OrdenCompraPresupuesto/${item.id}`, item)
-      .then((result: boolean) => {
+      .then((responseData: boolean) => {
         this.onLoadData();
       });
   }
   onDeleteOrdenCompraPresupuesto(id: number): void {
     const urlApi = `OrdenCompraPresupuesto/${id}`;
-    this.apiRequestS.onDelete(urlApi).then((result: boolean) => {
+    this.apiRequestS.onDelete(urlApi).then((responseData: boolean) => {
       this.onLoadData();
     });
   }
   // TODO: PARECE QUE ESTE METODO NO SE UTILIZA
   onDeleteProduct(data: any): void {
     const urlApi = `OrdenCompraDetalle/${data.id}`;
-    this.apiRequestS.onDelete(urlApi).then((result: boolean) => {
+    this.apiRequestS.onDelete(urlApi).then((responseData: boolean) => {
       this.onLoadData();
     });
   }
@@ -399,7 +399,7 @@ export default class OrdenCompraComponent implements OnInit {
     };
     this.apiRequestS
       .onPut(`OrdenCompraDetalle/${item.id}`, data)
-      .then((result: boolean) => {
+      .then((responseData: boolean) => {
         this.onLoadData();
       });
   }

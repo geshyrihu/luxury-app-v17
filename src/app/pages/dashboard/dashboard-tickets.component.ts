@@ -32,8 +32,8 @@ export default class DashboardTicketsComponent implements OnInit {
   }
   onLoadData() {
     const urlApi = `Dashboard/TicketPending/${this.customerIdS.getCustomerId()}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
     });
   }
   onLoadResumen(groupId: number) {

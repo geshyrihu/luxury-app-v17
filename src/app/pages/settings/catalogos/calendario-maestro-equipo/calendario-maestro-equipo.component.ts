@@ -25,15 +25,16 @@ export default class CalendarioMaestroEquipoComponent implements OnInit {
   onLoadData() {
     this.apiRequestS
       .onGetList('CalendarioMaestroEquipo')
-      .then((result: any) => {
-        this.data = result;
+      .then((responseData: any) => {
+        this.data = responseData;
       });
   }
   onDelete(id: number) {
     this.apiRequestS
       .onDelete(`CalendarioMaestroEquipo/${id}`)
-      .then((result: boolean) => {
-        if (result) this.data = this.data.filter((item) => item.id !== id);
+      .then((responseData: boolean) => {
+        if (responseData)
+          this.data = this.data.filter((item) => item.id !== id);
       });
   }
 
@@ -45,8 +46,8 @@ export default class CalendarioMaestroEquipoComponent implements OnInit {
         data.title,
         this.dialogHandlerS.dialogSizeSm
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
 }

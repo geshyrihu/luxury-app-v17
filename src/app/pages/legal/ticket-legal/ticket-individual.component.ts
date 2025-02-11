@@ -28,8 +28,8 @@ export default class TicketIndividualComponent implements OnInit {
   onLoadData() {
     this.apiRequestS
       .onGetItem('TicketLegal/individual/' + this.ticketId)
-      .then((result: any) => {
-        this.data = result;
+      .then((responseData: any) => {
+        this.data = responseData;
       });
   }
 }

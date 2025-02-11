@@ -56,9 +56,9 @@ export default class AddOrEditPiscinaComponent implements OnInit {
 
   onLoadData() {
     const urlApi = `piscina/${this.id}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-      this.model = result;
-      this.form.patchValue(result);
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+      this.model = responseData;
+      this.form.patchValue(responseData);
     });
   }
 
@@ -72,14 +72,14 @@ export default class AddOrEditPiscinaComponent implements OnInit {
     if (this.id === 0) {
       this.apiRequestS
         .onPost('piscina', formDataDto)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
       this.apiRequestS
         .onPut(`piscina/${this.id}`, formDataDto)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }
@@ -105,8 +105,10 @@ export default class AddOrEditPiscinaComponent implements OnInit {
   }
 
   onLoadEnumSelectItem() {
-    this.apiRequestS.onGetEnumSelectItem(`ETypePiscina`).then((result: any) => {
-      this.cb_typePiscina = result;
-    });
+    this.apiRequestS
+      .onGetEnumSelectItem(`ETypePiscina`)
+      .then((responseData: any) => {
+        this.cb_typePiscina = responseData;
+      });
   }
 }

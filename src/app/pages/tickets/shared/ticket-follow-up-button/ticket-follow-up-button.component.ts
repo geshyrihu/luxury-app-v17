@@ -24,8 +24,8 @@ export default class TicketFollowUpButtonComponent {
         'Seguimiento',
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) {
+      .then((responseData: boolean) => {
+        if (responseData) {
           this.followUpCompleted.emit(); // Emitir el evento si el seguimiento se completó
         }
       });

@@ -32,8 +32,8 @@ export default class LegalMatterCategorieAddOrEditComponent {
   }
   onLoadData() {
     const urlApi = `LegalMatter/Category/${this.id}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-      this.form.patchValue(result);
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+      this.form.patchValue(responseData);
     });
   }
 
@@ -44,14 +44,14 @@ export default class LegalMatterCategorieAddOrEditComponent {
     if (this.id === '') {
       this.apiRequestS
         .onPost(`LegalMatter/Category`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
       this.apiRequestS
         .onPut(`LegalMatter/Category/${this.id}`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }

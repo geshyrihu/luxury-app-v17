@@ -45,9 +45,11 @@ export default class ComunicadoAddOrEditComponent implements OnInit {
     this.form.patchValue({ area: this.config.data.titulo });
   }
   onLoadData() {
-    this.apiRequestS.onGetItem(`Comunicado/${this.id}`).then((result: any) => {
-      this.form.patchValue(result);
-    });
+    this.apiRequestS
+      .onGetItem(`Comunicado/${this.id}`)
+      .then((responseData: any) => {
+        this.form.patchValue(responseData);
+      });
   }
 
   public saveAreResponsableId(e: any): void {
@@ -67,14 +69,16 @@ export default class ComunicadoAddOrEditComponent implements OnInit {
     this.submitting = true;
 
     if (this.id === 0) {
-      this.apiRequestS.onPost(`Comunicado`, model).then((result: boolean) => {
-        result ? this.ref.close(true) : (this.submitting = false);
-      });
+      this.apiRequestS
+        .onPost(`Comunicado`, model)
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
+        });
     } else {
       this.apiRequestS
         .onPut(`Comunicado/${this.id}`, model)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }

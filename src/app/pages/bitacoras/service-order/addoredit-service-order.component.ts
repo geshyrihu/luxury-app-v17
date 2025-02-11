@@ -96,14 +96,16 @@ export default class ServiceOrderAddOrEditComponent implements OnInit {
         this.cb_applicationUser = response;
       });
 
-    this.apiRequestS.onGetEnumSelectItem(`EStatus`).then((result: any) => {
-      this.cb_Status = result;
-    });
+    this.apiRequestS
+      .onGetEnumSelectItem(`EStatus`)
+      .then((responseData: any) => {
+        this.cb_Status = responseData;
+      });
 
     this.apiRequestS
       .onGetEnumSelectItem(`ETypeMaintance`)
-      .then((result: any) => {
-        this.cb_TypeMaintance = result;
+      .then((responseData: any) => {
+        this.cb_TypeMaintance = responseData;
       });
   }
 
@@ -128,10 +130,14 @@ export default class ServiceOrderAddOrEditComponent implements OnInit {
 
   onLoadData() {
     const urlApi = `ServiceOrders/${this.id}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-      result.executionDate = this.dateS.getDateFormat(result.executionDate);
-      result.requestDate = this.dateS.getDateFormat(result.requestDate);
-      this.form.patchValue(result);
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+      responseData.executionDate = this.dateS.getDateFormat(
+        responseData.executionDate
+      );
+      responseData.requestDate = this.dateS.getDateFormat(
+        responseData.requestDate
+      );
+      this.form.patchValue(responseData);
       const contenidoHTML = this.form.get('activity').value;
       const contenidoSinHTML = contenidoHTML.replace(/<[^>]*>|&nbsp;/g, '');
       this.form.get('activity').patchValue(contenidoSinHTML);
@@ -150,14 +156,14 @@ export default class ServiceOrderAddOrEditComponent implements OnInit {
     if (this.id === 0) {
       this.apiRequestS
         .onPost(`ServiceOrders`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
       this.apiRequestS
         .onPut(`ServiceOrders/${this.id}`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }

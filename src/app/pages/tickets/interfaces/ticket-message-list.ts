@@ -1,3 +1,5 @@
+import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
+
 export interface TicketMessage {
   id: string;
   ticketGroupId: string;
@@ -32,5 +34,6 @@ export interface TicketMessage {
 export interface TicketResult {
   nameGroup: string;
   totalRecords: number;
+  assignee: ISelectItem[];
   items: TicketMessage[];
 }

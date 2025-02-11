@@ -55,8 +55,8 @@ export default class BitacoraMantenimientoComponent implements OnInit {
   }
   onLoadData() {
     const urlApi = `BitacoraMantenimiento/GetAll/${this.customerIdS.customerId}/${this.fechaInicial}/${this.fechaFinal}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
     });
   }
 
@@ -67,7 +67,7 @@ export default class BitacoraMantenimientoComponent implements OnInit {
   onDelete(item: any) {
     this.apiRequestS
       .onDelete(`BitacoraMantenimiento/${item.id}`)
-      .then((result: boolean) => {
+      .then((responseData: boolean) => {
         this.onLoadData();
       });
   }
@@ -82,8 +82,8 @@ export default class BitacoraMantenimientoComponent implements OnInit {
         data.title,
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
 

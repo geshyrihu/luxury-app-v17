@@ -29,14 +29,14 @@ export default class ListCuentasTercerNivelComponent implements OnInit {
   onLoadData(state: boolean) {
     this.apiRequestS
       .onGetList('Cuentas/GetList/' + (state ? 0 : 1))
-      .then((result: any) => {
-        this.data = result;
+      .then((responseData: any) => {
+        this.data = responseData;
       });
   }
 
   onDelete(id: number) {
-    this.apiRequestS.onDelete(`cuentas/${id}`).then((result: boolean) => {
-      if (result) this.data = this.data.filter((item) => item.id !== id);
+    this.apiRequestS.onDelete(`cuentas/${id}`).then((responseData: boolean) => {
+      if (responseData) this.data = this.data.filter((item) => item.id !== id);
     });
   }
 
@@ -48,8 +48,8 @@ export default class ListCuentasTercerNivelComponent implements OnInit {
         data.title,
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData(this.state);
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData(this.state);
       });
   }
 }

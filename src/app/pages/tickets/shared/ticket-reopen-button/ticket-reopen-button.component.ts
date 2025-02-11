@@ -24,8 +24,8 @@ export default class TicketReopenButtonComponent {
         'Re abrir ticket',
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) {
+      .then((responseData: boolean) => {
+        if (responseData) {
           this.reopenCompleted.emit(); // Emitir el evento cuando se complete la reapertura
         }
       });

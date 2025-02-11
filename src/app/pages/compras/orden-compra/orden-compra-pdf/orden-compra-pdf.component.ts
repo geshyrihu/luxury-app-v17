@@ -34,8 +34,8 @@ export default class OrdenCompraPdfComponent implements OnInit {
   onLoadData() {
     this.apiRequestS
       .onGetItem(`ordencompra/Pdf/${this.ordenCompraId}`)
-      .then((result: any) => {
-        this.model = result;
+      .then((responseData: any) => {
+        this.model = responseData;
         this.ordenCompraDetalle = this.model.ordenCompraDetalle;
 
         for (let n of this.ordenCompraDetalle) {
@@ -68,8 +68,8 @@ export default class OrdenCompraPdfComponent implements OnInit {
 
   onGetOrdenCompraPresupuesto() {
     const urlApi = `OrdenCompraPresupuesto/GetAllForOrdenCompra/${this.ordenCompraId}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.ordenCompraPresupuesto = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.ordenCompraPresupuesto = responseData;
     });
   }
 }

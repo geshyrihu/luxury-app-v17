@@ -62,16 +62,16 @@ export default class MinutasResumenComponent implements OnInit {
       .onGetList(
         `ResumenGeneral/ResumenMinutasGeneralLista/${fehcaInicio}/${fechaFinal}`
       )
-      .then((result: any) => {
-        this.generalMinutas = result;
+      .then((responseData: any) => {
+        this.generalMinutas = responseData;
       });
 
     this.apiRequestS
       .onGetList(
         `ResumenGeneral/ResumenMinutasGeneralGrupo/${fehcaInicio}/${fechaFinal}`
       )
-      .then((result: any) => {
-        this.generalMinutasGrupo = result;
+      .then((responseData: any) => {
+        this.generalMinutasGrupo = responseData;
       });
   }
   onModalFiltroMinutasArea(

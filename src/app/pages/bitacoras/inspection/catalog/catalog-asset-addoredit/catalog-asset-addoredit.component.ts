@@ -37,16 +37,16 @@ export default class CatalogAssetAddoreditComponent implements OnInit {
   }
   onLoadData() {
     const urlApi = `CatalogAsset/${this.id}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-      this.form.patchValue(result);
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+      this.form.patchValue(responseData);
     });
   }
 
   onLoadEnumSelectItem() {
     this.apiRequestS
       .onGetEnumSelectItem(`EAssetCategory`)
-      .then((result: any) => {
-        this.cb_category = result;
+      .then((responseData: any) => {
+        this.cb_category = responseData;
       });
   }
 
@@ -57,14 +57,14 @@ export default class CatalogAssetAddoreditComponent implements OnInit {
     if (this.id === '') {
       this.apiRequestS
         .onPost(`CatalogAsset`, this.form.value)
-        .then((result: any) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: any) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
       this.apiRequestS
         .onPut(`CatalogAsset/${this.id}`, this.form.value)
-        .then((result: any) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: any) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }

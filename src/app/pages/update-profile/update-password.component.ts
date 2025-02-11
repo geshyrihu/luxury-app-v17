@@ -59,8 +59,8 @@ export default class UpdatePasswordComponent implements OnInit {
 
     this.apiRequestS
       .onPut(`Users/ChangePassword/${id}`, model)
-      .then((result: boolean) => {
-        if (result) {
+      .then((responseData: boolean) => {
+        if (responseData) {
           this.submitting = false;
         }
       });

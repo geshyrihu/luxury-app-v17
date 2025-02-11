@@ -38,10 +38,10 @@ export default class CalificacionProveedorComponent implements OnInit {
 
   onLoadData() {
     const urlApi = `QualificationProvider/${this.authS.applicationUserId}/${this.providerId}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-      if (result != null) {
-        this.qualificationProviderId = result.id;
-        this.form.patchValue(result);
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+      if (responseData != null) {
+        this.qualificationProviderId = responseData.id;
+        this.form.patchValue(responseData);
       }
     });
   }
@@ -54,8 +54,8 @@ export default class CalificacionProveedorComponent implements OnInit {
     if (this.qualificationProviderId === 0) {
       this.apiRequestS
         .onPost(`QualificationProvider`, this.form.value)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
       this.apiRequestS
@@ -63,8 +63,8 @@ export default class CalificacionProveedorComponent implements OnInit {
           `QualificationProvider/${this.qualificationProviderId}`,
           this.form.value
         )
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }

@@ -27,22 +27,22 @@ export default class AddOrEditInvitedComponent implements OnInit {
 
   onSubmit() {
     const urlApi = `MeetingInvitado/AgregarParticipantesInvitado/${this.meetingId}/${this.invitado}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
       this.onLoadData();
     });
   }
   onDelete(idParticipant: number): void {
     this.apiRequestS
       .onDelete(`MeetingInvitado/${idParticipant}`)
-      .then((result: boolean) => {
+      .then((responseData: boolean) => {
         this.onLoadData();
       });
   }
 
   onLoadData() {
     const urlApi = `MeetingInvitado/ParticipantesInvitado/${this.meetingId}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.listaInvitados = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.listaInvitados = responseData;
       this.invitado = '';
     });
   }

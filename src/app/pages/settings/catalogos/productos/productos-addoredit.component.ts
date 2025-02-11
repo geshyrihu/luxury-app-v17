@@ -53,8 +53,8 @@ export default class ProductosAddOrEditComponent implements OnInit {
   cb_clasificacion: ISelectItem[] = [];
 
   onloadData() {
-    this.apiRequestS.onGetSelectItem('Categories').then((result: any) => {
-      this.cb_category = result;
+    this.apiRequestS.onGetSelectItem('Categories').then((responseData: any) => {
+      this.cb_category = responseData;
     });
   }
 
@@ -80,11 +80,13 @@ export default class ProductosAddOrEditComponent implements OnInit {
   }
 
   onLoadData() {
-    this.apiRequestS.onGetItem(`Productos/${this.id}`).then((result: any) => {
-      this.urlBaseImg = result.urlImagen;
-      this.form.patchValue(result);
-      this.form.patchValue({ category: result.category.nameCotegory });
-    });
+    this.apiRequestS
+      .onGetItem(`Productos/${this.id}`)
+      .then((responseData: any) => {
+        this.urlBaseImg = responseData.urlImagen;
+        this.form.patchValue(responseData);
+        this.form.patchValue({ category: responseData.category.nameCotegory });
+      });
   }
 
   onSubmit() {
@@ -93,14 +95,16 @@ export default class ProductosAddOrEditComponent implements OnInit {
 
     this.submitting = true;
     if (this.id === 0) {
-      this.apiRequestS.onPost(`Productos`, formData).then((result: boolean) => {
-        result ? this.ref.close(true) : (this.submitting = false);
-      });
+      this.apiRequestS
+        .onPost(`Productos`, formData)
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
+        });
     } else {
       this.apiRequestS
         .onPut(`Productos/${this.id}`, formData)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
+        .then((responseData: boolean) => {
+          responseData ? this.ref.close(true) : (this.submitting = false);
         });
     }
   }

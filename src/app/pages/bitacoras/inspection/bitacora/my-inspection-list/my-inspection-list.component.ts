@@ -45,8 +45,8 @@ export default class MyInspectionListComponent implements OnInit {
 
       const urlApi = `InspectionResult/GetInspectionsByCustomer/${this.authService.applicationUserId}/${this.customerIdS.customerId}/${formattedDate}`;
 
-      this.apiRequestS.onGetList(urlApi).then((result: any) => {
-        this.data = result;
+      this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+        this.data = responseData;
       });
     }
   }

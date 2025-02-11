@@ -36,8 +36,8 @@ export default class MyRequestsTicketMessageComponent implements OnInit {
 
   onLoadData(status: any) {
     const urlApi = `Tickets/MyRequest/${this.authS.applicationUserId}/${status}/${this.customerIdS.customerId}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
       this.status = status;
     });
   }
@@ -50,8 +50,8 @@ export default class MyRequestsTicketMessageComponent implements OnInit {
         'Seguimiento',
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData(this.status);
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData(this.status);
       });
   }
 
@@ -63,8 +63,8 @@ export default class MyRequestsTicketMessageComponent implements OnInit {
         data.title,
         this.dialogHandlerS.dialogSizeLg
       )
-      .then((result: boolean) => {
-        if (result) {
+      .then((responseData: boolean) => {
+        if (responseData) {
           this.onLoadData(this.status);
         }
       });
@@ -78,16 +78,16 @@ export default class MyRequestsTicketMessageComponent implements OnInit {
         data.title,
         this.dialogHandlerS.dialogSizeLg
       )
-      .then((result: boolean) => {
-        if (result) {
+      .then((responseData: boolean) => {
+        if (responseData) {
           this.onLoadData(this.status);
         }
       });
   }
   onUpdatePriority(id: string) {
     const urlApi = `Tickets/UpdatePriority/${id}/${this.authS.applicationUserId}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-      if (result) {
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+      if (responseData) {
         // Encuentra el índice del ítem con el ID proporcionado
         const itemIndex = this.data.findIndex((item) => item.id === id);
 

@@ -40,8 +40,8 @@ export default class ListadoAnualMantenimientoComponent implements OnInit {
     const url = `MaintenanceCalendars/GetAll/${this.customerIdS.getCustomerId()}/${
       this.month
     }`;
-    this.apiRequestS.onGetList(url).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(url).then((responseData: any) => {
+      this.data = responseData;
     });
   }
   calculateCustomerTotal(name: any) {
@@ -58,8 +58,9 @@ export default class ListadoAnualMantenimientoComponent implements OnInit {
   onDelete(id: number) {
     this.apiRequestS
       .onDelete(`maintenancecalendars/${id}`)
-      .then((result: boolean) => {
-        if (result) this.data = this.data.filter((item) => item.id !== id);
+      .then((responseData: boolean) => {
+        if (responseData)
+          this.data = this.data.filter((item) => item.id !== id);
       });
   }
 
@@ -75,8 +76,8 @@ export default class ListadoAnualMantenimientoComponent implements OnInit {
         data.title,
         this.dialogHandlerS.dialogSizeLg
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
   selectMonth() {
@@ -86,8 +87,8 @@ export default class ListadoAnualMantenimientoComponent implements OnInit {
   onLoadEnumSelectItem() {
     this.apiRequestS
       .onGetEnumSelectItem(`EMonth/${false}`)
-      .then((result: any) => {
-        this.months = result;
+      .then((responseData: any) => {
+        this.months = responseData;
         this.months.sort((a, b) => a.value - b.value);
       });
   }

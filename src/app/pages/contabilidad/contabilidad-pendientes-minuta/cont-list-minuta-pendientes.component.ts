@@ -37,8 +37,8 @@ export default class ContListMinutaPendientesComponent implements OnInit {
       .onGetList(
         `ContabilidadMinuta/ListaMinuta/${this.authS.userTokenDto.infoUserAuthDto.applicationUserId}/${this.statusFiltro}`
       )
-      .then((result: any) => {
-        this.data = result;
+      .then((responseData: any) => {
+        this.data = responseData;
       });
   }
 
@@ -61,8 +61,8 @@ export default class ContListMinutaPendientesComponent implements OnInit {
         'Seguimiento',
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
 
@@ -76,8 +76,8 @@ export default class ContListMinutaPendientesComponent implements OnInit {
         'Seguimientos',
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
 
@@ -89,8 +89,8 @@ export default class ContListMinutaPendientesComponent implements OnInit {
         data.header,
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
 }

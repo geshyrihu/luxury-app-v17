@@ -41,16 +41,17 @@ export default class ListSolicitudCompraComponent implements OnInit {
           this.customerIdS.customerId
         }/${this.solicitudCompraService.onGetStatusFiltro()}`
       )
-      .then((result: any) => {
-        this.data = result;
+      .then((responseData: any) => {
+        this.data = responseData;
       });
   }
 
   onDelete(id: number) {
     this.apiRequestS
       .onDelete(`solicitudcompra/${id}`)
-      .then((result: boolean) => {
-        if (result) this.data = this.data.filter((item) => item.id !== id);
+      .then((responseData: boolean) => {
+        if (responseData)
+          this.data = this.data.filter((item) => item.id !== id);
       });
   }
 

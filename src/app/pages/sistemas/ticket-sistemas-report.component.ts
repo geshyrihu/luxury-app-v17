@@ -49,8 +49,8 @@
 //       .onGetItem(
 //         `TicketsSistemas/Report/${this.responsableSistemas}/${this.dateInitial}/${this.dateFinal}`
 //       )
-//       .then((result: any) => {
-//         this.dataClient = result;
+//       .then((responseData: any) => {
+//         this.dataClient = responseData ;
 //         this.onCalculateTotal();
 //       });
 //   }

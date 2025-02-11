@@ -30,14 +30,14 @@ export default class InspectionDetailsComponent implements OnInit {
 
   onLoadData() {
     const urlApi = `InspectionCondominiumAsset/List/${this.id}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+      this.data = responseData;
     });
   }
   onDeleteArea(id: string, areas: any[]) {
     const urlApi = `InspectionCondominiumAsset/DeleteArea/${id}`;
-    this.apiRequestS.onDelete(urlApi).then((result: any) => {
-      if (result) {
+    this.apiRequestS.onDelete(urlApi).then((responseData: any) => {
+      if (responseData) {
         const index = areas.findIndex(
           (item) => item.inspectionCondominiumAssetId === id
         );
@@ -50,8 +50,8 @@ export default class InspectionDetailsComponent implements OnInit {
 
   onDeleteReview(reviewId: number, reviews: any[]) {
     const urlApi = `InspectionCondominiumAsset/DeleteReview/${reviewId}`;
-    this.apiRequestS.onDelete(urlApi).then((result: any) => {
-      if (result) {
+    this.apiRequestS.onDelete(urlApi).then((responseData: any) => {
+      if (responseData) {
         const index = reviews.findIndex((item) => item.id === reviewId);
         if (index !== -1) {
           reviews.splice(index, 1); // Elimina el elemento del array
@@ -70,7 +70,7 @@ export default class InspectionDetailsComponent implements OnInit {
         data.title,
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
+      .then((responseData: boolean) => {
         this.onLoadData();
       });
   }
@@ -85,8 +85,8 @@ export default class InspectionDetailsComponent implements OnInit {
         data.title,
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
 

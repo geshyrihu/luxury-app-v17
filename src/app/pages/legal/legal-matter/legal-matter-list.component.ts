@@ -25,17 +25,20 @@ export default class LegalMatterComponent {
 
   onLoadData() {
     const urlApi = `LegalMatter`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
       // Actualizamos el valor del signal con los datos recibidos
-      this.data = result;
+      this.data = responseData;
     });
   }
 
   // Funcion para eliminar un banco y refres
   onDelete(id: number) {
-    this.apiRequestS.onDelete(`LegalMatter/${id}`).then((result: boolean) => {
-      if (result) this.data = this.data.filter((item) => item.id !== id);
-    });
+    this.apiRequestS
+      .onDelete(`LegalMatter/${id}`)
+      .then((responseData: boolean) => {
+        if (responseData)
+          this.data = this.data.filter((item) => item.id !== id);
+      });
   }
 
   // Función para abrir un cuadro de diálogo modal para agregar o editar o crear
@@ -47,8 +50,8 @@ export default class LegalMatterComponent {
         data.title,
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
   onModalEditCategorie(data: any) {
@@ -59,13 +62,13 @@ export default class LegalMatterComponent {
         data.title,
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
   onDeleteCategorie(id: string) {
     const urlApi = `LegalMatter/Category/${id}`;
-    this.apiRequestS.onDelete(urlApi).then((result: any) => {
+    this.apiRequestS.onDelete(urlApi).then((responseData: any) => {
       this.onLoadData();
     });
   }

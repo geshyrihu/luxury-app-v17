@@ -45,9 +45,9 @@ export default class ReportSolicitudCompraComponent implements OnInit {
     const urlApi = `MaintenanceReport/solicitudinsumos/${
       this.customerIdS.customerId
     }/${this.dateS.getDateFormat(this.periodoMonthService.getPeriodoInicio)}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.solicitudes = result.solicitudes;
-      this.ordenesCompra = result.ordenesCompra;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.solicitudes = responseData.solicitudes;
+      this.ordenesCompra = responseData.ordenesCompra;
     });
   }
 }

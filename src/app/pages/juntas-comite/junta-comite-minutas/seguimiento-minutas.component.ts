@@ -37,8 +37,8 @@ export default class SeguimientoMinutaComponent implements OnInit {
 
   onLoadData(filtro: number) {
     const urlApi = `Meetings/SeguimientoMinutas/${this.customerIdS.customerId}/${filtro}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
     });
   }
 
@@ -56,8 +56,8 @@ export default class SeguimientoMinutaComponent implements OnInit {
         'Seguimiento',
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData(this.statusFiltro);
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData(this.statusFiltro);
       });
   }
 
@@ -72,15 +72,15 @@ export default class SeguimientoMinutaComponent implements OnInit {
         data.title,
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData(this.statusFiltro);
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData(this.statusFiltro);
       });
   }
 
   onDeleteSeguimiento(id: number) {
     this.apiRequestS
       .onDelete(`MeetingDertailsSeguimiento/${id}`)
-      .then((result: boolean) => {
+      .then((responseData: boolean) => {
         this.onLoadData(this.statusFiltro);
       });
   }
@@ -95,8 +95,8 @@ export default class SeguimientoMinutaComponent implements OnInit {
         'Seguimientos',
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData(this.statusFiltro);
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData(this.statusFiltro);
       });
   }
   onFiltrarData(filtro: number) {

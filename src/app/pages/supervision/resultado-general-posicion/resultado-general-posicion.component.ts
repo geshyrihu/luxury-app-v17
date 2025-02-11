@@ -35,8 +35,8 @@ export default class ResultadoGeneralPosicionComponent implements OnInit {
 
   onLoadData(fechaInicio: string, fechaFinal: string) {
     const urlApi = `ResumenGeneral/Posicion/${fechaInicio}/${fechaFinal}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
+      this.data = responseData;
     });
   }
 }

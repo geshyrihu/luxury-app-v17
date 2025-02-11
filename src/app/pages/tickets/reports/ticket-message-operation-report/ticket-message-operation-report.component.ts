@@ -45,8 +45,8 @@ export default class TicketMessageOperationReportComponent {
     this.ticketGroupService.setStatus(this.status);
 
     const urlApi = `TicketReport/WeeklyReport/${this.customerIdS.customerId}/${this.startDate}/${this.endDate}/${this.status}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.data = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.data = responseData;
     });
   }
 
@@ -70,8 +70,8 @@ export default class TicketMessageOperationReportComponent {
         'Agregar',
         this.dialogHandlerS.dialogSizeLg
       )
-      .then((result: boolean) => {
-        if (result) {
+      .then((responseData: boolean) => {
+        if (responseData) {
           this.onLoadData();
         }
       });
@@ -89,8 +89,8 @@ export default class TicketMessageOperationReportComponent {
         'Vistas',
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
 
@@ -102,15 +102,15 @@ export default class TicketMessageOperationReportComponent {
         'Cerrar ticket',
         this.dialogHandlerS.dialogSizeLg
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
 
   // Actualizar si el item es relevante o no
   onUpdateStateTicket(item: any) {
     const urlApi = `Tickets/UpdateRelevance/${item.id}`;
-    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((responseData: any) => {
       this.customToastService.onCloseToSuccess();
     });
   }
@@ -122,8 +122,8 @@ export default class TicketMessageOperationReportComponent {
         'Seguimiento',
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
 
@@ -140,8 +140,8 @@ export default class TicketMessageOperationReportComponent {
         'Envio de reporte semanal',
         this.dialogHandlerS.dialogSizeFull
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
 }

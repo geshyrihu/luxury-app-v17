@@ -34,13 +34,13 @@ export default class InspectionsListComponent implements OnInit {
 
   onLoadData() {
     const urlApi = `inspection/list/${this.customerIdS.customerId}`;
-    this.apiRequestS.onGetList(urlApi).then((result: any) => {
-      this.inspeccionesOriginales = result;
+    this.apiRequestS.onGetList(urlApi).then((responseData: any) => {
+      this.inspeccionesOriginales = responseData;
 
       // Inicializar inspecciones filtradas con todos los datos
       this.inspeccionesFiltradas = [...this.inspeccionesOriginales];
 
-      const data: any[] = result;
+      const data: any[] = responseData;
       // Extraer áreas responsables del arreglo y eliminar duplicados
       this.areasResponsables = [
         ...new Set(data.map((item) => item.areaResponsable)),
@@ -76,8 +76,8 @@ export default class InspectionsListComponent implements OnInit {
         data.title,
         this.dialogHandlerS.dialogSizeMd
       )
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
+      .then((responseData: boolean) => {
+        if (responseData) this.onLoadData();
       });
   }
 }
