@@ -12,12 +12,12 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
   imports: [LuxuryAppComponentsModule, StripTagsPipe],
 })
 export default class EquiposComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  custIdService = inject(CustomerIdService);
+  apiRequestS = inject(ApiRequestService);
+  customerIdS = inject(CustomerIdService);
 
   data: any[] = [];
 
-  customerId$: Observable<number> = this.custIdService.getCustomerId$();
+  customerId$: Observable<number> = this.customerIdS.getCustomerId$();
 
   ngOnInit() {
     this.onLoadData();
@@ -26,8 +26,8 @@ export default class EquiposComponent implements OnInit {
     });
   }
   onLoadData() {
-    const urlApi = `entregarecepcion/inventarioequipos/${this.custIdService.customerId}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    const urlApi = `entregarecepcion/inventarioequipos/${this.customerIdS.customerId}`;
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
   }

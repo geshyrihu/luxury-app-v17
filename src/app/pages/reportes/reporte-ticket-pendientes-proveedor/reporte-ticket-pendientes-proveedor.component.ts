@@ -15,7 +15,7 @@ export default class ReporteTicketPendientesProveedorComponent
   implements OnInit
 {
   authS = inject(AuthService);
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   reportService = inject(ReportService);
   router = inject(Router);
   routerActivate = inject(ActivatedRoute);
@@ -36,7 +36,7 @@ export default class ReporteTicketPendientesProveedorComponent
   }
   onLoadData() {
     const urlApi = `ticket/getreportpendingprovider/${this.customerId}/${this.departamentId}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
   }

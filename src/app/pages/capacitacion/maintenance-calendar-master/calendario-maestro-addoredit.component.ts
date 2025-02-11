@@ -16,11 +16,11 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   providers: [EnumSelectService],
 })
 export default class CalendarioMaestroAddOrEditComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  formBuilder = inject(FormBuilder);
+  apiRequestS = inject(ApiRequestService);
+  formB = inject(FormBuilder);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
-  enumSelectService = inject(EnumSelectService);
+  enumSelectS = inject(EnumSelectService);
 
   proveedoresSeleccionados: ISelectItem[] = [];
   cb_equipoCalendarioMaestro: ISelectItem[] = [];
@@ -30,7 +30,7 @@ export default class CalendarioMaestroAddOrEditComponent implements OnInit {
   id: number = 0;
   submitting: boolean = false;
 
-  form: FormGroup = this.formBuilder.group({
+  form: FormGroup = this.formB.group({
     id: { value: this.id, disabled: true },
     calendarioMaestroEquipoId: ['', Validators.required],
     descripcionServicio: ['', Validators.required],
@@ -40,7 +40,7 @@ export default class CalendarioMaestroAddOrEditComponent implements OnInit {
   });
 
   async ngOnInit() {
-    this.cb_meses = await this.enumSelectService.month(false);
+    this.cb_meses = await this.enumSelectS.month(false);
     this.onLoadSelectItem();
     this.id = this.config.data.id;
     if (this.id !== 0) this.onLoadData(this.id);
@@ -50,7 +50,7 @@ export default class CalendarioMaestroAddOrEditComponent implements OnInit {
     return this.form.controls;
   }
   onLoadData(id: number) {
-    this.apiRequestService
+    this.apiRequestS
       .onGetItem(`CalendarioMaestro/${id}`)
       .then((result: any) => {
         this.form.patchValue(result);
@@ -60,18 +60,18 @@ export default class CalendarioMaestroAddOrEditComponent implements OnInit {
       });
   }
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
 
     this.submitting = true;
 
     if (this.id === 0) {
-      this.apiRequestService
+      this.apiRequestS
         .onPost(`CalendarioMaestro`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.apiRequestService
+      this.apiRequestS
         .onPut(`CalendarioMaestro/${this.id}`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
@@ -80,13 +80,13 @@ export default class CalendarioMaestroAddOrEditComponent implements OnInit {
   }
 
   onLoadSelectItem() {
-    this.apiRequestService
+    this.apiRequestS
       .onGetSelectItem('EquipoCalendarioMaestro')
       .then((response: ISelectItem[]) => {
         this.cb_equipoCalendarioMaestro = response;
       });
 
-    this.apiRequestService
+    this.apiRequestS
       .onGetSelectItem('Providers')
       .then((response: ISelectItem[]) => {
         this.cb_providers = response;

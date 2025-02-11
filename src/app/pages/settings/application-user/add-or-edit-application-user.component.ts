@@ -15,18 +15,18 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   providers: [EnumSelectService],
 })
 export default class AddOrEditApplicationUserComponent implements OnInit {
-  formBuilder = inject(FormBuilder);
-  apiRequestService = inject(ApiRequestService);
+  formB = inject(FormBuilder);
+  apiRequestS = inject(ApiRequestService);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
-  enumSelectService = inject(EnumSelectService);
+  enumSelectS = inject(EnumSelectService);
 
   submitting: boolean = false;
   applicationUserId: string = '';
   cb_customer: ISelectItem[] = [];
   cb_typePerson: ISelectItem[] = [];
 
-  form: FormGroup = this.formBuilder.group({
+  form: FormGroup = this.formB.group({
     email: [''],
     phoneNumber: [''],
     customerId: ['', Validators.required],
@@ -36,14 +36,14 @@ export default class AddOrEditApplicationUserComponent implements OnInit {
   });
 
   async ngOnInit() {
-    this.cb_typePerson = await this.enumSelectService.typePerson();
+    this.cb_typePerson = await this.enumSelectS.typePerson();
     this.onLoadSelectItem();
     this.applicationUserId = this.config.data.applicationUserId;
     if (this.applicationUserId !== '') this.onLoadData();
   }
 
   onLoadSelectItem() {
-    this.apiRequestService
+    this.apiRequestS
       .onGetSelectItem('CustomersActive')
       .then((items: ISelectItem[]) => {
         this.cb_customer = items;
@@ -52,23 +52,23 @@ export default class AddOrEditApplicationUserComponent implements OnInit {
 
   onLoadData() {
     const urlApi = `Auth/${this.applicationUserId}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       this.form.patchValue(result);
     });
   }
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
 
     this.submitting = true;
 
     if (this.applicationUserId === '') {
-      this.apiRequestService
+      this.apiRequestS
         .onPost('Auth/CreateAccount', this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.apiRequestService
+      this.apiRequestS
         .onPut(`Auth/EditAccount/${this.applicationUserId}`, this.form.value)
         .then((result: boolean) => {
           if (result) {

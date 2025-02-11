@@ -16,10 +16,10 @@ import AddoreditToolsComponent from './addoredit-herramienta.component';
   imports: [LuxuryAppComponentsModule],
 })
 export default class ListerramientasComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   authS = inject(AuthService);
-  custIdService = inject(CustomerIdService);
-  dialogHandlerService = inject(DialogHandlerService);
+  customerIdS = inject(CustomerIdService);
+  dialogHandlerS = inject(DialogHandlerService);
 
   public reporteHerramientasPdfService = inject(ReporteHerramientasPdfService);
 
@@ -27,37 +27,37 @@ export default class ListerramientasComponent implements OnInit {
 
   ref: DynamicDialogRef;
 
-  customerId$: Observable<number> = this.custIdService.getCustomerId$();
+  customerId$: Observable<number> = this.customerIdS.getCustomerId$();
 
   ngOnInit(): void {
     this.onLoadData();
-    this.customerId$ = this.custIdService.getCustomerId$();
+    this.customerId$ = this.customerIdS.getCustomerId$();
     this.customerId$.subscribe((resp) => {
       this.onLoadData();
     });
   }
 
   onLoadData() {
-    const urlApi = `Tools/${this.custIdService.customerId}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    const urlApi = `Tools/${this.customerIdS.customerId}`;
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
       this.reporteHerramientasPdfService.setData(this.data);
     });
   }
 
   onDelete(id: number) {
-    this.apiRequestService.onDelete(`Tools/${id}`).then((result: boolean) => {
+    this.apiRequestS.onDelete(`Tools/${id}`).then((result: boolean) => {
       if (result) this.data = this.data.filter((item) => item.id !== id);
     });
   }
 
   showModalAddOrEdit(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         AddoreditToolsComponent,
         { id: data.id },
         data.title,
-        this.dialogHandlerService.dialogSizeLg
+        this.dialogHandlerS.dialogSizeLg
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();

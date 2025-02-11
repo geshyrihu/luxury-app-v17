@@ -18,22 +18,22 @@ import OrdenCompraComponent from '../../orden-compra/orden-compra.component';
   imports: [LuxuryAppComponentsModule],
 })
 export default class ListOrdenCompraFijosComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
   authS = inject(AuthService);
   router = inject(Router);
-  custIdService = inject(CustomerIdService);
+  customerIdS = inject(CustomerIdService);
   ordenCompraService = inject(OrdenCompraService);
 
   data: any[] = [];
   ref: DynamicDialogRef;
 
   statusCompra: number;
-  customerId$: Observable<number> = this.custIdService.getCustomerId$();
+  customerId$: Observable<number> = this.customerIdS.getCustomerId$();
 
   ngOnInit(): void {
     this.onLoadData();
-    this.customerId$ = this.custIdService.getCustomerId$();
+    this.customerId$ = this.customerIdS.getCustomerId$();
     this.customerId$.subscribe(() => {
       this.onLoadData();
     });
@@ -42,18 +42,18 @@ export default class ListOrdenCompraFijosComponent implements OnInit {
   onLoadData() {
     this.statusCompra = this.ordenCompraService.getStatusCompras();
 
-    const urlApi = `OrdenCompra/OrdenesCompraGastosFijos/${this.custIdService.customerId}/${this.statusCompra}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    const urlApi = `OrdenCompra/OrdenesCompraGastosFijos/${this.customerIdS.customerId}/${this.statusCompra}`;
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
   }
   onModalAdd() {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         CreateOrdenCompraComponent,
         {},
         'Nueva Orden de  b',
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();
@@ -61,11 +61,9 @@ export default class ListOrdenCompraFijosComponent implements OnInit {
   }
 
   onDelete(id: number) {
-    this.apiRequestService
-      .onDelete(`ordencompra/${id}`)
-      .then((result: boolean) => {
-        if (result) this.data = this.data.filter((item) => item.id !== id);
-      });
+    this.apiRequestS.onDelete(`ordencompra/${id}`).then((result: boolean) => {
+      if (result) this.data = this.data.filter((item) => item.id !== id);
+    });
   }
 
   onAddOrEdit(id: number) {
@@ -80,14 +78,14 @@ export default class ListOrdenCompraFijosComponent implements OnInit {
   onOrdenCompraModal(id: number) {
     this.ordenCompraService.setOrdenCompraId(id);
 
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         OrdenCompraComponent,
         {
           id,
         },
         'Editar Orden de Compra',
-        this.dialogHandlerService.dialogSizeFull
+        this.dialogHandlerS.dialogSizeFull
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();

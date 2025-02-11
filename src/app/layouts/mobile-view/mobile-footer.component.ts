@@ -15,7 +15,7 @@ import { TicketGroupService } from 'src/app/pages/tickets/ticket.service';
 })
 export default class MobileFooterComponent implements OnInit, OnDestroy {
   authS = inject(AuthService);
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   ticketGroupService = inject(TicketGroupService);
   signalRService = inject(SignalRService);
 
@@ -49,7 +49,7 @@ export default class MobileFooterComponent implements OnInit, OnDestroy {
     this.messageInNotRead = 0;
     this.notifications = [];
     const urlApi = `NotificationUser/GetAllUnread/${this.authS.applicationUserId}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.notifications = result;
       this.notifications.forEach((x: any) => {
         if (!x.isRead) {

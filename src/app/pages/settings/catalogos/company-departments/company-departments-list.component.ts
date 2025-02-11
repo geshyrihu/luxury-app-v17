@@ -13,8 +13,8 @@ import { DepartmentGroup } from './departament-group';
   imports: [LuxuryAppComponentsModule],
 })
 export default class CompanyDepartmentListComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
 
   // Declaración e inicialización de variables
   data: DepartmentGroup = null;
@@ -26,7 +26,7 @@ export default class CompanyDepartmentListComponent implements OnInit {
 
   onLoadData() {
     const urlApi = `CompanyDepartment/List`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       // Actualizamos el valor del signal con los datos recibidos
       this.data = result;
     });
@@ -34,7 +34,7 @@ export default class CompanyDepartmentListComponent implements OnInit {
 
   // Funcion para eliminar un banco y refres
   onDelete(id: number) {
-    this.apiRequestService
+    this.apiRequestS
       .onDelete(`CompanyDepartment/${id}`)
       .then((result: boolean) => {
         this.onLoadData();
@@ -43,12 +43,12 @@ export default class CompanyDepartmentListComponent implements OnInit {
 
   // Función para abrir un cuadro de diálogo modal para agregar o editar o crear
   onModalAddOrEdit(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         CompanyDepartmentsAddOrEditComponent,
         data,
         data.title,
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();

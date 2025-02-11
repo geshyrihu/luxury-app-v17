@@ -12,9 +12,9 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
   templateUrl: './my-inspection-add-images.component.html',
 })
 export default class MyInspectionAddImagesComponent {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   customerIdService = inject(CustomerIdService);
-  formBuilder = inject(FormBuilder);
+  formB = inject(FormBuilder);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
 
@@ -40,7 +40,7 @@ export default class MyInspectionAddImagesComponent {
       this.inspectionResultId
     }/${this.customerIdService.getCustomerId()}`;
 
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       this.existingImages = result; // Guardamos las imágenes recuperadas
     });
   }
@@ -82,7 +82,7 @@ export default class MyInspectionAddImagesComponent {
       this.inspectionResultId
     }?customerId=${this.customerIdService.getCustomerId()}`;
 
-    this.apiRequestService.onPost(urlApi, formData).then((result: any) => {
+    this.apiRequestS.onPost(urlApi, formData).then((result: any) => {
       this.loadExistingImages();
     });
   }
@@ -99,7 +99,7 @@ export default class MyInspectionAddImagesComponent {
   deleteExistingImage(imageId: string): void {
     const urlApi = `InspectionResultImage/DeleteInspectionImage/${imageId}/${this.customerIdService.getCustomerId()}`;
 
-    this.apiRequestService.onDelete(urlApi).then(() => {
+    this.apiRequestS.onDelete(urlApi).then(() => {
       // Filtrar la imagen eliminada
       this.existingImages = this.existingImages.filter(
         (img) => img.id !== imageId

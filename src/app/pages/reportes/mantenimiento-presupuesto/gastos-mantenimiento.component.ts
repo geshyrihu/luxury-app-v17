@@ -17,13 +17,13 @@ import MaintenancePreventiveAddoreditComponent from 'src/app/pages/calendar/mant
   providers: [MessageService, DialogService, CustomToastService],
 })
 export default class GastosMantenimientoComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  custIdService = inject(CustomerIdService);
-  dialogHandlerService = inject(DialogHandlerService);
+  apiRequestS = inject(ApiRequestService);
+  customerIdS = inject(CustomerIdService);
+  dialogHandlerS = inject(DialogHandlerService);
 
   data: any[] = [];
   resumenGastos: any[] = [];
-  customerId$: Observable<number> = this.custIdService.getCustomerId$();
+  customerId$: Observable<number> = this.customerIdS.getCustomerId$();
   totalGasto: number = 0;
   ref: DynamicDialogRef;
 
@@ -34,19 +34,19 @@ export default class GastosMantenimientoComponent implements OnInit {
     });
   }
   onLoadData() {
-    const urlApi = `PresupuestoMantenimiento/SummaryOfExpenses/${this.custIdService.getCustomerId()}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    const urlApi = `PresupuestoMantenimiento/SummaryOfExpenses/${this.customerIdS.getCustomerId()}`;
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result.items;
       this.totalGasto = result.totalGastos;
     });
 
-    const urlApi2 = `PresupuestoMantenimiento/Resumengastos/${this.custIdService.getCustomerId()}`;
-    this.apiRequestService.onGetList(urlApi2).then((result: any) => {
+    const urlApi2 = `PresupuestoMantenimiento/Resumengastos/${this.customerIdS.getCustomerId()}`;
+    this.apiRequestS.onGetList(urlApi2).then((result: any) => {
       this.resumenGastos = result;
     });
   }
   onModalItem(item: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         MaintenancePreventiveAddoreditComponent,
         {
@@ -55,7 +55,7 @@ export default class GastosMantenimientoComponent implements OnInit {
           idMachinery: item.idEquipo,
         },
         'Editar regitro',
-        this.dialogHandlerService.dialogSizeFull
+        this.dialogHandlerS.dialogSizeFull
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();

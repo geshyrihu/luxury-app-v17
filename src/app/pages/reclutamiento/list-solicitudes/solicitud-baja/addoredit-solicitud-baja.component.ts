@@ -22,11 +22,11 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   providers: [EnumSelectService],
 })
 export default class AddoreditSolicitudBajaComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  formBuilder = inject(FormBuilder);
+  apiRequestS = inject(ApiRequestService);
+  formB = inject(FormBuilder);
   ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);
-  enumSelectService = inject(EnumSelectService);
+  enumSelectS = inject(EnumSelectService);
 
   submitting: boolean = false;
 
@@ -36,7 +36,7 @@ export default class AddoreditSolicitudBajaComponent implements OnInit {
 
   id: number = 0;
 
-  form: FormGroup = this.formBuilder.group({
+  form: FormGroup = this.formB.group({
     id: { value: this.id, disabled: true },
     reasonForLeaving: [],
     tipoBaja: [null],
@@ -44,7 +44,7 @@ export default class AddoreditSolicitudBajaComponent implements OnInit {
     lawyerAssistance: [null],
     employeeInformed: [null],
     status: [null],
-    discounts: this.formBuilder.array([]),
+    discounts: this.formB.array([]),
     applicationUserId: [],
     employeeId: [],
     folio: [],
@@ -53,20 +53,20 @@ export default class AddoreditSolicitudBajaComponent implements OnInit {
   });
 
   async ngOnInit() {
-    this.cb_si_no = await this.enumSelectService.boolYesNo();
-    this.cb_status = await this.enumSelectService.status();
-    this.cb_tipo_baja = await this.enumSelectService.tipoBaja(false);
+    this.cb_si_no = await this.enumSelectS.boolYesNo();
+    this.cb_status = await this.enumSelectS.status();
+    this.cb_tipo_baja = await this.enumSelectS.tipoBaja(false);
     this.id = this.config.data.id;
     if (this.id !== 0) this.onLoadData();
   }
   onLoadData() {
     const urlApi = `RequestDismissal/GetById/${this.id}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       this.form.patchValue(result);
       // Luego, recorre el arreglo de discounts y agrégalo al formArray 'discounts'
       result.discounts.forEach((discount: any) => {
         this.discounts.push(
-          this.formBuilder.group({
+          this.formB.group({
             description: discount.description,
             discount: discount.discount,
             id: discount.id,
@@ -77,20 +77,20 @@ export default class AddoreditSolicitudBajaComponent implements OnInit {
   }
 
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
 
     this.id = this.config.data.id;
 
     this.submitting = true;
 
     if (this.id === 0) {
-      this.apiRequestService
+      this.apiRequestS
         .onPost(`RequestDismissal`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.apiRequestService
+      this.apiRequestS
         .onPut(`RequestDismissal/${this.id}`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
@@ -99,7 +99,7 @@ export default class AddoreditSolicitudBajaComponent implements OnInit {
   }
 
   addDiscountDescription() {
-    const discountDescription = this.formBuilder.group({
+    const discountDescription = this.formB.group({
       id: ['', Validators.required],
       description: ['', Validators.required],
       discount: ['', Validators.required],
@@ -116,7 +116,7 @@ export default class AddoreditSolicitudBajaComponent implements OnInit {
 
   removeDiscountDescription(index: number, id: number) {
     const urlApi = `RequestDismissalDiscount/${id}`;
-    this.apiRequestService.onDelete(urlApi).then((result: boolean) => {
+    this.apiRequestS.onDelete(urlApi).then((result: boolean) => {
       this.discounts.removeAt(index);
     });
   }

@@ -14,8 +14,8 @@ import TarjetaProductoComponent from 'src/app/pages/settings/catalogos/productos
   imports: [LuxuryAppComponentsModule],
 })
 export default class AddProductModalComponent implements OnInit, OnDestroy {
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
   authS = inject(AuthService);
@@ -29,7 +29,7 @@ export default class AddProductModalComponent implements OnInit, OnDestroy {
   cb_unidadMedida: ISelectItem[] = [];
 
   constructor() {
-    this.apiRequestService
+    this.apiRequestS
       .onGetSelectItem('GetMeasurementUnits')
       .then((response: any) => {
         this.cb_unidadMedida = response;
@@ -43,7 +43,7 @@ export default class AddProductModalComponent implements OnInit, OnDestroy {
   }
 
   onLoadProduct() {
-    this.apiRequestService
+    this.apiRequestS
       .onGetList(
         `SolicitudCompraDetalle/AddProductoToSolicitudDto/${this.solicitudCompraId}`
       )
@@ -63,7 +63,7 @@ export default class AddProductModalComponent implements OnInit, OnDestroy {
     }
 
     item.applicationUserId = this.authS.applicationUserId;
-    this.apiRequestService
+    this.apiRequestS
       .onPost(`solicitudcompradetalle/`, item)
       .then((result: boolean) => {
         this.mensajeError = false;
@@ -72,13 +72,13 @@ export default class AddProductModalComponent implements OnInit, OnDestroy {
   }
 
   onModalTarjetaProducto(productoId: number): void {
-    this.dialogHandlerService.openDialog(
+    this.dialogHandlerS.openDialog(
       TarjetaProductoComponent,
       {
         productoId: productoId,
       },
       'Tarjeta de Producto',
-      this.dialogHandlerService.dialogSizeMd
+      this.dialogHandlerS.dialogSizeMd
     );
   }
 

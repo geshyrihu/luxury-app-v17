@@ -13,10 +13,10 @@ import { TicketGroupService } from '../../ticket.service';
   imports: [LuxuryAppComponentsModule, TicketMessageModule],
 })
 export default class TicketMessageReportResumenComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   authS = inject(AuthService);
   ticketGroupService = inject(TicketGroupService);
-  custIdService = inject(CustomerIdService);
+  customerIdS = inject(CustomerIdService);
 
   data: any;
   status: number = this.ticketGroupService.ticketGroupMessageStatus;
@@ -24,8 +24,8 @@ export default class TicketMessageReportResumenComponent implements OnInit {
   ngOnInit() {}
 
   onLoadData(startDate: string, endDate: string) {
-    const urlApi = `TicketReport/GetTicketReport/${this.custIdService.customerId}/${startDate}/${endDate}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    const urlApi = `TicketReport/GetTicketReport/${this.customerIdS.customerId}/${startDate}/${endDate}`;
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
   }

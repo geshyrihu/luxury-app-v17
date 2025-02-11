@@ -14,9 +14,9 @@ import ResultadoGeneralEvaluacionAreasDetalleComponent from './resultado-general
   imports: [LuxuryAppComponentsModule],
 })
 export default class EvaluacionAreasComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
-  dateService = inject(DateService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
+  dateS = inject(DateService);
   rangoCalendarioService = inject(FiltroCalendarService);
 
   fechaInicial: string = '';
@@ -24,10 +24,10 @@ export default class EvaluacionAreasComponent implements OnInit {
   data: any[] = [];
 
   ngOnInit() {
-    this.fechaInicial = this.dateService.getDateFormat(
+    this.fechaInicial = this.dateS.getDateFormat(
       this.rangoCalendarioService.fechaInicial
     );
-    this.fechaFinal = this.dateService.getDateFormat(
+    this.fechaFinal = this.dateS.getDateFormat(
       this.rangoCalendarioService.fechaFinal
     );
     this.onLoadData(this.fechaInicial, this.fechaFinal);
@@ -39,13 +39,13 @@ export default class EvaluacionAreasComponent implements OnInit {
   }
   onLoadData(fechaInicio: string, fechaFinal: string) {
     const urlApi = `ResumenGeneral/EvaluacionAreas/${fechaInicio}/${fechaFinal}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
   }
 
   onModalFiltroMinutasArea(fecha: string, area: number, status?: number) {
-    this.dialogHandlerService.openDialog(
+    this.dialogHandlerS.openDialog(
       ResultadoGeneralEvaluacionAreasDetalleComponent,
       {
         fecha: fecha,
@@ -53,7 +53,7 @@ export default class EvaluacionAreasComponent implements OnInit {
         status: status,
       },
       '',
-      this.dialogHandlerService.dialogSizeFull
+      this.dialogHandlerS.dialogSizeFull
     );
   }
 }

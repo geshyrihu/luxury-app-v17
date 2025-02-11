@@ -24,13 +24,13 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 })
 export default class TicketGroupAddOrEditComponent implements OnInit {
   authS = inject(AuthService);
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   config = inject(DynamicDialogConfig);
-  custIdService = inject(CustomerIdService);
-  formBuilder = inject(FormBuilder);
+  customerIdS = inject(CustomerIdService);
+  formB = inject(FormBuilder);
   ref = inject(DynamicDialogRef);
-  notificationService = inject(NotificationService); // Inyectamos el NotificationService
-  enumSelectService = inject(EnumSelectService);
+  notificationS = inject(NotificationService); // Inyectamos el NotificationService
+  enumSelectS = inject(EnumSelectService);
 
   id: string = this.config.data.id;
   submitting: boolean = false;
@@ -38,10 +38,10 @@ export default class TicketGroupAddOrEditComponent implements OnInit {
   cb_visibility: ISelectItem[] = [];
   cb_ticketGroupCategory: ISelectItem[] = [];
 
-  form: FormGroup = this.formBuilder.group({
+  form: FormGroup = this.formB.group({
     id: new FormControl({ value: this.id, disabled: true }), // Deshabilitado desde el inicio
     customerId: new FormControl(
-      this.custIdService.customerId,
+      this.customerIdS.customerId,
       Validators.required
     ),
     visibility: [null, Validators.required],
@@ -50,36 +50,36 @@ export default class TicketGroupAddOrEditComponent implements OnInit {
   });
 
   async ngOnInit() {
-    this.cb_visibility = await this.enumSelectService.visibilityLevel();
+    this.cb_visibility = await this.enumSelectS.visibilityLevel();
     this.onLoadTicketGroupCategory();
     this.id = this.config.data.id;
     if (this.id !== '') this.onLoadData();
   }
   onLoadData() {
     const urlApi = `ticketGroup/${this.id}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       this.form.patchValue(result);
     });
   }
 
   onLoadTicketGroupCategory() {
-    const urlApi = `TicketGroupCategory/${this.custIdService.customerId}`;
-    this.apiRequestService.onGetSelectItem(urlApi).then((result: any) => {
+    const urlApi = `TicketGroupCategory/${this.customerIdS.customerId}`;
+    this.apiRequestS.onGetSelectItem(urlApi).then((result: any) => {
       this.cb_ticketGroupCategory = result;
     });
   }
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
     this.submitting = true;
 
     if (this.id === '') {
-      this.apiRequestService
+      this.apiRequestS
         .onPost(`ticketGroup`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.apiRequestService
+      this.apiRequestS
         .onPut(`ticketGroup/${this.id}`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);

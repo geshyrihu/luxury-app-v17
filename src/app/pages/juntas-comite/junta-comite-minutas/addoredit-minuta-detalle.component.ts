@@ -16,10 +16,10 @@ import { EnumSelectService } from '../../../core/services/enum-select.service';
   providers: [EnumSelectService],
 })
 export default class AddoreditMinutaDetalleComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  formBuilder = inject(FormBuilder);
+  apiRequestS = inject(ApiRequestService);
+  formB = inject(FormBuilder);
   ref = inject(DynamicDialogRef);
-  enumSelectService = inject(EnumSelectService);
+  enumSelectS = inject(EnumSelectService);
   config = inject(DynamicDialogConfig);
   authS = inject(AuthService);
 
@@ -42,7 +42,7 @@ export default class AddoreditMinutaDetalleComponent implements OnInit {
   cb_area: ISelectItem[] = [];
   id: number = 0;
 
-  form: FormGroup = this.formBuilder.group({
+  form: FormGroup = this.formB.group({
     id: { value: this.id, disabled: true },
     deliveryDate: [, Validators.required],
     status: [0, Validators.required],
@@ -57,13 +57,13 @@ export default class AddoreditMinutaDetalleComponent implements OnInit {
   });
 
   async ngOnInit() {
-    this.cb_area = await this.enumSelectService.areaMinutasDetalles();
+    this.cb_area = await this.enumSelectS.areaMinutasDetalles();
     this.id = this.config.data.id;
     if (this.id !== 0) this.onLoadData();
   }
   onLoadData() {
     const urlApi = `MeetingsDetails/${this.id}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       this.form.patchValue(result);
       const contenidoHTML = this.form.get('requestService').value;
       const contenidoSinHTML = contenidoHTML.replace(/<[^>]*>|&nbsp;/g, '');
@@ -71,19 +71,19 @@ export default class AddoreditMinutaDetalleComponent implements OnInit {
     });
   }
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
     this.id = this.config.data.id;
 
     this.submitting = true;
 
     if (this.id === 0) {
-      this.apiRequestService
+      this.apiRequestS
         .onPost(`MeetingsDetails`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.apiRequestService
+      this.apiRequestS
         .onPut(`MeetingsDetails/${this.id}`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);

@@ -18,14 +18,14 @@ import FormMedidorComponent from './form-medidor.component';
   imports: [LuxuryAppComponentsModule],
 })
 export default class ListMedidorComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
   authS = inject(AuthService);
-  custIdService = inject(CustomerIdService);
+  customerIdS = inject(CustomerIdService);
 
   data: IMedidor[] = [];
   ref: DynamicDialogRef;
-  customerId$: Observable<number> = this.custIdService.getCustomerId$();
+  customerId$: Observable<number> = this.customerIdS.getCustomerId$();
 
   ngOnInit(): void {
     this.onLoadData();
@@ -35,24 +35,24 @@ export default class ListMedidorComponent implements OnInit {
   }
 
   onLoadData() {
-    const urlApi = `Medidor/GetAll/${this.custIdService.customerId}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    const urlApi = `Medidor/GetAll/${this.customerIdS.customerId}`;
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
   }
   onDelete(id: number) {
-    this.apiRequestService.onDelete(`Medidor/${id}`).then((result: boolean) => {
+    this.apiRequestS.onDelete(`Medidor/${id}`).then((result: boolean) => {
       if (result) this.data = this.data.filter((item) => item.id !== id);
     });
   }
 
   modalAddEdit(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         FormMedidorComponent,
         data,
         data.title,
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();
@@ -60,7 +60,7 @@ export default class ListMedidorComponent implements OnInit {
   }
 
   modalMedidorLecturaAddEdit(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         FormMedidorLecturaComponent,
         {
@@ -68,7 +68,7 @@ export default class ListMedidorComponent implements OnInit {
           id: 0,
         },
         data.title,
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();
@@ -78,7 +78,7 @@ export default class ListMedidorComponent implements OnInit {
   datosExcel: any[] = [];
   exportExcel(id: number) {
     const urlApi = `MedidorLectura/ExportExcel/${id}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.datosExcel = result;
       this.generate();
     });

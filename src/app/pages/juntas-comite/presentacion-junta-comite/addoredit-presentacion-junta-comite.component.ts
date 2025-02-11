@@ -14,8 +14,8 @@ import { AuthService } from 'src/app/core/services/auth.service';
 export default class AddoreditPresentacionJuntaComiteComponent
   implements OnInit
 {
-  apiRequestService = inject(ApiRequestService);
-  formBuilder = inject(FormBuilder);
+  apiRequestS = inject(ApiRequestService);
+  formB = inject(FormBuilder);
   config = inject(DynamicDialogConfig);
   authS = inject(AuthService);
   ref = inject(DynamicDialogRef);
@@ -25,7 +25,7 @@ export default class AddoreditPresentacionJuntaComiteComponent
   filePath: string = '';
   errorMessage: string = '';
 
-  form: FormGroup = this.formBuilder.group({
+  form: FormGroup = this.formB.group({
     id: { value: this.id, disabled: true },
     archivo: [''],
     area: [],
@@ -40,14 +40,14 @@ export default class AddoreditPresentacionJuntaComiteComponent
     this.form.patchValue({ archivo: file });
   }
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
 
     this.id = this.config.data.id;
     const model = this.onCreateFormData(this.form.value);
 
     this.submitting = true;
 
-    this.apiRequestService
+    this.apiRequestS
       .onPost(`PresentacionJuntaComite/AddFile`, model)
       .then((result: boolean) => {
         result ? this.ref.close(true) : (this.submitting = false);

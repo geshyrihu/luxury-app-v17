@@ -20,9 +20,9 @@ import MdEditAccountComponent from './md-edit-account.component';
   providers: [EnumSelectService],
 })
 export default class ListApplicationUserComponent implements OnInit {
-  dialogHandlerService = inject(DialogHandlerService);
-  apiRequestService = inject(ApiRequestService);
-  enumSelectService = inject(EnumSelectService);
+  dialogHandlerS = inject(DialogHandlerService);
+  apiRequestS = inject(ApiRequestService);
+  enumSelectS = inject(EnumSelectService);
 
   data: IApplicationUserDto[] = [];
   filteredData: IApplicationUserDto[] = []; // Para almacenar la data filtrada
@@ -39,7 +39,7 @@ export default class ListApplicationUserComponent implements OnInit {
   typePerson: number = 0;
 
   async ngOnInit() {
-    this.cb_typePerson = await this.enumSelectService.typePerson(false);
+    this.cb_typePerson = await this.enumSelectS.typePerson(false);
     this.onLoadData(true, this.typePerson);
   }
 
@@ -54,7 +54,7 @@ export default class ListApplicationUserComponent implements OnInit {
   }
 
   onLoadData(applicationUserState: boolean, typePerson: ETypePerson): void {
-    this.apiRequestService
+    this.apiRequestS
       .onGetList(`ApplicationUser/List/${applicationUserState}/${typePerson}`)
       .then((result: any) => {
         this.data = result;
@@ -102,20 +102,20 @@ export default class ListApplicationUserComponent implements OnInit {
 
   // Tarjeta de Usuraio
   onCardEmployee(applicationUserId: string) {
-    this.dialogHandlerService.openDialog(
+    this.dialogHandlerS.openDialog(
       CardEmployeeComponent,
       { applicationUserId },
       'Colaborador',
-      this.dialogHandlerService.dialogSizeMd
+      this.dialogHandlerS.dialogSizeMd
     );
   }
   onAddOrEdit(applicationUserId: string, title: string) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         AddOrEditApplicationUserComponent,
         { applicationUserId },
         title,
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: any) => {
         if (result) this.onLoadData(this.applicationUserState, this.typePerson);
@@ -123,19 +123,19 @@ export default class ListApplicationUserComponent implements OnInit {
   }
 
   onModalEditAccount(applicationUserId: string, email: string) {
-    this.dialogHandlerService.openDialog(
+    this.dialogHandlerS.openDialog(
       MdEditAccountComponent,
       {
         applicationUserId,
         email,
       },
       'Editar Cuenta',
-      this.dialogHandlerService.dialogSizeFull
+      this.dialogHandlerS.dialogSizeFull
     );
   }
 
   onToBlockAccount(applicationUserId: string): void {
-    this.apiRequestService
+    this.apiRequestS
       .onGetList('ApplicationUser/ToBlockAccount/' + applicationUserId)
       .then(() => {
         const registro = this.data.find(
@@ -147,7 +147,7 @@ export default class ListApplicationUserComponent implements OnInit {
   }
 
   onToUnlockAccount(applicationUserId: string): void {
-    this.apiRequestService
+    this.apiRequestS
       .onGetList('ApplicationUser/ToUnlockAccount/' + applicationUserId)
       .then(() => {
         const registro = this.data.find(
@@ -158,7 +158,7 @@ export default class ListApplicationUserComponent implements OnInit {
       });
   }
   onDelete(applicationUserId: string): void {
-    this.apiRequestService
+    this.apiRequestS
       .onDelete(`ApplicationUser/${applicationUserId}`)
       .then((result: boolean) => {
         if (result) {
@@ -171,13 +171,13 @@ export default class ListApplicationUserComponent implements OnInit {
   }
 
   onModalPermission(applicationUserId: string) {
-    this.dialogHandlerService.openDialog(
+    this.dialogHandlerS.openDialog(
       ModuleAppPermissionComponent,
       {
         applicationUserId,
       },
       'Actualizar permisos de Usuario',
-      this.dialogHandlerService.dialogSizeFull
+      this.dialogHandlerS.dialogSizeFull
     );
   }
 }

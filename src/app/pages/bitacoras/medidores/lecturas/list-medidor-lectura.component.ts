@@ -16,8 +16,8 @@ import FormMedidorLecturaComponent from './form-medidor-lectura.component';
   imports: [LuxuryAppComponentsModule],
 })
 export default class ListMedidorLecturaComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
   authS = inject(AuthService);
   route = inject(ActivatedRoute);
 
@@ -35,7 +35,7 @@ export default class ListMedidorLecturaComponent implements OnInit {
 
   onLoadData() {
     const urlApi = `MedidorLectura/GetAll/${this.medidorId}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
   }
@@ -61,7 +61,7 @@ export default class ListMedidorLecturaComponent implements OnInit {
     FileSaver.saveAs(data, fileName + EXCEL_EXTENSION);
   }
   onDelete(id: number) {
-    this.apiRequestService
+    this.apiRequestS
       .onDelete(`MedidorLectura/${id}`)
       .then((result: boolean) => {
         if (result) this.data = this.data.filter((item) => item.id !== id);
@@ -69,7 +69,7 @@ export default class ListMedidorLecturaComponent implements OnInit {
   }
 
   modalAddEdit(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         AdminFormMedidorLecturaComponent,
         {
@@ -77,7 +77,7 @@ export default class ListMedidorLecturaComponent implements OnInit {
           medidorId: this.medidorId,
         },
         data.title,
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();
@@ -85,7 +85,7 @@ export default class ListMedidorLecturaComponent implements OnInit {
   }
 
   modalMedidorLecturaAddEdit(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         FormMedidorLecturaComponent,
         {
@@ -93,7 +93,7 @@ export default class ListMedidorLecturaComponent implements OnInit {
           id: 0,
         },
         data.title,
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();

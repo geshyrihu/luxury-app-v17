@@ -12,9 +12,9 @@ import { DateService } from 'src/app/core/services/date.service';
   imports: [LuxuryAppComponentsModule, EAreaMinutasDetallesPipe],
 })
 export default class AddOrEditMeetingDetailComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   config = inject(DynamicDialogConfig);
-  dateService = inject(DateService);
+  dateS = inject(DateService);
 
   status: number = 0;
   meetingId: number = 0;
@@ -29,11 +29,11 @@ export default class AddOrEditMeetingDetailComponent implements OnInit {
     this.data.sort();
   }
   convertirFecha(item: any) {
-    return this.dateService.getDateFormat(item);
+    return this.dateS.getDateFormat(item);
   }
   onLoadData() {
     const urlApi = `MeetingsDetails/DetallesFiltro/${this.meetingId}/${this.status}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
   }

@@ -13,12 +13,12 @@ import { TopbarModule } from './topbar.module';
 })
 export class TopbarComponent implements OnInit {
   authS = inject(AuthService);
-  custIdService = inject(CustomerIdService);
+  customerIdS = inject(CustomerIdService);
 
   @Output() settingsButtonClicked = new EventEmitter();
 
   customerId: number;
-  customerId$: Observable<number> = this.custIdService.getCustomerId$();
+  customerId$: Observable<number> = this.customerIdS.getCustomerId$();
 
   customerName = this.authS.infoUserAuthDto.customer;
   customerPhotoPath = this.authS.infoUserAuthDto.customerPhotoPath;
@@ -39,8 +39,8 @@ export class TopbarComponent implements OnInit {
       this.customerName = this.authS.infoUserAuthDto.customer;
       this.customerPhotoPath = this.authS.infoUserAuthDto.customerPhotoPath;
     } else {
-      this.customerName = this.custIdService.nameCustomer;
-      this.customerPhotoPath = this.custIdService.photoPath;
+      this.customerName = this.customerIdS.nameCustomer;
+      this.customerPhotoPath = this.customerIdS.photoPath;
     }
   }
 

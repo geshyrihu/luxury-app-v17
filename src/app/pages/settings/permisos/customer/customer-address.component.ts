@@ -12,15 +12,15 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class CustomerAddressComponent implements OnInit {
-  formBuilder = inject(FormBuilder);
+  formB = inject(FormBuilder);
   ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
 
   submitting: boolean = false;
   customerId: number = 0;
 
-  form: FormGroup = this.formBuilder.group({
+  form: FormGroup = this.formB.group({
     id: [],
     customerId: ['', Validators.required],
     additionalDetails: [''],
@@ -40,7 +40,7 @@ export default class CustomerAddressComponent implements OnInit {
     if (this.customerId !== 0) this.onLoadData();
   }
   onLoadData() {
-    this.apiRequestService
+    this.apiRequestS
       .onGetItem(`customers/customeraddress/${this.customerId}`)
       .then((result: any) => {
         this.form.patchValue(result);
@@ -48,11 +48,11 @@ export default class CustomerAddressComponent implements OnInit {
   }
 
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
 
     this.submitting = true;
 
-    this.apiRequestService
+    this.apiRequestS
       .onPut(`customers/updatecustomeraddress`, this.form.value)
       .then((result: boolean) => {
         result ? this.ref.close(true) : (this.submitting = false);

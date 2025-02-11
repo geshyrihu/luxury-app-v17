@@ -12,10 +12,10 @@ import { DateService } from 'src/app/core/services/date.service';
   imports: [LuxuryAppComponentsModule],
 })
 export default class SoporteOrdenServicioComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  dateService = inject(DateService);
+  apiRequestS = inject(ApiRequestService);
+  dateS = inject(DateService);
   route = inject(ActivatedRoute);
-  custIdService = inject(CustomerIdService);
+  customerIdS = inject(CustomerIdService);
 
   id: string = '';
   item: any;
@@ -32,16 +32,14 @@ export default class SoporteOrdenServicioComponent implements OnInit {
   }
   onLoadItem() {
     const urlApi = `ServiceOrders/SoporteOrdenServicio/${this.id}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
-      this.nameCarpetaFecha = this.dateService.getDateFormat(
-        result.fechaSolicitud
-      );
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
+      this.nameCarpetaFecha = this.dateS.getDateFormat(result.fechaSolicitud);
       this.item = result;
     });
   }
   onLoadData() {
-    const urlApi = `Customers/${this.custIdService.customerId}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    const urlApi = `Customers/${this.customerIdS.customerId}`;
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.dataCustomer = result;
       this.nameCustomer = result.nameCustomer;
       this.logoCustomer = result.photoPath;

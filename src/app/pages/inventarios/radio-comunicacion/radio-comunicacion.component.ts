@@ -16,18 +16,18 @@ import AddOrEditRadioComunicacionComponent from './addoredit-radio-comunicacion.
   imports: [LuxuryAppComponentsModule],
 })
 export default class RadioComunicacionComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
   authS = inject(AuthService);
-  custIdService = inject(CustomerIdService);
+  customerIdS = inject(CustomerIdService);
   data: IRadioComunicacion[] = [];
 
   ref: DynamicDialogRef;
 
-  customerId$: Observable<number> = this.custIdService.getCustomerId$();
+  customerId$: Observable<number> = this.customerIdS.getCustomerId$();
 
   ngOnInit(): void {
-    this.customerId$ = this.custIdService.getCustomerId$();
+    this.customerId$ = this.customerIdS.getCustomerId$();
     this.onLoadData();
     this.customerId$.subscribe(() => {
       this.onLoadData();
@@ -35,13 +35,13 @@ export default class RadioComunicacionComponent implements OnInit {
   }
 
   onLoadData() {
-    const urlApi = `RadioComunicacion/GetAll/${this.custIdService.customerId}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    const urlApi = `RadioComunicacion/GetAll/${this.customerIdS.customerId}`;
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
   }
   onDelete(id: number) {
-    this.apiRequestService
+    this.apiRequestS
       .onDelete(`RadioComunicacion/${id}`)
       .then((result: boolean) => {
         if (result) this.data = this.data.filter((item) => item.id !== id);
@@ -49,12 +49,12 @@ export default class RadioComunicacionComponent implements OnInit {
   }
 
   onModalAddOrEdit(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         AddOrEditRadioComunicacionComponent,
         data,
         data.title,
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();

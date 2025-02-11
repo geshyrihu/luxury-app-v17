@@ -17,16 +17,16 @@ import ServiceHistoryMachineryComponent from '../machineries/service-history-mac
   imports: [LuxuryAppComponentsModule],
 })
 export default class InventoryEngineSystemComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
-  custIdService = inject(CustomerIdService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
+  customerIdS = inject(CustomerIdService);
 
   // Declaración e inicialización de variables
   data: any[] = [];
   filteredData: any[] = [];
 
   ref: DynamicDialogRef; // Referencia a un cuadro de diálogo modal
-  customerId$: Observable<number> = this.custIdService.getCustomerId$();
+  customerId$: Observable<number> = this.customerIdS.getCustomerId$();
 
   ngOnInit(): void {
     this.onLoadData();
@@ -36,43 +36,43 @@ export default class InventoryEngineSystemComponent implements OnInit {
   }
 
   onLoadData() {
-    const urlApi = `InventoryEngineSystem/List/${this.custIdService.customerId}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    const urlApi = `InventoryEngineSystem/List/${this.customerIdS.customerId}`;
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
       this.filteredData = result;
     });
   }
 
   showModalFichatecnica(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         FichaTecnicaActivoComponent,
         data,
         'Ficha Técnica',
-        this.dialogHandlerService.dialogSizeFull
+        this.dialogHandlerS.dialogSizeFull
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();
       });
   }
   onBitacoraIndividual(machineryId: number) {
-    this.dialogHandlerService.openDialog(
+    this.dialogHandlerS.openDialog(
       BitacoraIndividualComponent,
       {
         machineryId: machineryId,
       },
       '',
-      this.dialogHandlerService.dialogSizeFull
+      this.dialogHandlerS.dialogSizeFull
     );
   }
   onServiceHistory(id: number) {
-    this.dialogHandlerService.openDialog(
+    this.dialogHandlerS.openDialog(
       ServiceHistoryMachineryComponent,
       {
         id: id,
       },
       '',
-      this.dialogHandlerService.dialogSizeFull
+      this.dialogHandlerS.dialogSizeFull
     );
   }
   // showModalListOrderService(id: number) {
@@ -83,7 +83,7 @@ export default class InventoryEngineSystemComponent implements OnInit {
   //         id: id,
   //       },
   //       'Servicios de Mantenimiento',
-  //       this.dialogHandlerService.dialogSizeFull
+  //       this.dialogHandlerS.dialogSizeFull
   //     )
   //     .then((result: any) => {
   //       if (result) this.onLoadData();
@@ -91,7 +91,7 @@ export default class InventoryEngineSystemComponent implements OnInit {
   // }
 
   showModalAddoredit(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         AddOrEditActivosComponent,
         {
@@ -100,7 +100,7 @@ export default class InventoryEngineSystemComponent implements OnInit {
           inventoryCategory: data.inventoryCategoryId,
         },
         data.title,
-        this.dialogHandlerService.dialogSizeFull
+        this.dialogHandlerS.dialogSizeFull
       )
       .then((result: any) => {
         if (result) this.onLoadData();

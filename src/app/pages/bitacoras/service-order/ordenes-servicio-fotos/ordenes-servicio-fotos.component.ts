@@ -13,8 +13,8 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 })
 export default class OrdenesServicioFotosComponent implements OnInit {
   config = inject(DynamicDialogConfig);
-  custIdService = inject(CustomerIdService);
-  apiRequestService = inject(ApiRequestService);
+  customerIdS = inject(CustomerIdService);
+  apiRequestS = inject(ApiRequestService);
   ref = inject(DynamicDialogRef);
 
   id: number = 0;
@@ -27,16 +27,16 @@ export default class OrdenesServicioFotosComponent implements OnInit {
     if (this.id !== 0) this.onLoadData();
   }
   onLoadData() {
-    const customerId = this.custIdService.customerId;
+    const customerId = this.customerIdS.customerId;
     const urlApi = `ServiceOrders/OrdenesServicioFotos/${this.id}/${customerId}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
   }
 
   deleteImg(id: number): void {
     const urlApi = `ServiceOrders/DeleteImg/${id}`;
-    this.apiRequestService.onDelete(urlApi).then((result: any) => {
+    this.apiRequestS.onDelete(urlApi).then((result: any) => {
       this.onLoadData();
     });
   }

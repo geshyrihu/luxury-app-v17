@@ -14,16 +14,16 @@ import { EmployeeAddOrEditService } from './employee-add-or-edit.service';
 })
 export default class EmployeeAddOrEditAdreessComponent implements OnInit {
   employeeAddOrEditService = inject(EmployeeAddOrEditService);
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   authS = inject(AuthService);
-  formBuilder = inject(FormBuilder);
+  formB = inject(FormBuilder);
 
   @Input() employeeId: string = '';
 
   addressId: string = '';
   submitting: boolean = false;
 
-  form: FormGroup = this.formBuilder.group({
+  form: FormGroup = this.formB.group({
     id: [''],
     city: ['', [Validators.required, Validators.maxLength(20)]],
     district: ['', [Validators.required, Validators.maxLength(60)]],
@@ -39,22 +39,20 @@ export default class EmployeeAddOrEditAdreessComponent implements OnInit {
   }
   onLoadData() {
     const urlApi = `EmployeeInternal/AddressData/${this.employeeId}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       this.form.patchValue(result);
       this.addressId = result.id;
     });
   }
 
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
     this.submitting = true;
 
     const urlApi = `EmployeeInternal/UpdateAddressData/${this.addressId}`;
-    this.apiRequestService
-      .onPut(urlApi, this.form.value)
-      .then((result: any) => {
-        this.form.patchValue(result);
-        this.submitting = false;
-      });
+    this.apiRequestS.onPut(urlApi, this.form.value).then((result: any) => {
+      this.form.patchValue(result);
+      this.submitting = false;
+    });
   }
 }

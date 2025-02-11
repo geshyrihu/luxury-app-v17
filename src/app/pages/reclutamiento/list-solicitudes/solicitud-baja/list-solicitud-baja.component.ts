@@ -18,9 +18,9 @@ import AddoreditSolicitudBajaComponent from './addoredit-solicitud-baja.componen
 })
 export default class ListSolicitudBajaComponent implements OnInit {
   authS = inject(AuthService);
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   filterRequestsService = inject(FilterRequestsService);
-  dialogHandlerService = inject(DialogHandlerService);
+  dialogHandlerS = inject(DialogHandlerService);
 
   data: any[] = [];
   ref: DynamicDialogRef;
@@ -34,26 +34,26 @@ export default class ListSolicitudBajaComponent implements OnInit {
   onLoadData() {
     const urlApi = `requestdismissal/list/`;
     const params = this.filterRequestsService.getParams();
-    this.apiRequestService.onGetList(urlApi, params).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi, params).then((result: any) => {
       this.data = result;
     });
   }
   onModalAddOrEdit(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         AddoreditSolicitudBajaComponent,
         {
           id: data.id,
         },
         data.title,
-        this.dialogHandlerService.dialogSizeFull
+        this.dialogHandlerS.dialogSizeFull
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();
       });
   }
   onDelete(id: number) {
-    this.apiRequestService
+    this.apiRequestS
       .onDelete(`RequestDismissal/${id}`)
       .then((result: boolean) => {
         if (result) this.data = this.data.filter((item) => item.id !== id);

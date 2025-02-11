@@ -15,8 +15,8 @@ import OrdenCompraComponent from '../orden-compra/orden-compra/orden-compra.comp
   imports: [LuxuryAppComponentsModule, CommonModule, NgbTooltip],
 })
 export default class OrdenesCompraCedulaListComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
   config = inject(DynamicDialogConfig);
   ordenCompraService = inject(OrdenCompraService);
 
@@ -32,7 +32,7 @@ export default class OrdenesCompraCedulaListComponent implements OnInit {
 
   onLoadData() {
     const urlApi = `OrdenCompra/compraspresupuesto/${this.partidaPresupuestalId}/${this.cedulaPresupuestalId}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
   }
@@ -72,13 +72,13 @@ export default class OrdenesCompraCedulaListComponent implements OnInit {
   onOrdenCompraModal(id: number) {
     this.ordenCompraService.setOrdenCompraId(id);
 
-    this.dialogHandlerService.openDialog(
+    this.dialogHandlerS.openDialog(
       OrdenCompraComponent,
       {
         id,
       },
       'Editar Orden de Compra',
-      this.dialogHandlerService.dialogSizeMd
+      this.dialogHandlerS.dialogSizeMd
     );
   }
 }

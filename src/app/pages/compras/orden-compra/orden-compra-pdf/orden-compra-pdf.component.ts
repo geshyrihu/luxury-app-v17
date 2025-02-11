@@ -10,7 +10,7 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
   imports: [LuxuryAppComponentsModule],
 })
 export default class OrdenCompraPdfComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   routeActive = inject(ActivatedRoute);
 
   model: any;
@@ -32,7 +32,7 @@ export default class OrdenCompraPdfComponent implements OnInit {
   }
 
   onLoadData() {
-    this.apiRequestService
+    this.apiRequestS
       .onGetItem(`ordencompra/Pdf/${this.ordenCompraId}`)
       .then((result: any) => {
         this.model = result;
@@ -68,7 +68,7 @@ export default class OrdenCompraPdfComponent implements OnInit {
 
   onGetOrdenCompraPresupuesto() {
     const urlApi = `OrdenCompraPresupuesto/GetAllForOrdenCompra/${this.ordenCompraId}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.ordenCompraPresupuesto = result;
     });
   }

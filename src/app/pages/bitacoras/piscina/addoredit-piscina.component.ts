@@ -15,12 +15,12 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class AddOrEditPiscinaComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   authS = inject(AuthService);
-  formBuilder = inject(FormBuilder);
+  formB = inject(FormBuilder);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
-  custIdService = inject(CustomerIdService);
+  customerIdS = inject(CustomerIdService);
 
   submitting: boolean = false;
 
@@ -39,7 +39,7 @@ export default class AddOrEditPiscinaComponent implements OnInit {
     this.id = this.config.data.id;
     if (this.id !== 0) this.onLoadData();
 
-    this.form = this.formBuilder.group({
+    this.form = this.formB.group({
       id: { value: this.id, disabled: true },
       name: ['', [Validators.required, Validators.maxLength(50)]],
       ubication: ['', [Validators.required, Validators.maxLength(50)]],
@@ -50,33 +50,33 @@ export default class AddOrEditPiscinaComponent implements OnInit {
       pathImage: [''],
       typePiscina: [null, Validators.required],
       applicationUserId: [this.authS.applicationUserId],
-      customerId: [this.custIdService.getCustomerId()],
+      customerId: [this.customerIdS.getCustomerId()],
     });
   }
 
   onLoadData() {
     const urlApi = `piscina/${this.id}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       this.model = result;
       this.form.patchValue(result);
     });
   }
 
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
 
     const formDataDto = this.onCreateFormData(this.form.value);
 
     this.submitting = true;
 
     if (this.id === 0) {
-      this.apiRequestService
+      this.apiRequestS
         .onPost('piscina', formDataDto)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.apiRequestService
+      this.apiRequestS
         .onPut(`piscina/${this.id}`, formDataDto)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
@@ -90,7 +90,7 @@ export default class AddOrEditPiscinaComponent implements OnInit {
     formData.append('ubication', dto.ubication);
     formData.append('volumen', dto.volumen);
     formData.append('typePiscina', String(dto.typePiscina));
-    formData.append('customerId', String(this.custIdService.customerId));
+    formData.append('customerId', String(this.customerIdS.customerId));
     formData.append('applicationUserId', String(this.authS.applicationUserId));
     formData.append('customerId', String(dto.customerId));
     if (dto.pathImage) {
@@ -105,10 +105,8 @@ export default class AddOrEditPiscinaComponent implements OnInit {
   }
 
   onLoadEnumSelectItem() {
-    this.apiRequestService
-      .onGetEnumSelectItem(`ETypePiscina`)
-      .then((result: any) => {
-        this.cb_typePiscina = result;
-      });
+    this.apiRequestS.onGetEnumSelectItem(`ETypePiscina`).then((result: any) => {
+      this.cb_typePiscina = result;
+    });
   }
 }

@@ -10,7 +10,7 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
   templateUrl: './customer-modul-list.component.html',
 })
 export default class CustomerModulListComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
 
   // Declaración e inicialización de variables
   data: any[] = [];
@@ -26,14 +26,14 @@ export default class CustomerModulListComponent implements OnInit {
 
   onLoadData(state: boolean): void {
     const urlApi = `ModuleAppCustomer/Customers/${state}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
   }
 
   // Funcion para eliminar un banco y refres
   onDelete(id: number) {
-    this.apiRequestService.onDelete(`ModuleAppCustomer/${id}`).then((_) => {
+    this.apiRequestS.onDelete(`ModuleAppCustomer/${id}`).then((_) => {
       // Actualizamos el signal para eliminar el elemento de la lista
       this.data.filter((item) => item.id !== id);
     });

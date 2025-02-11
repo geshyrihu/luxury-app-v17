@@ -24,14 +24,14 @@ import { TicketGroupService } from '../../ticket.service';
   providers: [EnumSelectService],
 })
 export default class TicketMessageViewComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   authS = inject(AuthService);
-  custIdService = inject(CustomerIdService);
-  formBuilder = inject(FormBuilder);
+  customerIdS = inject(CustomerIdService);
+  formB = inject(FormBuilder);
   notificationPushService = inject(SignalRService);
   ticketGroupService = inject(TicketGroupService);
   route = inject(ActivatedRoute);
-  enumSelectService = inject(EnumSelectService);
+  enumSelectS = inject(EnumSelectService);
 
   id: string = '';
   ticketGroupId: string = '';
@@ -41,7 +41,7 @@ export default class TicketMessageViewComponent implements OnInit {
   cb_ticket_group: ISelectItem[] = [];
   cb_user: any[] = [];
 
-  form: FormGroup = this.formBuilder.group({
+  form: FormGroup = this.formB.group({
     id: new FormControl(
       { value: this.id, disabled: true },
       Validators.required
@@ -51,7 +51,7 @@ export default class TicketMessageViewComponent implements OnInit {
     description: ['', [Validators.required, Validators.maxLength(150)]], // Descripción
     priority: [1, Validators.required], // Prioridad (enum)
     creatorId: [this.authS.applicationUserId], // Id del creador
-    customerId: [this.custIdService.customerId], // Id del cliente
+    customerId: [this.customerIdS.customerId], // Id del cliente
     beforeWork: [null], // Imagen del trabajo previo
     afterWork: [null], // Imagen del trabajo posterior
     beforeWorkPreview: [null], // Vista previa de BeforeWork
@@ -66,7 +66,7 @@ export default class TicketMessageViewComponent implements OnInit {
   applicationUserId: string = this.authS.applicationUserId;
   notificationUserId: string = '';
   async ngOnInit() {
-    this.cb_priority = await this.enumSelectService.priorityLevel();
+    this.cb_priority = await this.enumSelectS.priorityLevel();
     // Obtener el ticketId de los parámetros de la ruta
     this.route.params.subscribe((params) => {
       this.id = params['ticketMessageId'];
@@ -85,13 +85,13 @@ export default class TicketMessageViewComponent implements OnInit {
 
   UpdateToRead() {
     const urlApi = `NotificationUser/UpdateToRead/${this.applicationUserId}/${this.notificationUserId}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       this.notificationPushService.emitNotificationUpdate();
     });
   }
   onLoadTicketGroup() {
-    const urlApi = `TicketGroupList/${this.custIdService.getCustomerId()}`;
-    this.apiRequestService.onGetSelectItem(urlApi).then((result: any) => {
+    const urlApi = `TicketGroupList/${this.customerIdS.getCustomerId()}`;
+    this.apiRequestS.onGetSelectItem(urlApi).then((result: any) => {
       this.cb_ticket_group = result;
     });
   }
@@ -113,7 +113,7 @@ export default class TicketMessageViewComponent implements OnInit {
 
   onLoadData() {
     const urlApi = `Tickets/${this.id}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       this.form.patchValue(result);
       // Si las imágenes existen, carga las vistas previas
       // Si las imágenes existen, establece las vistas previas con la URL completa
@@ -190,7 +190,7 @@ export default class TicketMessageViewComponent implements OnInit {
       });
 
       if (this.id !== '') {
-        this.apiRequestService
+        this.apiRequestS
           .onPut(`Tickets/Update/${this.id}`, formData)
           .then((result: any) => {
             if (result.beforeWorkPreview) {
@@ -217,7 +217,7 @@ export default class TicketMessageViewComponent implements OnInit {
 
   onLoadUsers() {
     const urlApi = `Tickets/Participant/${this.ticketGroupId}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.cb_user = result;
     });
   }

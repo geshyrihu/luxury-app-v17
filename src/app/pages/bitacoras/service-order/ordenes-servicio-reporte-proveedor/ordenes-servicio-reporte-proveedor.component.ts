@@ -15,9 +15,9 @@ export default class OrdenesServicioReporteProveedorComponent
   implements OnInit
 {
   config = inject(DynamicDialogConfig);
-  custIdService = inject(CustomerIdService);
-  messageService = inject(MessageService);
-  apiRequestService = inject(ApiRequestService);
+  customerIdS = inject(CustomerIdService);
+  messageS = inject(MessageService);
+  apiRequestS = inject(ApiRequestService);
   ref = inject(DynamicDialogRef);
 
   id: number = 0;
@@ -28,9 +28,9 @@ export default class OrdenesServicioReporteProveedorComponent
     if (this.id !== 0) this.onLoadData();
   }
   onLoadData() {
-    const customerId = this.custIdService.getCustomerId();
+    const customerId = this.customerIdS.getCustomerId();
     const urlApi = `ServiceOrders/OrdenesServicioReporteProveedor/${this.id}/${customerId}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       // Actualizamos el valor del signal con los datos recibidos
       this.data = result;
     });
@@ -39,7 +39,7 @@ export default class OrdenesServicioReporteProveedorComponent
   deleteDoc(id: number): void {
     const urlApi = `ServiceOrders/DeleteDocument/${id}`;
 
-    this.apiRequestService.onDelete(urlApi).then((result: boolean) => {
+    this.apiRequestS.onDelete(urlApi).then((result: boolean) => {
       this.onLoadData();
     });
   }

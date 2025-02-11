@@ -23,9 +23,9 @@ import LoadingSpinnerComponent from 'src/app/custom-components/loading-spinner/l
 export default class TicketGroupParticipantComponent
   implements OnInit, OnDestroy
 {
-  apiRequestService = inject(ApiRequestService);
-  custIdService = inject(CustomerIdService);
-  formBuilder = inject(FormBuilder);
+  apiRequestS = inject(ApiRequestService);
+  customerIdS = inject(CustomerIdService);
+  formB = inject(FormBuilder);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
 
@@ -41,7 +41,7 @@ export default class TicketGroupParticipantComponent
     { label: 'Administrador', value: true },
   ];
 
-  form = this.formBuilder.group({
+  form = this.formB.group({
     id: { value: this.id, disabled: true },
     ticketGroupId: [this.config.data.id, Validators.required],
     applicationUserId: ['', Validators.required],
@@ -54,10 +54,10 @@ export default class TicketGroupParticipantComponent
   }
 
   onLoadAppUsers() {
-    const urlApi = `TicketGroupParticipant/Participants/${this.custIdService.getCustomerId()}/${
+    const urlApi = `TicketGroupParticipant/Participants/${this.customerIdS.getCustomerId()}/${
       this.config.data.id
     }`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.cb_application_user = result;
     });
   }
@@ -65,7 +65,7 @@ export default class TicketGroupParticipantComponent
   onLoadExistingParticipants() {
     this.loading_existing_participant = true;
     const urlApi = `TicketGroupParticipant/ExistingParticipants/${this.config.data.id}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.loading_existing_participant = false;
       this.cb_existing_Participant = result;
     });
@@ -81,17 +81,17 @@ export default class TicketGroupParticipantComponent
     });
   }
   onSubmit(): void {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
     this.submitting = true;
 
     if (this.id === '') {
-      this.apiRequestService
+      this.apiRequestS
         .onPost(`TicketGroupParticipant`, this.form.value)
         .then((result: boolean) => {
           this.onCleanForm();
         });
     } else {
-      this.apiRequestService
+      this.apiRequestS
         .onPut(`TicketGroupParticipant/${this.id}`, this.form.value)
         .then((result: boolean) => {
           this.onCleanForm();
@@ -111,7 +111,7 @@ export default class TicketGroupParticipantComponent
   }
 
   onDelete(id: number) {
-    this.apiRequestService
+    this.apiRequestS
       .onDelete(`TicketGroupParticipant/${id}`)
       .then((result: boolean) => {
         if (result)

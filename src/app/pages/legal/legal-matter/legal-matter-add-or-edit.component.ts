@@ -14,9 +14,9 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   providers: [],
 })
 export default class LegalMatterCategoryComponent {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   config = inject(DynamicDialogConfig);
-  formBuilder = inject(FormBuilder);
+  formB = inject(FormBuilder);
   ref = inject(DynamicDialogRef);
 
   id: string = '';
@@ -32,7 +32,7 @@ export default class LegalMatterCategoryComponent {
     },
   ];
 
-  form: FormGroup = this.formBuilder.group({
+  form: FormGroup = this.formB.group({
     id: { value: this.id, disabled: true },
     legalMatterCategoryId: [''],
     legalMatterCategory: ['', [Validators.required, Validators.maxLength(100)]],
@@ -47,7 +47,7 @@ export default class LegalMatterCategoryComponent {
   }
   onLoadData() {
     const urlApi = `LegalMatter/${this.id}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       this.form.patchValue(result);
     });
   }
@@ -55,22 +55,22 @@ export default class LegalMatterCategoryComponent {
 
   onCategories() {
     const urlApi = `LegalMatter/Categories`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.cb_categories = result;
     });
   }
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
     this.submitting = true;
 
     if (this.id === '') {
-      this.apiRequestService
+      this.apiRequestS
         .onPost(`LegalMatter`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.apiRequestService
+      this.apiRequestS
         .onPut(`LegalMatter/${this.id}`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);

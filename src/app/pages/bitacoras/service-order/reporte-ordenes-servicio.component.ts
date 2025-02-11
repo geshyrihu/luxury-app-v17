@@ -12,9 +12,9 @@ import { PeriodoMonthService } from 'src/app/core/services/periodo-month.service
   imports: [LuxuryAppComponentsModule],
 })
 export default class ReporteOrdenesServicioComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  custIdService = inject(CustomerIdService);
-  dateService = inject(DateService);
+  apiRequestS = inject(ApiRequestService);
+  customerIdS = inject(CustomerIdService);
+  dateS = inject(DateService);
   periodoMonthService = inject(PeriodoMonthService);
 
   data: any[] = [];
@@ -31,9 +31,9 @@ export default class ReporteOrdenesServicioComponent implements OnInit {
   }
   //TODO: Centralizar obtener ifno de customer...
   onLoadDataCustomer() {
-    const urlApi = 'Customers/' + this.custIdService.customerId;
+    const urlApi = 'Customers/' + this.customerIdS.customerId;
 
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       this.dataCustomer = result;
       this.nameCustomer = result.nameCustomer;
       this.logoCustomer = result.photoPath;
@@ -41,13 +41,13 @@ export default class ReporteOrdenesServicioComponent implements OnInit {
   }
 
   onLoadData() {
-    const customerId = this.custIdService.customerId;
-    const periodo = `${this.dateService.getDateFormat(
+    const customerId = this.customerIdS.customerId;
+    const periodo = `${this.dateS.getDateFormat(
       this.periodoMonthService.getPeriodoInicio
     )}-01`;
     const urlApi = `ServiceOrders/ReporteOrdenesServicio/${customerId}/${periodo}`;
 
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       this.data = result;
       this.nameCarpetaFecha = this.data[0].nameFolder;
     });

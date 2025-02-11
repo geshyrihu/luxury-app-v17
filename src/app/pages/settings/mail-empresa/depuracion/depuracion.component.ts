@@ -11,13 +11,13 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
   standalone: true,
 })
 export default class DepuracionComponent {
-  apiRequestService = inject(ApiRequestService);
-  custIdService = inject(CustomerIdService);
+  apiRequestS = inject(ApiRequestService);
+  customerIdS = inject(CustomerIdService);
   customToastService = inject(CustomToastService);
 
   MigrateAmenities(path: string) {
     const urlApi = `UpdateDataBase/${path}`;
-    this.apiRequestService.onGetList(urlApi).then(() => {
+    this.apiRequestS.onGetList(urlApi).then(() => {
       this.customToastService.onShowSuccess();
       this.customToastService.onClose();
     });
@@ -25,7 +25,7 @@ export default class DepuracionComponent {
   MigrateEquipos(path: string) {
     const urlApi = `UpdateDataBase/${path}`;
 
-    this.apiRequestService.onGetList(urlApi).then(() => {
+    this.apiRequestS.onGetList(urlApi).then(() => {
       this.customToastService.onShowSuccess();
       this.customToastService.onClose();
     });
@@ -33,7 +33,7 @@ export default class DepuracionComponent {
   DeleteDuplicateModuleAppRol(path: string) {
     const urlApi = `UpdateDataBase/${path}`;
 
-    this.apiRequestService.onGetList(urlApi).then(() => {
+    this.apiRequestS.onGetList(urlApi).then(() => {
       this.customToastService.onShowSuccess();
       this.customToastService.onClose();
     });
@@ -41,6 +41,6 @@ export default class DepuracionComponent {
   MyModuleApp(path: string) {
     const urlApi = `UpdateDataBase/${path}`;
 
-    this.apiRequestService.onGetList(urlApi).then((resut) => {});
+    this.apiRequestS.onGetList(urlApi).then((resut) => {});
   }
 }

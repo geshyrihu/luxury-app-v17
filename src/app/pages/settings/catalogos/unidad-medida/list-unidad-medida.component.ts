@@ -14,8 +14,8 @@ import AddOrEditUnidadMedidaComponent from './addoredit-unidad-medida.component'
 })
 export default class ListUnidadMedidaComponent implements OnInit {
   authS = inject(AuthService);
-  dialogHandlerService = inject(DialogHandlerService);
-  apiRequestService = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
+  apiRequestS = inject(ApiRequestService);
 
   data: any[] = [];
 
@@ -26,26 +26,24 @@ export default class ListUnidadMedidaComponent implements OnInit {
   }
 
   onLoadData() {
-    this.apiRequestService.onGetList('UnidadMedida').then((result: any) => {
+    this.apiRequestS.onGetList('UnidadMedida').then((result: any) => {
       this.data = result;
     });
   }
 
   onDelete(id: number) {
-    this.apiRequestService
-      .onDelete(`unidadmedida/${id}`)
-      .then((result: boolean) => {
-        if (result) this.data = this.data.filter((item) => item.id !== id);
-      });
+    this.apiRequestS.onDelete(`unidadmedida/${id}`).then((result: boolean) => {
+      if (result) this.data = this.data.filter((item) => item.id !== id);
+    });
   }
 
   showModalAddOrEdit(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         AddOrEditUnidadMedidaComponent,
         data,
         data.title,
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();

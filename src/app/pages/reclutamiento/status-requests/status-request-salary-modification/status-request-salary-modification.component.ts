@@ -21,9 +21,9 @@ export default class StatusRequestSalaryModificationComponent
   implements OnInit
 {
   private statusSolicitudVacanteService = inject(StatusSolicitudVacanteService);
-  apiRequestService = inject(ApiRequestService);
-  custIdService = inject(CustomerIdService);
-  dialogHandlerService = inject(DialogHandlerService);
+  apiRequestS = inject(ApiRequestService);
+  customerIdS = inject(CustomerIdService);
+  dialogHandlerS = inject(DialogHandlerService);
   router = inject(Router);
   authS = inject(AuthService);
 
@@ -43,33 +43,33 @@ export default class StatusRequestSalaryModificationComponent
 
   onLoadData() {
     const urlApi = `RequestSalaryModification/${this.workPositionId}/${this.employeeId}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
   }
 
   //Ver tarjeta de Colaborador
   onCardEmployee(applicationUserId: string) {
-    this.dialogHandlerService.openDialog(
+    this.dialogHandlerS.openDialog(
       CardEmployeeComponent,
       {
         applicationUserId,
       },
       'Tarjeta de colaborador',
-      this.dialogHandlerService.dialogSizeMd
+      this.dialogHandlerS.dialogSizeMd
     );
   }
 
   //Editar solicitud de baja
   onModalAddOrEdit(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         AddOrEditStatusRequestSalaryModificationComponent,
         {
           id: data.id,
         },
         data.title,
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();
@@ -78,7 +78,7 @@ export default class StatusRequestSalaryModificationComponent
 
   //Eliminar solicitud de baja
   onDelete(id: number) {
-    this.apiRequestService
+    this.apiRequestS
       .onDelete(`RequestSalaryModification/${id}`)
       .then((result: boolean) => {
         if (result) this.data = this.data.filter((item) => item.id !== id);

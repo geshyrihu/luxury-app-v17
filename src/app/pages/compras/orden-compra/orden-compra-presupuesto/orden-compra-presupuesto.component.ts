@@ -15,10 +15,10 @@ const fechaActual = new Date();
   imports: [LuxuryAppComponentsModule],
 })
 export default class OrdenCompraPresupuestoComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   authS = inject(AuthService);
   config = inject(DynamicDialogConfig);
-  custIdService = inject(CustomerIdService);
+  customerIdS = inject(CustomerIdService);
   ordenCompraService = inject(OrdenCompraService);
   ref = inject(DynamicDialogRef);
 
@@ -33,14 +33,14 @@ export default class OrdenCompraPresupuestoComponent implements OnInit {
   submitting: boolean = false;
 
   ngOnInit(): void {
-    this.onLoadCedulasCustomer(this.custIdService.getCustomerId());
+    this.onLoadCedulasCustomer(this.customerIdS.getCustomerId());
     this.total = this.ordenCompraService.getTotalPorCubrir();
     this.ordenCompraId = this.config.data.ordenCompraId;
   }
   onLoadData() {
     const urlApi = `OrdenCompraPresupuesto/GetAll/${this.cedulaId}/${this.ordenCompraId}`;
 
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
       this.data.forEach(
         (x) => (
@@ -52,7 +52,7 @@ export default class OrdenCompraPresupuestoComponent implements OnInit {
   onSubmit(partidaPresupuestal: any) {
     this.submitting = true;
 
-    this.apiRequestService
+    this.apiRequestS
       .onPost(`OrdenCompraPresupuesto`, partidaPresupuestal)
       .then((result: boolean) => {
         const valor =
@@ -72,7 +72,7 @@ export default class OrdenCompraPresupuestoComponent implements OnInit {
 
   onLoadCedulasCustomer(customerId: number) {
     const urlApi = `CedulaPresupuestal/GetCedulas/${customerId}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       if (result) {
         this.cedulaId = result[0].value;
         this.onLoadData();

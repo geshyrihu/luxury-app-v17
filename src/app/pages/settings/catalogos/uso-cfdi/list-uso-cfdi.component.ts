@@ -15,8 +15,8 @@ import AddoreditUsoCFDIComponent from './addoredit-uso-cfdi.component';
 })
 export default class ListUsoCfdiComponent implements OnInit {
   authS = inject(AuthService);
-  dialogHandlerService = inject(DialogHandlerService);
-  apiRequestService = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
+  apiRequestS = inject(ApiRequestService);
 
   data: IUseCFDI[] = [];
 
@@ -25,24 +25,24 @@ export default class ListUsoCfdiComponent implements OnInit {
     this.onLoadData();
   }
   onLoadData() {
-    this.apiRequestService.onGetList('UsoCfdi').then((result: any) => {
+    this.apiRequestS.onGetList('UsoCfdi').then((result: any) => {
       this.data = result;
     });
   }
 
   onDelete(id: number) {
-    this.apiRequestService.onDelete(`UsoCfdi/${id}`).then((result: boolean) => {
+    this.apiRequestS.onDelete(`UsoCfdi/${id}`).then((result: boolean) => {
       if (result) this.data = this.data.filter((item) => item.id !== id);
     });
   }
 
   showModalAddOrEdit(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         AddoreditUsoCFDIComponent,
         data,
         data.title,
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();

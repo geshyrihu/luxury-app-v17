@@ -12,8 +12,8 @@ import InspectionReviewsCatalogAddoreditComponent from '../inspection-reviews-ca
   templateUrl: './inspection-reviews-catalog.component.html',
 })
 export default class InspectionReviewsCatalogComponent {
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
 
   // Declaración e inicialización de variables
   dataSignal = signal<any>(null);
@@ -25,7 +25,7 @@ export default class InspectionReviewsCatalogComponent {
 
   onLoadData() {
     const urlApi = `InspectionReviewsCatalog`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       // Actualizamos el valor del signal con los datos recibidos
       this.dataSignal.set(result);
     });
@@ -33,7 +33,7 @@ export default class InspectionReviewsCatalogComponent {
 
   // Funcion para eliminar un banco y refres
   onDelete(id: number) {
-    this.apiRequestService
+    this.apiRequestS
       .onDelete(`InspectionReviewsCatalog/${id}`)
       .then((result: boolean) => {
         // Actualizamos el signal para eliminar el elemento de la lista
@@ -43,12 +43,12 @@ export default class InspectionReviewsCatalogComponent {
 
   // Función para abrir un cuadro de diálogo modal para agregar o editar o crear
   onModalAddOrEdit(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         InspectionReviewsCatalogAddoreditComponent,
         data,
         data.title,
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();

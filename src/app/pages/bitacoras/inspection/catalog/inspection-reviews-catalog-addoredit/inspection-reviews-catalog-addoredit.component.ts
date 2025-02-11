@@ -14,15 +14,15 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 export default class InspectionReviewsCatalogAddoreditComponent
   implements OnInit
 {
-  apiRequestService = inject(ApiRequestService);
-  formBuilder = inject(FormBuilder);
+  apiRequestS = inject(ApiRequestService);
+  formB = inject(FormBuilder);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
 
   id: string = '';
   submitting: boolean = false;
 
-  form: FormGroup = this.formBuilder.group({
+  form: FormGroup = this.formB.group({
     id: { value: this.id, disabled: true },
     description: ['', [Validators.required, Validators.maxLength(100)]],
   });
@@ -33,22 +33,22 @@ export default class InspectionReviewsCatalogAddoreditComponent
   }
   onLoadData() {
     const urlApi = `InspectionReviewsCatalog/${this.id}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       this.form.patchValue(result);
     });
   }
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
     this.submitting = true;
 
     if (this.id === '') {
-      this.apiRequestService
+      this.apiRequestS
         .onPost(`InspectionReviewsCatalog`, this.form.value)
         .then((result: any) => {
           result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.apiRequestService
+      this.apiRequestS
         .onPut(`InspectionReviewsCatalog/${this.id}`, this.form.value)
         .then((result: any) => {
           result ? this.ref.close(true) : (this.submitting = false);

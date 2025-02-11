@@ -16,12 +16,12 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   providers: [EnumSelectService],
 })
 export default class OrdenCompraDatosPagoComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   authS = inject(AuthService);
-  formBuilder = inject(FormBuilder);
+  formB = inject(FormBuilder);
   ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);
-  enumSelectService = inject(EnumSelectService);
+  enumSelectS = inject(EnumSelectService);
 
   submitting: boolean = false;
 
@@ -31,7 +31,7 @@ export default class OrdenCompraDatosPagoComponent implements OnInit {
   cb_payment_method: ISelectItem[] = [];
   cb_usoCfdi: ISelectItem[] = [];
   cb_tipoGasto: ISelectItem[] = [];
-  form: FormGroup = this.formBuilder.group({
+  form: FormGroup = this.formB.group({
     id: [0],
     ordenCompraId: [0],
     formaDePagoId: [0],
@@ -54,37 +54,33 @@ export default class OrdenCompraDatosPagoComponent implements OnInit {
     this.ordenCompraDatosPagoId =
       this.config.data.ordenCompra.ordenCompraDatosPago.id;
 
-    this.apiRequestService
-      .onGetSelectItem('Providers')
-      .then((response: any) => {
-        this.cb_providers = response;
-      });
+    this.apiRequestS.onGetSelectItem('Providers').then((response: any) => {
+      this.cb_providers = response;
+    });
 
-    this.apiRequestService
-      .onGetSelectItem('PaymentMethod')
-      .then((response: any) => {
-        this.cb_payment_method = response;
-      });
+    this.apiRequestS.onGetSelectItem('PaymentMethod').then((response: any) => {
+      this.cb_payment_method = response;
+    });
 
-    this.apiRequestService.onGetSelectItem('UseCFDI').then((response: any) => {
+    this.apiRequestS.onGetSelectItem('UseCFDI').then((response: any) => {
       this.cb_usoCfdi = response;
     });
 
-    this.apiRequestService.onGetSelectItem('WayToPay').then((response: any) => {
+    this.apiRequestS.onGetSelectItem('WayToPay').then((response: any) => {
       this.cb_formaPago = response;
     });
 
-    this.apiRequestService
+    this.apiRequestS
       .onGetItem(`OrdenCompraDatosPago/${this.ordenCompraDatosPagoId}`)
       .then((result: any) => {
         this.form.patchValue(result);
       });
-    this.cb_tipoGasto = await this.enumSelectService.tipoGasto();
+    this.cb_tipoGasto = await this.enumSelectS.tipoGasto();
   }
   onSubmit() {
     this.submitting = true;
 
-    this.apiRequestService
+    this.apiRequestS
       .onPut(
         `OrdenCompraDatosPago/${this.ordenCompraDatosPagoId}`,
         this.form.value

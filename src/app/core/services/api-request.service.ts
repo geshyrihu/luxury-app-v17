@@ -10,7 +10,7 @@ import { DataConnectorService } from './data.service';
 })
 export class ApiRequestService implements OnDestroy {
   customToastService = inject(CustomToastService);
-  dataService = inject(DataConnectorService);
+  dataConnectorS = inject(DataConnectorService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
@@ -20,7 +20,7 @@ export class ApiRequestService implements OnDestroy {
     this.customToastService.onLoading();
     try {
       await lastValueFrom(
-        this.dataService.delete(urlApi).pipe(
+        this.dataConnectorS.delete(urlApi).pipe(
           takeUntil(this.destroy$) // Cancelar la suscripción cuando el componente se destruye
         )
       );
@@ -40,7 +40,7 @@ export class ApiRequestService implements OnDestroy {
     this.customToastService.onLoading();
     try {
       const responseData = await lastValueFrom(
-        this.dataService
+        this.dataConnectorS
           .get<T>('selectitem/' + urlApi)
           .pipe(takeUntil(this.destroy$))
       );
@@ -60,7 +60,7 @@ export class ApiRequestService implements OnDestroy {
     this.customToastService.onLoading();
     try {
       const responseData = await lastValueFrom(
-        this.dataService
+        this.dataConnectorS
           .get<T>('EnumSelectItem/' + urlApi)
           .pipe(takeUntil(this.destroy$))
       );
@@ -81,7 +81,7 @@ export class ApiRequestService implements OnDestroy {
 
     try {
       const responseData = await lastValueFrom(
-        this.dataService
+        this.dataConnectorS
           .get<T>(urlApi, httpParams)
           .pipe(takeUntil(this.destroy$))
       );
@@ -103,7 +103,7 @@ export class ApiRequestService implements OnDestroy {
   ): Promise<T | null> {
     try {
       const responseData = await lastValueFrom(
-        this.dataService
+        this.dataConnectorS
           .get<T>(urlApi, httpParams)
           .pipe(takeUntil(this.destroy$))
       );
@@ -120,7 +120,7 @@ export class ApiRequestService implements OnDestroy {
   async onGetListNotLoading<T>(urlApi: string): Promise<T | null> {
     try {
       const responseData = await lastValueFrom(
-        this.dataService.get<T>(urlApi).pipe(takeUntil(this.destroy$))
+        this.dataConnectorS.get<T>(urlApi).pipe(takeUntil(this.destroy$))
       );
       console.log(`resp: ${urlApi}`, responseData.body);
       return responseData.body;
@@ -136,7 +136,7 @@ export class ApiRequestService implements OnDestroy {
     // Mostrar un mensaje de carga
     try {
       const responseData = await lastValueFrom(
-        this.dataService.get<T>(urlApi).pipe(takeUntil(this.destroy$))
+        this.dataConnectorS.get<T>(urlApi).pipe(takeUntil(this.destroy$))
       );
       console.log(`resp: ${urlApi}`, responseData.body);
       // Cuando se completa la carga con éxito, mostrar un mensaje de éxito y resolver la promesa con los datos
@@ -154,7 +154,7 @@ export class ApiRequestService implements OnDestroy {
     this.customToastService.onLoading();
     try {
       const responseData = await lastValueFrom(
-        this.dataService.post<T>(urlApi, data).pipe(takeUntil(this.destroy$))
+        this.dataConnectorS.post<T>(urlApi, data).pipe(takeUntil(this.destroy$))
       );
       this.customToastService.onCloseToSuccess();
       console.log(`resp: ${urlApi}`, responseData.body);
@@ -176,7 +176,7 @@ export class ApiRequestService implements OnDestroy {
     this.customToastService.onLoading();
     try {
       const responseData = await lastValueFrom(
-        this.dataService.put<T>(urlApi, data).pipe(takeUntil(this.destroy$))
+        this.dataConnectorS.put<T>(urlApi, data).pipe(takeUntil(this.destroy$))
       );
       // Cuando se completa la carga con éxito, mostrar un mensaje de éxito y resolver la promesa con los datos
       if (showsuccess !== false) {
@@ -197,7 +197,7 @@ export class ApiRequestService implements OnDestroy {
     this.customToastService.onLoading();
 
     // Llamar a getFile para obtener el archivo Excel
-    this.dataService
+    this.dataConnectorS
       .getFile(urlApi)
       .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
@@ -225,7 +225,7 @@ export class ApiRequestService implements OnDestroy {
     this.customToastService.onLoading();
 
     // Llamar a getFile para obtener el archivo Excel
-    this.dataService
+    this.dataConnectorS
       .getFile(urlApi)
       .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({

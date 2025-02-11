@@ -15,10 +15,10 @@ import { MenuReportMaintenance } from './menu-report-maintenance';
   imports: [LuxuryAppComponentsModule, PagetitleReportComponent],
 })
 export default class MaintenanceReportsComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  dateService = inject(DateService);
+  apiRequestS = inject(ApiRequestService);
+  dateS = inject(DateService);
   periodoMonthService = inject(PeriodoMonthService);
-  custIdService = inject(CustomerIdService);
+  customerIdS = inject(CustomerIdService);
   menu: any;
   periodoInicial$: Observable<Date> =
     this.periodoMonthService.getPeriodoInicial$();

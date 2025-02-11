@@ -14,8 +14,8 @@ import { DateRangeStorageService } from '../../services/date-range-storage.servi
 export default class TicketMessageWeeklyReportPreviewComponent
   implements OnInit
 {
-  apiRequestService = inject(ApiRequestService);
-  custIdService = inject(CustomerIdService);
+  apiRequestS = inject(ApiRequestService);
+  customerIdS = inject(CustomerIdService);
   dateRangeStorageService = inject(DateRangeStorageService);
   ticketGroupService = inject(TicketGroupService);
 
@@ -30,8 +30,8 @@ export default class TicketMessageWeeklyReportPreviewComponent
   }
 
   onLoadData() {
-    const urlApi = `TicketReport/WeeklyReportPreview/${this.custIdService.customerId}/${this.year}/${this.numeroSemana}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    const urlApi = `TicketReport/WeeklyReportPreview/${this.customerIdS.customerId}/${this.year}/${this.numeroSemana}`;
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
   }

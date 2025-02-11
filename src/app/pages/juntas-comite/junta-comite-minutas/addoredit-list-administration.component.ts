@@ -1,16 +1,16 @@
-import { Component, Input, OnInit, inject } from "@angular/core";
-import LuxuryAppComponentsModule from "app/shared/luxuryapp-components.module";
-import { DynamicDialogConfig } from "primeng/dynamicdialog";
-import { ApiRequestService } from "src/app/core/services/api-request.service";
+import { Component, Input, OnInit, inject } from '@angular/core';
+import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
+import { DynamicDialogConfig } from 'primeng/dynamicdialog';
+import { ApiRequestService } from 'src/app/core/services/api-request.service';
 
 @Component({
-  selector: "app-addoredit-list-administration",
-  templateUrl: "./addoredit-list-administration.component.html",
+  selector: 'app-addoredit-list-administration',
+  templateUrl: './addoredit-list-administration.component.html',
   standalone: true,
   imports: [LuxuryAppComponentsModule],
 })
 export default class AddOrEditListAdministrationComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   config = inject(DynamicDialogConfig);
 
   @Input()
@@ -20,7 +20,7 @@ export default class AddOrEditListAdministrationComponent implements OnInit {
   cb_ParticipantAdministration: any[] = [];
   cb_Administration: any[] = [];
   participantsList: any[] = [];
-  administrationparticipante = "";
+  administrationparticipante = '';
   listaParticipantesAdministration: any[] = [];
 
   ngOnInit(): void {
@@ -29,7 +29,7 @@ export default class AddOrEditListAdministrationComponent implements OnInit {
   }
   onLoadCB() {
     const urlApi = `SelectItem/GetListAdministracionMinuta/${this.customerId}/${this.meetingId}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.cb_Administration = result;
     });
   }
@@ -38,13 +38,13 @@ export default class AddOrEditListAdministrationComponent implements OnInit {
     const urlApi = `MeetingAdministracion/AgregarParticipantesAdministracion/${
       this.meetingId
     }/${this.administrationparticipante}/${1}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       this.onLoadData();
       this.onLoadCB();
     });
   }
   onDelete(idParticipant: number): void {
-    this.apiRequestService
+    this.apiRequestS
       .onDelete(`MeetingAdministracion/${idParticipant}`)
       .then((result: boolean) => {
         this.onLoadData();
@@ -54,7 +54,7 @@ export default class AddOrEditListAdministrationComponent implements OnInit {
 
   onLoadData() {
     const urlApi = `MeetingAdministracion/ParticipantesAdministracion/${this.meetingId}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.listaParticipantesAdministration = result;
     });
   }

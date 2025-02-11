@@ -15,17 +15,17 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 export default class PeriodoCedulaPresupuestalAddoreditComponent
   implements OnInit
 {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   authS = inject(AuthService);
   config = inject(DynamicDialogConfig);
-  formBuilder = inject(FormBuilder);
+  formB = inject(FormBuilder);
   ref = inject(DynamicDialogRef);
 
   submitting: boolean = false;
 
   id: number = 0;
 
-  form: FormGroup = this.formBuilder.group({
+  form: FormGroup = this.formB.group({
     id: { value: this.id, disabled: true },
     desde: ['', Validators.required],
     hasta: ['', Validators.required],
@@ -38,21 +38,21 @@ export default class PeriodoCedulaPresupuestalAddoreditComponent
   }
   onLoadItem() {
     const url = `CedulaPresupuestal/GetCedulaPresuppuestal/${this.id}`;
-    this.apiRequestService.onGetItem(url).then((result: any) => {
+    this.apiRequestS.onGetItem(url).then((result: any) => {
       this.form.patchValue(result);
     });
   }
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
 
     if (this.id === 0) {
-      this.apiRequestService
+      this.apiRequestS
         .onPost(`CedulaPresupuestal`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.apiRequestService
+      this.apiRequestS
         .onPut(`CedulaPresupuestal/Actualizar/${this.id}`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);

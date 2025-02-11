@@ -17,31 +17,31 @@ import { PeriodoMonthService } from 'src/app/core/services/periodo-month.service
  * Page Title Component
  */
 export default class PagetitleReportComponent {
-  custIdService = inject(CustomerIdService);
-  apiRequestService = inject(ApiRequestService);
+  customerIdS = inject(CustomerIdService);
+  apiRequestS = inject(ApiRequestService);
   periodoMonthService = inject(PeriodoMonthService);
-  dateService = inject(DateService);
+  dateS = inject(DateService);
 
   @Input() title: string | undefined;
-  @Input() periodo: string = this.dateService.formatDateTimeToMMMMAAAA(
+  @Input() periodo: string = this.dateS.formatDateTimeToMMMMAAAA(
     this.periodoMonthService.getPeriodoInicio
   );
 
   nameCustomer: string = '';
   logoCustomer: string = '';
 
-  customerId$: Observable<number> = this.custIdService.getCustomerId$();
+  customerId$: Observable<number> = this.customerIdS.getCustomerId$();
 
   ngOnInit(): void {
     this.onLoadData();
-    this.customerId$ = this.custIdService.getCustomerId$();
+    this.customerId$ = this.customerIdS.getCustomerId$();
     this.customerId$.subscribe(() => {
       this.onLoadData();
     });
   }
   onLoadData() {
-    const urlApi = `Customers/${this.custIdService.customerId}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    const urlApi = `Customers/${this.customerIdS.customerId}`;
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       this.nameCustomer = result.nameCustomer;
       this.logoCustomer = result.photoPath;
     });

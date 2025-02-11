@@ -14,8 +14,8 @@ import { StorageService } from './storage.service';
 })
 export class CustomerIdService implements OnDestroy {
   // Inyección de dependencias necesarias
-  dataService = inject(DataConnectorService); // Servicio para realizar peticiones HTTP
-  private storageService = inject(StorageService); // Servicio para manejar almacenamiento local
+  dataConnectorS = inject(DataConnectorService); // Servicio para realizar peticiones HTTP
+  private storageS = inject(StorageService); // Servicio para manejar almacenamiento local
 
   private destroy$ = new Subject<void>(); // Utilizado para limpiar suscripciones cuando el servicio se destruye
 
@@ -39,14 +39,14 @@ export class CustomerIdService implements OnDestroy {
     if (this.authS.userTokenDto) {
       // Si no existe un customerId en el almacenamiento local, lo establece desde el token
       if (
-        this.storageService.retrieve('customerId') === null ||
-        this.storageService.retrieve('customerId') === undefined
+        this.storageS.retrieve('customerId') === null ||
+        this.storageS.retrieve('customerId') === undefined
       ) {
-        this.storageService.store('customerId', customerId);
+        this.storageS.store('customerId', customerId);
         this.customerId = customerId;
       } else {
         // Si ya existe, lo recupera del almacenamiento local
-        this.customerId = this.storageService.retrieve('customerId');
+        this.customerId = this.storageS.retrieve('customerId');
       }
     }
 
@@ -59,7 +59,7 @@ export class CustomerIdService implements OnDestroy {
    * @param customerId El nuevo ID del cliente.
    */
   setCustomerId(customerId: number) {
-    this.storageService.store('customerId', customerId); // Almacena el ID del cliente en el almacenamiento local
+    this.storageS.store('customerId', customerId); // Almacena el ID del cliente en el almacenamiento local
     this.customerId = customerId; // Actualiza la propiedad local
     this.customerId$.next(customerId); // Notifica a los observadores del cambio
     this.onLoadDataCustomer(customerId); // Carga los datos del cliente
@@ -87,7 +87,7 @@ export class CustomerIdService implements OnDestroy {
    * @param customerId ID del cliente a cargar.
    */
   onLoadDataCustomer(customerId: number): void {
-    this.dataService
+    this.dataConnectorS
       .get(`Customers/${customerId}`) // Realiza la petición HTTP
       .pipe(takeUntil(this.destroy$)) // Gestiona la suscripción para evitar fugas de memoria
       .subscribe({
@@ -106,7 +106,7 @@ export class CustomerIdService implements OnDestroy {
   }
   onLoadPermissions(customerId: number): void {
     const urlApi = `ModuleAppCustomer/${customerId}/Permissions`;
-    this.dataService
+    this.dataConnectorS
       .get(urlApi) // Realiza la petición HTTP
       .pipe(takeUntil(this.destroy$)) // Gestiona la suscripción para evitar fugas de memoria
       .subscribe({

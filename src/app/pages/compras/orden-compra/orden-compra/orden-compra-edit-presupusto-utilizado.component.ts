@@ -14,8 +14,8 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 export default class OrdenCompraEditPresupustoUtilizadoComponent
   implements OnInit
 {
-  apiRequestService = inject(ApiRequestService);
-  formBuilder = inject(FormBuilder);
+  apiRequestS = inject(ApiRequestService);
+  formB = inject(FormBuilder);
   ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);
 
@@ -23,7 +23,7 @@ export default class OrdenCompraEditPresupustoUtilizadoComponent
 
   id: number = 0;
 
-  form: FormGroup = this.formBuilder.group({
+  form: FormGroup = this.formB.group({
     id: { value: this.id, disabled: true },
     dineroUsado: ['', Validators.required],
     ordenCompraId: ['', Validators.required],
@@ -35,17 +35,17 @@ export default class OrdenCompraEditPresupustoUtilizadoComponent
     if (this.id !== 0) this.onLoadData();
   }
   onLoadData() {
-    this.apiRequestService
+    this.apiRequestS
       .onGetItem(`OrdenCompraPresupuesto/GetId/${this.id}`)
       .then((result: any) => {
         this.form.patchValue(result);
       });
   }
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
 
     this.submitting = true;
-    this.apiRequestService
+    this.apiRequestS
       .onPut(`OrdenCompraPresupuesto/${this.id}`, this.form.value)
       .then((result: boolean) => {
         result ? this.ref.close(true) : (this.submitting = false);

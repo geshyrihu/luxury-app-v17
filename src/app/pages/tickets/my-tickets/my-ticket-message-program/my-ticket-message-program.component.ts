@@ -14,17 +14,17 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class MyTicketMessageProgramComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   authS = inject(AuthService);
-  formBuilder = inject(FormBuilder);
-  custIdService = inject(CustomerIdService);
+  formB = inject(FormBuilder);
+  customerIdS = inject(CustomerIdService);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
 
   id: string = this.config.data.id;
   submitting: boolean = false;
 
-  form: FormGroup = this.formBuilder.group({
+  form: FormGroup = this.formB.group({
     id: { value: this.id, disabled: true },
     scheduledDate: [new Date(), Validators.required],
     assigneeId: ['', Validators.required],
@@ -37,17 +37,17 @@ export default class MyTicketMessageProgramComponent implements OnInit {
 
   onLoadData() {
     const urlApi = `Tickets/Programation/${this.id}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       this.form.patchValue({
         assigneeId: result.assigneeId,
       });
     });
   }
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
     this.submitting = true;
 
-    this.apiRequestService
+    this.apiRequestS
       .onPost(`Tickets/MyTicket/Programation/${this.id}`, this.form.value)
       .then((result: boolean) => {
         result ? this.ref.close(true) : (this.submitting = false);

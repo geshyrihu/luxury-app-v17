@@ -21,19 +21,19 @@ import RecorridoAddOrEditComponent from './addoreedit-recorrido.component';
 export default class ListRecorridoComponent implements OnInit {
   authS = inject(AuthService);
   confirmationService = inject(ConfirmationService);
-  custIdService = inject(CustomerIdService);
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
+  customerIdS = inject(CustomerIdService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
 
   data: any[] = [];
 
   ref: DynamicDialogRef;
-  customerId$: Observable<number> = this.custIdService.getCustomerId$();
+  customerId$: Observable<number> = this.customerIdS.getCustomerId$();
   value: number = 0;
   filterValue: string = ' ';
 
   ngOnInit(): void {
-    this.customerId$ = this.custIdService.getCustomerId$();
+    this.customerId$ = this.customerIdS.getCustomerId$();
     this.onLoadData(this.value);
     this.customerId$.subscribe((resp) => {
       this.onLoadData(this.value);
@@ -54,16 +54,16 @@ export default class ListRecorridoComponent implements OnInit {
   }
 
   onLoadData(value: number) {
-    const urlApi = `Routes/GetAll/${this.custIdService.getCustomerId()}/${value}/${
+    const urlApi = `Routes/GetAll/${this.customerIdS.getCustomerId()}/${value}/${
       this.filterValue
     }`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
   }
 
   onDelete(id: number) {
-    this.apiRequestService.onDelete(`Routes/${id}`).then((result: boolean) => {
+    this.apiRequestS.onDelete(`Routes/${id}`).then((result: boolean) => {
       if (result) {
         this.data = this.data.filter((item) => item.id !== id);
         this.onLoadData(this.value);
@@ -73,27 +73,27 @@ export default class ListRecorridoComponent implements OnInit {
 
   onDeleteTask(taskId: number) {
     const urlApi = `RouteTask/${taskId}`;
-    this.apiRequestService.onDelete(urlApi).then((result: boolean) => {
+    this.apiRequestS.onDelete(urlApi).then((result: boolean) => {
       this.onLoadData(this.value);
     });
   }
 
   onModalAddOrEdit(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         RecorridoAddOrEditComponent,
         {
           id: data.id,
         },
         data.title,
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData(this.value);
       });
   }
   onModalAddTask(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         RecorridoTaskAddOrEditComponent,
         {
@@ -101,7 +101,7 @@ export default class ListRecorridoComponent implements OnInit {
           routeId: data.routeId,
         },
         'Agregar revisión a recorrido',
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData(this.value);
@@ -110,22 +110,22 @@ export default class ListRecorridoComponent implements OnInit {
 
   eliminarRecorrido(id: number) {
     const urlApi = `Routes/${id}`;
-    this.apiRequestService.onDelete(urlApi).then((result: boolean) => {
+    this.apiRequestS.onDelete(urlApi).then((result: boolean) => {
       this.onLoadData(this.value);
     });
   }
   onModalBitacora(machineryId: number) {
-    this.dialogHandlerService.openDialog(
+    this.dialogHandlerS.openDialog(
       BitacoraAddComponent,
       {
         machineryId,
       },
       'Registrar novedades',
-      this.dialogHandlerService.dialogSizeMd
+      this.dialogHandlerS.dialogSizeMd
     );
   }
   onModalBitacoraIndividual(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         BitacoraIndividualComponent,
         {
@@ -133,7 +133,7 @@ export default class ListRecorridoComponent implements OnInit {
           nameMachinery: data.nameMachinery,
         },
         'Bitacora',
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData(this.value);

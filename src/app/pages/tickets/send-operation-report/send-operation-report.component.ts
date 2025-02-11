@@ -16,11 +16,11 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 })
 export default class SendOperationReportComponent {
   authS = inject(AuthService);
-  apiRequestService = inject(ApiRequestService);
-  formBuilder = inject(FormBuilder);
+  apiRequestS = inject(ApiRequestService);
+  formB = inject(FormBuilder);
   config = inject(DynamicDialogConfig);
-  custIdService = inject(CustomerIdService);
-  messageService = inject(MessageService);
+  customerIdS = inject(CustomerIdService);
+  messageS = inject(MessageService);
   ref = inject(DynamicDialogRef);
 
   year: number = this.config.data.year;
@@ -40,7 +40,7 @@ export default class SendOperationReportComponent {
   mostrarCo: boolean = false;
   mostrarCco: boolean = false;
   placeholder: string = '';
-  form: FormGroup = this.formBuilder.group({
+  form: FormGroup = this.formB.group({
     email: [
       '',
       [
@@ -58,10 +58,8 @@ export default class SendOperationReportComponent {
     return this.form.controls;
   }
   onLoadSelectItem() {
-    this.apiRequestService
-      .onGetSelectItem(
-        `ResidentesEdificio/${this.custIdService.getCustomerId()}`
-      )
+    this.apiRequestS
+      .onGetSelectItem(`ResidentesEdificio/${this.customerIdS.getCustomerId()}`)
       .then((response: any) => {
         this.destinatarios = response;
       });
@@ -69,9 +67,9 @@ export default class SendOperationReportComponent {
 
   onEnviarEmail() {
     const applicationUserId = this.authS.applicationUserId;
-    const customerId = this.custIdService.getCustomerId();
+    const customerId = this.customerIdS.getCustomerId();
     const urlApi = `SendEmail/OperationReport/${applicationUserId}/${customerId}/${this.year}/${this.numeroSemana}`;
-    this.apiRequestService
+    this.apiRequestS
       .onPost(urlApi, this.onFilterDestinatarios())
       .then((result: boolean) => {});
   }

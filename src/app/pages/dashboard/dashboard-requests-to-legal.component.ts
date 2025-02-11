@@ -15,24 +15,24 @@ import LegalSummaryComponent from './legal-summary.component';
   templateUrl: './dashboard-requests-to-legal.component.html',
 })
 export default class DashboardRequestsToLegalComponent {
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
-  custIdService = inject(CustomerIdService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
+  customerIdS = inject(CustomerIdService);
 
   // Declaración e inicialización de variables
   data: any;
   ref: DynamicDialogRef; // Referencia a un cuadro de diálogo modal
-  customerId$: Observable<number> = this.custIdService.getCustomerId$();
+  customerId$: Observable<number> = this.customerIdS.getCustomerId$();
 
   ngOnInit(): void {
-    this.onLoadData(this.custIdService.getCustomerId());
+    this.onLoadData(this.customerIdS.getCustomerId());
     this.customerId$.subscribe((resp) => {
-      this.onLoadData(this.custIdService.getCustomerId());
+      this.onLoadData(this.customerIdS.getCustomerId());
     });
   }
   onLoadData(customerId: number) {
     const urlApi = `Dashboard/RequestsToLegal/${customerId}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       // Actualizamos el valor del signal con los datos recibidos
       this.data = result;
     });
@@ -40,11 +40,11 @@ export default class DashboardRequestsToLegalComponent {
 
   // Método para manejar el evento cuando se hace clic en un ticket
   onLoadResumen(status: any) {
-    this.dialogHandlerService.openDialog(
+    this.dialogHandlerS.openDialog(
       LegalSummaryComponent,
       { status }, // Pasa el groupId al componente del diálogo
       '',
-      this.dialogHandlerService.dialogSizeFull
+      this.dialogHandlerS.dialogSizeFull
     );
   }
 }

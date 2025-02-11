@@ -9,7 +9,7 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 })
 export default class InfoCuentaComponent implements OnInit {
   config = inject(DynamicDialogConfig);
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
 
   id: number = 0;
   info: string = '';
@@ -20,7 +20,7 @@ export default class InfoCuentaComponent implements OnInit {
   }
 
   onLoadData() {
-    this.apiRequestService
+    this.apiRequestS
       .onGetList(`Cuentas/Info/${this.id}`)
       .then((result: any) => {
         this.info = result.information;

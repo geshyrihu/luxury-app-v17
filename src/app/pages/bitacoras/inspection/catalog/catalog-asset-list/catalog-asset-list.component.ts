@@ -13,8 +13,8 @@ import CatalogAssetAddoreditComponent from '../catalog-asset-addoredit/catalog-a
   templateUrl: './catalog-asset-list.component.html',
 })
 export default class CatalogAssetListComponent {
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
 
   // Declaración e inicialización de variables
   dataSignal = signal<any>(null);
@@ -26,7 +26,7 @@ export default class CatalogAssetListComponent {
 
   onLoadData() {
     const urlApi = `CatalogAsset`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       // Actualizamos el valor del signal con los datos recibidos
       this.dataSignal.set(result);
     });
@@ -34,24 +34,22 @@ export default class CatalogAssetListComponent {
 
   // Funcion para eliminar un banco y refres
   onDelete(id: number) {
-    this.apiRequestService
-      .onDelete(`CatalogAsset/${id}`)
-      .then((result: any) => {
-        // Actualizamos el signal para eliminar el elemento de la lista
-        this.dataSignal.set(
-          this.dataSignal().filter((item: any) => item.id !== id)
-        );
-      });
+    this.apiRequestS.onDelete(`CatalogAsset/${id}`).then((result: any) => {
+      // Actualizamos el signal para eliminar el elemento de la lista
+      this.dataSignal.set(
+        this.dataSignal().filter((item: any) => item.id !== id)
+      );
+    });
   }
 
   // Función para abrir un cuadro de diálogo modal para agregar o editar o crear
   onModalAddOrEdit(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         CatalogAssetAddoreditComponent,
         data,
         data.title,
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();

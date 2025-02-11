@@ -16,10 +16,10 @@ import AddOrEditAgendaSupervisionComponent from './addoredit-agenda-supervision.
   imports: [LuxuryAppComponentsModule],
 })
 export default class AgendaSupervisionComponent implements OnInit {
-  dateService = inject(DateService);
+  dateS = inject(DateService);
   authS = inject(AuthService);
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
 
   rangoCalendarioService = inject(FiltroCalendarService);
 
@@ -32,10 +32,10 @@ export default class AgendaSupervisionComponent implements OnInit {
   cb_customers: any[] = [];
   cb_estatus: any[] = ['Concluido', 'Pendiente'];
 
-  fechaInicial: string = this.dateService.getDateFormat(
+  fechaInicial: string = this.dateS.getDateFormat(
     this.rangoCalendarioService.fechaInicioDateFull
   );
-  fechaFinal: string = this.dateService.getDateFormat(
+  fechaFinal: string = this.dateS.getDateFormat(
     this.rangoCalendarioService.fechaFinalDateFull
   );
   applicationUserId = this.authS.applicationUserId;
@@ -49,13 +49,11 @@ export default class AgendaSupervisionComponent implements OnInit {
   ngOnInit(): void {
     this.onLoadUserSupervisor();
 
-    this.apiRequestService
-      .onGetSelectItem(`NombreCorto`)
-      .then((response: any) => {
-        this.cb_customers = response.map((selectList: any) => ({
-          label: selectList.label,
-        }));
-      });
+    this.apiRequestS.onGetSelectItem(`NombreCorto`).then((response: any) => {
+      this.cb_customers = response.map((selectList: any) => ({
+        label: selectList.label,
+      }));
+    });
 
     this.rangoCalendarioService.fechas$.subscribe((resp: IFechasFiltro) => {
       this.fechaInicial = resp.fechaInicio;
@@ -67,25 +65,25 @@ export default class AgendaSupervisionComponent implements OnInit {
 
   onLoadData() {
     const urlApi = `AgendaSupervision/GetAll/${this.fechaInicial}/${this.fechaFinal}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
   }
 
   onLoadUserSupervisor() {
     const urlApi = `getlistsupervision`;
-    this.apiRequestService.onGetSelectItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetSelectItem(urlApi).then((result: any) => {
       this.cb_user = result;
     });
   }
 
   showModalAddOrEdit(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         AddOrEditAgendaSupervisionComponent,
         data,
         data.title,
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();
@@ -93,7 +91,7 @@ export default class AgendaSupervisionComponent implements OnInit {
   }
 
   onDelete(id: number) {
-    this.apiRequestService
+    this.apiRequestS
       .onDelete(`AgendaSupervision/${id}`)
       .then((result: boolean) => {
         if (result) this.data = this.data.filter((item) => item.id !== id);

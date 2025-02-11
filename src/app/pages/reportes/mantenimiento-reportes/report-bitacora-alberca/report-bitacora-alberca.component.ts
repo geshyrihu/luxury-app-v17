@@ -19,9 +19,9 @@ import CustomBarChartComponent from 'src/app/shared/graficos/ng2-chart/custom-ba
   ],
 })
 export default class ReportBitacoraAlbercaComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  custIdService = inject(CustomerIdService);
-  dateService = inject(DateService);
+  apiRequestS = inject(ApiRequestService);
+  customerIdS = inject(CustomerIdService);
+  dateS = inject(DateService);
   public periodoMonthService = inject(PeriodoMonthService);
 
   medidores: any[] = [];
@@ -32,10 +32,10 @@ export default class ReportBitacoraAlbercaComponent implements OnInit {
     this.onLoadData();
   }
   onLoadData() {
-    const urlApi = `MaintenanceReport/bitacoraalbercaparametros/${this.custIdService.getCustomerId()}/${this.dateService.getDateFormat(
+    const urlApi = `MaintenanceReport/bitacoraalbercaparametros/${this.customerIdS.getCustomerId()}/${this.dateS.getDateFormat(
       this.periodoMonthService.getPeriodoInicio
     )}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.medidores = result;
     });
   }

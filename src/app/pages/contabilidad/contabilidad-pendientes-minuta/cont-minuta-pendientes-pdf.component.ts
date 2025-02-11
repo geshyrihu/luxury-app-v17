@@ -9,7 +9,7 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
   imports: [LuxuryAppComponentsModule],
 })
 export default class ConMinutaPendientesPdfComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
 
   data: any[] = [];
 
@@ -18,7 +18,7 @@ export default class ConMinutaPendientesPdfComponent implements OnInit {
   }
 
   onLoadData() {
-    this.apiRequestService
+    this.apiRequestS
       .onGetList('ContabilidadMinuta/Pendientes/0')
       .then((result: any) => {
         this.data = result;

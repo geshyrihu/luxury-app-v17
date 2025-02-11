@@ -24,10 +24,10 @@ import { FiltroCalendarService } from 'src/app/core/services/filtro-calendar.ser
 })
 export default class PresupuestoAddComponent implements OnInit {
   config = inject(DynamicDialogConfig);
-  custIdService = inject(CustomerIdService);
-  apiRequestService = inject(ApiRequestService);
-  dateService = inject(DateService);
-  messageService = inject(MessageService);
+  customerIdS = inject(CustomerIdService);
+  apiRequestS = inject(ApiRequestService);
+  dateS = inject(DateService);
+  messageS = inject(MessageService);
   public rangoCalendarioService = inject(FiltroCalendarService);
   ref = inject(DynamicDialogRef);
   authS = inject(AuthService);
@@ -40,18 +40,14 @@ export default class PresupuestoAddComponent implements OnInit {
     this.id = this.config.data.id;
     if (this.id !== 0) this.onLoadData();
     this.periodo = {
-      customerId: this.custIdService.customerId,
-      from: this.dateService.formatDateTime(
-        this.rangoCalendarioService.fechaInicial
-      ),
-      to: this.dateService.formatDateTime(
-        this.rangoCalendarioService.fechaFinal
-      ),
+      customerId: this.customerIdS.customerId,
+      from: this.dateS.formatDateTime(this.rangoCalendarioService.fechaInicial),
+      to: this.dateS.formatDateTime(this.rangoCalendarioService.fechaFinal),
     };
 
     this.rangoCalendarioService.fechas$.subscribe((resp: IFechasFiltro) => {
       this.periodo = {
-        customerId: this.custIdService.customerId,
+        customerId: this.customerIdS.customerId,
         from: resp.fechaInicio,
         to: resp.fechaFinal,
       };
@@ -61,13 +57,13 @@ export default class PresupuestoAddComponent implements OnInit {
   onSubmit() {
     this.submitting = true;
     if (this.id === 0) {
-      this.apiRequestService
+      this.apiRequestS
         .onPost(`Presupuesto/Create`, this.periodo)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.apiRequestService
+      this.apiRequestS
         .onPut(`Presupuesto/UpdatePresupuesto/${this.id}`, this.periodo)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
@@ -75,9 +71,9 @@ export default class PresupuestoAddComponent implements OnInit {
     }
   }
   onLoadData() {
-    this.apiRequestService.onGetList('banks').then((result: any) => {
+    this.apiRequestS.onGetList('banks').then((result: any) => {
       this.periodo = {
-        customerId: this.custIdService.customerId,
+        customerId: this.customerIdS.customerId,
         from: result.fechaInicio,
         to: result.fechaFinal,
       };

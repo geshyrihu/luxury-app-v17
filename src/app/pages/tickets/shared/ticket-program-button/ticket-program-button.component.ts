@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import CustomBtnComponent from 'src/app/custom-components/custom-buttons/custom-button-button/custom-button.component';
 import TicketMessageProgramComponent from '../../messages/ticket-message-program/ticket-message-program.component';
@@ -11,18 +11,18 @@ import TicketMessageProgramComponent from '../../messages/ticket-message-program
   templateUrl: './ticket-program-button.component.html',
 })
 export default class TicketProgramButtonComponent {
+  private dialogHandlerS = inject(DialogHandlerService);
+
   @Input() item: any;
   @Output() programCompleted = new EventEmitter<void>();
 
-  constructor(private dialogHandlerService: DialogHandlerService) {}
-
   openProgramDialog() {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         TicketMessageProgramComponent,
         { id: this.item.id, ticketGroupId: this.item.ticketGroupId },
         'Programar actividad',
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) {

@@ -14,14 +14,14 @@ import MyInspectionAddImagesComponent from '../my-inspection-add-images/my-inspe
 })
 export default class MyInspectionEjecutarComponent implements OnInit {
   activatedRoute = inject(ActivatedRoute);
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   autS = inject(AuthService);
-  custIdService = inject(CustomerIdService);
+  customerIdS = inject(CustomerIdService);
   customerInspectionId: string | null = null;
-  dialogHandlerService = inject(DialogHandlerService);
+  dialogHandlerS = inject(DialogHandlerService);
   data: any;
   applicationUserId = this.autS.applicationUserId;
-  customerId = this.custIdService.getCustomerId();
+  customerId = this.customerIdS.getCustomerId();
 
   ngOnInit(): void {
     // Capturar el parámetro de la ruta
@@ -38,7 +38,7 @@ export default class MyInspectionEjecutarComponent implements OnInit {
   onLoadData(customerInspectionId: string): void {
     const urlApi = `InspectionResult/InspectionResultGetById/${customerInspectionId}`;
 
-    this.apiRequestService.onGetList(urlApi).then((response) => {
+    this.apiRequestS.onGetList(urlApi).then((response) => {
       this.data = response;
     });
   }
@@ -52,7 +52,7 @@ export default class MyInspectionEjecutarComponent implements OnInit {
       observations: revision.observations || '',
     };
 
-    this.apiRequestService
+    this.apiRequestS
       .onPost(urlApi, [revisionData]) // Se envía en un array para mantener compatibilidad con la API
       .then((result: any) => {
         console.log('Datos guardados exitosamente', result);
@@ -78,7 +78,7 @@ export default class MyInspectionEjecutarComponent implements OnInit {
 
     // Enviar datos de inspección en formato JSON
     const urlApi = `InspectionResult/UpdateInspectionData/${this.customerInspectionId}/${this.applicationUserId}`;
-    this.apiRequestService
+    this.apiRequestS
       .onPost(urlApi, inspectionUpdates)
       .then((result: any) => {
         // this.onSubmitImages();
@@ -90,12 +90,12 @@ export default class MyInspectionEjecutarComponent implements OnInit {
   }
 
   onModalAddImages(inspectionResultId: string) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         MyInspectionAddImagesComponent,
         { inspectionResultId },
         'Agregar imágenes',
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then(() => {
         this.onLoadData(this.customerInspectionId);

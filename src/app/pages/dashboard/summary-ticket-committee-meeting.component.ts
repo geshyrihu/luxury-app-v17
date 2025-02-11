@@ -11,9 +11,9 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
   imports: [LuxuryAppComponentsModule],
 })
 export default class SummaryTicketCommitteeMeetingComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
 
-  custIdService = inject(CustomerIdService);
+  customerIdS = inject(CustomerIdService);
   config = inject(DynamicDialogConfig);
 
   data: any[] = [];
@@ -26,10 +26,10 @@ export default class SummaryTicketCommitteeMeetingComponent implements OnInit {
     this.onLoadData();
   }
   onLoadData() {
-    const urlApi = `Dashboard/MinutasPendientesResumen/${this.custIdService.getCustomerId()}/${
+    const urlApi = `Dashboard/MinutasPendientesResumen/${this.customerIdS.getCustomerId()}/${
       this.eAreaMinutasDetalles
     }`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
   }

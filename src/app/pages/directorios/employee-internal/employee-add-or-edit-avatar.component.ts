@@ -10,7 +10,7 @@ import { EmployeeAddOrEditService } from './employee-add-or-edit.service';
   imports: [CommonModule],
 })
 export default class EmployeeAddOrEditAvatarComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   employeeAddOrEditService = inject(EmployeeAddOrEditService);
 
   applicationUserId: string = '';
@@ -27,7 +27,7 @@ export default class EmployeeAddOrEditAvatarComponent implements OnInit {
 
   onLoadData() {
     const urlApi = `EmployeeInternal/PhotoPath/${this.applicationUserId}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       this.photoPath = result.photoPath;
     });
   }
@@ -54,7 +54,7 @@ export default class EmployeeAddOrEditAvatarComponent implements OnInit {
     const formData = new FormData();
     formData.append('file', this.imgUpload);
 
-    this.apiRequestService
+    this.apiRequestS
       .onPut('EmployeeInternal/UpdateImage/' + this.applicationUserId, formData)
       .then((result: any) => {
         if (result) this.photoPath = result.photoPath;

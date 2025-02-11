@@ -15,17 +15,17 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   providers: [EnumSelectService],
 })
 export class ModuleAppAddOrEditComponent {
-  apiRequestService = inject(ApiRequestService);
-  formBuilder = inject(FormBuilder);
+  apiRequestS = inject(ApiRequestService);
+  formB = inject(FormBuilder);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
-  enumSelectService = inject(EnumSelectService);
+  enumSelectS = inject(EnumSelectService);
 
   cb_pathParent: ISelectItem[] = [];
   id: string = '';
   submitting: boolean = false;
   cb_rolLevel: ISelectItem[] = [];
-  form: FormGroup = this.formBuilder.group({
+  form: FormGroup = this.formB.group({
     id: { value: this.id, disabled: true },
     nameModule: ['', [Validators.required]],
     rolLevel: [null],
@@ -37,7 +37,7 @@ export class ModuleAppAddOrEditComponent {
   });
 
   async ngOnInit() {
-    this.cb_rolLevel = await this.enumSelectService.rolLevel();
+    this.cb_rolLevel = await this.enumSelectS.rolLevel();
 
     this.id = this.config.data.id;
     if (this.id !== '') this.onLoadData();
@@ -46,22 +46,22 @@ export class ModuleAppAddOrEditComponent {
   }
   onLoadData() {
     const urlApi = `ModuleApp/${this.id}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       this.form.patchValue(result);
     });
   }
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
     this.submitting = true;
 
     if (this.id === '') {
-      this.apiRequestService
+      this.apiRequestS
         .onPost(`ModuleApp`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.apiRequestService
+      this.apiRequestS
         .onPut(`ModuleApp/${this.id}`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
@@ -71,7 +71,7 @@ export class ModuleAppAddOrEditComponent {
 
   onLoadModuleApp() {
     const urlApi = `ModuleApp`;
-    this.apiRequestService.onGetSelectItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetSelectItem(urlApi).then((result: any) => {
       this.cb_pathParent = result;
     });
   }

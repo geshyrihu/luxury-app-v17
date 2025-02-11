@@ -12,7 +12,7 @@ import TicketDateRangeSelectorComponent from 'src/app/pages/tickets/shared/ticke
   providers: [DatePipe], // Provide DatePipe in the component
 })
 export default class LegalReportsInternalComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   datePipe = inject(DatePipe);
   // Declaración e inicialización de variables
   data: any;
@@ -61,46 +61,46 @@ export default class LegalReportsInternalComponent implements OnInit {
 
   onLoadReport(startDate: string, endDate: string) {
     const urlApi = `LegalReport/Results/${startDate}/${endDate}/${true}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.reportData = result;
     });
   }
   onRequestsAttended(startDate: string, endDate: string) {
     const urlApi = `LegalReport/RequestsAttended/${startDate}/${endDate}/${true}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.requestsAttended = result;
     });
   }
   onRequestsPending() {
     const urlApi = `LegalReport/RequestsPending/${true}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.requestsPending = result;
     });
   }
 
   onLoadData(startDate: string, endDate: string) {
     const urlApi = `LegalReport/Summary/${startDate}/${endDate}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
   }
 
   onLoadSummaryCustomer(startDate: string, endDate: string) {
     const urlApi = `LegalReport/SummaryCustomer/${startDate}/${endDate}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.summaryCustomer = result;
     });
   }
 
   onLoadDataSummaryIndividual(startDate: string, endDate: string) {
     const urlApi = `LegalReport/SummaryIndividual/${startDate}/${endDate}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.summaryIndividual = result;
     });
   }
   onLoadDataTotalRequests(startDate: string, endDate: string) {
     const urlApi = `LegalReport/TotalRequests/${startDate}/${endDate}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.totalRequests = result;
     });
   }
@@ -133,6 +133,6 @@ export default class LegalReportsInternalComponent implements OnInit {
     }/${true}`;
     const nameReport = 'Reporte Legal';
 
-    this.apiRequestService.onDownloadFile(urlApi, nameReport);
+    this.apiRequestS.onDownloadFile(urlApi, nameReport);
   }
 }

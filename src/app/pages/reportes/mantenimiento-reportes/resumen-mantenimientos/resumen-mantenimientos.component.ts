@@ -14,15 +14,15 @@ import { PeriodoMonthService } from 'src/app/core/services/periodo-month.service
   imports: [LuxuryAppComponentsModule],
 })
 export default class ResumenMantenimientosComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  custIdService = inject(CustomerIdService);
+  apiRequestS = inject(ApiRequestService);
+  customerIdS = inject(CustomerIdService);
   customToastService = inject(CustomToastService);
-  dateService = inject(DateService);
+  dateS = inject(DateService);
   periodoMonthService = inject(PeriodoMonthService);
 
   data: any;
   dataProvider: any = [];
-  customerId$: Observable<number> = this.custIdService.getCustomerId$();
+  customerId$: Observable<number> = this.customerIdS.getCustomerId$();
 
   periodoInicial$: Observable<Date> =
     this.periodoMonthService.getPeriodoInicial$();
@@ -39,19 +39,15 @@ export default class ResumenMantenimientosComponent implements OnInit {
   }
   onLoadData() {
     const urlApi = `MaintenanceReport/resumen/${
-      this.custIdService.customerId
-    }/${this.dateService.getDateFormat(
-      this.periodoMonthService.getPeriodoInicio
-    )}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      this.customerIdS.customerId
+    }/${this.dateS.getDateFormat(this.periodoMonthService.getPeriodoInicio)}`;
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
     const urlApi2 = `MaintenanceReport/proveedor/${
-      this.custIdService.customerId
-    }/${this.dateService.getDateFormat(
-      this.periodoMonthService.getPeriodoInicio
-    )}`;
-    this.apiRequestService.onGetList(urlApi2).then((result: any) => {
+      this.customerIdS.customerId
+    }/${this.dateS.getDateFormat(this.periodoMonthService.getPeriodoInicio)}`;
+    this.apiRequestS.onGetList(urlApi2).then((result: any) => {
       this.dataProvider = result;
     });
   }

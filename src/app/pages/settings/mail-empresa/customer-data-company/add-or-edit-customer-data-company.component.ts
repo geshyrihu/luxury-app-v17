@@ -13,8 +13,8 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class AddOrEditCustomerDataCompanyComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  formBuilder = inject(FormBuilder);
+  apiRequestS = inject(ApiRequestService);
+  formB = inject(FormBuilder);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
 
@@ -25,7 +25,7 @@ export default class AddOrEditCustomerDataCompanyComponent implements OnInit {
   cb_applicationUser: ISelectItem[] = [];
   cb_customer: ISelectItem[] = [];
 
-  form: FormGroup = this.formBuilder.group({
+  form: FormGroup = this.formB.group({
     id: { value: this.id, disabled: true },
     customerId: [''],
     customer: [''],
@@ -45,40 +45,40 @@ export default class AddOrEditCustomerDataCompanyComponent implements OnInit {
   }
   onLoadData() {
     const urlApi = `CustomerDataCompany/${this.id}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       this.form.patchValue(result);
     });
   }
 
   onLoadSelectItem() {
-    this.apiRequestService
+    this.apiRequestS
       .onGetSelectItem('CustomersActive')
       .then((items: ISelectItem[]) => {
         this.cb_customer = items;
       });
-    this.apiRequestService
+    this.apiRequestS
       .onGetSelectItem('Professions')
       .then((resp: ISelectItem[]) => {
         this.cb_profession = resp;
       });
-    this.apiRequestService
+    this.apiRequestS
       .onGetSelectItem('ApplicationUser')
       .then((resp: ISelectItem[]) => {
         this.cb_applicationUser = resp;
       });
   }
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
     this.submitting = true;
 
     if (this.id === '') {
-      this.apiRequestService
+      this.apiRequestS
         .onPost(`CustomerDataCompany`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.apiRequestService
+      this.apiRequestS
         .onPut(`CustomerDataCompany/${this.id}`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);

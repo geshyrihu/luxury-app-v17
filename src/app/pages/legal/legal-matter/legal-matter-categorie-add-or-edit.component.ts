@@ -13,15 +13,15 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   providers: [],
 })
 export default class LegalMatterCategorieAddOrEditComponent {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   config = inject(DynamicDialogConfig);
-  formBuilder = inject(FormBuilder);
+  formB = inject(FormBuilder);
   ref = inject(DynamicDialogRef);
 
   id: string = '';
   submitting: boolean = false;
 
-  form: FormGroup = this.formBuilder.group({
+  form: FormGroup = this.formB.group({
     id: { value: this.id, disabled: true },
     name: ['', [Validators.required, Validators.maxLength(100)]],
   });
@@ -32,23 +32,23 @@ export default class LegalMatterCategorieAddOrEditComponent {
   }
   onLoadData() {
     const urlApi = `LegalMatter/Category/${this.id}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       this.form.patchValue(result);
     });
   }
 
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
     this.submitting = true;
 
     if (this.id === '') {
-      this.apiRequestService
+      this.apiRequestS
         .onPost(`LegalMatter/Category`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.apiRequestService
+      this.apiRequestS
         .onPut(`LegalMatter/Category/${this.id}`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);

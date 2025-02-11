@@ -35,7 +35,7 @@ import EmployeeReclutamientoComponent from './employee-reclutamiento.component';
 })
 export default class EmployeeAddOrEditComponent implements OnInit {
   employeeAddOrEditService = inject(EmployeeAddOrEditService);
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   authS = inject(AuthService);
   router = inject(Router);
 
@@ -50,10 +50,10 @@ export default class EmployeeAddOrEditComponent implements OnInit {
 
     // TODO: Repararar
     // if (
-    //   this.apiRequestService.infoEmployeeDto.professionId == 5 ||
-    //   this.apiRequestService.infoEmployeeDto.professionId == 57 ||
-    //   this.apiRequestService.infoEmployeeDto.professionId == 58 ||
-    //   this.apiRequestService.infoEmployeeDto.professionId == 6
+    //   this.apiRequestS.infoEmployeeDto.professionId == 5 ||
+    //   this.apiRequestS.infoEmployeeDto.professionId == 57 ||
+    //   this.apiRequestS.infoEmployeeDto.professionId == 58 ||
+    //   this.apiRequestS.infoEmployeeDto.professionId == 6
     // ) {
     //   this.onValidarAdminAsis();
     // }
@@ -68,7 +68,7 @@ export default class EmployeeAddOrEditComponent implements OnInit {
 
   onValidarAdminAsis() {
     // ProfessionId Administrador= 5, Asistente = 6
-    this.apiRequestService
+    this.apiRequestS
       .onGetItem(`Employees/validaradminasis/${this.authS.applicationUserId}`)
       .then((result: any) => {
         this.tienePermiso = result;

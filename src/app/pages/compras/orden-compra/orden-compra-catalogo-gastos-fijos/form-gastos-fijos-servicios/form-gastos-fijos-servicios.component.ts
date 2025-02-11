@@ -11,7 +11,7 @@ import { CatalogoGastosFijosService } from 'src/app/core/services/catalogo-gasto
   imports: [LuxuryAppComponentsModule],
 })
 export default class FormGastosFijosServiciosComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   authS = inject(AuthService);
   catalogoGastosFijosService = inject(CatalogoGastosFijosService);
 
@@ -24,7 +24,7 @@ export default class FormGastosFijosServiciosComponent implements OnInit {
   productosAgregados: any[] = [];
 
   ngOnInit(): void {
-    this.apiRequestService
+    this.apiRequestS
       .onGetSelectItem('getMeasurementUnits')
       .then((response: any) => {
         this.cb_unidadMedida = response;
@@ -37,13 +37,13 @@ export default class FormGastosFijosServiciosComponent implements OnInit {
   }
   onLoadProductsAgregados() {
     const urlApi = `CatalogoGastosFijosDetalles/DetallesOrdenCompraFijos/${this.catalogoGastosFijosId}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.productosAgregados = result;
     });
   }
 
   deleteProductoAgregado(id: number) {
-    this.apiRequestService
+    this.apiRequestS
       .onDelete(`CatalogoGastosFijosDetalles/${id}`)
       .then((result: boolean) => {
         this.onLoadProductsAgregados();
@@ -53,7 +53,7 @@ export default class FormGastosFijosServiciosComponent implements OnInit {
     const urlApi =
       'CatalogoGastosFijosDetalles/GetALLCatalogoGastosFijosProductoDto/' +
       this.catalogoGastosFijosId;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.productos = result;
     });
   }
@@ -66,7 +66,7 @@ export default class FormGastosFijosServiciosComponent implements OnInit {
 
     item.catalogoGastosFijosId = this.catalogoGastosFijosId;
 
-    this.apiRequestService
+    this.apiRequestS
       .onPost(`CatalogoGastosFijosDetalles/`, item)
       .then((result: boolean) => {
         this.mensajeError = false;
@@ -76,7 +76,7 @@ export default class FormGastosFijosServiciosComponent implements OnInit {
   }
 
   onUpdateProductoAgregado(item: any) {
-    this.apiRequestService
+    this.apiRequestS
       .onPut(`CatalogoGastosFijosDetalles/${item.id}`, item)
       .then((result: boolean) => {
         this.mensajeError = false;

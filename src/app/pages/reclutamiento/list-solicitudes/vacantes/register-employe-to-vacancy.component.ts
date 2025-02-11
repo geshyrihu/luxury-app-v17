@@ -12,15 +12,15 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class RegisterEmployeToVacancyComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  formBuilder = inject(FormBuilder);
+  apiRequestS = inject(ApiRequestService);
+  formB = inject(FormBuilder);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
 
   id: number = 0;
   submitting: boolean = false;
 
-  form: FormGroup = this.formBuilder.group({
+  form: FormGroup = this.formB.group({
     id: { value: this.id, disabled: true },
     name: ['', [Validators.required, Validators.maxLength(15)]],
     lastName: ['', [Validators.required, Validators.maxLength(15)], ,],
@@ -31,7 +31,7 @@ export default class RegisterEmployeToVacancyComponent implements OnInit {
   ngOnInit() {}
 
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
     this.submitting = true;
   }
 }

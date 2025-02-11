@@ -10,18 +10,18 @@ import TicketMessageCloseComponent from '../../messages/ticket-message-close/tic
   templateUrl: './ticket-close-button.component.html',
 })
 export default class TicketCloseButtonComponent {
-  dialogHandlerService = inject(DialogHandlerService);
+  dialogHandlerS = inject(DialogHandlerService);
 
   @Input() item: any;
   @Output() closedCompleted = new EventEmitter<void>();
 
   openCloseDialog() {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         TicketMessageCloseComponent,
         { id: this.item.id },
         'Cerrar ticket',
-        this.dialogHandlerService.dialogSizeLg
+        this.dialogHandlerS.dialogSizeLg
       )
       .then((result: boolean) => {
         if (result) {

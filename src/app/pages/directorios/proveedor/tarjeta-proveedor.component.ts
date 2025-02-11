@@ -10,7 +10,7 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
   imports: [LuxuryAppComponentsModule],
 })
 export default class TarjetaProveedorComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   config = inject(DynamicDialogConfig);
 
   model: any;
@@ -24,7 +24,7 @@ export default class TarjetaProveedorComponent implements OnInit {
     }
   }
   onLoadItem() {
-    this.apiRequestService
+    this.apiRequestS
       .onGetItem(`Proveedor/${this.providerId}`)
       .then((result: any) => {
         this.urlLogo = result.pathPhoto;

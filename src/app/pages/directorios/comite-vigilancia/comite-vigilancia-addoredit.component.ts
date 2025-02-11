@@ -16,11 +16,11 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   providers: [EnumSelectService],
 })
 export default class ComiteVigilanciaAddOrEditComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   config = inject(DynamicDialogConfig);
-  custIdService = inject(CustomerIdService);
-  enumSelectService = inject(EnumSelectService);
-  formBuilder = inject(FormBuilder);
+  customerIdS = inject(CustomerIdService);
+  enumSelectS = inject(EnumSelectService);
+  formB = inject(FormBuilder);
   ref = inject(DynamicDialogRef);
 
   submitting: boolean = false;
@@ -28,7 +28,7 @@ export default class ComiteVigilanciaAddOrEditComponent implements OnInit {
   cb_position: ISelectItem[] = [];
   cb_condomino: ISelectItem[] = [];
   id: number = 0;
-  form: FormGroup = this.formBuilder.group({
+  form: FormGroup = this.formB.group({
     id: { value: this.id, disabled: true },
     listCondominoId: ['', Validators.required],
     nameDirectoryCondominium: ['', Validators.required],
@@ -37,20 +37,20 @@ export default class ComiteVigilanciaAddOrEditComponent implements OnInit {
   });
 
   async ngOnInit() {
-    this.apiRequestService
-      .onGetSelectItem(`listcondomino/${this.custIdService.getCustomerId()}`)
+    this.apiRequestS
+      .onGetSelectItem(`listcondomino/${this.customerIdS.getCustomerId()}`)
       .then((response: any) => {
         this.cb_condomino = response;
       });
 
     this.form.patchValue({
-      customerId: this.custIdService.getCustomerId(),
+      customerId: this.customerIdS.getCustomerId(),
     });
 
     this.id = this.config.data.id;
     if (this.id !== 0) this.onLoadData();
 
-    this.cb_position = await this.enumSelectService.typePosicionComite();
+    this.cb_position = await this.enumSelectS.typePosicionComite();
   }
 
   public saveCondominoId(e: any): void {
@@ -61,7 +61,7 @@ export default class ComiteVigilanciaAddOrEditComponent implements OnInit {
   }
 
   onLoadData() {
-    this.apiRequestService
+    this.apiRequestS
       .onGetItem(`comitevigilancia/${this.id}`)
       .then((result: any) => {
         this.form.patchValue(result);
@@ -71,7 +71,7 @@ export default class ComiteVigilanciaAddOrEditComponent implements OnInit {
       });
   }
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
     this.submitting = true;
 
     const formValue = this.form.value;
@@ -83,13 +83,13 @@ export default class ComiteVigilanciaAddOrEditComponent implements OnInit {
     };
 
     if (this.id === 0) {
-      this.apiRequestService
+      this.apiRequestS
         .onPost(`ComiteVigilancia`, filteredFormValue)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.apiRequestService
+      this.apiRequestS
         .onPut(`ComiteVigilancia/${this.id}`, filteredFormValue)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);

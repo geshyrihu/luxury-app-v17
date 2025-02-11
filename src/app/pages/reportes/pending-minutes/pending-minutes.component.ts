@@ -11,15 +11,15 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
   templateUrl: './pending-minutes.component.html',
 })
 export default class PendingMinutesComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  custIdService = inject(CustomerIdService);
+  apiRequestS = inject(ApiRequestService);
+  customerIdS = inject(CustomerIdService);
 
   data: any;
   customerData: any;
   administrador: any;
 
-  customerId$: Observable<number> = this.custIdService.getCustomerId$();
-  customerId = this.custIdService.getCustomerId();
+  customerId$: Observable<number> = this.customerIdS.getCustomerId$();
+  customerId = this.customerIdS.getCustomerId();
   ngOnInit(): void {
     this.onLoadData(this.customerId);
     this.customerId$.subscribe((customerId) => {
@@ -29,7 +29,7 @@ export default class PendingMinutesComponent implements OnInit {
 
   onLoadData(customerId: number) {
     const urlApi = `Reports/PendingMinutes/${customerId}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result.pendings;
       this.customerData = result.customer;
       this.administrador = result.administrador;

@@ -16,14 +16,14 @@ import CrudEntregaRecepcionClienteComponent from 'src/app/pages/settings/catalog
   imports: [LuxuryAppComponentsModule],
 })
 export default class EntregaRecepcionClienteComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
   authS = inject(AuthService);
-  custIdService = inject(CustomerIdService);
+  customerIdS = inject(CustomerIdService);
 
   public route = inject(Router);
 
-  customerId$: Observable<number> = this.custIdService.getCustomerId$();
+  customerId$: Observable<number> = this.customerIdS.getCustomerId$();
   data: any[] = [];
   cb_departamento = [
     { value: 'JURIDICO' },
@@ -57,27 +57,27 @@ export default class EntregaRecepcionClienteComponent implements OnInit {
   onLoadData() {
     // * Peticion para generar los items de entrega recepcion
     const urlApi1 = 'EntregaRecepcionCliente/GenerateData';
-    this.apiRequestService.onGetItem(urlApi1).then((result: any) => {});
+    this.apiRequestS.onGetItem(urlApi1).then((result: any) => {});
 
     // * Peticion para generar los items de entrega recepcion
 
     const urlApi =
       'EntregaRecepcionCliente/' +
-      this.custIdService.customerId +
+      this.customerIdS.customerId +
       '/' +
       this.departamento;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
   }
 
   onModalAddOrEdit(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         CrudEntregaRecepcionClienteComponent,
         data,
         data.title,
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();
@@ -85,7 +85,7 @@ export default class EntregaRecepcionClienteComponent implements OnInit {
   }
 
   onValidarDocument(id: number) {
-    this.apiRequestService
+    this.apiRequestS
       .onPut(
         `EntregaRecepcionCliente/ValidarArchivo/${this.authS.applicationUserId}/${id}`,
         null
@@ -95,7 +95,7 @@ export default class EntregaRecepcionClienteComponent implements OnInit {
       });
   }
   onInvalidarDocument(id: number) {
-    this.apiRequestService
+    this.apiRequestS
       .onPut(`EntregaRecepcionCliente/InvalidarArchivo/${id}`, null)
       .then((result: boolean) => {
         this.onLoadData();
@@ -103,7 +103,7 @@ export default class EntregaRecepcionClienteComponent implements OnInit {
   }
 
   onDeleteFile(id: number) {
-    this.apiRequestService
+    this.apiRequestS
       .onDelete(`EntregaRecepcionCliente/DeleteFile/${id}`)
       .then((result: boolean) => {
         this.onLoadData();

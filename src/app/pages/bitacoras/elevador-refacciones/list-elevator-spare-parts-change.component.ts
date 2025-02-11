@@ -14,14 +14,14 @@ import AddOrEditElevatorSparePartsChangeComponent from './add-or-edit-elevator-s
   imports: [LuxuryAppComponentsModule],
 })
 export default class ListElevatorSparePartsChangeComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
-  custIdService = inject(CustomerIdService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
+  customerIdS = inject(CustomerIdService);
 
   data: any[] = [];
   ref: DynamicDialogRef; // Referencia a un cuadro de diálogo modal
 
-  customerId$: Observable<number> = this.custIdService.getCustomerId$();
+  customerId$: Observable<number> = this.customerIdS.getCustomerId$();
 
   ngOnInit(): void {
     this.onLoadData();
@@ -31,14 +31,14 @@ export default class ListElevatorSparePartsChangeComponent implements OnInit {
   }
 
   onLoadData() {
-    const urlApi = `ElevatorSparePartsChange/list/${this.custIdService.customerId}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    const urlApi = `ElevatorSparePartsChange/list/${this.customerIdS.customerId}`;
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
   }
 
   onDelete(id: number) {
-    this.apiRequestService
+    this.apiRequestS
       .onDelete(`ElevatorSparePartsChange/${id}`)
       .then((result: boolean) => {
         if (result) this.data = this.data.filter((item) => item.id !== id);
@@ -46,15 +46,15 @@ export default class ListElevatorSparePartsChangeComponent implements OnInit {
   }
 
   onModalAddOrEdit(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         AddOrEditElevatorSparePartsChangeComponent,
         {
           id: data.id,
-          customerId: this.custIdService.customerId,
+          customerId: this.customerIdS.customerId,
         },
         data.title,
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();

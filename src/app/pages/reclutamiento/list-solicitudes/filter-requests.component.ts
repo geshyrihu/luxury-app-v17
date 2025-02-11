@@ -17,8 +17,8 @@ import CBtnModule from 'src/app/custom-components/custom-buttons/btn.module';
   imports: [LuxuryAppComponentsModule, CBtnModule],
 })
 export default class FilterRequestsComponent {
-  apiRequestService = inject(ApiRequestService);
-  dataService = inject(DataConnectorService);
+  apiRequestS = inject(ApiRequestService);
+  dataConnectorS = inject(DataConnectorService);
   router = inject(Router);
   filterRequestsService = inject(FilterRequestsService);
   customToastService = inject(CustomToastService);
@@ -48,7 +48,7 @@ export default class FilterRequestsComponent {
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
   exportToExcel(): void {
-    this.dataService
+    this.dataConnectorS
       .getFile(this.apiUrl, this.filterRequestsService.getParams())
       .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
@@ -68,7 +68,7 @@ export default class FilterRequestsComponent {
   }
   onSendReportVacants() {
     const urlApi = `solicitudesreclutamiento/sendreportvacants`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       this.onLoadData();
     });
   }

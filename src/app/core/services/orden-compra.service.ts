@@ -6,7 +6,7 @@ import { DataConnectorService } from './data.service';
   providedIn: 'root',
 })
 export class OrdenCompraService implements OnDestroy {
-  dataService = inject(DataConnectorService);
+  dataConnectorS = inject(DataConnectorService);
 
   private destroy$ = new Subject<void>(); // Utilizado para la gestión de recursos al destruir el componente
 
@@ -41,7 +41,7 @@ export class OrdenCompraService implements OnDestroy {
     this.totalCubierto = 0;
     this.totalPorCubrir = 0;
 
-    this.dataService
+    this.dataConnectorS
       .get(`OrdenCompraDetalle/GetAllTotal/${ordenCompraId}`)
       .pipe(takeUntil(this.destroy$)) // Cancelar la suscripción cuando el componente se destruye
       .subscribe({
@@ -50,7 +50,7 @@ export class OrdenCompraService implements OnDestroy {
             this.totalOrdenCompra += n.total;
           }
 
-          this.dataService
+          this.dataConnectorS
             .get(
               `OrdenCompraPresupuesto/GetAllForOrdenCompraTotal/${ordenCompraId}`
             )
@@ -86,6 +86,6 @@ export class OrdenCompraService implements OnDestroy {
     return this.statusCompras;
   }
   ngOnDestroy(): void {
-    this.dataService.ngOnDestroy();
+    this.dataConnectorS.ngOnDestroy();
   }
 }

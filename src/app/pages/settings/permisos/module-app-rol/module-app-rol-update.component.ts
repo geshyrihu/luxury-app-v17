@@ -11,9 +11,9 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
   templateUrl: './module-app-rol-update.component.html',
 })
 export default class ModuleAppRolUpdateComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   activatedRoute = inject(ActivatedRoute);
-  custIdService = inject(CustomerIdService);
+  customerIdS = inject(CustomerIdService);
 
   // Declaración e inicialización de variables
   data: any[] = [];
@@ -30,7 +30,7 @@ export default class ModuleAppRolUpdateComponent implements OnInit {
 
   onLoadData(roleId: string): void {
     const urlApi = `ModuleAppRol/Assignments/${roleId}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
   }
@@ -48,8 +48,8 @@ export default class ModuleAppRolUpdateComponent implements OnInit {
       isAssigned: item.isAssigned,
     };
 
-    this.apiRequestService.onPost(urlApi, data).then((result: any) => {
-      this.custIdService.onLoadDataCustomer(this.custIdService.customerId);
+    this.apiRequestS.onPost(urlApi, data).then((result: any) => {
+      this.customerIdS.onLoadDataCustomer(this.customerIdS.customerId);
     });
   }
   checkIfTwoDigitsAndSpace(moduleAppName: string): boolean {

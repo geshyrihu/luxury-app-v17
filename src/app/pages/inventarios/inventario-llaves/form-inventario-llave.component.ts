@@ -15,11 +15,11 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class FormInventarioLlaveComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  formBuilder = inject(FormBuilder);
+  apiRequestS = inject(ApiRequestService);
+  formB = inject(FormBuilder);
   ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);
-  custIdService = inject(CustomerIdService);
+  customerIdS = inject(CustomerIdService);
   authS = inject(AuthService);
 
   submitting: boolean = false;
@@ -27,9 +27,9 @@ export default class FormInventarioLlaveComponent implements OnInit {
   id: number = 0;
 
   cb_equipoClasificacion: ISelectItem[] = [];
-  form: FormGroup = this.formBuilder.group({
+  form: FormGroup = this.formB.group({
     id: { value: this.id, disabled: true },
-    customerId: [this.custIdService.getCustomerId(), [Validators.required]],
+    customerId: [this.customerIdS.getCustomerId(), [Validators.required]],
     descripcion: ['', [Validators.required]],
     marca: ['', [Validators.required]],
     numeroLlave: ['', [Validators.required]],
@@ -46,24 +46,24 @@ export default class FormInventarioLlaveComponent implements OnInit {
 
   onLoadData() {
     const urlApi = `InventarioLlave/${this.id}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       this.form.patchValue(result);
     });
   }
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
     this.id = this.config.data.id;
 
     this.submitting = true;
 
     if (this.id === 0) {
-      this.apiRequestService
+      this.apiRequestS
         .onPost(`InventarioLlave`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.apiRequestService
+      this.apiRequestS
         .onPut(`InventarioLlave/${this.id}`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
@@ -73,7 +73,7 @@ export default class FormInventarioLlaveComponent implements OnInit {
 
   onLoadEquipoClasificacion() {
     const urlApi = 'EquipoClasificacion/SelectItem';
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.cb_equipoClasificacion = result;
     });
   }

@@ -14,18 +14,18 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class PropiedadesAddOrEditComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  formBuilder = inject(FormBuilder);
+  apiRequestS = inject(ApiRequestService);
+  formB = inject(FormBuilder);
   authS = inject(AuthService);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
-  custIdService = inject(CustomerIdService);
+  customerIdS = inject(CustomerIdService);
 
   submitting: boolean = false;
 
   id: number = 0;
-  customerId: number = this.custIdService.customerId;
-  form: FormGroup = this.formBuilder.group({
+  customerId: number = this.customerIdS.customerId;
+  form: FormGroup = this.formB.group({
     id: { value: this.id, disabled: true },
     department: ['', Validators.required],
     customerId: [this.customerId, Validators.required],
@@ -35,24 +35,24 @@ export default class PropiedadesAddOrEditComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    this.customerId = this.custIdService.customerId;
+    this.customerId = this.customerIdS.customerId;
     this.id = this.config.data.id;
     if (this.id !== 0) {
       this.onLoadData();
     }
   }
   submit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
     this.submitting = true;
 
     if (this.id === 0) {
-      this.apiRequestService
+      this.apiRequestS
         .onPost(`DirectoryCondominium`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.apiRequestService
+      this.apiRequestS
         .onPut(`DirectoryCondominium/${this.id}`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
@@ -60,7 +60,7 @@ export default class PropiedadesAddOrEditComponent implements OnInit {
     }
   }
   onLoadData() {
-    this.apiRequestService
+    this.apiRequestS
       .onGetItem(`DirectoryCondominium/${this.id}`)
       .then((result: any) => {
         this.form.patchValue(result);

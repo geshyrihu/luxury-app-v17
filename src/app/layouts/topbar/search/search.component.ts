@@ -1,28 +1,28 @@
-import { Component, inject, OnInit } from "@angular/core";
-import { DialogService, DynamicDialogRef } from "primeng/dynamicdialog";
-import { DialogHandlerService } from "src/app/core/services/dialog-handler.service";
-import ModalSearchComponent from "../modal-search/modal-search.component";
+import { Component, inject, OnInit } from '@angular/core';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
+import ModalSearchComponent from '../modal-search/modal-search.component';
 
 @Component({
-  selector: "app-search",
-  templateUrl: "./search.component.html",
+  selector: 'app-search',
+  templateUrl: './search.component.html',
   standalone: true,
   imports: [],
 })
 export default class SearchComponent implements OnInit {
   ref: DynamicDialogRef | undefined;
-  dialogHandlerService = inject(DialogHandlerService);
-  dialogService = inject(DialogService);
+  dialogHandlerS = inject(DialogHandlerService);
+  dialogS = inject(DialogService);
 
   ngOnInit() {}
 
   onModalSearch() {
-    this.ref = this.dialogService.open(ModalSearchComponent, {
+    this.ref = this.dialogS.open(ModalSearchComponent, {
       closeOnEscape: true,
-      contentStyle: { overflow: "auto", borderRadius: "3px" },
-      position: "top",
+      contentStyle: { overflow: 'auto', borderRadius: '3px' },
+      position: 'top',
       showHeader: false,
-      width: "40%",
+      width: '40%',
       baseZIndex: 10000,
     });
   }

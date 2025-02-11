@@ -20,15 +20,15 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   templateUrl: './addoredit-customer-provider.component.html',
 })
 export default class AddOrEditCustomerProviderComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  custIdService = inject(CustomerIdService);
-  formBuilder = inject(FormBuilder);
+  apiRequestS = inject(ApiRequestService);
+  customerIdS = inject(CustomerIdService);
+  formB = inject(FormBuilder);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
 
   cb_providers: ISelectItem[] = [];
   cb_categories: ISelectItem[] = [];
-  customerId: number = this.custIdService.customerId;
+  customerId: number = this.customerIdS.customerId;
 
   submitting: boolean = false;
 
@@ -40,7 +40,7 @@ export default class AddOrEditCustomerProviderComponent implements OnInit {
     this.onLoadForm();
   }
   onLoadData() {
-    this.apiRequestService
+    this.apiRequestS
       .onGetItem(`customerprovider/getById/${this.config.data.id}`)
       .then((result: any) => {
         this.form.patchValue(result);
@@ -52,7 +52,7 @@ export default class AddOrEditCustomerProviderComponent implements OnInit {
   form: FormGroup;
 
   onLoadForm() {
-    this.form = this.formBuilder.group({
+    this.form = this.formB.group({
       id: { value: this.id, disabled: true },
       customerId: [this.customerId, Validators.required],
       providerId: ['', Validators.required],
@@ -65,34 +65,30 @@ export default class AddOrEditCustomerProviderComponent implements OnInit {
   onLoadSelectItem() {
     // Carga de listado de proveedores
 
-    this.apiRequestService
-      .onGetSelectItem(`providers`)
-      .then((response: any) => {
-        this.cb_providers = response;
-      });
+    this.apiRequestS.onGetSelectItem(`providers`).then((response: any) => {
+      this.cb_providers = response;
+    });
 
     // Carga de listado de categorias
 
-    this.apiRequestService
-      .onGetSelectItem(`categories`)
-      .then((response: any) => {
-        this.cb_categories = response;
-      });
+    this.apiRequestS.onGetSelectItem(`categories`).then((response: any) => {
+      this.cb_categories = response;
+    });
   }
 
   submit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
 
     this.submitting = true;
 
     if (this.id === '') {
-      this.apiRequestService
+      this.apiRequestS
         .onPost(`customerprovider`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.apiRequestService
+      this.apiRequestS
         .onPut(`customerprovider/${this.id}`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);

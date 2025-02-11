@@ -20,8 +20,8 @@
 //   imports: [LuxuryAppComponentsModule],
 // })
 // export default class SistemasReporteComponent implements OnInit {
-//   apiRequestService = inject(ApiRequestService);
-//   dialogHandlerService = inject(DialogHandlerService);
+//   apiRequestS = inject(ApiRequestService);
+//    dialogHandlerS = inject(DialogHandlerService);
 //   authS = inject(AuthService);
 
 //   public sistemasReporteService = inject(SistemasReporteService);
@@ -49,7 +49,7 @@
 
 //   onLoadData(status: EStatus, applicationUserId: string): void {
 //     const urlApi = `TicketsSistemas/List/${status}/${applicationUserId}`;
-//     this.apiRequestService.onGetList(urlApi).then((result: any) => {
+//     this.apiRequestS.onGetList(urlApi).then((result: any) => {
 //       this.data = result;
 //     });
 //   }
@@ -89,7 +89,7 @@
 //         AddoreditTicketSistemasComponent,
 //         { id: data.id, status: data.status },
 //         data.title,
-//         this.dialogHandlerService.dialogSizeLg
+//         this.dialogHandlerS.dialogSizeLg
 //       )
 //       .then((result: any) => {
 //         if (result !== undefined)
@@ -106,11 +106,11 @@
 //   }
 
 //   onCardEmployee(applicationUserId: string) {
-//     this.dialogHandlerService.openDialog(
+//     this.dialogHandlerS.openDialog(
 //       CardEmployeeComponent,
 //       { applicationUserId },
 //       'Colaborador',
-//       this.dialogHandlerService.dialogSizeMd
+//       this.dialogHandlerS.dialogSizeMd
 //     );
 //   }
 
@@ -120,7 +120,7 @@
 //         TicketSeguimientoComponent,
 //         { id },
 //         'Seguimientos',
-//         this.dialogHandlerService.dialogSizeLg
+//         this.dialogHandlerS.dialogSizeLg
 //       )
 //       .then((result: boolean) => {
 //         if (result) this.onLoadData(this.status, this.responsableSistemas);

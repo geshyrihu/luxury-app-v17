@@ -14,11 +14,11 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class EditProductosAlmacenComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  formBuilder = inject(FormBuilder);
+  apiRequestS = inject(ApiRequestService);
+  formB = inject(FormBuilder);
   authS = inject(AuthService);
   config = inject(DynamicDialogConfig);
-  custIdService = inject(CustomerIdService);
+  customerIdS = inject(CustomerIdService);
   ref = inject(DynamicDialogRef);
 
   submitting: boolean = false;
@@ -26,9 +26,9 @@ export default class EditProductosAlmacenComponent implements OnInit {
   id: any = 0;
   cb_measurementUnits: any = [];
   // stokMaximo: 0;
-  form: FormGroup = this.formBuilder.group({
+  form: FormGroup = this.formB.group({
     id: { value: this.id, disabled: true },
-    customerId: [this.custIdService.customerId, Validators.required],
+    customerId: [this.customerIdS.customerId, Validators.required],
     productoId: ['', Validators.required],
     producto: [''],
     existencia: [0, Validators.required],
@@ -39,7 +39,7 @@ export default class EditProductosAlmacenComponent implements OnInit {
   });
 
   onLoadProducts() {
-    this.apiRequestService
+    this.apiRequestS
       .onGetSelectItem('getMeasurementUnits')
       .then((response: any) => {
         this.cb_measurementUnits = response;
@@ -57,23 +57,23 @@ export default class EditProductosAlmacenComponent implements OnInit {
 
   onLoadData() {
     const urlApi = `InventarioProducto/${this.id}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       this.form.patchValue(result);
     });
   }
 
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
 
     this.submitting = true;
     if (this.id === 0) {
-      this.apiRequestService
+      this.apiRequestS
         .onPost(`InventarioProducto`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.apiRequestService
+      this.apiRequestS
         .onPut(`InventarioProducto/${this.id}`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);

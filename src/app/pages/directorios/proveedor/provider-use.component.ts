@@ -10,7 +10,7 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
   imports: [LuxuryAppComponentsModule],
 })
 export default class ProviderUseComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   config = inject(DynamicDialogConfig);
 
   data: any[] = [];
@@ -23,7 +23,7 @@ export default class ProviderUseComponent implements OnInit {
 
   onLoadData(providerId: number) {
     const urlApi = `providers/coincidencias/${providerId}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
   }

@@ -11,9 +11,9 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
   imports: [LuxuryAppComponentsModule],
 })
 export default class ReportMeetingComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   rutaActiva = inject(ActivatedRoute);
-  custIdService = inject(CustomerIdService);
+  customerIdS = inject(CustomerIdService);
 
   formattedDate: Date | null = null;
 
@@ -41,7 +41,7 @@ export default class ReportMeetingComponent implements OnInit {
 
   loadMeetingData() {
     const urlApi = `Meetings/MeetingReportPdf/${this.meetingId}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
       this.detalles = result.asuntos;
     });
@@ -49,7 +49,7 @@ export default class ReportMeetingComponent implements OnInit {
 
   onLoadCustomer() {
     const urlApi = `Customers/${this.customerId}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       this.nameCustomer = result.nameCustomer;
       this.logoCustomer = result.photoPath;
     });

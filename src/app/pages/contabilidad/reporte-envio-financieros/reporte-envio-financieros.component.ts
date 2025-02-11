@@ -12,9 +12,9 @@ import { PeriodoMonthService } from 'src/app/core/services/periodo-month.service
   imports: [LuxuryAppComponentsModule],
 })
 export default class ReporteEnvioFinancierosComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   public periodoMonthService = inject(PeriodoMonthService);
-  dateService = inject(DateService);
+  dateS = inject(DateService);
 
   // Declaración e inicialización de variables
   data: any[] = [];
@@ -22,7 +22,7 @@ export default class ReporteEnvioFinancierosComponent implements OnInit {
   periodo: string = '';
 
   ngOnInit(): void {
-    this.periodo = this.dateService.getNameMontYear(
+    this.periodo = this.dateS.getNameMontYear(
       this.periodoMonthService.fechaInicial
     );
     this.onLoadData();
@@ -30,9 +30,9 @@ export default class ReporteEnvioFinancierosComponent implements OnInit {
 
   // Función para cargar los datos de los reporte
   onLoadData() {
-    this.apiRequestService
+    this.apiRequestS
       .onGetList(
-        `EstadoFinanciero/reporteenviomensual/${this.dateService.getDateFormat(
+        `EstadoFinanciero/reporteenviomensual/${this.dateS.getDateFormat(
           this.periodoMonthService.getPeriodoInicio
         )}`
       )
@@ -43,7 +43,7 @@ export default class ReporteEnvioFinancierosComponent implements OnInit {
 
   onFiltrarPeriodo(periodo: string) {
     this.periodoMonthService.setPeriodo(periodo);
-    this.periodo = this.dateService.getNameMontYear(
+    this.periodo = this.dateS.getNameMontYear(
       this.periodoMonthService.fechaInicial
     );
     this.onLoadData();

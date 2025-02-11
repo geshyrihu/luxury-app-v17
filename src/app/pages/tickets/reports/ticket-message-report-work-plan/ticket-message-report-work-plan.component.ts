@@ -18,11 +18,11 @@ import { TicketGroupService } from '../../ticket.service';
   imports: [LuxuryAppComponentsModule, TicketMessageModule],
 })
 export default class TicketMessageReportWorkPlanComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   authS = inject(AuthService);
   ticketGroupService = inject(TicketGroupService);
-  custIdService = inject(CustomerIdService);
-  dialogHandlerService = inject(DialogHandlerService);
+  customerIdS = inject(CustomerIdService);
+  dialogHandlerS = inject(DialogHandlerService);
   router = inject(Router);
 
   data: any[] = [];
@@ -36,8 +36,8 @@ export default class TicketMessageReportWorkPlanComponent implements OnInit {
   }
 
   onLoadData() {
-    const urlApi = `TicketWorkPlan/Pending/${this.custIdService.customerId}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    const urlApi = `TicketWorkPlan/Pending/${this.customerIdS.customerId}`;
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
       this.originalData = JSON.parse(JSON.stringify(result)); // Copia profunda
       const uniqueResponsibles = Array.from(
@@ -76,12 +76,12 @@ export default class TicketMessageReportWorkPlanComponent implements OnInit {
     this.router.navigate(['/tickets/work-plan-preview']);
   }
   onModalAddOrEdit(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         TicketMessageAddOrEditComponent,
         { id: data.id, ticketGroupId: data.ticketGroupId },
         'Agregar',
-        this.dialogHandlerService.dialogSizeLg
+        this.dialogHandlerS.dialogSizeLg
       )
       .then((result: boolean) => {
         if (result) {
@@ -90,11 +90,11 @@ export default class TicketMessageReportWorkPlanComponent implements OnInit {
       });
   }
   onCardEmployee(applicationUserId: string) {
-    this.dialogHandlerService.openDialog(
+    this.dialogHandlerS.openDialog(
       CardEmployeeComponent,
       { applicationUserId },
       'Colaborador',
-      this.dialogHandlerService.dialogSizeMd
+      this.dialogHandlerS.dialogSizeMd
     );
   }
 }

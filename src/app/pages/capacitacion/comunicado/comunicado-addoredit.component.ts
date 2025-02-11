@@ -15,11 +15,11 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class ComunicadoAddOrEditComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   config = inject(DynamicDialogConfig);
-  dateService = inject(DateService);
+  dateS = inject(DateService);
   ref = inject(DynamicDialogRef);
-  formBuilder = inject(FormBuilder);
+  formB = inject(FormBuilder);
 
   submitting: boolean = false;
   id: number = 0;
@@ -27,7 +27,7 @@ export default class ComunicadoAddOrEditComponent implements OnInit {
   file: any = null;
   cb_area_responsable: ISelectItem[] = [];
 
-  form: FormGroup = this.formBuilder.group({
+  form: FormGroup = this.formB.group({
     id: { value: this.id, disabled: true },
     nombreComunicado: ['', Validators.required],
     folioComunicado: ['', Validators.required],
@@ -45,11 +45,9 @@ export default class ComunicadoAddOrEditComponent implements OnInit {
     this.form.patchValue({ area: this.config.data.titulo });
   }
   onLoadData() {
-    this.apiRequestService
-      .onGetItem(`Comunicado/${this.id}`)
-      .then((result: any) => {
-        this.form.patchValue(result);
-      });
+    this.apiRequestS.onGetItem(`Comunicado/${this.id}`).then((result: any) => {
+      this.form.patchValue(result);
+    });
   }
 
   public saveAreResponsableId(e: any): void {
@@ -61,7 +59,7 @@ export default class ComunicadoAddOrEditComponent implements OnInit {
     });
   }
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
 
     const model = this.onCreateFormData(this.form.value);
     this.id = this.config.data.id;
@@ -69,13 +67,11 @@ export default class ComunicadoAddOrEditComponent implements OnInit {
     this.submitting = true;
 
     if (this.id === 0) {
-      this.apiRequestService
-        .onPost(`Comunicado`, model)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
-        });
+      this.apiRequestS.onPost(`Comunicado`, model).then((result: boolean) => {
+        result ? this.ref.close(true) : (this.submitting = false);
+      });
     } else {
-      this.apiRequestService
+      this.apiRequestS
         .onPut(`Comunicado/${this.id}`, model)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
@@ -92,7 +88,7 @@ export default class ComunicadoAddOrEditComponent implements OnInit {
     formData.append('folioComunicado', dto.folioComunicado);
     formData.append(
       'fechaPublicacion',
-      this.dateService.getDateFormat(dto.fechaPublicacion)
+      this.dateS.getDateFormat(dto.fechaPublicacion)
     );
     formData.append('responsibleAreaId', String(dto.responsibleAreaId));
     if (this.file != null) {
@@ -102,7 +98,7 @@ export default class ComunicadoAddOrEditComponent implements OnInit {
   }
 
   onLoadSelectItem() {
-    this.apiRequestService
+    this.apiRequestS
       .onGetSelectItem('ResponsibleArea')
       .then((response: ISelectItem[]) => {
         this.cb_area_responsable = response;

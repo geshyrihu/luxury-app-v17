@@ -15,8 +15,8 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 export default class AddOrEditCalendarioMaestroEquipoComponent
   implements OnInit
 {
-  apiRequestService = inject(ApiRequestService);
-  formBuilder = inject(FormBuilder);
+  apiRequestS = inject(ApiRequestService);
+  formB = inject(FormBuilder);
   ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);
 
@@ -24,7 +24,7 @@ export default class AddOrEditCalendarioMaestroEquipoComponent
   id: number = 0;
   submitting: boolean = false;
 
-  form: FormGroup = this.formBuilder.group({
+  form: FormGroup = this.formB.group({
     id: { value: this.id, disabled: true },
     nombreEquipo: ['', Validators.required],
     equipoClasificacionId: [0, [Validators.required]],
@@ -38,23 +38,23 @@ export default class AddOrEditCalendarioMaestroEquipoComponent
 
   onLoadData(id: number) {
     const url = `CalendarioMaestroEquipo/${id}`;
-    this.apiRequestService.onGetItem(url).then((result: any) => {
+    this.apiRequestS.onGetItem(url).then((result: any) => {
       this.form.patchValue(result);
     });
   }
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
 
     this.submitting = true;
 
     if (this.id === 0) {
-      this.apiRequestService
+      this.apiRequestS
         .onPost(`CalendarioMaestroEquipo`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.apiRequestService
+      this.apiRequestS
         .onPut(`CalendarioMaestroEquipo/${this.id}`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
@@ -63,7 +63,7 @@ export default class AddOrEditCalendarioMaestroEquipoComponent
   }
 
   onLoadEquipoClasificacion() {
-    this.apiRequestService
+    this.apiRequestS
       .onGetList('EquipoClasificacion/SelectItem')
       .then((result: any) => {
         this.cb_equipoClasificacion = result;

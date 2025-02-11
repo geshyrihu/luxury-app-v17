@@ -19,12 +19,12 @@ import AddOrEditStatusRequestDismissalDiscountComponent from './addoredit-status
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class StatusRequestDismissalComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
 
   statusSolicitudVacanteService = inject(StatusSolicitudVacanteService);
   authS = inject(AuthService);
-  custIdService = inject(CustomerIdService);
+  customerIdS = inject(CustomerIdService);
   router = inject(Router);
 
   workPositionId = this.statusSolicitudVacanteService.getworkPositionId();
@@ -42,21 +42,21 @@ export default class StatusRequestDismissalComponent implements OnInit {
 
   onLoadData() {
     const urlApi = 'RequestDismissal/' + this.workPositionId;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       this.data = result;
     });
   }
 
   //Ver tarjeta de Colaborador
   onCardEmployee(applicationUserId: string) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         CardEmployeeComponent,
         {
           applicationUserId,
         },
         'Tarjeta de Colaborador',
-        this.dialogHandlerService.dialogSizeSm
+        this.dialogHandlerS.dialogSizeSm
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();
@@ -65,14 +65,14 @@ export default class StatusRequestDismissalComponent implements OnInit {
 
   //Editar solicitud de baja
   onModalAddOrEdit(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         AddoreditSolicitudBajaComponent,
         {
           id: data.id,
         },
         data.title,
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();
@@ -80,7 +80,7 @@ export default class StatusRequestDismissalComponent implements OnInit {
   }
   //Eliminar solicitud de baja
   onDelete(id: number) {
-    this.apiRequestService
+    this.apiRequestS
       .onDelete(`RequestDismissal/${id}`)
       .then((result: boolean) => {
         if (result) this.data = this.data.filter((item) => item.id !== id);
@@ -88,14 +88,14 @@ export default class StatusRequestDismissalComponent implements OnInit {
   }
   //Editar solicitud de Discounts
   onModalAddOrEditDiscounts(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         AddOrEditStatusRequestDismissalDiscountComponent,
         {
           id: data.id,
         },
         data.title,
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();
@@ -104,7 +104,7 @@ export default class StatusRequestDismissalComponent implements OnInit {
   //Eliminar solicitud de baja
   onDeleteDiscounts(id: number) {
     const urlApi = `RequestDismissalDiscount/${id}`;
-    this.apiRequestService.onDelete(urlApi).then((result: boolean) => {
+    this.apiRequestS.onDelete(urlApi).then((result: boolean) => {
       this.onLoadData();
     });
   }

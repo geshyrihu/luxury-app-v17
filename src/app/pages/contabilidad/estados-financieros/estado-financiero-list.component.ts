@@ -16,14 +16,14 @@ import EstadoFinancieroAddFileComponent from './estado-financiero-add-file.compo
 })
 export default class EstadoFinancieroListComponent implements OnInit {
   private authS = inject(AuthService);
-  custIdService = inject(CustomerIdService);
-  dialogHandlerService = inject(DialogHandlerService);
-  apiRequestService = inject(ApiRequestService);
+  customerIdS = inject(CustomerIdService);
+  dialogHandlerS = inject(DialogHandlerService);
+  apiRequestS = inject(ApiRequestService);
 
   data: any[] = [];
   ref: DynamicDialogRef;
 
-  customerId$: Observable<number> = this.custIdService.getCustomerId$();
+  customerId$: Observable<number> = this.customerIdS.getCustomerId$();
 
   ngOnInit(): void {
     this.onLoadData();
@@ -33,20 +33,20 @@ export default class EstadoFinancieroListComponent implements OnInit {
   }
 
   onLoadData(): void {
-    const urlApi = `EstadoFinanciero/ToCustomer/${this.custIdService.customerId}/`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    const urlApi = `EstadoFinanciero/ToCustomer/${this.customerIdS.customerId}/`;
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
   }
 
   // Función para abrir un cuadro de diálogo modal paraa agregar el archivo
   onUploadFile(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         EstadoFinancieroAddFileComponent,
         data,
         data.title,
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) {
@@ -55,7 +55,7 @@ export default class EstadoFinancieroListComponent implements OnInit {
       });
   }
   onAuthorize(id: string) {
-    this.apiRequestService
+    this.apiRequestS
       .onGetItem(
         `EstadoFinanciero/Authorize/${id}/${this.authS.applicationUserId}`
       )
@@ -64,7 +64,7 @@ export default class EstadoFinancieroListComponent implements OnInit {
       });
   }
   onDesauthorize(id: string) {
-    this.apiRequestService
+    this.apiRequestS
       .onGetItem(`EstadoFinanciero/Desauthorize/${id}`)
       .then((_) => {
         this.onLoadData();
@@ -73,7 +73,7 @@ export default class EstadoFinancieroListComponent implements OnInit {
 
   // onSendEstadosFinancieros(data: any) {
   onSendEstadosFinancieros(data: any) {
-    this.apiRequestService
+    this.apiRequestS
       .onPost(
         `EstadoFinanciero/Send/${data.id}/${this.authS.applicationUserId}`,
         null

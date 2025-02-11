@@ -18,7 +18,7 @@ import { environment } from 'src/environments/environment';
 export default class PresupuestoEditionFileComponent implements OnInit {
   customToastService = inject(CustomToastService);
   config = inject(DynamicDialogConfig);
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
 
   id = this.config.data.id;
   url: string = `${environment.API_BASE_URL}Cuentas/SetDocuments/${this.id}`;
@@ -41,7 +41,7 @@ export default class PresupuestoEditionFileComponent implements OnInit {
   }
 
   onGetDescription() {
-    this.apiRequestService
+    this.apiRequestS
       .onGetItem(`Cuentas/Description/${this.id}`)
       .then((result: any) => {
         this.description = result.description;
@@ -49,7 +49,7 @@ export default class PresupuestoEditionFileComponent implements OnInit {
       });
   }
   onGetFiles() {
-    this.apiRequestService
+    this.apiRequestS
       .onGetList(`Cuentas/SoporteFileList/${this.id}`)
       .then((result: any) => {
         this.files = result;
@@ -61,29 +61,27 @@ export default class PresupuestoEditionFileComponent implements OnInit {
       id: this.presupuestoDetalleSoporteId,
     };
 
-    this.apiRequestService.onPut(`Cuentas/UpdateDescription`, data);
+    this.apiRequestS.onPut(`Cuentas/UpdateDescription`, data);
   }
 
   // Función para eliminar un archivo
   onDeleteFile(id: number) {
-    this.apiRequestService
-      .onDelete(`Cuentas/File/${id}`)
-      .then((result: boolean) => {
-        // if (result) this.data = this.data.filter((item) => item.id !== id);
-        if (result) {
-          // Eliminar solo el registro afectado en lugar de toda la lista
-          // Supongamos que has recibido la respuesta HTTP y tienes el `id` del archivo a eliminar
-          const deleteRecordId = id; // Reemplaza 123 con el ID real del archivo que deseas eliminar
-          // Encuentra el índice del registro a eliminar en la lista
-          const recordIndex = this.files.findIndex(
-            (record) => record.id === deleteRecordId
-          );
-          if (recordIndex !== -1) {
-            // Si se encuentra el registro, elimínalo de la lista
-            this.files.splice(recordIndex, 1);
-          }
+    this.apiRequestS.onDelete(`Cuentas/File/${id}`).then((result: boolean) => {
+      // if (result) this.data = this.data.filter((item) => item.id !== id);
+      if (result) {
+        // Eliminar solo el registro afectado en lugar de toda la lista
+        // Supongamos que has recibido la respuesta HTTP y tienes el `id` del archivo a eliminar
+        const deleteRecordId = id; // Reemplaza 123 con el ID real del archivo que deseas eliminar
+        // Encuentra el índice del registro a eliminar en la lista
+        const recordIndex = this.files.findIndex(
+          (record) => record.id === deleteRecordId
+        );
+        if (recordIndex !== -1) {
+          // Si se encuentra el registro, elimínalo de la lista
+          this.files.splice(recordIndex, 1);
         }
-      });
+      }
+    });
     // Mostrar un mensaje de carga
     this.customToastService.onLoading();
   }

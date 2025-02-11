@@ -16,7 +16,7 @@ import { EmployeeAddOrEditService } from './employee-add-or-edit.service';
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class EmployeeGenerateUserNameAppComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   employeeAddOrEditService = inject(EmployeeAddOrEditService);
   authS = inject(AuthService);
   customToastService = inject(CustomToastService);
@@ -37,7 +37,7 @@ export default class EmployeeGenerateUserNameAppComponent implements OnInit {
   rolesAdmin: IRoles[] = RolesAdmin;
 
   getRoles() {
-    this.apiRequestService
+    this.apiRequestS
       .onGetList('ApplicationUser/GetRole/' + this.applicationUserId)
       .then((result: IRoles[]) => {
         if (this.authS.onValidateRoles(['SuperUsuario'])) {
@@ -68,7 +68,7 @@ export default class EmployeeGenerateUserNameAppComponent implements OnInit {
     this.getRoles();
   }
   onLoadData() {
-    this.apiRequestService
+    this.apiRequestS
       .onGetItem(
         `EmployeeInternal/DataForRecoveryPassword/${this.applicationUserId}`
       )
@@ -81,7 +81,7 @@ export default class EmployeeGenerateUserNameAppComponent implements OnInit {
         }
       });
 
-    this.apiRequestService
+    this.apiRequestS
       .onGetItem(`EmployeeInternal/OnValidateState/${this.applicationUserId}`)
       .then((result: any) => {
         this.applicationUserState = result;
@@ -90,7 +90,7 @@ export default class EmployeeGenerateUserNameAppComponent implements OnInit {
 
   sendOnlyPasswordEmail() {
     this.submitting = true;
-    this.apiRequestService
+    this.apiRequestS
       .onGetItem(`Auth/SendNewPasswordForEmail/${this.applicationUserId}`)
       .then(() => {
         this.submitting = false;
@@ -99,7 +99,7 @@ export default class EmployeeGenerateUserNameAppComponent implements OnInit {
   }
   onGenerateUserNameAndPassword() {
     this.submitting = true;
-    this.apiRequestService
+    this.apiRequestS
       .onGetItem(`Auth/SendNewUserNameForEmail/${this.applicationUserId}`)
       .then(() => {
         this.onLoadData();
@@ -116,20 +116,20 @@ export default class EmployeeGenerateUserNameAppComponent implements OnInit {
     selectedRole.isSelected = true;
 
     // Enviar al backend
-    this.apiRequestService.onPost(
+    this.apiRequestS.onPost(
       `ApplicationUser/AddRoleToUser/${this.applicationUserId}`,
       selectedRole
     );
   }
   onToBlockAccount() {
-    this.apiRequestService
+    this.apiRequestS
       .onGetList(`ApplicationUser/ToBlockAccount/${this.applicationUserId}`)
       .then(() => {
         this.onLoadData();
       });
   }
   onToUnlockAccount() {
-    this.apiRequestService
+    this.apiRequestS
       .onGetList(`ApplicationUser/ToUnlockAccount/${this.applicationUserId}`)
       .then(() => {
         this.onLoadData();

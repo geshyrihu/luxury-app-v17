@@ -10,7 +10,7 @@ const date = new Date();
   providedIn: 'root',
 })
 export class FiltroCalendarService {
-  dateService = inject(DateService);
+  dateS = inject(DateService);
 
   // Inicializamos las fechas de inicio y fin para el filtro de calendario
   // Día primero del mes anterior

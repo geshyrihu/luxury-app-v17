@@ -17,16 +17,16 @@ import PeriodoCedulaPresupuestalAddoreditComponent from './periodo-cedula-addore
   imports: [LuxuryAppComponentsModule],
 })
 export default class CedulaClienteListComponent implements OnInit {
-  dialogHandlerService = inject(DialogHandlerService);
-  apiRequestService = inject(ApiRequestService);
-  custIdService = inject(CustomerIdService);
+  dialogHandlerS = inject(DialogHandlerService);
+  apiRequestS = inject(ApiRequestService);
+  customerIdS = inject(CustomerIdService);
 
   id: number = 0;
   data: any[] = [];
   listCustomer: any[] = [];
   today = new Date();
   titulo = '';
-  customerId$: Observable<number> = this.custIdService.getCustomerId$();
+  customerId$: Observable<number> = this.customerIdS.getCustomerId$();
   presupuestoMensual: string = '';
   presupuestoEjercido: string = '';
   presupuestoDisponible: string = '';
@@ -35,19 +35,19 @@ export default class CedulaClienteListComponent implements OnInit {
 
   ngOnInit() {
     this.onLoadData();
-    this.customerId$ = this.custIdService.getCustomerId$();
-    this.onLoadCedulasCustomer(this.custIdService.customerId);
+    this.customerId$ = this.customerIdS.getCustomerId$();
+    this.onLoadCedulasCustomer(this.customerIdS.customerId);
     this.customerId$.subscribe((resp) => {
       this.id = 0;
       this.onLoadData();
-      this.onLoadCedulasCustomer(this.custIdService.customerId);
+      this.onLoadCedulasCustomer(this.customerIdS.customerId);
     });
   }
 
   onLoadData() {
-    this.apiRequestService
+    this.apiRequestS
       .onGetList(
-        `CedulaPresupuestal/GetCedulaPresupuestal/${this.custIdService.customerId}/${this.id}`
+        `CedulaPresupuestal/GetCedulaPresupuestal/${this.customerIdS.customerId}/${this.id}`
       )
       .then((result: any) => {
         if (result !== null) {
@@ -69,40 +69,40 @@ export default class CedulaClienteListComponent implements OnInit {
     this.onLoadData();
   }
   onLoadCedulasCustomer(customerId: number) {
-    this.apiRequestService
+    this.apiRequestS
       .onGetList(`CedulaPresupuestal/GetCedulas/${customerId}`)
       .then((result: any) => {
         this.cb_cedulas = result;
       });
   }
   onModalAdd() {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         PresupuestoAddPartidaComponent,
         {
           idBudgetCard: this.id,
         },
         'Agregar Partida',
-        this.dialogHandlerService.dialogSizeLg
+        this.dialogHandlerS.dialogSizeLg
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();
       });
   }
   onModalEditar(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         PresupuestoEditPartidaComponent,
         data,
         data.title,
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();
       });
   }
   onModalOrdenesCompraCedula(partidaPresupuestalId: number) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         OrdenesCompraCedulaListComponent,
         {
@@ -110,7 +110,7 @@ export default class CedulaClienteListComponent implements OnInit {
           cedulaPresupuestalId: this.id,
         },
         'Ordenes de Compra',
-        this.dialogHandlerService.dialogSizeFull
+        this.dialogHandlerS.dialogSizeFull
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();
@@ -118,7 +118,7 @@ export default class CedulaClienteListComponent implements OnInit {
   }
 
   onDelete(id: number) {
-    this.apiRequestService
+    this.apiRequestS
       .onDelete(`CedulaPresupuestalDetalle/${id}`)
       .then((result: boolean) => {
         if (result) this.data = this.data.filter((item) => item.id !== id);
@@ -126,17 +126,17 @@ export default class CedulaClienteListComponent implements OnInit {
   }
 
   editarPeriodo() {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         PeriodoCedulaPresupuestalAddoreditComponent,
         {
           cedulaId: this.id,
         },
         'Editar Periodo',
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
-        if (result) this.onLoadCedulasCustomer(this.custIdService.customerId);
+        if (result) this.onLoadCedulasCustomer(this.customerIdS.customerId);
       });
   }
 }

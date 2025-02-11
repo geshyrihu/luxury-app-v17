@@ -15,9 +15,9 @@ import MultiAxisChartComponent from 'src/app/shared/graficos/primeng-chart/multi
   imports: [LuxuryAppComponentsModule, MultiAxisChartComponent],
 })
 export default class ReportConsumosComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  custIdService = inject(CustomerIdService);
-  dateService = inject(DateService);
+  apiRequestS = inject(ApiRequestService);
+  customerIdS = inject(CustomerIdService);
+  dateS = inject(DateService);
   public periodoMonthService = inject(PeriodoMonthService);
 
   medidores: IChartData[] = [];
@@ -28,10 +28,10 @@ export default class ReportConsumosComponent implements OnInit {
     this.onLoadData();
   }
   onLoadData() {
-    const urlApi = `MaintenanceReport/DataGraficoMensual/${this.custIdService.getCustomerId()}/${this.dateService.getDateFormat(
+    const urlApi = `MaintenanceReport/DataGraficoMensual/${this.customerIdS.getCustomerId()}/${this.dateS.getDateFormat(
       this.periodoMonthService.getPeriodoInicio
     )}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.medidores = result;
     });
   }

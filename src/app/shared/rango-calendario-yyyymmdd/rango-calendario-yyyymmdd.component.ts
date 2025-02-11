@@ -14,7 +14,7 @@ const date = new Date();
   imports: [FormsModule, FlatpickrModule],
 })
 export default class RangoCalendarioyyyymmddComponent implements OnInit {
-  dateService = inject(DateService);
+  dateS = inject(DateService);
   rangoCalendarioService = inject(FiltroCalendarService);
   fechaInicioDate: Date = new Date(date.getFullYear(), date.getMonth(), 1); //Dia primero del mes actual
   fechaFinalDate: Date = new Date(date.getFullYear(), date.getMonth() + 1, 0); //Dia Ultimo del mes Actual
@@ -32,8 +32,8 @@ export default class RangoCalendarioyyyymmddComponent implements OnInit {
     this.rangoCalendarioService.setFechas(fechaInicio, fechaFinal);
     if (fechaInicio != null && fechaFinal != null) {
       const fechasFiltro: IFechasFiltro = {
-        fechaInicio: this.dateService.getDateFormat(fechaInicio),
-        fechaFinal: this.dateService.getDateFormat(fechaFinal),
+        fechaInicio: this.dateS.getDateFormat(fechaInicio),
+        fechaFinal: this.dateS.getDateFormat(fechaFinal),
       };
       this.rangoCalendarioService.fechas$.emit(fechasFiltro);
     }

@@ -22,11 +22,11 @@ import AddoreditMinutaDetalleComponent from './addoredit-minuta-detalle.componen
   imports: [LuxuryAppComponentsModule],
 })
 export default class ListMinutasComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
   authS = inject(AuthService);
   confirmationService = inject(ConfirmationService);
-  custIdService = inject(CustomerIdService);
+  customerIdS = inject(CustomerIdService);
   reportService = inject(ReportService);
   route = inject(Router);
 
@@ -34,7 +34,7 @@ export default class ListMinutasComponent implements OnInit {
   tipoJunta: string = 'Comité';
   ref: DynamicDialogRef;
 
-  customerId$: Observable<number> = this.custIdService.getCustomerId$();
+  customerId$: Observable<number> = this.customerIdS.getCustomerId$();
 
   emailAccount: boolean = false;
 
@@ -45,8 +45,8 @@ export default class ListMinutasComponent implements OnInit {
     });
   }
   onLoadData(tipoJunta: string) {
-    const urlApi = `Meetings/GetAll/${this.custIdService.customerId}/${this.tipoJunta}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    const urlApi = `Meetings/GetAll/${this.customerIdS.customerId}/${this.tipoJunta}`;
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
     this.tipoJunta = tipoJunta;
@@ -55,31 +55,29 @@ export default class ListMinutasComponent implements OnInit {
   exportToExcel(meetingId: number) {
     const urlApi = `MeetingDertailsSeguimiento/ExportSummaryToExcel/${meetingId}`; // Aquí debes proporcionar la URL de tu API
     const nombreDocumento = 'Pendientes Minuta'; // Aquí debes proporcionar el nombre de tu documento
-    this.apiRequestService.exportToExcel(urlApi, nombreDocumento);
+    this.apiRequestS.exportToExcel(urlApi, nombreDocumento);
   }
   onDelete(id: number) {
-    this.apiRequestService
-      .onDelete(`Meetings/${id}`)
-      .then((result: boolean) => {
-        if (result) this.onLoadData(this.tipoJunta);
-      });
+    this.apiRequestS.onDelete(`Meetings/${id}`).then((result: boolean) => {
+      if (result) this.onLoadData(this.tipoJunta);
+    });
   }
 
   onSendEmailMeeting(meetingId: number) {
     const urlApi = `SendEmail/Meeting/${meetingId}`;
-    this.apiRequestService.onGetItem(urlApi).then((_) => {});
+    this.apiRequestS.onGetItem(urlApi).then((_) => {});
   }
 
   showModalAddOrEditMeeting(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         AddOrEditMeetingComponent,
         {
           id: data.id,
-          customerId: this.custIdService.customerId,
+          customerId: this.customerIdS.customerId,
         },
         data.title,
-        this.dialogHandlerService.dialogSizeLg
+        this.dialogHandlerS.dialogSizeLg
       )
       .then((result: boolean) => {
         if (result) this.onLoadData(this.tipoJunta);
@@ -87,18 +85,18 @@ export default class ListMinutasComponent implements OnInit {
   }
   items: MenuItem[];
   showModalAddOrEditMeetingDetails(id: any, header: string, status: any) {
-    this.dialogHandlerService.openDialog(
+    this.dialogHandlerS.openDialog(
       AddOrEditMeetingDetailComponent,
       {
         id,
         status,
       },
       header,
-      this.dialogHandlerService.dialogSizeFull
+      this.dialogHandlerS.dialogSizeFull
     );
   }
   onModalAddOrEditMinutaDetalle(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         AddoreditMinutaDetalleComponent,
         {
@@ -107,7 +105,7 @@ export default class ListMinutasComponent implements OnInit {
           areaResponsable: data.areaResponsable,
         },
         data.header,
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData(this.tipoJunta);
@@ -117,7 +115,7 @@ export default class ListMinutasComponent implements OnInit {
   onGeneretePDF(id: number) {
     // this.reportService.setIdMinuta(id);
     this.route.navigate([
-      'publico/reporte-minuta/' + this.custIdService.getCustomerId() + '/' + id,
+      'publico/reporte-minuta/' + this.customerIdS.getCustomerId() + '/' + id,
     ]);
   }
   resumenMinuta(id: number) {
@@ -125,10 +123,10 @@ export default class ListMinutasComponent implements OnInit {
     this.route.navigate(['/junta-comite/resumen-minuta/' + id]);
   }
   onSendEmailResponsible(id: number, eAreaMinutasDetalles: number) {
-    const urlApi = `Meetings/SendEmailResponsible/${id}/${this.custIdService.getCustomerId()}/${eAreaMinutasDetalles}/${
+    const urlApi = `Meetings/SendEmailResponsible/${id}/${this.customerIdS.getCustomerId()}/${eAreaMinutasDetalles}/${
       this.authS.infoUserAuthDto.applicationUserId
     }`;
-    this.apiRequestService.onGetItem(urlApi).then((_) => {});
+    this.apiRequestS.onGetItem(urlApi).then((_) => {});
   }
 
   onSendEmail(id: number, eAreaMinutasDetalles: number) {
@@ -139,7 +137,7 @@ export default class ListMinutasComponent implements OnInit {
     meetingDetailsId: any,
     idMeetingSeguimiento: any
   ) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         AddorEditMeetingSeguimientoComponent,
         {
@@ -147,7 +145,7 @@ export default class ListMinutasComponent implements OnInit {
           idMeetingSeguimiento,
         },
         'Seguimiento',
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData(this.tipoJunta);
@@ -155,7 +153,7 @@ export default class ListMinutasComponent implements OnInit {
   }
 
   onDeleteSeguimiento(id: number) {
-    this.apiRequestService
+    this.apiRequestS
       .onDelete(`MeetingDertailsSeguimiento/${id}`)
       .then((result: boolean) => {
         this.onLoadData(this.tipoJunta);
@@ -163,7 +161,7 @@ export default class ListMinutasComponent implements OnInit {
   }
 
   onDeleteMeetingDetail(id: number) {
-    this.apiRequestService
+    this.apiRequestS
       .onDelete(`MeetingsDetails/${id}`)
       .then((result: boolean) => {
         this.onLoadData(this.tipoJunta);

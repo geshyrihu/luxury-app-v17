@@ -12,7 +12,7 @@ import Swal from 'sweetalert2';
   templateUrl: './ticket-progress-button.component.html',
 })
 export default class TicketProgressButtonComponent {
-  private apiRequestService = inject(ApiRequestService);
+  private apiRequestS = inject(ApiRequestService);
   private authS = inject(AuthService);
 
   @Input() item: any;
@@ -32,7 +32,7 @@ export default class TicketProgressButtonComponent {
       if (result.isConfirmed) {
         const urlApi = `Tickets/InProgress/${this.item.id}/${this.authS.applicationUserId}`;
 
-        this.apiRequestService.onGetItem(urlApi).then(() => {
+        this.apiRequestS.onGetItem(urlApi).then(() => {
           this.progressCompleted.emit(); // Emitir el evento de finalización
         });
       }

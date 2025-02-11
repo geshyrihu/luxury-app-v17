@@ -13,40 +13,40 @@ import { FiltroCalendarService } from 'src/app/core/services/filtro-calendar.ser
   imports: [LuxuryAppComponentsModule],
 })
 export default class AccessLogComponent implements OnInit {
-  dateService = inject(DateService);
-  custIdService = inject(CustomerIdService);
+  dateS = inject(DateService);
+  customerIdS = inject(CustomerIdService);
   filtroCalendarService = inject(FiltroCalendarService);
 
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
 
   data: any[] = [];
 
-  customerId$: Observable<number> = this.custIdService.getCustomerId$();
+  customerId$: Observable<number> = this.customerIdS.getCustomerId$();
   dates$: Observable<Date[]> = this.filtroCalendarService.getDates$();
 
   ngOnInit(): void {
     this.onLoadData(
-      this.dateService.getDateFormat(this.filtroCalendarService.fechaInicial),
-      this.dateService.getDateFormat(this.filtroCalendarService.fechaFinal)
+      this.dateS.getDateFormat(this.filtroCalendarService.fechaInicial),
+      this.dateS.getDateFormat(this.filtroCalendarService.fechaFinal)
     );
     this.customerId$.subscribe(() => {
       this.onLoadData(
-        this.dateService.getDateFormat(this.filtroCalendarService.fechaInicial),
-        this.dateService.getDateFormat(this.filtroCalendarService.fechaFinal)
+        this.dateS.getDateFormat(this.filtroCalendarService.fechaInicial),
+        this.dateS.getDateFormat(this.filtroCalendarService.fechaFinal)
       );
     });
     this.dates$.subscribe((dates) => {
       this.onLoadData(
-        this.dateService.getDateFormat(dates[0]),
-        this.dateService.getDateFormat(dates[1])
+        this.dateS.getDateFormat(dates[0]),
+        this.dateS.getDateFormat(dates[1])
       );
     });
   }
 
   onLoadData(fechaInicial: string, fechaFinal: string): void {
-    const urlApi = `AccessHistory/${this.custIdService.customerId}/${fechaInicial}/${fechaFinal}`;
+    const urlApi = `AccessHistory/${this.customerIdS.customerId}/${fechaInicial}/${fechaFinal}`;
 
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
   }

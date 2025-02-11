@@ -10,7 +10,7 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
   templateUrl: './module-app-permission.component.html',
 })
 export default class ModuleAppPermissionComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
 
@@ -23,7 +23,7 @@ export default class ModuleAppPermissionComponent implements OnInit {
   }
 
   onLoadData() {
-    this.apiRequestService
+    this.apiRequestS
       .onGetItem(`Permission/PermissionUser/${this.applicationUserId}`)
       .then((result: any) => {
         this.data = result;
@@ -34,11 +34,7 @@ export default class ModuleAppPermissionComponent implements OnInit {
     permission[field] = checked;
 
     // Aquí envías la solicitud para actualizar los permisos
-    this.apiRequestService.onPut(
-      `Permission/${permission.id}`,
-      permission,
-      false
-    );
+    this.apiRequestS.onPut(`Permission/${permission.id}`, permission, false);
   }
 }
 export interface PermissionDto {

@@ -14,8 +14,8 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 })
 export default class AddoreditUsoCFDIComponent implements OnInit {
   authS = inject(AuthService);
-  apiRequestService = inject(ApiRequestService);
-  formBuilder = inject(FormBuilder);
+  apiRequestS = inject(ApiRequestService);
+  formB = inject(FormBuilder);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
 
@@ -29,7 +29,7 @@ export default class AddoreditUsoCFDIComponent implements OnInit {
     if (this.id !== 0) {
       this.onLoadData();
     }
-    this.form = this.formBuilder.group({
+    this.form = this.formB.group({
       id: { value: this.id, disabled: true },
       codigo: ['', [Validators.required]],
       descripcion: ['', Validators.required],
@@ -37,25 +37,23 @@ export default class AddoreditUsoCFDIComponent implements OnInit {
   }
 
   onLoadData() {
-    this.apiRequestService
-      .onGetItem(`UsoCfdi/${this.id}`)
-      .then((result: any) => {
-        this.form.patchValue(result);
-      });
+    this.apiRequestS.onGetItem(`UsoCfdi/${this.id}`).then((result: any) => {
+      this.form.patchValue(result);
+    });
   }
 
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
 
     this.submitting = true;
     if (this.id === 0) {
-      this.apiRequestService
+      this.apiRequestS
         .onPost(`UsoCfdi`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.apiRequestService
+      this.apiRequestS
         .onPut(`UsoCfdi/${this.id}`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);

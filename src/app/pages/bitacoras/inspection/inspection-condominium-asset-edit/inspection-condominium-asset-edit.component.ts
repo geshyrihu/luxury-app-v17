@@ -13,11 +13,11 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class InspectionCondominiumAssetEditComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   fb = inject(FormBuilder);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
-  custIdService = inject(CustomerIdService);
+  customerIdS = inject(CustomerIdService);
 
   cb_activos: any[] = [];
   cb_inspection_reviews_catalog: any[] = [];
@@ -42,7 +42,7 @@ export default class InspectionCondominiumAssetEditComponent implements OnInit {
   loadInspectionCondominiumAsset() {
     const assetId = this.config.data.inspectionCondominiumAssetId;
     if (assetId) {
-      this.apiRequestService
+      this.apiRequestS
         .onGetItem(`InspectionCondominiumAsset/${assetId}`)
         .then((resp: any) => {
           if (resp) {
@@ -85,15 +85,15 @@ export default class InspectionCondominiumAssetEditComponent implements OnInit {
   }
 
   onLoadActivos() {
-    this.apiRequestService
-      .onGetSelectItem(`CondominiumAsset/${this.custIdService.customerId}`)
+    this.apiRequestS
+      .onGetSelectItem(`CondominiumAsset/${this.customerIdS.customerId}`)
       .then((resp: any) => {
         this.cb_activos = resp;
       });
   }
 
   onLoadRevisionsCatalog() {
-    this.apiRequestService
+    this.apiRequestS
       .onGetSelectItem(`InspectionReviewsCatalog`)
       .then((resp: any) => {
         this.cb_inspection_reviews_catalog = resp;
@@ -148,7 +148,7 @@ export default class InspectionCondominiumAssetEditComponent implements OnInit {
   }
 
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
 
     const reviewsControl = this.form.get('inspectionReviews') as FormArray;
 
@@ -163,7 +163,7 @@ export default class InspectionCondominiumAssetEditComponent implements OnInit {
     };
 
     const urlApi = `InspectionCondominiumAsset/${data.id}`;
-    this.apiRequestService.onPut(urlApi, data).then((result: any) => {
+    this.apiRequestS.onPut(urlApi, data).then((result: any) => {
       if (result) {
         this.ref.close(true);
       } else {

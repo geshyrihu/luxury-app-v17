@@ -19,15 +19,15 @@ import HomeMenuComponent from './home-menu/home-menu.component';
 })
 export default class HomeComponent implements OnInit {
   private sidebarService = inject(SidebarService);
-  private apiRequestService = inject(ApiRequestService);
+  private apiRequestS = inject(ApiRequestService);
   authS = inject(AuthService);
-  private custIdService = inject(CustomerIdService);
+  private customerIdS = inject(CustomerIdService);
   modulePermissionService = inject(ModulePermissionService);
 
   homeMenuService = inject(HomeMenuService);
 
   customerId: number;
-  customerId$: Observable<number> = this.custIdService.getCustomerId$();
+  customerId$: Observable<number> = this.customerIdS.getCustomerId$();
 
   // menu: any;
   menuItems: IMenuItem[] = [];
@@ -44,9 +44,9 @@ export default class HomeComponent implements OnInit {
   onLoadMenu() {
     const applicationUserId =
       this.authS.userTokenDto.infoUserAuthDto.applicationUserId;
-    const customerId = this.custIdService.getCustomerId();
+    const customerId = this.customerIdS.getCustomerId();
     const urlApi = `MenuItems/Mobil/${customerId}/${applicationUserId}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.menuItems = result;
     });
   }

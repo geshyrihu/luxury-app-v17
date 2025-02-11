@@ -15,20 +15,20 @@ import CardEmployeeComponent from 'src/app/pages/directorios/employee-internal/c
   imports: [LuxuryAppComponentsModule],
 })
 export default class BitacoraIndividualComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
 
-  dateService = inject(DateService);
+  dateS = inject(DateService);
   rangoCalendarioService = inject(FiltroCalendarService);
   ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);
 
   machineryId: number;
   nameMachinery: string = '';
-  fechaInicial: string = this.dateService.getDateFormat(
+  fechaInicial: string = this.dateS.getDateFormat(
     this.rangoCalendarioService.fechaInicioDateFull
   );
-  fechaFinal: string = this.dateService.getDateFormat(
+  fechaFinal: string = this.dateS.getDateFormat(
     this.rangoCalendarioService.fechaFinalDateFull
   );
   data: any[];
@@ -55,17 +55,17 @@ export default class BitacoraIndividualComponent implements OnInit {
   }
 
   onCardEmployee(applicationUserId: string) {
-    this.dialogHandlerService.openDialog(
+    this.dialogHandlerS.openDialog(
       CardEmployeeComponent,
       { applicationUserId },
       'Colaborador',
-      this.dialogHandlerService.dialogSizeMd
+      this.dialogHandlerS.dialogSizeMd
     );
   }
 
   onLoadData() {
     const urlApi = `BitacoraMantenimiento/BitacoraIndividual/${this.machineryId}/${this.fechaInicial}/${this.fechaFinal}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
   }

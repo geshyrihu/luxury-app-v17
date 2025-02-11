@@ -16,21 +16,21 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class AddOrEditEntradasComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  formBuilder = inject(FormBuilder);
-  custIdService = inject(CustomerIdService);
-  dateService = inject(DateService);
+  apiRequestS = inject(ApiRequestService);
+  formB = inject(FormBuilder);
+  customerIdS = inject(CustomerIdService);
+  dateS = inject(DateService);
   authS = inject(AuthService);
   config = inject(DynamicDialogConfig);
 
   ref = inject(DynamicDialogRef);
   submitting: boolean = false;
 
-  form: FormGroup = this.formBuilder.group({
+  form: FormGroup = this.formB.group({
     id: { value: 0, disabled: true },
     providerId: ['', Validators.required],
-    customerId: [this.custIdService.customerId, Validators.required],
-    fechaEntrada: [this.dateService.getDateNow(), Validators.required],
+    customerId: [this.customerIdS.customerId, Validators.required],
+    fechaEntrada: [this.dateS.getDateNow(), Validators.required],
     productoId: [0, Validators.required],
     cantidad: ['', Validators.required],
     unidadMedidaId: ['', Validators.required],
@@ -58,17 +58,15 @@ export default class AddOrEditEntradasComponent implements OnInit {
   ngOnInit(): void {
     flatpickrFactory();
 
-    this.apiRequestService
+    this.apiRequestS
       .onGetSelectItem(`getMeasurementUnits`)
       .then((response: any) => {
         this.cb_measurement_unit = response;
       });
 
-    this.apiRequestService
-      .onGetSelectItem(`Providers`)
-      .then((response: any) => {
-        this.cb_providers = response;
-      });
+    this.apiRequestS.onGetSelectItem(`Providers`).then((response: any) => {
+      this.cb_providers = response;
+    });
 
     this.form.patchValue({ productoId: this.config.data.idProducto });
     this.id = this.config.data.id;
@@ -84,12 +82,12 @@ export default class AddOrEditEntradasComponent implements OnInit {
   }
   onLoadData() {
     const urlApi = `EntradaProducto/${this.id}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       this.nombreProducto = result.nombreProducto;
       this.cantidadActual = result.cantidad;
       this.form.patchValue(result);
       this.form.patchValue({
-        fechaEntrada: this.dateService.getDateFormat(result.fechaEntrada),
+        fechaEntrada: this.dateS.getDateFormat(result.fechaEntrada),
       });
       this.form.patchValue({
         providerId: result.providerId,
@@ -103,18 +101,18 @@ export default class AddOrEditEntradasComponent implements OnInit {
   // convenience getter for easy access to form fields
 
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
 
     this.submitting = true;
 
     if (this.id === 0) {
-      this.apiRequestService
+      this.apiRequestS
         .onPost(`EntradaProducto`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.apiRequestService
+      this.apiRequestS
         .onPut(
           `EntradaProducto/${this.id}/${this.cantidadActual}`,
           this.form.value

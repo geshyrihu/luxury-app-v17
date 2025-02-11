@@ -15,11 +15,11 @@ import { PeriodoMonthService } from 'src/app/core/services/periodo-month.service
 export default class MantenimientosPreventivosResumenComponent
   implements OnInit
 {
-  apiRequestService = inject(ApiRequestService);
-  custIdService = inject(CustomerIdService);
+  apiRequestS = inject(ApiRequestService);
+  customerIdS = inject(CustomerIdService);
   config = inject(DynamicDialogConfig);
   periodoMonthService = inject(PeriodoMonthService);
-  dateService = inject(DateService);
+  dateS = inject(DateService);
 
   data: any[] = [];
   ref: DynamicDialogRef;
@@ -30,8 +30,8 @@ export default class MantenimientosPreventivosResumenComponent
     this.onLoadData(this.estatus);
   }
   onLoadData(status: any) {
-    const urlApi = `Dashboard/ServiceOrderSummary/${this.custIdService.getCustomerId()}/${status}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    const urlApi = `Dashboard/ServiceOrderSummary/${this.customerIdS.getCustomerId()}/${status}`;
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
   }

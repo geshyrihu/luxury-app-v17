@@ -15,19 +15,19 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class AddoreditInventarioIluminacionComponent implements OnInit {
-  formBuilder = inject(FormBuilder);
-  apiRequestService = inject(ApiRequestService);
+  formB = inject(FormBuilder);
+  apiRequestS = inject(ApiRequestService);
   ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);
   authS = inject(AuthService);
-  custIdService = inject(CustomerIdService);
+  customerIdS = inject(CustomerIdService);
   submitting: boolean = false;
 
   cb_machinery: ISelectItem[] = [];
   cb_producto: ISelectItem[] = [];
 
   id: number = 0;
-  form: FormGroup = this.formBuilder.group({
+  form: FormGroup = this.formB.group({
     id: { value: this.id, disabled: true },
     machineryId: ['', Validators.required],
     machinery: ['', Validators.required],
@@ -57,25 +57,25 @@ export default class AddoreditInventarioIluminacionComponent implements OnInit {
     });
   }
   onLoadData() {
-    this.apiRequestService
+    this.apiRequestS
       .onGetItem(`InventarioIluminacion/${this.id}`)
       .then((result: any) => {
         this.form.patchValue(result);
       });
   }
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
 
     this.submitting = true;
 
     if (this.id === 0) {
-      this.apiRequestService
+      this.apiRequestS
         .onPost(`InventarioIluminacion`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.apiRequestService
+      this.apiRequestS
         .onPut(`InventarioIluminacion/${this.id}`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
@@ -84,16 +84,16 @@ export default class AddoreditInventarioIluminacionComponent implements OnInit {
   }
 
   onLoadMachinery() {
-    this.apiRequestService
+    this.apiRequestS
       .onGetList(
-        'Machineries/GetAutocompeteInv/' + this.custIdService.getCustomerId()
+        'Machineries/GetAutocompeteInv/' + this.customerIdS.getCustomerId()
       )
       .then((result: any) => {
         this.cb_machinery = result;
       });
   }
   onLoadProducto() {
-    this.apiRequestService
+    this.apiRequestS
       .onGetList('Productos/GetAutoCompleteSelectItem/')
       .then((result: any) => {
         this.cb_producto = result;

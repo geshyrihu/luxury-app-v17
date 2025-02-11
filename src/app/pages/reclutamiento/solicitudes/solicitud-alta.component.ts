@@ -18,13 +18,13 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   providers: [DataConnectorService, EnumSelectService],
 })
 export default class SolicitudAltaComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
-  formBuilder = inject(FormBuilder);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
+  formB = inject(FormBuilder);
   authS = inject(AuthService);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
-  enumSelectService = inject(EnumSelectService);
+  enumSelectS = inject(EnumSelectService);
 
   requestPositionCandidateId: number = 0;
   data: any;
@@ -36,7 +36,7 @@ export default class SolicitudAltaComponent implements OnInit {
   employeeId = this.config.data.employeeId;
   customerId = this.config.data.customerId;
 
-  form: FormGroup = this.formBuilder.group({
+  form: FormGroup = this.formB.group({
     positionRequestId: ['', Validators.required],
     boss: ['', Validators.required],
     candidateName: ['', Validators.required],
@@ -48,7 +48,7 @@ export default class SolicitudAltaComponent implements OnInit {
 
   async ngOnInit() {
     this.cb_typeContractRegister =
-      await this.enumSelectService.typeContractRegister();
+      await this.enumSelectS.typeContractRegister();
     this.onLoadDataVacante();
     this.onLoadData();
   }
@@ -58,7 +58,7 @@ export default class SolicitudAltaComponent implements OnInit {
   }
   onLoadData() {
     const urlApi = `RequestEmployeeRegister/GetEmployeeRegister/${this.employeeId}/${this.customerId}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.form.patchValue(result);
       this.form.patchValue({
         employeeId: this.config.data.employeeId,
@@ -69,21 +69,19 @@ export default class SolicitudAltaComponent implements OnInit {
 
   onLoadDataVacante() {
     const urlApi = `requestemployeeregister/vacantes/${this.customerId}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.cb_vacantes = result;
     });
   }
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
 
     this.submitting = true;
     // Mostrar un mensaje de carga
 
     var urlApi = `solicitudesreclutamiento/solicitudalta/${this.authS.applicationUserId}`;
-    this.apiRequestService
-      .onPost(urlApi, this.form.value)
-      .then((result: boolean) => {
-        result ? this.ref.close(true) : (this.submitting = false);
-      });
+    this.apiRequestS.onPost(urlApi, this.form.value).then((result: boolean) => {
+      result ? this.ref.close(true) : (this.submitting = false);
+    });
   }
 }

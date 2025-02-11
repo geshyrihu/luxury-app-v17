@@ -13,10 +13,10 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class BitacoraAddComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   authS = inject(AuthService);
   config = inject(DynamicDialogConfig);
-  formBuilder = inject(FormBuilder);
+  formB = inject(FormBuilder);
   ref = inject(DynamicDialogRef);
 
   submitting: boolean = false;
@@ -35,7 +35,7 @@ export default class BitacoraAddComponent implements OnInit {
   }
 
   onCreateForm() {
-    this.form = this.formBuilder.group({
+    this.form = this.formB.group({
       machineryId: ['', Validators.required],
       machinery: ['', Validators.required],
       descripcion: ['', Validators.required],
@@ -45,13 +45,13 @@ export default class BitacoraAddComponent implements OnInit {
   }
 
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
 
     this.submitting = true;
     this.form.patchValue({
       applicationUserId: this.authS.applicationUserId,
     });
-    this.apiRequestService
+    this.apiRequestS
       .onPost(`BitacoraMantenimiento`, this.form.value)
       .then((result: boolean) => {
         result ? this.ref.close(true) : (this.submitting = false);
@@ -60,7 +60,7 @@ export default class BitacoraAddComponent implements OnInit {
 
   onGetMachinerySelectItem(value: number) {
     const urlApi = `Machineries/GetMachinerySelectItem/${value}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       this.machinery = result;
     });
   }

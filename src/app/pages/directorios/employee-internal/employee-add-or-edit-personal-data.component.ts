@@ -18,10 +18,10 @@ import { EmployeeAddOrEditService } from './employee-add-or-edit.service';
 })
 export default class EmployeeAddOrEditPersonalDataComponent implements OnInit {
   employeeAddOrEditService = inject(EmployeeAddOrEditService);
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   authS = inject(AuthService);
-  formBuilder = inject(FormBuilder);
-  enumSelectService = inject(EnumSelectService);
+  formB = inject(FormBuilder);
+  enumSelectS = inject(EnumSelectService);
 
   @Input() employeeId: string = '';
 
@@ -32,7 +32,7 @@ export default class EmployeeAddOrEditPersonalDataComponent implements OnInit {
 
   submitting: boolean = false;
 
-  form: FormGroup = this.formBuilder.group({
+  form: FormGroup = this.formB.group({
     // Person data
     birth: ['', Validators.required],
     bloodType: [null, Validators.required],
@@ -51,23 +51,23 @@ export default class EmployeeAddOrEditPersonalDataComponent implements OnInit {
   }
   onLoadData() {
     const urlApi = `EmployeeInternal/PersonalData/${this.employeeId}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       this.form.patchValue(result);
     });
   }
 
   async onLoadEmun() {
-    this.cb_blood_type = await this.enumSelectService.bloodType();
-    this.cb_marital_status = await this.enumSelectService.maritalStatus();
+    this.cb_blood_type = await this.enumSelectS.bloodType();
+    this.cb_marital_status = await this.enumSelectS.maritalStatus();
     this.cb_nationality = ECountry.GetEnum();
-    this.cb_sex = await this.enumSelectService.sex();
+    this.cb_sex = await this.enumSelectS.sex();
   }
 
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
     this.submitting = true;
 
-    this.apiRequestService
+    this.apiRequestS
       .onPut(
         `EmployeeInternal/UpdatePersonalData/${this.employeeId}`,
         this.form.value

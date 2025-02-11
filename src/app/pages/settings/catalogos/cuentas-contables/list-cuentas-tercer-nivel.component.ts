@@ -13,8 +13,8 @@ import AddoreditLedgerAccountsComponent from './addoredit-cuentas-tercer-nivel.c
   imports: [LuxuryAppComponentsModule],
 })
 export default class ListCuentasTercerNivelComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
   authS = inject(AuthService);
 
   data: any[] = [];
@@ -27,7 +27,7 @@ export default class ListCuentasTercerNivelComponent implements OnInit {
   }
 
   onLoadData(state: boolean) {
-    this.apiRequestService
+    this.apiRequestS
       .onGetList('Cuentas/GetList/' + (state ? 0 : 1))
       .then((result: any) => {
         this.data = result;
@@ -35,18 +35,18 @@ export default class ListCuentasTercerNivelComponent implements OnInit {
   }
 
   onDelete(id: number) {
-    this.apiRequestService.onDelete(`cuentas/${id}`).then((result: boolean) => {
+    this.apiRequestS.onDelete(`cuentas/${id}`).then((result: boolean) => {
       if (result) this.data = this.data.filter((item) => item.id !== id);
     });
   }
 
   showModalAddOrEdit(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         AddoreditLedgerAccountsComponent,
         data,
         data.title,
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData(this.state);

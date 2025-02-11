@@ -18,13 +18,13 @@
 //   imports: [LuxuryAppComponentsModule, CustomInputModule],
 // })
 // export default class AddoreditTicketSistemasComponent implements OnInit {
-//   apiRequestService = inject(ApiRequestService);
+//   apiRequestS = inject(ApiRequestService);
 
 //   authS = inject(AuthService);
-//   formBuilder = inject(FormBuilder);
+//   formB = inject(FormBuilder);
 //   config = inject(DynamicDialogConfig);
 //   ref = inject(DynamicDialogRef);
-//   dateService = inject(DateService);
+//   dateS = inject(DateService);
 //   model: any;
 //   submitting: boolean = false;
 
@@ -34,7 +34,7 @@
 //   cb_priority: ISelectItem[] = onGetSelectItemFromEnum(EPriority);
 //   cb_user: ISelectItem[] = [];
 //   cb_responsableSistemas: ISelectItem[] = [];
-//   form = this.formBuilder.group({
+//   form = this.formB.group({
 //     id: { value: this.id, disabled: true },
 //     activity: ['', Validators.required],
 //     dateFinished: [],
@@ -79,13 +79,13 @@
 
 //   loadData(id: number) {
 //     const urlApi = `TicketsSistemas/${id}`;
-//     this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+//     this.apiRequestS.onGetItem(urlApi).then((result: any) => {
 //       this.form.patchValue(result);
 //     });
 //   }
 
 //   onSubmit() {
-//     if (!this.apiRequestService.validateForm(this.form)) return;
+//     if (!this.apiRequestS.validateForm(this.form)) return;
 //     this.submitting = true;
 //     if (this.id === 0) {
 //       this.apiRequestService

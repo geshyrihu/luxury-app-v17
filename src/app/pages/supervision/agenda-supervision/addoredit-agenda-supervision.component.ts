@@ -17,12 +17,12 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 })
 export default class AddOrEditAgendaSupervisionComponent implements OnInit {
   authS = inject(AuthService);
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
 
-  formBuilder = inject(FormBuilder);
+  formB = inject(FormBuilder);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
-  dateService = inject(DateService);
+  dateS = inject(DateService);
   customToastService = inject(CustomToastService);
 
   submitting: boolean = false;
@@ -31,9 +31,9 @@ export default class AddOrEditAgendaSupervisionComponent implements OnInit {
 
   cb_customer: any[] = [];
   rangeDates: Date[];
-  form: FormGroup = this.formBuilder.group({
+  form: FormGroup = this.formB.group({
     id: { value: this.id, disabled: true },
-    fechaSolicitud: [this.dateService.getDateNow(), Validators.required],
+    fechaSolicitud: [this.dateS.getDateNow(), Validators.required],
     customerId: [
       this.authS.userTokenDto.infoUserAuthDto.customerId,
       Validators.required,
@@ -45,11 +45,9 @@ export default class AddOrEditAgendaSupervisionComponent implements OnInit {
   });
 
   onLoadSelectItem() {
-    this.apiRequestService
-      .onGetSelectItem(`customers`)
-      .then((response: any) => {
-        this.cb_customer = response;
-      });
+    this.apiRequestS.onGetSelectItem(`customers`).then((response: any) => {
+      this.cb_customer = response;
+    });
   }
 
   ngOnInit(): void {
@@ -61,30 +59,26 @@ export default class AddOrEditAgendaSupervisionComponent implements OnInit {
 
   onLoadData() {
     const urlApi = `AgendaSupervision/${this.id}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
-      result.fechaConclusion = this.dateService.getDateFormat(
-        result.fechaConclusion
-      );
-      result.fechaSolicitud = this.dateService.getDateFormat(
-        result.fechaSolicitud
-      );
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
+      result.fechaConclusion = this.dateS.getDateFormat(result.fechaConclusion);
+      result.fechaSolicitud = this.dateS.getDateFormat(result.fechaSolicitud);
       this.form.patchValue(result);
     });
   }
 
   submit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
 
     this.submitting = true;
 
     if (this.id === 0) {
-      this.apiRequestService
+      this.apiRequestS
         .onPost(`AgendaSupervision`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.apiRequestService
+      this.apiRequestS
         .onPut(`AgendaSupervision/${this.id}`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);

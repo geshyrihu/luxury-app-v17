@@ -10,7 +10,7 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
   imports: [LuxuryAppComponentsModule],
 })
 export default class UpdateRoleComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
 
   roles: IRoles[] = [];
   @Input() applicationUserId: string = '';
@@ -20,7 +20,7 @@ export default class UpdateRoleComponent implements OnInit {
   }
 
   getRoles() {
-    this.apiRequestService
+    this.apiRequestS
       .onGetList('ApplicationUser/GetRole/' + this.applicationUserId)
       .then((result: any) => {
         this.roles = result;
@@ -35,7 +35,7 @@ export default class UpdateRoleComponent implements OnInit {
     selectedRole.isSelected = true;
 
     // Enviar al backend
-    this.apiRequestService.onPost(
+    this.apiRequestS.onPost(
       `ApplicationUser/AddRoleToUser/${this.applicationUserId}`,
       selectedRole
     );

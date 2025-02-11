@@ -19,20 +19,20 @@ const date = new Date();
   imports: [LuxuryAppComponentsModule],
 })
 export default class CatalogoGastosFijosComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
   authS = inject(AuthService);
-  custIdService = inject(CustomerIdService);
+  customerIdS = inject(CustomerIdService);
   catalogoGastosFijosService = inject(CatalogoGastosFijosService);
 
   data: any = [];
   ref: DynamicDialogRef;
-  customerId$: Observable<number> = this.custIdService.getCustomerId$();
+  customerId$: Observable<number> = this.customerIdS.getCustomerId$();
   fechaSolicitud: string = '';
 
   ngOnInit(): void {
     flatpickrFactory();
-    this.customerId$ = this.custIdService.getCustomerId$();
+    this.customerId$ = this.customerIdS.getCustomerId$();
     this.fechaSolicitud = date.toISOString().slice(0, 10);
     this.onLoadData();
     this.customerId$.subscribe(() => {
@@ -41,14 +41,13 @@ export default class CatalogoGastosFijosComponent implements OnInit {
   }
 
   onLoadData() {
-    const urlApi =
-      'CatalogoGastosFijos/GetAll/' + this.custIdService.customerId;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    const urlApi = 'CatalogoGastosFijos/GetAll/' + this.customerIdS.customerId;
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
   }
   onDelete(id: number) {
-    this.apiRequestService
+    this.apiRequestS
       .onDelete(`catalogogastosfijos/${id}`)
       .then((result: boolean) => {
         if (result) this.data = this.data.filter((item) => item.id !== id);
@@ -58,14 +57,14 @@ export default class CatalogoGastosFijosComponent implements OnInit {
   onModal(data: any) {
     this.catalogoGastosFijosService.setCatalogoGastosFijosId(data.id);
 
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         ModalOrdenCompraGrastosFijosComponent,
         {
           title: data.title,
         },
         '',
-        this.dialogHandlerService.dialogSizeFull
+        this.dialogHandlerS.dialogSizeFull
       )
       .then(() => {
         // TODO: REVISAR PORQUE NO LLEGA SEÑAL Y SE RECARGA
@@ -75,11 +74,11 @@ export default class CatalogoGastosFijosComponent implements OnInit {
 
   crearOrder(id: number, value: any) {
     const urlApi = `CatalogoGastosFijos/ValidarCreateOrder/${id}/${value}`;
-    this.apiRequestService.onGetList(urlApi).then(() => {});
+    this.apiRequestS.onGetList(urlApi).then(() => {});
   }
 
   createOrdenesCompra() {
-    const urlApi = `OrdenCompra/GenerarOrdenCompraFijos/${this.fechaSolicitud}/${this.custIdService.customerId}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {});
+    const urlApi = `OrdenCompra/GenerarOrdenCompraFijos/${this.fechaSolicitud}/${this.customerIdS.customerId}`;
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {});
   }
 }

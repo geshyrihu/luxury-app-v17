@@ -13,8 +13,8 @@ import AddOrEditCustomerDataCompanyComponent from './add-or-edit-customer-data-c
   imports: [LuxuryAppComponentsModule],
 })
 export default class ListCustomerDataCompanyComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
 
   // Declaración e inicialización de variables
   data: CustomerDataCompanyDto[] = [];
@@ -26,7 +26,7 @@ export default class ListCustomerDataCompanyComponent implements OnInit {
 
   onLoadData() {
     const urlApi = `CustomerDataCompany`;
-    this.apiRequestService
+    this.apiRequestS
       .onGetList(urlApi)
       .then((result: CustomerDataCompanyDto[]) => {
         this.data = result;
@@ -35,7 +35,7 @@ export default class ListCustomerDataCompanyComponent implements OnInit {
 
   // Funcion para eliminar un banco y refres
   onDelete(id: string) {
-    this.apiRequestService
+    this.apiRequestS
       .onDelete(`CustomerDataCompany/${id}`)
       .then((result: boolean) => {
         if (result) this.data = this.data.filter((item) => item.id !== id);
@@ -44,12 +44,12 @@ export default class ListCustomerDataCompanyComponent implements OnInit {
 
   // Función para abrir un cuadro de diálogo modal para agregar o editar o crear
   onModalAddOrEdit(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         AddOrEditCustomerDataCompanyComponent,
         data,
         data.title,
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();

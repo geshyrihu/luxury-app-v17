@@ -13,8 +13,8 @@ import EditProductoComponent from '../edit-producto.component';
   imports: [LuxuryAppComponentsModule],
 })
 export default class SolicitudCompraDetalleComponent {
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
   solicitudCompraService = inject(SolicitudCompraService);
 
   @Input()
@@ -27,7 +27,7 @@ export default class SolicitudCompraDetalleComponent {
   ref: DynamicDialogRef;
 
   editProduct(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         EditProductoComponent,
         {
@@ -35,7 +35,7 @@ export default class SolicitudCompraDetalleComponent {
           id: data.id,
         },
         'Editar Producto',
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onUpdateData();
@@ -46,7 +46,7 @@ export default class SolicitudCompraDetalleComponent {
   }
 
   onDeleteProduct(id: number) {
-    this.apiRequestService.onDelete(`solicitudcompradetalle/${id}`).then(() => {
+    this.apiRequestS.onDelete(`solicitudcompradetalle/${id}`).then(() => {
       this.onUpdateData();
       this.solicitudCompraService.onDeleteProduct();
     });

@@ -12,8 +12,8 @@ import TicketGroupCategoryAddOrEditComponent from './ticket-group-category-add-o
   imports: [LuxuryAppComponentsModule],
 })
 export default class TicketGroupCategoryListComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
   // googleCalendarService = inject(GoogleCalendarService);
 
   // Declaración e inicialización de variables
@@ -26,7 +26,7 @@ export default class TicketGroupCategoryListComponent implements OnInit {
 
   onLoadData() {
     const urlApi = `TicketGroupCategory`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       // Actualizamos el valor del signal con los datos recibidos
       this.dataSignal.set(result);
     });
@@ -34,7 +34,7 @@ export default class TicketGroupCategoryListComponent implements OnInit {
 
   // Funcion para eliminar un banco y refres
   onDelete(id: number) {
-    this.apiRequestService
+    this.apiRequestS
       .onDelete(`TicketGroupCategory/${id}`)
       .then((result: boolean) => {
         // Actualizamos el signal para eliminar el elemento de la lista
@@ -44,12 +44,12 @@ export default class TicketGroupCategoryListComponent implements OnInit {
 
   // Función para abrir un cuadro de diálogo modal para agregar o editar o crear
   onModalAddOrEdit(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         TicketGroupCategoryAddOrEditComponent,
         data,
         data.title,
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();

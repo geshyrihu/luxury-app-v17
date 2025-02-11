@@ -13,8 +13,8 @@ import ProcesoAddOrEditComponent from './proceso-addoredit.component';
   imports: [LuxuryAppComponentsModule],
 })
 export default class ProcesoListComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
   authS = inject(AuthService);
 
   data: any[] = [];
@@ -24,12 +24,12 @@ export default class ProcesoListComponent implements OnInit {
     this.onLoadData();
   }
   onLoadData() {
-    this.apiRequestService.onGetList('FormatoProceso').then((result: any) => {
+    this.apiRequestS.onGetList('FormatoProceso').then((result: any) => {
       this.data = result;
     });
   }
   onDelete(id: number): void {
-    this.apiRequestService
+    this.apiRequestS
       .onDelete(`formatoproceso/${id}`)
       .then((result: boolean) => {
         if (result) this.data = this.data.filter((item) => item.id !== id);
@@ -37,12 +37,12 @@ export default class ProcesoListComponent implements OnInit {
   }
 
   onModalAddOrEdit(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         ProcesoAddOrEditComponent,
         data,
         data.title,
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();

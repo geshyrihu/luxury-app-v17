@@ -13,8 +13,8 @@ import AddOrEditCategoryComponent from './addoredit-category.component';
   imports: [LuxuryAppComponentsModule],
 })
 export default class ListCategoryComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
 
   data: ICategory[] = [];
   ref: DynamicDialogRef;
@@ -25,25 +25,25 @@ export default class ListCategoryComponent implements OnInit {
 
   onLoadData() {
     const urlApi = `Categories`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
   }
 
   onDelete(id: number) {
     const urlApi = `categories/${id}`;
-    this.apiRequestService.onDelete(urlApi).then((result: boolean) => {
+    this.apiRequestS.onDelete(urlApi).then((result: boolean) => {
       if (result) this.data = this.data.filter((item) => item.id !== id);
     });
   }
 
   onModalAddOrEdit(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         AddOrEditCategoryComponent,
         data,
         data.title,
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();

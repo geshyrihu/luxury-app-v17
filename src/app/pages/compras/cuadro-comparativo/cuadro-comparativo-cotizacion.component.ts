@@ -20,9 +20,9 @@ import CreateOrdenCompraComponent from '../orden-compra/orden-compra/create-orde
 export default class CuadroComparativoCotizacionComponent
   implements OnInit, OnDestroy
 {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   authS = inject(AuthService);
-  dialogHandlerService = inject(DialogHandlerService);
+  dialogHandlerS = inject(DialogHandlerService);
   customToastService = inject(CustomToastService);
   ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);
@@ -54,7 +54,7 @@ export default class CuadroComparativoCotizacionComponent
 
   onGetCotizacioProveedor() {
     const url = `CotizacionProveedor/GetPosicionCotizacion/${this.solicitudCompraId}/${this.posicionCotizacion}`;
-    this.apiRequestService.onGetItem(url).then((result: any) => {
+    this.apiRequestS.onGetItem(url).then((result: any) => {
       this.cotizacionProveedor = result;
       this.garantia = result.garantia;
       this.entrega = result.entrega;
@@ -64,7 +64,7 @@ export default class CuadroComparativoCotizacionComponent
   }
   onLoadData() {
     const urlApi = `solicitudcompra/${this.solicitudCompraId}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       this.solicitudCompra = result;
       this.solicitudCompraDetalle = result.solicitudCompraDetalle;
     });
@@ -76,7 +76,7 @@ export default class CuadroComparativoCotizacionComponent
     this.cotizacionProveedor.entrega = this.entrega;
     this.cotizacionProveedor.politicaPago = this.politicaPago;
 
-    this.apiRequestService
+    this.apiRequestS
       .onPut(
         `CotizacionProveedor/UpdateProvider/${this.cotizacionProveedor.id}`,
         this.cotizacionProveedor
@@ -112,7 +112,7 @@ export default class CuadroComparativoCotizacionComponent
       unidadMedidaId: item.unidadMedidaId,
     };
 
-    this.apiRequestService
+    this.apiRequestS
       .onPut(`SolicitudCompraDetalle/UpdatePrice/${item.id}`, data)
       .then((result: boolean) => {
         if (result) this.onLoadData();
@@ -120,7 +120,7 @@ export default class CuadroComparativoCotizacionComponent
   }
 
   onDeleteProvider() {
-    this.apiRequestService
+    this.apiRequestS
       .onDelete(
         `solicitudCompra/deleteprovider/${this.solicitudCompraId}/${this.cotizacionProveedorId}`
       )
@@ -130,7 +130,7 @@ export default class CuadroComparativoCotizacionComponent
   }
   onModalCreateOrdenCompra() {
     this.ref.close(true);
-    this.dialogHandlerService.openDialog(
+    this.dialogHandlerS.openDialog(
       CreateOrdenCompraComponent,
       {
         solicitudCompraId: this.solicitudCompra.id,
@@ -138,13 +138,13 @@ export default class CuadroComparativoCotizacionComponent
         posicionCotizacion: this.posicionCotizacion,
       },
       'Crear Orden de compra',
-      this.dialogHandlerService.dialogSizeLg
+      this.dialogHandlerS.dialogSizeLg
     );
   }
 
   onCotizacionesRelacionadas() {
     const urlApi = `OrdenCompra/CotizacionesRelacionadas/${this.solicitudCompraId}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.cotizacionesRelacionadas = result;
     });
   }

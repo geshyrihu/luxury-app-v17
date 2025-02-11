@@ -26,14 +26,14 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   providers: [EnumSelectService],
 })
 export default class SolicitudBajaComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  formBuilder = inject(FormBuilder);
+  apiRequestS = inject(ApiRequestService);
+  formB = inject(FormBuilder);
   authS = inject(AuthService);
   config = inject(DynamicDialogConfig);
-  custIdService = inject(CustomerIdService);
-  dateService = inject(DateService);
+  customerIdS = inject(CustomerIdService);
+  dateS = inject(DateService);
   ref = inject(DynamicDialogRef);
-  enumSelectService = inject(EnumSelectService);
+  enumSelectS = inject(EnumSelectService);
 
   data: any;
   id: number = 0;
@@ -46,7 +46,7 @@ export default class SolicitudBajaComponent implements OnInit {
   tipobaja: number = 1;
   mensajeRenuncia =
     'Adjunta la renuncia firmada por el empleado, si no regreso a firmar se considera abandono de trabajo';
-  form: FormGroup = this.formBuilder.group({
+  form: FormGroup = this.formB.group({
     id: [this.config.data.employeeId],
     professionId: ['', Validators.required],
     employeeId: ['', Validators.required],
@@ -65,7 +65,7 @@ export default class SolicitudBajaComponent implements OnInit {
         Validators.maxLength(250),
       ],
     ],
-    discountDescriptions: this.formBuilder.array([]),
+    discountDescriptions: this.formB.array([]),
     lawyerAssistance: false, // Valor booleano directo
     employeeInformed: false, // Valor booleano directo
 
@@ -73,8 +73,8 @@ export default class SolicitudBajaComponent implements OnInit {
   });
 
   async ngOnInit() {
-    this.cb_si_no = await this.enumSelectService.boolYesNo();
-    this.cb_type_departure = await this.enumSelectService.tipoBaja();
+    this.cb_si_no = await this.enumSelectS.boolYesNo();
+    this.cb_type_departure = await this.enumSelectS.tipoBaja();
     this.onLoadData();
     // Suscribirse a cambios en el control 'typeOfDeparture'
     this.form.get('typeOfDeparture').valueChanges.subscribe((newValue) => {
@@ -84,7 +84,7 @@ export default class SolicitudBajaComponent implements OnInit {
   }
   onLoadData() {
     const urlApi = `RequestDismissal/GetRequestDismissal/${this.employeeId}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       this.form.patchValue(result);
     });
   }
@@ -108,16 +108,16 @@ export default class SolicitudBajaComponent implements OnInit {
   }
 
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
 
     var model = this.createFormData(this.form.value);
 
     this.submitting = true;
 
-    this.apiRequestService
+    this.apiRequestS
       .onPost(
         `SolicitudesReclutamiento/SolicitudBaja/
-          ${this.custIdService.getCustomerId()}/${this.employeeId}/${
+          ${this.customerIdS.getCustomerId()}/${this.employeeId}/${
           this.authS.infoUserAuthDto.applicationUserId
         }`,
         model
@@ -137,11 +137,11 @@ export default class SolicitudBajaComponent implements OnInit {
     formData.append('profession', form.profession);
     formData.append(
       'executionDate',
-      this.dateService.getDateFormat(form.executionDate)
+      this.dateS.getDateFormat(form.executionDate)
     );
     formData.append(
       'lastdayofwork',
-      this.dateService.getDateFormat(form.lastdayofwork)
+      this.dateS.getDateFormat(form.lastdayofwork)
     );
     formData.append('typeOfDeparture', form.typeOfDeparture);
     formData.append('professionId', form.professionId);
@@ -183,7 +183,7 @@ export default class SolicitudBajaComponent implements OnInit {
   }
 
   addDiscountDescription() {
-    const discountDescription = this.formBuilder.group({
+    const discountDescription = this.formB.group({
       description: ['', Validators.required],
       price: ['', Validators.required],
     });

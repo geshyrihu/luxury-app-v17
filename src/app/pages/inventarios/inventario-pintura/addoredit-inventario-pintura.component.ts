@@ -15,11 +15,11 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class AddoreditInventarioPinturaComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  formBuilder = inject(FormBuilder);
+  apiRequestS = inject(ApiRequestService);
+  formB = inject(FormBuilder);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
-  custIdService = inject(CustomerIdService);
+  customerIdS = inject(CustomerIdService);
   authS = inject(AuthService);
 
   submitting: boolean = false;
@@ -27,7 +27,7 @@ export default class AddoreditInventarioPinturaComponent implements OnInit {
   cb_machinery: ISelectItem[] = [];
   cb_producto: ISelectItem[] = [];
   id: number = 0;
-  form: FormGroup = this.formBuilder.group({
+  form: FormGroup = this.formB.group({
     id: { value: this.id, disabled: true },
     machineryId: ['', Validators.required],
     machinery: ['', Validators.required],
@@ -58,7 +58,7 @@ export default class AddoreditInventarioPinturaComponent implements OnInit {
   }
   onLoadData() {
     const urlApi = `InventarioPintura/${this.id}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       this.form.patchValue(result);
       this.form.patchValue({
         productoId: result.productoId,
@@ -75,17 +75,17 @@ export default class AddoreditInventarioPinturaComponent implements OnInit {
     });
   }
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
     this.submitting = true;
 
     if (this.id === 0) {
-      this.apiRequestService
+      this.apiRequestS
         .onPost(`InventarioPintura`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.apiRequestService
+      this.apiRequestS
         .onPut(`InventarioPintura/${this.id}`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
@@ -94,14 +94,14 @@ export default class AddoreditInventarioPinturaComponent implements OnInit {
   }
   onLoadMachinery() {
     const urlApi =
-      'Machineries/GetAutocompeteInv/' + this.custIdService.getCustomerId();
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      'Machineries/GetAutocompeteInv/' + this.customerIdS.getCustomerId();
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.cb_machinery = result;
     });
   }
   onLoadProducto() {
     const urlApi = `productos/getautocompleteselectitem/`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.cb_producto = result;
     });
   }

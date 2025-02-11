@@ -28,17 +28,17 @@ import { TopbarComponent } from '../topbar/topbar.component';
  * Vertical Component
  */
 export default class VerticalComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   authS = inject(AuthService);
   location = inject(Location);
   router = inject(Router);
-  custIdService = inject(CustomerIdService);
+  customerIdS = inject(CustomerIdService);
 
   cb_customer: any[] = [];
-  customerId = this.custIdService.customerId;
+  customerId = this.customerIdS.customerId;
 
   // selectCustomer(customerId: number) {
-  //   this.custIdService.setCustomerId(customerId);
+  //   this.customerIdS.setCustomerId(customerId);
   // }
 
   // constructor() {

@@ -13,11 +13,11 @@ import SubirPdfComponent from 'src/app/shared/subir-pdf/subir-pdf.component';
   imports: [LuxuryAppComponentsModule],
 })
 export default class ActivosDocumentosComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
-  custIdService = inject(CustomerIdService);
+  customerIdS = inject(CustomerIdService);
 
   data: any[] = [];
   machineryId: number = 0;
@@ -29,19 +29,19 @@ export default class ActivosDocumentosComponent implements OnInit {
   }
   onLoadData() {
     const urlApi = `MachineryDocument/GetAll/${this.machineryId}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
   }
   onDelete(id: number) {
-    this.apiRequestService
+    this.apiRequestS
       .onDelete(`Machineries/DeleteDocument/${id}`)
       .then((result: boolean) => {
         if (result) this.data = this.data.filter((item) => item.id !== id);
       });
   }
   onModalFormUploadDoc(id: number) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         SubirPdfComponent,
         {
@@ -49,7 +49,7 @@ export default class ActivosDocumentosComponent implements OnInit {
           pathUrl: 'Machineries/SubirDocumento/',
         },
         'Cargar Documentos',
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();

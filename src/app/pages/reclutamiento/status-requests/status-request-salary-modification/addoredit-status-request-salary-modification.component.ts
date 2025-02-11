@@ -17,11 +17,11 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 export default class AddOrEditStatusRequestSalaryModificationComponent
   implements OnInit
 {
-  formBuilder = inject(FormBuilder);
-  apiRequestService = inject(ApiRequestService);
+  formB = inject(FormBuilder);
+  apiRequestS = inject(ApiRequestService);
   ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);
-  enumSelectService = inject(EnumSelectService);
+  enumSelectS = inject(EnumSelectService);
 
   submitting: boolean = false;
 
@@ -30,7 +30,7 @@ export default class AddOrEditStatusRequestSalaryModificationComponent
   cb_profession: ISelectItem[] = [];
   cb_si_no: ISelectItem[] = [];
 
-  form: FormGroup = this.formBuilder.group({
+  form: FormGroup = this.formB.group({
     id: { value: this.config.data.id, disabled: true },
     employeeId: ['', Validators.required],
     workPositionId: ['', Validators.required],
@@ -49,31 +49,31 @@ export default class AddOrEditStatusRequestSalaryModificationComponent
   });
 
   async ngOnInit() {
-    this.cb_si_no = await this.enumSelectService.boolYesNo();
+    this.cb_si_no = await this.enumSelectS.boolYesNo();
     this.onProfessionSelectItem();
     this.id = this.config.data.id;
     if (this.id !== 0) this.onLoadData();
   }
   onLoadData() {
     const urlApi = `RequestSalaryModification/GetById/${this.id}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       this.form.patchValue(result);
     });
   }
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
     this.id = this.config.data.id;
 
     this.submitting = true;
 
     if (this.id === 0) {
-      this.apiRequestService
+      this.apiRequestS
         .onPost(`RequestSalaryModification`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.apiRequestService
+      this.apiRequestS
         .onPut(`RequestSalaryModification/${this.id}`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
@@ -81,10 +81,8 @@ export default class AddOrEditStatusRequestSalaryModificationComponent
     }
   }
   onProfessionSelectItem() {
-    this.apiRequestService
-      .onGetSelectItem(`Professions`)
-      .then((response: any) => {
-        this.cb_profession = response;
-      });
+    this.apiRequestS.onGetSelectItem(`Professions`).then((response: any) => {
+      this.cb_profession = response;
+    });
   }
 }

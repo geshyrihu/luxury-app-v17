@@ -18,13 +18,13 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class AddOrEditRadioComunicacionComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   config = inject(DynamicDialogConfig);
-  formBuilder = inject(FormBuilder);
+  formB = inject(FormBuilder);
   ref = inject(DynamicDialogRef);
-  dateService = inject(DateService);
+  dateS = inject(DateService);
   authS = inject(AuthService);
-  custIdService = inject(CustomerIdService);
+  customerIdS = inject(CustomerIdService);
 
   submitting: boolean = false;
 
@@ -34,7 +34,7 @@ export default class AddOrEditRadioComunicacionComponent implements OnInit {
   photoFileUpdate: boolean = false;
   cb_application_user: ISelectItem[] = [];
   cb_area_responsable: ISelectItem[] = [];
-  form: FormGroup = this.formBuilder.group({
+  form: FormGroup = this.formB.group({
     id: { value: this.id, disabled: true },
     marca: ['', Validators.required],
     fotografia: [''],
@@ -57,7 +57,7 @@ export default class AddOrEditRadioComunicacionComponent implements OnInit {
   }
   onLoadData() {
     const urlApi = `RadioComunicacion/${this.id}`;
-    this.apiRequestService
+    this.apiRequestS
       .onGetItem<IRadioComunicacionAddOrEdit>(urlApi)
       .then((result: IRadioComunicacionAddOrEdit) => {
         this.form.patchValue(result);
@@ -71,19 +71,19 @@ export default class AddOrEditRadioComunicacionComponent implements OnInit {
   }
 
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
     const formData = this.createFormData(this.form.value);
 
     this.submitting = true;
 
     if (this.id === 0) {
-      this.apiRequestService
+      this.apiRequestS
         .onPost('RadioComunicacion', formData)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.apiRequestService
+      this.apiRequestS
         .onPut(`RadioComunicacion/${this.id}`, formData)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
@@ -113,14 +113,11 @@ export default class AddOrEditRadioComunicacionComponent implements OnInit {
     formData.append('marca', dto.marca);
     formData.append('modelo', dto.modelo);
     formData.append('serie', dto.serie);
-    formData.append(
-      'fechaCompra',
-      this.dateService.getDateFormat(dto.fechaCompra)
-    );
+    formData.append('fechaCompra', this.dateS.getDateFormat(dto.fechaCompra));
     formData.append('bateria', dto.bateria);
 
     if (this.id == 0) {
-      formData.append('customerId', String(this.custIdService.customerId));
+      formData.append('customerId', String(this.customerIdS.customerId));
     } else {
       formData.append('customerId', String(dto.customerId));
     }
@@ -138,13 +135,13 @@ export default class AddOrEditRadioComunicacionComponent implements OnInit {
   }
 
   onLoadSelectItem() {
-    this.apiRequestService
-      .onGetSelectItem(`ApplicationUser/${this.custIdService.getCustomerId()}`)
+    this.apiRequestS
+      .onGetSelectItem(`ApplicationUser/${this.customerIdS.getCustomerId()}`)
       .then((response: any) => {
         this.cb_application_user = response;
       });
 
-    this.apiRequestService
+    this.apiRequestS
       .onGetSelectItem(`ResponsibleArea`)
       .then((response: any) => {
         this.cb_area_responsable = response;

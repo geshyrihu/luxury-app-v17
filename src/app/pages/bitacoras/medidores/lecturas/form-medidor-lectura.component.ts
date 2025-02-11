@@ -14,16 +14,16 @@ const date = new Date();
   imports: [LuxuryAppComponentsModule],
 })
 export default class FormMedidorLecturaComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  formBuilder = inject(FormBuilder);
-  dateService = inject(DateService);
+  apiRequestS = inject(ApiRequestService);
+  formB = inject(FormBuilder);
+  dateS = inject(DateService);
   authS = inject(AuthService);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
 
   submitting: boolean = false;
 
-  dateString: string = this.dateService.getDateFormat(date);
+  dateString: string = this.dateS.getDateFormat(date);
   dateStringUltimoRegistro: string = '';
   seRegistroEsteDia: boolean = false;
   seRegistroEsteDiaMensaje: string = 'Ya se cargo el registro de este día';
@@ -45,9 +45,9 @@ export default class FormMedidorLecturaComponent implements OnInit {
     this.medidorId = this.config.data.medidorId;
 
     const urlApi = `MedidorLectura/UltimaLectura/${this.medidorId}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       if (result !== null) {
-        this.dateStringUltimoRegistro = this.dateService.getDateFormat(
+        this.dateStringUltimoRegistro = this.dateS.getDateFormat(
           result.fechaRegistro
         );
         this.validarUltimaLectura();
@@ -57,7 +57,7 @@ export default class FormMedidorLecturaComponent implements OnInit {
 
     if (this.id !== 0) this.onLoadData();
 
-    this.form = this.formBuilder.group({
+    this.form = this.formB.group({
       id: { value: this.id, disabled: true },
       medidorId: [this.medidorId],
       fechaRegistro: [''],
@@ -67,24 +67,24 @@ export default class FormMedidorLecturaComponent implements OnInit {
   }
   onLoadData() {
     const urlApi = `MedidorLectura/${this.id}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       this.form.patchValue(result);
     });
   }
   onSubmit() {
     if (this.form.value.lectura == 0) return;
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
 
     this.submitting = true;
 
     if (this.id === 0) {
-      this.apiRequestService
+      this.apiRequestS
         .onPost(`MedidorLectura`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.apiRequestService
+      this.apiRequestS
         .onPut(`MedidorLectura/${this.id}`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);

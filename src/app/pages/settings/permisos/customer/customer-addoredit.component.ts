@@ -16,10 +16,10 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class CustomerAddOrEditComponent implements OnInit {
-  formBuilder = inject(FormBuilder);
-  apiRequestService = inject(ApiRequestService);
+  formB = inject(FormBuilder);
+  apiRequestS = inject(ApiRequestService);
   config = inject(DynamicDialogConfig);
-  dateService = inject(DateService);
+  dateS = inject(DateService);
   ref = inject(DynamicDialogRef);
 
   submitting: boolean = false;
@@ -33,7 +33,7 @@ export default class CustomerAddOrEditComponent implements OnInit {
   model: ICustomerAddOrEdit;
   photoFileUpdate: boolean = false;
 
-  form: FormGroup = this.formBuilder.group({
+  form: FormGroup = this.formB.group({
     id: { value: this.id, disabled: true },
     active: [''],
     nameCustomer: ['', [Validators.required, Validators.minLength(5)]],
@@ -59,31 +59,29 @@ export default class CustomerAddOrEditComponent implements OnInit {
   }
 
   onLoadData() {
-    this.apiRequestService
+    this.apiRequestS
       .onGetItem<ICustomerAddOrEdit>(`Customers/${this.id}`)
       .then((result: any) => {
         this.model = result;
-        const register = this.dateService.getDateFormat(result.register);
+        const register = this.dateS.getDateFormat(result.register);
         this.model.register = register;
         this.form.patchValue(result);
       });
   }
 
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
 
     const formData = this.createFormData(this.form.value);
 
     this.submitting = true;
 
     if (this.id === 0) {
-      this.apiRequestService
-        .onPost('Customers', formData)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
-        });
+      this.apiRequestS.onPost('Customers', formData).then((result: boolean) => {
+        result ? this.ref.close(true) : (this.submitting = false);
+      });
     } else {
-      this.apiRequestService
+      this.apiRequestS
         .onPut(`Customers/${this.id}`, formData)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
@@ -109,7 +107,7 @@ export default class CustomerAddOrEditComponent implements OnInit {
     }
     formData.append(
       'register',
-      this.dateService.getDateFormat(customerAdCustomerAddOrEdit.register)
+      this.dateS.getDateFormat(customerAdCustomerAddOrEdit.register)
     );
     formData.append('rfc', customerAdCustomerAddOrEdit.rfc);
     formData.append('numeroCliente', customerAdCustomerAddOrEdit.numeroCliente);

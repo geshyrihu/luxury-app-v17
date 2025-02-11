@@ -16,13 +16,13 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class EditSalidasComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  formBuilder = inject(FormBuilder);
-  dateService = inject(DateService);
+  apiRequestS = inject(ApiRequestService);
+  formB = inject(FormBuilder);
+  dateS = inject(DateService);
   ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);
   authS = inject(AuthService);
-  custIdService = inject(CustomerIdService);
+  customerIdS = inject(CustomerIdService);
 
   submitting: boolean = false;
 
@@ -51,8 +51,8 @@ export default class EditSalidasComponent implements OnInit {
     return this.form.controls;
   }
   onLoadExistencia() {
-    const urlApi = `InventarioProducto/GetExistenciaProducto/${this.custIdService.customerId}/${this.config.data.idProducto}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    const urlApi = `InventarioProducto/GetExistenciaProducto/${this.customerIdS.customerId}/${this.config.data.idProducto}`;
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       if (result !== null) {
         this.existenciaAlmacen = result.existencia;
       }
@@ -61,7 +61,7 @@ export default class EditSalidasComponent implements OnInit {
   ngOnInit(): void {
     flatpickrFactory();
 
-    this.apiRequestService
+    this.apiRequestS
       .onGetSelectItem(`getMeasurementUnits`)
       .then((response: any) => {
         this.cb_measurement_unit = response;
@@ -74,10 +74,10 @@ export default class EditSalidasComponent implements OnInit {
 
     if (this.id !== 0) this.onLoadData();
 
-    this.form = this.formBuilder.group({
+    this.form = this.formB.group({
       id: { value: 0, disabled: true },
-      customerId: [this.custIdService.customerId, Validators.required],
-      fechaSalida: [this.dateService.getDateNow(), Validators.required],
+      customerId: [this.customerIdS.customerId, Validators.required],
+      fechaSalida: [this.dateS.getDateNow(), Validators.required],
       productoId: [this.idProducto, Validators.required],
       cantidad: [0, Validators.required],
       unidadMedidaId: ['', Validators.required],
@@ -93,10 +93,10 @@ export default class EditSalidasComponent implements OnInit {
 
   onLoadData() {
     const urlApi = `SalidaProductos/${this.id}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       this.nombreProducto = result.producto;
       this.cantidadActualUsada = result.cantidad;
-      result.fechaSalida = this.dateService.getDateFormat(result.fechaSalida);
+      result.fechaSalida = this.dateS.getDateFormat(result.fechaSalida);
       this.form.patchValue(result);
     });
   }
@@ -105,13 +105,13 @@ export default class EditSalidasComponent implements OnInit {
 
     this.submitting = true;
     if (this.id === 0) {
-      this.apiRequestService
+      this.apiRequestS
         .onPost(`SalidaProductos`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.apiRequestService
+      this.apiRequestS
         .onPut(
           `SalidaProductos/${this.id}/${this.cantidadActualUsada}`,
           this.form.value

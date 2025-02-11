@@ -16,9 +16,9 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   providers: [EnumSelectService],
 })
 export default class AddOrEditSolicitudAltaComponent implements OnInit {
-  formBuilder = inject(FormBuilder);
-  apiRequestService = inject(ApiRequestService);
-  enumSelectService = inject(EnumSelectService);
+  formB = inject(FormBuilder);
+  apiRequestS = inject(ApiRequestService);
+  enumSelectS = inject(EnumSelectService);
 
   ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);
@@ -29,7 +29,7 @@ export default class AddOrEditSolicitudAltaComponent implements OnInit {
   cb_typeContractRegister: ISelectItem[] = [];
   id: number = 0;
 
-  form: FormGroup = this.formBuilder.group({
+  form: FormGroup = this.formB.group({
     id: { value: this.id, disabled: true },
     requestPositionCandidateId: [null],
     requestDate: ['', Validators.required],
@@ -44,9 +44,9 @@ export default class AddOrEditSolicitudAltaComponent implements OnInit {
     employee: [],
   });
   async ngOnInit() {
-    this.cb_status = await this.enumSelectService.status();
+    this.cb_status = await this.enumSelectS.status();
     this.cb_typeContractRegister =
-      await this.enumSelectService.typeContractRegister();
+      await this.enumSelectS.typeContractRegister();
     this.id = this.config.data.id;
     if (this.id !== 0) this.onLoadData();
   }
@@ -54,7 +54,7 @@ export default class AddOrEditSolicitudAltaComponent implements OnInit {
     this.onLoadEmpleados();
 
     const urlApi = `RequestEmployeeRegister/${this.id}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       this.form.patchValue(result);
       if (result.employeeId !== null) {
         let find = this.empleados.find((x) => x?.value === result.employeeId);
@@ -68,13 +68,13 @@ export default class AddOrEditSolicitudAltaComponent implements OnInit {
 
   onLoadEmpleados() {
     const urlApi = `Employees/EmployeeTemp`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.empleados = result;
     });
   }
 
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
 
     this.id = this.config.data.id;
 
@@ -84,13 +84,13 @@ export default class AddOrEditSolicitudAltaComponent implements OnInit {
     this.submitting = true;
 
     if (this.id === 0) {
-      this.apiRequestService
+      this.apiRequestS
         .onPost(`RequestEmployeeRegister`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.apiRequestService
+      this.apiRequestS
         .onPut(`RequestEmployeeRegister/${this.id}`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);

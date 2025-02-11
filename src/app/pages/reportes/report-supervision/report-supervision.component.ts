@@ -11,14 +11,14 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
   templateUrl: './report-supervision.component.html',
 })
 export default class ReportSupervisionComponent implements OnInit {
-  custIdService = inject(CustomerIdService);
-  apiRequestService = inject(ApiRequestService);
+  customerIdS = inject(CustomerIdService);
+  apiRequestS = inject(ApiRequestService);
 
   nameCustomer = '';
   photoPath = '';
 
-  customerId$: Observable<number> = this.custIdService.getCustomerId$();
-  customerId = this.custIdService.getCustomerId();
+  customerId$: Observable<number> = this.customerIdS.getCustomerId$();
+  customerId = this.customerIdS.getCustomerId();
 
   minutas: any;
   tickets: any;
@@ -27,8 +27,8 @@ export default class ReportSupervisionComponent implements OnInit {
   ngOnInit(): void {
     this.onLoadData(this.customerId);
     this.customerId$.subscribe((customerId) => {
-      this.nameCustomer = this.custIdService.nameCustomer;
-      this.photoPath = this.custIdService.photoPath;
+      this.nameCustomer = this.customerIdS.nameCustomer;
+      this.photoPath = this.customerIdS.photoPath;
       this.onLoadData(customerId);
     });
   }
@@ -41,25 +41,25 @@ export default class ReportSupervisionComponent implements OnInit {
   }
   onLoadDataMinutas(customerId: number) {
     const urlApi = `ReportSupervision/PendingMinutes/${customerId}`;
-    this.apiRequestService.onGetList(urlApi).then((response: any) => {
+    this.apiRequestS.onGetList(urlApi).then((response: any) => {
       this.minutas = response;
     });
   }
   onLoadDataTickets(customerId: number) {
     const urlApi = `ReportSupervision/PendingTickets/${customerId}`;
-    this.apiRequestService.onGetList(urlApi).then((response: any) => {
+    this.apiRequestS.onGetList(urlApi).then((response: any) => {
       this.tickets = response;
     });
   }
   onLoadDataPendingLegal(customerId: number) {
     const urlApi = `ReportSupervision/PendingLegal/${customerId}`;
-    this.apiRequestService.onGetList(urlApi).then((response: any) => {
+    this.apiRequestS.onGetList(urlApi).then((response: any) => {
       this.pendingLegal = response;
     });
   }
   onLoadDataEnvioFinancieros(customerId: number) {
     const urlApi = `ReportSupervision/EstadosFinancieros/${customerId}`;
-    this.apiRequestService.onGetList(urlApi).then((response: any) => {
+    this.apiRequestS.onGetList(urlApi).then((response: any) => {
       this.envioFinancieros = response;
     });
   }

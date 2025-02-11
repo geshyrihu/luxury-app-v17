@@ -12,7 +12,7 @@ import TicketDateRangeSelectorComponent from 'src/app/pages/tickets/shared/ticke
   providers: [DatePipe], // Provide DatePipe in the component
 })
 export default class LegalReportsExternalComponent {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   datePipe = inject(DatePipe);
   // Declaración e inicialización de variables
   reportData: any;
@@ -49,19 +49,19 @@ export default class LegalReportsExternalComponent {
 
   onLoadReport(startDate: string, endDate: string) {
     const urlApi = `LegalReport/Results/${startDate}/${endDate}/${false}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.reportData = result;
     });
   }
   onRequestsAttended(startDate: string, endDate: string) {
     const urlApi = `LegalReport/RequestsAttended/${startDate}/${endDate}/${false}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.requestsAttended = result;
     });
   }
   onRequestsPending() {
     const urlApi = `LegalReport/RequestsPending/${false}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.requestsPending = result;
     });
   }

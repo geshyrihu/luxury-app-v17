@@ -18,9 +18,9 @@ import { FiltroCalendarService } from 'src/app/core/services/filtro-calendar.ser
   imports: [LuxuryAppComponentsModule, NgChartsModule],
 })
 export default class ChartLecturaComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   rutaActiva = inject(ActivatedRoute);
-  dateService = inject(DateService);
+  dateS = inject(DateService);
   filtroCalendarService = inject(FiltroCalendarService);
 
   data: IDataSet;
@@ -30,10 +30,10 @@ export default class ChartLecturaComponent implements OnInit {
   medidorId: number = 0;
   dates$: Observable<Date[]> = this.filtroCalendarService.getDates$();
 
-  fechaInicial: string = this.dateService.getDateFormat(
+  fechaInicial: string = this.dateS.getDateFormat(
     this.filtroCalendarService.fechaInicioDateFull
   );
-  fechaFinal: string = this.dateService.getDateFormat(
+  fechaFinal: string = this.dateS.getDateFormat(
     this.filtroCalendarService.fechaFinalDateFull
   );
 
@@ -49,8 +49,8 @@ export default class ChartLecturaComponent implements OnInit {
   onLoadData() {
     if (this.ViewMonth) {
       this.onDataGraficoMensual(
-        this.dateService.getDateFormat(this.filtroCalendarService.fechaInicial),
-        this.dateService.getDateFormat(this.filtroCalendarService.fechaFinal)
+        this.dateS.getDateFormat(this.filtroCalendarService.fechaInicial),
+        this.dateS.getDateFormat(this.filtroCalendarService.fechaFinal)
       );
     }
     if (this.ViewDay) {
@@ -68,15 +68,15 @@ export default class ChartLecturaComponent implements OnInit {
     });
     this.dates$.subscribe((dates) => {
       this.onDataGraficoMensual(
-        this.dateService.getDateFormat(dates[0]),
-        this.dateService.getDateFormat(dates[1])
+        this.dateS.getDateFormat(dates[0]),
+        this.dateS.getDateFormat(dates[1])
       );
     });
   }
 
   onDataGraficoDiaria() {
     const urlApi = `MedidorLectura/DataGraficoDiaria/${this.medidorId}/${this.fechaInicial}/${this.fechaFinal}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
       this.onLoadChart(
         this.data.label,
@@ -90,7 +90,7 @@ export default class ChartLecturaComponent implements OnInit {
 
   onDataGraficoMensual(fechaInicial: string, fechaFinal: string) {
     const urlApi = `MedidorLectura/DataGraficoMensual/${this.medidorId}/${fechaInicial}/${fechaFinal}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
       this.onLoadChart(
         this.data.label,

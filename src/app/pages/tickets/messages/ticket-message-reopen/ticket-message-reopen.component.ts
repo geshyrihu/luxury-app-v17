@@ -20,15 +20,15 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 })
 export default class TicketMessageReopenComponent implements OnInit {
   authS = inject(AuthService);
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   config = inject(DynamicDialogConfig);
-  custIdService = inject(CustomerIdService);
-  formBuilder = inject(FormBuilder);
+  customerIdS = inject(CustomerIdService);
+  formB = inject(FormBuilder);
   ref = inject(DynamicDialogRef);
 
   submitting: boolean = false;
 
-  form: FormGroup = this.formBuilder.group({
+  form: FormGroup = this.formB.group({
     applicationUserId: new FormControl(
       this.authS.applicationUserId,
       Validators.required
@@ -43,10 +43,10 @@ export default class TicketMessageReopenComponent implements OnInit {
   ngOnInit() {}
 
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
     this.submitting = true;
 
-    this.apiRequestService
+    this.apiRequestS
       .onPost(`Tickets/Reopen`, this.form.value)
       .then((result: boolean) => {
         result ? this.ref.close(true) : (this.submitting = false);

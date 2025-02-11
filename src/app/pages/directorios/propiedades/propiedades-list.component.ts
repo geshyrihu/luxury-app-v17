@@ -16,14 +16,14 @@ import PropiedadesAddOrEditComponent from './propiedades-addoredit.component';
   imports: [LuxuryAppComponentsModule],
 })
 export default class PropiedadesListComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   authS = inject(AuthService);
-  custIdService = inject(CustomerIdService);
-  dialogHandlerService = inject(DialogHandlerService);
+  customerIdS = inject(CustomerIdService);
+  dialogHandlerS = inject(DialogHandlerService);
 
   data: IDirectoryCondominium[] = [];
   ref: DynamicDialogRef;
-  customerId$: Observable<number> = this.custIdService.getCustomerId$();
+  customerId$: Observable<number> = this.customerIdS.getCustomerId$();
 
   ngOnInit(): void {
     this.onLoadData();
@@ -33,26 +33,26 @@ export default class PropiedadesListComponent implements OnInit {
   }
 
   onLoadData() {
-    const urlApi = `DirectoryCondominium/GetAllAsync/${this.custIdService.customerId}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    const urlApi = `DirectoryCondominium/GetAllAsync/${this.customerIdS.customerId}`;
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
   }
 
   onDelete(id: number) {
-    this.apiRequestService
+    this.apiRequestS
       .onDelete(`directorycondominium/${id}`)
       .then((result: boolean) => {
         if (result) this.data = this.data.filter((item) => item.id !== id);
       });
   }
   showModalAddOrEdit(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         PropiedadesAddOrEditComponent,
         data,
         data.title,
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();

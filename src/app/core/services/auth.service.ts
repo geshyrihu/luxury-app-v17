@@ -14,8 +14,8 @@ import { StorageService } from './storage.service';
   providedIn: 'root',
 })
 export class AuthService {
-  storageService = inject(StorageService);
-  dataService = inject(DataConnectorService);
+  storageS = inject(StorageService);
+  dataConnectorS = inject(DataConnectorService);
   router = inject(Router);
 
   userTokenDto: IUserToken;
@@ -35,7 +35,7 @@ export class AuthService {
    */
   validateToken() {
     // Obtener el token almacenado en el sistema de almacenamiento
-    this.data.token = this.storageService.retrieve('token');
+    this.data.token = this.storageS.retrieve('token');
 
     // Si el token es indefinido, redirigir al inicio de sesión
     if (this.data.token === undefined) {
@@ -43,7 +43,7 @@ export class AuthService {
     }
 
     // Enviar una solicitud al servidor para validar el token
-    return this.dataService.post('Auth/ValidateJwtToken', this.data).pipe(
+    return this.dataConnectorS.post('Auth/ValidateJwtToken', this.data).pipe(
       map((resp: any) => {
         // Almacenar la información del token y el estado del JWT
         this.userTokenDto = resp.body;

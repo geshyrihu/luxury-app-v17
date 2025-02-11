@@ -17,13 +17,13 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   providers: [EnumSelectService],
 })
 export default class AddoreditPlantillaComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  formBuilder = inject(FormBuilder);
+  apiRequestS = inject(ApiRequestService);
+  formB = inject(FormBuilder);
   authS = inject(AuthService);
   config = inject(DynamicDialogConfig);
-  custIdService = inject(CustomerIdService);
+  customerIdS = inject(CustomerIdService);
   ref = inject(DynamicDialogRef);
-  enumSelectService = inject(EnumSelectService);
+  enumSelectS = inject(EnumSelectService);
 
   submitting: boolean = false;
 
@@ -34,9 +34,9 @@ export default class AddoreditPlantillaComponent implements OnInit {
   cb_turnoTrabajo: ISelectItem[] = [];
   cb_state: ISelectItem[] = [];
 
-  form: FormGroup = this.formBuilder.group({
+  form: FormGroup = this.formB.group({
     id: { value: this.id, disabled: true },
-    customerId: [this.custIdService.getCustomerId(), Validators.required],
+    customerId: [this.customerIdS.getCustomerId(), Validators.required],
     folio: [''],
     professionId: ['', Validators.required],
     responsibleAreaId: [''],
@@ -65,8 +65,8 @@ export default class AddoreditPlantillaComponent implements OnInit {
   });
 
   async ngOnInit() {
-    this.cb_turnoTrabajo = await this.enumSelectService.turnoTrabajo();
-    this.cb_state = await this.enumSelectService.state();
+    this.cb_turnoTrabajo = await this.enumSelectS.turnoTrabajo();
+    this.cb_state = await this.enumSelectS.state();
     this.onProfessionSelectItem();
     this.onProfessionSelectItem();
     this.onLoadSelectItem();
@@ -75,7 +75,7 @@ export default class AddoreditPlantillaComponent implements OnInit {
   }
   onLoadData() {
     const urlApi = `WorkPosition/GetForEdit/${this.id}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       this.form.patchValue(result);
       this.form.patchValue({
         id: this.id,
@@ -84,7 +84,7 @@ export default class AddoreditPlantillaComponent implements OnInit {
   }
 
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
     this.id = this.config.data.id;
 
     this.form.patchValue({
@@ -95,13 +95,13 @@ export default class AddoreditPlantillaComponent implements OnInit {
     this.submitting = true;
 
     if (this.id === 0) {
-      this.apiRequestService
+      this.apiRequestS
         .onPost(`WorkPosition`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.apiRequestService
+      this.apiRequestS
         .onPut(`WorkPosition/${this.id}`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
@@ -110,16 +110,14 @@ export default class AddoreditPlantillaComponent implements OnInit {
   }
 
   onProfessionSelectItem() {
-    this.apiRequestService
-      .onGetSelectItem(`Professions`)
-      .then((response: any) => {
-        this.cb_profession = response;
-      });
+    this.apiRequestS.onGetSelectItem(`Professions`).then((response: any) => {
+      this.cb_profession = response;
+    });
   }
 
   onLoadSelectItem() {
-    this.apiRequestService
-      .onGetSelectItem(`Employee/${this.custIdService.getCustomerId()}`)
+    this.apiRequestS
+      .onGetSelectItem(`Employee/${this.customerIdS.getCustomerId()}`)
       .then((response: any) => {
         this.cb_employee = response;
       });

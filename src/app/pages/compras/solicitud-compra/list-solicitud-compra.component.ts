@@ -15,9 +15,9 @@ import { SolicitudCompraService } from 'src/app/core/services/solicitud-compra.s
   imports: [LuxuryAppComponentsModule],
 })
 export default class ListSolicitudCompraComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   authS = inject(AuthService);
-  custIdService = inject(CustomerIdService);
+  customerIdS = inject(CustomerIdService);
   router = inject(Router);
   solicitudCompraService = inject(SolicitudCompraService);
 
@@ -26,7 +26,7 @@ export default class ListSolicitudCompraComponent implements OnInit {
   subRef$: Subscription;
   statusCompra: number = this.solicitudCompraService.onGetStatusFiltro();
 
-  customerId$: Observable<number> = this.custIdService.getCustomerId$();
+  customerId$: Observable<number> = this.customerIdS.getCustomerId$();
   ngOnInit(): void {
     this.onLoadData();
     this.customerId$.subscribe(() => {
@@ -35,10 +35,10 @@ export default class ListSolicitudCompraComponent implements OnInit {
   }
 
   onLoadData() {
-    this.apiRequestService
+    this.apiRequestS
       .onGetList(
         `SolicitudCompra/Solicitudes/${
-          this.custIdService.customerId
+          this.customerIdS.customerId
         }/${this.solicitudCompraService.onGetStatusFiltro()}`
       )
       .then((result: any) => {
@@ -47,7 +47,7 @@ export default class ListSolicitudCompraComponent implements OnInit {
   }
 
   onDelete(id: number) {
-    this.apiRequestService
+    this.apiRequestS
       .onDelete(`solicitudcompra/${id}`)
       .then((result: boolean) => {
         if (result) this.data = this.data.filter((item) => item.id !== id);

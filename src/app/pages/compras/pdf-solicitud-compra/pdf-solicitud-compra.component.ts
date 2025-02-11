@@ -10,7 +10,7 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
   imports: [LuxuryAppComponentsModule],
 })
 export default class PdfSolicitudCompraComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   route = inject(ActivatedRoute);
 
   idSolicituCompra: any;
@@ -20,7 +20,7 @@ export default class PdfSolicitudCompraComponent implements OnInit {
   ngOnInit(): void {
     this.idSolicituCompra = this.route.snapshot.paramMap.get('id');
 
-    this.apiRequestService
+    this.apiRequestS
       .onGetItem(
         `SolicitudCompra/GetSolicitudCompraIndividual/${this.idSolicituCompra}`
       )

@@ -17,13 +17,13 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   providers: [EnumSelectService],
 })
 export default class AddoreditInventarioExtintorComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   authS = inject(AuthService);
   config = inject(DynamicDialogConfig);
-  custIdService = inject(CustomerIdService);
-  formBuilder = inject(FormBuilder);
+  customerIdS = inject(CustomerIdService);
+  formB = inject(FormBuilder);
   ref = inject(DynamicDialogRef);
-  enumSelectService = inject(EnumSelectService);
+  enumSelectS = inject(EnumSelectService);
 
   submitting: boolean = false;
 
@@ -32,9 +32,9 @@ export default class AddoreditInventarioExtintorComponent implements OnInit {
   urlBaseImg: string = '';
   id: number = 0;
 
-  form: FormGroup = this.formBuilder.group({
+  form: FormGroup = this.formB.group({
     id: { value: this.id, disabled: true },
-    customerId: [this.custIdService.getCustomerId(), Validators.required],
+    customerId: [this.customerIdS.getCustomerId(), Validators.required],
     eExtintor: [null, Validators.required],
     ubicacion: ['', Validators.required],
     photo: [''],
@@ -47,31 +47,31 @@ export default class AddoreditInventarioExtintorComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.cb_extintor = await this.enumSelectService.extintor();
+    this.cb_extintor = await this.enumSelectS.extintor();
     this.id = this.config.data.id;
     if (this.id !== 0) this.onLoadData();
   }
   onLoadData() {
     const urlApi = `InventarioExtintor/${this.id}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       this.urlBaseImg = result.currentPhoto;
       this.form.patchValue(result);
     });
   }
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
     const formData = this.createFormData(this.form.value);
 
     this.submitting = true;
 
     if (this.id === 0) {
-      this.apiRequestService
+      this.apiRequestS
         .onPost(`InventarioExtintor`, formData)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.apiRequestService
+      this.apiRequestS
         .onPut(`InventarioExtintor/${this.id}`, formData)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);

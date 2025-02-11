@@ -18,21 +18,21 @@ import OrdenCompraComponent from './orden-compra.component';
   imports: [LuxuryAppComponentsModule],
 })
 export default class ListOrdenCompraComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
   authS = inject(AuthService);
   router = inject(Router);
   ordenCompraService = inject(OrdenCompraService);
-  custIdService = inject(CustomerIdService);
+  customerIdS = inject(CustomerIdService);
   data: any[] = [];
   ref: DynamicDialogRef;
 
   statusCompra: number;
-  customerId$: Observable<number> = this.custIdService.getCustomerId$();
+  customerId$: Observable<number> = this.customerIdS.getCustomerId$();
 
   ngOnInit(): void {
     this.onLoadData();
-    this.customerId$ = this.custIdService.getCustomerId$();
+    this.customerId$ = this.customerIdS.getCustomerId$();
     this.customerId$.subscribe(() => {
       this.onLoadData();
     });
@@ -41,43 +41,41 @@ export default class ListOrdenCompraComponent implements OnInit {
   onLoadData() {
     this.statusCompra = this.ordenCompraService.getStatusCompras();
 
-    const url = `OrdenCompra/GetAll/${this.custIdService.customerId}/${this.statusCompra}`;
-    this.apiRequestService.onGetList(url).then((result: any) => {
+    const url = `OrdenCompra/GetAll/${this.customerIdS.customerId}/${this.statusCompra}`;
+    this.apiRequestS.onGetList(url).then((result: any) => {
       this.data = result;
     });
   }
 
   onDelete(id: number) {
-    this.apiRequestService
-      .onDelete(`ordencompra/${id}`)
-      .then((result: boolean) => {
-        if (result) this.data = this.data.filter((item) => item.id !== id);
-      });
+    this.apiRequestS.onDelete(`ordencompra/${id}`).then((result: boolean) => {
+      if (result) this.data = this.data.filter((item) => item.id !== id);
+    });
   }
 
   onOrdenCompraModal(id: number) {
     this.ordenCompraService.setOrdenCompraId(id);
 
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         OrdenCompraComponent,
         {
           id,
         },
         'Editar Orden de Compra',
-        this.dialogHandlerService.dialogSizeFull
+        this.dialogHandlerS.dialogSizeFull
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();
       });
   }
   onModalAdd() {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         CreateOrdenCompraComponent,
         {},
         'Nueva Orden de compra',
-        this.dialogHandlerService.dialogSizeFull
+        this.dialogHandlerS.dialogSizeFull
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();

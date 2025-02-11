@@ -15,7 +15,7 @@ import TarjetaProveedorComponent from 'src/app/pages/directorios/proveedor/tarje
 })
 export default class DatosServicioAddOrEditComponent implements OnInit {
   config = inject(DynamicDialogConfig);
-  dialogService = inject(DialogService);
+  dialogS = inject(DialogService);
   data: any;
   proveedores: any;
   ref: DynamicDialogRef;
@@ -25,7 +25,7 @@ export default class DatosServicioAddOrEditComponent implements OnInit {
     this.proveedores = this.config.data.proveedores;
   }
   onDataProveedor(id: number) {
-    this.ref = this.dialogService.open(TarjetaProveedorComponent, {
+    this.ref = this.dialogS.open(TarjetaProveedorComponent, {
       data: {
         id,
       },

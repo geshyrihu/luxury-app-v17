@@ -12,10 +12,10 @@ import { DataConnectorService } from 'src/app/core/services/data.service';
   templateUrl: './customer-modul-edit.component.html',
 })
 export default class CustomerModulEditComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   activatedRoute = inject(ActivatedRoute);
-  custIdService = inject(CustomerIdService);
-  dataService = inject(DataConnectorService);
+  customerIdS = inject(CustomerIdService);
+  dataConnectorS = inject(DataConnectorService);
   // Declaración e inicialización de variables
   data: any[] = [];
 
@@ -31,7 +31,7 @@ export default class CustomerModulEditComponent implements OnInit {
 
   onLoadData(customerId: number): void {
     const urlApi = `ModuleAppCustomer/Customer/${customerId}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
   }
@@ -49,14 +49,14 @@ export default class CustomerModulEditComponent implements OnInit {
       isAssigned: item.isAssigned,
     };
 
-    const customerId = this.custIdService.customerId;
+    const customerId = this.customerIdS.customerId;
 
-    this.dataService.post(urlApi, data).subscribe((_) => {
-      // this.custIdService.onLoadDataCustomer(customerId);
+    this.dataConnectorS.post(urlApi, data).subscribe((_) => {
+      // this.customerIdS.onLoadDataCustomer(customerId);
     });
 
-    // this.apiRequestService.onPost(urlApi, data).then((_) => {
-    //   this.custIdService.onLoadDataCustomer(customerId);
+    // this.apiRequestS.onPost(urlApi, data).then((_) => {
+    //   this.customerIdS.onLoadDataCustomer(customerId);
     // });
   }
 }

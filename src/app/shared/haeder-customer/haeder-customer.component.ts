@@ -11,13 +11,13 @@ import { TicketFilterService } from 'src/app/core/services/ticket-filter.service
   standalone: true,
 })
 export default class HaederCustomerComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  custIdService = inject(CustomerIdService);
+  apiRequestS = inject(ApiRequestService);
+  customerIdS = inject(CustomerIdService);
   filterReportOperationService = inject(TicketFilterService);
 
   logoCustomer = '';
   nameCustomer = '';
-  customerId$: Observable<number> = this.custIdService.getCustomerId$();
+  customerId$: Observable<number> = this.customerIdS.getCustomerId$();
 
   @Input()
   title: string = 'Titulo de cabecera';
@@ -32,8 +32,8 @@ export default class HaederCustomerComponent implements OnInit {
   }
 
   onLoadData() {
-    const urlApi = `Customers/${this.custIdService.customerId}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    const urlApi = `Customers/${this.customerIdS.customerId}`;
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       this.nameCustomer = result.nameCustomer;
       this.logoCustomer = result.photoPath;
     });

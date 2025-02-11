@@ -12,8 +12,8 @@ import AddOrEditCalendarioMaestroEquipoComponent from './addoredit-calendario-ma
   imports: [LuxuryAppComponentsModule],
 })
 export default class CalendarioMaestroEquipoComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
 
   data: any[] = [];
   ref: DynamicDialogRef;
@@ -23,14 +23,14 @@ export default class CalendarioMaestroEquipoComponent implements OnInit {
   }
 
   onLoadData() {
-    this.apiRequestService
+    this.apiRequestS
       .onGetList('CalendarioMaestroEquipo')
       .then((result: any) => {
         this.data = result;
       });
   }
   onDelete(id: number) {
-    this.apiRequestService
+    this.apiRequestS
       .onDelete(`CalendarioMaestroEquipo/${id}`)
       .then((result: boolean) => {
         if (result) this.data = this.data.filter((item) => item.id !== id);
@@ -38,12 +38,12 @@ export default class CalendarioMaestroEquipoComponent implements OnInit {
   }
 
   onModalAddOrEdit(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         AddOrEditCalendarioMaestroEquipoComponent,
         data,
         data.title,
-        this.dialogHandlerService.dialogSizeSm
+        this.dialogHandlerS.dialogSizeSm
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();

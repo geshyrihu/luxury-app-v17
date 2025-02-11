@@ -19,8 +19,8 @@ import TicketTrakingComponent from './ticket-traking.component';
   imports: [LuxuryAppComponentsModule],
 })
 export default class LegalListTicketComponent implements OnInit {
-  private dialogHandlerService = inject(DialogHandlerService);
-  private apiRequestService = inject(ApiRequestService);
+  private dialogHandlerS = inject(DialogHandlerService);
+  private apiRequestS = inject(ApiRequestService);
   private authS = inject(AuthService);
 
   isSuperUser = this.authS.onValidateRoles(['SuperUsuario']);
@@ -34,11 +34,9 @@ export default class LegalListTicketComponent implements OnInit {
   }
 
   onLoadData() {
-    this.apiRequestService
-      .onGetList('TicketLegal/AllLegal')
-      .then((result: any) => {
-        this.data = result;
-      });
+    this.apiRequestS.onGetList('TicketLegal/AllLegal').then((result: any) => {
+      this.data = result;
+    });
   }
 
   // clearInput() {
@@ -54,12 +52,12 @@ export default class LegalListTicketComponent implements OnInit {
   //     });
   // }
   onModalEdit(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         LegalTicketEditComponent,
         data,
         '',
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) {
@@ -69,12 +67,12 @@ export default class LegalListTicketComponent implements OnInit {
   }
 
   onModalAddOrEdit(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         LegalTicketAddComponent,
         data,
         '',
-        this.dialogHandlerService.dialogSizeLg
+        this.dialogHandlerS.dialogSizeLg
       )
       .then((result: boolean) => {
         if (result) {
@@ -84,12 +82,12 @@ export default class LegalListTicketComponent implements OnInit {
   }
 
   onModalUpdateStatus(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         LegalTicketUpdateStatusComponent,
         data,
         '',
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) {
@@ -99,12 +97,12 @@ export default class LegalListTicketComponent implements OnInit {
   }
 
   onModalSeguimiento(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         TicketTrakingComponent,
         data,
         data.title,
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) {
@@ -114,25 +112,23 @@ export default class LegalListTicketComponent implements OnInit {
   }
 
   onModalViewDetail(data: any) {
-    this.dialogHandlerService.openDialog(
+    this.dialogHandlerS.openDialog(
       TicketTrakingRequestDetailComponent,
       data,
       '',
-      this.dialogHandlerService.dialogSizeMd
+      this.dialogHandlerS.dialogSizeMd
     );
   }
 
   // Funcion para eliminar un banco y refres
   onDelete(id: number) {
-    this.apiRequestService
-      .onDelete(`TicketLegal/${id}`)
-      .then((result: boolean) => {
-        if (result) this.onLoadData();
-      });
+    this.apiRequestS.onDelete(`TicketLegal/${id}`).then((result: boolean) => {
+      if (result) this.onLoadData();
+    });
   }
 
   // PendingEmail() {
   //   const urlApi = `TicketLegal/PendingEmail`;
-  //   this.apiRequestService.onGetItem(urlApi);
+  //   this.apiRequestS.onGetItem(urlApi);
   // }
 }

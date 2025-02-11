@@ -18,11 +18,11 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 export default class AddOrEditElevatorSparePartsChangeComponent
   implements OnInit
 {
-  apiRequestService = inject(ApiRequestService);
-  formBuilder = inject(FormBuilder);
+  apiRequestS = inject(ApiRequestService);
+  formB = inject(FormBuilder);
   config = inject(DynamicDialogConfig);
   datePipe = inject(DatePipe);
-  dateService = inject(DateService);
+  dateS = inject(DateService);
 
   ref = inject(DynamicDialogRef);
   cb_elevators: ISelectItem[] = [];
@@ -31,7 +31,7 @@ export default class AddOrEditElevatorSparePartsChangeComponent
   customerId: number = 0;
   submitting: boolean = false;
 
-  form: FormGroup = this.formBuilder.group({
+  form: FormGroup = this.formB.group({
     id: { value: this.id, disabled: true },
     folio: [''],
     customerId: [this.config.data.customerId, Validators.required],
@@ -51,20 +51,20 @@ export default class AddOrEditElevatorSparePartsChangeComponent
   }
   onLoadData() {
     const urlApi = `elevatorsparepartschange/${this.id}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
-      const changeDate = this.dateService.getDateFormat(result.changeDate);
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
+      const changeDate = this.dateS.getDateFormat(result.changeDate);
       result.changeDate = changeDate;
       this.form.patchValue(result);
     });
   }
   onLoadDataElevators() {
     const urlApi = `elevatorsparepartschange/elevators/${this.config.data.customerId}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       this.cb_elevators = result;
     });
   }
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
 
     this.submitting = true;
     // Convertir la fecha a formato ISO 8601 utilizando DatePipe
@@ -76,13 +76,13 @@ export default class AddOrEditElevatorSparePartsChangeComponent
     this.form.value.changeDate = formattedDate;
 
     if (this.id === '') {
-      this.apiRequestService
+      this.apiRequestS
         .onPost(`elevatorsparepartschange`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.apiRequestService
+      this.apiRequestS
         .onPut(`elevatorsparepartschange/${this.id}`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);

@@ -12,8 +12,8 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class OrdenCompraStatusComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  formBuilder = inject(FormBuilder);
+  apiRequestS = inject(ApiRequestService);
+  formB = inject(FormBuilder);
   ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);
 
@@ -21,7 +21,7 @@ export default class OrdenCompraStatusComponent implements OnInit {
 
   ordenCompraId: number = 0;
   ordenCompraStatus: any;
-  form: FormGroup = this.formBuilder.group({
+  form: FormGroup = this.formB.group({
     id: [0],
     ordenCompraId: [0],
     sePago: [false],
@@ -36,7 +36,7 @@ export default class OrdenCompraStatusComponent implements OnInit {
   }
 
   onLoadData() {
-    this.apiRequestService
+    this.apiRequestS
       .onGetItem(`OrdenCompraStatus/${this.ordenCompraId}`)
       .then((result: any) => {
         this.ordenCompraStatus = result;
@@ -46,7 +46,7 @@ export default class OrdenCompraStatusComponent implements OnInit {
   onSubmit() {
     this.submitting = true;
 
-    this.apiRequestService
+    this.apiRequestS
       .onPut(`OrdenCompraStatus/${this.ordenCompraStatus.id}`, this.form.value)
       .then((result: boolean) => {
         result ? this.ref.close(true) : (this.submitting = false);

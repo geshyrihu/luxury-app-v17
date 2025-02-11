@@ -19,16 +19,16 @@ import EditProductosAlmacenComponent from './edit-productos-almacen.component';
   imports: [LuxuryAppComponentsModule],
 })
 export default class ListAlmacenProductosComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
-  custIdService = inject(CustomerIdService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
+  customerIdS = inject(CustomerIdService);
   authS = inject(AuthService);
 
   data: any[] = [];
   ref: DynamicDialogRef;
 
-  customerId$: Observable<number> = this.custIdService.getCustomerId$();
-  rowGroupMetadata: any = this.custIdService.getCustomerId$();
+  customerId$: Observable<number> = this.customerIdS.getCustomerId$();
+  rowGroupMetadata: any = this.customerIdS.getCustomerId$();
 
   ngOnInit(): void {
     this.onLoadData();
@@ -63,15 +63,15 @@ export default class ListAlmacenProductosComponent implements OnInit {
 
   onLoadData() {
     const urlApi =
-      'InventarioProducto/GetAsyncAll/' + this.custIdService.customerId;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      'InventarioProducto/GetAsyncAll/' + this.customerIdS.customerId;
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
       this.updateRowGroupMetaData();
     });
   }
 
   onDelete(id: number) {
-    this.apiRequestService
+    this.apiRequestS
       .onDelete(`InventarioProducto/${id}`)
       .then((result: boolean) => {
         if (result) this.data = this.data.filter((item) => item.id !== id);
@@ -79,7 +79,7 @@ export default class ListAlmacenProductosComponent implements OnInit {
   }
 
   editProductos(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         EditProductosAlmacenComponent,
         {
@@ -87,14 +87,14 @@ export default class ListAlmacenProductosComponent implements OnInit {
           idProducto: data.idProducto,
         },
         data.title,
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();
       });
   }
   addProductos(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         AddProductosAlmacenComponent,
         {
@@ -102,7 +102,7 @@ export default class ListAlmacenProductosComponent implements OnInit {
           idProducto: data.idProducto,
         },
         data.title,
-        this.dialogHandlerService.dialogSizeFull
+        this.dialogHandlerS.dialogSizeFull
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();
@@ -110,7 +110,7 @@ export default class ListAlmacenProductosComponent implements OnInit {
   }
 
   onAddEntrada(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         AddOrEditEntradasComponent,
         {
@@ -119,14 +119,14 @@ export default class ListAlmacenProductosComponent implements OnInit {
           nombreProducto: data.nombreProducto,
         },
         'Entrada de Productos',
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();
       });
   }
   onAddSalida(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         CrudSalidasComponent,
         {
@@ -136,7 +136,7 @@ export default class ListAlmacenProductosComponent implements OnInit {
           nombreProducto: data.nombreProducto,
         },
         'Salida de Productos',
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();
@@ -144,13 +144,13 @@ export default class ListAlmacenProductosComponent implements OnInit {
   }
 
   onModalTarjetaProducto(productoId: number): void {
-    this.dialogHandlerService.openDialog(
+    this.dialogHandlerS.openDialog(
       TarjetaProductoComponent,
       {
         productoId: productoId,
       },
       'Tarjeta de Producto',
-      this.dialogHandlerService.dialogSizeLg
+      this.dialogHandlerS.dialogSizeLg
     );
   }
 }

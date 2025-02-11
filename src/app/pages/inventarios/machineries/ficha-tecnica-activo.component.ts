@@ -11,7 +11,7 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
   imports: [LuxuryAppComponentsModule],
 })
 export default class FichaTecnicaActivoComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   config = inject(DynamicDialogConfig);
 
   data: IFichaTecnicaActivo;
@@ -24,7 +24,7 @@ export default class FichaTecnicaActivoComponent implements OnInit {
 
   onLoadData() {
     const urlApi = `Machineries/Fichatecnica/${this.id}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
   }

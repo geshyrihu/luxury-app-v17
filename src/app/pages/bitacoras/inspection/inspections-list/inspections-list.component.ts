@@ -14,12 +14,12 @@ import InspectionsAddoreditComponent from '../inspections-addoredit/inspections-
   templateUrl: './inspections-list.component.html',
 })
 export default class InspectionsListComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
-  custIdService = inject(CustomerIdService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
+  customerIdS = inject(CustomerIdService);
 
   customerId: number;
-  customerId$: Observable<number> = this.custIdService.getCustomerId$();
+  customerId$: Observable<number> = this.customerIdS.getCustomerId$();
 
   areasResponsables: string[] = []; // Para almacenar las áreas responsables
   inspeccionesOriginales: any[] = []; // Inspecciones completas desde el backend
@@ -33,8 +33,8 @@ export default class InspectionsListComponent implements OnInit {
   }
 
   onLoadData() {
-    const urlApi = `inspection/list/${this.custIdService.customerId}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    const urlApi = `inspection/list/${this.customerIdS.customerId}`;
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.inspeccionesOriginales = result;
 
       // Inicializar inspecciones filtradas con todos los datos
@@ -69,12 +69,12 @@ export default class InspectionsListComponent implements OnInit {
   }
   // Función para abrir un cuadro de diálogo modal para agregar o editar o crear
   onModalAddOrEdit(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         InspectionsAddoreditComponent,
         data,
         data.title,
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();

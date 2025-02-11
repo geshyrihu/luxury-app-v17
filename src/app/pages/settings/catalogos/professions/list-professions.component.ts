@@ -14,8 +14,8 @@ import DescripcionPuestoComponent from './descripcion-puesto.component';
   imports: [LuxuryAppComponentsModule],
 })
 export default class ListProfessionsComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
 
   authS = inject(AuthService);
   data: any[] = [];
@@ -27,24 +27,24 @@ export default class ListProfessionsComponent implements OnInit {
 
   onLoadData() {
     const urlApi = 'Professions/';
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
   }
   onDelete(id: number) {
     const urlApi = `Professions/${id}`;
-    this.apiRequestService.onDelete(urlApi).then((result: boolean) => {
+    this.apiRequestS.onDelete(urlApi).then((result: boolean) => {
       if (result) this.data = this.data.filter((item) => item.id !== id);
     });
   }
 
   showModalAddOrEdit(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         AddOrEditProfessionsComponent,
         data,
         data.title,
-        this.dialogHandlerService.dialogSizeFull
+        this.dialogHandlerS.dialogSizeFull
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();
@@ -52,11 +52,11 @@ export default class ListProfessionsComponent implements OnInit {
   }
 
   onModalDescripcionPuestos(data: any) {
-    this.dialogHandlerService.openDialog(
+    this.dialogHandlerS.openDialog(
       DescripcionPuestoComponent,
       data,
       data.title,
-      this.dialogHandlerService.dialogSizeFull
+      this.dialogHandlerS.dialogSizeFull
     );
   }
 }

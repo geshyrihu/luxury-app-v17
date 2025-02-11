@@ -17,11 +17,11 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export class EmployeeProviderAddOrEditComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   config = inject(DynamicDialogConfig);
-  custIdService = inject(CustomerIdService);
-  dateService = inject(DateService);
-  formBuilder = inject(FormBuilder);
+  customerIdS = inject(CustomerIdService);
+  dateS = inject(DateService);
+  formB = inject(FormBuilder);
   ref = inject(DynamicDialogRef);
 
   submitting: boolean = false;
@@ -33,7 +33,7 @@ export class EmployeeProviderAddOrEditComponent implements OnInit {
   cb_profession: any[] = [];
   // dataError = '';
   data: UserInfoDto;
-  form: FormGroup = this.formBuilder.group({
+  form: FormGroup = this.formB.group({
     firstName: ['', Validators.required],
     lastName: ['', Validators.required],
     phoneNumber: ['', Validators.required],
@@ -51,7 +51,7 @@ export class EmployeeProviderAddOrEditComponent implements OnInit {
     ],
   });
   register() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
     const formData = this.createFormData(this.form.value);
 
     this.submitting = true;
@@ -61,17 +61,15 @@ export class EmployeeProviderAddOrEditComponent implements OnInit {
     } else {
       urlApi = 'Employees/CreateEmployeeExternal';
     }
-    this.apiRequestService.onPost(urlApi, formData).then((result: boolean) => {
+    this.apiRequestS.onPost(urlApi, formData).then((result: boolean) => {
       result ? this.ref.close(true) : (this.submitting = false);
     });
   }
 
   ngOnInit(): void {
-    this.apiRequestService
-      .onGetSelectItem(`Professions`)
-      .then((response: any) => {
-        this.cb_profession = response;
-      });
+    this.apiRequestS.onGetSelectItem(`Professions`).then((response: any) => {
+      this.cb_profession = response;
+    });
   }
 
   get f() {
@@ -81,9 +79,9 @@ export class EmployeeProviderAddOrEditComponent implements OnInit {
     const formData = new FormData();
 
     formData.append('email', model.email);
-    formData.append('customerId', String(this.custIdService.getCustomerId()));
+    formData.append('customerId', String(this.customerIdS.getCustomerId()));
     formData.append('firstName', model.firstName);
-    formData.append('birth', this.dateService.getDateFormat(model.birth));
+    formData.append('birth', this.dateS.getDateFormat(model.birth));
     formData.append('lastName', model.lastName);
     formData.append('phoneNumber', model.phoneNumber);
     formData.append('professionId', model.professionId);
@@ -114,7 +112,7 @@ export class EmployeeProviderAddOrEditComponent implements OnInit {
     }
     this.existingPerson = [];
     const urlApi = 'Employees/SearchExistingPerson/' + fullName.target.value;
-    this.apiRequestService.onGetListNotLoading(urlApi).then((result: any) => {
+    this.apiRequestS.onGetListNotLoading(urlApi).then((result: any) => {
       this.existingPerson = result;
     });
   }
@@ -128,7 +126,7 @@ export class EmployeeProviderAddOrEditComponent implements OnInit {
     this.existingPhone = [];
 
     const urlApi = 'Employees/SearchExistingPhone/' + phone.target.value;
-    this.apiRequestService.onGetListNotLoading(urlApi).then((result: any) => {
+    this.apiRequestS.onGetListNotLoading(urlApi).then((result: any) => {
       this.existingPhone = result;
     });
   }

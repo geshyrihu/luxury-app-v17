@@ -13,9 +13,9 @@ import { PeriodoMonthService } from 'src/app/core/services/periodo-month.service
   imports: [LuxuryAppComponentsModule, MultiSelectModule],
 })
 export default class ResultadoGeneralDashboardComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   periodoMonthService = inject(PeriodoMonthService);
-  dateService = inject(DateService);
+  dateS = inject(DateService);
 
   reporteFiltro: string = 'MINUTAS GENERAL';
 
@@ -27,15 +27,13 @@ export default class ResultadoGeneralDashboardComponent implements OnInit {
   mostrar: boolean = false;
 
   ngOnInit(): void {
-    this.apiRequestService
-      .onGetSelectItem(`NombreCorto`)
-      .then((response: any) => {
-        this.cb_customers = response.map((selectList: any) => ({
-          label: selectList.label,
-        }));
-      });
+    this.apiRequestS.onGetSelectItem(`NombreCorto`).then((response: any) => {
+      this.cb_customers = response.map((selectList: any) => ({
+        label: selectList.label,
+      }));
+    });
 
-    this.periodo = this.dateService.getNameMontYear(
+    this.periodo = this.dateS.getNameMontYear(
       this.periodoMonthService.fechaInicial
     );
     this.onLoadDataMinutas();
@@ -43,7 +41,7 @@ export default class ResultadoGeneralDashboardComponent implements OnInit {
 
   onFiltrarPeriodo(periodo: string) {
     this.periodoMonthService.setPeriodo(periodo);
-    this.periodo = this.dateService.getNameMontYear(
+    this.periodo = this.dateS.getNameMontYear(
       this.periodoMonthService.fechaInicial
     );
     this.onLoadDataMinutas();
@@ -58,46 +56,42 @@ export default class ResultadoGeneralDashboardComponent implements OnInit {
     this.reporteFiltro = 'MINUTAS GENERAL';
     // Mostrar un mensaje de carga
 
-    const urlApi = `ResumenGeneral/ReporteResumenMinutas/${this.dateService.getDateFormat(
+    const urlApi = `ResumenGeneral/ReporteResumenMinutas/${this.dateS.getDateFormat(
       this.periodoMonthService.getPeriodoInicio
-    )}/${this.dateService.getDateFormat(
-      this.periodoMonthService.getPeriodoFin
-    )}/${this.nivelReporte}`;
+    )}/${this.dateS.getDateFormat(this.periodoMonthService.getPeriodoFin)}/${
+      this.nivelReporte
+    }`;
 
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
   }
   onLoadDataMinutaFiltro(EAreaMinutasDetalles: number, reporteFiltro: string) {
-    const urlApi = `ResumenGeneral/ReporteResumenMinutasFiltro/${this.dateService.getDateFormat(
+    const urlApi = `ResumenGeneral/ReporteResumenMinutasFiltro/${this.dateS.getDateFormat(
       this.periodoMonthService.getPeriodoInicio
-    )}/${this.dateService.getDateFormat(
+    )}/${this.dateS.getDateFormat(
       this.periodoMonthService.getPeriodoFin
     )}/${EAreaMinutasDetalles}/${this.nivelReporte}`;
 
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
   }
   onLoadDataPreventivos() {
-    const urlApi = `ResumenGeneral/ReporteResumenPreventivos/${this.dateService.getDateFormat(
+    const urlApi = `ResumenGeneral/ReporteResumenPreventivos/${this.dateS.getDateFormat(
       this.periodoMonthService.getPeriodoInicio
-    )}/${this.dateService.getDateFormat(
-      this.periodoMonthService.getPeriodoFin
-    )}`;
+    )}/${this.dateS.getDateFormat(this.periodoMonthService.getPeriodoFin)}`;
 
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
   }
   onLoadDataTickets() {
-    const urlApi = `ResumenGeneral/ReporteResumenTicket/${this.dateService.getDateFormat(
+    const urlApi = `ResumenGeneral/ReporteResumenTicket/${this.dateS.getDateFormat(
       this.periodoMonthService.getPeriodoInicio
-    )}/${this.dateService.getDateFormat(
-      this.periodoMonthService.getPeriodoFin
-    )}`;
+    )}/${this.dateS.getDateFormat(this.periodoMonthService.getPeriodoFin)}`;
 
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
   }

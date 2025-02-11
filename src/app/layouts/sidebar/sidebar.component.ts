@@ -42,16 +42,16 @@ import { SidebarService } from './sidebar.service';
 export default class SidebarComponent implements OnInit, AfterViewInit {
   authS = inject(AuthService);
   private sidebarService = inject(SidebarService);
-  private custIdService = inject(CustomerIdService);
-  private apiRequestService = inject(ApiRequestService);
+  private customerIdS = inject(CustomerIdService);
+  private apiRequestS = inject(ApiRequestService);
   private cdr = inject(ChangeDetectorRef);
 
   @ViewChild('sideMenu') sideMenu!: ElementRef;
   menu: any;
   menuItems: IMenuItem[] = [];
-  // customerId: number = this.custIdService.getCustomerId();
+  // customerId: number = this.customerIdS.getCustomerId();
   // menuItemss: IMenuItem[] = [];
-  customerId$: Observable<number> = this.custIdService.getCustomerId$();
+  customerId$: Observable<number> = this.customerIdS.getCustomerId$();
 
   ngOnInit(): void {
     // this.menuItems = this.sidebarService.onLoadMenu;
@@ -64,9 +64,9 @@ export default class SidebarComponent implements OnInit, AfterViewInit {
   onLoadItems() {
     const applicationUserId =
       this.authS.userTokenDto.infoUserAuthDto.applicationUserId;
-    const customerId = this.custIdService.getCustomerId();
+    const customerId = this.customerIdS.getCustomerId();
     const urlApi = `MenuItems/${customerId}/${applicationUserId}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.menuItems = result;
 
       this.cdr.detectChanges(); // Forzar actualización de la vista

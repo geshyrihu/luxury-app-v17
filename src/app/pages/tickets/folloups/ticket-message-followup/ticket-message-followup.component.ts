@@ -15,11 +15,11 @@ import { AuthService } from 'src/app/core/services/auth.service';
 export default class TicketMessageFollowupComponent
   implements OnInit, OnDestroy
 {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
 
   authS = inject(AuthService);
   config = inject(DynamicDialogConfig);
-  formBuilder = inject(FormBuilder);
+  formB = inject(FormBuilder);
   ref = inject(DynamicDialogRef);
 
   description: any[] = [];
@@ -31,7 +31,7 @@ export default class TicketMessageFollowupComponent
   ticketMessageId: number = this.config.data.id;
   id: number = 0;
 
-  form: FormGroup = this.formBuilder.group({
+  form: FormGroup = this.formB.group({
     id: { value: this.id, disabled: true },
     ticketMessageId: [this.ticketMessageId, Validators.required],
     applicationUserId: [this.authS.applicationUserId, Validators.required],
@@ -64,7 +64,7 @@ export default class TicketMessageFollowupComponent
     this.loading = true;
 
     const urlApi = `TicketMessageFollowUp/List/${this.ticketMessageId}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.description = result;
       this.loading = false;
     });
@@ -73,11 +73,11 @@ export default class TicketMessageFollowupComponent
     return this.form.controls;
   }
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
 
     this.submitting = true;
 
-    this.apiRequestService
+    this.apiRequestS
       .onPost(`TicketMessageFollowUp`, this.form.value)
       .then((_) => {
         this.onCargaListaseguimientos();

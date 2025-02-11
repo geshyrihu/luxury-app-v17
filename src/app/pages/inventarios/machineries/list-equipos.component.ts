@@ -22,10 +22,10 @@ import ServiceHistoryMachineryComponent from './service-history-machinery.compon
   imports: [LuxuryAppComponentsModule],
 })
 export default class ListEquiposComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
 
-  custIdService = inject(CustomerIdService);
+  customerIdS = inject(CustomerIdService);
   authS = inject(AuthService);
   rutaActiva = inject(ActivatedRoute);
   router = inject(Router);
@@ -33,7 +33,7 @@ export default class ListEquiposComponent implements OnInit {
   subscriber: Subscription;
 
   customerId: number;
-  customerId$: Observable<number> = this.custIdService.getCustomerId$();
+  customerId$: Observable<number> = this.customerIdS.getCustomerId$();
   data: any[];
   datadetail: any[];
   paramId: string = '';
@@ -48,8 +48,8 @@ export default class ListEquiposComponent implements OnInit {
   ngOnInit() {
     this.inventoryCategoryId = this.rutaActiva.snapshot.params.categoria;
 
-    this.customerId$ = this.custIdService.getCustomerId$();
-    this.customerId = this.custIdService.getCustomerId();
+    this.customerId$ = this.customerIdS.getCustomerId$();
+    this.customerId = this.customerIdS.getCustomerId();
     this.onLoadData();
     this.subscriber = this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
@@ -64,7 +64,7 @@ export default class ListEquiposComponent implements OnInit {
         this.onLoadData();
       });
     this.customerId$.subscribe((resp) => {
-      this.customerId = this.custIdService.getCustomerId();
+      this.customerId = this.customerIdS.getCustomerId();
       this.onLoadData();
     });
   }
@@ -72,9 +72,9 @@ export default class ListEquiposComponent implements OnInit {
     if (this.state) this.subTitle = ' Inactivos';
     if (!this.state) this.subTitle = ' Activos';
 
-    const urlApi = `Machineries/GetAll/${this.custIdService.customerId}/${this.inventoryCategoryId}/${this.state}`;
+    const urlApi = `Machineries/GetAll/${this.customerIdS.customerId}/${this.inventoryCategoryId}/${this.state}`;
 
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
       this.OnChageTitle();
     });
@@ -84,27 +84,25 @@ export default class ListEquiposComponent implements OnInit {
     this.onLoadData();
   }
   onDelete(id: number) {
-    this.apiRequestService
-      .onDelete(`Machineries/${id}`)
-      .then((result: boolean) => {
-        if (result) this.data = this.data.filter((item) => item.id !== id);
-      });
+    this.apiRequestS.onDelete(`Machineries/${id}`).then((result: boolean) => {
+      if (result) this.data = this.data.filter((item) => item.id !== id);
+    });
   }
 
   showModalFichatecnica(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         FichaTecnicaActivoComponent,
         data,
         'Ficha Técnica',
-        this.dialogHandlerService.dialogSizeFull
+        this.dialogHandlerS.dialogSizeFull
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();
       });
   }
   showModalAddoredit(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         AddOrEditActivosComponent,
         {
@@ -113,14 +111,14 @@ export default class ListEquiposComponent implements OnInit {
           inventoryCategory: this.inventoryCategoryId,
         },
         data.title,
-        this.dialogHandlerService.dialogSizeFull
+        this.dialogHandlerS.dialogSizeFull
       )
       .then((result: any) => {
         if (result) this.onLoadData();
       });
   }
   showModalMaintenanceCalendar(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         MaintenancePreventiveAddoreditComponent,
         {
@@ -129,7 +127,7 @@ export default class ListEquiposComponent implements OnInit {
           idMachinery: data.machineryId,
         },
         data.title,
-        this.dialogHandlerService.dialogSizeFull
+        this.dialogHandlerS.dialogSizeFull
       )
       .then((result: any) => {
         if (result) this.onLoadData();
@@ -137,18 +135,18 @@ export default class ListEquiposComponent implements OnInit {
   }
 
   onBitacoraIndividual(machineryId: number) {
-    this.dialogHandlerService.openDialog(
+    this.dialogHandlerS.openDialog(
       BitacoraIndividualComponent,
       {
         machineryId: machineryId,
       },
       '',
-      this.dialogHandlerService.dialogSizeFull
+      this.dialogHandlerS.dialogSizeFull
     );
   }
 
   showModalAddOrEditCalendars(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         MaintenancePreventiveAddoreditComponent,
         {
@@ -157,20 +155,20 @@ export default class ListEquiposComponent implements OnInit {
           idMachinery: data.machineryId,
         },
         data.title,
-        this.dialogHandlerService.dialogSizeFull
+        this.dialogHandlerS.dialogSizeFull
       )
       .then((result: any) => {
         if (result) this.onLoadData();
       });
   }
   onDocumentos(machineryId: number) {
-    this.dialogHandlerService.openDialog(
+    this.dialogHandlerS.openDialog(
       ActivosDocumentosComponent,
       {
         machineryId: machineryId,
       },
       'Documentos',
-      this.dialogHandlerService.dialogSizeFull
+      this.dialogHandlerS.dialogSizeFull
     );
   }
 
@@ -202,7 +200,7 @@ export default class ListEquiposComponent implements OnInit {
   }
 
   onDeleteOrder(id: number) {
-    this.apiRequestService
+    this.apiRequestS
       .onDelete(`maintenancecalendars/${id}`)
       .then((result: any) => {
         this.onLoadData();
@@ -210,13 +208,13 @@ export default class ListEquiposComponent implements OnInit {
   }
 
   onServiceHistory(id: number) {
-    this.dialogHandlerService.openDialog(
+    this.dialogHandlerS.openDialog(
       ServiceHistoryMachineryComponent,
       {
         id: id,
       },
       '',
-      this.dialogHandlerService.dialogSizeFull
+      this.dialogHandlerS.dialogSizeFull
     );
   }
 }

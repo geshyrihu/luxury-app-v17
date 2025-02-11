@@ -16,11 +16,11 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   providers: [EnumSelectService],
 })
 export default class AddOrEditVacanteComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  formBuilder = inject(FormBuilder);
+  apiRequestS = inject(ApiRequestService);
+  formB = inject(FormBuilder);
   ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);
-  enumSelectService = inject(EnumSelectService);
+  enumSelectS = inject(EnumSelectService);
 
   submitting: boolean = false;
 
@@ -28,7 +28,7 @@ export default class AddOrEditVacanteComponent implements OnInit {
   cb_fuente: ISelectItem[] = [];
   id: number = 0;
 
-  form: FormGroup = this.formBuilder.group({
+  form: FormGroup = this.formB.group({
     id: { value: this.id, disabled: true },
     folio: ['', Validators.required],
     status: [null, Validators.required],
@@ -40,33 +40,33 @@ export default class AddOrEditVacanteComponent implements OnInit {
     fuente: [this.config.data.workPositionId],
   });
   async ngOnInit() {
-    this.cb_status = await this.enumSelectService.status();
-    this.cb_fuente = await this.enumSelectService.fuenteReclutamiento();
+    this.cb_status = await this.enumSelectS.status();
+    this.cb_fuente = await this.enumSelectS.fuenteReclutamiento();
     this.id = this.config.data.id;
     if (this.id !== 0) this.onLoadData();
   }
   onLoadData() {
     const urlApi = `RequestPosition/${this.id}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       this.form.patchValue(result);
     });
   }
 
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
 
     this.id = this.config.data.id;
 
     this.submitting = true;
 
     if (this.id === 0) {
-      this.apiRequestService
+      this.apiRequestS
         .onPost(`RequestPosition`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.apiRequestService
+      this.apiRequestS
         .onPut(`RequestPosition/${this.id}`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);

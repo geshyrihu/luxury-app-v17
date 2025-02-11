@@ -17,17 +17,17 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 export default class EmployeeEmergencyContactAddOrEditComponent
   implements OnInit
 {
-  apiRequestService = inject(ApiRequestService);
-  formBuilder = inject(FormBuilder);
+  apiRequestS = inject(ApiRequestService);
+  formB = inject(FormBuilder);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
-  enumSelectService = inject(EnumSelectService);
+  enumSelectS = inject(EnumSelectService);
 
   id: string = '';
   submitting: boolean = false;
   cb_relacion: ISelectItem[] = [];
 
-  form: FormGroup = this.formBuilder.group({
+  form: FormGroup = this.formB.group({
     id: { value: this.id, disabled: true },
     employeeId: [this.config.data.employeeId],
     nameContact: ['', Validators.required],
@@ -36,7 +36,7 @@ export default class EmployeeEmergencyContactAddOrEditComponent
     contacOfBeneficiary: [this.config.data.contacOfBeneficiary],
   });
   async ngOnInit() {
-    this.cb_relacion = await this.enumSelectService.relationEmployee();
+    this.cb_relacion = await this.enumSelectS.relationEmployee();
 
     this.id = this.config.data.id;
 
@@ -44,23 +44,23 @@ export default class EmployeeEmergencyContactAddOrEditComponent
   }
   onLoadData() {
     const urlApi = `EmployeeEmergencyContact/${this.id}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.form.patchValue(result);
     });
   }
 
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
     this.submitting = true;
 
     if (this.id === '') {
-      this.apiRequestService
+      this.apiRequestS
         .onPost(`EmployeeEmergencyContact`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.apiRequestService
+      this.apiRequestS
         .onPut(`EmployeeEmergencyContact/${this.id}`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);

@@ -13,8 +13,8 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class AddoreditFormaPagoComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  formBuilder = inject(FormBuilder);
+  apiRequestS = inject(ApiRequestService);
+  formB = inject(FormBuilder);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
   private authS = inject(AuthService);
@@ -29,7 +29,7 @@ export default class AddoreditFormaPagoComponent implements OnInit {
     if (this.id !== 0) {
       this.onLoadItem();
     }
-    this.form = this.formBuilder.group({
+    this.form = this.formB.group({
       id: { value: this.id, disabled: true },
       codigo: ['', [Validators.required]],
       descripcion: ['', Validators.required],
@@ -40,25 +40,23 @@ export default class AddoreditFormaPagoComponent implements OnInit {
   }
 
   onLoadItem() {
-    this.apiRequestService
-      .onGetItem(`FormaPago/${this.id}`)
-      .then((result: any) => {
-        this.form.patchValue(result);
-      });
+    this.apiRequestS.onGetItem(`FormaPago/${this.id}`).then((result: any) => {
+      this.form.patchValue(result);
+    });
   }
 
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
 
     this.submitting = true;
     if (this.id === 0) {
-      this.apiRequestService
+      this.apiRequestS
         .onPost(`FormaPago`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.apiRequestService
+      this.apiRequestS
         .onPut(`FormaPago/${this.id}`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);

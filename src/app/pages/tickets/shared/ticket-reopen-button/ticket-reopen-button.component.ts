@@ -11,18 +11,18 @@ import TicketMessageReopenComponent from '../../messages/ticket-message-reopen/t
   templateUrl: './ticket-reopen-button.component.html',
 })
 export default class TicketReopenButtonComponent {
-  private dialogHandlerService = inject(DialogHandlerService);
+  private dialogHandlerS = inject(DialogHandlerService);
 
   @Input() item: any;
   @Output() reopenCompleted = new EventEmitter<void>();
 
   openReopenDialog() {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         TicketMessageReopenComponent,
         { id: this.item.id },
         'Re abrir ticket',
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) {

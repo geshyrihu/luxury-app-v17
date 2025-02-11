@@ -15,15 +15,15 @@ import AddoreditContratoPolizaComponent from './addoredit-contrato-poliza.compon
   imports: [LuxuryAppComponentsModule],
 })
 export default class ListContratoPolizaComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
 
-  custIdService = inject(CustomerIdService);
+  customerIdS = inject(CustomerIdService);
   data: any[] = [];
 
   ref: DynamicDialogRef;
 
-  customerId$: Observable<number> = this.custIdService.getCustomerId$();
+  customerId$: Observable<number> = this.customerIdS.getCustomerId$();
 
   ngOnInit(): void {
     this.onLoadData();
@@ -33,13 +33,13 @@ export default class ListContratoPolizaComponent implements OnInit {
   }
 
   onLoadData() {
-    const urlApi = `ContratoPoliza/GetAll/${this.custIdService.getCustomerId()}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    const urlApi = `ContratoPoliza/GetAll/${this.customerIdS.getCustomerId()}`;
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
   }
   onDelete(id: number) {
-    this.apiRequestService
+    this.apiRequestS
       .onDelete(`contratopoliza/${id}`)
       .then((result: boolean) => {
         if (result) this.data = this.data.filter((item) => item.id !== id);
@@ -47,12 +47,12 @@ export default class ListContratoPolizaComponent implements OnInit {
   }
 
   onModalAddOrEdit(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         AddoreditContratoPolizaComponent,
         data,
         data.title,
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();
@@ -60,7 +60,7 @@ export default class ListContratoPolizaComponent implements OnInit {
   }
   onDeleteDocument(id: number) {
     const urlApi = `ContratoPoliza/DeleteDocument/${id}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       this.onLoadData();
     });
   }

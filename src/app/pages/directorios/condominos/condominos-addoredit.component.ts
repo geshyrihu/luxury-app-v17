@@ -17,18 +17,18 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   providers: [EnumSelectService],
 })
 export default class CondominosAddOrEditComponent implements OnInit {
-  enumSelectService = inject(EnumSelectService);
-  apiRequestService = inject(ApiRequestService);
+  enumSelectS = inject(EnumSelectService);
+  apiRequestS = inject(ApiRequestService);
   authS = inject(AuthService);
   config = inject(DynamicDialogConfig);
-  custIdService = inject(CustomerIdService);
-  formBuilder = inject(FormBuilder);
+  customerIdS = inject(CustomerIdService);
+  formB = inject(FormBuilder);
   ref = inject(DynamicDialogRef);
 
   submitting: boolean = false;
 
   id: number = 0;
-  customerId: number = this.custIdService.customerId;
+  customerId: number = this.customerIdS.customerId;
   cb_directory_condominium: any[] = [];
   cb_enviarMails: ISelectItem[] = [
     {
@@ -41,7 +41,7 @@ export default class CondominosAddOrEditComponent implements OnInit {
     },
   ];
   cb_Habitant: ISelectItem[] = [];
-  form: FormGroup = this.formBuilder.group({
+  form: FormGroup = this.formB.group({
     id: { value: this.id, disabled: true },
     customerId: [this.customerId],
     phoneNumber: ['', Validators.required],
@@ -56,11 +56,11 @@ export default class CondominosAddOrEditComponent implements OnInit {
     enviarMails: [],
   });
   async ngOnInit() {
-    this.customerId = this.custIdService.customerId;
+    this.customerId = this.customerIdS.customerId;
 
-    this.apiRequestService
+    this.apiRequestS
       .onGetSelectItem(
-        `DirectoryCondominium/${this.custIdService.getCustomerId()}`
+        `DirectoryCondominium/${this.customerIdS.getCustomerId()}`
       )
       .then((response: any) => {
         this.cb_directory_condominium = response;
@@ -70,7 +70,7 @@ export default class CondominosAddOrEditComponent implements OnInit {
     if (this.id !== 0) {
       this.getImem();
     }
-    this.cb_Habitant = await this.enumSelectService.typeHabitant();
+    this.cb_Habitant = await this.enumSelectS.typeHabitant();
   }
 
   public savePropiedadId(e): void {
@@ -83,18 +83,18 @@ export default class CondominosAddOrEditComponent implements OnInit {
     });
   }
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
 
     this.submitting = true;
 
     if (this.id === 0) {
-      this.apiRequestService
+      this.apiRequestS
         .onPost(`ListCondomino`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.apiRequestService
+      this.apiRequestS
         .onPut(`ListCondomino/${this.id}`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
@@ -102,7 +102,7 @@ export default class CondominosAddOrEditComponent implements OnInit {
     }
   }
   getImem() {
-    this.apiRequestService
+    this.apiRequestS
       .onGetItem(`ListCondomino/${this.id}`)
       .then((result: any) => {
         this.form.patchValue(result);

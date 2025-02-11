@@ -18,8 +18,8 @@ import ValidationErrorsCustomInputComponent from 'src/app/custom-components/cust
   ],
 })
 export default class EditProductoComponent implements OnInit {
-  formBuilder = inject(FormBuilder);
-  apiRequestService = inject(ApiRequestService);
+  formB = inject(FormBuilder);
+  apiRequestS = inject(ApiRequestService);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
   authS = inject(AuthService);
@@ -34,7 +34,7 @@ export default class EditProductoComponent implements OnInit {
   nombreProducto = '';
 
   onLoadSelectItem() {
-    this.apiRequestService
+    this.apiRequestS
       .onGetSelectItem('getMeasurementUnits')
       .then((response: any) => {
         this.cb_unidadMedida = response;
@@ -47,7 +47,7 @@ export default class EditProductoComponent implements OnInit {
     this.id = this.config.data.id;
     this.solicitudCompraId = this.config.data.solicitudCompraId;
     this.onLoadProduct();
-    this.form = this.formBuilder.group({
+    this.form = this.formB.group({
       id: [0],
       solicitudCompraId: [
         this.config.data.solicitudCompraId,
@@ -65,7 +65,7 @@ export default class EditProductoComponent implements OnInit {
   }
 
   onLoadProduct() {
-    this.apiRequestService
+    this.apiRequestS
       .onGetItem(`solicitudcompradetalle/editproduct/${this.id}`)
       .then((result: any) => {
         this.data = result;
@@ -78,7 +78,7 @@ export default class EditProductoComponent implements OnInit {
     return this.form.controls;
   }
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
 
     this.data.cantidad = this.form.get('cantidad').value;
     this.data.unidadMedidaId = this.form.get('unidadMedidaId').value;
@@ -86,7 +86,7 @@ export default class EditProductoComponent implements OnInit {
 
     this.submitting = true;
 
-    this.apiRequestService
+    this.apiRequestS
       .onPut(`SolicitudCompraDetalle/${this.id}`, this.data)
       .then((result: boolean) => {
         result ? this.ref.close(true) : (this.submitting = false);

@@ -1,18 +1,18 @@
-import { Component, OnInit, inject } from '@angular/core';
-import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { ApiRequestService } from 'src/app/core/services/api-request.service';
+import { Component, OnInit, inject } from "@angular/core";
+import LuxuryAppComponentsModule from "app/shared/luxuryapp-components.module";
+import { DynamicDialogConfig, DynamicDialogRef } from "primeng/dynamicdialog";
+import { ApiRequestService } from "src/app/core/services/api-request.service";
 
 @Component({
-  selector: 'app-presupuesto-detalle-edicion-historial',
-  templateUrl: './presupuesto-detalle-edicion-historial.component.html',
+  selector: "app-presupuesto-detalle-edicion-historial",
+  templateUrl: "./presupuesto-detalle-edicion-historial.component.html",
   standalone: true,
   imports: [LuxuryAppComponentsModule],
 })
 export default class PresupuestoDetalleEdicionHistorialComponent
   implements OnInit
 {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);
 
@@ -25,7 +25,7 @@ export default class PresupuestoDetalleEdicionHistorialComponent
   }
 
   onLoadData() {
-    this.apiRequestService
+    this.apiRequestS
       .onGetList(`Presupuesto/HistorialToEdition/${this.id}`)
       .then((result: any) => {
         this.data = result;

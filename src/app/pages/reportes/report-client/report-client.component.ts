@@ -11,9 +11,9 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
   imports: [LuxuryAppComponentsModule],
 })
 export default class ReportClientComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   rutaActiva = inject(ActivatedRoute);
-  custIdService = inject(CustomerIdService);
+  customerIdS = inject(CustomerIdService);
 
   data: any = [];
 
@@ -28,7 +28,7 @@ export default class ReportClientComponent implements OnInit {
     this.final = this.rutaActiva.snapshot.params.final;
     this.rutaFinal = `Tickets/GetReportClient/${this.customer}/${this.inicio}/${this.final}`;
 
-    this.apiRequestService.onGetList(this.rutaFinal).then((result: any) => {
+    this.apiRequestS.onGetList(this.rutaFinal).then((result: any) => {
       // Actualizamos el valor del signal con los datos recibidos
       this.data = result;
     });

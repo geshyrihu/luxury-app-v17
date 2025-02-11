@@ -17,14 +17,14 @@ import CondominosAddOrEditComponent from './condominos-addoredit.component';
   imports: [LuxuryAppComponentsModule],
 })
 export default class ListCondominosComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
   authS = inject(AuthService);
-  custIdService = inject(CustomerIdService);
+  customerIdS = inject(CustomerIdService);
 
   data: IListCondomino[] = [];
   ref: DynamicDialogRef;
-  customerId$: Observable<number> = this.custIdService.getCustomerId$();
+  customerId$: Observable<number> = this.customerIdS.getCustomerId$();
 
   ngOnInit(): void {
     this.onLoadData();
@@ -34,27 +34,25 @@ export default class ListCondominosComponent implements OnInit {
   }
 
   onLoadData() {
-    const urlApi = `ListCondomino/GetAllAsync/${this.custIdService.customerId}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    const urlApi = `ListCondomino/GetAllAsync/${this.customerIdS.customerId}`;
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
   }
 
   onDelete(id: number) {
-    this.apiRequestService
-      .onDelete(`listcondomino/${id}`)
-      .then((result: boolean) => {
-        if (result) this.data = this.data.filter((item) => item.id !== id);
-      });
+    this.apiRequestS.onDelete(`listcondomino/${id}`).then((result: boolean) => {
+      if (result) this.data = this.data.filter((item) => item.id !== id);
+    });
   }
 
   showModalAddOrEdit(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         CondominosAddOrEditComponent,
         data,
         data.title,
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();

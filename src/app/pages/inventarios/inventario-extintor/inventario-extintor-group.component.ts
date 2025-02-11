@@ -11,11 +11,11 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
   imports: [LuxuryAppComponentsModule],
 })
 export default class InventarioExtintorGroupComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  custIdService = inject(CustomerIdService);
+  apiRequestS = inject(ApiRequestService);
+  customerIdS = inject(CustomerIdService);
 
   data: any[] = [];
-  customerId$: Observable<number> = this.custIdService.getCustomerId$();
+  customerId$: Observable<number> = this.customerIdS.getCustomerId$();
 
   ngOnInit(): void {
     this.onLoadData();
@@ -26,8 +26,8 @@ export default class InventarioExtintorGroupComponent implements OnInit {
 
   onLoadData() {
     const urlApi =
-      'InventarioExtintor/GetAllGroup/' + this.custIdService.getCustomerId();
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      'InventarioExtintor/GetAllGroup/' + this.customerIdS.getCustomerId();
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
   }

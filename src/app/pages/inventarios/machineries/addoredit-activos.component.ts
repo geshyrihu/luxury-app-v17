@@ -19,21 +19,21 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   providers: [EnumSelectService],
 })
 export default class AddOrEditActivosComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  dateService = inject(DateService);
+  apiRequestS = inject(ApiRequestService);
+  dateS = inject(DateService);
   authS = inject(AuthService);
-  formBuilder = inject(FormBuilder);
+  formB = inject(FormBuilder);
   getdateService = inject(DateService);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
-  custIdService = inject(CustomerIdService);
-  enumSelectService = inject(EnumSelectService);
+  customerIdS = inject(CustomerIdService);
+  enumSelectS = inject(EnumSelectService);
 
   submitting: boolean = false;
 
   id: number = 0;
   applicationUserId = this.authS.userTokenDto.infoUserAuthDto.applicationUserId;
-  customerId: number = this.custIdService.getCustomerId();
+  customerId: number = this.customerIdS.getCustomerId();
   machineryDTO: any;
   photoFileUpdate: boolean = false;
   category: any;
@@ -51,7 +51,7 @@ export default class AddOrEditActivosComponent implements OnInit {
 
     if (this.config.data.id !== 0) this.onLoadData(this.config.data.id);
 
-    this.form = this.formBuilder.group({
+    this.form = this.formB.group({
       id: { value: this.id, disabled: true },
       brand: [''],
       customerId: [this.customerId],
@@ -76,7 +76,7 @@ export default class AddOrEditActivosComponent implements OnInit {
   }
   onLoadData(id: number) {
     const urlApi = `Machineries/${id}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       this.id = result.id;
       result.dateOfPurchase = this.getdateService.getDateFormat(
         result.dateOfPurchase
@@ -98,26 +98,23 @@ export default class AddOrEditActivosComponent implements OnInit {
   }
 
   async onLoadEnum() {
-    this.cb_inventoryCategory =
-      await this.enumSelectService.inventoryCategory();
-    this.optionActive = await this.enumSelectService.state();
+    this.cb_inventoryCategory = await this.enumSelectS.inventoryCategory();
+    this.optionActive = await this.enumSelectS.state();
   }
 
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
 
     const model = this.createFormData(this.form.value);
 
     this.submitting = true;
 
     if (this.id === 0) {
-      this.apiRequestService
-        .onPost(`machineries`, model)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
-        });
+      this.apiRequestS.onPost(`machineries`, model).then((result: boolean) => {
+        result ? this.ref.close(true) : (this.submitting = false);
+      });
     } else {
-      this.apiRequestService
+      this.apiRequestS
         .onPut(`machineries/${this.id}`, model)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
@@ -136,7 +133,7 @@ export default class AddOrEditActivosComponent implements OnInit {
     formData.append('state', String(machineryDTO.state));
     formData.append(
       'dateOfPurchase',
-      this.dateService.getDateFormat(machineryDTO.dateOfPurchase)
+      this.dateS.getDateFormat(machineryDTO.dateOfPurchase)
     );
     formData.append('customerId', String(this.customerId));
     formData.append(
@@ -161,7 +158,7 @@ export default class AddOrEditActivosComponent implements OnInit {
 
   onLoadEquipoClasificacion() {
     const urlApi = `equipoclasificacion/selectitem`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.cb_equipoClasificacion = result;
     });
   }

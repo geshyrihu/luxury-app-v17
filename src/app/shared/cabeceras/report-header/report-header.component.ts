@@ -10,8 +10,8 @@ import { TicketFilterService } from 'src/app/core/services/ticket-filter.service
   standalone: true,
 })
 export default class ReportHeaderComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  custIdService = inject(CustomerIdService);
+  apiRequestS = inject(ApiRequestService);
+  customerIdS = inject(CustomerIdService);
   filterReportOperationService = inject(TicketFilterService);
 
   logoLuxury = ``;
@@ -20,21 +20,21 @@ export default class ReportHeaderComponent implements OnInit {
   @Input()
   logoCustomer: string = '';
 
-  customerId$: Observable<number> = this.custIdService.getCustomerId$();
+  customerId$: Observable<number> = this.customerIdS.getCustomerId$();
 
   ngOnInit(): void {
     this.onLoadData();
-    this.customerId$ = this.custIdService.getCustomerId$();
+    this.customerId$ = this.customerIdS.getCustomerId$();
     this.customerId$.subscribe((resp) => {
       this.filterReportOperationService.setIdCustomer(
-        this.custIdService.customerId
+        this.customerIdS.customerId
       );
       this.onLoadData();
     });
   }
   onLoadData() {
-    const urlApi = `Customers/${this.custIdService.customerId}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    const urlApi = `Customers/${this.customerIdS.customerId}`;
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       this.nameCustomer = result.nameCustomer;
       this.logoCustomer = result.photoPath;
     });

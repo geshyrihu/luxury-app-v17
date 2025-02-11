@@ -14,8 +14,8 @@ import AddorEditMeetingSeguimientoComponent from '../../juntas-comite/junta-comi
 export default class ContMinutaSeguimientosComponent implements OnInit {
   config = inject(DynamicDialogConfig);
 
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
   data: any[] = [];
   id = this.config.data.idItem;
 
@@ -24,7 +24,7 @@ export default class ContMinutaSeguimientosComponent implements OnInit {
   }
   onLoadData() {
     // Mostrar un mensaje de carga
-    this.apiRequestService
+    this.apiRequestS
       .onGetList(`ContabilidadMinuta/ListaSeguimientos/${this.id}`)
       .then((result: any) => {
         this.data = result;
@@ -32,21 +32,21 @@ export default class ContMinutaSeguimientosComponent implements OnInit {
   }
 
   onDeleteSeguimiento(id: number) {
-    this.apiRequestService
+    this.apiRequestS
       .onDelete(`MeetingDertailsSeguimiento/${id}`)
       .then((result: boolean) => {
         if (result) this.data = this.data.filter((item) => item.id !== id);
       });
   }
   onModalAddOrEditSeguimiento(idMeetingSeguimiento: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         AddorEditMeetingSeguimientoComponent,
         {
           idMeetingSeguimiento,
         },
         'Seguimiento',
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();

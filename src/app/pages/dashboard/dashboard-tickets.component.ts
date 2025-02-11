@@ -15,35 +15,35 @@ import SummaryTicketsComponent from './summary-tickets.component';
   imports: [LuxuryAppComponentsModule, DashboardDynamicCardItemComponent],
 })
 export default class DashboardTicketsComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
-  custIdService = inject(CustomerIdService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
+  customerIdS = inject(CustomerIdService);
 
   data: any[] = [];
-  customerId$: Observable<number> = this.custIdService.getCustomerId$();
+  customerId$: Observable<number> = this.customerIdS.getCustomerId$();
   ref: DynamicDialogRef;
 
   ngOnInit(): void {
-    // this.customerId$ = this.custIdService.getCustomerId$();
+    // this.customerId$ = this.customerIdS.getCustomerId$();
     this.onLoadData();
     this.customerId$.subscribe(() => {
       this.onLoadData();
     });
   }
   onLoadData() {
-    const urlApi = `Dashboard/TicketPending/${this.custIdService.getCustomerId()}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    const urlApi = `Dashboard/TicketPending/${this.customerIdS.getCustomerId()}`;
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
   }
   onLoadResumen(groupId: number) {
-    this.dialogHandlerService.openDialog(
+    this.dialogHandlerS.openDialog(
       SummaryTicketsComponent,
       {
         groupId,
       },
       'Pendientes',
-      this.dialogHandlerService.dialogSizeFull
+      this.dialogHandlerS.dialogSizeFull
     );
   }
 }

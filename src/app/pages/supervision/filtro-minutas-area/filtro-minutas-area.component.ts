@@ -12,9 +12,9 @@ import { EnumSelectService } from 'src/app/core/services/enum-select.service';
   providers: [EnumSelectService],
 })
 export default class FiltroMinutasAreaComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   config = inject(DynamicDialogConfig);
-  enumSelectService = inject(EnumSelectService);
+  enumSelectS = inject(EnumSelectService);
 
   data: any[] = [];
   meetingId: number;
@@ -45,7 +45,7 @@ export default class FiltroMinutasAreaComponent implements OnInit {
   onLoadData() {
     const urlApi = `Dashboard/FiltroMinutasArea/${this.meetingId}/${this.area}/${this.estatus}`;
 
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
   }

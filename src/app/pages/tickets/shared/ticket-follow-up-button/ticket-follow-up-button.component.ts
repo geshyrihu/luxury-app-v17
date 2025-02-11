@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import TicketMessageFollowupComponent from '../../../tickets/folloups/ticket-message-followup/ticket-message-followup.component';
 
@@ -10,19 +10,19 @@ import TicketMessageFollowupComponent from '../../../tickets/folloups/ticket-mes
   templateUrl: './ticket-follow-up-button.component.html',
 })
 export default class TicketFollowUpButtonComponent {
+  private dialogHandlerS = inject(DialogHandlerService);
+
   @Input() id!: string; // ID para el seguimiento
   @Input() followUpCount!: number; // Cantidad de seguimientos (opcional, para mostrar en el botón)
   @Output() followUpCompleted = new EventEmitter<void>(); // EventEmitter para notificar al padre
 
-  constructor(private dialogHandlerService: DialogHandlerService) {}
-
   onFollowUp() {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         TicketMessageFollowupComponent,
         { id: this.id },
         'Seguimiento',
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) {

@@ -13,7 +13,7 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
   templateUrl: './inspection-report-list.component.html',
 })
 export default class InspectionReportListComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   customerIdService = inject(CustomerIdService);
   constructor() {
     flatpickrFactory();
@@ -36,7 +36,7 @@ export default class InspectionReportListComponent implements OnInit {
   }
   onLoadData(inspectionResultId: string, date: string): void {
     const urlApi = `InspectionResult/Report/${inspectionResultId}/${date}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
   }
@@ -46,7 +46,7 @@ export default class InspectionReportListComponent implements OnInit {
 
   onLoadInspectionReport() {
     const urlApi = `CustomerInspections/${this.customerIdService.getCustomerId()}`;
-    this.apiRequestService.onGetSelectItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetSelectItem(urlApi).then((result: any) => {
       this.inspectionResult = result;
     });
   }
@@ -55,6 +55,6 @@ export default class InspectionReportListComponent implements OnInit {
     const urlApi = `InspectionResult/ExportPDF/${this.inspectionResultId}/${this.date}`;
     const nameDocument = `Inspección_${this.inspectionResultId}.pdf`; // Nombre del archivo
 
-    this.apiRequestService.onDownloadFile(urlApi, nameDocument);
+    this.apiRequestS.onDownloadFile(urlApi, nameDocument);
   }
 }

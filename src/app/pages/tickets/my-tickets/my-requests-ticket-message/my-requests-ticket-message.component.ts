@@ -19,11 +19,11 @@ import MyTicketMessageAddEditComponent from '../my-ticket-message-addedit/my-tic
   imports: [LuxuryAppComponentsModule, TicketMessageModule],
 })
 export default class MyRequestsTicketMessageComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   authS = inject(AuthService);
-  dialogHandlerService = inject(DialogHandlerService);
+  dialogHandlerS = inject(DialogHandlerService);
   ticketGroupService = inject(TicketGroupService);
-  custIdService = inject(CustomerIdService);
+  customerIdS = inject(CustomerIdService);
   customToastService = inject(CustomToastService);
   activatedRoute = inject(ActivatedRoute);
 
@@ -35,20 +35,20 @@ export default class MyRequestsTicketMessageComponent implements OnInit {
   }
 
   onLoadData(status: any) {
-    const urlApi = `Tickets/MyRequest/${this.authS.applicationUserId}/${status}/${this.custIdService.customerId}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    const urlApi = `Tickets/MyRequest/${this.authS.applicationUserId}/${status}/${this.customerIdS.customerId}`;
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
       this.status = status;
     });
   }
 
   onFollowUp(id: string) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         TicketMessageFollowupComponent,
         { id: id },
         'Seguimiento',
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData(this.status);
@@ -56,12 +56,12 @@ export default class MyRequestsTicketMessageComponent implements OnInit {
   }
 
   onModalAddOrEdit(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         TicketMessageAddOrEditComponent,
         { id: data.id, ticketGroupId: data.ticketGroupId },
         data.title,
-        this.dialogHandlerService.dialogSizeLg
+        this.dialogHandlerS.dialogSizeLg
       )
       .then((result: boolean) => {
         if (result) {
@@ -71,12 +71,12 @@ export default class MyRequestsTicketMessageComponent implements OnInit {
   }
 
   onModalAdd(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         MyTicketMessageAddEditComponent,
         { id: data.id },
         data.title,
-        this.dialogHandlerService.dialogSizeLg
+        this.dialogHandlerS.dialogSizeLg
       )
       .then((result: boolean) => {
         if (result) {
@@ -86,7 +86,7 @@ export default class MyRequestsTicketMessageComponent implements OnInit {
   }
   onUpdatePriority(id: string) {
     const urlApi = `Tickets/UpdatePriority/${id}/${this.authS.applicationUserId}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       if (result) {
         // Encuentra el índice del ítem con el ID proporcionado
         const itemIndex = this.data.findIndex((item) => item.id === id);

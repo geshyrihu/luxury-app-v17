@@ -12,8 +12,8 @@ import AddoreditClasificacionEquipoComponent from './addoredit-clasificacion-equ
   imports: [LuxuryAppComponentsModule],
 })
 export default class ListClasificacionEquipoComponent implements OnInit {
-  dialogHandlerService = inject(DialogHandlerService);
-  apiRequestService = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
+  apiRequestS = inject(ApiRequestService);
 
   data: any[] = [];
   ref: DynamicDialogRef;
@@ -22,14 +22,12 @@ export default class ListClasificacionEquipoComponent implements OnInit {
     this.onLoadData();
   }
   onLoadData() {
-    this.apiRequestService
-      .onGetList('EquipoClasificacion')
-      .then((result: any) => {
-        this.data = result;
-      });
+    this.apiRequestS.onGetList('EquipoClasificacion').then((result: any) => {
+      this.data = result;
+    });
   }
   onDelete(id: number) {
-    this.apiRequestService
+    this.apiRequestS
       .onDelete(`equipoclasificacion/${id}`)
       .then((result: boolean) => {
         if (result) this.data = this.data.filter((item) => item.id !== id);
@@ -37,12 +35,12 @@ export default class ListClasificacionEquipoComponent implements OnInit {
   }
 
   onModalAddOrEdit(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         AddoreditClasificacionEquipoComponent,
         data,
         data.title,
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();

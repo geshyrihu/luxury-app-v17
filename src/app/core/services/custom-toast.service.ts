@@ -6,13 +6,13 @@ import Swal from 'sweetalert2';
   providedIn: 'root',
 })
 export class CustomToastService {
-  messageService = inject(MessageService);
+  messageS = inject(MessageService);
 
   /**
    * Muestra un mensaje de éxito.
    */
   onShowSuccess() {
-    this.messageService.add({
+    this.messageS.add({
       severity: 'success',
       summary: 'Éxito!',
       detail: 'Operación completada',
@@ -24,7 +24,7 @@ export class CustomToastService {
    * @param detail Detalles del mensaje de información.
    */
   onShowInfo(detail: string) {
-    this.messageService.add({
+    this.messageS.add({
       severity: 'info',
       summary: 'Información',
       detail: detail,
@@ -36,7 +36,7 @@ export class CustomToastService {
    * @param detail Detalles del mensaje de advertencia.
    */
   onShowWarn(detail: string) {
-    this.messageService.add({
+    this.messageS.add({
       severity: 'warn',
       summary: 'Atención',
       detail: detail,
@@ -47,7 +47,7 @@ export class CustomToastService {
    * Muestra un mensaje de error.
    */
   onShowError(errorMessage: any = 'No se pudo completar la tarea') {
-    this.messageService.add({
+    this.messageS.add({
       severity: 'error',
       summary: 'Error',
       detail: errorMessage,

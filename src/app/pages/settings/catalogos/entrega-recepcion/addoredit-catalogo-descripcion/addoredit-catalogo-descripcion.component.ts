@@ -13,8 +13,8 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class AddOrEditCatalogoDescripcionComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  formBuilder = inject(FormBuilder);
+  apiRequestS = inject(ApiRequestService);
+  formB = inject(FormBuilder);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
 
@@ -34,7 +34,7 @@ export default class AddOrEditCatalogoDescripcionComponent implements OnInit {
     { value: 1, label: 'Activo' },
     { value: 0, label: 'Inactivo' },
   ];
-  form: FormGroup = this.formBuilder.group({
+  form: FormGroup = this.formB.group({
     id: { value: this.id, disabled: true },
     folioId: ['', Validators.required],
     departamento: ['', Validators.required],
@@ -50,30 +50,30 @@ export default class AddOrEditCatalogoDescripcionComponent implements OnInit {
   }
   onLoadData() {
     const urlApi = `CatalogoEntregaRecepcionDescripcion/${this.id}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       this.form.patchValue(result);
     });
   }
   onLoadGrupos() {
     const urlApi = `CatalogoEntregaRecepcionDescripcion/grupos`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.cb_grupo = result;
     });
   }
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
     this.id = this.config.data.id;
 
     this.submitting = true;
 
     if (this.id === 0) {
-      this.apiRequestService
+      this.apiRequestS
         .onPost(`CatalogoEntregaRecepcionDescripcion`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.apiRequestService
+      this.apiRequestS
         .onPut(
           `CatalogoEntregaRecepcionDescripcion/${this.id}`,
           this.form.value

@@ -22,9 +22,9 @@ import PresupuestoEditionFileComponent from './presupuesto-edition-file.componen
 })
 export default class PresupuestoIndividualComponent implements OnInit {
   authS = inject(AuthService);
-  custIdService = inject(CustomerIdService);
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
+  customerIdS = inject(CustomerIdService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
   private activatedRoute = inject(ActivatedRoute);
 
   // Declaración e inicialización de variables
@@ -40,7 +40,7 @@ export default class PresupuestoIndividualComponent implements OnInit {
   }
 
   onLoadData() {
-    this.apiRequestService
+    this.apiRequestS
       .onGetItem(`Presupuesto/GetById/${this.id}`)
       .then((result: any) => {
         this.data = result;
@@ -48,14 +48,14 @@ export default class PresupuestoIndividualComponent implements OnInit {
   }
 
   onModalAdd() {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         PresupuestoAddPartidaComponent,
         {
           idBudgetCard: this.id,
         },
         'Agregar Partida',
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();
@@ -64,7 +64,7 @@ export default class PresupuestoIndividualComponent implements OnInit {
 
   // Función para eliminar un partida presupuestal
   onDelete(id: number) {
-    this.apiRequestService
+    this.apiRequestS
       .onDelete(`cedulapresupuestal/cedulapresupuestaldetalle/${id}`)
       .then((result: boolean) => {
         if (result) {
@@ -74,36 +74,36 @@ export default class PresupuestoIndividualComponent implements OnInit {
   }
   // Función para eliminar
   onGetHistorial(id: number) {
-    this.dialogHandlerService.openDialog(
+    this.dialogHandlerS.openDialog(
       PresupuestoDetalleEdicionHistorialComponent,
       {
         id,
       },
       'Historial de movimientos',
-      this.dialogHandlerService.dialogSizeMd
+      this.dialogHandlerS.dialogSizeMd
     );
   }
   onModalInfoCuenta(id: number) {
-    this.dialogHandlerService.openDialog(
+    this.dialogHandlerS.openDialog(
       InfoCuentaComponent,
       {
         id: this.id,
       },
       'Consideraciones',
-      this.dialogHandlerService.dialogSizeMd
+      this.dialogHandlerS.dialogSizeMd
     );
   }
 
   // Función para abrir un cuadro de diálogo modal para agregar o editar información sobre un banco
   onModalAddOrEdit(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         PresupuestoEditPartidaComponent,
         {
           id: this.id,
         },
         data.title,
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();
@@ -111,25 +111,25 @@ export default class PresupuestoIndividualComponent implements OnInit {
   }
 
   ServiciosMttoProgramados(cuentaId: number) {
-    this.dialogHandlerService.openDialog(
+    this.dialogHandlerS.openDialog(
       MantenimientosProgramadosComponent,
       {
         cuentaId: cuentaId,
       },
       'Mantenimientos programados',
-      this.dialogHandlerService.dialogSizeMd
+      this.dialogHandlerS.dialogSizeMd
     );
   }
 
   onModalDocument(id: number) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         PresupuestoEditionFileComponent,
         {
           id: id,
         },
         'Soporte documentos',
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();
@@ -146,30 +146,28 @@ export default class PresupuestoIndividualComponent implements OnInit {
       monthlyBudget: item.monthlyBudget,
     };
 
-    this.apiRequestService
-      .onPost(`Presupuesto/UpdateAccount/`, data)
-      .then((_) => {
-        const index = this.data.budgetDetailDto.findIndex(
-          (existingItem) => existingItem.id === data.id
-        );
-        // Calcula el porcentaje de aumento
-        const porcentaje = this.PorcentajeAumento(
-          data.monthlyBudget,
-          item.monthlyBudgetFormet
-        ); // Reemplaza 'originalValor' por el valor correcto
+    this.apiRequestS.onPost(`Presupuesto/UpdateAccount/`, data).then((_) => {
+      const index = this.data.budgetDetailDto.findIndex(
+        (existingItem) => existingItem.id === data.id
+      );
+      // Calcula el porcentaje de aumento
+      const porcentaje = this.PorcentajeAumento(
+        data.monthlyBudget,
+        item.monthlyBudgetFormet
+      ); // Reemplaza 'originalValor' por el valor correcto
 
-        if (index !== -1) {
-          // Actualiza el elemento en la matriz
-          this.data.budgetDetailDto[index] = {
-            ...this.data.budgetDetailDto[index],
-            monthlyBudget: parseFloat(data.monthlyBudget).toLocaleString(),
-            percentageIncrease: porcentaje,
-            totalBudget: (
-              this.data.duracion * parseFloat(data.monthlyBudget)
-            ).toLocaleString(),
-          };
-        }
-      });
+      if (index !== -1) {
+        // Actualiza el elemento en la matriz
+        this.data.budgetDetailDto[index] = {
+          ...this.data.budgetDetailDto[index],
+          monthlyBudget: parseFloat(data.monthlyBudget).toLocaleString(),
+          percentageIncrease: porcentaje,
+          totalBudget: (
+            this.data.duracion * parseFloat(data.monthlyBudget)
+          ).toLocaleString(),
+        };
+      }
+    });
   }
   onEnterPressedPorcentaje(item: any) {
     if (item.percentageIncrease > 100) return;
@@ -198,7 +196,7 @@ export default class PresupuestoIndividualComponent implements OnInit {
       monthlyBudget: newmonthlyBudget,
     };
 
-    this.apiRequestService
+    this.apiRequestS
       .onPost(`Presupuesto/UpdateAccount/`, data)
       .then((result: boolean) => {
         // Cuando se actualiza el elemento con éxito, buscar su índice en la matriz
@@ -224,7 +222,7 @@ export default class PresupuestoIndividualComponent implements OnInit {
     presupuestoAnteriorDetalleId: number,
     presupuestoAnteriorId: number
   ) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         OrdenesCompraCedulaListComponent,
         {
@@ -232,7 +230,7 @@ export default class PresupuestoIndividualComponent implements OnInit {
           cedulaPresupuestalId: presupuestoAnteriorId,
         },
         'Ordenes de Compra',
-        this.dialogHandlerService.dialogSizeFull
+        this.dialogHandlerS.dialogSizeFull
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();

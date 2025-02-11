@@ -11,7 +11,7 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
   imports: [LuxuryAppComponentsModule],
 })
 export default class CardEmployeeComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);
 
@@ -25,7 +25,7 @@ export default class CardEmployeeComponent implements OnInit {
   }
 
   onLoadData() {
-    this.apiRequestService
+    this.apiRequestS
       .onGetItem(`Auth/CardUser/${this.applicationUserId}`)
       .then((result: any) => {
         this.applicationUser = result;

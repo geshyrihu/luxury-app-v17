@@ -16,12 +16,12 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   providers: [EnumSelectService],
 })
 export default class AddoreditLedgerAccountsComponent implements OnInit {
-  formBuilder = inject(FormBuilder);
+  formB = inject(FormBuilder);
   authS = inject(AuthService);
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
-  enumSelectService = inject(EnumSelectService);
+  enumSelectS = inject(EnumSelectService);
 
   submitting: boolean = false;
 
@@ -33,12 +33,12 @@ export default class AddoreditLedgerAccountsComponent implements OnInit {
   form: FormGroup;
 
   async ngOnInit() {
-    this.cb_state = await this.enumSelectService.state();
+    this.cb_state = await this.enumSelectS.state();
     this.id = this.config.data.id;
     if (this.id !== 0) {
       this.onLoadData();
     }
-    this.form = this.formBuilder.group({
+    this.form = this.formB.group({
       id: { value: this.id, disabled: true },
       numeroCuenta: ['', Validators.required],
       descripcion: ['', Validators.required],
@@ -48,18 +48,18 @@ export default class AddoreditLedgerAccountsComponent implements OnInit {
   }
 
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
 
     this.submitting = true;
 
     if (this.id === 0) {
-      this.apiRequestService
+      this.apiRequestS
         .onPost(`Cuentas/`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.apiRequestService
+      this.apiRequestS
         .onPut(`Cuentas/${this.id}`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
@@ -67,10 +67,8 @@ export default class AddoreditLedgerAccountsComponent implements OnInit {
     }
   }
   onLoadData() {
-    this.apiRequestService
-      .onGetItem(`Cuentas/${this.id}`)
-      .then((result: any) => {
-        this.form.patchValue(result);
-      });
+    this.apiRequestS.onGetItem(`Cuentas/${this.id}`).then((result: any) => {
+      this.form.patchValue(result);
+    });
   }
 }

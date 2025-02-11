@@ -12,29 +12,29 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
   imports: [LuxuryAppComponentsModule],
 })
 export default class ReporteCompletoActivosComponent implements OnInit {
-  custIdService = inject(CustomerIdService);
-  apiRequestService = inject(ApiRequestService);
-  messageService = inject(MessageService); // private reporteActivosPdfService: ReporteActivosPdfService
+  customerIdS = inject(CustomerIdService);
+  apiRequestS = inject(ApiRequestService);
+  messageS = inject(MessageService); // private reporteActivosPdfService: ReporteActivosPdfService
 
   data: any[] = [];
   titulo: string = '';
 
   customerId: number;
-  customerId$: Observable<number> = this.custIdService.getCustomerId$();
+  customerId$: Observable<number> = this.customerIdS.getCustomerId$();
 
   ngOnInit(): void {
-    this.customerId$ = this.custIdService.getCustomerId$();
-    this.customerId = this.custIdService.getCustomerId();
+    this.customerId$ = this.customerIdS.getCustomerId$();
+    this.customerId = this.customerIdS.getCustomerId();
     this.onLoadData();
     this.customerId$.subscribe((resp) => {
-      this.customerId = this.custIdService.getCustomerId();
+      this.customerId = this.customerIdS.getCustomerId();
       this.onLoadData();
     });
   }
 
   onLoadData() {
     const urlApi = 'Machineries/InventarioCompleto/' + this.customerId;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       // Actualizamos el valor del signal con los datos recibidos
       this.data = result;
     });

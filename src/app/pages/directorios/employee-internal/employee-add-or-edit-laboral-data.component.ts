@@ -17,11 +17,11 @@ import { EmployeeAddOrEditService } from './employee-add-or-edit.service';
   providers: [EnumSelectService],
 })
 export default class EmployeeAddOrEditLaboralDataComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   authS = inject(AuthService);
   employeeAddOrEditService = inject(EmployeeAddOrEditService);
-  enumSelectService = inject(EnumSelectService);
-  formBuilder = inject(FormBuilder);
+  enumSelectS = inject(EnumSelectService);
+  formB = inject(FormBuilder);
 
   @Input() applicationUserId: string = '';
 
@@ -44,7 +44,7 @@ export default class EmployeeAddOrEditLaboralDataComponent implements OnInit {
 
   submitting: boolean = false;
 
-  form: FormGroup = this.formBuilder.group({
+  form: FormGroup = this.formB.group({
     // Person data
     dateAdmission: ['', Validators.required],
     professionId: [0, Validators.required],
@@ -58,35 +58,31 @@ export default class EmployeeAddOrEditLaboralDataComponent implements OnInit {
   });
 
   async ngOnInit() {
-    this.apiRequestService
-      .onGetSelectItem(`Professions`)
-      .then((response: any) => {
-        this.cb_profession = response;
-      });
+    this.apiRequestS.onGetSelectItem(`Professions`).then((response: any) => {
+      this.cb_profession = response;
+    });
 
-    this.apiRequestService
-      .onGetSelectItem(`Customers`)
-      .then((response: any) => {
-        this.cb_customer = response;
-      });
+    this.apiRequestS.onGetSelectItem(`Customers`).then((response: any) => {
+      this.cb_customer = response;
+    });
 
     flatpickrFactory();
     this.onLoadData();
-    this.cb_type_contract = await this.enumSelectService.typeContract();
-    this.cb_education_level = await this.enumSelectService.educationLevel();
+    this.cb_type_contract = await this.enumSelectS.typeContract();
+    this.cb_education_level = await this.enumSelectS.educationLevel();
   }
   onLoadData() {
     const urlApi = `EmployeeInternal/LaboralData/${this.applicationUserId}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       this.form.patchValue(result);
     });
   }
 
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
     this.submitting = true;
 
-    this.apiRequestService
+    this.apiRequestS
       .onPut(
         `EmployeeInternal/UpdateLaboralData/${this.applicationUserId}`,
         this.form.value

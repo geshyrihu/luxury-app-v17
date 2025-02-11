@@ -22,10 +22,10 @@ import { TicketGroupService } from 'src/app/pages/tickets/ticket.service';
   templateUrl: './mobile-navbar.component.html',
 })
 export default class MobileNavbarComponent implements OnInit, OnDestroy {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   authS = inject(AuthService);
   router = inject(Router);
-  custIdService = inject(CustomerIdService);
+  customerIdS = inject(CustomerIdService);
   profielServiceService = inject(ProfielServiceService);
 
   location = inject(Location);
@@ -65,7 +65,7 @@ export default class MobileNavbarComponent implements OnInit, OnDestroy {
     // Cargar de listado de clientes a los que se tiene acceso
     this.onLoadCustomerAccess();
     // Suscribirse a cambios en customerId
-    const customerSubscription = this.custIdService
+    const customerSubscription = this.customerIdS
       .getCustomerId$()
       .subscribe(() => {
         this.updateCustomerData();
@@ -85,9 +85,9 @@ export default class MobileNavbarComponent implements OnInit, OnDestroy {
    * Actualiza las propiedades del componente con los datos actuales del servicio.
    */
   private updateCustomerData(): void {
-    this.customerId = this.custIdService.customerId;
-    this.nameCustomer = this.custIdService.nameCustomer;
-    this.photoPath = this.custIdService.photoPath;
+    this.customerId = this.customerIdS.customerId;
+    this.nameCustomer = this.customerIdS.nameCustomer;
+    this.photoPath = this.customerIdS.photoPath;
   }
 
   /**
@@ -95,7 +95,7 @@ export default class MobileNavbarComponent implements OnInit, OnDestroy {
    * @param customerId ID del cliente seleccionado
    */
   selectCustomer(customerId: number): void {
-    this.custIdService.setCustomerId(customerId);
+    this.customerIdS.setCustomerId(customerId);
   }
   onLoadCustomerAccess() {
     this.cb_customer = this.authS.customerAccess;
@@ -107,7 +107,7 @@ export default class MobileNavbarComponent implements OnInit, OnDestroy {
     this.messageInNotRead = 0;
     this.notifications = [];
     const urlApi = `NotificationUser/GetAllUnread/${this.authS.applicationUserId}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.notifications = result;
       this.messageInNotRead = this.notifications.filter(
         (x: any) => !x.isRead
@@ -122,7 +122,7 @@ export default class MobileNavbarComponent implements OnInit, OnDestroy {
     this.router.navigate(['/auth/login']);
 
     const urlApi = `Auth/Logout/${this.authS.infoUserAuthDto.applicationUserId}`;
-    this.apiRequestService.onGetItem(urlApi).then(() => {});
+    this.apiRequestS.onGetItem(urlApi).then(() => {});
   }
   /**
    * Maneja la limpieza de suscripciones al destruir el componente.

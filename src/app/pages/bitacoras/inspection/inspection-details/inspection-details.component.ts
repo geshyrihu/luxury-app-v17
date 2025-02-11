@@ -16,8 +16,8 @@ import InspectionCondominiumAssetEditComponent from '../inspection-condominium-a
 })
 export default class InspectionDetailsComponent implements OnInit {
   activatedRoute = inject(ActivatedRoute);
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
 
   data: any;
 
@@ -30,13 +30,13 @@ export default class InspectionDetailsComponent implements OnInit {
 
   onLoadData() {
     const urlApi = `InspectionCondominiumAsset/List/${this.id}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       this.data = result;
     });
   }
   onDeleteArea(id: string, areas: any[]) {
     const urlApi = `InspectionCondominiumAsset/DeleteArea/${id}`;
-    this.apiRequestService.onDelete(urlApi).then((result: any) => {
+    this.apiRequestS.onDelete(urlApi).then((result: any) => {
       if (result) {
         const index = areas.findIndex(
           (item) => item.inspectionCondominiumAssetId === id
@@ -50,7 +50,7 @@ export default class InspectionDetailsComponent implements OnInit {
 
   onDeleteReview(reviewId: number, reviews: any[]) {
     const urlApi = `InspectionCondominiumAsset/DeleteReview/${reviewId}`;
-    this.apiRequestService.onDelete(urlApi).then((result: any) => {
+    this.apiRequestS.onDelete(urlApi).then((result: any) => {
       if (result) {
         const index = reviews.findIndex((item) => item.id === reviewId);
         if (index !== -1) {
@@ -61,21 +61,21 @@ export default class InspectionDetailsComponent implements OnInit {
   }
 
   onModalInspectionCondominiumAssetAdd(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         InspectionCondominiumAssetAddComponent,
         {
           inspectionId: data.inspectionId,
         },
         data.title,
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         this.onLoadData();
       });
   }
   onModalInspectionCondominiumAssetEdit(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         InspectionCondominiumAssetEditComponent,
         {
@@ -83,7 +83,7 @@ export default class InspectionDetailsComponent implements OnInit {
           inspectionCondominiumAssetId: data.inspectionCondominiumAssetId,
         },
         data.title,
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();
@@ -91,11 +91,11 @@ export default class InspectionDetailsComponent implements OnInit {
   }
 
   onModalAddRevision() {
-    this.dialogHandlerService.openDialog(
+    this.dialogHandlerS.openDialog(
       InspectionAddRevisionComponent,
       { title: 'Agregar área' },
       'Agregar revisión',
-      this.dialogHandlerService.dialogSizeMd
+      this.dialogHandlerS.dialogSizeMd
     );
   }
 }

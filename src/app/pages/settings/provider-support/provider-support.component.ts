@@ -15,9 +15,9 @@ import AddOrEditprovidersupportComponent from './add-or-edit-provider-support/ad
 })
 export default class providersupportComponent implements OnInit {
   authS = inject(AuthService);
-  dialogService = inject(DialogService);
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
+  dialogS = inject(DialogService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
 
   // Declaración e inicialización de variables
   data: IProviderSupportList[] = [];
@@ -29,7 +29,7 @@ export default class providersupportComponent implements OnInit {
   }
   // Función para cargar los datos
   onLoadData() {
-    this.apiRequestService.onGetList('providersupport').then((result: any) => {
+    this.apiRequestS.onGetList('providersupport').then((result: any) => {
       this.data = result;
     });
   }
@@ -37,12 +37,12 @@ export default class providersupportComponent implements OnInit {
   //Modal Agregar o editar
   // Función para abrir un cuadro de diálogo modal para agregar o editar información sobre un banco
   onModalAddOrEdit(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         AddOrEditprovidersupportComponent,
         data,
         data.title,
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();
@@ -50,7 +50,7 @@ export default class providersupportComponent implements OnInit {
   }
   // Función para eliminar
   onDelete(id: string) {
-    this.apiRequestService
+    this.apiRequestS
       .onDelete(`providersupport/${id}`)
       .then((result: boolean) => {
         if (result) this.data = this.data.filter((item) => item.id !== id);

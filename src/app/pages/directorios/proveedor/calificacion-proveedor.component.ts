@@ -13,17 +13,17 @@ import { AuthService } from 'src/app/core/services/auth.service';
   imports: [LuxuryAppComponentsModule, RatingModule],
 })
 export default class CalificacionProveedorComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   authS = inject(AuthService);
   config = inject(DynamicDialogConfig);
-  formBuilder = inject(FormBuilder);
+  formB = inject(FormBuilder);
   ref = inject(DynamicDialogRef);
 
   submitting: boolean = false;
   providerId: number = 0;
   qualificationProviderId: number = 0;
 
-  form: FormGroup = this.formBuilder.group({
+  form: FormGroup = this.formB.group({
     applicationUserId: [this.authS.applicationUserId, Validators.required],
     providerId: [this.config.data.providerId, Validators.required],
     precio: [0, Validators.required],
@@ -38,7 +38,7 @@ export default class CalificacionProveedorComponent implements OnInit {
 
   onLoadData() {
     const urlApi = `QualificationProvider/${this.authS.applicationUserId}/${this.providerId}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       if (result != null) {
         this.qualificationProviderId = result.id;
         this.form.patchValue(result);
@@ -47,18 +47,18 @@ export default class CalificacionProveedorComponent implements OnInit {
   }
 
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
 
     this.submitting = true;
 
     if (this.qualificationProviderId === 0) {
-      this.apiRequestService
+      this.apiRequestS
         .onPost(`QualificationProvider`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.apiRequestService
+      this.apiRequestS
         .onPut(
           `QualificationProvider/${this.qualificationProviderId}`,
           this.form.value

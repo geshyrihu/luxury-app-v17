@@ -12,8 +12,8 @@ import { FiltroCalendarService } from 'src/app/core/services/filtro-calendar.ser
   imports: [LuxuryAppComponentsModule],
 })
 export default class ResultadoGeneralPosicionComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  dateService = inject(DateService);
+  apiRequestS = inject(ApiRequestService);
+  dateS = inject(DateService);
   rangoCalendarioService = inject(FiltroCalendarService);
 
   fechaInicial: string = '';
@@ -21,10 +21,10 @@ export default class ResultadoGeneralPosicionComponent implements OnInit {
   data: any;
 
   ngOnInit() {
-    this.fechaInicial = this.dateService.getDateFormat(
+    this.fechaInicial = this.dateS.getDateFormat(
       this.rangoCalendarioService.fechaInicial
     );
-    this.fechaFinal = this.dateService.getDateFormat(
+    this.fechaFinal = this.dateS.getDateFormat(
       this.rangoCalendarioService.fechaFinal
     );
     this.onLoadData(this.fechaInicial, this.fechaFinal);
@@ -35,7 +35,7 @@ export default class ResultadoGeneralPosicionComponent implements OnInit {
 
   onLoadData(fechaInicio: string, fechaFinal: string) {
     const urlApi = `ResumenGeneral/Posicion/${fechaInicio}/${fechaFinal}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       this.data = result;
     });
   }

@@ -13,8 +13,8 @@ import ComunicadoAddOrEditComponent from './comunicado-addoredit.component';
   imports: [LuxuryAppComponentsModule],
 })
 export default class ComunicadoListComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
   authS = inject(AuthService);
 
   data: any[] = [];
@@ -24,28 +24,26 @@ export default class ComunicadoListComponent implements OnInit {
     this.onLoadData();
   }
   onLoadData() {
-    this.apiRequestService.onGetList('Comunicado').then((result: any) => {
+    this.apiRequestS.onGetList('Comunicado').then((result: any) => {
       this.data = result;
     });
   }
 
   onModalAddOrEdit(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         ComunicadoAddOrEditComponent,
         data,
         data.title,
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();
       });
   }
   onDelete(id: number) {
-    this.apiRequestService
-      .onDelete(`Comunicado/${id}`)
-      .then((result: boolean) => {
-        if (result) this.data = this.data.filter((item) => item.id !== id);
-      });
+    this.apiRequestS.onDelete(`Comunicado/${id}`).then((result: boolean) => {
+      if (result) this.data = this.data.filter((item) => item.id !== id);
+    });
   }
 }

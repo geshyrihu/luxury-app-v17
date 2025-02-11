@@ -11,9 +11,9 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
   templateUrl: './legal-summary.component.html',
 })
 export default class LegalSummaryComponent {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   config = inject(DynamicDialogConfig);
-  custIdService = inject(CustomerIdService);
+  customerIdS = inject(CustomerIdService);
   data: any[] = [];
 
   status: number = 0;
@@ -24,10 +24,10 @@ export default class LegalSummaryComponent {
   }
 
   onLoadData() {
-    const urlApi = `Dashboard/LegalSummary/${this.custIdService.getCustomerId()}/${
+    const urlApi = `Dashboard/LegalSummary/${this.customerIdS.getCustomerId()}/${
       this.status
     }`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
   }

@@ -12,8 +12,8 @@ import AddOrEditTelefonosEmergenciaComponent from './addoredit-telefonos-emergen
   imports: [LuxuryAppComponentsModule],
 })
 export default class TelefonosEmergenciaComponent {
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
 
   authS = inject(AuthService);
 
@@ -25,12 +25,12 @@ export default class TelefonosEmergenciaComponent {
 
   onLoadData() {
     const urlApi = `TelefonosEmergencia`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
   }
   onDelete(id: number) {
-    this.apiRequestService
+    this.apiRequestS
       .onDelete(`telefonosemergencia/${id}`)
       .then((result: boolean) => {
         if (result) this.data = this.data.filter((item) => item.id !== id);
@@ -38,12 +38,12 @@ export default class TelefonosEmergenciaComponent {
   }
 
   onModalAddOrEdit(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         AddOrEditTelefonosEmergenciaComponent,
         data,
         data.title,
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();

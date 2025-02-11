@@ -19,17 +19,17 @@ import AddoreditPresentacionJuntaComiteComponent from './addoredit-presentacion-
   imports: [LuxuryAppComponentsModule],
 })
 export default class PresentacionJuntaComiteComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
   authS = inject(AuthService);
   confirmationService = inject(ConfirmationService);
-  custIdService = inject(CustomerIdService);
-  dateService = inject(DateService);
+  customerIdS = inject(CustomerIdService);
+  dateS = inject(DateService);
 
   ref: DynamicDialogRef;
   applicationUserId: string =
     this.authS.userTokenDto.infoUserAuthDto.applicationUserId;
-  customerId$: Observable<number> = this.custIdService.getCustomerId$();
+  customerId$: Observable<number> = this.customerIdS.getCustomerId$();
   data: PresentacionJuntaComiteDto[] = [];
   supervisorContable: boolean = false;
 
@@ -46,14 +46,14 @@ export default class PresentacionJuntaComiteComponent implements OnInit {
   }
 
   onLoadData(): void {
-    const urlApi = `PresentacionJuntaComite/GetAll/${this.custIdService.getCustomerId()}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    const urlApi = `PresentacionJuntaComite/GetAll/${this.customerIdS.getCustomerId()}`;
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
   }
 
   showModalAddOrEdit(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         AddoreditPresentacionJuntaComiteComponent,
         {
@@ -61,21 +61,21 @@ export default class PresentacionJuntaComiteComponent implements OnInit {
           titulo: data.titulo,
         },
         data.titulo,
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();
       });
   }
   showModalAdd(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         AddPresentacionJuntaComiteComponent,
         {
           id: data.id,
         },
         data.title,
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();
@@ -85,21 +85,21 @@ export default class PresentacionJuntaComiteComponent implements OnInit {
   // Eliminar pdf
   onDelete(item: any, area: string) {
     const urlApi = `PresentacionJuntaComite/${item.id}/${area}`;
-    this.apiRequestService.onDelete(urlApi).then((result: boolean) => {
+    this.apiRequestS.onDelete(urlApi).then((result: boolean) => {
       if (result) this.onLoadData();
     });
   }
   // Eliminar registro completo
   onDeleteItem(item: any) {
     const urlApi = `PresentacionJuntaComite/${item.id}`;
-    this.apiRequestService.onDelete(urlApi).then((result: boolean) => {
+    this.apiRequestS.onDelete(urlApi).then((result: boolean) => {
       if (result) this.onLoadData();
     });
   }
 
   onValidarPresentacion(id: number) {
     const urlApi = `PresentacionJuntaComite/AutorizarPresentacion/${id}/${this.authS.applicationUserId}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: boolean) => {
+    this.apiRequestS.onGetItem(urlApi).then((result: boolean) => {
       if (result) {
         this.enviarMailPresentacionComite(id);
         this.onLoadData();
@@ -137,7 +137,7 @@ export default class PresentacionJuntaComiteComponent implements OnInit {
         } else {
           urlApi = 'PresentacionJuntaComite/RevocarContable/' + id;
         }
-        this.apiRequestService.onGetList(urlApi).then((result: any) => {
+        this.apiRequestS.onGetList(urlApi).then((result: any) => {
           this.onLoadData();
         });
       }
@@ -154,7 +154,7 @@ export default class PresentacionJuntaComiteComponent implements OnInit {
 
   enviarMailPresentacionComite(idJunta: number) {
     const urlApi = `SendEmail/PresentacionFinalComite/${idJunta}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.onLoadData();
     });
   }

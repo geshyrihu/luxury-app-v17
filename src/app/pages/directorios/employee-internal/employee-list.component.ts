@@ -20,10 +20,10 @@ import { EmployeeProviderAddOrEditComponent } from './employee-provider-addoredi
 })
 export default class EmployeeListComponent implements OnInit {
   authS = inject(AuthService);
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
   employeeAddOrEditService = inject(EmployeeAddOrEditService);
-  custIdService = inject(CustomerIdService);
+  customerIdS = inject(CustomerIdService);
   rutaActiva = inject(ActivatedRoute);
   router = inject(Router);
 
@@ -32,7 +32,7 @@ export default class EmployeeListComponent implements OnInit {
   getAllEmployeeActive: any = [];
   ref: DynamicDialogRef;
 
-  customerId$: Observable<number> = this.custIdService.getCustomerId$();
+  customerId$: Observable<number> = this.customerIdS.getCustomerId$();
 
   ngOnInit(): void {
     this.onLoadData();
@@ -47,9 +47,9 @@ export default class EmployeeListComponent implements OnInit {
   }
 
   onLoadData() {
-    const urlApi = `EmployeeInternal/List/${this.custIdService.customerId}/${this.activo}`;
+    const urlApi = `EmployeeInternal/List/${this.customerIdS.customerId}/${this.activo}`;
 
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
   }
@@ -74,12 +74,12 @@ export default class EmployeeListComponent implements OnInit {
     return permission;
   }
   showModalAddEmployee() {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         EmployeeProviderAddOrEditComponent,
         { typePerson: 0 },
         'Registrar Empleado.',
-        this.dialogHandlerService.dialogSizeLg
+        this.dialogHandlerS.dialogSizeLg
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();
@@ -87,11 +87,11 @@ export default class EmployeeListComponent implements OnInit {
   }
 
   onCardEmployee(applicationUserId: string) {
-    this.dialogHandlerService.openDialog(
+    this.dialogHandlerS.openDialog(
       CardEmployeeComponent,
       { applicationUserId },
       'Colaborador',
-      this.dialogHandlerService.dialogSizeSm
+      this.dialogHandlerS.dialogSizeSm
     );
   }
 

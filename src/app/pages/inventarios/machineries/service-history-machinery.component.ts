@@ -12,8 +12,8 @@ import ServiceOrderAddOrEditComponent from '../../bitacoras/service-order/addore
   imports: [LuxuryAppComponentsModule],
 })
 export default class ServiceHistoryMachineryComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
   config = inject(DynamicDialogConfig);
 
   id: number = this.config.data.id;
@@ -27,13 +27,13 @@ export default class ServiceHistoryMachineryComponent implements OnInit {
 
   onLoadData() {
     const urlApi = `Machineries/ServiceHistory/${this.config.data.id}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
   }
 
   onEdit(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         ServiceOrderAddOrEditComponent,
         {
@@ -42,7 +42,7 @@ export default class ServiceHistoryMachineryComponent implements OnInit {
           providerId: data.providerId,
         },
         data.title,
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();

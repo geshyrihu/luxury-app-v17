@@ -12,8 +12,8 @@ import { TicketGroupService } from '../../ticket.service';
   templateUrl: './ticket-message-report-work-plan-preview.component.html',
 })
 export default class TicketMessageReportWorkPlanPreviewComponent {
-  apiRequestService = inject(ApiRequestService);
-  custIdService = inject(CustomerIdService);
+  apiRequestS = inject(ApiRequestService);
+  customerIdS = inject(CustomerIdService);
   authS = inject(AuthService);
   ticketGroupService = inject(TicketGroupService);
 
@@ -31,16 +31,16 @@ export default class TicketMessageReportWorkPlanPreviewComponent {
   onSendWoekPlan() {
     const urlApi = `TicketWorkPlan/Create/${
       this.authS.applicationUserId
-    }/${this.custIdService.getCustomerId()}/${this.year}/${this.numeroSemana}`;
-    this.apiRequestService.onGetList(urlApi);
+    }/${this.customerIdS.getCustomerId()}/${this.year}/${this.numeroSemana}`;
+    this.apiRequestS.onGetList(urlApi);
   }
   onLoadData() {
     // No sobreescribimos el año y la semana seleccionados con los valores actuales
-    const urlApi = `TicketWorkPlan/Preview/${this.custIdService.getCustomerId()}/${
+    const urlApi = `TicketWorkPlan/Preview/${this.customerIdS.getCustomerId()}/${
       this.year
     }/${this.numeroSemana}`;
 
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
   }

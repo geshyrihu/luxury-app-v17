@@ -13,10 +13,10 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class AddOrEditAreaResponsableComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
-  formBuilder = inject(FormBuilder);
+  formB = inject(FormBuilder);
 
   submitting: boolean = false;
   id: number = 0;
@@ -32,19 +32,19 @@ export default class AddOrEditAreaResponsableComponent implements OnInit {
 
   onLoadEnumSelectItem() {
     const urlApi = `ECompanyArea`;
-    this.apiRequestService.onGetEnumSelectItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetEnumSelectItem(urlApi).then((result: any) => {
       this.cb_area_empresa = result;
     });
   }
 
   onLoadData(id: number) {
     const urlApi = `Departament/${id}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       this.form.patchValue(result);
     });
   }
   onLoadForm() {
-    this.form = this.formBuilder.group({
+    this.form = this.formB.group({
       id: { value: this.id, disabled: true },
       nameArea: ['', [Validators.required, Validators.minLength(5)]],
       companyArea: ['', [Validators.required]],
@@ -53,18 +53,18 @@ export default class AddOrEditAreaResponsableComponent implements OnInit {
     });
   }
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
 
     this.submitting = true;
 
     if (this.id === 0) {
-      this.apiRequestService
+      this.apiRequestS
         .onPost(`Departament`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.apiRequestService
+      this.apiRequestS
         .onPut(`Departament/${this.id}`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);

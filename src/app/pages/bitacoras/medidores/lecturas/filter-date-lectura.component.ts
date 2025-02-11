@@ -16,7 +16,7 @@
 //   imports: [CommonModule, ComponentsModule],
 // })
 // export default class FilterDateLecturaComponent implements OnInit {
-//   dateService = inject(DateService);
+//   dateS = inject(DateService);
 //   ref = inject(DynamicDialogRef);
 //   config = inject(DynamicDialogConfig);
 //   tipe: string = this.config.data.tipe;
@@ -28,8 +28,8 @@
 //   finalYearNow: number = date.getFullYear();
 //   initialYearNow: number = date.getFullYear();
 
-//   initialDate = this.dateService.getDateFormatmesAnterior();
-//   finalDate = this.dateService.getDateFormat(date);
+//   initialDate = this.dateS.getDateFormatmesAnterior();
+//   finalDate = this.dateS.getDateFormat(date);
 
 //   ngOnInit(): void {
 //     this.onLoadYears();

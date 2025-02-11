@@ -16,8 +16,8 @@ import TarjetaProveedorComponent from './tarjeta-proveedor.component';
   imports: [LuxuryAppComponentsModule, NgbRatingModule],
 })
 export default class BuscadorProvedorComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
   authS = inject(AuthService);
 
   incluirInactivos: boolean = false;
@@ -37,22 +37,22 @@ export default class BuscadorProvedorComponent implements OnInit {
   }
 
   showModalCardProveedor(data: any) {
-    this.dialogHandlerService.openDialog(
+    this.dialogHandlerS.openDialog(
       TarjetaProveedorComponent,
       data,
       data.title,
-      this.dialogHandlerService.dialogSizeLg
+      this.dialogHandlerS.dialogSizeLg
     );
   }
   showModalCalificarProveedor(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         CalificacionProveedorComponent,
         {
           providerId: data.providerId,
         },
         'Calificar a ' + data.nameProvider,
-        this.dialogHandlerService.dialogSizeSm
+        this.dialogHandlerS.dialogSizeSm
       )
       .then((result: boolean) => {
         if (result) this.buscar();
@@ -60,14 +60,14 @@ export default class BuscadorProvedorComponent implements OnInit {
   }
 
   showModalAddOrEdit(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         AddoreditProveedorComponent,
         {
           id: data.id,
         },
         data.title,
-        this.dialogHandlerService.dialogSizeFull
+        this.dialogHandlerS.dialogSizeFull
       )
       .then((result: boolean) => {
         if (result) this.buscar();
@@ -84,7 +84,7 @@ export default class BuscadorProvedorComponent implements OnInit {
     return restult;
   }
   onActivateProvider(data: any) {
-    this.apiRequestService
+    this.apiRequestS
       .onPut(`Providers/ChangeState/${data.providerId}/${data.state}`, null)
       .then((result: boolean) => {
         this.buscar();
@@ -97,17 +97,15 @@ export default class BuscadorProvedorComponent implements OnInit {
     this.loading = true;
 
     const urlApi = `proveedor/buscarProveedor/${this.incluirInactivos}/${this.filtro}`;
-    this.apiRequestService.onGetListNotLoading(urlApi).then((result: any) => {
+    this.apiRequestS.onGetListNotLoading(urlApi).then((result: any) => {
       this.resultados = result;
       this.loading = false;
     });
   }
 
   onDelete(id: number) {
-    this.apiRequestService
-      .onDelete(`providers/${id}`)
-      .then((result: boolean) => {
-        if (result) this.buscar();
-      });
+    this.apiRequestS.onDelete(`providers/${id}`).then((result: boolean) => {
+      if (result) this.buscar();
+    });
   }
 }

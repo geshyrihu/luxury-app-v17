@@ -10,7 +10,7 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
   templateUrl: './operation-report-client.component.html',
 })
 export default class OperationReportClientComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   rutaActiva = inject(ActivatedRoute);
 
   data: any = [];
@@ -28,7 +28,7 @@ export default class OperationReportClientComponent implements OnInit {
 
   onLoadData() {
     const urlApi = `TicketReport/GetReportClient/${this.customer}/${this.inicio}/${this.final}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       // Actualizamos el valor del signal con los datos recibidos
       this.data = result;
     });

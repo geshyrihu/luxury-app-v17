@@ -14,9 +14,9 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class CuadroComparativoAddProveedorComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   config = inject(DynamicDialogConfig);
-  formBuilder = inject(FormBuilder);
+  formB = inject(FormBuilder);
   ref = inject(DynamicDialogRef);
 
   submitting: boolean = false;
@@ -25,7 +25,7 @@ export default class CuadroComparativoAddProveedorComponent implements OnInit {
 
   ngOnInit(): void {
     flatpickrFactory();
-    this.form = this.formBuilder.group({
+    this.form = this.formB.group({
       solicitudCompraId: [
         this.config.data.solicitudCompraId,
         Validators.required,
@@ -37,7 +37,7 @@ export default class CuadroComparativoAddProveedorComponent implements OnInit {
   }
   onSubmit() {
     this.submitting = true;
-    this.apiRequestService
+    this.apiRequestS
       .onPost(`cotizacionproveedor`, this.form.value)
       .then((result: boolean) => {
         result ? this.ref.close(true) : (this.submitting = false);

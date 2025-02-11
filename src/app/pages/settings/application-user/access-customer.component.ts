@@ -12,7 +12,7 @@ import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 })
 export default class AccessCustomerComponent implements OnInit {
   customToastService = inject(CustomToastService);
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
 
   clientes: IAddCustomerPermisoToUser[] = [];
   ActualizarClientes: IAddCustomerPermisoToUser[] = [];
@@ -24,7 +24,7 @@ export default class AccessCustomerComponent implements OnInit {
     this.onGetAccesCustomer();
   }
   onGetAccesCustomer() {
-    this.apiRequestService
+    this.apiRequestS
       .onGetList('AccesoCustomers/GetCustomers/' + this.applicationUserId)
       .then((result: any[]) => {
         this.clientes = result;
@@ -33,7 +33,7 @@ export default class AccessCustomerComponent implements OnInit {
   }
 
   onUpdateAcceso(roles: any) {
-    this.apiRequestService.onPost(
+    this.apiRequestS.onPost(
       `AccesoCustomers/AddCustomerAccesoToUser/${this.applicationUserId}`,
       roles
     );

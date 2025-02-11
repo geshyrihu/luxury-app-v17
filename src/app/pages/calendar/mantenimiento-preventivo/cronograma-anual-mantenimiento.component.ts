@@ -16,12 +16,12 @@ import MaintenancePreventiveAddoreditComponent from './maintenance-preventive-ad
   imports: [LuxuryAppComponentsModule],
 })
 export default class CronogramaAnualMantenimientoComponent {
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
-  custIdService = inject(CustomerIdService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
+  customerIdS = inject(CustomerIdService);
   cronogramaMantenimientoService = inject(CronogramaMantenimientoService);
 
-  customerId$: Observable<number> = this.custIdService.getCustomerId$();
+  customerId$: Observable<number> = this.customerIdS.getCustomerId$();
   cronogramaAnual: any = [];
   itemsInventario: any = [];
   ref: DynamicDialogRef;
@@ -58,7 +58,7 @@ export default class CronogramaAnualMantenimientoComponent {
   }
   ngOnInit() {
     this.itemsInventario = this.cronogramaMantenimientoService.data;
-    this.customerId$ = this.custIdService.getCustomerId$();
+    this.customerId$ = this.customerIdS.getCustomerId$();
     this.onLoadData();
     this.customerId$.subscribe(() => {
       this.onLoadData();
@@ -68,19 +68,19 @@ export default class CronogramaAnualMantenimientoComponent {
   onLoadData() {
     const endpoint =
       this.filtroId === 10
-        ? `MaintenanceCalendars/CronogramaAnual/${this.custIdService.customerId}`
-        : `MaintenanceCalendars/CronogramaAnual/${this.custIdService.customerId}/${this.filtroId}`;
+        ? `MaintenanceCalendars/CronogramaAnual/${this.customerIdS.customerId}`
+        : `MaintenanceCalendars/CronogramaAnual/${this.customerIdS.customerId}/${this.filtroId}`;
 
-    this.apiRequestService.onGetItem(endpoint).then((result: any) => {
+    this.apiRequestS.onGetItem(endpoint).then((result: any) => {
       this.cronogramaAnual = result;
     });
   }
 
   exportExcel() {
     let dataCalendar = [];
-    this.apiRequestService
+    this.apiRequestS
       .onGetItem(
-        `MaintenanceCalendars/ExportCalendar/${this.custIdService.customerId}`
+        `MaintenanceCalendars/ExportCalendar/${this.customerIdS.customerId}`
       )
       .then((result: any) => {
         dataCalendar = result;
@@ -113,7 +113,7 @@ export default class CronogramaAnualMantenimientoComponent {
   }
 
   onModalItem(id: number) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         MaintenancePreventiveAddoreditComponent,
         {
@@ -123,7 +123,7 @@ export default class CronogramaAnualMantenimientoComponent {
           header: 'Editar regitro ' + id,
         },
         'Editar regitro',
-        this.dialogHandlerService.dialogSizeLg
+        this.dialogHandlerS.dialogSizeLg
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();

@@ -12,8 +12,8 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class OrdenCompraEditDetalleComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  formBuilder = inject(FormBuilder);
+  apiRequestS = inject(ApiRequestService);
+  formB = inject(FormBuilder);
   ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);
 
@@ -22,7 +22,7 @@ export default class OrdenCompraEditDetalleComponent implements OnInit {
   id: number = 0;
 
   cb_unidadMedida: any[] = [];
-  form: FormGroup = this.formBuilder.group({
+  form: FormGroup = this.formB.group({
     id: { value: this.config.data.id, disabled: true },
     ordenCompraId: ['', Validators.required],
     productoId: ['', Validators.required],
@@ -40,7 +40,7 @@ export default class OrdenCompraEditDetalleComponent implements OnInit {
   }
 
   onSelectItem() {
-    this.apiRequestService
+    this.apiRequestS
       .onGetSelectItem('getMeasurementUnits')
       .then((response: any) => {
         this.cb_unidadMedida = response;
@@ -48,18 +48,18 @@ export default class OrdenCompraEditDetalleComponent implements OnInit {
   }
 
   onLoadData() {
-    this.apiRequestService
+    this.apiRequestS
       .onGetItem(`OrdenCompraDetalle/${this.id}`)
       .then((result: any) => {
         this.form.patchValue(result);
       });
   }
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
 
     this.submitting = true;
 
-    this.apiRequestService
+    this.apiRequestS
       .onPut(`OrdenCompraDetalle/${this.id}`, this.form.value)
       .then((result: boolean) => {
         result ? this.ref.close(true) : (this.submitting = false);

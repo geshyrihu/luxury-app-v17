@@ -15,10 +15,10 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   imports: [LuxuryAppComponentsModule, NgSelectModule, CustomInputModule],
 })
 export default class AddoreditProveedorComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   authS = inject(AuthService);
   config = inject(DynamicDialogConfig);
-  formBuilder = inject(FormBuilder);
+  formB = inject(FormBuilder);
   ref = inject(DynamicDialogRef);
 
   submitting: boolean = false;
@@ -48,13 +48,11 @@ export default class AddoreditProveedorComponent implements OnInit {
     return this.form.controls;
   }
   onLoadSelectItem() {
-    this.apiRequestService
-      .onGetSelectItem(`Categories`)
-      .then((response: any) => {
-        this.cb_category = response;
-      });
+    this.apiRequestS.onGetSelectItem(`Categories`).then((response: any) => {
+      this.cb_category = response;
+    });
 
-    this.apiRequestService.onGetSelectItem(`Bank`).then((response: any) => {
+    this.apiRequestS.onGetSelectItem(`Bank`).then((response: any) => {
       this.cb_bancos = response;
     });
   }
@@ -71,7 +69,7 @@ export default class AddoreditProveedorComponent implements OnInit {
     if (this.id !== 0) {
       this.getItem();
     }
-    this.form = this.formBuilder.group({
+    this.form = this.formB.group({
       id: { value: this.id, disabled: true },
       address: ['', Validators.required],
       bankId: ['', Validators.required],
@@ -107,29 +105,25 @@ export default class AddoreditProveedorComponent implements OnInit {
   }
 
   getItem() {
-    this.apiRequestService
-      .onGetItem(`Proveedor/${this.id}`)
-      .then((result: any) => {
-        this.form.patchValue(result);
-        this.form.patchValue({ bankId: result.bankId });
-        this.form.patchValue({ bankName: result.bankName });
-        this.urlLogo = result.pathPhoto;
-      });
+    this.apiRequestS.onGetItem(`Proveedor/${this.id}`).then((result: any) => {
+      this.form.patchValue(result);
+      this.form.patchValue({ bankId: result.bankId });
+      this.form.patchValue({ bankName: result.bankName });
+      this.urlLogo = result.pathPhoto;
+    });
   }
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
     const model = this.onCreateFormData(this.form.value);
 
     this.submitting = true;
 
     if (this.id === 0) {
-      this.apiRequestService
-        .onPost(`Proveedor/`, model)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
-        });
+      this.apiRequestS.onPost(`Proveedor/`, model).then((result: boolean) => {
+        result ? this.ref.close(true) : (this.submitting = false);
+      });
     } else {
-      this.apiRequestService
+      this.apiRequestS
         .onPut(`Proveedor/${this.id}`, model)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
@@ -184,7 +178,7 @@ export default class AddoreditProveedorComponent implements OnInit {
   }
 
   onValidarRFC() {
-    this.apiRequestService
+    this.apiRequestS
       .onGetList('Providers/ValidarRfc/' + this.valueRfc)
       .then((result: any) => {
         this.rfcCoincidente = result;

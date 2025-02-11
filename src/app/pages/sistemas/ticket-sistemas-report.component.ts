@@ -18,8 +18,8 @@
 //   imports: [LuxuryAppComponentsModule, FlatpickrModule],
 // })
 // export default class TicketSistemasReportComponent implements OnInit {
-//   apiRequestService = inject(ApiRequestService);
-//   dialogHandlerService = inject(DialogHandlerService);
+//   apiRequestS = inject(ApiRequestService);
+//    dialogHandlerS = inject(DialogHandlerService);
 //   authS = inject(AuthService);
 
 //   constructor() {

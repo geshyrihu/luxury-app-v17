@@ -11,13 +11,13 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
   imports: [LuxuryAppComponentsModule],
 })
 export default class OrganigramaInternoComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  custIdService = inject(CustomerIdService);
+  apiRequestS = inject(ApiRequestService);
+  customerIdS = inject(CustomerIdService);
 
   nameCustomer: string = '';
   logoCustomer: string = '';
   data: any[] = [];
-  customerId$: Observable<number> = this.custIdService.getCustomerId$();
+  customerId$: Observable<number> = this.customerIdS.getCustomerId$();
 
   ngOnInit() {
     this.onLoadData();
@@ -29,14 +29,14 @@ export default class OrganigramaInternoComponent implements OnInit {
   }
 
   onLoadData() {
-    const urlApi = 'OrganigramaInterno/' + this.custIdService.getCustomerId();
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    const urlApi = 'OrganigramaInterno/' + this.customerIdS.getCustomerId();
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
   }
   OnLoadCustomer() {
-    this.apiRequestService
-      .onGetItem(`Customers/${this.custIdService.customerId}`)
+    this.apiRequestS
+      .onGetItem(`Customers/${this.customerIdS.customerId}`)
       .then((result: any) => {
         this.nameCustomer = result.nameCustomer;
       });

@@ -13,7 +13,7 @@ import { EmployeeAddOrEditService } from './employee-add-or-edit.service';
   imports: [LuxuryAppComponentsModule],
 })
 export default class EmployeePermissionAppComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   employeeAddOrEditService = inject(EmployeeAddOrEditService);
   authS = inject(AuthService);
   customToastService = inject(CustomToastService);
@@ -26,7 +26,7 @@ export default class EmployeePermissionAppComponent implements OnInit {
     this.onLoadData();
   }
   onLoadData() {
-    this.apiRequestService
+    this.apiRequestS
       .onGetItem(`Permission/PermissionUserAdmin/${this.applicationUserId}/`)
       .then((result: any) => {
         this.data = result;
@@ -37,10 +37,6 @@ export default class EmployeePermissionAppComponent implements OnInit {
     permission[field] = checked;
 
     // Aquí envías la solicitud para actualizar los permisos
-    this.apiRequestService.onPut(
-      `Permission/${permission.id}`,
-      permission,
-      false
-    );
+    this.apiRequestS.onPut(`Permission/${permission.id}`, permission, false);
   }
 }

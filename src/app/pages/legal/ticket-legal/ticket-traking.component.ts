@@ -15,12 +15,12 @@ import CustomInputDateComponent from 'src/app/custom-components/custom-input-for
   imports: [LuxuryAppComponentsModule, CustomInputDateComponent],
 })
 export default class TicketTrakingComponent implements OnInit, OnDestroy {
-  formBuilder = inject(FormBuilder);
+  formB = inject(FormBuilder);
   ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);
   authS = inject(AuthService);
-  apiRequestService = inject(ApiRequestService);
-  dateService = inject(DateService);
+  apiRequestS = inject(ApiRequestService);
+  dateS = inject(DateService);
 
   seguimientos: any[] = [];
   submitting: boolean = false;
@@ -31,10 +31,10 @@ export default class TicketTrakingComponent implements OnInit, OnDestroy {
   ticketId: string = this.config.data.ticketId;
   id: string = '';
 
-  form: FormGroup = this.formBuilder.group({
+  form: FormGroup = this.formB.group({
     id: { value: this.id, disabled: true },
     ticketId: [this.ticketId, Validators.required],
-    dateCreation: [this.dateService.getDateNow(), Validators.required],
+    dateCreation: [this.dateS.getDateNow(), Validators.required],
     applicationUserId: [this.authS.applicationUserId, Validators.required],
     description: [
       '',
@@ -63,7 +63,7 @@ export default class TicketTrakingComponent implements OnInit, OnDestroy {
   }
 
   onCargaListaseguimientos() {
-    this.apiRequestService
+    this.apiRequestS
       .onGetItem(`TicketLegal/Traking/${this.ticketId}`)
       .then((result: any) => {
         this.seguimientos = result;
@@ -75,11 +75,11 @@ export default class TicketTrakingComponent implements OnInit, OnDestroy {
 
   onCreateItem = false;
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
 
     this.submitting = true;
 
-    this.apiRequestService
+    this.apiRequestS
       .onPost(`TicketLegal/Addtraking`, this.form.value)
       .then(() => {
         this.onCargaListaseguimientos();

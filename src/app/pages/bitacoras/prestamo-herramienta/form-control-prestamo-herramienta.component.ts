@@ -15,12 +15,12 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class FormControlPrestamoHerramientaComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  formBuilder = inject(FormBuilder);
+  apiRequestS = inject(ApiRequestService);
+  formB = inject(FormBuilder);
   ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);
   authS = inject(AuthService);
-  custIdService = inject(CustomerIdService);
+  customerIdS = inject(CustomerIdService);
 
   submitting: boolean = false;
 
@@ -31,22 +31,22 @@ export default class FormControlPrestamoHerramientaComponent implements OnInit {
   form: FormGroup;
 
   ngOnInit(): void {
-    this.apiRequestService
-      .onGetSelectItem(`ApplicationUser/${this.custIdService.getCustomerId()}`)
+    this.apiRequestS
+      .onGetSelectItem(`ApplicationUser/${this.customerIdS.getCustomerId()}`)
       .then((response: any) => {
         this.cb_applicationUser = response;
       });
 
-    this.apiRequestService
-      .onGetSelectItem(`tool/${this.custIdService.getCustomerId()}`)
+    this.apiRequestS
+      .onGetSelectItem(`tool/${this.customerIdS.getCustomerId()}`)
       .then((response: any) => {
         this.cb_tool = response;
       });
 
     this.today = new Date().toISOString().slice(0, 16);
-    this.form = this.formBuilder.group({
+    this.form = this.formB.group({
       id: { value: this.id, disabled: true },
-      customerId: [this.custIdService.customerId],
+      customerId: [this.customerIdS.customerId],
       fechaSalida: [this.today, Validators.required],
       fechaRegreso: [],
       applicationUserId: ['', Validators.required],
@@ -77,7 +77,7 @@ export default class FormControlPrestamoHerramientaComponent implements OnInit {
   }
   onLoadData() {
     const urlApi = `controlprestamoherramientas/${this.id}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       this.form.patchValue(result);
       this.form.patchValue({
         applicationUser: result.applicationUser,
@@ -94,17 +94,17 @@ export default class FormControlPrestamoHerramientaComponent implements OnInit {
     });
   }
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
     this.submitting = true;
 
     if (this.id === 0) {
-      this.apiRequestService
+      this.apiRequestS
         .onPost(`controlprestamoherramientas`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.apiRequestService
+      this.apiRequestS
         .onPut(`controlprestamoherramientas/${this.id}`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);

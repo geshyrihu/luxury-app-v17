@@ -13,8 +13,8 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class FormatoAddOrEditComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  formBuilder = inject(FormBuilder);
+  apiRequestS = inject(ApiRequestService);
+  formB = inject(FormBuilder);
   ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);
 
@@ -23,7 +23,7 @@ export default class FormatoAddOrEditComponent implements OnInit {
   file: any = null;
   cb_area_responsable: ISelectItem[] = [];
 
-  form: FormGroup = this.formBuilder.group({
+  form: FormGroup = this.formB.group({
     id: { value: this.id, disabled: true },
     folio: ['', Validators.required],
     descripcion: ['', Validators.required],
@@ -38,11 +38,9 @@ export default class FormatoAddOrEditComponent implements OnInit {
     this.onLoadSelectItem();
     this.form.patchValue({ area: this.config.data.titulo });
 
-    this.apiRequestService
-      .onGetItem(`Formato/${this.id}`)
-      .then((result: any) => {
-        this.form.patchValue(result);
-      });
+    this.apiRequestS.onGetItem(`Formato/${this.id}`).then((result: any) => {
+      this.form.patchValue(result);
+    });
   }
 
   public saveAreResponsableId(e: any): void {
@@ -54,19 +52,17 @@ export default class FormatoAddOrEditComponent implements OnInit {
     });
   }
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
 
     const model = this.onCreateFormData(this.form.value);
     this.submitting = true;
 
     if (this.id === 0) {
-      this.apiRequestService
-        .onPost(`Formato`, model)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
-        });
+      this.apiRequestS.onPost(`Formato`, model).then((result: boolean) => {
+        result ? this.ref.close(true) : (this.submitting = false);
+      });
     } else {
-      this.apiRequestService
+      this.apiRequestS
         .onPut(`Formato/${this.id}`, model)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
@@ -89,7 +85,7 @@ export default class FormatoAddOrEditComponent implements OnInit {
   }
 
   onLoadSelectItem() {
-    this.apiRequestService
+    this.apiRequestS
       .onGetSelectItem('ResponsibleArea')
       .then((response: ISelectItem[]) => {
         this.cb_area_responsable = response;

@@ -15,19 +15,19 @@ import AddoreditInventarioIluminacionComponent from './addoredit-inventario-ilum
   imports: [LuxuryAppComponentsModule],
 })
 export default class InventarioIluminacionComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   authS = inject(AuthService);
-  custIdService = inject(CustomerIdService);
-  dialogHandlerService = inject(DialogHandlerService);
-  dialogService = inject(DialogService);
+  customerIdS = inject(CustomerIdService);
+  dialogHandlerS = inject(DialogHandlerService);
+  dialogS = inject(DialogService);
 
   data: any[] = [];
 
   ref: DynamicDialogRef;
-  customerId$: Observable<number> = this.custIdService.getCustomerId$();
+  customerId$: Observable<number> = this.customerIdS.getCustomerId$();
 
   ngOnInit(): void {
-    this.customerId$ = this.custIdService.getCustomerId$();
+    this.customerId$ = this.customerIdS.getCustomerId$();
     this.onLoadData();
     this.customerId$.subscribe(() => {
       this.onLoadData();
@@ -35,16 +35,16 @@ export default class InventarioIluminacionComponent implements OnInit {
   }
 
   onLoadData() {
-    this.apiRequestService
+    this.apiRequestS
       .onGetList(
-        'InventarioIluminacion/GetAll/' + this.custIdService.getCustomerId()
+        'InventarioIluminacion/GetAll/' + this.customerIdS.getCustomerId()
       )
       .then((result: any) => {
         this.data = result;
       });
   }
   onDelete(id: number) {
-    this.apiRequestService
+    this.apiRequestS
       .onDelete(`InventarioIluminacion/${id}`)
       .then((result: boolean) => {
         if (result) this.data = this.data.filter((item) => item.id !== id);
@@ -52,12 +52,12 @@ export default class InventarioIluminacionComponent implements OnInit {
   }
 
   onModalAddOrEdit(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         AddoreditInventarioIluminacionComponent,
         data,
         data.title,
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();

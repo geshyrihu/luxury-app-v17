@@ -15,18 +15,18 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class ModalOrdenCompraComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  formBuilder = inject(FormBuilder);
+  apiRequestS = inject(ApiRequestService);
+  formB = inject(FormBuilder);
   authS = inject(AuthService);
   config = inject(DynamicDialogConfig);
-  dateService = inject(DateService);
+  dateS = inject(DateService);
   ref = inject(DynamicDialogRef);
 
   submitting: boolean = false;
 
   ordenCompraId: number = 0;
   model: any;
-  form: FormGroup = this.formBuilder.group({
+  form: FormGroup = this.formB.group({
     id: [0, Validators.required],
     fechaSolicitud: ['', Validators.required],
     equipoOInstalacion: ['', Validators.required],
@@ -45,19 +45,17 @@ export default class ModalOrdenCompraComponent implements OnInit {
   }
 
   onLoadData() {
-    this.apiRequestService
+    this.apiRequestS
       .onGetItem(`OrdenCompra/GetForEdit/${this.ordenCompraId}`)
       .then((result: any) => {
-        result.fechaSolicitud = this.dateService.getDateFormat(
-          result.fechaSolicitud
-        );
+        result.fechaSolicitud = this.dateS.getDateFormat(result.fechaSolicitud);
         this.form.patchValue(result);
       });
   }
   onSubmit() {
     this.submitting = true;
 
-    this.apiRequestService
+    this.apiRequestS
       .onPut(`OrdenCompra/${this.ordenCompraId}`, this.form.value)
       .then((result: boolean) => {
         result ? this.ref.close(true) : (this.submitting = false);

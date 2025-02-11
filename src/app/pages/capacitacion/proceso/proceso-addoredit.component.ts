@@ -14,8 +14,8 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class ProcesoAddOrEditComponent implements OnInit {
-  formBuilder = inject(FormBuilder);
-  apiRequestService = inject(ApiRequestService);
+  formB = inject(FormBuilder);
+  apiRequestS = inject(ApiRequestService);
   ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);
 
@@ -27,7 +27,7 @@ export default class ProcesoAddOrEditComponent implements OnInit {
 
   cb_area_responsable: ISelectItem[] = [];
 
-  form: FormGroup = this.formBuilder.group({
+  form: FormGroup = this.formB.group({
     id: { value: this.id, disabled: true },
     folio: ['', Validators.required],
     descripcion: ['', Validators.required],
@@ -42,7 +42,7 @@ export default class ProcesoAddOrEditComponent implements OnInit {
   }
 
   onLoadData() {
-    this.apiRequestService
+    this.apiRequestS
       .onGetItem(`FormatoProceso/${this.id}`)
       .then((result: any) => {
         this.form.patchValue(result);
@@ -58,19 +58,19 @@ export default class ProcesoAddOrEditComponent implements OnInit {
     });
   }
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
 
     const model = this.onCreateFormData(this.form.value);
     this.submitting = true;
 
     if (this.id === 0) {
-      this.apiRequestService
+      this.apiRequestS
         .onPost(`FormatoProceso`, model)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.apiRequestService
+      this.apiRequestS
         .onPut(`FormatoProceso/${this.id}`, model)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
@@ -93,7 +93,7 @@ export default class ProcesoAddOrEditComponent implements OnInit {
   }
 
   onLoadSelectItem() {
-    this.apiRequestService
+    this.apiRequestS
       .onGetSelectItem('ResponsibleArea')
       .then((response: ISelectItem[]) => {
         this.cb_area_responsable = response;

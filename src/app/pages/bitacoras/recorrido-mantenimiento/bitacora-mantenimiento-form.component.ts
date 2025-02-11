@@ -20,10 +20,10 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class BitacoraMantenimientoFormComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  formBuilder = inject(FormBuilder);
+  apiRequestS = inject(ApiRequestService);
+  formB = inject(FormBuilder);
   authS = inject(AuthService);
-  custIdService = inject(CustomerIdService);
+  customerIdS = inject(CustomerIdService);
   ref = inject(DynamicDialogRef);
   customToastService = inject(CustomToastService);
 
@@ -44,8 +44,8 @@ export default class BitacoraMantenimientoFormComponent implements OnInit {
   ngOnInit(): void {
     this.userId = this.authS.userTokenDto.infoUserAuthDto.applicationUserId;
     this.onLoadMachinery();
-    this.form = this.formBuilder.group({
-      customerId: [this.custIdService.getCustomerId(), Validators.required],
+    this.form = this.formB.group({
+      customerId: [this.customerIdS.getCustomerId(), Validators.required],
       machineryId: ['', Validators.required],
       machinery: ['', Validators.required],
       descripcion: ['', Validators.required],
@@ -53,7 +53,7 @@ export default class BitacoraMantenimientoFormComponent implements OnInit {
       applicationUserId: [this.authS.applicationUserId],
     });
 
-    this.formFecha = this.formBuilder.group({
+    this.formFecha = this.formB.group({
       fechaHora: [],
     });
   }
@@ -62,13 +62,13 @@ export default class BitacoraMantenimientoFormComponent implements OnInit {
   }
 
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
 
     this.submitting = true;
     this.form.patchValue({
       applicationUserId: this.authS.applicationUserId,
     });
-    this.apiRequestService
+    this.apiRequestS
       .onPost(`BitacoraMantenimiento`, this.form.value)
       .then((result: boolean) => {
         result ? this.ref.close(true) : (this.submitting = false);
@@ -76,8 +76,8 @@ export default class BitacoraMantenimientoFormComponent implements OnInit {
   }
 
   onLoadMachinery() {
-    const urlApi = `SelectItem/ListadoInstalaciones/${this.custIdService.getCustomerId()}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    const urlApi = `SelectItem/ListadoInstalaciones/${this.customerIdS.getCustomerId()}`;
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.maquinarias = result;
     });
   }

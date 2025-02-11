@@ -16,8 +16,8 @@ import TarjetaProveedorComponent from './tarjeta-proveedor.component';
   imports: [LuxuryAppComponentsModule],
 })
 export default class ListProviderComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
   authS = inject(AuthService);
 
   data: IBusquedaProveedor[] = [];
@@ -31,51 +31,49 @@ export default class ListProviderComponent implements OnInit {
   }
   onLoadData() {
     const urlApi = `proveedor/listadoproveedores`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
   }
 
   onDelete(id: number) {
-    this.apiRequestService
-      .onDelete(`providers/${id}`)
-      .then((result: boolean) => {
-        if (result)
-          this.data = this.data.filter((item) => item.providerId !== id);
-      });
+    this.apiRequestS.onDelete(`providers/${id}`).then((result: boolean) => {
+      if (result)
+        this.data = this.data.filter((item) => item.providerId !== id);
+    });
   }
 
   onAutorizarProvider(providerId: number) {
     const urlApi = `Proveedor/Autorizar/${providerId}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.onLoadData();
     });
   }
 
   showModalCardProveedor(data: any) {
-    this.dialogHandlerService.openDialog(
+    this.dialogHandlerS.openDialog(
       TarjetaProveedorComponent,
       data,
       data.title,
-      this.dialogHandlerService.dialogSizeLg
+      this.dialogHandlerS.dialogSizeLg
     );
   }
   onConicidencias(data: any) {
-    this.dialogHandlerService.openDialog(
+    this.dialogHandlerS.openDialog(
       ProviderUseComponent,
       data,
       data.title,
-      this.dialogHandlerService.dialogSizeLg
+      this.dialogHandlerS.dialogSizeLg
     );
   }
 
   showModalAddOrEdit(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         AddoreditProveedorComponent,
         data,
         data.title,
-        this.dialogHandlerService.dialogSizeFull
+        this.dialogHandlerS.dialogSizeFull
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();
@@ -83,7 +81,7 @@ export default class ListProviderComponent implements OnInit {
   }
 
   onActivateProvider(data: any) {
-    this.apiRequestService
+    this.apiRequestS
       .onPut(`Providers/ChangeState/${data.providerId}/${data.state}`, null)
       .then((result: boolean) => {
         this.onLoadData();

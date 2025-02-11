@@ -22,11 +22,11 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 })
 export default class ProductosAddOrEditComponent implements OnInit {
   authS = inject(AuthService);
-  apiRequestService = inject(ApiRequestService);
-  formBuilder = inject(FormBuilder);
+  apiRequestS = inject(ApiRequestService);
+  formB = inject(FormBuilder);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
-  enumSelectService = inject(EnumSelectService);
+  enumSelectS = inject(EnumSelectService);
 
   submitting: boolean = false;
 
@@ -35,7 +35,7 @@ export default class ProductosAddOrEditComponent implements OnInit {
   model: any;
   photoFileUpdate: boolean = false;
 
-  form: FormGroup = this.formBuilder.group({
+  form: FormGroup = this.formB.group({
     id: new FormControl({ value: this.id, disabled: true }),
     category: ['', Validators.required],
     categoryId: ['', Validators.required],
@@ -53,7 +53,7 @@ export default class ProductosAddOrEditComponent implements OnInit {
   cb_clasificacion: ISelectItem[] = [];
 
   onloadData() {
-    this.apiRequestService.onGetSelectItem('Categories').then((result: any) => {
+    this.apiRequestS.onGetSelectItem('Categories').then((result: any) => {
       this.cb_category = result;
     });
   }
@@ -65,7 +65,7 @@ export default class ProductosAddOrEditComponent implements OnInit {
     });
   }
   async ngOnInit() {
-    this.cb_clasificacion = await this.enumSelectService.productClasificacion();
+    this.cb_clasificacion = await this.enumSelectS.productClasificacion();
     this.onloadData();
     this.id = this.config.data.id;
     if (this.id !== 0) this.onLoadData();
@@ -80,28 +80,24 @@ export default class ProductosAddOrEditComponent implements OnInit {
   }
 
   onLoadData() {
-    this.apiRequestService
-      .onGetItem(`Productos/${this.id}`)
-      .then((result: any) => {
-        this.urlBaseImg = result.urlImagen;
-        this.form.patchValue(result);
-        this.form.patchValue({ category: result.category.nameCotegory });
-      });
+    this.apiRequestS.onGetItem(`Productos/${this.id}`).then((result: any) => {
+      this.urlBaseImg = result.urlImagen;
+      this.form.patchValue(result);
+      this.form.patchValue({ category: result.category.nameCotegory });
+    });
   }
 
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
     const formData = this.createFormData(this.form.value);
 
     this.submitting = true;
     if (this.id === 0) {
-      this.apiRequestService
-        .onPost(`Productos`, formData)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
-        });
+      this.apiRequestS.onPost(`Productos`, formData).then((result: boolean) => {
+        result ? this.ref.close(true) : (this.submitting = false);
+      });
     } else {
-      this.apiRequestService
+      this.apiRequestS
         .onPut(`Productos/${this.id}`, formData)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);

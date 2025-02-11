@@ -13,8 +13,8 @@ import ProductosAddOrEditComponent from 'src/app/pages/settings/catalogos/produc
   imports: [LuxuryAppComponentsModule],
 })
 export default class OrdenCompraDetalleAddProductoComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
 
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
@@ -28,7 +28,7 @@ export default class OrdenCompraDetalleAddProductoComponent implements OnInit {
   cb_unidadMedida: any[] = [];
 
   ngOnInit(): void {
-    this.apiRequestService
+    this.apiRequestS
       .onGetSelectItem('getMeasurementUnits')
       .then((response: any) => {
         this.cb_unidadMedida = response;
@@ -40,7 +40,7 @@ export default class OrdenCompraDetalleAddProductoComponent implements OnInit {
 
   onLoadProduct() {
     var urlApi = `OrdenCompraDetalle/AddProductoToOrder/${this.ordenCompraId}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
   }
@@ -54,7 +54,7 @@ export default class OrdenCompraDetalleAddProductoComponent implements OnInit {
     item.applicationUserId =
       this.authS.userTokenDto.infoUserAuthDto.applicationUserId;
 
-    this.apiRequestService
+    this.apiRequestS
       .onPost(`OrdenCompraDetalle/`, item)
       .then((result: boolean) => {
         this.mensajeError = false;
@@ -66,13 +66,13 @@ export default class OrdenCompraDetalleAddProductoComponent implements OnInit {
   showModalAddOrEdit() {
     this.ref.close();
 
-    this.dialogHandlerService.openDialog(
+    this.dialogHandlerS.openDialog(
       ProductosAddOrEditComponent,
       {
         id: 0,
       },
       'Crear Producto',
-      this.dialogHandlerService.dialogSizeMd
+      this.dialogHandlerS.dialogSizeMd
     );
   }
 }

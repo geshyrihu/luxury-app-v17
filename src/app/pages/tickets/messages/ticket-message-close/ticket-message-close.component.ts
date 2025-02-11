@@ -21,18 +21,18 @@ import { TicketGroupService } from '../../ticket.service';
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class TicketMessageCloseComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   authS = inject(AuthService);
-  formBuilder = inject(FormBuilder);
+  formB = inject(FormBuilder);
   ticketGroupService = inject(TicketGroupService);
-  custIdService = inject(CustomerIdService);
+  customerIdS = inject(CustomerIdService);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
 
   id: string = this.config.data.id;
   submitting: boolean = false;
 
-  form: FormGroup = this.formBuilder.group({
+  form: FormGroup = this.formB.group({
     id: { value: this.id, disabled: true },
     closedDate: ['', Validators.required],
     closedById: ['', Validators.required],
@@ -40,7 +40,7 @@ export default class TicketMessageCloseComponent implements OnInit {
     afterWork: [null], // Imagen del trabajo posterior
     beforeWorkPreview: [null], // Vista previa de BeforeWork
     afterWorkPreview: [null], // Vista previa de AfterWork
-    customerId: [this.custIdService.customerId],
+    customerId: [this.customerIdS.customerId],
   });
 
   ngOnInit() {
@@ -48,7 +48,7 @@ export default class TicketMessageCloseComponent implements OnInit {
   }
   onLoadData() {
     const urlApi = `Tickets/GetByClosed/${this.id}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       this.form.patchValue(result);
       this.form.patchValue({
         closedById: this.authS.applicationUserId,
@@ -86,7 +86,7 @@ export default class TicketMessageCloseComponent implements OnInit {
       const formData = new FormData();
 
       this.form.patchValue({
-        customerId: this.custIdService.customerId,
+        customerId: this.customerIdS.customerId,
         closedDate: new Date(this.form.value.closedDate).toISOString(),
       });
 
@@ -114,7 +114,7 @@ export default class TicketMessageCloseComponent implements OnInit {
           formData.append(key, control?.value);
         }
       });
-      this.apiRequestService
+      this.apiRequestS
         .onPut(`Tickets/Closed/${this.id}`, formData)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);

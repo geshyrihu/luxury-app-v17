@@ -16,11 +16,11 @@ import { ProfielServiceService } from 'src/app/core/services/profiel-service.ser
   imports: [CommonModule, RouterModule, SimplebarAngularModule, FormsModule],
 })
 export default class UserProfileComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   authS = inject(AuthService);
   profielServiceService = inject(ProfielServiceService);
   router = inject(Router);
-  custIdService = inject(CustomerIdService);
+  customerIdS = inject(CustomerIdService);
 
   infoAccountAuthDto: InfoAccountAuthDto;
 
@@ -30,7 +30,7 @@ export default class UserProfileComponent implements OnInit {
   customerPhotoPath = this.authS.infoUserAuthDto.customerPhotoPath;
 
   cb_customer: any[] = [];
-  customerId = this.custIdService.customerId;
+  customerId = this.customerIdS.customerId;
 
   ngOnInit() {
     this.infoAccountAuthDto = this.authS.infoUserAuthDto;
@@ -51,12 +51,12 @@ export default class UserProfileComponent implements OnInit {
     localStorage.setItem('currentUrl', currentUrl);
     this.router.navigate(['/auth/login']);
 
-    this.apiRequestService.onGetItem(
+    this.apiRequestS.onGetItem(
       `Auth/Logout/${this.authS.infoUserAuthDto.applicationUserId}`
     );
   }
 
   selectCustomer(customerId: number) {
-    this.custIdService.setCustomerId(customerId);
+    this.customerIdS.setCustomerId(customerId);
   }
 }

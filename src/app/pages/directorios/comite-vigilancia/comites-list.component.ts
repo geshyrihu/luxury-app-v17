@@ -9,7 +9,7 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
   imports: [LuxuryAppComponentsModule],
 })
 export default class ComitesListComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
 
   // Declaración e inicialización de variables
   data: any;
@@ -20,7 +20,7 @@ export default class ComitesListComponent implements OnInit {
 
   onLoadData() {
     const urlApi = `LegalDirectories/Committees`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       // Actualizamos el valor del signal con los datos recibidos
       this.data = result;
     });

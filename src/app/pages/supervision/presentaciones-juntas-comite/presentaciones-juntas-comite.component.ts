@@ -12,13 +12,13 @@ import { FiltroCalendarService } from 'src/app/core/services/filtro-calendar.ser
   imports: [LuxuryAppComponentsModule],
 })
 export default class PresentacionesJuntasComiteComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   rangoCalendarioService = inject(FiltroCalendarService);
   route = inject(Router);
-  dateService = inject(DateService);
+  dateS = inject(DateService);
 
   data: any[] = [];
-  periodo: string = this.dateService.onParseToInputMonth(
+  periodo: string = this.dateS.onParseToInputMonth(
     this.rangoCalendarioService.fechaInicial
   );
 
@@ -27,11 +27,9 @@ export default class PresentacionesJuntasComiteComponent implements OnInit {
   }
 
   onLoadData(): void {
-    let inicial = this.dateService.getDateFormat(
-      new Date(this.periodo + '-' + 1)
-    );
+    let inicial = this.dateS.getDateFormat(new Date(this.periodo + '-' + 1));
     const urlApi = 'PresentacionJuntaComite/Generales/' + inicial + '/';
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
   }

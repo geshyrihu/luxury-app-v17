@@ -12,8 +12,8 @@ import { ModuleAppAddOrEditComponent } from './module-app-add-or-edit.component'
   templateUrl: './module-app-list.component.html',
 })
 export default class ModuleAppListComponent {
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
 
   // Declaración e inicialización de variables
   data: any[] = [];
@@ -25,7 +25,7 @@ export default class ModuleAppListComponent {
 
   onLoadData() {
     const urlApi = `ModuleApp`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       // Actualizamos el valor del signal con los datos recibidos
       this.data = result;
     });
@@ -33,7 +33,7 @@ export default class ModuleAppListComponent {
 
   // Funcion para eliminar un banco y refres
   onDelete(id: number) {
-    this.apiRequestService.onDelete(`ModuleApp/${id}`).then((_) => {
+    this.apiRequestS.onDelete(`ModuleApp/${id}`).then((_) => {
       // Actualizamos el signal para eliminar el elemento de la lista
       this.data.filter((item) => item.id !== id);
     });
@@ -41,12 +41,12 @@ export default class ModuleAppListComponent {
 
   // Función para abrir un cuadro de diálogo modal para agregar o editar o crear
   onModalAddOrEdit(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         ModuleAppAddOrEditComponent,
         data,
         data.title,
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();

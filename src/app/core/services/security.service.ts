@@ -6,7 +6,7 @@ import { StorageService } from './storage.service';
   providedIn: 'root',
 })
 export class SecurityService {
-  private storeService = inject(StorageService);
+  private storeS = inject(StorageService);
   private authSource = new Subject<boolean>();
   authChallenge$ = this.authSource.asObservable();
 
@@ -15,14 +15,14 @@ export class SecurityService {
    * @returns El token de autenticación o null si no está presente.
    */
   getToken(): any {
-    return this.storeService.retrieve('token');
+    return this.storeS.retrieve('token');
   }
 
   /**
    * Elimina los datos de autenticación del almacenamiento local.
    */
   resetAuthData() {
-    this.storeService.remove('token');
+    this.storeS.remove('token');
   }
 
   /**
@@ -30,7 +30,7 @@ export class SecurityService {
    * @param token El token de autenticación a almacenar.
    */
   setAuthData(token: string) {
-    this.storeService.store('token', token);
+    this.storeS.store('token', token);
   }
 
   /**

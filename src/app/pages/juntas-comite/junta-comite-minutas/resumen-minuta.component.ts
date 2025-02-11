@@ -14,7 +14,7 @@ import ResumenMinutaGraficoComponent from './resumen-minuta-grafico.component';
 })
 export default class ResumenMinutaComponent implements OnInit {
   reportService = inject(ReportService);
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   activatedRoute = inject(ActivatedRoute);
   clipboard = inject(Clipboard);
 
@@ -27,12 +27,12 @@ export default class ResumenMinutaComponent implements OnInit {
 
   onLoadData() {
     const urlApi1 = `MeetingDertailsSeguimiento/ResumenMinutasPresentacion/${this.activatedRoute.snapshot.params.meetingId}`;
-    this.apiRequestService.onGetList(urlApi1).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi1).then((result: any) => {
       this.data = result;
     });
 
     const urlApi = `MeetingDertailsSeguimiento/ResumenMinutasGraficoPresentacion/${this.activatedRoute.snapshot.params.meetingId}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.dataGrafico = result;
       this.reportService.setDataGrafico(result);
     });

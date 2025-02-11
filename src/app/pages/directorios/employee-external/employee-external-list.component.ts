@@ -19,9 +19,9 @@ import { EmployeeProviderAddOrEditComponent } from '../employee-internal/employe
 })
 export default class EmployeeExternalListComponent implements OnInit {
   employeeAddOrEditService = inject(EmployeeAddOrEditService);
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
-  custIdService = inject(CustomerIdService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
+  customerIdS = inject(CustomerIdService);
   rutaActiva = inject(ActivatedRoute);
   router = inject(Router);
 
@@ -30,7 +30,7 @@ export default class EmployeeExternalListComponent implements OnInit {
   getAllEmployeeActive: any = [];
   ref: DynamicDialogRef;
 
-  customerId$: Observable<number> = this.custIdService.getCustomerId$();
+  customerId$: Observable<number> = this.customerIdS.getCustomerId$();
 
   ngOnInit(): void {
     this.onLoadData();
@@ -45,41 +45,39 @@ export default class EmployeeExternalListComponent implements OnInit {
   }
 
   onLoadData() {
-    const urlApi = `EmployeeExternal/List/${this.custIdService.customerId}/${this.activo}`;
+    const urlApi = `EmployeeExternal/List/${this.customerIdS.customerId}/${this.activo}`;
 
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
   }
 
   onModalAddOrEdit(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         EmployeeProviderAddOrEditComponent,
         { id: data.id, typePerson: 1, title: data.title },
         'Agregar externo',
-        this.dialogHandlerService.dialogSizeLg
+        this.dialogHandlerS.dialogSizeLg
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();
       });
   }
   onDelete(id: number) {
-    this.apiRequestService
-      .onDelete(`Employees/${id}`)
-      .then((result: boolean) => {
-        if (result) this.data = this.data.filter((item) => item.id !== id);
-      });
+    this.apiRequestS.onDelete(`Employees/${id}`).then((result: boolean) => {
+      if (result) this.data = this.data.filter((item) => item.id !== id);
+    });
   }
 
   onCardEmployee(applicationUserId: string) {
-    this.dialogHandlerService.openDialog(
+    this.dialogHandlerS.openDialog(
       CardEmployeeComponent,
       {
         applicationUserId,
       },
       'Colaborador',
-      this.dialogHandlerService.dialogSizeSm
+      this.dialogHandlerS.dialogSizeSm
     );
   }
   onShowModalEditEmpleado(

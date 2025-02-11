@@ -15,10 +15,10 @@ import FiltroMinutasAreaComponent from '../filtro-minutas-area/filtro-minutas-ar
   imports: [LuxuryAppComponentsModule, MultiSelectModule],
 })
 export default class MinutasResumenComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
   periodoMonthService = inject(PeriodoMonthService);
-  dateService = inject(DateService);
+  dateS = inject(DateService);
 
   ref: DynamicDialogRef;
   cb_customers: any[] = [];
@@ -29,38 +29,36 @@ export default class MinutasResumenComponent implements OnInit {
   periodo: string = '';
 
   ngOnInit(): void {
-    this.periodo = this.dateService.getNameMontYear(
+    this.periodo = this.dateS.getNameMontYear(
       this.periodoMonthService.fechaInicial
     );
 
-    this.apiRequestService
-      .onGetSelectItem(`NombreCorto`)
-      .then((response: any) => {
-        this.cb_customers = response.map((selectList: any) => ({
-          label: selectList.label,
-        }));
-      });
+    this.apiRequestS.onGetSelectItem(`NombreCorto`).then((response: any) => {
+      this.cb_customers = response.map((selectList: any) => ({
+        label: selectList.label,
+      }));
+    });
 
     this.onLoadData(
-      this.dateService.getDateFormat(this.periodoMonthService.getPeriodoInicio),
-      this.dateService.getDateFormat(this.periodoMonthService.getPeriodoFin)
+      this.dateS.getDateFormat(this.periodoMonthService.getPeriodoInicio),
+      this.dateS.getDateFormat(this.periodoMonthService.getPeriodoFin)
     );
   }
 
   onFiltrarPeriodo(periodo: string) {
     this.periodoMonthService.setPeriodo(periodo);
     this.onLoadData(
-      this.dateService.getDateFormat(this.periodoMonthService.getPeriodoInicio),
-      this.dateService.getDateFormat(this.periodoMonthService.getPeriodoFin)
+      this.dateS.getDateFormat(this.periodoMonthService.getPeriodoInicio),
+      this.dateS.getDateFormat(this.periodoMonthService.getPeriodoFin)
     );
 
-    this.periodo = this.dateService.getNameMontYear(
+    this.periodo = this.dateS.getNameMontYear(
       this.periodoMonthService.fechaInicial
     );
   }
 
   onLoadData(fehcaInicio: string, fechaFinal: string) {
-    this.apiRequestService
+    this.apiRequestS
       .onGetList(
         `ResumenGeneral/ResumenMinutasGeneralLista/${fehcaInicio}/${fechaFinal}`
       )
@@ -68,7 +66,7 @@ export default class MinutasResumenComponent implements OnInit {
         this.generalMinutas = result;
       });
 
-    this.apiRequestService
+    this.apiRequestS
       .onGetList(
         `ResumenGeneral/ResumenMinutasGeneralGrupo/${fehcaInicio}/${fechaFinal}`
       )
@@ -83,7 +81,7 @@ export default class MinutasResumenComponent implements OnInit {
     estatus: number,
     customerName: string
   ) {
-    this.dialogHandlerService.openDialog(
+    this.dialogHandlerS.openDialog(
       FiltroMinutasAreaComponent,
       {
         meetingId: meetingId,
@@ -93,7 +91,7 @@ export default class MinutasResumenComponent implements OnInit {
         customerName: customerName,
       },
       '',
-      this.dialogHandlerService.dialogSizeFull
+      this.dialogHandlerS.dialogSizeFull
     );
   }
 }

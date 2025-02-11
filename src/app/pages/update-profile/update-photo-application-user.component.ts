@@ -15,7 +15,7 @@ import { ProfielServiceService } from 'src/app/core/services/profiel-service.ser
   imports: [LuxuryAppComponentsModule, CommonModule, NgbModule, ToastModule],
 })
 export default class UpdatePhotoApplicationUserComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   authS = inject(AuthService);
   public profielServiceService = inject(ProfielServiceService);
 
@@ -52,7 +52,7 @@ export default class UpdatePhotoApplicationUserComponent implements OnInit {
     const formData = new FormData();
     formData.append('file', this.imgUpload);
 
-    this.apiRequestService
+    this.apiRequestS
       .onPut('EmployeeInternal/UpdateImage/' + this.applicationUserId, formData)
       .then((result: any) => {
         if (result) {

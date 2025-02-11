@@ -17,14 +17,14 @@ import MantenimientosPreventivosResumenComponent from './summary-preventive-main
   imports: [LuxuryAppComponentsModule, DashboardDynamicCardItemComponent],
 })
 export default class DashboardPreventiveMaintenanceComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
-  dateService = inject(DateService);
-  custIdService = inject(CustomerIdService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
+  dateS = inject(DateService);
+  customerIdS = inject(CustomerIdService);
   periodoMonthService = inject(PeriodoMonthService);
 
   ref: DynamicDialogRef;
-  customerId$: Observable<number> = this.custIdService.getCustomerId$();
+  customerId$: Observable<number> = this.customerIdS.getCustomerId$();
   data: any = [];
 
   onChangePeriodo(periodo: string) {
@@ -33,7 +33,7 @@ export default class DashboardPreventiveMaintenanceComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.customerId$ = this.custIdService.getCustomerId$();
+    this.customerId$ = this.customerIdS.getCustomerId$();
     this.onLoadOrdenServicio();
     this.customerId$.subscribe(() => {
       this.onLoadOrdenServicio();
@@ -41,20 +41,20 @@ export default class DashboardPreventiveMaintenanceComponent implements OnInit {
   }
 
   onLoadOrdenServicio() {
-    const urlApi = `Dashboard/OrdenesServicio/${this.custIdService.getCustomerId()}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    const urlApi = `Dashboard/OrdenesServicio/${this.customerIdS.getCustomerId()}`;
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
   }
 
   onClick(estatus?: number) {
-    this.dialogHandlerService.openDialog(
+    this.dialogHandlerS.openDialog(
       MantenimientosPreventivosResumenComponent,
       {
         estatus,
       },
       'Ordenes de Mantenimiento Preventivo',
-      this.dialogHandlerService.dialogSizeFull
+      this.dialogHandlerS.dialogSizeFull
     );
   }
 }

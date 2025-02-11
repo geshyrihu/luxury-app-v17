@@ -24,14 +24,14 @@ import { EnumSelectService } from '../../../core/services/enum-select.service';
   providers: [EnumSelectService],
 })
 export default class SolicitudModificacionSalarioComponent {
-  apiRequestService = inject(ApiRequestService);
-  formBuilder = inject(FormBuilder);
+  apiRequestS = inject(ApiRequestService);
+  formB = inject(FormBuilder);
   config = inject(DynamicDialogConfig);
-  custIdService = inject(CustomerIdService);
-  dateService = inject(DateService);
+  customerIdS = inject(CustomerIdService);
+  dateS = inject(DateService);
   ref = inject(DynamicDialogRef);
   authS = inject(AuthService);
-  enumSelectService = inject(EnumSelectService);
+  enumSelectS = inject(EnumSelectService);
 
   workPositionId: number = this.config.data.workPositionId;
   data: any;
@@ -42,7 +42,7 @@ export default class SolicitudModificacionSalarioComponent {
   cb_profession: ISelectItem[] = [];
   cb_si_no: ISelectItem[] = [];
 
-  form: FormGroup = this.formBuilder.group({
+  form: FormGroup = this.formB.group({
     employeeId: ['', Validators.required],
     employeeName: ['', Validators.required],
     professionCurrentId: [],
@@ -57,32 +57,30 @@ export default class SolicitudModificacionSalarioComponent {
   });
 
   async ngOnInit() {
-    this.cb_si_no = await this.enumSelectService.boolYesNo();
-    this.apiRequestService
-      .onGetSelectItem(`Professions`)
-      .then((response: any) => {
-        this.cb_profession = response;
-      });
+    this.cb_si_no = await this.enumSelectS.boolYesNo();
+    this.apiRequestS.onGetSelectItem(`Professions`).then((response: any) => {
+      this.cb_profession = response;
+    });
 
     this.onLoadData();
   }
   onLoadData() {
     const urlApi = `RequestSalaryModification/GetDataForModificacionSalario/${this.workPositionId}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       this.form.patchValue(result);
     });
   }
 
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
 
     var model = this.createFormData(this.form.value);
 
     this.submitting = true;
 
-    this.apiRequestService
+    this.apiRequestS
       .onPost(
-        `SolicitudesReclutamiento/SolicitudModificacionSalario/${this.custIdService.getCustomerId()}/${
+        `SolicitudesReclutamiento/SolicitudModificacionSalario/${this.customerIdS.getCustomerId()}/${
           this.authS.infoUserAuthDto.applicationUserId
         } `,
         model
@@ -111,7 +109,7 @@ export default class SolicitudModificacionSalarioComponent {
     formData.append('workPositionId', this.config.data.workPositionId);
     formData.append(
       'executionDate',
-      this.dateService.getDateFormat(form.executionDate)
+      this.dateS.getDateFormat(form.executionDate)
     );
     formData.append('retroactive', form.retroactive);
     formData.append('additionalInformation', form.additionalInformation);

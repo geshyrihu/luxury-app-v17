@@ -16,21 +16,21 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   imports: [LuxuryAppComponentsModule, FlatpickrModule, CustomInputModule],
 })
 export default class AddPresentacionJuntaComiteComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  formBuilder = inject(FormBuilder);
+  apiRequestS = inject(ApiRequestService);
+  formB = inject(FormBuilder);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
-  custIdService = inject(CustomerIdService);
-  dateService = inject(DateService);
+  customerIdS = inject(CustomerIdService);
+  dateS = inject(DateService);
 
   submitting: boolean = false;
   id: number = 0;
   filePath: string = '';
   errorMessage: string = '';
 
-  form: FormGroup = this.formBuilder.group({
+  form: FormGroup = this.formB.group({
     id: { value: this.id, disabled: true },
-    customerId: [this.custIdService.getCustomerId()],
+    customerId: [this.customerIdS.getCustomerId()],
     fechaCorrespondiente: ['', Validators.required],
     fechaJunta: [''],
   });
@@ -43,28 +43,28 @@ export default class AddPresentacionJuntaComiteComponent implements OnInit {
     flatpickrFactory();
 
     const urlApi = `PresentacionJuntaComite/Get/${this.id}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
-      result.fechaCorrespondiente = this.dateService.getDateFormat(
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
+      result.fechaCorrespondiente = this.dateS.getDateFormat(
         result.fechaCorrespondiente
       );
-      result.fechaJunta = this.dateService.getDateFormat(result.fechaJunta);
+      result.fechaJunta = this.dateS.getDateFormat(result.fechaJunta);
       this.form.patchValue(result);
     });
   }
 
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
 
     this.submitting = true;
 
     if (this.id === 0) {
-      this.apiRequestService
+      this.apiRequestS
         .onPost(`PresentacionJuntaComite/AddFecha`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.apiRequestService
+      this.apiRequestS
         .onPut(`PresentacionJuntaComite/AddFecha/${this.id}`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);

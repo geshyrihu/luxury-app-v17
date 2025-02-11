@@ -19,8 +19,8 @@ import AddoreditModificacionSalarioComponent from './addoredit-modificacion-sala
 export default class ListSolicitudModificacionSalarioComponent
   implements OnInit
 {
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
 
   filterRequestsService = inject(FilterRequestsService);
   statusSolicitudVacanteService = inject(StatusSolicitudVacanteService);
@@ -35,7 +35,7 @@ export default class ListSolicitudModificacionSalarioComponent
   }
   onLoadData() {
     const urlApi = `RequestSalaryModification`;
-    this.apiRequestService
+    this.apiRequestS
       .onGetList(urlApi, this.filterRequestsService.getParams())
       .then((result: any) => {
         this.data = result;
@@ -43,7 +43,7 @@ export default class ListSolicitudModificacionSalarioComponent
   }
 
   onDelete(id: number) {
-    this.apiRequestService
+    this.apiRequestS
       .onDelete(`RequestSalaryModification/${id}`)
       .then((result: boolean) => {
         if (result) this.data = this.data.filter((item) => item.id !== id);
@@ -51,14 +51,14 @@ export default class ListSolicitudModificacionSalarioComponent
   }
 
   onModalAddOrEdit(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         AddoreditModificacionSalarioComponent,
         {
           id: data.id,
         },
         'Editar registro',
-        this.dialogHandlerService.dialogSizeFull
+        this.dialogHandlerS.dialogSizeFull
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();

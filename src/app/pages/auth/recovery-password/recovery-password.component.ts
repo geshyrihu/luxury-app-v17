@@ -16,22 +16,22 @@ import Swal from 'sweetalert2';
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class RecoveryPasswordComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   customToastService = inject(CustomToastService);
-  dataService = inject(DataConnectorService);
-  formBuilder = inject(FormBuilder);
+  dataConnectorS = inject(DataConnectorService);
+  formB = inject(FormBuilder);
   errorMessage: string = '';
   successMessage: string = '';
 
   form: FormGroup;
   ngOnInit(): void {
-    this.form = this.formBuilder.group({
+    this.form = this.formB.group({
       email: ['', [Validators.required, Validators.email]], // Validación de correo electrónico requerido y con formato válido
     });
   }
 
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
 
     // Limpiar mensajes previos
     this.errorMessage = '';
@@ -50,7 +50,7 @@ export default class RecoveryPasswordComponent implements OnInit {
     const urlApi = 'Auth/RecoverPassword';
     const body = this.form.value;
 
-    this.dataService
+    this.dataConnectorS
       .post(urlApi, body)
       .pipe(
         catchError((error: HttpErrorResponse) => {

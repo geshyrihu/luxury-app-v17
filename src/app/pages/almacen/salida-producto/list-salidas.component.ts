@@ -15,14 +15,14 @@ import EditSalidasComponent from './edit-salidas.component';
   imports: [LuxuryAppComponentsModule],
 })
 export default class ListSalidasComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   authS = inject(AuthService);
-  custIdService = inject(CustomerIdService);
-  dialogHandlerService = inject(DialogHandlerService);
+  customerIdS = inject(CustomerIdService);
+  dialogHandlerS = inject(DialogHandlerService);
 
   data: any[] = [];
   ref: DynamicDialogRef;
-  customerId$: Observable<number> = this.custIdService.getCustomerId$();
+  customerId$: Observable<number> = this.customerIdS.getCustomerId$();
 
   ngOnInit(): void {
     this.onLoadData();
@@ -32,13 +32,13 @@ export default class ListSalidasComponent implements OnInit {
   }
 
   onLoadData() {
-    const urlApi = `SalidaProductos/GetSalidaProductos/${this.custIdService.customerId}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    const urlApi = `SalidaProductos/GetSalidaProductos/${this.customerIdS.customerId}`;
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
   }
   onDelete(id: number) {
-    this.apiRequestService
+    this.apiRequestS
       .onDelete(`salidaproductos/${id}`)
       .then((result: boolean) => {
         if (result) this.data = this.data.filter((item) => item.id !== id);
@@ -46,7 +46,7 @@ export default class ListSalidasComponent implements OnInit {
   }
 
   onEditSalida(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         EditSalidasComponent,
         {
@@ -56,7 +56,7 @@ export default class ListSalidasComponent implements OnInit {
           idInventarioProducto: data.idInventarioProducto,
         },
         'Salida de Productos',
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();

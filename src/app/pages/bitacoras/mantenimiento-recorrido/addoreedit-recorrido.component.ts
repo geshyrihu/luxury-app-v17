@@ -14,11 +14,11 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class RecorridoAddOrEditComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  formBuilder = inject(FormBuilder);
+  apiRequestS = inject(ApiRequestService);
+  formB = inject(FormBuilder);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
-  custIdService = inject(CustomerIdService);
+  customerIdS = inject(CustomerIdService);
 
   submitting: boolean = false;
 
@@ -29,14 +29,12 @@ export default class RecorridoAddOrEditComponent implements OnInit {
   cb_RouteRecurrence: ISelectItem[] = [];
 
   onLoadSelectItem() {
-    this.apiRequestService
-      .onGetSelectItem(
-        `MachineriesGetAll/${this.custIdService.getCustomerId()}`
-      )
+    this.apiRequestS
+      .onGetSelectItem(`MachineriesGetAll/${this.customerIdS.getCustomerId()}`)
       .then((response: any) => {
         this.cb_machinery = response;
       });
-    this.apiRequestService
+    this.apiRequestS
       .onGetEnumSelectItem(`ERouteRecurrence`)
       .then((result: any) => {
         this.cb_RouteRecurrence = result;
@@ -58,13 +56,13 @@ export default class RecorridoAddOrEditComponent implements OnInit {
 
   onLoadData() {
     const urlApi = `Routes/${this.id}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       this.form.patchValue(result);
     });
   }
 
   onLoadForm() {
-    this.form = this.formBuilder.group({
+    this.form = this.formB.group({
       id: { value: this.id, disabled: true },
       machineryId: ['', Validators.required],
       machinery: ['', Validators.required],
@@ -74,19 +72,19 @@ export default class RecorridoAddOrEditComponent implements OnInit {
   }
 
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
     this.id = this.config.data.id;
 
     this.submitting = true;
 
     if (this.id === 0) {
-      this.apiRequestService
+      this.apiRequestS
         .onPost(`Routes`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.apiRequestService
+      this.apiRequestS
         .onPut(`Routes/${this.id}`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);

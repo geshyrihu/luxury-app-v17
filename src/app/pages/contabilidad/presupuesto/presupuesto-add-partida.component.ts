@@ -12,7 +12,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
   imports: [LuxuryAppComponentsModule],
 })
 export default class PresupuestoAddPartidaComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   config = inject(DynamicDialogConfig);
   authS = inject(AuthService);
   ref = inject(DynamicDialogRef);
@@ -26,7 +26,7 @@ export default class PresupuestoAddPartidaComponent implements OnInit {
     this.onLoadData();
   }
   onLoadData() {
-    this.apiRequestService
+    this.apiRequestS
       .onGetList(
         `SelectItem/AddCuentaCedulaPresupuestal/${this.config.data.idBudgetCard}`
       )
@@ -53,10 +53,8 @@ export default class PresupuestoAddPartidaComponent implements OnInit {
 
     this.submitting = true;
 
-    this.apiRequestService
-      .onPost(`CedulaPresupuestalDetalles`, model)
-      .then(() => {
-        this.onLoadData();
-      });
+    this.apiRequestS.onPost(`CedulaPresupuestalDetalles`, model).then(() => {
+      this.onLoadData();
+    });
   }
 }

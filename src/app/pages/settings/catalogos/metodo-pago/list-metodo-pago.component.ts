@@ -13,8 +13,8 @@ import AddoreditMetodoPagoComponent from './addoredit-metodo-pago.component';
   imports: [LuxuryAppComponentsModule],
 })
 export default class ListMetodoPagoComponent implements OnInit {
-  dialogHandlerService = inject(DialogHandlerService);
-  apiRequestService = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
+  apiRequestS = inject(ApiRequestService);
 
   data: any[] = [];
 
@@ -24,26 +24,24 @@ export default class ListMetodoPagoComponent implements OnInit {
     this.onLoadData();
   }
   onLoadData() {
-    this.apiRequestService.onGetList('MetodoPago').then((result: any) => {
+    this.apiRequestS.onGetList('MetodoPago').then((result: any) => {
       this.data = result;
     });
   }
 
   onDelete(id: number) {
-    this.apiRequestService
-      .onDelete(`MetodoPago/${id}`)
-      .then((result: boolean) => {
-        if (result) this.data = this.data.filter((item) => item.id !== id);
-      });
+    this.apiRequestS.onDelete(`MetodoPago/${id}`).then((result: boolean) => {
+      if (result) this.data = this.data.filter((item) => item.id !== id);
+    });
   }
 
   showModalAddOrEdit(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         AddoreditMetodoPagoComponent,
         data,
         data.title,
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();

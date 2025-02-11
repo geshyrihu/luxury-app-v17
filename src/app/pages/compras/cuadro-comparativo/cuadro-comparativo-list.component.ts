@@ -15,8 +15,8 @@ import CuadroComparativoCotizacionComponent from './cuadro-comparativo-cotizacio
   imports: [LuxuryAppComponentsModule],
 })
 export default class CuadroComparativoListComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
   customToastService = inject(CustomToastService);
   routeActive = inject(ActivatedRoute);
 
@@ -56,14 +56,14 @@ export default class CuadroComparativoListComponent implements OnInit {
   }
 
   onModalAddProveedor() {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         CuadroComparativoAddProveedorComponent,
         {
           solicitudCompraId: this.solicitudCompraId,
         },
         'Selecciona un proveedor',
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) {
@@ -80,7 +80,7 @@ export default class CuadroComparativoListComponent implements OnInit {
     this.provider3 = undefined;
     const urlApi = `solicitudcompra/cuadrocomparativo/${this.solicitudCompraId}`;
 
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       this.folio = result.folio;
       this.solicitudCompra = result;
       this.cotizacionProveedor = this.solicitudCompra.cotizacionProveedor;
@@ -128,7 +128,7 @@ export default class CuadroComparativoListComponent implements OnInit {
   }
 
   onEditCotizacion(posicionCotizacion: number, cotizacionProveedorId: number) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         CuadroComparativoCotizacionComponent,
         {
@@ -137,7 +137,7 @@ export default class CuadroComparativoListComponent implements OnInit {
           cotizacionProveedorId: cotizacionProveedorId,
         },
         'Editar Cotización',
-        this.dialogHandlerService.dialogSizeLg
+        this.dialogHandlerS.dialogSizeLg
       )
       .then((result: boolean) => {
         if (result) {

@@ -15,8 +15,8 @@ import { TicketGroupService } from '../../../tickets/ticket.service';
 })
 export default class TicketMessageStatusComponent implements OnInit {
   ticketGroupService = inject(TicketGroupService);
-  apiRequestService = inject(ApiRequestService);
-  enumSelectService = inject(EnumSelectService);
+  apiRequestS = inject(ApiRequestService);
+  enumSelectS = inject(EnumSelectService);
 
   cb_status: ISelectItem[] = []; // Lista de estados
 
@@ -24,9 +24,7 @@ export default class TicketMessageStatusComponent implements OnInit {
   @Output() statusChange = new EventEmitter<string>(); // Evento para emitir el cambio de estado
 
   async ngOnInit() {
-    this.cb_status = await this.enumSelectService.typeTicketMessageStatus(
-      false
-    );
+    this.cb_status = await this.enumSelectS.typeTicketMessageStatus(false);
   }
 
   onStatusChange(value: any) {

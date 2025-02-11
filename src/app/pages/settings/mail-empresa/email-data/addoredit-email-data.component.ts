@@ -14,8 +14,8 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class AddOrEditEmailDataComponent implements OnInit {
-  formBuilder = inject(FormBuilder);
-  apiRequestService = inject(ApiRequestService);
+  formB = inject(FormBuilder);
+  apiRequestS = inject(ApiRequestService);
   authS = inject(AuthService);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
@@ -25,8 +25,8 @@ export default class AddOrEditEmailDataComponent implements OnInit {
   testEmailMessage: string = '';
   submitting: boolean = false;
 
-  form: FormGroup = this.formBuilder.group({
-    id: this.formBuilder.control({
+  form: FormGroup = this.formB.group({
+    id: this.formB.control({
       value: this.id,
       disabled: true,
     }),
@@ -43,7 +43,7 @@ export default class AddOrEditEmailDataComponent implements OnInit {
   }
 
   onLoadData() {
-    this.apiRequestService
+    this.apiRequestS
       .onGetList<IEmailDataAddOrEdit>(`EmailData/${this.id}`)
       .then((result: any) => {
         if (result !== null) {
@@ -53,18 +53,18 @@ export default class AddOrEditEmailDataComponent implements OnInit {
       });
   }
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
 
     this.submitting = true;
 
     if (this.id === '') {
-      this.apiRequestService
+      this.apiRequestS
         .onPost(`EmailData`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.apiRequestService
+      this.apiRequestS
         .onPut(`EmailData/${this.id}`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
@@ -76,7 +76,7 @@ export default class AddOrEditEmailDataComponent implements OnInit {
 
     var urlApi = `SendEmail/TestEmail/${this.id}`;
 
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.testEmailMessage = result.message;
       this.submitting = false;
     });

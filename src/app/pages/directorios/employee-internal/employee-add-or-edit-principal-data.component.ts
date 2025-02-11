@@ -14,15 +14,15 @@ import { EmployeeAddOrEditService } from './employee-add-or-edit.service';
 })
 export default class EmployeeAddOrEditPrincipalDataComponent implements OnInit {
   employeeAddOrEditService = inject(EmployeeAddOrEditService);
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   authS = inject(AuthService);
-  formBuilder = inject(FormBuilder);
+  formB = inject(FormBuilder);
 
   @Input()
   applicationUserId: string = '';
 
   submitting: boolean = false;
-  form: FormGroup = this.formBuilder.group({
+  form: FormGroup = this.formB.group({
     id: { value: this.applicationUserId, disabled: true },
     email: ['', Validators.required],
     firstName: ['', Validators.required],
@@ -35,16 +35,16 @@ export default class EmployeeAddOrEditPrincipalDataComponent implements OnInit {
 
   onLoadData() {
     const urlApi = `EmployeeInternal/PrincipalData/${this.applicationUserId}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       this.form.patchValue(result);
     });
   }
 
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
 
     this.submitting = true;
-    this.apiRequestService
+    this.apiRequestS
       .onPut(
         `EmployeeInternal/UpdatePrincipalData/${this.applicationUserId}`,
         this.form.value

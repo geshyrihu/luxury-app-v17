@@ -13,8 +13,8 @@ import LegalMatterCategorieAddOrEditComponent from './legal-matter-categorie-add
   imports: [LuxuryAppComponentsModule],
 })
 export default class LegalMatterComponent {
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
   ref: DynamicDialogRef; // Referencia a un cuadro de diálogo modal
   // Declaración e inicialización de variables
   data: any[];
@@ -25,7 +25,7 @@ export default class LegalMatterComponent {
 
   onLoadData() {
     const urlApi = `LegalMatter`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       // Actualizamos el valor del signal con los datos recibidos
       this.data = result;
     });
@@ -33,33 +33,31 @@ export default class LegalMatterComponent {
 
   // Funcion para eliminar un banco y refres
   onDelete(id: number) {
-    this.apiRequestService
-      .onDelete(`LegalMatter/${id}`)
-      .then((result: boolean) => {
-        if (result) this.data = this.data.filter((item) => item.id !== id);
-      });
+    this.apiRequestS.onDelete(`LegalMatter/${id}`).then((result: boolean) => {
+      if (result) this.data = this.data.filter((item) => item.id !== id);
+    });
   }
 
   // Función para abrir un cuadro de diálogo modal para agregar o editar o crear
   onModalAddOrEdit(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         LegalMatterCategoryComponent,
         data,
         data.title,
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();
       });
   }
   onModalEditCategorie(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         LegalMatterCategorieAddOrEditComponent,
         data,
         data.title,
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();
@@ -67,7 +65,7 @@ export default class LegalMatterComponent {
   }
   onDeleteCategorie(id: string) {
     const urlApi = `LegalMatter/Category/${id}`;
-    this.apiRequestService.onDelete(urlApi).then((result: any) => {
+    this.apiRequestS.onDelete(urlApi).then((result: any) => {
       this.onLoadData();
     });
   }

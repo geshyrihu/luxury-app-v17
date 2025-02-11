@@ -6,7 +6,7 @@ import { DialogSize } from '../enums/dialog-size';
   providedIn: 'root',
 })
 export class DialogHandlerService {
-  dialogService = inject(DialogService);
+  dialogS = inject(DialogService);
 
   openDialog(
     component: any,
@@ -14,11 +14,10 @@ export class DialogHandlerService {
     title: string,
     size: DialogSize
   ): Promise<boolean> {
-    const ref = this.dialogService.open(component, {
+    const ref = this.dialogS.open(component, {
       data,
       header: title,
       styleClass: this.getResponsiveDialogSize(size),
-      // styleClass: size,
       closeOnEscape: true,
       baseZIndex: 10000,
     });

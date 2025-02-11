@@ -31,11 +31,11 @@ import TicketMessageReopenComponent from '../ticket-message-reopen/ticket-messag
 export default class TicketMessageListComponent implements OnInit {
   // Dependencies injection
   activatedRoute = inject(ActivatedRoute);
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   authS = inject(AuthService);
-  custIdService = inject(CustomerIdService);
+  customerIdS = inject(CustomerIdService);
   customToastService = inject(CustomToastService);
-  dialogHandlerService = inject(DialogHandlerService);
+  dialogHandlerS = inject(DialogHandlerService);
   router = inject(Router);
   ticketGroupService = inject(TicketGroupService);
 
@@ -106,7 +106,7 @@ export default class TicketMessageListComponent implements OnInit {
     const urlApi = `Tickets/List/${this.ticketGroupId}/${status}`;
     const httpParams = { page, pageSize, filter };
 
-    this.apiRequestService
+    this.apiRequestS
       .onGetListOffLoading(urlApi, httpParams)
       .then((result: TicketResult) => {
         if (!result) return;
@@ -158,7 +158,7 @@ export default class TicketMessageListComponent implements OnInit {
     const urlApi = `Tickets/List/${this.ticketGroupId}/${status}`;
     const httpParams = { page, pageSize, filter };
 
-    this.apiRequestService
+    this.apiRequestS
       .onGetList(urlApi, httpParams)
       .then((result: TicketResult) => {
         if (!result) return;
@@ -196,12 +196,12 @@ export default class TicketMessageListComponent implements OnInit {
     }
   }
   onModalAddOrEdit(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         TicketMessageAddOrEditComponent,
         { id: data.id, ticketGroupId: this.ticketGroupId },
         data.title,
-        this.dialogHandlerService.dialogSizeLg
+        this.dialogHandlerS.dialogSizeLg
       )
       .then((result: boolean) => {
         this.onLoadData(this.status);
@@ -210,44 +210,44 @@ export default class TicketMessageListComponent implements OnInit {
       });
   }
   onCardEmployee(applicationUserId: string) {
-    this.dialogHandlerService.openDialog(
+    this.dialogHandlerS.openDialog(
       CardEmployeeComponent,
       { applicationUserId },
       'Colaborador',
-      this.dialogHandlerService.dialogSizeMd
+      this.dialogHandlerS.dialogSizeMd
     );
   }
   onProgram(id: string) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         TicketMessageProgramComponent,
         { id: id, ticketGroupId: this.ticketGroupId },
         'Programar actividad',
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData(this.status);
       });
   }
   onReopen(id: string) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         TicketMessageReopenComponent,
         { id: id },
         'Re abrir ticket',
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData(this.status);
       });
   }
   onView(id: string) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         TicketMessageReadListComponent,
         { id: id },
         'Vistas',
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData(this.status);
@@ -268,7 +268,7 @@ export default class TicketMessageListComponent implements OnInit {
       if (result.value) {
         const urlApi = `Tickets/InProgress/${id}/${this.authS.applicationUserId}`;
 
-        this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+        this.apiRequestS.onGetItem(urlApi).then((result: any) => {
           // Actualizamos el valor del signal con los datos recibidos
           this.onLoadData(this.status);
         });
@@ -285,12 +285,12 @@ export default class TicketMessageListComponent implements OnInit {
     ]);
   }
   onClosed(id: string) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         TicketMessageCloseComponent,
         { id: id },
         'Cerrar ticket',
-        this.dialogHandlerService.dialogSizeLg
+        this.dialogHandlerS.dialogSizeLg
       )
       .then((result: boolean) => {
         if (result) this.onLoadData(this.status);
@@ -300,18 +300,18 @@ export default class TicketMessageListComponent implements OnInit {
   // Actualizar si el item es relevante o no
   onUpdateStateTicket(item: any) {
     const urlApi = `Tickets/UpdateRelevance/${item.id}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       this.customToastService.onCloseToSuccess();
     });
   }
 
   onFollowUp(id: string) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         TicketMessageFollowupComponent,
         { id: id },
         'Seguimiento',
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData(this.status);
@@ -320,7 +320,7 @@ export default class TicketMessageListComponent implements OnInit {
 
   onUpdatePriority(id: string) {
     const urlApi = `Tickets/UpdatePriority/${id}/${this.authS.applicationUserId}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       if (result) {
         // Encuentra el índice del ítem con el ID proporcionado
         const itemIndex = this.data.items.findIndex((item) => item.id === id);
@@ -339,8 +339,8 @@ export default class TicketMessageListComponent implements OnInit {
 
   // Funcion para eliminar un banco y refres
   onDelete(id: any) {
-    this.apiRequestService
-      .onDelete(`Tickets/${id}/${this.custIdService.getCustomerId()}`)
+    this.apiRequestS
+      .onDelete(`Tickets/${id}/${this.customerIdS.getCustomerId()}`)
       .then((result: boolean) => {
         // Actualizamos el signal para eliminar el elemento de la lista
         if (result) {
@@ -375,7 +375,7 @@ export default class TicketMessageListComponent implements OnInit {
   }
   onSendWeeklyReport(): void {
     // Lógica para enviar el reporte
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         SendOperationReportComponent,
         {
@@ -383,7 +383,7 @@ export default class TicketMessageListComponent implements OnInit {
           numeroSemana: this.numeroSemana,
         },
         'Envio de reporte semanal',
-        this.dialogHandlerService.dialogSizeFull
+        this.dialogHandlerS.dialogSizeFull
       )
       .then((result: boolean) => {
         if (result) this.onLoadData(this.status);

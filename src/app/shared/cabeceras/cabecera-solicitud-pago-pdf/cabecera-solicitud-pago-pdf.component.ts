@@ -9,8 +9,8 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
   standalone: true,
 })
 export default class CabeceraSolicitudPagoPdfComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  custIdService = inject(CustomerIdService);
+  apiRequestS = inject(ApiRequestService);
+  customerIdS = inject(CustomerIdService);
 
   data: any;
 
@@ -27,8 +27,8 @@ export default class CabeceraSolicitudPagoPdfComponent implements OnInit {
   }
 
   onloadData() {
-    const urlApi = 'Customers/' + this.custIdService.getCustomerId();
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    const urlApi = 'Customers/' + this.customerIdS.getCustomerId();
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
   }

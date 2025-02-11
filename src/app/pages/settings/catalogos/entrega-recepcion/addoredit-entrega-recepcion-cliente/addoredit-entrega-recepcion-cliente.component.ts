@@ -17,18 +17,18 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   providers: [EnumSelectService],
 })
 export default class CrudEntregaRecepcionClienteComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   authS = inject(AuthService);
-  formBuilder = inject(FormBuilder);
+  formB = inject(FormBuilder);
   ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);
-  custIdService = inject(CustomerIdService);
-  enumSelectService = inject(EnumSelectService);
+  customerIdS = inject(CustomerIdService);
+  enumSelectS = inject(EnumSelectService);
 
   id: number = 0;
 
   cb_estatus: ISelectItem[] = [];
-  form: FormGroup = this.formBuilder.group({
+  form: FormGroup = this.formB.group({
     id: { value: this.id, disabled: true },
     observaciones: [''],
     archivo: [''],
@@ -38,21 +38,21 @@ export default class CrudEntregaRecepcionClienteComponent implements OnInit {
   submitting: boolean = false;
 
   async ngOnInit() {
-    this.cb_estatus = await this.enumSelectService.state();
+    this.cb_estatus = await this.enumSelectS.state();
     this.id = this.config.data.id;
     this.onLoadData();
   }
 
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
     const model = this.onCreateFormData(this.form.value);
     this.submitting = true;
 
-    this.apiRequestService
+    this.apiRequestS
       .onPut(
         `EntregaRecepcionCliente/${this.id}/${
           this.authS.applicationUserId
-        }/${this.custIdService.getCustomerId()}`,
+        }/${this.customerIdS.getCustomerId()}`,
         model
       )
       .then((result: boolean) => {
@@ -61,7 +61,7 @@ export default class CrudEntregaRecepcionClienteComponent implements OnInit {
   }
   onLoadData() {
     const urlApi = `EntregaRecepcionDescripcion/${this.id}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       this.form.patchValue(result);
     });
   }

@@ -20,27 +20,27 @@ import BitacoraMantenimientoFormComponent from './bitacora-mantenimiento-form.co
   imports: [LuxuryAppComponentsModule],
 })
 export default class BitacoraMantenimientoComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
 
-  dateService = inject(DateService);
+  dateS = inject(DateService);
   authServide = inject(AuthService);
-  custIdService = inject(CustomerIdService);
+  customerIdS = inject(CustomerIdService);
   rangoCalendarioService = inject(FiltroCalendarService);
 
   customerList: any[] = [];
 
-  fechaInicial: string = this.dateService.getDateFormat(
+  fechaInicial: string = this.dateS.getDateFormat(
     this.rangoCalendarioService.fechaInicioDateFull
   );
-  fechaFinal: string = this.dateService.getDateFormat(
+  fechaFinal: string = this.dateS.getDateFormat(
     this.rangoCalendarioService.fechaFinalDateFull
   );
   es: LocaleSettings;
   data: any[];
   ref: DynamicDialogRef;
 
-  customerId$: Observable<number> = this.custIdService.getCustomerId$();
+  customerId$: Observable<number> = this.customerIdS.getCustomerId$();
 
   ngOnInit(): void {
     this.onLoadData();
@@ -54,8 +54,8 @@ export default class BitacoraMantenimientoComponent implements OnInit {
     });
   }
   onLoadData() {
-    const urlApi = `BitacoraMantenimiento/GetAll/${this.custIdService.customerId}/${this.fechaInicial}/${this.fechaFinal}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    const urlApi = `BitacoraMantenimiento/GetAll/${this.customerIdS.customerId}/${this.fechaInicial}/${this.fechaFinal}`;
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
   }
@@ -65,7 +65,7 @@ export default class BitacoraMantenimientoComponent implements OnInit {
   }
 
   onDelete(item: any) {
-    this.apiRequestService
+    this.apiRequestS
       .onDelete(`BitacoraMantenimiento/${item.id}`)
       .then((result: boolean) => {
         this.onLoadData();
@@ -73,14 +73,14 @@ export default class BitacoraMantenimientoComponent implements OnInit {
   }
 
   onModalFormBiacora(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         BitacoraMantenimientoFormComponent,
         {
           id: data.id,
         },
         data.title,
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();
@@ -88,11 +88,11 @@ export default class BitacoraMantenimientoComponent implements OnInit {
   }
 
   onCardEmployee(applicationUserId: string) {
-    this.dialogHandlerService.openDialog(
+    this.dialogHandlerS.openDialog(
       CardEmployeeComponent,
       { applicationUserId },
       'Colaborador',
-      this.dialogHandlerService.dialogSizeMd
+      this.dialogHandlerS.dialogSizeMd
     );
   }
 }

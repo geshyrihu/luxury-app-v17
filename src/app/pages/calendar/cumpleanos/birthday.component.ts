@@ -15,10 +15,10 @@ import { DialogHandlerService } from 'src/app/core/services/dialog-handler.servi
   imports: [LuxuryAppComponentsModule, FullCalendarModule],
 })
 export default class BirthdayComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
   authS = inject(AuthService);
-  custIdService = inject(CustomerIdService);
+  customerIdS = inject(CustomerIdService);
 
   selectedMonth: number | null = null;
   months: string[] = [
@@ -51,12 +51,12 @@ export default class BirthdayComponent implements OnInit {
 
   data: any[] = [];
   ref: DynamicDialogRef;
-  customerId$: Observable<number> = this.custIdService.getCustomerId$();
+  customerId$: Observable<number> = this.customerIdS.getCustomerId$();
 
   onLoadData() {
-    this.apiRequestService
+    this.apiRequestS
       .onGetList(
-        `Birthday/${this.custIdService.customerId}/${this.selectedMonth}`
+        `Birthday/${this.customerIdS.customerId}/${this.selectedMonth}`
       )
       .then((result: any) => {
         this.data = result;

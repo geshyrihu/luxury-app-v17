@@ -15,8 +15,8 @@ import AddoreditMinutaDetalleComponent from '../juntas-comite/junta-comite-minut
   imports: [LuxuryAppComponentsModule],
 })
 export default class LegalPendientesMinutaComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
   authS = inject(AuthService);
 
   data: any[] = [];
@@ -28,7 +28,7 @@ export default class LegalPendientesMinutaComponent implements OnInit {
   }
 
   onLoadData() {
-    this.apiRequestService
+    this.apiRequestS
       .onGetList(
         `ContabilidadMinuta/ListaMinutaLegal/${this.authS.userTokenDto.infoUserAuthDto.applicationUserId}/${this.statusFiltro}`
       )
@@ -41,7 +41,7 @@ export default class LegalPendientesMinutaComponent implements OnInit {
     meetingDetailsId: any,
     idMeetingSeguimiento: any
   ) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         AddorEditMeetingSeguimientoComponent,
         {
@@ -49,7 +49,7 @@ export default class LegalPendientesMinutaComponent implements OnInit {
           idMeetingSeguimiento,
         },
         'Agregar Seguimiento',
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();
@@ -57,7 +57,7 @@ export default class LegalPendientesMinutaComponent implements OnInit {
   }
 
   onModalAddOrEditMinutaDetalle(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         AddoreditMinutaDetalleComponent,
         {
@@ -65,7 +65,7 @@ export default class LegalPendientesMinutaComponent implements OnInit {
           areaResponsable: data.areaResponsable,
         },
         data.header,
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();
@@ -73,7 +73,7 @@ export default class LegalPendientesMinutaComponent implements OnInit {
   }
 
   onDeleteSeguimiento(id: number) {
-    this.apiRequestService
+    this.apiRequestS
       .onDelete(`MeetingDertailsSeguimiento/${id}`)
       .then((result: boolean) => {
         if (result) this.data = this.data.filter((item) => item.id !== id);
@@ -81,13 +81,13 @@ export default class LegalPendientesMinutaComponent implements OnInit {
   }
 
   onModalTodosSeguimientos(idItem: number) {
-    this.dialogHandlerService.openDialog(
+    this.dialogHandlerS.openDialog(
       ContMinutaSeguimientosComponent,
       {
         idItem,
       },
       'Seguimientos',
-      this.dialogHandlerService.dialogSizeMd
+      this.dialogHandlerS.dialogSizeMd
     );
   }
   onFiltrarData(valorFiltro: number) {

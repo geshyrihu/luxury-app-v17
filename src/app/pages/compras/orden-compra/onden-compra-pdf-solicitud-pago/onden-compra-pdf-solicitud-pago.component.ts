@@ -10,7 +10,7 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
   imports: [LuxuryAppComponentsModule],
 })
 export default class OndenCompraPdfSolicitudPagoComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   routeActive = inject(ActivatedRoute);
 
   model: any;
@@ -29,7 +29,7 @@ export default class OndenCompraPdfSolicitudPagoComponent implements OnInit {
   ngOnInit(): void {
     this.ordenCompraId = this.routeActive.snapshot.params.id;
 
-    this.apiRequestService
+    this.apiRequestS
       .onGetSelectItem('getMeasurementUnits')
       .then((response: any) => {
         this.cb_unidadMedida = response;
@@ -38,7 +38,7 @@ export default class OndenCompraPdfSolicitudPagoComponent implements OnInit {
   }
 
   onLoadData() {
-    this.apiRequestService
+    this.apiRequestS
       .onGetItem(`OrdenCompra/SolicitudPago/${this.ordenCompraId}`)
       .then((response: any) => {
         this.model = response;

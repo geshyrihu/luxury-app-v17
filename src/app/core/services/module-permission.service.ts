@@ -5,7 +5,7 @@ import { CustomerIdService } from './customer-id.service';
   providedIn: 'root',
 })
 export class ModulePermissionService {
-  custIdService = inject(CustomerIdService);
+  customerIdS = inject(CustomerIdService);
 
   modulePermission: any[] = [];
 

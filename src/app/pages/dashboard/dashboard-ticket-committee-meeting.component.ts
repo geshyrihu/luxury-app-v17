@@ -18,25 +18,25 @@ import SummaryTicketCommitteeMeetingComponent from './summary-ticket-committee-m
 export default class DashboardTicketCommitteeMeetingComponent
   implements OnInit
 {
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
   authS = inject(AuthService);
-  custIdService = inject(CustomerIdService);
+  customerIdS = inject(CustomerIdService);
 
-  customerId$: Observable<number> = this.custIdService.getCustomerId$();
+  customerId$: Observable<number> = this.customerIdS.getCustomerId$();
   data: any = [];
   ref: DynamicDialogRef;
 
   ngOnInit(): void {
-    this.onLoadData(this.custIdService.getCustomerId());
+    this.onLoadData(this.customerIdS.getCustomerId());
     this.customerId$.subscribe((resp) => {
-      this.onLoadData(this.custIdService.getCustomerId());
+      this.onLoadData(this.customerIdS.getCustomerId());
     });
   }
 
   onLoadData(customerId: number) {
     const urlApi = `Dashboard/MinutasPendientes/${customerId}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
   }
@@ -54,13 +54,13 @@ export default class DashboardTicketCommitteeMeetingComponent
       titulo = 'Legal';
     }
 
-    this.dialogHandlerService.openDialog(
+    this.dialogHandlerS.openDialog(
       SummaryTicketCommitteeMeetingComponent,
       {
         eAreaMinutasDetalles: statusKey,
       },
       'Pendientes ' + titulo,
-      this.dialogHandlerService.dialogSizeFull
+      this.dialogHandlerS.dialogSizeFull
     );
   }
 }

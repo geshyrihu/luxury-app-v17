@@ -24,11 +24,11 @@ import { TicketGroupService } from '../../ticket.service';
 })
 export default class TicketMessageOperationReportComponent {
   activatedRoute = inject(ActivatedRoute);
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   authS = inject(AuthService);
-  custIdService = inject(CustomerIdService);
+  customerIdS = inject(CustomerIdService);
   customToastService = inject(CustomToastService);
-  dialogHandlerService = inject(DialogHandlerService);
+  dialogHandlerS = inject(DialogHandlerService);
   ticketGroupService = inject(TicketGroupService);
   router = inject(Router);
 
@@ -44,8 +44,8 @@ export default class TicketMessageOperationReportComponent {
   onLoadData() {
     this.ticketGroupService.setStatus(this.status);
 
-    const urlApi = `TicketReport/WeeklyReport/${this.custIdService.customerId}/${this.startDate}/${this.endDate}/${this.status}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    const urlApi = `TicketReport/WeeklyReport/${this.customerIdS.customerId}/${this.startDate}/${this.endDate}/${this.status}`;
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
   }
@@ -63,12 +63,12 @@ export default class TicketMessageOperationReportComponent {
   }
 
   onModalAddOrEdit(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         TicketMessageAddOrEditComponent,
         { id: data.id, ticketGroupId: this.ticketGroupId },
         'Agregar',
-        this.dialogHandlerService.dialogSizeLg
+        this.dialogHandlerS.dialogSizeLg
       )
       .then((result: boolean) => {
         if (result) {
@@ -82,12 +82,12 @@ export default class TicketMessageOperationReportComponent {
   }
 
   onView(id: string) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         TicketMessageReadListComponent,
         { id: id },
         'Vistas',
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();
@@ -95,12 +95,12 @@ export default class TicketMessageOperationReportComponent {
   }
 
   onClosed(id: string) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         TicketMessageCloseComponent,
         { id: id },
         'Cerrar ticket',
-        this.dialogHandlerService.dialogSizeLg
+        this.dialogHandlerS.dialogSizeLg
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();
@@ -110,17 +110,17 @@ export default class TicketMessageOperationReportComponent {
   // Actualizar si el item es relevante o no
   onUpdateStateTicket(item: any) {
     const urlApi = `Tickets/UpdateRelevance/${item.id}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       this.customToastService.onCloseToSuccess();
     });
   }
   onFollowUp(id: string) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         TicketMessageFollowupComponent,
         { id: id },
         'Seguimiento',
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();
@@ -133,12 +133,12 @@ export default class TicketMessageOperationReportComponent {
   }
   onSendReportClicked(): void {
     // Lógica para enviar el reporte
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         SendOperationReportComponent,
         {},
         'Envio de reporte semanal',
-        this.dialogHandlerService.dialogSizeFull
+        this.dialogHandlerS.dialogSizeFull
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();

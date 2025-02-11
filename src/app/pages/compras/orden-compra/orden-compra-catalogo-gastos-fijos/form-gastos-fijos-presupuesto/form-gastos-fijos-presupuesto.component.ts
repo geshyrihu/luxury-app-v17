@@ -13,12 +13,12 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
   imports: [LuxuryAppComponentsModule],
 })
 export default class FormGastosFijosPresupuestoComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   authS = inject(AuthService);
   ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);
   catalogoGastosFijosService = inject(CatalogoGastosFijosService);
-  custIdService = inject(CustomerIdService);
+  customerIdS = inject(CustomerIdService);
 
   data: any[] = [];
   presupuestoAgregados: any[] = [];
@@ -35,8 +35,8 @@ export default class FormGastosFijosPresupuestoComponent implements OnInit {
   }
 
   onLoadPresupuesto() {
-    const urlApi = `OrdenCompraPresupuesto/GetAllForGastosFijos/${this.custIdService.customerId}/${this.cedulaId}/${this.catalogoGastosFijosId}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    const urlApi = `OrdenCompraPresupuesto/GetAllForGastosFijos/${this.customerIdS.customerId}/${this.cedulaId}/${this.catalogoGastosFijosId}`;
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
       this.onLoadPresupuestoAgregados();
     });
@@ -50,7 +50,7 @@ export default class FormGastosFijosPresupuestoComponent implements OnInit {
       catalogoGastosFijosId: this.catalogoGastosFijosId,
     };
 
-    this.apiRequestService
+    this.apiRequestS
       .onPost(`CatalogoGastosFijosPresupuesto`, model)
       .then((result: boolean) => {
         this.onLoadPresupuestoAgregados();
@@ -61,13 +61,13 @@ export default class FormGastosFijosPresupuestoComponent implements OnInit {
   onLoadPresupuestoAgregados() {
     const urlApi = `CatalogoGastosFijosPresupuesto/PresupuestoOrdenCompraFijos/${this.catalogoGastosFijosId}`;
 
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.presupuestoAgregados = result;
     });
   }
 
   deletePresupuestoAgregado(id: number) {
-    this.apiRequestService
+    this.apiRequestS
       .onDelete(`CatalogoGastosFijosPresupuesto/${id}`)
       .then((result: boolean) => {
         this.onLoadPresupuesto();
@@ -76,7 +76,7 @@ export default class FormGastosFijosPresupuestoComponent implements OnInit {
   }
 
   onUpdatePresupuestoAgregado(item: any) {
-    this.apiRequestService
+    this.apiRequestS
       .onPut(`CatalogoGastosFijosPresupuesto/${item.id}`, item)
       .then((result: boolean) => {
         this.onLoadPresupuestoAgregados();
@@ -84,8 +84,8 @@ export default class FormGastosFijosPresupuestoComponent implements OnInit {
   }
 
   onLoadCedulas() {
-    const urlApi = `CedulaPresupuestal/GetCedulas/${this.custIdService.getCustomerId()}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    const urlApi = `CedulaPresupuestal/GetCedulas/${this.customerIdS.getCustomerId()}`;
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       if (result) {
         this.cedulaId = result[0].value;
       }

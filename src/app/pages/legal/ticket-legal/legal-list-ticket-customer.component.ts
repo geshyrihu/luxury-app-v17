@@ -14,9 +14,9 @@ import TicketTrakingRequestDetailComponent from './ticket-traking-request-detail
   imports: [LuxuryAppComponentsModule],
 })
 export default class LegalListTicketComponent implements OnInit {
-  dialogHandlerService = inject(DialogHandlerService);
-  apiRequestService = inject(ApiRequestService);
-  custIdService = inject(CustomerIdService);
+  dialogHandlerS = inject(DialogHandlerService);
+  apiRequestS = inject(ApiRequestService);
+  customerIdS = inject(CustomerIdService);
   data: any[] = [];
 
   ngOnInit() {
@@ -24,20 +24,20 @@ export default class LegalListTicketComponent implements OnInit {
   }
 
   onLoadData() {
-    this.apiRequestService
-      .onGetList(`TicketLegal/All/${this.custIdService.getCustomerId()}`)
+    this.apiRequestS
+      .onGetList(`TicketLegal/All/${this.customerIdS.getCustomerId()}`)
       .then((result: any) => {
         this.data = result;
       });
   }
 
   onModalAddOrEdit(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         LegalTicketAddComponent,
         data,
         '',
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) {
@@ -47,19 +47,19 @@ export default class LegalListTicketComponent implements OnInit {
   }
 
   onModalSeguimientoCliente(data: any) {
-    this.dialogHandlerService.openDialog(
+    this.dialogHandlerS.openDialog(
       TicketTrakingCustomerComponent,
       data,
       '',
-      this.dialogHandlerService.dialogSizeMd
+      this.dialogHandlerS.dialogSizeMd
     );
   }
   onModalViewDetail(data: any) {
-    this.dialogHandlerService.openDialog(
+    this.dialogHandlerS.openDialog(
       TicketTrakingRequestDetailComponent,
       data,
       '',
-      this.dialogHandlerService.dialogSizeMd
+      this.dialogHandlerS.dialogSizeMd
     );
   }
 }

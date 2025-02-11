@@ -12,11 +12,11 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
   templateUrl: './contracts-policies.component.html',
 })
 export default class ContractsPoliciesComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  custIdService = inject(CustomerIdService);
+  apiRequestS = inject(ApiRequestService);
+  customerIdS = inject(CustomerIdService);
   data: any[] = [];
 
-  customerId$: Observable<number> = this.custIdService.getCustomerId$();
+  customerId$: Observable<number> = this.customerIdS.getCustomerId$();
 
   ngOnInit(): void {
     this.onLoadData();
@@ -26,8 +26,8 @@ export default class ContractsPoliciesComponent implements OnInit {
   }
 
   onLoadData() {
-    const urlApi = `ContratoPoliza/GetAll/${this.custIdService.getCustomerId()}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    const urlApi = `ContratoPoliza/GetAll/${this.customerIdS.getCustomerId()}`;
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
   }

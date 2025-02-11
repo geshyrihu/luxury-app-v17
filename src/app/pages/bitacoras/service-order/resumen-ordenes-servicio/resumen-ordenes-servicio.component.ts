@@ -13,9 +13,9 @@ import ResumenOrdenesServicioGraficoComponent from '../resumen-ordenes-servicio-
   imports: [LuxuryAppComponentsModule, ResumenOrdenesServicioGraficoComponent],
 })
 export default class ResumenOrdenesServicioComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  custIdService = inject(CustomerIdService);
-  dateService = inject(DateService);
+  apiRequestS = inject(ApiRequestService);
+  customerIdS = inject(CustomerIdService);
+  dateS = inject(DateService);
   reporteOrdenesServicioService = inject(ReporteOrdenesServicioService);
 
   data: any[] = [];
@@ -29,7 +29,7 @@ export default class ResumenOrdenesServicioComponent implements OnInit {
   customerId: Number;
 
   ngOnInit(): void {
-    this.customerId = this.custIdService.getCustomerId();
+    this.customerId = this.customerIdS.getCustomerId();
     this.onLoadData();
   }
 
@@ -38,10 +38,8 @@ export default class ResumenOrdenesServicioComponent implements OnInit {
       'MeetingDertailsSeguimiento/ResumenPreventivosPresentacion/' +
       this.customerId +
       '/' +
-      this.dateService.getDateFormat(
-        this.reporteOrdenesServicioService.getDate()
-      );
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      this.dateS.getDateFormat(this.reporteOrdenesServicioService.getDate());
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
 
@@ -49,10 +47,8 @@ export default class ResumenOrdenesServicioComponent implements OnInit {
       'MeetingDertailsSeguimiento/ResumenPreventivosGraficoPresentacion/' +
       this.customerId +
       '/' +
-      this.dateService.getDateFormat(
-        this.reporteOrdenesServicioService.getDate()
-      );
-    this.apiRequestService.onGetList(urlApi2).then((result: any) => {
+      this.dateS.getDateFormat(this.reporteOrdenesServicioService.getDate());
+    this.apiRequestS.onGetList(urlApi2).then((result: any) => {
       this.dataGraficos = result;
       this.reporteOrdenesServicioService.setDateGrafico(this.dataGraficos);
     });

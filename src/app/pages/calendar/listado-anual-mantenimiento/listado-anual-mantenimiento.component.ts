@@ -18,15 +18,15 @@ const date = new Date();
   imports: [LuxuryAppComponentsModule, CurrencyMexicoPipe],
 })
 export default class ListadoAnualMantenimientoComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   authS = inject(AuthService);
-  custIdService = inject(CustomerIdService);
-  dialogHandlerService = inject(DialogHandlerService);
+  customerIdS = inject(CustomerIdService);
+  dialogHandlerS = inject(DialogHandlerService);
 
   data: any[] = [];
   ref: DynamicDialogRef;
 
-  customerId$: Observable<number> = this.custIdService.getCustomerId$();
+  customerId$: Observable<number> = this.customerIdS.getCustomerId$();
   month = date.getMonth();
   months: ISelectItem[] = [];
 
@@ -37,10 +37,10 @@ export default class ListadoAnualMantenimientoComponent implements OnInit {
     });
   }
   onLoadData() {
-    const url = `MaintenanceCalendars/GetAll/${this.custIdService.getCustomerId()}/${
+    const url = `MaintenanceCalendars/GetAll/${this.customerIdS.getCustomerId()}/${
       this.month
     }`;
-    this.apiRequestService.onGetList(url).then((result: any) => {
+    this.apiRequestS.onGetList(url).then((result: any) => {
       this.data = result;
     });
   }
@@ -56,7 +56,7 @@ export default class ListadoAnualMantenimientoComponent implements OnInit {
     return total;
   }
   onDelete(id: number) {
-    this.apiRequestService
+    this.apiRequestS
       .onDelete(`maintenancecalendars/${id}`)
       .then((result: boolean) => {
         if (result) this.data = this.data.filter((item) => item.id !== id);
@@ -64,7 +64,7 @@ export default class ListadoAnualMantenimientoComponent implements OnInit {
   }
 
   showModalAddOrEdit(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         MaintenancePreventiveAddoreditComponent,
         {
@@ -73,7 +73,7 @@ export default class ListadoAnualMantenimientoComponent implements OnInit {
           idMachinery: data.idMachinery,
         },
         data.title,
-        this.dialogHandlerService.dialogSizeLg
+        this.dialogHandlerS.dialogSizeLg
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();
@@ -84,7 +84,7 @@ export default class ListadoAnualMantenimientoComponent implements OnInit {
     this.onLoadData();
   }
   onLoadEnumSelectItem() {
-    this.apiRequestService
+    this.apiRequestS
       .onGetEnumSelectItem(`EMonth/${false}`)
       .then((result: any) => {
         this.months = result;

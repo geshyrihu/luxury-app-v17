@@ -14,7 +14,7 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 export default class ResultadoGeneralEvaluacionAreasDetalleComponent
   implements OnInit
 {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   config = inject(DynamicDialogConfig);
 
   data: any;
@@ -29,7 +29,7 @@ export default class ResultadoGeneralEvaluacionAreasDetalleComponent
 
   onLoadData(fecha: string, area: number, status?: number) {
     const urlApi = `ResumenGeneral/EvaluacionAreasDetalle/${fecha}/${area}/${status}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
   }

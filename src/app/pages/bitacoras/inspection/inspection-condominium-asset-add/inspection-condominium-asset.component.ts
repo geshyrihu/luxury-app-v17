@@ -13,11 +13,11 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class InspectionCondominiumAssetAddComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   fb = inject(FormBuilder);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
-  custIdService = inject(CustomerIdService);
+  customerIdS = inject(CustomerIdService);
 
   cb_activos: any[] = [];
   cb_inspection_reviews_catalog: any[] = [];
@@ -52,15 +52,15 @@ export default class InspectionCondominiumAssetAddComponent implements OnInit {
   }
 
   onLoadActivos() {
-    this.apiRequestService
-      .onGetSelectItem(`CondominiumAsset/${this.custIdService.customerId}`)
+    this.apiRequestS
+      .onGetSelectItem(`CondominiumAsset/${this.customerIdS.customerId}`)
       .then((resp: any) => {
         this.cb_activos = resp;
       });
   }
 
   onLoadRevisionsCatalog() {
-    this.apiRequestService
+    this.apiRequestS
       .onGetSelectItem(`InspectionReviewsCatalog`)
       .then((resp: any) => {
         this.cb_inspection_reviews_catalog = resp;
@@ -122,7 +122,7 @@ export default class InspectionCondominiumAssetAddComponent implements OnInit {
   }
 
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
 
     const reviewsControl = this.form.get('inspectionReviews') as FormArray;
 
@@ -136,7 +136,7 @@ export default class InspectionCondominiumAssetAddComponent implements OnInit {
     };
 
     const urlApi = `InspectionCondominiumAsset`;
-    this.apiRequestService.onPost(urlApi, data).then((result: any) => {
+    this.apiRequestS.onPost(urlApi, data).then((result: any) => {
       if (result) {
         this.ref.close(true);
       } else {

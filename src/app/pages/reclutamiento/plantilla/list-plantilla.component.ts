@@ -23,19 +23,19 @@ import HoursWorkPositionComponent from './hours-work-position.component';
   imports: [LuxuryAppComponentsModule],
 })
 export default class ListWorkPlantillaComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
 
   router = inject(Router);
   authS = inject(AuthService);
   confirmationService = inject(ConfirmationService);
-  custIdService = inject(CustomerIdService);
+  customerIdS = inject(CustomerIdService);
   customToastService = inject(CustomToastService);
-  dialogService = inject(DialogService);
-  messageService = inject(MessageService);
+  dialogS = inject(DialogService);
+  messageS = inject(MessageService);
   statusSolicitudVacanteService = inject(StatusSolicitudVacanteService);
 
-  customerId$: Observable<number> = this.custIdService.getCustomerId$();
+  customerId$: Observable<number> = this.customerIdS.getCustomerId$();
   data: any[] = [];
   ref: DynamicDialogRef;
 
@@ -48,17 +48,17 @@ export default class ListWorkPlantillaComponent implements OnInit {
   }
 
   onLoadData() {
-    const urlApi = `workposition/getall/${this.custIdService.getCustomerId()}/${
+    const urlApi = `workposition/getall/${this.customerIdS.getCustomerId()}/${
       this.state
     }`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
   }
 
   //Modal para visualizar horarios de la vacante
   onModalHoursWorkPosition(workPositionId: number) {
-    this.ref = this.dialogService.open(HoursWorkPositionComponent, {
+    this.ref = this.dialogS.open(HoursWorkPositionComponent, {
       data: {
         workPositionId,
       },
@@ -77,7 +77,7 @@ export default class ListWorkPlantillaComponent implements OnInit {
 
   //Modal para visualizar descripcion de puesto
   onModalJobDescription(id: number) {
-    this.ref = this.dialogService.open(DescripcionPuestoComponent, {
+    this.ref = this.dialogS.open(DescripcionPuestoComponent, {
       data: {
         id,
       },
@@ -95,7 +95,7 @@ export default class ListWorkPlantillaComponent implements OnInit {
 
   //Solicitar vacante
   onModalSolicitudVacante(id: number) {
-    this.ref = this.dialogService.open(SolicitudVacanteComponent, {
+    this.ref = this.dialogS.open(SolicitudVacanteComponent, {
       data: {
         workPositionId: id,
       },
@@ -113,7 +113,7 @@ export default class ListWorkPlantillaComponent implements OnInit {
   }
   //Ver tarjeta de Colaborador
   onCardEmployee(applicationUserId: string) {
-    this.ref = this.dialogService.open(CardEmployeeComponent, {
+    this.ref = this.dialogS.open(CardEmployeeComponent, {
       data: {
         applicationUserId,
       },
@@ -152,7 +152,7 @@ export default class ListWorkPlantillaComponent implements OnInit {
   }
   //Editar vacante
   onModalAddOrEdit(data: any) {
-    this.ref = this.dialogService.open(AddoreditPlantillaComponent, {
+    this.ref = this.dialogS.open(AddoreditPlantillaComponent, {
       data: {
         id: data.id,
       },
@@ -169,11 +169,9 @@ export default class ListWorkPlantillaComponent implements OnInit {
   }
   //Eliminar vacante workPosition
   onDelete(id: number) {
-    this.apiRequestService
-      .onDelete(`WorkPosition/${id}`)
-      .then((result: boolean) => {
-        if (result) this.data = this.data.filter((item) => item.id !== id);
-      });
+    this.apiRequestS.onDelete(`WorkPosition/${id}`).then((result: boolean) => {
+      if (result) this.data = this.data.filter((item) => item.id !== id);
+    });
   }
 
   onValidateShowTIcket(professionId: number): boolean {
@@ -228,7 +226,7 @@ export default class ListWorkPlantillaComponent implements OnInit {
     let acceso = true;
 
     // Validamos si el cliente tiene el ID 1
-    if (this.custIdService.customerId == 1) {
+    if (this.customerIdS.customerId == 1) {
       // Si la profesión es 54, el cliente tiene acceso.
       if (professionId == 54) {
         return true;

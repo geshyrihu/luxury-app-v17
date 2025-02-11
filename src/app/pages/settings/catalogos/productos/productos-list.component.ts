@@ -14,8 +14,8 @@ import ProductosAddOrEditComponent from './productos-addoredit.component';
 })
 export default class ProductosListComponent implements OnInit {
   authS = inject(AuthService);
-  dialogHandlerService = inject(DialogHandlerService);
-  apiRequestService = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
+  apiRequestS = inject(ApiRequestService);
 
   data: any[] = [];
 
@@ -29,28 +29,26 @@ export default class ProductosListComponent implements OnInit {
   }
 
   onLoadData() {
-    this.apiRequestService.onGetList('Productos').then((result: any) => {
+    this.apiRequestS.onGetList('Productos').then((result: any) => {
       this.data = result;
     });
   }
 
   // ... Eliminar registro
   onDelete(id: number) {
-    this.apiRequestService
-      .onDelete(`productos/${id}`)
-      .then((result: boolean) => {
-        if (result) this.data = this.data.filter((item) => item.id !== id);
-      });
+    this.apiRequestS.onDelete(`productos/${id}`).then((result: boolean) => {
+      if (result) this.data = this.data.filter((item) => item.id !== id);
+    });
   }
 
   // ... Llamada al Modal agregar o editar
   showModalAddOrEdit(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         ProductosAddOrEditComponent,
         data,
         data.title,
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();

@@ -15,10 +15,10 @@ import TarjetaProductoComponent from '../../settings/catalogos/productos/tarjeta
   imports: [LuxuryAppComponentsModule],
 })
 export default class AddProductosAlmacenComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
   authS = inject(AuthService);
-  custIdService = inject(CustomerIdService);
+  customerIdS = inject(CustomerIdService);
 
   ref = inject(DynamicDialogRef);
 
@@ -27,7 +27,7 @@ export default class AddProductosAlmacenComponent implements OnInit {
   mensajeError = '';
 
   onLoadSelectItem() {
-    this.apiRequestService
+    this.apiRequestS
       .onGetSelectItem(`getMeasurementUnits`)
       .then((response: any) => {
         this.cb_UnidadMedida = response;
@@ -40,14 +40,14 @@ export default class AddProductosAlmacenComponent implements OnInit {
   }
 
   onModalTarjetaProducto(productoId: number): void {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         TarjetaProductoComponent,
         {
           productoId: productoId,
         },
         'Tarjeta de Producto',
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();
@@ -55,14 +55,14 @@ export default class AddProductosAlmacenComponent implements OnInit {
   }
 
   onLoadData() {
-    const urlApi = `InventarioProducto/GetProductoDropdownDto/${this.custIdService.customerId}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    const urlApi = `InventarioProducto/GetProductoDropdownDto/${this.customerIdS.customerId}`;
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
   }
   onSubmit(item: IProductoListAdd) {
     item.applicationUserId = this.authS.applicationUserId;
-    item.customerId = this.custIdService.customerId;
+    item.customerId = this.customerIdS.customerId;
 
     if (
       item.existencia < 0 ||
@@ -75,7 +75,7 @@ export default class AddProductosAlmacenComponent implements OnInit {
       return;
     }
 
-    this.apiRequestService
+    this.apiRequestS
       .onPost(`InventarioProducto/`, item)
       .then((result: boolean) => {
         this.mensajeError = '';

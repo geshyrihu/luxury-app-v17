@@ -13,13 +13,13 @@ import FichaTecnicaActivoComponent from '../inventarios/machineries/ficha-tecnic
   imports: [LuxuryAppComponentsModule],
 })
 export default class MiEdificioComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  custIdService = inject(CustomerIdService);
-  dialogHandlerService = inject(DialogHandlerService);
+  apiRequestS = inject(ApiRequestService);
+  customerIdS = inject(CustomerIdService);
+  dialogHandlerS = inject(DialogHandlerService);
 
   data: any;
 
-  customerId$: Observable<number> = this.custIdService.getCustomerId$();
+  customerId$: Observable<number> = this.customerIdS.getCustomerId$();
 
   // bread crumb items
   breadCrumbItems!: Array<{}>;
@@ -27,27 +27,27 @@ export default class MiEdificioComponent implements OnInit {
   zoom: number = 15;
 
   ngOnInit(): void {
-    this.customerId$ = this.custIdService.getCustomerId$();
+    this.customerId$ = this.customerIdS.getCustomerId$();
     this.onLoadData();
     this.customerId$.subscribe((resp) => {
       this.onLoadData();
     });
   }
   onLoadData() {
-    const customerId = this.custIdService.getCustomerId();
+    const customerId = this.customerIdS.getCustomerId();
     const urlApi = `MiEdificio/Caratula/${customerId}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
   }
 
   showModalFichatecnica(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         FichaTecnicaActivoComponent,
         data,
         'Ficha Técnica',
-        this.dialogHandlerService.dialogSizeFull
+        this.dialogHandlerS.dialogSizeFull
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();

@@ -11,7 +11,7 @@ import { ReporteHerramientasPdfService } from 'src/app/core/services/reporte-her
 })
 export default class InformeHerramientaPdfComponent implements OnInit {
   public reporteHerramientasPdfService = inject(ReporteHerramientasPdfService);
-  custIdService = inject(CustomerIdService);
+  customerIdS = inject(CustomerIdService);
   data: any[] = [];
 
   ngOnInit(): void {

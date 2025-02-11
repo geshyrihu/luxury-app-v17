@@ -27,13 +27,13 @@ import RegisterEmployeToVacancyComponent from './register-employe-to-vacancy.com
   ],
 })
 export default class ListVacantesComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   filterRequestsService = inject(FilterRequestsService);
   authS = inject(AuthService);
   statusSolicitudVacanteService = inject(StatusSolicitudVacanteService);
 
   router = inject(Router);
-  dialogHandlerService = inject(DialogHandlerService);
+  dialogHandlerS = inject(DialogHandlerService);
 
   data: any[] = [];
   ref: DynamicDialogRef;
@@ -46,7 +46,7 @@ export default class ListVacantesComponent implements OnInit {
 
   onLoadData() {
     const urlApi = `RequestPosition/`;
-    this.apiRequestService
+    this.apiRequestS
       .onGetList(urlApi, this.filterRequestsService.getParams())
       .then((result: any) => {
         this.data = result;
@@ -54,7 +54,7 @@ export default class ListVacantesComponent implements OnInit {
   }
 
   onDelete(id: number) {
-    this.apiRequestService
+    this.apiRequestS
       .onDelete(`RequestPosition/${id}`)
       .then((result: boolean) => {
         if (result) this.data = this.data.filter((item) => item.id !== id);
@@ -62,14 +62,14 @@ export default class ListVacantesComponent implements OnInit {
   }
 
   onModalAddOrEdit(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         AddOrEditVacanteComponent,
         {
           id: data.id,
         },
         'Editar registro',
-        this.dialogHandlerService.dialogSizeLg
+        this.dialogHandlerS.dialogSizeLg
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();
@@ -78,14 +78,14 @@ export default class ListVacantesComponent implements OnInit {
 
   //Modal para visualizar horarios de la vacante
   onModalHoursWorkPosition(workPositionId: number) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         HoursWorkPositionComponent,
         {
           workPositionId,
         },
         'Horario de trabajo',
-        this.dialogHandlerService.dialogSizeLg
+        this.dialogHandlerS.dialogSizeLg
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();
@@ -93,14 +93,14 @@ export default class ListVacantesComponent implements OnInit {
   }
   //Modal para visualizar descripcion de puesto
   onModalJobDescription(id: number) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         DescripcionPuestoComponent,
         {
           id,
         },
         'Descripción del puesto',
-        this.dialogHandlerService.dialogSizeLg
+        this.dialogHandlerS.dialogSizeLg
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();
@@ -112,14 +112,14 @@ export default class ListVacantesComponent implements OnInit {
   }
 
   onModalRegisterEmployeToVacancy(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         RegisterEmployeToVacancyComponent,
         {
           workPositionId: data.workPositionId,
         },
         data.title,
-        this.dialogHandlerService.dialogSizeFull
+        this.dialogHandlerS.dialogSizeFull
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();

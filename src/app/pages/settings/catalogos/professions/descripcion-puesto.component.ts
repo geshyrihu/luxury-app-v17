@@ -11,7 +11,7 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
   imports: [LuxuryAppComponentsModule, AutosizeDirective],
 })
 export default class DescripcionPuestoComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   config = inject(DynamicDialogConfig);
 
   profesion: any;
@@ -22,7 +22,7 @@ export default class DescripcionPuestoComponent implements OnInit {
 
   onLoadData() {
     const urlApi = 'Professions/' + this.config.data.id;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       this.profesion = result;
     });
   }

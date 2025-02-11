@@ -16,12 +16,12 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   providers: [EnumSelectService],
 })
 export default class SolicitudVacanteComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  formBuilder = inject(FormBuilder);
+  apiRequestS = inject(ApiRequestService);
+  formB = inject(FormBuilder);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
   authS = inject(AuthService);
-  enumSelectService = inject(EnumSelectService);
+  enumSelectS = inject(EnumSelectService);
 
   workPositionId: number = this.config.data.workPositionId;
 
@@ -31,7 +31,7 @@ export default class SolicitudVacanteComponent implements OnInit {
   id: number = 0;
 
   cb_turnoTrabajo: ISelectItem[] = [];
-  form: FormGroup = this.formBuilder.group({
+  form: FormGroup = this.formB.group({
     id: [this.config.data.workPositionId],
     professionName: [, Validators.required],
     sueldo: ['', [Validators.required, Validators.minLength(4)]],
@@ -55,22 +55,22 @@ export default class SolicitudVacanteComponent implements OnInit {
   });
 
   async ngOnInit() {
-    this.cb_turnoTrabajo = await this.enumSelectService.turnoTrabajo();
+    this.cb_turnoTrabajo = await this.enumSelectS.turnoTrabajo();
     this.onLoadData();
   }
 
   onLoadData() {
     const urlApi = `WorkPosition/${this.workPositionId}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       this.form.patchValue(result);
     });
   }
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
 
     this.submitting = true;
 
-    this.apiRequestService
+    this.apiRequestS
       .onPost(
         `SolicitudesReclutamiento/SolicitudVacante/${this.authS.infoUserAuthDto.applicationUserId}`,
         this.form.value

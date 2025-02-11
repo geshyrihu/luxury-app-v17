@@ -19,10 +19,10 @@ import Swal from 'sweetalert2';
 })
 export default class LoginComponent implements OnInit {
   activateRoute = inject(ActivatedRoute);
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   customToastService = inject(CustomToastService);
-  dataService = inject(DataConnectorService);
-  formBuilder = inject(FormBuilder);
+  dataConnectorS = inject(DataConnectorService);
+  formB = inject(FormBuilder);
   router = inject(Router);
   securityService = inject(SecurityService);
   authS = inject(AuthService);
@@ -51,7 +51,7 @@ export default class LoginComponent implements OnInit {
     });
     Swal.showLoading();
 
-    this.dataService
+    this.dataConnectorS
       .post('Auth/login', this.form.value)
       .pipe(
         catchError((error: HttpErrorResponse) => {
@@ -109,7 +109,7 @@ export default class LoginComponent implements OnInit {
 
   onLoadForm() {
     // Carga los valores de userName y password desde el localStorage al inicializar el formulario
-    this.form = this.formBuilder.group({
+    this.form = this.formB.group({
       userName: [localStorage.getItem('userName') || '', Validators.required],
       password: [localStorage.getItem('password') || '', Validators.required],
       remember: [true],

@@ -13,8 +13,8 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   templateUrl: './catalog-asset-addoredit.component.html',
 })
 export default class CatalogAssetAddoreditComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  formBuilder = inject(FormBuilder);
+  apiRequestS = inject(ApiRequestService);
+  formB = inject(FormBuilder);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
 
@@ -23,7 +23,7 @@ export default class CatalogAssetAddoreditComponent implements OnInit {
 
   cb_category: ISelectItem[] = [];
 
-  form: FormGroup = this.formBuilder.group({
+  form: FormGroup = this.formB.group({
     id: { value: this.id, disabled: true },
     folio: ['', [Validators.required, Validators.maxLength(5)]],
     name: ['', [Validators.required, Validators.maxLength(50)], ,],
@@ -37,13 +37,13 @@ export default class CatalogAssetAddoreditComponent implements OnInit {
   }
   onLoadData() {
     const urlApi = `CatalogAsset/${this.id}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       this.form.patchValue(result);
     });
   }
 
   onLoadEnumSelectItem() {
-    this.apiRequestService
+    this.apiRequestS
       .onGetEnumSelectItem(`EAssetCategory`)
       .then((result: any) => {
         this.cb_category = result;
@@ -51,17 +51,17 @@ export default class CatalogAssetAddoreditComponent implements OnInit {
   }
 
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
     this.submitting = true;
 
     if (this.id === '') {
-      this.apiRequestService
+      this.apiRequestS
         .onPost(`CatalogAsset`, this.form.value)
         .then((result: any) => {
           result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.apiRequestService
+      this.apiRequestS
         .onPut(`CatalogAsset/${this.id}`, this.form.value)
         .then((result: any) => {
           result ? this.ref.close(true) : (this.submitting = false);

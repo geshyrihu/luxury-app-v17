@@ -16,8 +16,8 @@ import CustomerImagesComponent from './customer-images.component';
   imports: [LuxuryAppComponentsModule],
 })
 export default class ListCustomerComponent implements OnInit {
-  dialogHandlerService = inject(DialogHandlerService);
-  apiRequestService = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
+  apiRequestS = inject(ApiRequestService);
 
   data: ICustomer[] = [];
   ref: DynamicDialogRef;
@@ -32,7 +32,7 @@ export default class ListCustomerComponent implements OnInit {
   }
 
   onLoadData() {
-    this.apiRequestService
+    this.apiRequestS
       .onGetList(`Customers/GetAllAsync/${this.state}`)
       .then((result: any) => {
         this.data = result;
@@ -40,20 +40,18 @@ export default class ListCustomerComponent implements OnInit {
   }
 
   onDelete(id: number) {
-    this.apiRequestService
-      .onDelete(`customers/${id}`)
-      .then((result: boolean) => {
-        if (result) this.data = this.data.filter((item) => item.id !== id);
-      });
+    this.apiRequestS.onDelete(`customers/${id}`).then((result: boolean) => {
+      if (result) this.data = this.data.filter((item) => item.id !== id);
+    });
   }
 
   onModalAddOrEdit(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         CustomerAddOrEditComponent,
         data,
         data.title,
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();
@@ -61,12 +59,12 @@ export default class ListCustomerComponent implements OnInit {
   }
 
   onUpdateImages(customerId: number) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         CustomerImagesComponent,
         { customerId },
         'Actualizar Imagenes',
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();
@@ -74,12 +72,12 @@ export default class ListCustomerComponent implements OnInit {
   }
 
   onUpdateAddress(customerId: number) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         CustomerAddressComponent,
         { customerId },
         'Actualizar Direccion',
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();

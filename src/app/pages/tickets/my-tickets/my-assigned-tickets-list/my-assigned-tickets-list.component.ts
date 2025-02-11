@@ -24,19 +24,19 @@ import MyTicketMessageProgramComponent from '../my-ticket-message-program/my-tic
   imports: [LuxuryAppComponentsModule, TicketMessageModule],
 })
 export default class MyAssignedTicketsListComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   authS = inject(AuthService);
-  dialogHandlerService = inject(DialogHandlerService);
+  dialogHandlerS = inject(DialogHandlerService);
   ticketGroupService = inject(TicketGroupService);
-  custIdService = inject(CustomerIdService);
+  customerIdS = inject(CustomerIdService);
   activatedRoute = inject(ActivatedRoute);
 
   status: string = this.ticketGroupService.ticketGroupMessageStatus;
 
-  customerId$: Observable<number> = this.custIdService.getCustomerId$();
+  customerId$: Observable<number> = this.customerIdS.getCustomerId$();
 
   ngOnInit() {
-    this.customerId$ = this.custIdService.getCustomerId$();
+    this.customerId$ = this.customerIdS.getCustomerId$();
     this.onLoadData(this.status);
     this.customerId$.subscribe(() => {
       this.onLoadData(this.status);
@@ -48,8 +48,8 @@ export default class MyAssignedTicketsListComponent implements OnInit {
   searchText: string = ''; // Para almacenar el texto de búsqueda
 
   onLoadData(status: any) {
-    const urlApi = `Tickets/MyAssignedTickets/${this.authS.applicationUserId}/${status}/${this.custIdService.customerId}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    const urlApi = `Tickets/MyAssignedTickets/${this.authS.applicationUserId}/${status}/${this.customerIdS.customerId}`;
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
       this.filteredData = result; // Inicializa la data filtrada
       this.status = status;
@@ -68,36 +68,36 @@ export default class MyAssignedTicketsListComponent implements OnInit {
   }
 
   onProgram(id: string) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         MyTicketMessageProgramComponent,
         { id: id },
         'Programar actividad',
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData(this.status);
       });
   }
   onClosed(id: string) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         TicketMessageCloseComponent,
         { id: id },
         'Cerrar ticket',
-        this.dialogHandlerService.dialogSizeLg
+        this.dialogHandlerS.dialogSizeLg
       )
       .then((result: boolean) => {
         if (result) this.onLoadData(this.status);
       });
   }
   onFollowUp(id: string) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         TicketMessageFollowupComponent,
         { id: id },
         'Seguimiento',
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData(this.status);
@@ -105,12 +105,12 @@ export default class MyAssignedTicketsListComponent implements OnInit {
   }
 
   onModalAddOrEdit(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         TicketMessageAddOrEditComponent,
         { id: data.id, ticketGroupId: data.ticketGroupId },
         data.title,
-        this.dialogHandlerService.dialogSizeLg
+        this.dialogHandlerS.dialogSizeLg
       )
       .then((result: boolean) => {
         if (result) {
@@ -120,12 +120,12 @@ export default class MyAssignedTicketsListComponent implements OnInit {
   }
 
   onModalAdd(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         MyTicketMessageAddEditComponent,
         { id: data.id },
         data.title,
-        this.dialogHandlerService.dialogSizeLg
+        this.dialogHandlerS.dialogSizeLg
       )
       .then((result: boolean) => {
         if (result) {
@@ -134,23 +134,23 @@ export default class MyAssignedTicketsListComponent implements OnInit {
       });
   }
   onReopen(id: string) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         TicketMessageReopenComponent,
         { id: id },
         'Re abrir ticket',
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData(this.status);
       });
   }
   onCardEmployee(applicationUserId: string) {
-    this.dialogHandlerService.openDialog(
+    this.dialogHandlerS.openDialog(
       CardEmployeeComponent,
       { applicationUserId },
       'Colaborador',
-      this.dialogHandlerService.dialogSizeMd
+      this.dialogHandlerS.dialogSizeMd
     );
   }
 
@@ -168,7 +168,7 @@ export default class MyAssignedTicketsListComponent implements OnInit {
       if (result.value) {
         const urlApi = `Tickets/InProgress/${id}/${this.authS.applicationUserId}`;
 
-        this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+        this.apiRequestS.onGetItem(urlApi).then((result: any) => {
           // Actualizamos el valor del signal con los datos recibidos
           this.onLoadData(this.status);
         });

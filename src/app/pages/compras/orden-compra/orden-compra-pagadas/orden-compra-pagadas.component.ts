@@ -17,42 +17,42 @@ import OrdenCompraComponent from '../orden-compra/orden-compra.component';
   imports: [LuxuryAppComponentsModule, CurrencyMexicoPipe],
 })
 export default class OrdenCompraPagadasComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
-  custIdService = inject(CustomerIdService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
+  customerIdS = inject(CustomerIdService);
   router = inject(Router);
   ordenCompraService = inject(OrdenCompraService);
 
   data: any[] = [];
-  customerId$: Observable<number> = this.custIdService.getCustomerId$();
+  customerId$: Observable<number> = this.customerIdS.getCustomerId$();
   tipo = 1;
   ref: DynamicDialogRef;
 
   ngOnInit(): void {
     this.onLoadData(1);
-    this.customerId$ = this.custIdService.getCustomerId$();
+    this.customerId$ = this.customerIdS.getCustomerId$();
     this.customerId$.subscribe((resp) => {
       this.onLoadData(1);
     });
   }
 
   onLoadData(type: any) {
-    const urlApi = `OrdenCompra/Pagadas/${this.custIdService.customerId}/${type}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    const urlApi = `OrdenCompra/Pagadas/${this.customerIdS.customerId}/${type}`;
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
   }
   onAddOrEdit(id: number) {
     this.ordenCompraService.setOrdenCompraId(id);
 
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         OrdenCompraComponent,
         {
           id,
         },
         'Editar Orden de Compra',
-        this.dialogHandlerService.dialogSizeFull
+        this.dialogHandlerS.dialogSizeFull
       )
       .then((result: boolean) => {
         if (result) this.onLoadData(this.tipo);

@@ -6,7 +6,7 @@ import { ApiRequestService } from './api-request.service';
   providedIn: 'root',
 })
 export class EnumSelectService {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
 
   async onLoadEnumList(
     nameEnum: string,
@@ -18,7 +18,7 @@ export class EnumSelectService {
         : `EnumSelectItem/${nameEnum}`;
 
     try {
-      return await this.apiRequestService.onGetList(urlApi);
+      return await this.apiRequestS.onGetList(urlApi);
     } catch (error) {
       console.error(`Error al obtener ${nameEnum}:`, error);
       return [];
@@ -29,7 +29,7 @@ export class EnumSelectService {
     const urlApi = `${nameEnum}`;
 
     try {
-      return await this.apiRequestService.onGetSelectItem(urlApi);
+      return await this.apiRequestS.onGetSelectItem(urlApi);
     } catch (error) {
       console.error(`Error al obtener ${nameEnum}:`, error);
       return [];

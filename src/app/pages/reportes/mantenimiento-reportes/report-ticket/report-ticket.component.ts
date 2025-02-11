@@ -15,10 +15,10 @@ import { PeriodoMonthService } from 'src/app/core/services/periodo-month.service
   imports: [LuxuryAppComponentsModule],
 })
 export default class ReportTicketComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  custIdService = inject(CustomerIdService);
+  apiRequestS = inject(ApiRequestService);
+  customerIdS = inject(CustomerIdService);
   customToastService = inject(CustomToastService);
-  dateService = inject(DateService);
+  dateS = inject(DateService);
   periodoMonthService = inject(PeriodoMonthService);
 
   data: any;
@@ -26,7 +26,7 @@ export default class ReportTicketComponent implements OnInit {
   dataCargaTicket: any;
   ref: DynamicDialogRef;
 
-  customerId$: Observable<number> = this.custIdService.getCustomerId$();
+  customerId$: Observable<number> = this.customerIdS.getCustomerId$();
   periodoInicial$: Observable<Date> =
     this.periodoMonthService.getPeriodoInicial$();
 
@@ -41,22 +41,22 @@ export default class ReportTicketComponent implements OnInit {
     });
   }
   onLoadData() {
-    const periodo = this.dateService.getDateFormat(
+    const periodo = this.dateS.getDateFormat(
       this.periodoMonthService.getPeriodoInicio
     );
-    const urlApi = `MaintenanceReport/ticket/${this.custIdService.customerId}/${periodo}`;
+    const urlApi = `MaintenanceReport/ticket/${this.customerIdS.customerId}/${periodo}`;
 
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
 
-    const urlApi2 = `MaintenanceReport/TicketResponsable/${this.custIdService.customerId}/${periodo}`;
-    this.apiRequestService.onGetList(urlApi2).then((result: any) => {
+    const urlApi2 = `MaintenanceReport/TicketResponsable/${this.customerIdS.customerId}/${periodo}`;
+    this.apiRequestS.onGetList(urlApi2).then((result: any) => {
       this.dataResponsable = result;
     });
 
-    const urlApi3 = `MaintenanceReport/CargaTicket/${this.custIdService.customerId}/${periodo}`;
-    this.apiRequestService.onGetList(urlApi3).then((result: any) => {
+    const urlApi3 = `MaintenanceReport/CargaTicket/${this.customerIdS.customerId}/${periodo}`;
+    this.apiRequestS.onGetList(urlApi3).then((result: any) => {
       this.dataCargaTicket = result;
     });
   }

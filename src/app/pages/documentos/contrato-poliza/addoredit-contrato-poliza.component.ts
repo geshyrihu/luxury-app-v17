@@ -17,12 +17,12 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class AddoreditContratoPolizaComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  custIdService = inject(CustomerIdService);
+  apiRequestS = inject(ApiRequestService);
+  customerIdS = inject(CustomerIdService);
   authS = inject(AuthService);
   config = inject(DynamicDialogConfig);
-  dateService = inject(DateService);
-  formBuilder = inject(FormBuilder);
+  dateS = inject(DateService);
+  formB = inject(FormBuilder);
 
   ref = inject(DynamicDialogRef);
   submitting: boolean = false;
@@ -32,11 +32,11 @@ export default class AddoreditContratoPolizaComponent implements OnInit {
   model: any;
   cb_providers: ISelectItem[] = [];
   file: File;
-  form: FormGroup = this.formBuilder.group({
+  form: FormGroup = this.formB.group({
     id: { value: this.id, disabled: true },
     providerId: ['', Validators.required],
     providerName: ['', Validators.required],
-    customerId: [this.custIdService.getCustomerId(), Validators.required],
+    customerId: [this.customerIdS.getCustomerId(), Validators.required],
     description: ['', Validators.required],
     startDate: ['', Validators.required],
     endDate: ['', Validators.required],
@@ -46,11 +46,9 @@ export default class AddoreditContratoPolizaComponent implements OnInit {
   ngOnInit(): void {
     this.id = this.config.data.id;
 
-    this.apiRequestService
-      .onGetSelectItem(`Providers`)
-      .then((response: any) => {
-        this.cb_providers = response;
-      });
+    this.apiRequestS.onGetSelectItem(`Providers`).then((response: any) => {
+      this.cb_providers = response;
+    });
 
     flatpickrFactory();
     if (this.id !== 0) this.onLoadData();
@@ -65,7 +63,7 @@ export default class AddoreditContratoPolizaComponent implements OnInit {
 
   onLoadData() {
     const urlApi = `ContratoPoliza/${this.id}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       this.id = result.id;
       this.form.patchValue(result);
       this.form.patchValue({
@@ -79,19 +77,19 @@ export default class AddoreditContratoPolizaComponent implements OnInit {
   submit() {
     let formData = this.createModel(this.form);
 
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
     this.id = this.config.data.id;
 
     this.submitting = true;
 
     if (this.id === 0) {
-      this.apiRequestService
+      this.apiRequestS
         .onPost(`ContratoPoliza`, formData)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.apiRequestService
+      this.apiRequestS
         .onPut(`ContratoPoliza/${this.id}`, formData)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
@@ -113,11 +111,11 @@ export default class AddoreditContratoPolizaComponent implements OnInit {
     formData.append('description', form.get('description').value);
     formData.append(
       'startDate',
-      this.dateService.getDateFormat(form.get('startDate').value)
+      this.dateS.getDateFormat(form.get('startDate').value)
     );
     formData.append(
       'endDate',
-      this.dateService.getDateFormat(form.get('endDate').value)
+      this.dateS.getDateFormat(form.get('endDate').value)
     );
     return formData;
   }

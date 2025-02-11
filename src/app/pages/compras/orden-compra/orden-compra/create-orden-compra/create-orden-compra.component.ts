@@ -17,14 +17,14 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class CreateOrdenCompraComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   router = inject(Router);
 
   authS = inject(AuthService);
   config = inject(DynamicDialogConfig);
-  custIdService = inject(CustomerIdService);
-  dateService = inject(DateService);
-  formBuilder = inject(FormBuilder);
+  customerIdS = inject(CustomerIdService);
+  dateS = inject(DateService);
+  formB = inject(FormBuilder);
   ref = inject(DynamicDialogRef);
 
   submitting: boolean = false;
@@ -50,13 +50,13 @@ export default class CreateOrdenCompraComponent implements OnInit {
       this.posicionCotizacion = 0;
     }
 
-    this.date = this.dateService.getDateFormat(new Date());
+    this.date = this.dateS.getDateFormat(new Date());
     if (this.solicitudCompraId !== undefined) {
       this.onLoadSolicitudCompra();
     }
-    this.form = this.formBuilder.group({
+    this.form = this.formB.group({
       id: [0, Validators.required],
-      customerId: [this.custIdService.getCustomerId(), Validators.required],
+      customerId: [this.customerIdS.getCustomerId(), Validators.required],
       folio: [''],
       fechaSolicitud: [this.date, Validators.required],
       folioSolicitudCompra: [''],
@@ -71,14 +71,14 @@ export default class CreateOrdenCompraComponent implements OnInit {
 
   onLoadSelectItemProvider() {
     const url = 'providers';
-    this.apiRequestService.onGetSelectItem(url).then((result: any) => {
+    this.apiRequestS.onGetSelectItem(url).then((result: any) => {
       this.cb_providers = result;
     });
   }
 
   onLoadSolicitudCompra() {
     const urlApi = `SolicitudCompra/${this.solicitudCompraId}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       this.solicitudCompra = result;
       this.form.controls['equipoOInstalacion'].setValue(
         result.equipoOInstalacion
@@ -93,12 +93,12 @@ export default class CreateOrdenCompraComponent implements OnInit {
   }
   onSubmit() {
     this.ref.close();
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
 
     this.submitting = true;
 
     if (this.ordenCompraId === 0) {
-      this.apiRequestService
+      this.apiRequestS
         .onPost(
           `ordencompra/${this.providerId}/${this.posicionCotizacion}`,
           this.form.value
@@ -110,7 +110,7 @@ export default class CreateOrdenCompraComponent implements OnInit {
           }
         });
     } else {
-      this.apiRequestService
+      this.apiRequestS
         .onPut(`OrdenCompra/${this.ordenCompraId}`, this.form.value)
         .then((result: any) => {
           result ? this.ref.close(result.id) : (this.submitting = false);

@@ -12,8 +12,8 @@ import ModuleAppRolUpdateComponent from './module-app-rol-update.component';
   templateUrl: './module-app-rol.component.html',
 })
 export default class ModuleAppRolComponent {
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
   // Declaración e inicialización de variables
   data: any[] = [];
   ref: DynamicDialogRef; // Referencia a un cuadro de diálogo modal
@@ -24,7 +24,7 @@ export default class ModuleAppRolComponent {
 
   onLoadData() {
     const urlApi = `ModuleAppRol/ListRole`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       // Actualizamos el valor del signal con los datos recibidos
       this.data = result;
     });
@@ -32,11 +32,11 @@ export default class ModuleAppRolComponent {
 
   // Función para abrir un cuadro de diálogo modal para agregar o editar o crear
   onModalAddOrEdit(data: any) {
-    this.dialogHandlerService.openDialog(
+    this.dialogHandlerS.openDialog(
       ModuleAppRolUpdateComponent,
       data,
       data.title,
-      this.dialogHandlerService.dialogSizeMd
+      this.dialogHandlerS.dialogSizeMd
     );
   }
 }

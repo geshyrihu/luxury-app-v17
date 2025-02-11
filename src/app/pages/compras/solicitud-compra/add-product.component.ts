@@ -21,9 +21,9 @@ import { SolicitudCompraService } from 'src/app/core/services/solicitud-compra.s
   imports: [LuxuryAppComponentsModule],
 })
 export default class AddProductComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   authS = inject(AuthService);
-  formBuilder = inject(FormBuilder);
+  formB = inject(FormBuilder);
   solicitudCompraService = inject(SolicitudCompraService);
 
   id: any = 0;
@@ -38,7 +38,7 @@ export default class AddProductComponent implements OnInit {
   @Output()
   updateData = new EventEmitter<void>();
 
-  form: FormGroup = this.formBuilder.group({
+  form: FormGroup = this.formB.group({
     id: { value: this.id, disabled: true },
     productoId: [],
     productName: ['', Validators.required],
@@ -57,7 +57,7 @@ export default class AddProductComponent implements OnInit {
     });
     this.onLoadProduct();
 
-    this.apiRequestService
+    this.apiRequestS
       .onGetSelectItem('getMeasurementUnits')
       .then((response: any) => {
         this.cb_measurement_units = response;
@@ -65,7 +65,7 @@ export default class AddProductComponent implements OnInit {
   }
 
   onLoadProduct() {
-    this.apiRequestService
+    this.apiRequestS
       .onGetList(
         `SolicitudCompraDetalle/AddProductoToSolicitudDto/${this.solicitudCompraId}`
       )
@@ -81,7 +81,7 @@ export default class AddProductComponent implements OnInit {
     this.form.patchValue({
       applicationUserId: this.authS.applicationUserId,
     });
-    this.apiRequestService
+    this.apiRequestS
       .onPost(`SolicitudCompraDetalle`, this.form.value)
       .then((result: boolean) => {
         this.onUpdateData();

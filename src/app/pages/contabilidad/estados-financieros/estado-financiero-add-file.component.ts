@@ -12,8 +12,8 @@ import { AuthService } from 'src/app/core/services/auth.service';
   imports: [LuxuryAppComponentsModule],
 })
 export default class EstadoFinancieroAddFileComponent implements OnInit {
-  formBuilder = inject(FormBuilder);
-  apiRequestService = inject(ApiRequestService);
+  formB = inject(FormBuilder);
+  apiRequestS = inject(ApiRequestService);
   authS = inject(AuthService);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
@@ -22,7 +22,7 @@ export default class EstadoFinancieroAddFileComponent implements OnInit {
   id: number = 0;
   filePath: string = '';
 
-  form: FormGroup = this.formBuilder.group({
+  form: FormGroup = this.formB.group({
     nameFileEstadoFinanciero: [''],
   });
   ngOnInit(): void {
@@ -33,14 +33,14 @@ export default class EstadoFinancieroAddFileComponent implements OnInit {
     this.form.patchValue({ nameFileEstadoFinanciero: file });
   }
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
 
     this.id = this.config.data.id;
     const model = this.onCreateFormData(this.form.value);
 
     this.submitting = true;
 
-    this.apiRequestService
+    this.apiRequestS
       .onPost(
         `EstadoFinanciero/UploadFile/${this.id}/${this.authS.applicationUserId}`,
         model

@@ -13,17 +13,17 @@ import { PeriodoMonthService } from 'src/app/core/services/periodo-month.service
   imports: [LuxuryAppComponentsModule],
 })
 export default class ReporteTicketsComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  dateService = inject(DateService);
+  apiRequestS = inject(ApiRequestService);
+  dateS = inject(DateService);
   periodoMonthService = inject(PeriodoMonthService);
-  custIdService = inject(CustomerIdService);
+  customerIdS = inject(CustomerIdService);
 
   data: any[] = [];
-  customerId$: Observable<number> = this.custIdService.getCustomerId$();
+  customerId$: Observable<number> = this.customerIdS.getCustomerId$();
 
   ngOnInit(): void {
     this.onLoadData();
-    this.customerId$ = this.custIdService.getCustomerId$();
+    this.customerId$ = this.customerIdS.getCustomerId$();
     this.customerId$.subscribe((resp) => {
       this.onLoadData();
     });
@@ -36,13 +36,11 @@ export default class ReporteTicketsComponent implements OnInit {
 
   onLoadData() {
     const urlApi = `ResumenGeneral/ReporteResumenTicket/${
-      this.custIdService.customerId
-    }/${this.dateService.getDateFormat(
+      this.customerIdS.customerId
+    }/${this.dateS.getDateFormat(
       this.periodoMonthService.getPeriodoInicio
-    )}/${this.dateService.getDateFormat(
-      this.periodoMonthService.getPeriodoFin
-    )}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    )}/${this.dateS.getDateFormat(this.periodoMonthService.getPeriodoFin)}`;
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
   }

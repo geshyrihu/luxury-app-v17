@@ -14,10 +14,10 @@ import EmployeeEmergencyContactAddOrEditComponent from './employee-emergency-con
 })
 export default class EmployeeEmergencyContactListComponent implements OnInit {
   employeeAddOrEditService = inject(EmployeeAddOrEditService);
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
 
-  formBuilder = inject(FormBuilder);
+  formB = inject(FormBuilder);
 
   @Input()
   employeeId: number = 0;
@@ -38,7 +38,7 @@ export default class EmployeeEmergencyContactListComponent implements OnInit {
     const urlApi = `EmployeeEmergencyContact/ListEmployeeContact/${
       this.employeeId
     }/${0}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       this.dataEmergencyContact = result;
     });
   }
@@ -46,18 +46,18 @@ export default class EmployeeEmergencyContactListComponent implements OnInit {
     const urlApi = `EmployeeEmergencyContact/ListEmployeeContact/${
       this.employeeId
     }/${1}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       this.dataBeneficiary = result;
     });
   }
 
   onModalAddOrEdit(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         EmployeeEmergencyContactAddOrEditComponent,
         data,
         data.title,
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) {
@@ -68,7 +68,7 @@ export default class EmployeeEmergencyContactListComponent implements OnInit {
   }
 
   onDelete(id: string, typeContact: number) {
-    this.apiRequestService
+    this.apiRequestS
       .onDelete(`EmployeeEmergencyContact/${id}`)
       .then((result: any) => {
         if (result) {

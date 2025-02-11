@@ -16,10 +16,10 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class CrudSalidasComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  custIdService = inject(CustomerIdService);
-  dateService = inject(DateService);
-  formBuilder = inject(FormBuilder);
+  apiRequestS = inject(ApiRequestService);
+  customerIdS = inject(CustomerIdService);
+  dateS = inject(DateService);
+  formB = inject(FormBuilder);
 
   authS = inject(AuthService);
   config = inject(DynamicDialogConfig);
@@ -42,14 +42,14 @@ export default class CrudSalidasComponent implements OnInit {
   ngOnInit(): void {
     flatpickrFactory();
 
-    this.apiRequestService
+    this.apiRequestS
       .onGetSelectItem(`getMeasurementUnits`)
       .then((response: any) => {
         this.cb_measurement_unit = response;
       });
 
-    const urlApi = `InventarioProducto/GetExistenciaProducto/${this.custIdService.customerId}/${this.config.data.idProducto}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    const urlApi = `InventarioProducto/GetExistenciaProducto/${this.customerIdS.customerId}/${this.config.data.idProducto}`;
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       if (result) this.existenciaActual = result.existencia;
     });
 
@@ -61,10 +61,10 @@ export default class CrudSalidasComponent implements OnInit {
 
     if (this.id !== 0) this.onLoadData();
 
-    this.form = this.formBuilder.group({
+    this.form = this.formB.group({
       id: { value: 0, disabled: true },
-      customerId: [this.custIdService.customerId, Validators.required],
-      fechaSalida: [this.dateService.getDateNow(), Validators.required],
+      customerId: [this.customerIdS.customerId, Validators.required],
+      fechaSalida: [this.dateS.getDateNow(), Validators.required],
       productoId: [this.idProducto, Validators.required],
       cantidad: [0, Validators.required],
       unidadMedidaId: ['', Validators.required],
@@ -84,27 +84,27 @@ export default class CrudSalidasComponent implements OnInit {
   }
   onLoadData() {
     const urlApi = `salidaproductos/${this.id}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       this.nombreProducto = result.producto;
       this.cantidadActual = result.cantidad;
-      result.fechaSalida = this.dateService.getDateFormat(result.fechaSalida);
+      result.fechaSalida = this.dateS.getDateFormat(result.fechaSalida);
       this.form.patchValue(result);
     });
   }
 
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
 
     this.submitting = true;
 
     if (this.id === 0) {
-      this.apiRequestService
+      this.apiRequestS
         .onPost('SalidaProductos', this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.apiRequestService
+      this.apiRequestS
         .onPut(
           `SalidaProductos/${this.id}/${this.cantidadActual}`,
           this.form.value

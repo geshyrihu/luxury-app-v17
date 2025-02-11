@@ -28,11 +28,11 @@ const date = new Date();
   providers: [EnumSelectService],
 })
 export default class AddOrEditMeetingComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   authS = inject(AuthService);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
-  enumSelectService = inject(EnumSelectService);
+  enumSelectS = inject(EnumSelectService);
 
   dateNow = new Date(
     date.getTime() + new Date().getTimezoneOffset() * -60 * 1000
@@ -47,13 +47,13 @@ export default class AddOrEditMeetingComponent implements OnInit {
   form: FormGroup;
 
   async ngOnInit() {
-    this.cb_typeMeeting = await this.enumSelectService.typeMeeting();
+    this.cb_typeMeeting = await this.enumSelectS.typeMeeting();
     flatpickrFactory();
     this.customerId = this.config.data.customerId;
 
     this.id = this.config.data.id;
     if (this.id !== 0) this.onLoadData();
-    this.form = this.formBuilder.group({
+    this.form = this.formB.group({
       id: { value: this.id, disabled: true },
       date: [this.dateNow, Validators.required],
       eTypeMeeting: [null, Validators.required],
@@ -62,8 +62,8 @@ export default class AddOrEditMeetingComponent implements OnInit {
     });
   }
 
-  constructor(private formBuilder: FormBuilder) {
-    this.form = this.formBuilder.group({
+  constructor(private formB: FormBuilder) {
+    this.form = this.formB.group({
       id: { value: null, disabled: true },
       date: [null, Validators.required],
       eTypeMeeting: [null, Validators.required],
@@ -73,17 +73,17 @@ export default class AddOrEditMeetingComponent implements OnInit {
   }
 
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
 
     if (this.id === 0) {
-      this.apiRequestService
+      this.apiRequestS
         .onPost(`Meetings`, this.form.value)
         .then((result: any) => {
           this.id = result.id;
           this.onLoadData();
         });
     } else {
-      this.apiRequestService
+      this.apiRequestS
         .onPut(`Meetings/${this.id}`, this.form.value)
         .then((result: any) => {
           this.onLoadData();
@@ -93,7 +93,7 @@ export default class AddOrEditMeetingComponent implements OnInit {
 
   onLoadData() {
     const urlApi = `Meetings/${this.id}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       this.form.patchValue(result);
     });
   }

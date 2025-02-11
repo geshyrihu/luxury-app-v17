@@ -13,7 +13,7 @@ import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 })
 export default class UpdatePasswordAccountComponent implements OnInit {
   config = inject(DynamicDialogConfig);
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   customToastService = inject(CustomToastService);
 
   submitting: boolean = false;
@@ -26,7 +26,7 @@ export default class UpdatePasswordAccountComponent implements OnInit {
 
   sendOnlyPasswordEmail() {
     this.submitting = true;
-    this.apiRequestService
+    this.apiRequestS
       .onGetItem(`Auth/SendNewPasswordForEmail/${this.applicationUserId}`)
       .then(() => {
         this.submitting = false;
@@ -35,7 +35,7 @@ export default class UpdatePasswordAccountComponent implements OnInit {
   }
   onGenerateUserNameAndPassword() {
     this.submitting = true;
-    this.apiRequestService
+    this.apiRequestS
       .onGetItem(`Auth/SendNewUserNameForEmail/${this.applicationUserId}`)
       .then(() => {
         this.submitting = false;

@@ -20,14 +20,14 @@ import AddOrEditVacanteComponent from '../list-solicitudes/vacantes/addoredit-va
   imports: [LuxuryAppComponentsModule],
 })
 export default class ListSolicitudesPorClienteComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
-  custIdService = inject(CustomerIdService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
+  customerIdS = inject(CustomerIdService);
   statusSolicitudVacanteService = inject(StatusSolicitudVacanteService);
   router = inject(Router);
   authS = inject(AuthService);
 
-  customerId$: Observable<number> = this.custIdService.getCustomerId$();
+  customerId$: Observable<number> = this.customerIdS.getCustomerId$();
   // Declaración e inicialización de variables
   data: any[] = [];
   ref: DynamicDialogRef; // Referencia a un cuadro de diálogo modal
@@ -44,10 +44,10 @@ export default class ListSolicitudesPorClienteComponent implements OnInit {
   onLoadData() {
     const urlApi =
       'SolicitudesReclutamiento/solicitudesporcliente/' +
-      this.custIdService.getCustomerId() +
+      this.customerIdS.getCustomerId() +
       '/' +
       this.authS.infoUserAuthDto.applicationUserId;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
   }
@@ -57,14 +57,14 @@ export default class ListSolicitudesPorClienteComponent implements OnInit {
     this.router.navigate(['/reclutamiento/status-solicitud-vacante']);
   }
   onModalEditVacante(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         AddOrEditVacanteComponent,
         {
           id: data.id,
         },
         'Editar Registro',
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();
@@ -72,14 +72,14 @@ export default class ListSolicitudesPorClienteComponent implements OnInit {
   }
 
   onModalEditSolicitudAlta(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         AddOrEditSolicitudAltaComponent,
         {
           id: data.id,
         },
         'Editar Registro',
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();
@@ -87,14 +87,14 @@ export default class ListSolicitudesPorClienteComponent implements OnInit {
   }
 
   onModalEditSolicitudBaja(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         AddoreditSolicitudBajaComponent,
         {
           id: data.id,
         },
         'Editar Registro',
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();
@@ -102,14 +102,14 @@ export default class ListSolicitudesPorClienteComponent implements OnInit {
   }
 
   onModalEditModificacionSalario(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         AddoreditModificacionSalarioComponent,
         {
           id: data.id,
         },
         'Editar Registro',
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();

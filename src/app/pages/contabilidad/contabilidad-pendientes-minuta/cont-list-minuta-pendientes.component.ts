@@ -18,11 +18,11 @@ import ContMinutaSeguimientosComponent from './cont-minuta-seguimientos.componen
   imports: [LuxuryAppComponentsModule, NgbTooltip],
 })
 export default class ContListMinutaPendientesComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
   authS = inject(AuthService);
-  dialogService = inject(DialogService);
-  messageService = inject(MessageService);
+  dialogS = inject(DialogService);
+  messageS = inject(MessageService);
 
   data: any[] = [];
   ref: DynamicDialogRef;
@@ -33,7 +33,7 @@ export default class ContListMinutaPendientesComponent implements OnInit {
   }
 
   onLoadData() {
-    this.apiRequestService
+    this.apiRequestS
       .onGetList(
         `ContabilidadMinuta/ListaMinuta/${this.authS.userTokenDto.infoUserAuthDto.applicationUserId}/${this.statusFiltro}`
       )
@@ -51,7 +51,7 @@ export default class ContListMinutaPendientesComponent implements OnInit {
     meetingDetailsId: any,
     idMeetingSeguimiento: any
   ) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         AddorEditMeetingSeguimientoComponent,
         {
@@ -59,7 +59,7 @@ export default class ContListMinutaPendientesComponent implements OnInit {
           idMeetingSeguimiento,
         },
         'Seguimiento',
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();
@@ -67,14 +67,14 @@ export default class ContListMinutaPendientesComponent implements OnInit {
   }
 
   onModalTodosSeguimientos(idItem: number) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         ContMinutaSeguimientosComponent,
         {
           idItem,
         },
         'Seguimientos',
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();
@@ -82,12 +82,12 @@ export default class ContListMinutaPendientesComponent implements OnInit {
   }
 
   onModalAddOrEditMinutaDetalle(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         AddoreditMinutaDetalleComponent,
         data,
         data.header,
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();

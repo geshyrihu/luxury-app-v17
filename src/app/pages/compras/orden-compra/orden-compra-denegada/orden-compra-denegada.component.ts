@@ -13,17 +13,17 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class OrdenCompraDenegadaComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   authS = inject(AuthService);
   config = inject(DynamicDialogConfig);
-  formBuilder = inject(FormBuilder);
+  formB = inject(FormBuilder);
   ref = inject(DynamicDialogRef);
 
   submitting: boolean = false;
 
   ordenCompraId: number = 0;
   ordenCompraAuthId: number = 0;
-  form: FormGroup = this.formBuilder.group({
+  form: FormGroup = this.formB.group({
     id: [],
     ordenCompraId: [],
     fechaAutorizacion: [],
@@ -34,7 +34,7 @@ export default class OrdenCompraDenegadaComponent implements OnInit {
   ngOnInit(): void {
     this.ordenCompraId = this.config.data.ordenCompraId;
     this.ordenCompraAuthId = this.config.data.ordenCompraAuthId;
-    this.form = this.formBuilder.group({
+    this.form = this.formB.group({
       id: [this.ordenCompraAuthId],
       ordenCompraId: [this.ordenCompraId],
       fechaAutorizacion: [''],
@@ -45,7 +45,7 @@ export default class OrdenCompraDenegadaComponent implements OnInit {
 
   onSubmit() {
     this.submitting = true;
-    this.apiRequestService
+    this.apiRequestS
       .onPut(
         `OrdenCompraAuth/NoAutorizada/${this.ordenCompraAuthId}/${this.authS.applicationUserId}`,
         this.form.value

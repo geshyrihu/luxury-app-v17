@@ -10,7 +10,7 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
   imports: [LuxuryAppComponentsModule],
 })
 export default class TarjetaProductoComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   config = inject(DynamicDialogConfig);
 
   productoId: number = this.config.data.productoId;
@@ -18,7 +18,7 @@ export default class TarjetaProductoComponent implements OnInit {
 
   ngOnInit(): void {
     const urlApi = `Productos/${this.productoId}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       this.producto = result;
     });
   }

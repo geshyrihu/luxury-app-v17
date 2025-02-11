@@ -12,8 +12,8 @@ import AddOrEditCatalogoDescripcionComponent from 'src/app/pages/settings/catalo
   imports: [LuxuryAppComponentsModule],
 })
 export default class ListCatalogoDescripcionComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
 
   data: any[] = [];
   ref: DynamicDialogRef;
@@ -24,25 +24,25 @@ export default class ListCatalogoDescripcionComponent implements OnInit {
 
   onLoadData() {
     const urlApi = `CatalogoEntregaRecepcionDescripcion`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
   }
 
   onModalAddOrEdit(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         AddOrEditCatalogoDescripcionComponent,
         data,
         data.title,
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();
       });
   }
   onDelete(id: number) {
-    this.apiRequestService
+    this.apiRequestS
       .onDelete(`catalogoentregarecepciondescripcion/${id}`)
       .then((result: boolean) => {
         if (result) this.data = this.data.filter((item) => item.id !== id);

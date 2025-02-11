@@ -15,19 +15,19 @@ import AddoreditInventarioPinturaComponent from './addoredit-inventario-pintura.
   imports: [LuxuryAppComponentsModule, ImageModule],
 })
 export default class InventarioPinturaComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
-  custIdService = inject(CustomerIdService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
+  customerIdS = inject(CustomerIdService);
 
   urlImg: string = '';
   data: any[] = [];
 
   ref: DynamicDialogRef;
 
-  customerId$: Observable<number> = this.custIdService.getCustomerId$();
+  customerId$: Observable<number> = this.customerIdS.getCustomerId$();
 
   ngOnInit(): void {
-    this.customerId$ = this.custIdService.getCustomerId$();
+    this.customerId$ = this.customerIdS.getCustomerId$();
     this.onLoadData();
     this.customerId$.subscribe((resp) => {
       this.onLoadData();
@@ -36,13 +36,13 @@ export default class InventarioPinturaComponent implements OnInit {
 
   onLoadData() {
     const urlApi =
-      'InventarioPintura/GetAll/' + this.custIdService.getCustomerId();
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      'InventarioPintura/GetAll/' + this.customerIdS.getCustomerId();
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
     });
   }
   onDelete(id: number) {
-    this.apiRequestService
+    this.apiRequestS
       .onDelete(`InventarioPintura/${id}`)
       .then((result: boolean) => {
         if (result) this.data = this.data.filter((item) => item.id !== id);
@@ -50,12 +50,12 @@ export default class InventarioPinturaComponent implements OnInit {
   }
 
   onModalAddOrEdit(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         AddoreditInventarioPinturaComponent,
         data,
         data.title,
-        this.dialogHandlerService.dialogSizeLg
+        this.dialogHandlerS.dialogSizeLg
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();

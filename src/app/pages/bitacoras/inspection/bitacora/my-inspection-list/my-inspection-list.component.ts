@@ -16,11 +16,11 @@ import { DialogHandlerService } from 'src/app/core/services/dialog-handler.servi
 })
 export default class MyInspectionListComponent implements OnInit {
   authService = inject(AuthService);
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
-  custIdService = inject(CustomerIdService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
+  customerIdS = inject(CustomerIdService);
 
-  customerId$: Observable<number> = this.custIdService.getCustomerId$();
+  customerId$: Observable<number> = this.customerIdS.getCustomerId$();
 
   // Método para actualizar la fecha seleccionada
   data: any = [];
@@ -43,9 +43,9 @@ export default class MyInspectionListComponent implements OnInit {
 
       const formattedDate = `${year}-${month}-${day}`; // yyyy-MM-dd
 
-      const urlApi = `InspectionResult/GetInspectionsByCustomer/${this.authService.applicationUserId}/${this.custIdService.customerId}/${formattedDate}`;
+      const urlApi = `InspectionResult/GetInspectionsByCustomer/${this.authService.applicationUserId}/${this.customerIdS.customerId}/${formattedDate}`;
 
-      this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      this.apiRequestS.onGetList(urlApi).then((result: any) => {
         this.data = result;
       });
     }

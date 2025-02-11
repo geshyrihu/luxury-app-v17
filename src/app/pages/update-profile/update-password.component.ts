@@ -1,20 +1,20 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { FormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { passwordValidation } from 'src/app/core/directives/password-validation.directive';
-import { IChangePassword } from 'src/app/core/interfaces/change-password.interface';
-import { ApiRequestService } from 'src/app/core/services/api-request.service';
-import { AuthService } from 'src/app/core/services/auth.service';
+import { Component, OnInit, inject } from "@angular/core";
+import { FormBuilder, UntypedFormGroup, Validators } from "@angular/forms";
+import LuxuryAppComponentsModule from "app/shared/luxuryapp-components.module";
+import { passwordValidation } from "src/app/core/directives/password-validation.directive";
+import { IChangePassword } from "src/app/core/interfaces/change-password.interface";
+import { ApiRequestService } from "src/app/core/services/api-request.service";
+import { AuthService } from "src/app/core/services/auth.service";
 
 @Component({
-  selector: 'app-update-password',
-  templateUrl: './update-password.component.html',
+  selector: "app-update-password",
+  templateUrl: "./update-password.component.html",
   standalone: true,
   imports: [LuxuryAppComponentsModule],
 })
 export default class UpdatePasswordComponent implements OnInit {
-  formBuilder = inject(FormBuilder);
-  apiRequestService = inject(ApiRequestService);
+  formB = inject(FormBuilder);
+  apiRequestS = inject(ApiRequestService);
   authS = inject(AuthService);
 
   submitting: boolean = false;
@@ -29,35 +29,35 @@ export default class UpdatePasswordComponent implements OnInit {
   }
 
   onCreateForm() {
-    this.formUpdatePassword = this.formBuilder.group(
+    this.formUpdatePassword = this.formB.group(
       {
-        currentPassword: ['', Validators.required],
+        currentPassword: ["", Validators.required],
         newPassword: [
-          '',
+          "",
           {
             validators: [Validators.required, passwordValidation()],
           },
         ],
-        confirm: ['', Validators.required],
+        confirm: ["", Validators.required],
       },
       {
-        validators: this.passwordEqual('newPassword', 'confirm'),
+        validators: this.passwordEqual("newPassword", "confirm"),
       }
     );
   }
 
   updatePassword() {
-    if (!this.apiRequestService.validateForm(this.formUpdatePassword)) return;
+    if (!this.apiRequestS.validateForm(this.formUpdatePassword)) return;
 
     const model: IChangePassword = {
-      currentPassword: this.formUpdatePassword.get('currentPassword').value,
-      newPassword: this.formUpdatePassword.get('newPassword').value,
+      currentPassword: this.formUpdatePassword.get("currentPassword").value,
+      newPassword: this.formUpdatePassword.get("newPassword").value,
     };
     const id = this.authS.userTokenDto.infoUserAuthDto.applicationUserId;
 
     this.submitting = true;
 
-    this.apiRequestService
+    this.apiRequestS
       .onPut(`Users/ChangePassword/${id}`, model)
       .then((result: boolean) => {
         if (result) {
@@ -79,8 +79,8 @@ export default class UpdatePasswordComponent implements OnInit {
     };
   }
   passwordNotValid() {
-    const pass1 = this.formUpdatePassword.get('newPassword').value;
-    const pass2 = this.formUpdatePassword.get('confirm').value;
+    const pass1 = this.formUpdatePassword.get("newPassword").value;
+    const pass2 = this.formUpdatePassword.get("confirm").value;
 
     return pass1 !== pass2 && this.updatePassword ? true : false;
   }

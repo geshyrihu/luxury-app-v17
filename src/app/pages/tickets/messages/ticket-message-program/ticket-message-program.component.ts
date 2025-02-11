@@ -14,10 +14,10 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class TicketMessageProgramComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   authS = inject(AuthService);
-  formBuilder = inject(FormBuilder);
-  custIdService = inject(CustomerIdService);
+  formB = inject(FormBuilder);
+  customerIdS = inject(CustomerIdService);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
 
@@ -26,7 +26,7 @@ export default class TicketMessageProgramComponent implements OnInit {
 
   cb_user: any[] = [];
 
-  form: FormGroup = this.formBuilder.group({
+  form: FormGroup = this.formB.group({
     id: { value: this.id, disabled: true },
     scheduledDate: [new Date(), Validators.required],
     assigneeId: ['', Validators.required],
@@ -41,7 +41,7 @@ export default class TicketMessageProgramComponent implements OnInit {
 
   onLoadData() {
     const urlApi = `Tickets/Programation/${this.id}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       this.form.patchValue({
         assignee: result.assignee,
         assigneeId: result.assigneeId,
@@ -49,10 +49,10 @@ export default class TicketMessageProgramComponent implements OnInit {
     });
   }
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
     this.submitting = true;
 
-    this.apiRequestService
+    this.apiRequestS
       .onPost(`Tickets/Programation/${this.id}`, this.form.value)
       .then((result: boolean) => {
         result ? this.ref.close(true) : (this.submitting = false);
@@ -61,7 +61,7 @@ export default class TicketMessageProgramComponent implements OnInit {
 
   onLoadUsers() {
     const urlApi = `Tickets/Participant/${this.config.data.ticketGroupId}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.cb_user = result;
     });
   }

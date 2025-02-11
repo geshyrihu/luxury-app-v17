@@ -15,19 +15,19 @@ import { DataConnectorService } from 'src/app/core/services/data.service';
 })
 export default class CustomerSelectionComponent implements OnInit {
   authS = inject(AuthService);
-  custIdService = inject(CustomerIdService);
-  apiRequestService = inject(ApiRequestService);
+  customerIdS = inject(CustomerIdService);
+  apiRequestS = inject(ApiRequestService);
 
   customerName = this.authS.infoUserAuthDto.customer;
   customerPhotoPath = this.authS.infoUserAuthDto.customerPhotoPath;
 
   cb_customer: any[] = [];
-  customerId = this.custIdService.customerId;
+  customerId = this.customerIdS.customerId;
   selectedCountry: string | undefined;
   ngOnInit() {
     this.cb_customer = this.authS.customerAccess;
   }
   selectCustomer(customerId: number) {
-    this.custIdService.setCustomerId(customerId);
+    this.customerIdS.setCustomerId(customerId);
   }
 }

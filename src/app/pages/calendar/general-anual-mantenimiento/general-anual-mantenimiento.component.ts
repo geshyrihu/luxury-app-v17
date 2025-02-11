@@ -12,11 +12,11 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
   imports: [LuxuryAppComponentsModule],
 })
 export default class GeneralAnualMantenimientoComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  custIdService = inject(CustomerIdService);
+  apiRequestS = inject(ApiRequestService);
+  customerIdS = inject(CustomerIdService);
 
   data: any[] = [];
-  customerId$: Observable<number> = this.custIdService.getCustomerId$();
+  customerId$: Observable<number> = this.customerIdS.getCustomerId$();
   cb_providers: ISelectItem[] = [];
   providerId = '';
 
@@ -29,15 +29,15 @@ export default class GeneralAnualMantenimientoComponent implements OnInit {
   }
   onLoadProveedores() {
     this.cb_providers = [];
-    const url = `MaintenanceCalendars/ProveedoresCalendario/${this.custIdService.customerId}`;
-    this.apiRequestService.onGetList(url).then((result: any) => {
+    const url = `MaintenanceCalendars/ProveedoresCalendario/${this.customerIdS.customerId}`;
+    this.apiRequestS.onGetList(url).then((result: any) => {
       this.cb_providers = result;
     });
   }
   onLoadData() {
     this.data = [];
-    const url = `MaintenanceCalendars/GeneralMantenimiento/${this.custIdService.customerId}/${this.providerId}`;
-    this.apiRequestService.onGetList(url).then((result: any) => {
+    const url = `MaintenanceCalendars/GeneralMantenimiento/${this.customerIdS.customerId}/${this.providerId}`;
+    this.apiRequestS.onGetList(url).then((result: any) => {
       this.data = result;
     });
   }

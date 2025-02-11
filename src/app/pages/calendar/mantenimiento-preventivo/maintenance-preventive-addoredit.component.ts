@@ -18,13 +18,13 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   providers: [EnumSelectService],
 })
 export default class MaintenancePreventiveAddoreditComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  formBuilder = inject(FormBuilder);
+  apiRequestS = inject(ApiRequestService);
+  formB = inject(FormBuilder);
   authS = inject(AuthService);
   config = inject(DynamicDialogConfig);
-  custIdService = inject(CustomerIdService);
+  customerIdS = inject(CustomerIdService);
   ref = inject(DynamicDialogRef);
-  enumSelectService = inject(EnumSelectService);
+  enumSelectS = inject(EnumSelectService);
 
   cb_machinery: ISelectItem[] = [];
   cb_providers: ISelectItem[] = [];
@@ -60,8 +60,8 @@ export default class MaintenancePreventiveAddoreditComponent implements OnInit {
       }
     }
     this.onLoadForm();
-    this.cb_recurrencia = await this.enumSelectService.recurrence();
-    this.cb_TypeMaintance = await this.enumSelectService.typeMaintance();
+    this.cb_recurrencia = await this.enumSelectS.recurrence();
+    this.cb_TypeMaintance = await this.enumSelectS.typeMaintance();
 
     this.idMachinery = this.config.data.idMachinery;
     if (this.config.data.fecha !== null) {
@@ -93,19 +93,15 @@ export default class MaintenancePreventiveAddoreditComponent implements OnInit {
   }
 
   onLoadSelectItem() {
-    this.apiRequestService
-      .onGetSelectItem(
-        `MachineriesGetAll/${this.custIdService.getCustomerId()}`
-      )
+    this.apiRequestS
+      .onGetSelectItem(`MachineriesGetAll/${this.customerIdS.getCustomerId()}`)
       .then((response: any) => {
         this.cb_machinery = response;
       });
-    this.apiRequestService
-      .onGetSelectItem('Providers')
-      .then((response: any) => {
-        this.cb_providers = response;
-      });
-    this.apiRequestService
+    this.apiRequestS.onGetSelectItem('Providers').then((response: any) => {
+      this.cb_providers = response;
+    });
+    this.apiRequestS
       .onGetSelectItem('CuentasContables')
       .then((response: ISelectItem[]) => {
         this.cb_subCuentaId = response;
@@ -114,7 +110,7 @@ export default class MaintenancePreventiveAddoreditComponent implements OnInit {
 
   onGetMachinerySelectItem() {
     if (this.config.data.idMachinery !== 0) {
-      this.apiRequestService
+      this.apiRequestS
         .onGetList(
           `Machineries/GetMachinerySelectItem/${this.config.data.idMachinery}`
         )
@@ -131,7 +127,7 @@ export default class MaintenancePreventiveAddoreditComponent implements OnInit {
   }
 
   onLoadForm() {
-    this.form = this.formBuilder.group({
+    this.form = this.formB.group({
       id: { value: this.id, disabled: true },
       activity: ['', Validators.required],
       machineryId: ['', Validators.required],
@@ -141,7 +137,7 @@ export default class MaintenancePreventiveAddoreditComponent implements OnInit {
       providerId: ['', Validators.required],
       recurrence: [null, Validators.required],
       typeMaintance: [null, Validators.required],
-      customerId: [this.custIdService.getCustomerId()],
+      customerId: [this.customerIdS.getCustomerId()],
       cuentaId: ['', Validators.required],
       // temp
       machineryName: ['', Validators.required],
@@ -151,7 +147,7 @@ export default class MaintenancePreventiveAddoreditComponent implements OnInit {
     });
   }
   LoadCopy() {
-    this.apiRequestService
+    this.apiRequestS
       .onGetItem(`MaintenanceCalendars/Get/${this.config.data.id}`)
       .then((result: any) => {
         this.id = 0;
@@ -159,7 +155,7 @@ export default class MaintenancePreventiveAddoreditComponent implements OnInit {
       });
   }
   onLoadData() {
-    this.apiRequestService
+    this.apiRequestS
       .onGetItem(`MaintenanceCalendars/Get/${this.config.data.id}`)
       .then((result: any) => {
         this.id = result.id;
@@ -197,18 +193,18 @@ export default class MaintenancePreventiveAddoreditComponent implements OnInit {
   // convenience getter for easy access to form fields
 
   submit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
 
     this.submitting = true;
 
     if (this.id === 0) {
-      this.apiRequestService
+      this.apiRequestS
         .onPost(`MaintenanceCalendars`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.apiRequestService
+      this.apiRequestS
         .onPut(`MaintenanceCalendars/${this.id}`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);

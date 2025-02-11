@@ -17,9 +17,9 @@ import { ISelectItem } from '../../../core/interfaces/select-Item.interface';
   imports: [LuxuryAppComponentsModule, CustomInputModule, FlatpickrModule],
 })
 export default class LegalTicketAddComponent implements OnInit {
-  custIdService = inject(CustomerIdService);
-  formBuilder = inject(FormBuilder);
-  apiRequestService = inject(ApiRequestService);
+  customerIdS = inject(CustomerIdService);
+  formB = inject(FormBuilder);
+  apiRequestS = inject(ApiRequestService);
   auhtService = inject(AuthService);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
@@ -34,7 +34,7 @@ export default class LegalTicketAddComponent implements OnInit {
 
   cb_customer: ISelectItem[] = [];
   employee: ISelectItem[] = [];
-  form: FormGroup = this.formBuilder.group({
+  form: FormGroup = this.formB.group({
     id: { value: this.id, disabled: true },
     customerId: ['', Validators.required],
     typeService: [0, Validators.required],
@@ -53,12 +53,12 @@ export default class LegalTicketAddComponent implements OnInit {
   });
   ngOnInit() {
     this.onLegalMatter();
-    this.apiRequestService.onGetSelectItem(`NombreCorto`).then((resp: any) => {
+    this.apiRequestS.onGetSelectItem(`NombreCorto`).then((resp: any) => {
       this.cb_customer = resp;
     });
     this.id = this.config.data.id;
     if (this.id !== '') this.onLoadData();
-    this.apiRequestService
+    this.apiRequestS
       .onGetItem(`TicketLegal/EmployeeLegal`)
       .then((result: any) => {
         this.employee = result;
@@ -67,25 +67,23 @@ export default class LegalTicketAddComponent implements OnInit {
   onLegalMatter() {
     const urlApi = `LegalMatter/SelectForAddTicket`;
 
-    this.apiRequestService.onGetList(urlApi).then((result: ISelectItem[]) => {
+    this.apiRequestS.onGetList(urlApi).then((result: ISelectItem[]) => {
       this.cb_legal_matter = result;
     });
   }
   onLoadData() {
-    this.apiRequestService
-      .onGetItem(`TicketLegal/${this.id}`)
-      .then((result: any) => {
-        this.form.patchValue(result);
-        this.tipoSolicitud = result.tipoSolicitud;
-      });
+    this.apiRequestS.onGetItem(`TicketLegal/${this.id}`).then((result: any) => {
+      this.form.patchValue(result);
+      this.tipoSolicitud = result.tipoSolicitud;
+    });
   }
   onSubmit() {
     this.form.removeControl('typeService');
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
     this.id = this.config.data.id;
     this.submitting = true;
 
-    this.apiRequestService
+    this.apiRequestS
       .onPost(`TicketLegal`, this.form.value)
       .then((result: boolean) => {
         result ? this.ref.close(true) : (this.submitting = false);

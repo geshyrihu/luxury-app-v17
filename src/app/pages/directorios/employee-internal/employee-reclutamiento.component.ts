@@ -12,9 +12,9 @@ import SolicitudModificacionSalarioComponent from 'src/app/pages/reclutamiento/s
   standalone: true,
 })
 export default class EmployeeReclutamientoComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
-  custIdService = inject(CustomerIdService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
+  customerIdS = inject(CustomerIdService);
 
   @Input() employeeId: any;
 
@@ -33,7 +33,7 @@ export default class EmployeeReclutamientoComponent implements OnInit {
   // Solicitud de modificacion de salario
   onValidarSolicitudesAbiertas() {
     const urlApi = `employees/validarsolicitudesabiertas/${this.employeeId}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       this.workPosition = result.workPosition;
       this.solicitudAltaStatus = result.solicitudAlta;
       this.solicitudBajaStatus = result.solicitudBaja;
@@ -43,15 +43,15 @@ export default class EmployeeReclutamientoComponent implements OnInit {
   }
 
   onModalSolicitudALta() {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         SolicitudAltaComponent,
         {
           employeeId: this.employeeId,
-          customerId: this.custIdService.customerId,
+          customerId: this.customerIdS.customerId,
         },
         'Solicitud de alta',
-        this.dialogHandlerService.dialogSizeFull
+        this.dialogHandlerS.dialogSizeFull
       )
       .then((result: boolean) => {
         if (result) {
@@ -63,14 +63,14 @@ export default class EmployeeReclutamientoComponent implements OnInit {
   // Metodo para solicitar baja del empleado
 
   onModalSolicitudBaja() {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         SolicitudBajaComponent,
         {
           employeeId: this.employeeId,
         },
         'Solicitud de baja',
-        this.dialogHandlerService.dialogSizeFull
+        this.dialogHandlerS.dialogSizeFull
       )
       .then((result: boolean) => {
         if (result) this.onValidarSolicitudesAbiertas();
@@ -80,14 +80,14 @@ export default class EmployeeReclutamientoComponent implements OnInit {
   //Solicitar Modificacion de salario
 
   onModalSolicitudModificacionSalarion() {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         SolicitudModificacionSalarioComponent,
         {
           workPositionId: this.employeeId,
         },
         'Solicitud de Modificación de salario',
-        this.dialogHandlerService.dialogSizeFull
+        this.dialogHandlerS.dialogSizeFull
       )
       .then((result: boolean) => {
         if (result) this.onValidarSolicitudesAbiertas();

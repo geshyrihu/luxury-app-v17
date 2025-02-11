@@ -16,9 +16,9 @@
 //   imports: [LuxuryAppComponentsModule],
 // })
 // export default class ServiceOrderComponent implements OnInit {
-//   apiRequestService = inject(ApiRequestService);
+//   apiRequestS = inject(ApiRequestService);
 //   customToastService = inject(CustomToastService);
-//   dialogHandlerService = inject(DialogHandlerService);
+//    dialogHandlerS = inject(DialogHandlerService);
 
 //   authS = inject(AuthService);
 //   config = inject(DynamicDialogConfig);
@@ -42,7 +42,7 @@
 
 //   onLoadData() {
 //     const urlApi = `MaintenanceCalendars/ListService/${this.idMachinery}`;
-//     this.apiRequestService.onGetList(urlApi).then((result: any) => {
+//     this.apiRequestS.onGetList(urlApi).then((result: any) => {
 //       this.maintenanceCalendars = result;
 //     });
 //   }
@@ -56,7 +56,7 @@
 //         //confirm action
 
 //         const urlApi = `MaintenanceCalendars/${id}`;
-//         this.apiRequestService.onDelete(urlApi).then((result: boolean) => {
+//         this.apiRequestS.onDelete(urlApi).then((result: boolean) => {
 //           this.onLoadData();
 //         });
 //       },
@@ -75,7 +75,7 @@
 //           idMachinery: data.idMachinery,
 //         },
 //         data.header,
-//         this.dialogHandlerService.dialogSizeMd
+//         this.dialogHandlerS.dialogSizeMd
 //       )
 //       .then((result: boolean) => {
 //         if (result) this.onLoadData();

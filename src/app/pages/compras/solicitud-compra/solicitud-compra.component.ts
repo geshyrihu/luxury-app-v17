@@ -29,13 +29,13 @@ import SolicitudCompraDetalleComponent from './solicitud-compra-detalle/solicitu
   providers: [EnumSelectService],
 })
 export default class SolicitudCompraComponent implements OnInit {
-  enumSelectService = inject(EnumSelectService);
-  apiRequestService = inject(ApiRequestService);
+  enumSelectS = inject(EnumSelectService);
+  apiRequestS = inject(ApiRequestService);
   authS = inject(AuthService);
-  custIdService = inject(CustomerIdService);
-  dateService = inject(DateService);
-  dialogHandlerService = inject(DialogHandlerService);
-  formBuilder = inject(FormBuilder);
+  customerIdS = inject(CustomerIdService);
+  dateS = inject(DateService);
+  dialogHandlerS = inject(DialogHandlerService);
+  formB = inject(FormBuilder);
   routeActive = inject(ActivatedRoute);
   router = inject(Router);
 
@@ -65,18 +65,16 @@ export default class SolicitudCompraComponent implements OnInit {
       this.onLoadData();
       this.onCotizacionesRelacionadas();
     }
-    this.statusCompra = await this.enumSelectService.typeStatusOrdenCompra(
-      false
-    );
+    this.statusCompra = await this.enumSelectS.typeStatusOrdenCompra(false);
   }
   get f() {
     return this.form.controls;
   }
   //TODO: CREAR UN SERVICIO PARA REFRESCAR CUANDO SE ELIMINA UN PRODUCTO
   createForm() {
-    return (this.form = this.formBuilder.group({
+    return (this.form = this.formB.group({
       id: { value: this.id, disabled: true },
-      customerId: [this.custIdService.getCustomerId()],
+      customerId: [this.customerIdS.getCustomerId()],
       fechaSolicitud: [],
       solicita: ['', Validators.required],
       equipoOInstalacion: ['', Validators.required],
@@ -87,7 +85,7 @@ export default class SolicitudCompraComponent implements OnInit {
     }));
   }
   onCotizacionesRelacionadas() {
-    this.apiRequestService
+    this.apiRequestS
       .onGetList(`OrdenCompra/CotizacionesRelacionadas/${this.id}`)
       .then((result: any) => {
         this.cotizacionesRelacionadas = result;
@@ -106,14 +104,12 @@ export default class SolicitudCompraComponent implements OnInit {
     }
   }
   onLoadData() {
-    this.apiRequestService
+    this.apiRequestS
       .onGetItem(`SolicitudCompra/GetSolicitudCompraIndividual/${this.id}`)
       .then((result: any) => {
         this.solicitudCompra = result;
         this.onSetTipe(result.estatus);
-        result.fechaSolicitud = this.dateService.getDateFormat(
-          result.fechaSolicitud
-        );
+        result.fechaSolicitud = this.dateS.getDateFormat(result.fechaSolicitud);
         this.form.patchValue(result);
         this.SolicitudCompraDetalle =
           this.solicitudCompra.solicitudCompraDetalle;
@@ -121,11 +117,11 @@ export default class SolicitudCompraComponent implements OnInit {
   }
 
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
 
     this.submitting = true;
     if (Number(this.id) === 0) {
-      this.apiRequestService
+      this.apiRequestS
         .onPost(`SolicitudCompra`, this.form.value)
         .then((result: any) => {
           if (result) {
@@ -135,7 +131,7 @@ export default class SolicitudCompraComponent implements OnInit {
           }
         });
     } else {
-      this.apiRequestService
+      this.apiRequestS
         .onPut(`SolicitudCompra/${this.id}`, this.form.value)
         .then((result: boolean) => {
           if (result) {
@@ -146,7 +142,7 @@ export default class SolicitudCompraComponent implements OnInit {
     }
   }
   addProduct(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         AddProductComponent,
         {
@@ -154,14 +150,14 @@ export default class SolicitudCompraComponent implements OnInit {
           id: data.id,
         },
         'Agregar',
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();
       });
   }
   addProductModal(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         AddProductModalComponent,
         {
@@ -169,7 +165,7 @@ export default class SolicitudCompraComponent implements OnInit {
           id: data.id,
         },
         'Agregar',
-        this.dialogHandlerService.dialogSizeFull
+        this.dialogHandlerS.dialogSizeFull
       )
       .then(() => {
         this.onLoadData();
@@ -177,7 +173,7 @@ export default class SolicitudCompraComponent implements OnInit {
   }
 
   onModalCreateOrdenCompra() {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         CreateOrdenCompraComponent,
         {
@@ -185,7 +181,7 @@ export default class SolicitudCompraComponent implements OnInit {
           folioSolicitudCompra: this.solicitudCompra.folio,
         },
         'Crear Orden de compra',
-        this.dialogHandlerService.dialogSizeFull
+        this.dialogHandlerS.dialogSizeFull
       )
       .then((ordenCompraId: any) => {
         if (ordenCompraId !== undefined) {

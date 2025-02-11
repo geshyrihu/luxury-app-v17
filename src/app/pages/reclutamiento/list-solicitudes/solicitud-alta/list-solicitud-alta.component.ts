@@ -18,8 +18,8 @@ import AddOrEditSolicitudAltaComponent from './addoredit-solicitud-alta.componen
   imports: [LuxuryAppComponentsModule, FilterRequestsComponent],
 })
 export default class ListSolicitudAltaComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
 
   private filterRequestsService = inject(FilterRequestsService);
   authS = inject(AuthService);
@@ -35,7 +35,7 @@ export default class ListSolicitudAltaComponent implements OnInit {
   }
 
   onLoadData() {
-    this.apiRequestService
+    this.apiRequestS
       .onGetList(
         `RequestEmployeeRegister/GetList/`,
         this.filterRequestsService.getParams()
@@ -46,14 +46,14 @@ export default class ListSolicitudAltaComponent implements OnInit {
   }
 
   showModalAddOrEdit(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         AddOrEditSolicitudAltaComponent,
         {
           id: data.id,
         },
         'Editar registro',
-        this.dialogHandlerService.dialogSizeFull
+        this.dialogHandlerS.dialogSizeFull
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();
@@ -61,7 +61,7 @@ export default class ListSolicitudAltaComponent implements OnInit {
   }
 
   onDelete(id: number) {
-    this.apiRequestService
+    this.apiRequestS
       .onDelete(`RequestEmployeeRegister/${id}`)
       .then((result: boolean) => {
         if (result) this.data = this.data.filter((item) => item.id !== id);

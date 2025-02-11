@@ -16,10 +16,10 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class FormCatalogoGastosFijosComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  custIdService = inject(CustomerIdService);
+  apiRequestS = inject(ApiRequestService);
+  customerIdS = inject(CustomerIdService);
   authS = inject(AuthService);
-  formBuilder = inject(FormBuilder);
+  formB = inject(FormBuilder);
   ref = inject(DynamicDialogRef);
   config = inject(DynamicDialogConfig);
   catalogoGastosFijosService = inject(CatalogoGastosFijosService);
@@ -34,9 +34,9 @@ export default class FormCatalogoGastosFijosComponent implements OnInit {
 
   cb_providers: any[] = [];
   proveedor: SelectItem;
-  form: FormGroup = this.formBuilder.group({
+  form: FormGroup = this.formB.group({
     id: { value: this.id, disabled: true },
-    customerId: [this.custIdService.customerId],
+    customerId: [this.customerIdS.customerId],
     equipoOInstalacion: ['', Validators.required],
     justificacionGasto: ['', Validators.required],
     providerName: ['', Validators.required],
@@ -44,29 +44,25 @@ export default class FormCatalogoGastosFijosComponent implements OnInit {
     usoCFDIId: ['', Validators.required],
     metodoDePagoId: ['', Validators.required],
     formaDePagoId: ['', Validators.required],
-    catalogoGastosFijosPresupuesto: this.formBuilder.array([]),
-    catalogoGastosFijosDetalles: this.formBuilder.array([]),
+    catalogoGastosFijosPresupuesto: this.formB.array([]),
+    catalogoGastosFijosDetalles: this.formB.array([]),
     applicationUserId: [this.authS.applicationUserId],
   });
 
   ngOnInit(): void {
-    this.apiRequestService
-      .onGetSelectItem('Providers')
-      .then((response: any) => {
-        this.cb_providers = response;
-      });
+    this.apiRequestS.onGetSelectItem('Providers').then((response: any) => {
+      this.cb_providers = response;
+    });
 
-    this.apiRequestService.onGetSelectItem('UseCFDI').then((response: any) => {
+    this.apiRequestS.onGetSelectItem('UseCFDI').then((response: any) => {
       this.cb_use_cfdi = response;
     });
 
-    this.apiRequestService
-      .onGetSelectItem('PaymentMethod')
-      .then((response: any) => {
-        this.cb_metodoDePago = response;
-      });
+    this.apiRequestS.onGetSelectItem('PaymentMethod').then((response: any) => {
+      this.cb_metodoDePago = response;
+    });
 
-    this.apiRequestService.onGetSelectItem('WayToPay').then((response: any) => {
+    this.apiRequestS.onGetSelectItem('WayToPay').then((response: any) => {
       this.cb_formaDePago = response;
     });
 
@@ -82,7 +78,7 @@ export default class FormCatalogoGastosFijosComponent implements OnInit {
   }
 
   onLoadData() {
-    this.apiRequestService
+    this.apiRequestS
       .onGetItem(`CatalogoGastosFijos/${this.id}`)
       .then((result: any) => {
         this.catalogoGastosFijosService.setCatalogoGastosFijosId(result.id);
@@ -95,19 +91,19 @@ export default class FormCatalogoGastosFijosComponent implements OnInit {
   }
 
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
 
     this.submitting = true;
 
     if (this.id === 0) {
-      this.apiRequestService
+      this.apiRequestS
         .onPost(`CatalogoGastosFijos`, this.form.value)
         .then((result: any) => {
           this.id = result.id;
           this.onLoadData();
         });
     } else {
-      this.apiRequestService
+      this.apiRequestS
         .onPut(`CatalogoGastosFijos/${this.id}`, this.form.value)
         .then((result: boolean) => {
           this.onLoadData();

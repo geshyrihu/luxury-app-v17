@@ -13,8 +13,8 @@ import FormatoAddOrEditComponent from './formato-addoredit.component';
   imports: [LuxuryAppComponentsModule],
 })
 export default class FormatoListComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
   authS = inject(AuthService);
 
   data: any[] = [];
@@ -25,23 +25,23 @@ export default class FormatoListComponent implements OnInit {
   }
 
   onLoadData() {
-    this.apiRequestService.onGetList('formato').then((result: any) => {
+    this.apiRequestS.onGetList('formato').then((result: any) => {
       this.data = result;
     });
   }
   onDelete(id: number) {
-    this.apiRequestService.onDelete(`formato/${id}`).then((result: boolean) => {
+    this.apiRequestS.onDelete(`formato/${id}`).then((result: boolean) => {
       if (result) this.data = this.data.filter((item) => item.id !== id);
     });
   }
 
   onModalAddOrEdit(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         FormatoAddOrEditComponent,
         data,
         data.title,
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();

@@ -18,35 +18,35 @@ import PresupuestoAddComponent from './presupuesto-add.component';
   imports: [LuxuryAppComponentsModule],
 })
 export default class ListPresupuestoComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
   authS = inject(AuthService);
-  custIdService = inject(CustomerIdService);
+  customerIdS = inject(CustomerIdService);
   customToastService = inject(CustomToastService);
   router = inject(Router);
 
   data: any[] = [];
   ref: DynamicDialogRef;
 
-  customerId$: Observable<number> = this.custIdService.getCustomerId$();
+  customerId$: Observable<number> = this.customerIdS.getCustomerId$();
 
   ngOnInit() {
     this.onLoadData();
-    this.customerId$ = this.custIdService.getCustomerId$();
+    this.customerId$ = this.customerIdS.getCustomerId$();
     this.customerId$.subscribe(() => {
       this.onLoadData();
     });
   }
   onLoadData() {
-    this.apiRequestService
-      .onGetList(`Presupuesto/GetList/${this.custIdService.customerId}`)
+    this.apiRequestS
+      .onGetList(`Presupuesto/GetList/${this.customerIdS.customerId}`)
       .then((result: any) => {
         this.data = result;
       });
   }
 
   onFinished(cedulaId: number, finished: boolean) {
-    this.apiRequestService
+    this.apiRequestS
       .onGetItem(`Presupuesto/Finished/${cedulaId}/${finished}`)
       .then((result: any) => {
         // Actualiza solo el registro afectado en lugar de toda la lista
@@ -62,14 +62,14 @@ export default class ListPresupuestoComponent implements OnInit {
   }
 
   onAddPresupuesto(id: number) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         PresupuestoAddComponent,
         {
           id: id,
         },
         'Agregar presupuesto',
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();
@@ -77,14 +77,14 @@ export default class ListPresupuestoComponent implements OnInit {
   }
 
   onModalAddOrEdit(id: number) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         PeriodoCedulaPresupuestalAddoreditComponent,
         {
           cedulaId: id,
         },
         'Editar Periodo',
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();
@@ -96,10 +96,8 @@ export default class ListPresupuestoComponent implements OnInit {
 
   // Función para eliminar
   onDelete(id: number) {
-    this.apiRequestService
-      .onDelete(`presupuesto/${id}`)
-      .then((result: boolean) => {
-        if (result) this.data = this.data.filter((item) => item.id !== id);
-      });
+    this.apiRequestS.onDelete(`presupuesto/${id}`).then((result: boolean) => {
+      if (result) this.data = this.data.filter((item) => item.id !== id);
+    });
   }
 }

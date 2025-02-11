@@ -13,15 +13,15 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class AddOrEditCategoryComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   config = inject(DynamicDialogConfig);
-  formBuilder = inject(FormBuilder);
+  formB = inject(FormBuilder);
   ref = inject(DynamicDialogRef);
 
   submitting: boolean = false;
 
   id: any = 0;
-  form: FormGroup = this.formBuilder.group({
+  form: FormGroup = this.formB.group({
     id: { value: this.id, disabled: true },
     nameCotegory: [
       '',
@@ -45,26 +45,24 @@ export default class AddOrEditCategoryComponent implements OnInit {
 
   onLoadData() {
     const urlApi = `Categories/${this.id}`;
-    this.apiRequestService
-      .onGetItem(urlApi)
-      .then((result: ICategoryAddOrEdit) => {
-        this.form.patchValue(result);
-      });
+    this.apiRequestS.onGetItem(urlApi).then((result: ICategoryAddOrEdit) => {
+      this.form.patchValue(result);
+    });
   }
 
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
 
     this.submitting = true;
 
     if (this.id === 0) {
-      this.apiRequestService
+      this.apiRequestS
         .onPost(`Categories`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
         });
     } else {
-      this.apiRequestService
+      this.apiRequestS
         .onPut(`Categories/${this.id}`, this.form.value)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);

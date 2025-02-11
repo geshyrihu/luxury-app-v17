@@ -17,13 +17,13 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
   imports: [LuxuryAppComponentsModule, CustomInputModule],
 })
 export default class AddoreditToolsComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   authS = inject(AuthService);
-  formBuilder = inject(FormBuilder);
-  dateService = inject(DateService);
+  formB = inject(FormBuilder);
+  dateS = inject(DateService);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
-  custIdService = inject(CustomerIdService);
+  customerIdS = inject(CustomerIdService);
 
   submitting: boolean = false;
 
@@ -43,7 +43,7 @@ export default class AddoreditToolsComponent implements OnInit {
     this.id = this.config.data.id;
     if (this.id !== 0) this.onLoadData();
 
-    this.form = this.formBuilder.group({
+    this.form = this.formB.group({
       id: { value: this.id, disabled: true },
       nameTool: ['', [Validators.required, Validators.minLength(5)]],
       brand: ['', [Validators.required]],
@@ -51,52 +51,46 @@ export default class AddoreditToolsComponent implements OnInit {
       model: [''],
       photoPath: [''],
       state: [null, [Validators.required]],
-      dateOfPurchase: [this.dateService.getDateNow(), [Validators.required]],
+      dateOfPurchase: [this.dateS.getDateNow(), [Validators.required]],
       technicalSpecifications: [''],
       observations: [''],
       categoryId: ['', [Validators.required]],
       applicationUserId: [this.authS.applicationUserId, [Validators.required]],
-      customerId: [this.custIdService.getCustomerId()],
+      customerId: [this.customerIdS.getCustomerId()],
     });
   }
 
   onLoadSelectItem() {
-    this.apiRequestService.onGetEnumSelectItem(`EState`).then((result: any) => {
+    this.apiRequestS.onGetEnumSelectItem(`EState`).then((result: any) => {
       this.optionActive = result;
     });
 
-    this.apiRequestService
-      .onGetSelectItem(`Categories`)
-      .then((response: any) => {
-        this.cb_category = response;
-      });
+    this.apiRequestS.onGetSelectItem(`Categories`).then((response: any) => {
+      this.cb_category = response;
+    });
   }
   onLoadData() {
     const urlApi = `Tools/Get/${this.id}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       this.model = result;
-      result.dateOfPurchase = this.dateService.getDateFormat(
-        result.dateOfPurchase
-      );
+      result.dateOfPurchase = this.dateS.getDateFormat(result.dateOfPurchase);
       this.urlBaseImg = this.model.photoPath;
       this.form.patchValue(result);
     });
   }
 
   onSubmit() {
-    if (!this.apiRequestService.validateForm(this.form)) return;
+    if (!this.apiRequestS.validateForm(this.form)) return;
     const formDataDto = this.onCreateFormData(this.form.value);
 
     this.submitting = true;
 
     if (this.id === 0) {
-      this.apiRequestService
-        .onPost(`Tools`, formDataDto)
-        .then((result: boolean) => {
-          result ? this.ref.close(true) : (this.submitting = false);
-        });
+      this.apiRequestS.onPost(`Tools`, formDataDto).then((result: boolean) => {
+        result ? this.ref.close(true) : (this.submitting = false);
+      });
     } else {
-      this.apiRequestService
+      this.apiRequestS
         .onPut(`Tools/${this.id}`, formDataDto)
         .then((result: boolean) => {
           result ? this.ref.close(true) : (this.submitting = false);
@@ -113,7 +107,7 @@ export default class AddoreditToolsComponent implements OnInit {
     formData.append('state', String(dto.state));
     formData.append(
       'dateOfPurchase',
-      this.dateService.getDateFormat(dto.dateOfPurchase)
+      this.dateS.getDateFormat(dto.dateOfPurchase)
     );
     formData.append('technicalSpecifications', dto.technicalSpecifications);
     formData.append('observations', dto.observations);

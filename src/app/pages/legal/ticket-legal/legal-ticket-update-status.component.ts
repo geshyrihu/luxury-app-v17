@@ -11,7 +11,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
   imports: [LuxuryAppComponentsModule],
 })
 export default class LegalTicketUpdateStatusComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   public auhtService = inject(AuthService);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
@@ -25,14 +25,14 @@ export default class LegalTicketUpdateStatusComponent implements OnInit {
   }
 
   onLoadData() {
-    this.apiRequestService
+    this.apiRequestS
       .onGetList(`TicketLegal/status/${this.id}`)
       .then((result: any) => {
         this.status = result.status;
       });
   }
   onSubmit() {
-    this.apiRequestService
+    this.apiRequestS
       .onGetItem(`TicketLegal/UpdateStatus/${this.id}/${this.status}`)
       .then((result: any) => {
         if (result) {

@@ -25,15 +25,15 @@ import { TicketGroupService } from '../../ticket.service';
   providers: [EnumSelectService],
 })
 export default class MyTicketMessageAddEditComponent implements OnInit {
-  custIdService = inject(CustomerIdService);
+  customerIdS = inject(CustomerIdService);
   authS = inject(AuthService);
-  apiRequestService = inject(ApiRequestService);
-  formBuilder = inject(FormBuilder);
+  apiRequestS = inject(ApiRequestService);
+  formB = inject(FormBuilder);
   config = inject(DynamicDialogConfig);
   ref = inject(DynamicDialogRef);
   ticketGroupService = inject(TicketGroupService);
   notificationPushService = inject(SignalRService);
-  enumSelectService = inject(EnumSelectService);
+  enumSelectS = inject(EnumSelectService);
 
   id: string = '';
   submitting: boolean = false;
@@ -41,7 +41,7 @@ export default class MyTicketMessageAddEditComponent implements OnInit {
   cb_priority: ISelectItem[] = [];
   cb_ticket_group: ISelectItem[] = [];
 
-  form: FormGroup = this.formBuilder.group({
+  form: FormGroup = this.formB.group({
     id: new FormControl(
       { value: this.id, disabled: true },
       Validators.required
@@ -51,7 +51,7 @@ export default class MyTicketMessageAddEditComponent implements OnInit {
     description: ['', [Validators.required, Validators.maxLength(150)]], // Descripción
     priority: [1, Validators.required], // Prioridad (enum)
     creatorId: [this.authS.applicationUserId], // Id del creador
-    customerId: [this.custIdService.customerId], // Id del cliente
+    customerId: [this.customerIdS.customerId], // Id del cliente
     beforeWork: [null], // Imagen del trabajo previo
     afterWork: [null], // Imagen del trabajo posterior
     beforeWorkPreview: [null], // Vista previa de BeforeWork
@@ -64,15 +64,15 @@ export default class MyTicketMessageAddEditComponent implements OnInit {
   });
 
   async ngOnInit() {
-    this.cb_priority = await this.enumSelectService.priorityLevel();
+    this.cb_priority = await this.enumSelectS.priorityLevel();
     this.onLoadTicketGroup();
     this.id = this.config.data.id;
     if (this.id !== '') this.onLoadData();
   }
 
   onLoadTicketGroup() {
-    const urlApi = `TicketGroupList/${this.custIdService.getCustomerId()}`;
-    this.apiRequestService.onGetSelectItem(urlApi).then((result: any) => {
+    const urlApi = `TicketGroupList/${this.customerIdS.getCustomerId()}`;
+    this.apiRequestS.onGetSelectItem(urlApi).then((result: any) => {
       this.cb_ticket_group = result;
     });
   }
@@ -94,7 +94,7 @@ export default class MyTicketMessageAddEditComponent implements OnInit {
 
   onLoadData() {
     const urlApi = `Tickets/${this.id}`;
-    this.apiRequestService.onGetItem(urlApi).then((result: any) => {
+    this.apiRequestS.onGetItem(urlApi).then((result: any) => {
       this.form.patchValue(result);
       // Si las imágenes existen, carga las vistas previas
       // Si las imágenes existen, establece las vistas previas con la URL completa
@@ -156,13 +156,13 @@ export default class MyTicketMessageAddEditComponent implements OnInit {
 
       // Verifica si es creación o actualización
       if (this.id === '') {
-        this.apiRequestService
+        this.apiRequestS
           .onPost(`Tickets/Create`, formData)
           .then((result: boolean) => {
             result ? this.ref.close(true) : (this.submitting = false);
           });
       } else {
-        this.apiRequestService
+        this.apiRequestS
           .onPut(`Tickets/Update/${this.id}`, formData)
           .then((result: boolean) => {
             result ? this.ref.close(true) : (this.submitting = false);

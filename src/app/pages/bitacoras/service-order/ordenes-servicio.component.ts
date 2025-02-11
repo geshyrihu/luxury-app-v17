@@ -24,12 +24,12 @@ const date = new Date();
 export default class OrdenesServicioComponentComponent
   implements OnInit, OnChanges
 {
-  apiRequestService = inject(ApiRequestService);
+  apiRequestS = inject(ApiRequestService);
   authS = inject(AuthService);
-  custIdService = inject(CustomerIdService);
+  customerIdS = inject(CustomerIdService);
   reporteOrdenesServicioService = inject(ReporteOrdenesServicioService);
-  dateService = inject(DateService);
-  dialogHandlerService = inject(DialogHandlerService);
+  dateS = inject(DateService);
+  dialogHandlerS = inject(DialogHandlerService);
 
   mm = date.getMonth() + 1;
   fecha = [date.getFullYear(), (this.mm > 9 ? '' : '0') + this.mm].join('-');
@@ -40,7 +40,7 @@ export default class OrdenesServicioComponentComponent
 
   // urlImg: string = '';
   nameCarpetaFecha = '';
-  customerId$: Observable<number> = this.custIdService.getCustomerId$();
+  customerId$: Observable<number> = this.customerIdS.getCustomerId$();
 
   filtroEquiposValue: any = 'todos';
   filtroId: number | string = '';
@@ -68,7 +68,7 @@ export default class OrdenesServicioComponentComponent
   public subscriber: Subscription;
   ngOnInit(): void {
     this.reporteOrdenesServicioService.setDate(Date.now);
-    this.customerId$ = this.custIdService.getCustomerId$();
+    this.customerId$ = this.customerIdS.getCustomerId$();
     this.onLoadData();
     this.customerId$.subscribe((resp) => {
       this.onReloadOrdenes(this.filtroId, this.filtroEquiposValue);
@@ -76,21 +76,21 @@ export default class OrdenesServicioComponentComponent
   }
 
   onModalFormUploadImg(id: number) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         FormUploadImgComponent,
         {
           serviceOrderId: id,
         },
         'Cargar Imagenes',
-        this.dialogHandlerService.dialogSizeFull
+        this.dialogHandlerS.dialogSizeFull
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();
       });
   }
   onModalFormUploadDoc(id: number) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         SubirPdfComponent,
         {
@@ -98,35 +98,35 @@ export default class OrdenesServicioComponentComponent
           pathUrl: 'ServiceOrders/SubirDocumento/',
         },
         'Cargar Documentos',
-        this.dialogHandlerService.dialogSizeFull
+        this.dialogHandlerS.dialogSizeFull
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();
       });
   }
   onModalFotos(id: number) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         OrdenesServicioFotosComponent,
         {
           id,
         },
         'Soporte Fotografico',
-        this.dialogHandlerService.dialogSizeFull
+        this.dialogHandlerS.dialogSizeFull
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();
       });
   }
   onModalRpeorteProveedor(id: number) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         OrdenesServicioReporteProveedorComponent,
         {
           id,
         },
         'Reportes de proveedor',
-        this.dialogHandlerService.dialogSizeMd
+        this.dialogHandlerS.dialogSizeMd
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();
@@ -138,14 +138,14 @@ export default class OrdenesServicioComponentComponent
     this.reporteOrdenesServicioService.setDate(converToDate);
 
     const urlApi = `ServiceOrders/GetAllPintura/${
-      this.custIdService.customerId
-    }/${this.dateService.getDateFormat(converToDate)}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      this.customerIdS.customerId
+    }/${this.dateS.getDateFormat(converToDate)}`;
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
       this.reporteOrdenesServicioService.setData(this.data);
 
       if (this.data.length !== 0) {
-        this.nameCarpetaFecha = this.dateService.getDateFormat(
+        this.nameCarpetaFecha = this.dateS.getDateFormat(
           this.data[0].requestDate
         );
       }
@@ -156,14 +156,14 @@ export default class OrdenesServicioComponentComponent
     this.reporteOrdenesServicioService.setDate(converToDate);
 
     const urlApi = `ServiceOrders/GetAll/${
-      this.custIdService.customerId
-    }/${this.dateService.getDateFormat(converToDate)}/${this.filtroId}`;
-    this.apiRequestService.onGetList(urlApi).then((result: any) => {
+      this.customerIdS.customerId
+    }/${this.dateS.getDateFormat(converToDate)}/${this.filtroId}`;
+    this.apiRequestS.onGetList(urlApi).then((result: any) => {
       this.data = result;
       this.reporteOrdenesServicioService.setData(this.data);
 
       if (this.data.length !== 0) {
-        this.nameCarpetaFecha = this.dateService.getDateFormat(
+        this.nameCarpetaFecha = this.dateS.getDateFormat(
           this.data[0].requestDate
         );
       }
@@ -171,7 +171,7 @@ export default class OrdenesServicioComponentComponent
   }
 
   onEdit(data: any) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         ServiceOrderAddOrEditComponent,
         {
@@ -180,7 +180,7 @@ export default class OrdenesServicioComponentComponent
           providerId: data.providerId,
         },
         data.title,
-        this.dialogHandlerService.dialogSizeFull
+        this.dialogHandlerS.dialogSizeFull
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();
@@ -188,11 +188,9 @@ export default class OrdenesServicioComponentComponent
   }
 
   onDelete(id: number) {
-    this.apiRequestService
-      .onDelete(`ServiceOrders/${id}`)
-      .then((result: boolean) => {
-        if (result) this.data = this.data.filter((item) => item.id !== id);
-      });
+    this.apiRequestS.onDelete(`ServiceOrders/${id}`).then((result: boolean) => {
+      if (result) this.data = this.data.filter((item) => item.id !== id);
+    });
   }
 
   ngOnChanges() {

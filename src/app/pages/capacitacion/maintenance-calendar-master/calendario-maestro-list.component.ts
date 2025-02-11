@@ -14,8 +14,8 @@ import DatosServicioAddOrEditComponent from './datos-servicio-addoredit.componen
   imports: [LuxuryAppComponentsModule],
 })
 export default class CalendarioMaestroListComponent implements OnInit {
-  apiRequestService = inject(ApiRequestService);
-  dialogHandlerService = inject(DialogHandlerService);
+  apiRequestS = inject(ApiRequestService);
+  dialogHandlerS = inject(DialogHandlerService);
   authS = inject(AuthService);
 
   data: any[] = [];
@@ -26,7 +26,7 @@ export default class CalendarioMaestroListComponent implements OnInit {
   }
 
   onLoadData() {
-    this.apiRequestService
+    this.apiRequestS
       .onGetList('calendariomaestro/getall')
       .then((result: any) => {
         this.data = result;
@@ -34,15 +34,15 @@ export default class CalendarioMaestroListComponent implements OnInit {
   }
 
   onDatosServicio(data: any) {
-    this.dialogHandlerService.openDialog(
+    this.dialogHandlerS.openDialog(
       DatosServicioAddOrEditComponent,
       data,
       'Información de servicio',
-      this.dialogHandlerService.dialogSizeLg
+      this.dialogHandlerS.dialogSizeLg
     );
   }
   onDelete(id: number): any {
-    this.apiRequestService
+    this.apiRequestS
       .onDelete(`calendariomaestro/${id}`)
       .then((result: boolean) => {
         if (result) this.data = this.data.filter((item) => item.id !== id);
@@ -50,7 +50,7 @@ export default class CalendarioMaestroListComponent implements OnInit {
   }
 
   onModalAddOrEdit(id: number, mes: number) {
-    this.dialogHandlerService
+    this.dialogHandlerS
       .openDialog(
         CalendarioMaestroAddOrEditComponent,
         {
@@ -58,7 +58,7 @@ export default class CalendarioMaestroListComponent implements OnInit {
           mes,
         },
         'Calendario Maestro',
-        this.dialogHandlerService.dialogSizeFull
+        this.dialogHandlerS.dialogSizeFull
       )
       .then((result: boolean) => {
         if (result) this.onLoadData();
