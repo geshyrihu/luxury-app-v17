@@ -13,10 +13,9 @@ import RecorridoTaskAddOrEditComponent from './addoredit-recorrido-task.componen
 import RecorridoAddOrEditComponent from './addoreedit-recorrido.component';
 
 @Component({
-  selector: 'app-list-recorrido',
-  templateUrl: './list-recorrido.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-list-recorrido',
+    templateUrl: './list-recorrido.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class ListRecorridoComponent implements OnInit {
   authS = inject(AuthService);

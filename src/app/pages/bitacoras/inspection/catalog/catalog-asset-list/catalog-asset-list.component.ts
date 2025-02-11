@@ -7,10 +7,9 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 import CatalogAssetAddoreditComponent from '../catalog-asset-addoredit/catalog-asset-addoredit.component';
 
 @Component({
-  selector: 'app-catalog-asset-list',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
-  templateUrl: './catalog-asset-list.component.html',
+    selector: 'app-catalog-asset-list',
+    imports: [LuxuryAppComponentsModule, CustomInputModule],
+    templateUrl: './catalog-asset-list.component.html'
 })
 export default class CatalogAssetListComponent {
   apiRequestS = inject(ApiRequestService);

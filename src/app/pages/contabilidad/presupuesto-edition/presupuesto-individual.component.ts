@@ -15,10 +15,9 @@ import PresupuestoDetalleEdicionHistorialComponent from './presupuesto-detalle-e
 import PresupuestoEditionFileComponent from './presupuesto-edition-file.component';
 
 @Component({
-  selector: 'app-presupuesto-individual',
-  templateUrl: './presupuesto-individual.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-presupuesto-individual',
+    templateUrl: './presupuesto-individual.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class PresupuestoIndividualComponent implements OnInit {
   authS = inject(AuthService);

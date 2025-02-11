@@ -12,10 +12,9 @@ import FilterRequestsComponent from '../filter-requests.component';
 import AddOrEditSolicitudAltaComponent from './addoredit-solicitud-alta.component';
 
 @Component({
-  selector: 'app-list-solicitud-alta',
-  templateUrl: './list-solicitud-alta.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, FilterRequestsComponent],
+    selector: 'app-list-solicitud-alta',
+    templateUrl: './list-solicitud-alta.component.html',
+    imports: [LuxuryAppComponentsModule, FilterRequestsComponent]
 })
 export default class ListSolicitudAltaComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

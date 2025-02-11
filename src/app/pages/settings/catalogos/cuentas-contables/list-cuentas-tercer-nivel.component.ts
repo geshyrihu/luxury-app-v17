@@ -7,10 +7,9 @@ import { DialogHandlerService } from 'src/app/core/services/dialog-handler.servi
 import AddoreditLedgerAccountsComponent from './addoredit-cuentas-tercer-nivel.component';
 
 @Component({
-  selector: 'app-list-cuentas-tercer-nivel',
-  templateUrl: './list-cuentas-tercer-nivel.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-list-cuentas-tercer-nivel',
+    templateUrl: './list-cuentas-tercer-nivel.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class ListCuentasTercerNivelComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

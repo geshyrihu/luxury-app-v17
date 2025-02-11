@@ -10,15 +10,14 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 import LoadingSpinnerComponent from 'src/app/custom-components/loading-spinner/loading-spinner.component';
 
 @Component({
-  selector: 'app-ticket-group-participant',
-  templateUrl: './ticket-group-participant.component.html',
-  standalone: true,
-  imports: [
-    CommonModule,
-    LoadingSpinnerComponent,
-    LuxuryAppComponentsModule,
-    CustomInputModule,
-  ],
+    selector: 'app-ticket-group-participant',
+    templateUrl: './ticket-group-participant.component.html',
+    imports: [
+        CommonModule,
+        LoadingSpinnerComponent,
+        LuxuryAppComponentsModule,
+        CustomInputModule,
+    ]
 })
 export default class TicketGroupParticipantComponent
   implements OnInit, OnDestroy

@@ -11,10 +11,9 @@ import FichaTecnicaActivoComponent from '../machineries/ficha-tecnica-activo.com
 import ServiceHistoryMachineryComponent from '../machineries/service-history-machinery.component';
 
 @Component({
-  selector: 'app-inventory-engine-system',
-  templateUrl: './inventory-engine-system.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-inventory-engine-system',
+    templateUrl: './inventory-engine-system.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class InventoryEngineSystemComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

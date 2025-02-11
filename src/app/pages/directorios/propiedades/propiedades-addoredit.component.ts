@@ -8,10 +8,9 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-propiedades-addoredit',
-  templateUrl: './propiedades-addoredit.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
+    selector: 'app-propiedades-addoredit',
+    templateUrl: './propiedades-addoredit.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule]
 })
 export default class PropiedadesAddOrEditComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

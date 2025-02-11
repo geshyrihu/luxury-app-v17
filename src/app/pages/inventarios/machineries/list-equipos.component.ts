@@ -16,10 +16,9 @@ import FichaTecnicaActivoComponent from './ficha-tecnica-activo.component';
 import ServiceHistoryMachineryComponent from './service-history-machinery.component';
 
 @Component({
-  selector: 'app-list-equipos',
-  templateUrl: './list-equipos.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-list-equipos',
+    templateUrl: './list-equipos.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class ListEquiposComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

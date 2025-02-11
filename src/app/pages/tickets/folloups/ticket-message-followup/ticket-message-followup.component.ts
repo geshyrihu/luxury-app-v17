@@ -6,11 +6,10 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
-  selector: 'app-ticket-message-followup',
-  templateUrl: './ticket-message-followup.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
-  providers: [],
+    selector: 'app-ticket-message-followup',
+    templateUrl: './ticket-message-followup.component.html',
+    imports: [LuxuryAppComponentsModule],
+    providers: []
 })
 export default class TicketMessageFollowupComponent
   implements OnInit, OnDestroy

@@ -14,11 +14,10 @@ import { EnumSelectService } from 'src/app/core/services/enum-select.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-productos-addoredit',
-  templateUrl: './productos-addoredit.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
-  providers: [EnumSelectService],
+    selector: 'app-productos-addoredit',
+    templateUrl: './productos-addoredit.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule],
+    providers: [EnumSelectService]
 })
 export default class ProductosAddOrEditComponent implements OnInit {
   authS = inject(AuthService);

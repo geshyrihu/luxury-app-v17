@@ -11,10 +11,9 @@ import DashboardDynamicCardItemComponent from './dashboard-dynamic-card-item.com
 import MantenimientosPreventivosResumenComponent from './summary-preventive-maintenance.component';
 
 @Component({
-  selector: 'app-dashboard-preventive-maintenance',
-  templateUrl: './dashboard-preventive-maintenance.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, DashboardDynamicCardItemComponent],
+    selector: 'app-dashboard-preventive-maintenance',
+    templateUrl: './dashboard-preventive-maintenance.component.html',
+    imports: [LuxuryAppComponentsModule, DashboardDynamicCardItemComponent]
 })
 export default class DashboardPreventiveMaintenanceComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

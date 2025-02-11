@@ -6,10 +6,9 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-roles-add-or-edit',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
-  templateUrl: './roles-add-or-edit.component.html',
+    selector: 'app-roles-add-or-edit',
+    imports: [LuxuryAppComponentsModule, CustomInputModule],
+    templateUrl: './roles-add-or-edit.component.html'
 })
 export class RolesAddOrEditComponent {
   apiRequestS = inject(ApiRequestService);

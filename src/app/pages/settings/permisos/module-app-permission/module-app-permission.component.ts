@@ -4,10 +4,9 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 
 @Component({
-  selector: 'app-module-app-permission',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
-  templateUrl: './module-app-permission.component.html',
+    selector: 'app-module-app-permission',
+    imports: [LuxuryAppComponentsModule],
+    templateUrl: './module-app-permission.component.html'
 })
 export default class ModuleAppPermissionComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

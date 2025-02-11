@@ -6,10 +6,9 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-register-employe-to-vacancy',
-  templateUrl: './register-employe-to-vacancy.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
+    selector: 'app-register-employe-to-vacancy',
+    templateUrl: './register-employe-to-vacancy.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule]
 })
 export default class RegisterEmployeToVacancyComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

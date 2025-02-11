@@ -16,11 +16,10 @@ import { NotificationService } from 'src/app/core/services/notification.service'
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-ticket-group-add-or-edit',
-  templateUrl: './ticket-group-add-or-edit.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
-  providers: [EnumSelectService],
+    selector: 'app-ticket-group-add-or-edit',
+    templateUrl: './ticket-group-add-or-edit.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule],
+    providers: [EnumSelectService]
 })
 export default class TicketGroupAddOrEditComponent implements OnInit {
   authS = inject(AuthService);

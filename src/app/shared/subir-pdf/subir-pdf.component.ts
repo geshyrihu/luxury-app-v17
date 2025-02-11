@@ -6,10 +6,9 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-subir-pdf',
-  templateUrl: './subir-pdf.component.html',
-  standalone: true,
-  imports: [FileUploadModule, SharedModule],
+    selector: 'app-subir-pdf',
+    templateUrl: './subir-pdf.component.html',
+    imports: [FileUploadModule, SharedModule]
 })
 export default class SubirPdfComponent implements OnInit {
   ref = inject(DynamicDialogRef);

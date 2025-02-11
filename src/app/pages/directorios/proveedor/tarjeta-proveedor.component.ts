@@ -4,10 +4,9 @@ import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 
 @Component({
-  selector: 'app-tarjeta-proveedor',
-  templateUrl: './tarjeta-proveedor.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-tarjeta-proveedor',
+    templateUrl: './tarjeta-proveedor.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class TarjetaProveedorComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

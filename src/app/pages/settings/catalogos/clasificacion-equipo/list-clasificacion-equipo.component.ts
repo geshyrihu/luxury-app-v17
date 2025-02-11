@@ -6,10 +6,9 @@ import { DialogHandlerService } from 'src/app/core/services/dialog-handler.servi
 import AddoreditClasificacionEquipoComponent from './addoredit-clasificacion-equipo.component';
 
 @Component({
-  selector: 'app-list-clasificacion-equipo',
-  templateUrl: './list-clasificacion-equipo.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-list-clasificacion-equipo',
+    templateUrl: './list-clasificacion-equipo.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class ListClasificacionEquipoComponent implements OnInit {
   dialogHandlerS = inject(DialogHandlerService);

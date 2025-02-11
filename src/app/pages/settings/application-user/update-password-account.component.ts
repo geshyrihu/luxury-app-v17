@@ -6,10 +6,9 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 
 @Component({
-  selector: 'app-update-password-account',
-  templateUrl: './update-password-account.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-update-password-account',
+    templateUrl: './update-password-account.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class UpdatePasswordAccountComponent implements OnInit {
   config = inject(DynamicDialogConfig);

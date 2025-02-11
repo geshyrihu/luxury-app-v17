@@ -11,15 +11,14 @@ import { ProfielServiceService } from 'src/app/core/services/profiel-service.ser
 import { TicketGroupService } from 'src/app/pages/tickets/ticket.service';
 
 @Component({
-  selector: 'app-mobile-navbar',
-  standalone: true,
-  imports: [
-    SimplebarAngularModule,
-    RouterModule,
-    CommonModule,
-    SimplebarAngularModule,
-  ],
-  templateUrl: './mobile-navbar.component.html',
+    selector: 'app-mobile-navbar',
+    imports: [
+        SimplebarAngularModule,
+        RouterModule,
+        CommonModule,
+        SimplebarAngularModule,
+    ],
+    templateUrl: './mobile-navbar.component.html'
 })
 export default class MobileNavbarComponent implements OnInit, OnDestroy {
   apiRequestS = inject(ApiRequestService);

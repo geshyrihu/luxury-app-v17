@@ -6,10 +6,9 @@ import { TableModule } from 'primeng/table';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 
 @Component({
-  selector: 'app-resultado-general-evaluacion-areas-detalle',
-  templateUrl: './resultado-general-evaluacion-areas-detalle.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, TableModule, MultiSelectModule],
+    selector: 'app-resultado-general-evaluacion-areas-detalle',
+    templateUrl: './resultado-general-evaluacion-areas-detalle.component.html',
+    imports: [LuxuryAppComponentsModule, TableModule, MultiSelectModule]
 })
 export default class ResultadoGeneralEvaluacionAreasDetalleComponent
   implements OnInit

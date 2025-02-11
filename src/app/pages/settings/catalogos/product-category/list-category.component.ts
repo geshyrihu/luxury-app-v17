@@ -7,10 +7,9 @@ import { DialogHandlerService } from 'src/app/core/services/dialog-handler.servi
 import AddOrEditCategoryComponent from './addoredit-category.component';
 
 @Component({
-  selector: 'app-list-category',
-  templateUrl: './list-category.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-list-category',
+    templateUrl: './list-category.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class ListCategoryComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

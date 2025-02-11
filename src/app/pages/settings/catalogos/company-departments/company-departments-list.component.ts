@@ -7,10 +7,9 @@ import CompanyDepartmentsAddOrEditComponent from './company-departments-add-or-e
 import { DepartmentGroup } from './departament-group';
 
 @Component({
-  selector: 'app-company-departments-list',
-  templateUrl: './company-departments-list.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-company-departments-list',
+    templateUrl: './company-departments-list.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class CompanyDepartmentListComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

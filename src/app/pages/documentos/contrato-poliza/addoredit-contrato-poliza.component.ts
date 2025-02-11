@@ -11,10 +11,9 @@ import { DateService } from 'src/app/core/services/date.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-addoredit-contrato-poliza',
-  templateUrl: './addoredit-contrato-poliza.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
+    selector: 'app-addoredit-contrato-poliza',
+    templateUrl: './addoredit-contrato-poliza.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule]
 })
 export default class AddoreditContratoPolizaComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

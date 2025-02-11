@@ -8,10 +8,9 @@ import {
 import TarjetaProveedorComponent from 'src/app/pages/directorios/proveedor/tarjeta-proveedor.component';
 
 @Component({
-  selector: 'app-datos-servicio-addoredit',
-  templateUrl: './datos-servicio-addoredit.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-datos-servicio-addoredit',
+    templateUrl: './datos-servicio-addoredit.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class DatosServicioAddOrEditComponent implements OnInit {
   config = inject(DynamicDialogConfig);

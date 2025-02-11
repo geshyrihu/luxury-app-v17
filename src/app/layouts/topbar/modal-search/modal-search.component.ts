@@ -7,10 +7,9 @@ import { IMenuItem } from 'src/app/layouts/sidebar/menu.model';
 import { SidebarService } from '../../sidebar/sidebar.service';
 
 @Component({
-  selector: 'app-modal-search',
-  templateUrl: './modal-search.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CommonModule],
+    selector: 'app-modal-search',
+    templateUrl: './modal-search.component.html',
+    imports: [LuxuryAppComponentsModule, CommonModule]
 })
 export default class ModalSearchComponent implements OnInit {
   private router = inject(Router);

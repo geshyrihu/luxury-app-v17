@@ -8,10 +8,9 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-addoredit-recorrido',
-  templateUrl: './addoreedit-recorrido.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
+    selector: 'app-addoredit-recorrido',
+    templateUrl: './addoreedit-recorrido.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule]
 })
 export default class RecorridoAddOrEditComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

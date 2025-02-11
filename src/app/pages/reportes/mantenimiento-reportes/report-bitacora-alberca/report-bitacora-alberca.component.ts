@@ -9,14 +9,13 @@ import PagetitleReportComponent from 'src/app/shared/cabeceras/pagetitlereport/p
 import CustomBarChartComponent from 'src/app/shared/graficos/ng2-chart/custom-bar-chart/custom-bar-chart.component';
 
 @Component({
-  selector: 'app-report-bitacora-alberca',
-  templateUrl: './report-bitacora-alberca.component.html',
-  standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    CustomBarChartComponent,
-    PagetitleReportComponent,
-  ],
+    selector: 'app-report-bitacora-alberca',
+    templateUrl: './report-bitacora-alberca.component.html',
+    imports: [
+        LuxuryAppComponentsModule,
+        CustomBarChartComponent,
+        PagetitleReportComponent,
+    ]
 })
 export default class ReportBitacoraAlbercaComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

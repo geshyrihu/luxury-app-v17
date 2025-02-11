@@ -3,10 +3,9 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter, map } from 'rxjs';
 
 @Component({
-  selector: 'app-current-title',
-  standalone: true,
-  imports: [],
-  templateUrl: './current-title.component.html',
+    selector: 'app-current-title',
+    imports: [],
+    templateUrl: './current-title.component.html'
 })
 export default class CurrentTitleComponent {
   activatedRoute = inject(ActivatedRoute);

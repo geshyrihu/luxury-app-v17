@@ -9,10 +9,9 @@ import { DateService } from 'src/app/core/services/date.service';
 import { PeriodoMonthService } from 'src/app/core/services/periodo-month.service';
 
 @Component({
-  selector: 'app-report-ticket',
-  templateUrl: './report-ticket.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-report-ticket',
+    templateUrl: './report-ticket.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class ReportTicketComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

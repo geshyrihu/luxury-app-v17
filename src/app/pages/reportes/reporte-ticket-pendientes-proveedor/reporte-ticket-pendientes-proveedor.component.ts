@@ -6,10 +6,9 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { ReportService } from 'src/app/core/services/report.service';
 
 @Component({
-  selector: 'app-reporte-ticket-pendientes-proveedor',
-  templateUrl: './reporte-ticket-pendientes-proveedor.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-reporte-ticket-pendientes-proveedor',
+    templateUrl: './reporte-ticket-pendientes-proveedor.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class ReporteTicketPendientesProveedorComponent
   implements OnInit

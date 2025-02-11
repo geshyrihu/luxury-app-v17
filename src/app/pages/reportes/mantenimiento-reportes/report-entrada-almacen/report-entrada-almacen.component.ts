@@ -8,10 +8,9 @@ import { DateService } from 'src/app/core/services/date.service';
 import { PeriodoMonthService } from 'src/app/core/services/periodo-month.service';
 
 @Component({
-  selector: 'app-report-entrada-almacen',
-  templateUrl: './report-entrada-almacen.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-report-entrada-almacen',
+    templateUrl: './report-entrada-almacen.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class ReportEntradaAlmacenComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

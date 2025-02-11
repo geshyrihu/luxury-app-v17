@@ -7,10 +7,9 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-addoredit-forma-pago',
-  templateUrl: './addoredit-forma-pago.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
+    selector: 'app-addoredit-forma-pago',
+    templateUrl: './addoredit-forma-pago.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule]
 })
 export default class AddoreditFormaPagoComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

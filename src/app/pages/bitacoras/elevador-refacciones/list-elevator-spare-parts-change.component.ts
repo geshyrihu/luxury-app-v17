@@ -8,10 +8,9 @@ import { DialogHandlerService } from 'src/app/core/services/dialog-handler.servi
 import AddOrEditElevatorSparePartsChangeComponent from './add-or-edit-elevator-spare-parts-change.component';
 
 @Component({
-  selector: 'app-list-elevator-spare-parts-change',
-  templateUrl: './list-elevator-spare-parts-change.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-list-elevator-spare-parts-change',
+    templateUrl: './list-elevator-spare-parts-change.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class ListElevatorSparePartsChangeComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

@@ -6,10 +6,9 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 
 @Component({
-  selector: 'app-my-inspection-add-images',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
-  templateUrl: './my-inspection-add-images.component.html',
+    selector: 'app-my-inspection-add-images',
+    imports: [LuxuryAppComponentsModule],
+    templateUrl: './my-inspection-add-images.component.html'
 })
 export default class MyInspectionAddImagesComponent {
   apiRequestS = inject(ApiRequestService);

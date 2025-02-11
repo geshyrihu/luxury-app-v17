@@ -13,10 +13,9 @@ import AddPresentacionJuntaComiteComponent from './add-presentacion-junta-comite
 import AddoreditPresentacionJuntaComiteComponent from './addoredit-presentacion-junta-comite.component';
 
 @Component({
-  selector: 'app-presentacion-junta-comite',
-  templateUrl: './presentacion-junta-comite.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-presentacion-junta-comite',
+    templateUrl: './presentacion-junta-comite.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class PresentacionJuntaComiteComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

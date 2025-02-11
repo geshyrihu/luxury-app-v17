@@ -12,10 +12,9 @@ import FormMedidorLecturaComponent from '../lecturas/form-medidor-lectura.compon
 import FormMedidorComponent from './form-medidor.component';
 
 @Component({
-  selector: 'app-lista-medidores',
-  templateUrl: './lista-medidores.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-lista-medidores',
+    templateUrl: './lista-medidores.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class ListMedidorComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

@@ -17,10 +17,9 @@ import { TicketMessageModule } from '../../ticket-message.module';
 import { TicketGroupService } from '../../ticket.service';
 
 @Component({
-  selector: 'app-ticket-message-operation-report',
-  templateUrl: './ticket-message-operation-report.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, TicketMessageModule],
+    selector: 'app-ticket-message-operation-report',
+    templateUrl: './ticket-message-operation-report.component.html',
+    imports: [LuxuryAppComponentsModule, TicketMessageModule]
 })
 export default class TicketMessageOperationReportComponent {
   activatedRoute = inject(ActivatedRoute);

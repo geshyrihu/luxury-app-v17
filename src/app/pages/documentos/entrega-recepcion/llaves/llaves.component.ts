@@ -5,10 +5,9 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 
 @Component({
-  selector: 'app-llaves',
-  templateUrl: './llaves.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-llaves',
+    templateUrl: './llaves.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class LlavesComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

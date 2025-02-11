@@ -9,10 +9,9 @@ import { PeriodoMonthService } from 'src/app/core/services/periodo-month.service
 import FiltroMinutasAreaComponent from '../filtro-minutas-area/filtro-minutas-area.component';
 
 @Component({
-  selector: 'app-minutas-resumen',
-  templateUrl: './minutas-resumen.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, MultiSelectModule],
+    selector: 'app-minutas-resumen',
+    templateUrl: './minutas-resumen.component.html',
+    imports: [LuxuryAppComponentsModule, MultiSelectModule]
 })
 export default class MinutasResumenComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

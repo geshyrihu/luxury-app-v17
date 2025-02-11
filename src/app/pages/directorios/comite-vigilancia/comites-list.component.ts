@@ -3,10 +3,9 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 
 @Component({
-  selector: 'app-comites-list',
-  templateUrl: './comites-list.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-comites-list',
+    templateUrl: './comites-list.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class ComitesListComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

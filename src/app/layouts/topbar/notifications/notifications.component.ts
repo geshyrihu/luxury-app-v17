@@ -8,10 +8,9 @@ import { SignalRService } from 'src/app/core/services/signal-r.service';
 import { TicketGroupService } from 'src/app/pages/tickets/ticket.service';
 
 @Component({
-  selector: 'app-notifications',
-  templateUrl: './notifications.component.html',
-  standalone: true,
-  imports: [SimplebarAngularModule, LuxuryAppComponentsModule],
+    selector: 'app-notifications',
+    templateUrl: './notifications.component.html',
+    imports: [SimplebarAngularModule, LuxuryAppComponentsModule]
 })
 export default class NotificationsComponent implements OnInit, OnDestroy {
   apiRequestS = inject(ApiRequestService);

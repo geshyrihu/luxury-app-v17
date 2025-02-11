@@ -10,10 +10,9 @@ import { DialogHandlerService } from 'src/app/core/services/dialog-handler.servi
 import ComiteVigilanciaAddOrEditComponent from './comite-vigilancia-addoredit.component';
 
 @Component({
-  selector: 'app-comite-vigilancia-list',
-  templateUrl: './comite-vigilancia-list.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-comite-vigilancia-list',
+    templateUrl: './comite-vigilancia-list.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class ComiteVigilanciaListComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

@@ -17,11 +17,10 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 import { TicketGroupService } from '../../ticket.service';
 
 @Component({
-  selector: 'app-ticket-message-view',
-  templateUrl: './ticket-message-view.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
-  providers: [EnumSelectService],
+    selector: 'app-ticket-message-view',
+    templateUrl: './ticket-message-view.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule],
+    providers: [EnumSelectService]
 })
 export default class TicketMessageViewComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

@@ -2,10 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-home-calendar-juntas-comite',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './home-calendar-juntas-comite.component.html',
+    selector: 'app-home-calendar-juntas-comite',
+    imports: [CommonModule],
+    templateUrl: './home-calendar-juntas-comite.component.html'
 })
 export default class HomeCalendarJuntasComiteComponent {
   opciones = [

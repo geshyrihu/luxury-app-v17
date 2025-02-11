@@ -10,10 +10,9 @@ import DashboardDynamicCardItemComponent from './dashboard-dynamic-card-item.com
 import SummaryTicketCommitteeMeetingComponent from './summary-ticket-committee-meeting.component';
 
 @Component({
-  selector: 'app-dashboard-ticket-committee-meeting',
-  templateUrl: './dashboard-ticket-committee-meeting.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, DashboardDynamicCardItemComponent],
+    selector: 'app-dashboard-ticket-committee-meeting',
+    templateUrl: './dashboard-ticket-committee-meeting.component.html',
+    imports: [LuxuryAppComponentsModule, DashboardDynamicCardItemComponent]
 })
 export default class DashboardTicketCommitteeMeetingComponent
   implements OnInit

@@ -8,10 +8,9 @@ import { DateService } from 'src/app/core/services/date.service';
 const date = new Date();
 
 @Component({
-  selector: 'app-form-medidor-lectura',
-  templateUrl: './form-medidor-lectura.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-form-medidor-lectura',
+    templateUrl: './form-medidor-lectura.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class FormMedidorLecturaComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

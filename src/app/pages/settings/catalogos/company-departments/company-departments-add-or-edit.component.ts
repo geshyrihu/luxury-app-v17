@@ -8,11 +8,10 @@ import { EnumSelectService } from 'src/app/core/services/enum-select.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-company-departments-add-or-edit',
-  templateUrl: './company-departments-add-or-edit.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
-  providers: [EnumSelectService],
+    selector: 'app-company-departments-add-or-edit',
+    templateUrl: './company-departments-add-or-edit.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule],
+    providers: [EnumSelectService]
 })
 export default class CompanyDepartmentsAddOrEditComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

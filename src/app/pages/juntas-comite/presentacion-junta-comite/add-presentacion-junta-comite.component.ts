@@ -10,10 +10,9 @@ import { DateService } from 'src/app/core/services/date.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-add-presentacion-junta-comite',
-  templateUrl: './add-presentacion-junta-comite.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, FlatpickrModule, CustomInputModule],
+    selector: 'app-add-presentacion-junta-comite',
+    templateUrl: './add-presentacion-junta-comite.component.html',
+    imports: [LuxuryAppComponentsModule, FlatpickrModule, CustomInputModule]
 })
 export default class AddPresentacionJuntaComiteComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

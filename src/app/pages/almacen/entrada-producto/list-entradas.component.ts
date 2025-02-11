@@ -9,10 +9,9 @@ import { DialogHandlerService } from 'src/app/core/services/dialog-handler.servi
 import AddOrEditEntradasComponent from './addoredit-entradas.component';
 
 @Component({
-  selector: 'app-list-entradas',
-  templateUrl: './list-entradas.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-list-entradas',
+    templateUrl: './list-entradas.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class ListEntradasComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

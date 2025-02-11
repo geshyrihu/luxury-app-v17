@@ -5,10 +5,9 @@ import { AutosizeDirective } from 'src/app/core/directives/autosize-text-area.di
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 
 @Component({
-  selector: 'app-descripcion-puesto',
-  templateUrl: './descripcion-puesto.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, AutosizeDirective],
+    selector: 'app-descripcion-puesto',
+    templateUrl: './descripcion-puesto.component.html',
+    imports: [LuxuryAppComponentsModule, AutosizeDirective]
 })
 export default class DescripcionPuestoComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

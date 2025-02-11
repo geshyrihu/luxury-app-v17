@@ -14,10 +14,9 @@ import CardEmployeeComponent from 'src/app/pages/directorios/employee-internal/c
 import BitacoraMantenimientoFormComponent from './bitacora-mantenimiento-form.component';
 
 @Component({
-  selector: 'app-bitacora-mantenimiento',
-  templateUrl: './bitacora-mantenimiento.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-bitacora-mantenimiento',
+    templateUrl: './bitacora-mantenimiento.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class BitacoraMantenimientoComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

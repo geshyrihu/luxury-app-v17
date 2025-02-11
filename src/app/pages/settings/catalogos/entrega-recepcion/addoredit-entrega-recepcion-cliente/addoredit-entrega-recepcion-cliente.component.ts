@@ -10,11 +10,10 @@ import { EnumSelectService } from 'src/app/core/services/enum-select.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-addoredit-entrega-recepcion-cliente',
-  templateUrl: './addoredit-entrega-recepcion-cliente.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
-  providers: [EnumSelectService],
+    selector: 'app-addoredit-entrega-recepcion-cliente',
+    templateUrl: './addoredit-entrega-recepcion-cliente.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule],
+    providers: [EnumSelectService]
 })
 export default class CrudEntregaRecepcionClienteComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

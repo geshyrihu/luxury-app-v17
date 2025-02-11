@@ -6,11 +6,10 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-legal-matter-categorie-add-or-edit',
-  templateUrl: './legal-matter-categorie-add-or-edit.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
-  providers: [],
+    selector: 'app-legal-matter-categorie-add-or-edit',
+    templateUrl: './legal-matter-categorie-add-or-edit.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule],
+    providers: []
 })
 export default class LegalMatterCategorieAddOrEditComponent {
   apiRequestS = inject(ApiRequestService);

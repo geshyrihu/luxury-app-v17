@@ -8,10 +8,9 @@ import { FiltroCalendarService } from 'src/app/core/services/filtro-calendar.ser
 const date = new Date();
 
 @Component({
-  selector: 'app-rango-calendario-yyyymmdd',
-  templateUrl: './rango-calendario-yyyymmdd.component.html',
-  standalone: true,
-  imports: [FormsModule, FlatpickrModule],
+    selector: 'app-rango-calendario-yyyymmdd',
+    templateUrl: './rango-calendario-yyyymmdd.component.html',
+    imports: [FormsModule, FlatpickrModule]
 })
 export default class RangoCalendarioyyyymmddComponent implements OnInit {
   dateS = inject(DateService);

@@ -6,10 +6,9 @@ import { DialogHandlerService } from 'src/app/core/services/dialog-handler.servi
 import AddorEditMeetingSeguimientoComponent from '../../juntas-comite/junta-comite-minutas/addor-edit-meeting-seguimiento.component';
 
 @Component({
-  selector: 'app-cont-minuta-seguimientos',
-  templateUrl: './cont-minuta-seguimientos.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-cont-minuta-seguimientos',
+    templateUrl: './cont-minuta-seguimientos.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class ContMinutaSeguimientosComponent implements OnInit {
   config = inject(DynamicDialogConfig);

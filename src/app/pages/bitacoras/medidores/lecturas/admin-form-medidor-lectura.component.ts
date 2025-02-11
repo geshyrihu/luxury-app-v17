@@ -7,10 +7,9 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-admin-form-medidor-lectura',
-  templateUrl: './admin-form-medidor-lectura.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
+    selector: 'app-admin-form-medidor-lectura',
+    templateUrl: './admin-form-medidor-lectura.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule]
 })
 export default class AdminFormMedidorLecturaComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

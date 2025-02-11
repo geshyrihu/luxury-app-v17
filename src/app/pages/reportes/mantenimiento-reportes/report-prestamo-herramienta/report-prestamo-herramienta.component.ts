@@ -8,10 +8,9 @@ import { DateService } from 'src/app/core/services/date.service';
 import { PeriodoMonthService } from 'src/app/core/services/periodo-month.service';
 
 @Component({
-  selector: 'app-report-prestamo-herramienta',
-  templateUrl: './report-prestamo-herramienta.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-report-prestamo-herramienta',
+    templateUrl: './report-prestamo-herramienta.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class ReportPrestamoHerramientaComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

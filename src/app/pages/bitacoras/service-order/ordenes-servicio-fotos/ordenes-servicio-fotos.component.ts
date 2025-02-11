@@ -6,10 +6,9 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 
 @Component({
-  selector: 'app-ordenes-servicio-fotos',
-  templateUrl: './ordenes-servicio-fotos.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, ImageModule],
+    selector: 'app-ordenes-servicio-fotos',
+    templateUrl: './ordenes-servicio-fotos.component.html',
+    imports: [LuxuryAppComponentsModule, ImageModule]
 })
 export default class OrdenesServicioFotosComponent implements OnInit {
   config = inject(DynamicDialogConfig);

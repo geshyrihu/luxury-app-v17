@@ -10,10 +10,9 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-form-catalogo-gastos-fijos',
-  templateUrl: './form-catalogo-gastos-fijos.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
+    selector: 'app-form-catalogo-gastos-fijos',
+    templateUrl: './form-catalogo-gastos-fijos.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule]
 })
 export default class FormCatalogoGastosFijosComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

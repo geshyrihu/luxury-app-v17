@@ -12,10 +12,9 @@ import { DateService } from 'src/app/core/services/date.service';
 import { FiltroCalendarService } from 'src/app/core/services/filtro-calendar.service';
 
 @Component({
-  selector: 'app-chart-lectura',
-  templateUrl: './chart-lectura.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, NgChartsModule],
+    selector: 'app-chart-lectura',
+    templateUrl: './chart-lectura.component.html',
+    imports: [LuxuryAppComponentsModule, NgChartsModule]
 })
 export default class ChartLecturaComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

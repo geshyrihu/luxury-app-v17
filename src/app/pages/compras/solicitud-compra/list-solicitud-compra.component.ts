@@ -9,10 +9,9 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { SolicitudCompraService } from 'src/app/core/services/solicitud-compra.service';
 
 @Component({
-  selector: 'app-list-solicitud-compra',
-  templateUrl: './list-solicitud-compra.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-list-solicitud-compra',
+    templateUrl: './list-solicitud-compra.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class ListSolicitudCompraComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

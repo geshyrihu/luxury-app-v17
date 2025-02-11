@@ -2,10 +2,9 @@ import { Component } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 
 @Component({
-  selector: 'app-calculadoras',
-  templateUrl: './calculadoras.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-calculadoras',
+    templateUrl: './calculadoras.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class CalculadorasComponent {
   precio: number = 0;

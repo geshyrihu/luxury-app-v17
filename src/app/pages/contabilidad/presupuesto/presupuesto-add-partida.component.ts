@@ -6,10 +6,9 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
-  selector: 'app-presupuesto-add-partida',
-  templateUrl: './presupuesto-add-partida.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-presupuesto-add-partida',
+    templateUrl: './presupuesto-add-partida.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class PresupuestoAddPartidaComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

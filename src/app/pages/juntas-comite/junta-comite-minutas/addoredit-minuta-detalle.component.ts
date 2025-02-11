@@ -9,11 +9,10 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 import { EnumSelectService } from '../../../core/services/enum-select.service';
 
 @Component({
-  selector: 'app-addoredit-minuta-detalle',
-  templateUrl: './addoredit-minuta-detalle.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
-  providers: [EnumSelectService],
+    selector: 'app-addoredit-minuta-detalle',
+    templateUrl: './addoredit-minuta-detalle.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule],
+    providers: [EnumSelectService]
 })
 export default class AddoreditMinutaDetalleComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

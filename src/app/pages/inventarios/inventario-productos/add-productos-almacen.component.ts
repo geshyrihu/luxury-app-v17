@@ -9,10 +9,9 @@ import { DialogHandlerService } from 'src/app/core/services/dialog-handler.servi
 import TarjetaProductoComponent from '../../settings/catalogos/productos/tarjeta-producto.component';
 
 @Component({
-  selector: 'app-add-productos-almacen',
-  templateUrl: './add-productos-almacen.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-add-productos-almacen',
+    templateUrl: './add-productos-almacen.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class AddProductosAlmacenComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

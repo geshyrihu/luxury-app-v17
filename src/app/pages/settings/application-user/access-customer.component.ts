@@ -5,10 +5,9 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 
 @Component({
-  selector: 'app-access-customer',
-  templateUrl: './access-customer.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-access-customer',
+    templateUrl: './access-customer.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class AccessCustomerComponent implements OnInit {
   customToastService = inject(CustomToastService);

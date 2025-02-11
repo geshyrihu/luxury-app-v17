@@ -9,10 +9,9 @@ import { DialogHandlerService } from 'src/app/core/services/dialog-handler.servi
 import AddoreditInventarioPinturaComponent from './addoredit-inventario-pintura.component';
 
 @Component({
-  selector: 'app-inventario-pintura',
-  templateUrl: './inventario-pintura.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, ImageModule],
+    selector: 'app-inventario-pintura',
+    templateUrl: './inventario-pintura.component.html',
+    imports: [LuxuryAppComponentsModule, ImageModule]
 })
 export default class InventarioPinturaComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

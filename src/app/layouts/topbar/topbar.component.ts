@@ -6,10 +6,9 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { TopbarModule } from './topbar.module';
 
 @Component({
-  selector: 'app-topbar',
-  templateUrl: './topbar.component.html',
-  standalone: true,
-  imports: [TopbarModule],
+    selector: 'app-topbar',
+    templateUrl: './topbar.component.html',
+    imports: [TopbarModule]
 })
 export class TopbarComponent implements OnInit {
   authS = inject(AuthService);

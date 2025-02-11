@@ -4,10 +4,9 @@ import { IMenuItem } from '../../sidebar/menu.model';
 import HomeListGroupComponent from '../home-list-group/home-list-group.component';
 
 @Component({
-  selector: 'app-home-juntas-comite',
-  standalone: true,
-  imports: [HomeListGroupComponent],
-  templateUrl: './home-juntas-comite.component.html',
+    selector: 'app-home-juntas-comite',
+    imports: [HomeListGroupComponent],
+    templateUrl: './home-juntas-comite.component.html'
 })
 export default class HomeJuntasComiteComponent {
   authS = inject(AuthService);

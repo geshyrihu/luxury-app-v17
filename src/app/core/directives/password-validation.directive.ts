@@ -15,14 +15,15 @@ export function passwordValidation(): ValidatorFn {
 }
 
 @Directive({
-  selector: '[passwordValidation]',
-  providers: [
-    {
-      provide: NG_VALIDATORS,
-      useExisting: PasswordValidationDirective,
-      multi: true,
-    },
-  ],
+    selector: '[passwordValidation]',
+    providers: [
+        {
+            provide: NG_VALIDATORS,
+            useExisting: PasswordValidationDirective,
+            multi: true,
+        },
+    ],
+    standalone: false
 })
 export class PasswordValidationDirective implements Validator {
   passwordsProhibidos = ['123456', 'querty', '123456789'];

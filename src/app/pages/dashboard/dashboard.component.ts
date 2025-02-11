@@ -8,16 +8,15 @@ import DashboardTicketCommitteeMeetingComponent from './dashboard-ticket-committ
 import DashboardTicketsComponent from './dashboard-tickets.component';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    DashboardPreventiveMaintenanceComponent,
-    DashboardTicketCommitteeMeetingComponent,
-    DashboardTicketsComponent,
-    DashboardRequestsToLegalComponent,
-  ],
+    selector: 'app-dashboard',
+    templateUrl: './dashboard.component.html',
+    imports: [
+        LuxuryAppComponentsModule,
+        DashboardPreventiveMaintenanceComponent,
+        DashboardTicketCommitteeMeetingComponent,
+        DashboardTicketsComponent,
+        DashboardRequestsToLegalComponent,
+    ]
 })
 export default class DashboardComponent implements OnInit {
   autS = inject(AuthService);

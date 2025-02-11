@@ -7,10 +7,9 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-periodo-cedula-addoredit',
-  templateUrl: './periodo-cedula-addoredit.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
+    selector: 'app-periodo-cedula-addoredit',
+    templateUrl: './periodo-cedula-addoredit.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule]
 })
 export default class PeriodoCedulaPresupuestalAddoreditComponent
   implements OnInit

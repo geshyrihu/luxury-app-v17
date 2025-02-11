@@ -8,17 +8,16 @@ import {
 import ValidationErrorsCustomInputComponent from '../validation-errors-custom-input/validation-errors-custom-input.component';
 
 @Component({
-  imports: [CommonModule, ValidationErrorsCustomInputComponent],
-  selector: 'custom-input-check',
-  standalone: true,
-  templateUrl: './custom-input-check.component.html',
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => CustomInputCheckComponent),
-      multi: true,
-    },
-  ],
+    imports: [CommonModule, ValidationErrorsCustomInputComponent],
+    selector: 'custom-input-check',
+    templateUrl: './custom-input-check.component.html',
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => CustomInputCheckComponent),
+            multi: true,
+        },
+    ]
 })
 export default class CustomInputCheckComponent implements ControlValueAccessor {
   @Input() control: FormControl;

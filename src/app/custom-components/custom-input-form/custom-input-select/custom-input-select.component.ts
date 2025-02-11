@@ -10,21 +10,20 @@ import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import ValidationErrorsCustomInputComponent from '../validation-errors-custom-input/validation-errors-custom-input.component';
 
 @Component({
-  selector: 'custom-input-select',
-  templateUrl: './custom-input-select.component.html',
-  standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    CommonModule,
-    ValidationErrorsCustomInputComponent,
-  ],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => CustomInputSelectComponent),
-      multi: true,
-    },
-  ],
+    selector: 'custom-input-select',
+    templateUrl: './custom-input-select.component.html',
+    imports: [
+        LuxuryAppComponentsModule,
+        CommonModule,
+        ValidationErrorsCustomInputComponent,
+    ],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => CustomInputSelectComponent),
+            multi: true,
+        },
+    ]
 })
 export default class CustomInputSelectComponent
   implements ControlValueAccessor, AfterViewInit

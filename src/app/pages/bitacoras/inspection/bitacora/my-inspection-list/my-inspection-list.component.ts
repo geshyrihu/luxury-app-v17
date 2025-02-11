@@ -9,10 +9,9 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 
 @Component({
-  selector: 'app-my-inspection-list',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, FlatpickrModule],
-  templateUrl: './my-inspection-list.component.html',
+    selector: 'app-my-inspection-list',
+    imports: [LuxuryAppComponentsModule, FlatpickrModule],
+    templateUrl: './my-inspection-list.component.html'
 })
 export default class MyInspectionListComponent implements OnInit {
   authService = inject(AuthService);

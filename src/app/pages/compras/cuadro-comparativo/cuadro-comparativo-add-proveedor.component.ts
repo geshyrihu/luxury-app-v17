@@ -8,10 +8,9 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-cuadro-comparativo-add-proveedor',
-  templateUrl: './cuadro-comparativo-add-proveedor.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
+    selector: 'app-cuadro-comparativo-add-proveedor',
+    templateUrl: './cuadro-comparativo-add-proveedor.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule]
 })
 export default class CuadroComparativoAddProveedorComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

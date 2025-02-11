@@ -5,11 +5,10 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { EnumSelectService } from 'src/app/core/services/enum-select.service';
 
 @Component({
-  selector: 'app-filtro-minutas-area',
-  templateUrl: './filtro-minutas-area.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
-  providers: [EnumSelectService],
+    selector: 'app-filtro-minutas-area',
+    templateUrl: './filtro-minutas-area.component.html',
+    imports: [LuxuryAppComponentsModule],
+    providers: [EnumSelectService]
 })
 export default class FiltroMinutasAreaComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

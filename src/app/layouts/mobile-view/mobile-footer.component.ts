@@ -8,10 +8,9 @@ import { SignalRService } from 'src/app/core/services/signal-r.service';
 import { TicketGroupService } from 'src/app/pages/tickets/ticket.service';
 
 @Component({
-  selector: 'app-mobile-footer',
-  standalone: true,
-  imports: [RouterModule, CommonModule],
-  templateUrl: './mobile-footer.component.html',
+    selector: 'app-mobile-footer',
+    imports: [RouterModule, CommonModule],
+    templateUrl: './mobile-footer.component.html'
 })
 export default class MobileFooterComponent implements OnInit, OnDestroy {
   authS = inject(AuthService);

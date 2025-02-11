@@ -23,18 +23,17 @@ import OrdenCompraEditDetalleComponent from './orden-compra-edit-detalle.compone
 import OrdenCompraEditPresupustoUtilizadoComponent from './orden-compra-edit-presupusto-utilizado.component';
 
 @Component({
-  selector: 'app-orden-compra',
-  templateUrl: './orden-compra.component.html',
-  standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    FormsModule,
-    OrdenCompraDatosCotizacionComponent,
-    OrdenCompraDatosPagoParcialComponent,
-    OrdenCompraStatusParcialComponent,
-    ContextMenuModule,
-    ConfirmDialogModule,
-  ],
+    selector: 'app-orden-compra',
+    templateUrl: './orden-compra.component.html',
+    imports: [
+        LuxuryAppComponentsModule,
+        FormsModule,
+        OrdenCompraDatosCotizacionComponent,
+        OrdenCompraDatosPagoParcialComponent,
+        OrdenCompraStatusParcialComponent,
+        ContextMenuModule,
+        ConfirmDialogModule,
+    ]
 })
 export default class OrdenCompraComponent implements OnInit {
   authS = inject(AuthService);

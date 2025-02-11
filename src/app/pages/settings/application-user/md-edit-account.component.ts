@@ -8,16 +8,15 @@ import UpdatePasswordAccountComponent from './update-password-account.component'
 import UpdateRoleComponent from './update-role.component';
 
 @Component({
-  selector: 'app-md-edit-account',
-  templateUrl: './md-edit-account.component.html',
-  standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    AccessCustomerComponent,
-    UpdateRoleComponent,
-    UpdatePasswordAccountComponent,
-    // UpdateAccountComponent,
-  ],
+    selector: 'app-md-edit-account',
+    templateUrl: './md-edit-account.component.html',
+    imports: [
+        LuxuryAppComponentsModule,
+        AccessCustomerComponent,
+        UpdateRoleComponent,
+        UpdatePasswordAccountComponent,
+        // UpdateAccountComponent,
+    ]
 })
 export default class MdEditAccountComponent implements OnInit {
   config = inject(DynamicDialogConfig);

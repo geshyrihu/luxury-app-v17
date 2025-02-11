@@ -6,10 +6,9 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-banco-addoredit',
-  templateUrl: './banco-addoredit.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
+    selector: 'app-banco-addoredit',
+    templateUrl: './banco-addoredit.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule]
 })
 export default class BancoAddOrEditComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

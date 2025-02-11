@@ -8,10 +8,9 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-proceso-addoredit',
-  templateUrl: './proceso-addoredit.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
+    selector: 'app-proceso-addoredit',
+    templateUrl: './proceso-addoredit.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule]
 })
 export default class ProcesoAddOrEditComponent implements OnInit {
   formB = inject(FormBuilder);

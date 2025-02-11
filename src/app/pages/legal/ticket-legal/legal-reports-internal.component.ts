@@ -5,11 +5,10 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import TicketDateRangeSelectorComponent from 'src/app/pages/tickets/shared/ticket-date-range-selector/ticket-date-range-selector.component';
 
 @Component({
-  selector: 'app-legal-reports-internal',
-  templateUrl: './legal-reports-internal.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, TicketDateRangeSelectorComponent],
-  providers: [DatePipe], // Provide DatePipe in the component
+    selector: 'app-legal-reports-internal',
+    templateUrl: './legal-reports-internal.component.html',
+    imports: [LuxuryAppComponentsModule, TicketDateRangeSelectorComponent],
+    providers: [DatePipe]
 })
 export default class LegalReportsInternalComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

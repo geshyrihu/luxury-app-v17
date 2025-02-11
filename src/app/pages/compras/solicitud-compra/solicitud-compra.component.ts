@@ -17,16 +17,15 @@ import AddProductComponent from './add-product.component';
 import SolicitudCompraDetalleComponent from './solicitud-compra-detalle/solicitud-compra-detalle.component';
 
 @Component({
-  selector: 'app-solicitud-compra',
-  templateUrl: './solicitud-compra.component.html',
-  standalone: true,
-  imports: [
-    AddProductComponent,
-    LuxuryAppComponentsModule,
-    NgbProgressbar,
-    SolicitudCompraDetalleComponent,
-  ],
-  providers: [EnumSelectService],
+    selector: 'app-solicitud-compra',
+    templateUrl: './solicitud-compra.component.html',
+    imports: [
+        AddProductComponent,
+        LuxuryAppComponentsModule,
+        NgbProgressbar,
+        SolicitudCompraDetalleComponent,
+    ],
+    providers: [EnumSelectService]
 })
 export default class SolicitudCompraComponent implements OnInit {
   enumSelectS = inject(EnumSelectService);

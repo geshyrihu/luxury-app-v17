@@ -6,10 +6,9 @@ import { TicketGroupService } from 'src/app/pages/tickets/ticket.service';
 import { DateRangeStorageService } from '../../services/date-range-storage.service';
 
 @Component({
-  selector: 'app-ticket-message-weekly-report-preview',
-  templateUrl: './ticket-message-weekly-report-preview.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-ticket-message-weekly-report-preview',
+    templateUrl: './ticket-message-weekly-report-preview.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class TicketMessageWeeklyReportPreviewComponent
   implements OnInit

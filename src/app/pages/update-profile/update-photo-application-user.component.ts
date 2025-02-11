@@ -9,10 +9,9 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { ProfielServiceService } from 'src/app/core/services/profiel-service.service';
 
 @Component({
-  selector: 'app-update-photo-application-user',
-  templateUrl: './update-photo-application-user.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CommonModule, NgbModule, ToastModule],
+    selector: 'app-update-photo-application-user',
+    templateUrl: './update-photo-application-user.component.html',
+    imports: [LuxuryAppComponentsModule, CommonModule, NgbModule, ToastModule]
 })
 export default class UpdatePhotoApplicationUserComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

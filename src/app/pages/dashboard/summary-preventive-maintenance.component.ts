@@ -7,10 +7,9 @@ import { DateService } from 'src/app/core/services/date.service';
 import { PeriodoMonthService } from 'src/app/core/services/periodo-month.service';
 
 @Component({
-  selector: 'app-summary-preventive-maintenance',
-  templateUrl: './summary-preventive-maintenance.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-summary-preventive-maintenance',
+    templateUrl: './summary-preventive-maintenance.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class MantenimientosPreventivosResumenComponent
   implements OnInit

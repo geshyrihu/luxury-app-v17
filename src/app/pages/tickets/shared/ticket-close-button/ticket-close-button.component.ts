@@ -4,10 +4,9 @@ import CustomBtnComponent from 'src/app/custom-components/custom-buttons/custom-
 import TicketMessageCloseComponent from '../../messages/ticket-message-close/ticket-message-close.component';
 
 @Component({
-  selector: 'app-ticket-close-button',
-  standalone: true,
-  imports: [CustomBtnComponent],
-  templateUrl: './ticket-close-button.component.html',
+    selector: 'app-ticket-close-button',
+    imports: [CustomBtnComponent],
+    templateUrl: './ticket-close-button.component.html'
 })
 export default class TicketCloseButtonComponent {
   dialogHandlerS = inject(DialogHandlerService);

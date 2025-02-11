@@ -10,10 +10,9 @@ import { DialogHandlerService } from 'src/app/core/services/dialog-handler.servi
 import MaintenancePreventiveAddoreditComponent from './maintenance-preventive-addoredit.component';
 
 @Component({
-  selector: 'app-cronograma-anual-mantenimiento',
-  templateUrl: './cronograma-anual-mantenimiento.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-cronograma-anual-mantenimiento',
+    templateUrl: './cronograma-anual-mantenimiento.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class CronogramaAnualMantenimientoComponent {
   apiRequestS = inject(ApiRequestService);

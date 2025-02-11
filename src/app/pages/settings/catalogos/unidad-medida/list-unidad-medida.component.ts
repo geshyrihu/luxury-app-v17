@@ -7,10 +7,9 @@ import { DialogHandlerService } from 'src/app/core/services/dialog-handler.servi
 import AddOrEditUnidadMedidaComponent from './addoredit-unidad-medida.component';
 
 @Component({
-  selector: 'app-list-unidad-medida',
-  templateUrl: './list-unidad-medida.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-list-unidad-medida',
+    templateUrl: './list-unidad-medida.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class ListUnidadMedidaComponent implements OnInit {
   authS = inject(AuthService);

@@ -7,10 +7,9 @@ import { DialogHandlerService } from 'src/app/core/services/dialog-handler.servi
 import SubirPdfComponent from 'src/app/shared/subir-pdf/subir-pdf.component';
 
 @Component({
-  selector: 'app-activos-documentos',
-  templateUrl: './activos-documentos.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-activos-documentos',
+    templateUrl: './activos-documentos.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class ActivosDocumentosComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

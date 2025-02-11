@@ -4,10 +4,9 @@ import { ToastModule } from 'primeng/toast';
 import Swal from 'sweetalert2';
 
 @Component({
-  imports: [ToastModule, NgbTooltip],
-  selector: 'btn-delete-span',
-  templateUrl: './btn-delete-span.component.html',
-  standalone: true,
+    imports: [ToastModule, NgbTooltip],
+    selector: 'btn-delete-span',
+    templateUrl: './btn-delete-span.component.html'
 })
 export default class BtnDeleteSpanComponent {
   @Input()

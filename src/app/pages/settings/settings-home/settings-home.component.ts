@@ -8,10 +8,9 @@ import { IMenuItem } from 'src/app/layouts/sidebar/menu.model';
 import * as MenuItems from 'src/app/layouts/sidebar/index-menu-item';
 
 @Component({
-  selector: 'app-settings-home',
-  standalone: true,
-  imports: [CommonModule, RouterModule, DialogModule],
-  templateUrl: './settings-home.component.html',
+    selector: 'app-settings-home',
+    imports: [CommonModule, RouterModule, DialogModule],
+    templateUrl: './settings-home.component.html'
 })
 export default class SettingsHomeComponent {
   private authS = inject(AuthService);

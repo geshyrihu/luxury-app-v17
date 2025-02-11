@@ -3,10 +3,9 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { IMenuItem } from '../../sidebar/menu.model';
 import HomeListGroupComponent from '../home-list-group/home-list-group.component';
 @Component({
-  selector: 'app-home-compras',
-  standalone: true,
-  imports: [HomeListGroupComponent],
-  templateUrl: './home-compras.component.html',
+    selector: 'app-home-compras',
+    imports: [HomeListGroupComponent],
+    templateUrl: './home-compras.component.html'
 })
 export default class HomeComprasComponent {
   authS = inject(AuthService);

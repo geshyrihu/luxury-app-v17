@@ -5,10 +5,9 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 
 @Component({
-  selector: 'app-estados-financieros',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
-  templateUrl: './estados-financieros.component.html',
+    selector: 'app-estados-financieros',
+    imports: [LuxuryAppComponentsModule],
+    templateUrl: './estados-financieros.component.html'
 })
 export default class EstadosFinancierosComponent {
   apiRequestS = inject(ApiRequestService);

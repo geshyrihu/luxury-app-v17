@@ -9,11 +9,10 @@ import { EnumSelectService } from 'src/app/core/services/enum-select.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-orden-compra-datos-pago',
-  templateUrl: './orden-compra-datos-pago.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
-  providers: [EnumSelectService],
+    selector: 'app-orden-compra-datos-pago',
+    templateUrl: './orden-compra-datos-pago.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule],
+    providers: [EnumSelectService]
 })
 export default class OrdenCompraDatosPagoComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

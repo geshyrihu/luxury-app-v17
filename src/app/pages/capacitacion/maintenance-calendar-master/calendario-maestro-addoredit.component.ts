@@ -9,11 +9,10 @@ import { EnumSelectService } from 'src/app/core/services/enum-select.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-calendario-maestro-addoredit',
-  templateUrl: './calendario-maestro-addoredit.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, NgSelectModule, CustomInputModule],
-  providers: [EnumSelectService],
+    selector: 'app-calendario-maestro-addoredit',
+    templateUrl: './calendario-maestro-addoredit.component.html',
+    imports: [LuxuryAppComponentsModule, NgSelectModule, CustomInputModule],
+    providers: [EnumSelectService]
 })
 export default class CalendarioMaestroAddOrEditComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

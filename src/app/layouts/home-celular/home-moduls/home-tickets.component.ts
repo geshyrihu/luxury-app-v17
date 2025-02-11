@@ -4,10 +4,9 @@ import { IMenuItem } from '../../sidebar/menu.model';
 import HomeListGroupComponent from '../home-list-group/home-list-group.component';
 
 @Component({
-  selector: 'app-home-tickets',
-  standalone: true,
-  imports: [HomeListGroupComponent],
-  templateUrl: './home-tickets.component.html',
+    selector: 'app-home-tickets',
+    imports: [HomeListGroupComponent],
+    templateUrl: './home-tickets.component.html'
 })
 export default class HomeTicketsComponent {
   authS = inject(AuthService);

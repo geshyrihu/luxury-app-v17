@@ -18,10 +18,9 @@ import MyTicketMessageAddEditComponent from '../my-ticket-message-addedit/my-tic
 import MyTicketMessageProgramComponent from '../my-ticket-message-program/my-ticket-message-program.component';
 
 @Component({
-  selector: 'app-my-assigned-tickets-list',
-  templateUrl: './my-assigned-tickets-list.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, TicketMessageModule],
+    selector: 'app-my-assigned-tickets-list',
+    templateUrl: './my-assigned-tickets-list.component.html',
+    imports: [LuxuryAppComponentsModule, TicketMessageModule]
 })
 export default class MyAssignedTicketsListComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

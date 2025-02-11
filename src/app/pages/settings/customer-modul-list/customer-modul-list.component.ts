@@ -4,10 +4,9 @@ import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 
 @Component({
-  selector: 'app-customer-modul-list',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
-  templateUrl: './customer-modul-list.component.html',
+    selector: 'app-customer-modul-list',
+    imports: [LuxuryAppComponentsModule],
+    templateUrl: './customer-modul-list.component.html'
 })
 export default class CustomerModulListComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

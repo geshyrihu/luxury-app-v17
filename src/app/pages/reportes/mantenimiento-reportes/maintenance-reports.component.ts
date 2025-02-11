@@ -9,10 +9,9 @@ import PagetitleReportComponent from 'src/app/shared/cabeceras/pagetitlereport/p
 import { MenuReportMaintenance } from './menu-report-maintenance';
 
 @Component({
-  selector: 'app-maintenance-reports',
-  templateUrl: './maintenance-reports.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, PagetitleReportComponent],
+    selector: 'app-maintenance-reports',
+    templateUrl: './maintenance-reports.component.html',
+    imports: [LuxuryAppComponentsModule, PagetitleReportComponent]
 })
 export default class MaintenanceReportsComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

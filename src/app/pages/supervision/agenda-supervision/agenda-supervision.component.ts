@@ -10,10 +10,9 @@ import { FiltroCalendarService } from 'src/app/core/services/filtro-calendar.ser
 import AddOrEditAgendaSupervisionComponent from './addoredit-agenda-supervision.component';
 
 @Component({
-  selector: 'app-agenda-supervision',
-  templateUrl: './agenda-supervision.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-agenda-supervision',
+    templateUrl: './agenda-supervision.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class AgendaSupervisionComponent implements OnInit {
   dateS = inject(DateService);

@@ -11,11 +11,10 @@ import { EnumSelectService } from 'src/app/core/services/enum-select.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-solicitud-alta',
-  templateUrl: './solicitud-alta.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
-  providers: [DataConnectorService, EnumSelectService],
+    selector: 'app-solicitud-alta',
+    templateUrl: './solicitud-alta.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule],
+    providers: [DataConnectorService, EnumSelectService]
 })
 export default class SolicitudAltaComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

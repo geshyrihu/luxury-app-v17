@@ -10,10 +10,9 @@ import { DateService } from 'src/app/core/services/date.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-customer-addoredit',
-  templateUrl: './customer-addoredit.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
+    selector: 'app-customer-addoredit',
+    templateUrl: './customer-addoredit.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule]
 })
 export default class CustomerAddOrEditComponent implements OnInit {
   formB = inject(FormBuilder);

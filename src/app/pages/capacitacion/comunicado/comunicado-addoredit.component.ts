@@ -9,10 +9,9 @@ import { DateService } from 'src/app/core/services/date.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-comunicado-addoredit',
-  templateUrl: './comunicado-addoredit.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
+    selector: 'app-comunicado-addoredit',
+    templateUrl: './comunicado-addoredit.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule]
 })
 export default class ComunicadoAddOrEditComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

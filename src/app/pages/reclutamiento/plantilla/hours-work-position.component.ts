@@ -4,10 +4,9 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 
 @Component({
-  selector: 'app-hours-work-position',
-  templateUrl: './hours-work-position.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-hours-work-position',
+    templateUrl: './hours-work-position.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class HoursWorkPositionComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

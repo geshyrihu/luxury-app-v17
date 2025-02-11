@@ -4,10 +4,9 @@ import { Router } from '@angular/router';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: 'btn-router-notification',
-  templateUrl: './btn-router-notification.component.html',
-  standalone: true,
-  imports: [CommonModule, NgbTooltipModule],
+    selector: 'btn-router-notification',
+    templateUrl: './btn-router-notification.component.html',
+    imports: [CommonModule, NgbTooltipModule]
 })
 export default class BtnNotificationComponent {
   router = inject(Router); // Injectamos Router.

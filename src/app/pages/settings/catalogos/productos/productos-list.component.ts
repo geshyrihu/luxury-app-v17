@@ -7,10 +7,9 @@ import { DialogHandlerService } from 'src/app/core/services/dialog-handler.servi
 import ProductosAddOrEditComponent from './productos-addoredit.component';
 
 @Component({
-  selector: 'app-productos-list',
-  templateUrl: './productos-list.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-productos-list',
+    templateUrl: './productos-list.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class ProductosListComponent implements OnInit {
   authS = inject(AuthService);

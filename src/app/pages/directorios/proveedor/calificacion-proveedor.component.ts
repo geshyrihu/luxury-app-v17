@@ -7,10 +7,9 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
-  selector: 'app-calificacion-proveedor',
-  templateUrl: './calificacion-proveedor.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, RatingModule],
+    selector: 'app-calificacion-proveedor',
+    templateUrl: './calificacion-proveedor.component.html',
+    imports: [LuxuryAppComponentsModule, RatingModule]
 })
 export default class CalificacionProveedorComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

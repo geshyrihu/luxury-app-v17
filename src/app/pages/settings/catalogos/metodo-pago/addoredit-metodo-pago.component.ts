@@ -8,10 +8,9 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-addoredit-metodo-pago',
-  templateUrl: './addoredit-metodo-pago.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
+    selector: 'app-addoredit-metodo-pago',
+    templateUrl: './addoredit-metodo-pago.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule]
 })
 export default class AddoreditMetodoPagoComponent implements OnInit {
   authS = inject(AuthService);

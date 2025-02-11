@@ -10,11 +10,10 @@ import { EnumSelectService } from 'src/app/core/services/enum-select.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-addoredit-inventario-extintor',
-  templateUrl: './addoredit-inventario-extintor.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
-  providers: [EnumSelectService],
+    selector: 'app-addoredit-inventario-extintor',
+    templateUrl: './addoredit-inventario-extintor.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule],
+    providers: [EnumSelectService]
 })
 export default class AddoreditInventarioExtintorComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

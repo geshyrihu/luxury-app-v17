@@ -8,11 +8,10 @@ import { EnumSelectService } from 'src/app/core/services/enum-select.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-add-or-edit-application-user',
-  templateUrl: './add-or-edit-application-user.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
-  providers: [EnumSelectService],
+    selector: 'app-add-or-edit-application-user',
+    templateUrl: './add-or-edit-application-user.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule],
+    providers: [EnumSelectService]
 })
 export default class AddOrEditApplicationUserComponent implements OnInit {
   formB = inject(FormBuilder);

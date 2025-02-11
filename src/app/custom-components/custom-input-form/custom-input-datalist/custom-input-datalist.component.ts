@@ -16,17 +16,16 @@ import { ISelectItem } from 'src/app/core/interfaces/select-Item.interface';
 import ValidationErrorsCustomInputComponent from '../validation-errors-custom-input/validation-errors-custom-input.component';
 
 @Component({
-  selector: 'custom-input-datalist',
-  standalone: true,
-  templateUrl: './custom-input-datalist.component.html',
-  imports: [CommonModule, ValidationErrorsCustomInputComponent],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => CustomInputDatalistComponent),
-      multi: true,
-    },
-  ],
+    selector: 'custom-input-datalist',
+    templateUrl: './custom-input-datalist.component.html',
+    imports: [CommonModule, ValidationErrorsCustomInputComponent],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => CustomInputDatalistComponent),
+            multi: true,
+        },
+    ]
 })
 export default class CustomInputDatalistComponent
   implements ControlValueAccessor, OnInit

@@ -11,10 +11,9 @@ import { FilterRequestsService } from 'src/app/core/services/filter-requests.ser
 import CBtnModule from 'src/app/custom-components/custom-buttons/btn.module';
 
 @Component({
-  selector: 'app-filter-requests',
-  templateUrl: './filter-requests.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CBtnModule],
+    selector: 'app-filter-requests',
+    templateUrl: './filter-requests.component.html',
+    imports: [LuxuryAppComponentsModule, CBtnModule]
 })
 export default class FilterRequestsComponent {
   apiRequestS = inject(ApiRequestService);

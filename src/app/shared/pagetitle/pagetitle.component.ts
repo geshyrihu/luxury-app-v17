@@ -3,10 +3,9 @@ import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-pagetitle',
-  standalone: true,
-  imports: [],
-  templateUrl: './pagetitle.component.html',
+    selector: 'app-pagetitle',
+    imports: [],
+    templateUrl: './pagetitle.component.html'
 })
 export default class PagetitleComponent implements OnInit {
   @Input() title: string | undefined;

@@ -6,10 +6,9 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { TicketGroupService } from '../../ticket.service';
 
 @Component({
-  selector: 'app-ticket-message-report-work-plan-preview',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
-  templateUrl: './ticket-message-report-work-plan-preview.component.html',
+    selector: 'app-ticket-message-report-work-plan-preview',
+    imports: [LuxuryAppComponentsModule],
+    templateUrl: './ticket-message-report-work-plan-preview.component.html'
 })
 export default class TicketMessageReportWorkPlanPreviewComponent {
   apiRequestS = inject(ApiRequestService);

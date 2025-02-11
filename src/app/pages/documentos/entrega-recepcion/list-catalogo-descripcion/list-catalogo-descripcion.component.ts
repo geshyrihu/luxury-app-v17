@@ -6,10 +6,9 @@ import { DialogHandlerService } from 'src/app/core/services/dialog-handler.servi
 import AddOrEditCatalogoDescripcionComponent from 'src/app/pages/settings/catalogos/entrega-recepcion/addoredit-catalogo-descripcion/addoredit-catalogo-descripcion.component';
 
 @Component({
-  selector: 'app-list-catalogo-descripcion',
-  templateUrl: './list-catalogo-descripcion.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-list-catalogo-descripcion',
+    templateUrl: './list-catalogo-descripcion.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class ListCatalogoDescripcionComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

@@ -9,10 +9,9 @@ import { DialogHandlerService } from 'src/app/core/services/dialog-handler.servi
 import EstadoFinancieroAddFileComponent from './estado-financiero-add-file.component';
 
 @Component({
-  selector: 'app-estado-financiero-list',
-  templateUrl: './estado-financiero-list.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-estado-financiero-list',
+    templateUrl: './estado-financiero-list.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class EstadoFinancieroListComponent implements OnInit {
   private authS = inject(AuthService);

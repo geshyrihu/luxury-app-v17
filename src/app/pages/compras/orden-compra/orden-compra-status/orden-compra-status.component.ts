@@ -6,10 +6,9 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-orden-compra-status',
-  templateUrl: './orden-compra-status.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
+    selector: 'app-orden-compra-status',
+    templateUrl: './orden-compra-status.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule]
 })
 export default class OrdenCompraStatusComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

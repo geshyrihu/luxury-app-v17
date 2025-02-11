@@ -5,10 +5,9 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 
 @Component({
-  selector: 'app-module-app-rol-update',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
-  templateUrl: './module-app-rol-update.component.html',
+    selector: 'app-module-app-rol-update',
+    imports: [LuxuryAppComponentsModule],
+    templateUrl: './module-app-rol-update.component.html'
 })
 export default class ModuleAppRolUpdateComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

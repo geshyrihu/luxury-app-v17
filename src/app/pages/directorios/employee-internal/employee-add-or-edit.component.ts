@@ -16,22 +16,21 @@ import EmployeePermissionAppComponent from './employee-permission-app.component'
 import EmployeeReclutamientoComponent from './employee-reclutamiento.component';
 
 @Component({
-  selector: 'app-employee-add-or-edit',
-  templateUrl: './employee-add-or-edit.component.html',
-  standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    CustomInputModule,
-    EmployeeAddOrEditAdreessComponent,
-    EmployeeAddOrEditAvatarComponent,
-    EmployeeAddOrEditLaboralDataComponent,
-    EmployeeAddOrEditPersonalDataComponent,
-    EmployeeAddOrEditPrincipalDataComponent,
-    EmployeeEmergencyContactListComponent,
-    EmployeeGenerateUserNameAppComponent,
-    EmployeeReclutamientoComponent,
-    EmployeePermissionAppComponent,
-  ],
+    selector: 'app-employee-add-or-edit',
+    templateUrl: './employee-add-or-edit.component.html',
+    imports: [
+        LuxuryAppComponentsModule,
+        CustomInputModule,
+        EmployeeAddOrEditAdreessComponent,
+        EmployeeAddOrEditAvatarComponent,
+        EmployeeAddOrEditLaboralDataComponent,
+        EmployeeAddOrEditPersonalDataComponent,
+        EmployeeAddOrEditPrincipalDataComponent,
+        EmployeeEmergencyContactListComponent,
+        EmployeeGenerateUserNameAppComponent,
+        EmployeeReclutamientoComponent,
+        EmployeePermissionAppComponent,
+    ]
 })
 export default class EmployeeAddOrEditComponent implements OnInit {
   employeeAddOrEditService = inject(EmployeeAddOrEditService);

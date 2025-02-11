@@ -8,10 +8,9 @@ import { FiltroCalendarService } from 'src/app/core/services/filtro-calendar.ser
 import ResultadoGeneralEvaluacionAreasDetalleComponent from './resultado-general-evaluacion-areas-detalle.component';
 
 @Component({
-  selector: 'app-evaluacion-areas',
-  templateUrl: './resultado-general-evaluacion-areas.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-evaluacion-areas',
+    templateUrl: './resultado-general-evaluacion-areas.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class EvaluacionAreasComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

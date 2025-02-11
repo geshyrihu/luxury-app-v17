@@ -6,10 +6,9 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-form-upload-img',
-  templateUrl: './form-upload-img.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, FileUploadModule],
+    selector: 'app-form-upload-img',
+    templateUrl: './form-upload-img.component.html',
+    imports: [LuxuryAppComponentsModule, FileUploadModule]
 })
 export default class FormUploadImgComponent {
   ref = inject(DynamicDialogRef);

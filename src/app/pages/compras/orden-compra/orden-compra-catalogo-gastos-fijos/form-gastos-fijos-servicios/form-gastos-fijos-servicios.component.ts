@@ -5,10 +5,9 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { CatalogoGastosFijosService } from 'src/app/core/services/catalogo-gastos-fijos.service';
 
 @Component({
-  selector: 'app-form-gastos-fijos-servicios',
-  templateUrl: './form-gastos-fijos-servicios.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-form-gastos-fijos-servicios',
+    templateUrl: './form-gastos-fijos-servicios.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class FormGastosFijosServiciosComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

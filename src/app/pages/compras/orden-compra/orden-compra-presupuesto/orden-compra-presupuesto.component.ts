@@ -9,10 +9,9 @@ import { OrdenCompraService } from 'src/app/core/services/orden-compra.service';
 const fechaActual = new Date();
 
 @Component({
-  selector: 'app-orden-compra-presupuesto',
-  templateUrl: './orden-compra-presupuesto.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-orden-compra-presupuesto',
+    templateUrl: './orden-compra-presupuesto.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class OrdenCompraPresupuestoComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

@@ -4,10 +4,9 @@ import { RouterModule } from '@angular/router';
 import { DialogModule } from 'primeng/dialog';
 import { IMenuItem, ISubMenuItem } from 'src/app/layouts/sidebar/menu.model';
 @Component({
-  selector: 'app-home-menu',
-  standalone: true,
-  imports: [CommonModule, RouterModule, DialogModule],
-  templateUrl: './home-menu.component.html',
+    selector: 'app-home-menu',
+    imports: [CommonModule, RouterModule, DialogModule],
+    templateUrl: './home-menu.component.html'
 })
 export default class HomeMenuComponent {
   @Input() menuItems: ISubMenuItem[] = [];

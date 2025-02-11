@@ -11,10 +11,9 @@ import FilterRequestsComponent from '../filter-requests.component';
 import AddoreditSolicitudBajaComponent from './addoredit-solicitud-baja.component';
 
 @Component({
-  selector: 'app-list-solicitud-baja',
-  templateUrl: './list-solicitud-baja.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, FilterRequestsComponent],
+    selector: 'app-list-solicitud-baja',
+    templateUrl: './list-solicitud-baja.component.html',
+    imports: [LuxuryAppComponentsModule, FilterRequestsComponent]
 })
 export default class ListSolicitudBajaComponent implements OnInit {
   authS = inject(AuthService);

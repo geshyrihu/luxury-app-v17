@@ -10,11 +10,10 @@ import { EnumSelectService } from 'src/app/core/services/enum-select.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-condominos-addoredit',
-  templateUrl: './condominos-addoredit.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
-  providers: [EnumSelectService],
+    selector: 'app-condominos-addoredit',
+    templateUrl: './condominos-addoredit.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule],
+    providers: [EnumSelectService]
 })
 export default class CondominosAddOrEditComponent implements OnInit {
   enumSelectS = inject(EnumSelectService);

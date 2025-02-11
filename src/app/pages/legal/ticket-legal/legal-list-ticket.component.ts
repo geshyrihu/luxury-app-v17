@@ -13,10 +13,9 @@ import TicketTrakingRequestDetailComponent from './ticket-traking-request-detail
 import TicketTrakingComponent from './ticket-traking.component';
 
 @Component({
-  selector: 'app-legal-list-ticket',
-  templateUrl: './legal-list-ticket.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-legal-list-ticket',
+    templateUrl: './legal-list-ticket.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class LegalListTicketComponent implements OnInit {
   private dialogHandlerS = inject(DialogHandlerService);

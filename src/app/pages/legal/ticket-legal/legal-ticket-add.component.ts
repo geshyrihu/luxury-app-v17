@@ -11,10 +11,9 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 import { ISelectItem } from '../../../core/interfaces/select-Item.interface';
 
 @Component({
-  selector: 'app-legal-ticket-add-or-edit',
-  templateUrl: './legal-ticket-add.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule, FlatpickrModule],
+    selector: 'app-legal-ticket-add-or-edit',
+    templateUrl: './legal-ticket-add.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule, FlatpickrModule]
 })
 export default class LegalTicketAddComponent implements OnInit {
   customerIdS = inject(CustomerIdService);

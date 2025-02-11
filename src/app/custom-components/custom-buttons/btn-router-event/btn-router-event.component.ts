@@ -3,10 +3,9 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: 'btn-router-event',
-  templateUrl: './btn-router-event.component.html',
-  standalone: true,
-  imports: [CommonModule, NgbTooltipModule],
+    selector: 'btn-router-event',
+    templateUrl: './btn-router-event.component.html',
+    imports: [CommonModule, NgbTooltipModule]
 })
 export default class BtnRouterEventComponent {
   @Input() route: string = ''; // Recibe la ruta como entrada

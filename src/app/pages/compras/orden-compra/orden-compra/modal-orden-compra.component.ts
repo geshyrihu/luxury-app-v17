@@ -9,10 +9,9 @@ import { DateService } from 'src/app/core/services/date.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-modal-orden-compra',
-  templateUrl: './modal-orden-compra.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
+    selector: 'app-modal-orden-compra',
+    templateUrl: './modal-orden-compra.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule]
 })
 export default class ModalOrdenCompraComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

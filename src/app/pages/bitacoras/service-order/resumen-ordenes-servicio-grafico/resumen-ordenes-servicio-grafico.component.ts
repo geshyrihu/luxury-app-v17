@@ -4,10 +4,9 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { ReporteOrdenesServicioService } from 'src/app/core/services/reporte-ordenes-servicio.service';
 
 @Component({
-  selector: 'app-resumen-ordenes-servicio-grafico',
-  templateUrl: './resumen-ordenes-servicio-grafico.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, NgxChartsModule],
+    selector: 'app-resumen-ordenes-servicio-grafico',
+    templateUrl: './resumen-ordenes-servicio-grafico.component.html',
+    imports: [LuxuryAppComponentsModule, NgxChartsModule]
 })
 export default class ResumenOrdenesServicioGraficoComponent {
   public reporteOrdenesServicioService = inject(ReporteOrdenesServicioService);

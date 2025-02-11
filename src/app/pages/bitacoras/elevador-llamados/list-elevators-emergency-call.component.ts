@@ -8,10 +8,9 @@ import { DialogHandlerService } from 'src/app/core/services/dialog-handler.servi
 import AddOrEditElevatorsEmergencyCallComponent from './add-or-edit-elevators-emergency-call.component';
 
 @Component({
-  selector: 'app-list-elevators-emergency-call',
-  templateUrl: './list-elevators-emergency-call.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-list-elevators-emergency-call',
+    templateUrl: './list-elevators-emergency-call.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class ListElevatorsEmergencyCallComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

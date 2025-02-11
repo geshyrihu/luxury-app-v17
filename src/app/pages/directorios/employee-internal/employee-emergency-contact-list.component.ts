@@ -7,10 +7,9 @@ import { EmployeeAddOrEditService } from './employee-add-or-edit.service';
 import EmployeeEmergencyContactAddOrEditComponent from './employee-emergency-contact-add-or-edit.component';
 
 @Component({
-  selector: 'employee-emergency-contact-list',
-  templateUrl: './employee-emergency-contact-list.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'employee-emergency-contact-list',
+    templateUrl: './employee-emergency-contact-list.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class EmployeeEmergencyContactListComponent implements OnInit {
   employeeAddOrEditService = inject(EmployeeAddOrEditService);

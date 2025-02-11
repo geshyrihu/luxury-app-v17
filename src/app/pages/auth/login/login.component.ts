@@ -12,10 +12,9 @@ import { SecurityService } from 'src/app/core/services/security.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 import Swal from 'sweetalert2';
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
+    selector: 'app-login',
+    templateUrl: './login.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule]
 })
 export default class LoginComponent implements OnInit {
   activateRoute = inject(ActivatedRoute);

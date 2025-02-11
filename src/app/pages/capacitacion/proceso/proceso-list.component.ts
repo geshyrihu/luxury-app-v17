@@ -7,10 +7,9 @@ import { DialogHandlerService } from 'src/app/core/services/dialog-handler.servi
 import ProcesoAddOrEditComponent from './proceso-addoredit.component';
 
 @Component({
-  selector: 'app-proceso-list',
-  templateUrl: './proceso-list.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-proceso-list',
+    templateUrl: './proceso-list.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class ProcesoListComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

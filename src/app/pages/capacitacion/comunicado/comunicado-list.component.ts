@@ -7,10 +7,9 @@ import { DialogHandlerService } from 'src/app/core/services/dialog-handler.servi
 import ComunicadoAddOrEditComponent from './comunicado-addoredit.component';
 
 @Component({
-  selector: 'app-comunicado-list',
-  templateUrl: './comunicado-list.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-comunicado-list',
+    templateUrl: './comunicado-list.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class ComunicadoListComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

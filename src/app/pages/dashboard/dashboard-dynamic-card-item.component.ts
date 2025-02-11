@@ -2,10 +2,9 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 
 @Component({
-  selector: 'app-dashboard-dynamic-card-item',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
-  templateUrl: './dashboard-dynamic-card-item.component.html',
+    selector: 'app-dashboard-dynamic-card-item',
+    imports: [LuxuryAppComponentsModule],
+    templateUrl: './dashboard-dynamic-card-item.component.html'
 })
 export default class DashboardDynamicCardItemComponent {
   // Propiedades de entrada para el componente

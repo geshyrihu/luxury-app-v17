@@ -7,10 +7,9 @@ import { DateService } from 'src/app/core/services/date.service';
 import { PeriodoMonthService } from 'src/app/core/services/periodo-month.service';
 
 @Component({
-  selector: 'app-resultado-general-dashboard',
-  templateUrl: './resultado-general-dashboard.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, MultiSelectModule],
+    selector: 'app-resultado-general-dashboard',
+    templateUrl: './resultado-general-dashboard.component.html',
+    imports: [LuxuryAppComponentsModule, MultiSelectModule]
 })
 export default class ResultadoGeneralDashboardComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

@@ -9,10 +9,9 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-addoredit-inventario-pintura',
-  templateUrl: './addoredit-inventario-pintura.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
+    selector: 'app-addoredit-inventario-pintura',
+    templateUrl: './addoredit-inventario-pintura.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule]
 })
 export default class AddoreditInventarioPinturaComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

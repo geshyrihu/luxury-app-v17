@@ -9,10 +9,9 @@ import { PeriodoMonthService } from 'src/app/core/services/periodo-month.service
 import PagetitleReportComponent from 'src/app/shared/cabeceras/pagetitlereport/pagetitlereport.component';
 
 @Component({
-  selector: 'app-report-solicitud-compra',
-  templateUrl: './report-solicitud-compra.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, PagetitleReportComponent],
+    selector: 'app-report-solicitud-compra',
+    templateUrl: './report-solicitud-compra.component.html',
+    imports: [LuxuryAppComponentsModule, PagetitleReportComponent]
 })
 export default class ReportSolicitudCompraComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

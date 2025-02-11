@@ -5,10 +5,9 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 
 @Component({
-  selector: 'app-mantenimientos-programados',
-  templateUrl: './mantenimientos-programados.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-mantenimientos-programados',
+    templateUrl: './mantenimientos-programados.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class MantenimientosProgramadosComponent implements OnInit {
   customerIdS = inject(CustomerIdService);

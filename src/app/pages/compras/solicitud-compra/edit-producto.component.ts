@@ -9,13 +9,12 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 import ValidationErrorsCustomInputComponent from 'src/app/custom-components/custom-input-form/validation-errors-custom-input/validation-errors-custom-input.component';
 
 @Component({
-  templateUrl: './edit-producto.component.html',
-  standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    CustomInputModule,
-    ValidationErrorsCustomInputComponent,
-  ],
+    templateUrl: './edit-producto.component.html',
+    imports: [
+        LuxuryAppComponentsModule,
+        CustomInputModule,
+        ValidationErrorsCustomInputComponent,
+    ]
 })
 export default class EditProductoComponent implements OnInit {
   formB = inject(FormBuilder);

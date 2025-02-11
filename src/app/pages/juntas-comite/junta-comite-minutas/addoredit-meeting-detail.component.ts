@@ -6,10 +6,9 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { DateService } from 'src/app/core/services/date.service';
 
 @Component({
-  selector: 'app-addoredit-meeting-detail',
-  templateUrl: './addoredit-meeting-detail.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, EAreaMinutasDetallesPipe],
+    selector: 'app-addoredit-meeting-detail',
+    templateUrl: './addoredit-meeting-detail.component.html',
+    imports: [LuxuryAppComponentsModule, EAreaMinutasDetallesPipe]
 })
 export default class AddOrEditMeetingDetailComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

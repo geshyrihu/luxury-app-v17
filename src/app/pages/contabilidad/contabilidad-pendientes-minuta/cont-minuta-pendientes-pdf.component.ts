@@ -3,10 +3,9 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 
 @Component({
-  selector: 'app-cont-minuta-pendientes-pdf',
-  templateUrl: './cont-minuta-pendientes-pdf.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-cont-minuta-pendientes-pdf',
+    templateUrl: './cont-minuta-pendientes-pdf.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class ConMinutaPendientesPdfComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

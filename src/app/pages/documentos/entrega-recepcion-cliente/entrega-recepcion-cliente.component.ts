@@ -10,10 +10,9 @@ import { DialogHandlerService } from 'src/app/core/services/dialog-handler.servi
 import CrudEntregaRecepcionClienteComponent from 'src/app/pages/settings/catalogos/entrega-recepcion/addoredit-entrega-recepcion-cliente/addoredit-entrega-recepcion-cliente.component';
 
 @Component({
-  selector: 'app-entrega-recepcion-cliente',
-  templateUrl: './entrega-recepcion-cliente.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-entrega-recepcion-cliente',
+    templateUrl: './entrega-recepcion-cliente.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class EntregaRecepcionClienteComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

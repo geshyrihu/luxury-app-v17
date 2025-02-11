@@ -8,10 +8,9 @@ import { SignalRService } from 'src/app/core/services/signal-r.service';
 import { TicketGroupService } from 'src/app/pages/tickets/ticket.service';
 
 @Component({
-  selector: 'app-home-notification',
-  standalone: true,
-  imports: [SimplebarAngularModule, LuxuryAppComponentsModule],
-  templateUrl: './home-notification.component.html',
+    selector: 'app-home-notification',
+    imports: [SimplebarAngularModule, LuxuryAppComponentsModule],
+    templateUrl: './home-notification.component.html'
 })
 export default class HomeNotificationComponent implements OnInit, OnDestroy {
   apiRequestS = inject(ApiRequestService);

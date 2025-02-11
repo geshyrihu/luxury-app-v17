@@ -7,10 +7,9 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 import MyInspectionAddImagesComponent from '../my-inspection-add-images/my-inspection-add-images.component';
 @Component({
-  selector: 'app-my-inspection-ejecutar',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
-  templateUrl: './my-inspection-ejecutar.component.html',
+    selector: 'app-my-inspection-ejecutar',
+    imports: [LuxuryAppComponentsModule],
+    templateUrl: './my-inspection-ejecutar.component.html'
 })
 export default class MyInspectionEjecutarComponent implements OnInit {
   activatedRoute = inject(ActivatedRoute);

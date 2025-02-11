@@ -7,10 +7,9 @@ import { DialogHandlerService } from 'src/app/core/services/dialog-handler.servi
 import FichaTecnicaActivoComponent from '../inventarios/machineries/ficha-tecnica-activo.component';
 
 @Component({
-  selector: 'app-mi-edificio',
-  templateUrl: './mi-edificio.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-mi-edificio',
+    templateUrl: './mi-edificio.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class MiEdificioComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

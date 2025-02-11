@@ -7,10 +7,9 @@ import { ReportService } from 'src/app/core/services/report.service';
 import ResumenMinutaGraficoComponent from './resumen-minuta-grafico.component';
 
 @Component({
-  selector: 'app-resumen-minuta',
-  templateUrl: './resumen-minuta.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, ResumenMinutaGraficoComponent],
+    selector: 'app-resumen-minuta',
+    templateUrl: './resumen-minuta.component.html',
+    imports: [LuxuryAppComponentsModule, ResumenMinutaGraficoComponent]
 })
 export default class ResumenMinutaComponent implements OnInit {
   reportService = inject(ReportService);

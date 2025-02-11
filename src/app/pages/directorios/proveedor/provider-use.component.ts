@@ -4,10 +4,9 @@ import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 
 @Component({
-  selector: 'app-provider-use',
-  templateUrl: './provider-use.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-provider-use',
+    templateUrl: './provider-use.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class ProviderUseComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

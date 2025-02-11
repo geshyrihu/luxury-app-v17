@@ -6,10 +6,9 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-inspection-reviews-catalog-addoredit',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
-  templateUrl: './inspection-reviews-catalog-addoredit.component.html',
+    selector: 'app-inspection-reviews-catalog-addoredit',
+    imports: [LuxuryAppComponentsModule, CustomInputModule],
+    templateUrl: './inspection-reviews-catalog-addoredit.component.html'
 })
 export default class InspectionReviewsCatalogAddoreditComponent
   implements OnInit

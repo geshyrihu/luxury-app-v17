@@ -13,10 +13,9 @@ import ModalOrdenCompraGrastosFijosComponent from '../modal-orden-compra-gastos-
 const date = new Date();
 
 @Component({
-  selector: 'app-catalogo-gastos-fijos',
-  templateUrl: './catalogo-gastos-fijos.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-catalogo-gastos-fijos',
+    templateUrl: './catalogo-gastos-fijos.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class CatalogoGastosFijosComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

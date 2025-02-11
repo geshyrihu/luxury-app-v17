@@ -5,10 +5,9 @@ import { DialogHandlerService } from 'src/app/core/services/dialog-handler.servi
 import AddOrEditAreaResponsableComponent from './addoredit-area-responsable.component';
 
 @Component({
-  selector: 'app-list-area-responsable',
-  templateUrl: './list-area-responsable.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-list-area-responsable',
+    templateUrl: './list-area-responsable.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class ListAreaResponsableComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

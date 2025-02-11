@@ -5,10 +5,9 @@ import { Observable, Subject } from 'rxjs';
 import { FiltroCalendarService } from 'src/app/core/services/filtro-calendar.service';
 
 @Component({
-  selector: 'app-mesanio',
-  templateUrl: './mesanio.component.html',
-  standalone: true,
-  imports: [FormsModule, NgbTooltip],
+    selector: 'app-mesanio',
+    templateUrl: './mesanio.component.html',
+    imports: [FormsModule, NgbTooltip]
 })
 export default class MesanioComponent implements OnInit {
   @Output() periodoEmit = new EventEmitter<string>();

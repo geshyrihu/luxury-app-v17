@@ -3,10 +3,9 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 
 @Component({
-  selector: 'app-legal-reports-pending',
-  templateUrl: './legal-reports-pending.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-legal-reports-pending',
+    templateUrl: './legal-reports-pending.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class LegalReportsPendingComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

@@ -17,11 +17,10 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 import { EnumSelectService } from '../../../core/services/enum-select.service';
 
 @Component({
-  selector: 'app-solicitud-modificacion-salario',
-  templateUrl: './solicitud-modificacion-salario.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule, FileUploadModule],
-  providers: [EnumSelectService],
+    selector: 'app-solicitud-modificacion-salario',
+    templateUrl: './solicitud-modificacion-salario.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule, FileUploadModule],
+    providers: [EnumSelectService]
 })
 export default class SolicitudModificacionSalarioComponent {
   apiRequestS = inject(ApiRequestService);

@@ -7,16 +7,15 @@ import FormGastosFijosPresupuestoComponent from '../form-gastos-fijos-presupuest
 import FormGastosFijosServiciosComponent from '../form-gastos-fijos-servicios/form-gastos-fijos-servicios.component';
 
 @Component({
-  selector: 'app-modal-orden-compra-grastos-fijos',
-  templateUrl: './modal-orden-compra-grastos-fijos.component.html',
-  standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    NgbNavModule,
-    FormCatalogoGastosFijosComponent,
-    FormGastosFijosServiciosComponent,
-    FormGastosFijosPresupuestoComponent,
-  ],
+    selector: 'app-modal-orden-compra-grastos-fijos',
+    templateUrl: './modal-orden-compra-grastos-fijos.component.html',
+    imports: [
+        LuxuryAppComponentsModule,
+        NgbNavModule,
+        FormCatalogoGastosFijosComponent,
+        FormGastosFijosServiciosComponent,
+        FormGastosFijosPresupuestoComponent,
+    ]
 })
 export default class ModalOrdenCompraGrastosFijosComponent {
   public catalogoGastosFijosService = inject(CatalogoGastosFijosService);

@@ -7,10 +7,9 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-presupuesto-edit-partida',
-  templateUrl: './presupuesto-edit-partida.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
+    selector: 'app-presupuesto-edit-partida',
+    templateUrl: './presupuesto-edit-partida.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule]
 })
 export default class PresupuestoEditPartidaComponent implements OnInit {
   formB = inject(FormBuilder);

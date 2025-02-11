@@ -12,10 +12,9 @@ import MaintenancePreventiveAddoreditComponent from '../mantenimiento-preventivo
 const date = new Date();
 
 @Component({
-  selector: 'app-listado-anual-mantenimiento',
-  templateUrl: './listado-anual-mantenimiento.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CurrencyMexicoPipe],
+    selector: 'app-listado-anual-mantenimiento',
+    templateUrl: './listado-anual-mantenimiento.component.html',
+    imports: [LuxuryAppComponentsModule, CurrencyMexicoPipe]
 })
 export default class ListadoAnualMantenimientoComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

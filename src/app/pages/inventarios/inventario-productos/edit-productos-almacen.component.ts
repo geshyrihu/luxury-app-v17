@@ -8,10 +8,9 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-edit-productos-almacen',
-  templateUrl: './edit-productos-almacen.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
+    selector: 'app-edit-productos-almacen',
+    templateUrl: './edit-productos-almacen.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule]
 })
 export default class EditProductosAlmacenComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

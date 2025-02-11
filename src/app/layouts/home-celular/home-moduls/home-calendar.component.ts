@@ -4,10 +4,9 @@ import { IMenuItem } from '../../sidebar/menu.model';
 import HomeMenuComponent from '../home-menu/home-menu.component';
 
 @Component({
-  selector: 'app-home-calendar',
-  standalone: true,
-  imports: [HomeMenuComponent],
-  templateUrl: './home-calendar.component.html',
+    selector: 'app-home-calendar',
+    imports: [HomeMenuComponent],
+    templateUrl: './home-calendar.component.html'
 })
 export default class HomeCalendarComponent {
   authS = inject(AuthService);

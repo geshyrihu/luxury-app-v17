@@ -13,11 +13,9 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-add-or-edit-customer-provider',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule, ReactiveFormsModule],
-
-  templateUrl: './addoredit-customer-provider.component.html',
+    selector: 'app-add-or-edit-customer-provider',
+    imports: [LuxuryAppComponentsModule, CustomInputModule, ReactiveFormsModule],
+    templateUrl: './addoredit-customer-provider.component.html'
 })
 export default class AddOrEditCustomerProviderComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

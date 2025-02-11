@@ -1,10 +1,9 @@
 import { Component, EventEmitter, Output } from "@angular/core";
 
 @Component({
-  selector: "app-ticket-report-actions",
-  templateUrl: "./ticket-report-actions.component.html",
-  standalone: true,
-  imports: [],
+    selector: "app-ticket-report-actions",
+    templateUrl: "./ticket-report-actions.component.html",
+    imports: []
 })
 export default class TicketReportActionsComponent {
   @Output() previewClicked = new EventEmitter<void>();

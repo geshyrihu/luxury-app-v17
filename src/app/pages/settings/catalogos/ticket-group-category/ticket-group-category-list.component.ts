@@ -6,10 +6,9 @@ import { DialogHandlerService } from 'src/app/core/services/dialog-handler.servi
 import TicketGroupCategoryAddOrEditComponent from './ticket-group-category-add-or-edit.component';
 
 @Component({
-  selector: 'app-ticket-group-category-list',
-  templateUrl: './ticket-group-category-list.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-ticket-group-category-list',
+    templateUrl: './ticket-group-category-list.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class TicketGroupCategoryListComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

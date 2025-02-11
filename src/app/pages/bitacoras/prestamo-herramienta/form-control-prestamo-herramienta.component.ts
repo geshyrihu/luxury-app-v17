@@ -9,10 +9,9 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-form-control-prestamo-herramienta',
-  templateUrl: './form-control-prestamo-herramienta.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
+    selector: 'app-form-control-prestamo-herramienta',
+    templateUrl: './form-control-prestamo-herramienta.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule]
 })
 export default class FormControlPrestamoHerramientaComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

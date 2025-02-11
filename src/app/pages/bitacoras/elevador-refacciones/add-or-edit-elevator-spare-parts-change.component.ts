@@ -9,11 +9,10 @@ import { DateService } from 'src/app/core/services/date.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-add-or-edit-elevator-spare-parts-change',
-  templateUrl: './add-or-edit-elevator-spare-parts-change.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
-  providers: [DatePipe],
+    selector: 'app-add-or-edit-elevator-spare-parts-change',
+    templateUrl: './add-or-edit-elevator-spare-parts-change.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule],
+    providers: [DatePipe]
 })
 export default class AddOrEditElevatorSparePartsChangeComponent
   implements OnInit

@@ -9,10 +9,9 @@ import { DialogHandlerService } from 'src/app/core/services/dialog-handler.servi
 import AddoreditInventarioExtintorComponent from './addoredit-inventario-extintor.component';
 
 @Component({
-  selector: 'app-inventario-extintor',
-  templateUrl: './inventario-extintor.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, ImageModule],
+    selector: 'app-inventario-extintor',
+    templateUrl: './inventario-extintor.component.html',
+    imports: [LuxuryAppComponentsModule, ImageModule]
 })
 export default class InventarioExtintorComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

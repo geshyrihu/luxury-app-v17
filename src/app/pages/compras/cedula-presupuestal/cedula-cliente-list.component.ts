@@ -11,10 +11,9 @@ import OrdenesCompraCedulaListComponent from './ordenes-compra-cedula-list.compo
 import PeriodoCedulaPresupuestalAddoreditComponent from './periodo-cedula-addoredit.component';
 
 @Component({
-  selector: 'app-cedula-cliente-list',
-  templateUrl: './cedula-cliente-list.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-cedula-cliente-list',
+    templateUrl: './cedula-cliente-list.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class CedulaClienteListComponent implements OnInit {
   dialogHandlerS = inject(DialogHandlerService);

@@ -9,10 +9,9 @@ import { DialogHandlerService } from 'src/app/core/services/dialog-handler.servi
 import FormControlPrestamoHerramientaComponent from './form-control-prestamo-herramienta.component';
 
 @Component({
-  selector: 'app-control-prestamo-herramientas',
-  templateUrl: './control-prestamo-herramientas.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-control-prestamo-herramientas',
+    templateUrl: './control-prestamo-herramientas.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class ControlPrestamoHerramientasComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

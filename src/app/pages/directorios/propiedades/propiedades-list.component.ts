@@ -10,10 +10,9 @@ import { DialogHandlerService } from 'src/app/core/services/dialog-handler.servi
 import PropiedadesAddOrEditComponent from './propiedades-addoredit.component';
 
 @Component({
-  selector: 'app-propiedades-list',
-  templateUrl: './propiedades-list.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-propiedades-list',
+    templateUrl: './propiedades-list.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class PropiedadesListComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

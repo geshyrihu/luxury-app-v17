@@ -6,10 +6,9 @@ import { DialogHandlerService } from 'src/app/core/services/dialog-handler.servi
 import { ModuleAppAddOrEditComponent } from './module-app-add-or-edit.component';
 
 @Component({
-  selector: 'app-module-app-list',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
-  templateUrl: './module-app-list.component.html',
+    selector: 'app-module-app-list',
+    imports: [LuxuryAppComponentsModule],
+    templateUrl: './module-app-list.component.html'
 })
 export default class ModuleAppListComponent {
   apiRequestS = inject(ApiRequestService);

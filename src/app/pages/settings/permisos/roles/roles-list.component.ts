@@ -6,10 +6,9 @@ import { DialogHandlerService } from 'src/app/core/services/dialog-handler.servi
 import { RolesAddOrEditComponent } from './roles-add-or-edit.component';
 
 @Component({
-  selector: 'app-roles',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
-  templateUrl: './roles-list.component.html',
+    selector: 'app-roles',
+    imports: [LuxuryAppComponentsModule],
+    templateUrl: './roles-list.component.html'
 })
 export default class RolesListComponent {
   apiRequestS = inject(ApiRequestService);

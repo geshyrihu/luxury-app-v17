@@ -5,10 +5,9 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 
 @Component({
-  selector: 'app-instalaciones',
-  templateUrl: './instalaciones.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-instalaciones',
+    templateUrl: './instalaciones.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class InstalacionesComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

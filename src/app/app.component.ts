@@ -4,10 +4,9 @@ import { SignalRService } from './core/services/signal-r.service';
 import { UpdateService } from './core/services/update-pwa.service';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  standalone: true,
-  imports: [RouterModule],
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    imports: [RouterModule]
 })
 export class AppComponent {
   notificationPushService = inject(SignalRService);

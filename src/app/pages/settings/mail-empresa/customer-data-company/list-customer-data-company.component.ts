@@ -7,10 +7,9 @@ import { CustomerDataCompanyDto } from './CustomerDataCompanyDto';
 import AddOrEditCustomerDataCompanyComponent from './add-or-edit-customer-data-company.component';
 
 @Component({
-  selector: 'customer-data-company',
-  templateUrl: './list-customer-data-company.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'customer-data-company',
+    templateUrl: './list-customer-data-company.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class ListCustomerDataCompanyComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

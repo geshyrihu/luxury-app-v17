@@ -7,10 +7,9 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-addoredit-catalogo-descripcion',
-  templateUrl: './addoredit-catalogo-descripcion.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
+    selector: 'app-addoredit-catalogo-descripcion',
+    templateUrl: './addoredit-catalogo-descripcion.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule]
 })
 export default class AddOrEditCatalogoDescripcionComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

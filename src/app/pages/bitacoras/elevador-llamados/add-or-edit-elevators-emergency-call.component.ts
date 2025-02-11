@@ -9,11 +9,10 @@ import { DateService } from "src/app/core/services/date.service";
 import CustomInputModule from "src/app/custom-components/custom-input-form/custom-input.module";
 
 @Component({
-  selector: "app-add-or-edit-elevators-emergency-call",
-  templateUrl: "./add-or-edit-elevators-emergency-call.component.html",
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
-  providers: [DatePipe],
+    selector: "app-add-or-edit-elevators-emergency-call",
+    templateUrl: "./add-or-edit-elevators-emergency-call.component.html",
+    imports: [LuxuryAppComponentsModule, CustomInputModule],
+    providers: [DatePipe]
 })
 export default class AddOrEditElevatorsEmergencyCallComponent
   implements OnInit

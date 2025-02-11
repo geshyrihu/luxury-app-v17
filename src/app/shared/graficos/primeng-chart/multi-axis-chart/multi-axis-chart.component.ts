@@ -2,10 +2,9 @@ import { Component, Input, OnInit } from "@angular/core";
 import { ChartModule } from "primeng/chart";
 
 @Component({
-  selector: "app-multi-axis-chart",
-  templateUrl: "./multi-axis-chart.component.html",
-  standalone: true,
-  imports: [ChartModule],
+    selector: "app-multi-axis-chart",
+    templateUrl: "./multi-axis-chart.component.html",
+    imports: [ChartModule]
 })
 export default class MultiAxisChartComponent implements OnInit {
   @Input()

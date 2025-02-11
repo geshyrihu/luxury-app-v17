@@ -16,10 +16,9 @@ import OrdenesServicioReporteProveedorComponent from './ordenes-servicio-reporte
 const date = new Date();
 
 @Component({
-  selector: 'app-OrdenesServicioComponent',
-  templateUrl: './ordenes-servicio.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-OrdenesServicioComponent',
+    templateUrl: './ordenes-servicio.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class OrdenesServicioComponentComponent
   implements OnInit, OnChanges

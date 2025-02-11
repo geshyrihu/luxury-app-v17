@@ -4,10 +4,9 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 
 @Component({
-  selector: 'app-orden-compra-pdf',
-  templateUrl: './orden-compra-pdf.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-orden-compra-pdf',
+    templateUrl: './orden-compra-pdf.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class OrdenCompraPdfComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

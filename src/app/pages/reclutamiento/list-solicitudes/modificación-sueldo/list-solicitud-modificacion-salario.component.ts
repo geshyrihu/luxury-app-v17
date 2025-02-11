@@ -11,10 +11,9 @@ import FilterRequestsComponent from '../filter-requests.component';
 import AddoreditModificacionSalarioComponent from './addoredit-modificacion-salario.component';
 
 @Component({
-  selector: 'app-list-solicitud-modificacion-salario',
-  templateUrl: './list-solicitud-modificacion-salario.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, FilterRequestsComponent],
+    selector: 'app-list-solicitud-modificacion-salario',
+    templateUrl: './list-solicitud-modificacion-salario.component.html',
+    imports: [LuxuryAppComponentsModule, FilterRequestsComponent]
 })
 export default class ListSolicitudModificacionSalarioComponent
   implements OnInit

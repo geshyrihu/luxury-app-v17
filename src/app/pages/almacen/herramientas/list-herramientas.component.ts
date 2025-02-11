@@ -10,10 +10,9 @@ import { ReporteHerramientasPdfService } from 'src/app/core/services/reporte-her
 import AddoreditToolsComponent from './addoredit-herramienta.component';
 
 @Component({
-  selector: 'app-list-herramientas',
-  templateUrl: './list-herramientas.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-list-herramientas',
+    templateUrl: './list-herramientas.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class ListerramientasComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

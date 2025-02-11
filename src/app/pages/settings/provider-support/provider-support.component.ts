@@ -8,10 +8,9 @@ import { DialogHandlerService } from 'src/app/core/services/dialog-handler.servi
 import AddOrEditprovidersupportComponent from './add-or-edit-provider-support/add-or-edit-provider-support.component';
 
 @Component({
-  selector: 'app-provider-support',
-  templateUrl: './provider-support.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-provider-support',
+    templateUrl: './provider-support.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class providersupportComponent implements OnInit {
   authS = inject(AuthService);

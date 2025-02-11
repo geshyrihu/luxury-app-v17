@@ -2,10 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
-  selector: 'app-input-img',
-  templateUrl: './input-img.component.html',
-  standalone: true,
-  imports: [CommonModule],
+    selector: 'app-input-img',
+    templateUrl: './input-img.component.html',
+    imports: [CommonModule]
 })
 export default class InputImgComponent {
   @Input() urlImgCurrent: string = '';

@@ -12,10 +12,9 @@ import CreateOrdenCompraComponent from './create-orden-compra/create-orden-compr
 import OrdenCompraComponent from './orden-compra.component';
 
 @Component({
-  selector: 'app-list-orden-compra',
-  templateUrl: './list-orden-compra.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-list-orden-compra',
+    templateUrl: './list-orden-compra.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class ListOrdenCompraComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

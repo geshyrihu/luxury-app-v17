@@ -10,10 +10,9 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-recovery-password',
-  templateUrl: './recovery-password.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
+    selector: 'app-recovery-password',
+    templateUrl: './recovery-password.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule]
 })
 export default class RecoveryPasswordComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

@@ -8,11 +8,10 @@ import { EnumSelectService } from 'src/app/core/services/enum-select.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-module-app-add-or-edit',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
-  templateUrl: './module-app-add-or-edit.component.html',
-  providers: [EnumSelectService],
+    selector: 'app-module-app-add-or-edit',
+    imports: [LuxuryAppComponentsModule, CustomInputModule],
+    templateUrl: './module-app-add-or-edit.component.html',
+    providers: [EnumSelectService]
 })
 export class ModuleAppAddOrEditComponent {
   apiRequestS = inject(ApiRequestService);

@@ -8,10 +8,9 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-legal-ticket-edit',
-  templateUrl: './legal-ticket-edit.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
+    selector: 'app-legal-ticket-edit',
+    templateUrl: './legal-ticket-edit.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule]
 })
 export default class LegalTicketEditComponent implements OnInit {
   formB = inject(FormBuilder);

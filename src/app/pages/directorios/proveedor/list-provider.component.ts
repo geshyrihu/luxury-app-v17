@@ -10,10 +10,9 @@ import ProviderUseComponent from './provider-use.component';
 import TarjetaProveedorComponent from './tarjeta-proveedor.component';
 
 @Component({
-  selector: 'app-list-provider',
-  templateUrl: './list-provider.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-list-provider',
+    templateUrl: './list-provider.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class ListProviderComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

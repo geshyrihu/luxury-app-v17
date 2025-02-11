@@ -15,15 +15,14 @@ import {
 import VerticalComponent from './vertical/vertical.component';
 
 @Component({
-  selector: 'app-layout',
-  templateUrl: './layout.component.html',
-  standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    CommonModule,
-    RouterModule,
-    VerticalComponent,
-  ],
+    selector: 'app-layout',
+    templateUrl: './layout.component.html',
+    imports: [
+        LuxuryAppComponentsModule,
+        CommonModule,
+        RouterModule,
+        VerticalComponent,
+    ]
 })
 
 /**

@@ -7,11 +7,10 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DataConnectorService } from 'src/app/core/services/data.service';
 
 @Component({
-  selector: 'app-customer-selection',
-  templateUrl: './customer-selection.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, FormsModule],
-  providers: [DataConnectorService],
+    selector: 'app-customer-selection',
+    templateUrl: './customer-selection.component.html',
+    imports: [LuxuryAppComponentsModule, FormsModule],
+    providers: [DataConnectorService]
 })
 export default class CustomerSelectionComponent implements OnInit {
   authS = inject(AuthService);

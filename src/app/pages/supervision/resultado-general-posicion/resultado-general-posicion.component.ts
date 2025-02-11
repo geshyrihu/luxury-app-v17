@@ -6,10 +6,9 @@ import { DateService } from 'src/app/core/services/date.service';
 import { FiltroCalendarService } from 'src/app/core/services/filtro-calendar.service';
 
 @Component({
-  selector: 'app-resultado-general-posicion',
-  templateUrl: './resultado-general-posicion.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-resultado-general-posicion',
+    templateUrl: './resultado-general-posicion.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class ResultadoGeneralPosicionComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

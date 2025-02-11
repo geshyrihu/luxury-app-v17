@@ -11,11 +11,10 @@ import { EnumSelectService } from 'src/app/core/services/enum-select.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-maintenance-preventive-addoredit',
-  templateUrl: './maintenance-preventive-addoredit.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
-  providers: [EnumSelectService],
+    selector: 'app-maintenance-preventive-addoredit',
+    templateUrl: './maintenance-preventive-addoredit.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule],
+    providers: [EnumSelectService]
 })
 export default class MaintenancePreventiveAddoreditComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

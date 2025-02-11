@@ -10,17 +10,16 @@ import SidebarComponent from '../sidebar/sidebar.component';
 import { TopbarComponent } from '../topbar/topbar.component';
 
 @Component({
-  selector: 'app-vertical',
-  templateUrl: './vertical.component.html',
-  standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    CommonModule,
-    RouterModule,
-    SidebarComponent,
-    TopbarComponent,
-    MobileMainViewComponent,
-  ],
+    selector: 'app-vertical',
+    templateUrl: './vertical.component.html',
+    imports: [
+        LuxuryAppComponentsModule,
+        CommonModule,
+        RouterModule,
+        SidebarComponent,
+        TopbarComponent,
+        MobileMainViewComponent,
+    ]
 })
 /**
  * Vertical Component

@@ -11,14 +11,13 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 import ValidationErrorsCustomInputComponent from 'src/app/custom-components/custom-input-form/validation-errors-custom-input/validation-errors-custom-input.component';
 
 @Component({
-  selector: 'app-addoredit-service-order',
-  templateUrl: './addoredit-service-order.component.html',
-  standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    CustomInputModule,
-    ValidationErrorsCustomInputComponent,
-  ],
+    selector: 'app-addoredit-service-order',
+    templateUrl: './addoredit-service-order.component.html',
+    imports: [
+        LuxuryAppComponentsModule,
+        CustomInputModule,
+        ValidationErrorsCustomInputComponent,
+    ]
 })
 export default class ServiceOrderAddOrEditComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

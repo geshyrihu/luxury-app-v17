@@ -12,10 +12,9 @@ import PeriodoCedulaPresupuestalAddoreditComponent from 'src/app/pages/compras/c
 import PresupuestoAddComponent from './presupuesto-add.component';
 
 @Component({
-  selector: 'app-list-presupuesto',
-  templateUrl: './list-presupuesto.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-list-presupuesto',
+    templateUrl: './list-presupuesto.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class ListPresupuestoComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

@@ -7,10 +7,9 @@ import { DialogHandlerService } from 'src/app/core/services/dialog-handler.servi
 import AddoreditMetodoPagoComponent from './addoredit-metodo-pago.component';
 
 @Component({
-  selector: 'app-list-metodo-pago',
-  templateUrl: './list-metodo-pago.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-list-metodo-pago',
+    templateUrl: './list-metodo-pago.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class ListMetodoPagoComponent implements OnInit {
   dialogHandlerS = inject(DialogHandlerService);

@@ -6,10 +6,9 @@ import { DialogHandlerService } from 'src/app/core/services/dialog-handler.servi
 import AddOrEditTelefonosEmergenciaComponent from './addoredit-telefonos-emergencia.component';
 
 @Component({
-  selector: 'app-telefonos-emergencia',
-  templateUrl: './telefonos-emergencia.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-telefonos-emergencia',
+    templateUrl: './telefonos-emergencia.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class TelefonosEmergenciaComponent {
   apiRequestS = inject(ApiRequestService);

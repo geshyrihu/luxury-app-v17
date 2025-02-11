@@ -7,10 +7,9 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-addoredit-medidor-categoria',
-  templateUrl: './addoredit-medidor-categoria.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
+    selector: 'app-addoredit-medidor-categoria',
+    templateUrl: './addoredit-medidor-categoria.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule]
 })
 export default class FormMedidorCategoriaComponent implements OnInit {
   authS = inject(AuthService);

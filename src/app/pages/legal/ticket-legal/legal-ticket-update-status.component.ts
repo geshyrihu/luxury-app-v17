@@ -5,10 +5,9 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
-  selector: 'app-legal-ticket-update-status',
-  templateUrl: './legal-ticket-update-status.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-legal-ticket-update-status',
+    templateUrl: './legal-ticket-update-status.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class LegalTicketUpdateStatusComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

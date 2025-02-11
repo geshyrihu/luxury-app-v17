@@ -7,10 +7,9 @@ import { ReporteOrdenesServicioService } from 'src/app/core/services/reporte-ord
 import ResumenOrdenesServicioGraficoComponent from '../resumen-ordenes-servicio-grafico/resumen-ordenes-servicio-grafico.component';
 
 @Component({
-  selector: 'app-resumen-ordenes-servicio',
-  templateUrl: './resumen-ordenes-servicio.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, ResumenOrdenesServicioGraficoComponent],
+    selector: 'app-resumen-ordenes-servicio',
+    templateUrl: './resumen-ordenes-servicio.component.html',
+    imports: [LuxuryAppComponentsModule, ResumenOrdenesServicioGraficoComponent]
 })
 export default class ResumenOrdenesServicioComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

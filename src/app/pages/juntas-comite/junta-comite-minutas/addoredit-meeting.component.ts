@@ -15,17 +15,16 @@ import AddOrEditListAdministrationComponent from './addoredit-list-administratio
 const date = new Date();
 
 @Component({
-  selector: 'app-addoredit-meeting',
-  templateUrl: './addoredit-meeting.component.html',
-  standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    AddOrEditComiteComponent,
-    AddOrEditListAdministrationComponent,
-    AddOrEditInvitedComponent,
-    CustomInputModule,
-  ],
-  providers: [EnumSelectService],
+    selector: 'app-addoredit-meeting',
+    templateUrl: './addoredit-meeting.component.html',
+    imports: [
+        LuxuryAppComponentsModule,
+        AddOrEditComiteComponent,
+        AddOrEditListAdministrationComponent,
+        AddOrEditInvitedComponent,
+        CustomInputModule,
+    ],
+    providers: [EnumSelectService]
 })
 export default class AddOrEditMeetingComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

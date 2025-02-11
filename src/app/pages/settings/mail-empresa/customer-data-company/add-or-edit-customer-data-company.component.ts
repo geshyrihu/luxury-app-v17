@@ -7,10 +7,9 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'add-or-edit-customer-data-company',
-  templateUrl: './add-or-edit-customer-data-company.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
+    selector: 'add-or-edit-customer-data-company',
+    templateUrl: './add-or-edit-customer-data-company.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule]
 })
 export default class AddOrEditCustomerDataCompanyComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

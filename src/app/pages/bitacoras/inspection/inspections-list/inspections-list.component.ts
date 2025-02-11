@@ -8,10 +8,9 @@ import { DialogHandlerService } from 'src/app/core/services/dialog-handler.servi
 import InspectionsAddoreditComponent from '../inspections-addoredit/inspections-addoredit.component';
 
 @Component({
-  selector: 'app-inspections',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, RouterModule],
-  templateUrl: './inspections-list.component.html',
+    selector: 'app-inspections',
+    imports: [LuxuryAppComponentsModule, RouterModule],
+    templateUrl: './inspections-list.component.html'
 })
 export default class InspectionsListComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

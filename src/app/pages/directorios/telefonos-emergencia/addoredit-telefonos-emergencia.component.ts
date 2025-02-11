@@ -6,10 +6,9 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-addoredit-telefonos-emergencia',
-  templateUrl: './addoredit-telefonos-emergencia.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
+    selector: 'app-addoredit-telefonos-emergencia',
+    templateUrl: './addoredit-telefonos-emergencia.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule]
 })
 export default class AddOrEditTelefonosEmergenciaComponent {
   apiRequestS = inject(ApiRequestService);

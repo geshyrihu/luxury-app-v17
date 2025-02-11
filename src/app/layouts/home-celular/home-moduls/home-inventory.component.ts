@@ -4,10 +4,9 @@ import { IMenuItem } from '../../sidebar/menu.model';
 import HomeListGroupComponent from '../home-list-group/home-list-group.component';
 
 @Component({
-  selector: 'app-home-inventory',
-  standalone: true,
-  imports: [HomeListGroupComponent],
-  templateUrl: './home-inventory.component.html',
+    selector: 'app-home-inventory',
+    imports: [HomeListGroupComponent],
+    templateUrl: './home-inventory.component.html'
 })
 export default class HomeInventoryComponent {
   authS = inject(AuthService);

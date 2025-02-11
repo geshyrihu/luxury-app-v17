@@ -5,10 +5,9 @@ import CustomBtnComponent from 'src/app/custom-components/custom-buttons/custom-
 import TicketMessageProgramComponent from '../../messages/ticket-message-program/ticket-message-program.component';
 
 @Component({
-  selector: 'app-ticket-program-button',
-  standalone: true,
-  imports: [CommonModule, CustomBtnComponent],
-  templateUrl: './ticket-program-button.component.html',
+    selector: 'app-ticket-program-button',
+    imports: [CommonModule, CustomBtnComponent],
+    templateUrl: './ticket-program-button.component.html'
 })
 export default class TicketProgramButtonComponent {
   private dialogHandlerS = inject(DialogHandlerService);

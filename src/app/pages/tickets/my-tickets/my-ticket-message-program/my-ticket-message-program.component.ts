@@ -8,10 +8,9 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-my-ticket-message-program',
-  templateUrl: './my-ticket-message-program.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
+    selector: 'app-my-ticket-message-program',
+    templateUrl: './my-ticket-message-program.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule]
 })
 export default class MyTicketMessageProgramComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

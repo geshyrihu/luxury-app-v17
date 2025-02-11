@@ -5,10 +5,9 @@ import { IUserCard } from 'src/app/core/interfaces/user-card.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 
 @Component({
-  selector: 'app-card-employee',
-  templateUrl: './card-employee.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-card-employee',
+    templateUrl: './card-employee.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class CardEmployeeComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

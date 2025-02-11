@@ -5,10 +5,9 @@ import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 
 @Component({
-  selector: 'app-depuracion',
-  templateUrl: './depuracion.component.html',
-  imports: [LuxuryAppComponentsModule],
-  standalone: true,
+    selector: 'app-depuracion',
+    templateUrl: './depuracion.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class DepuracionComponent {
   apiRequestS = inject(ApiRequestService);

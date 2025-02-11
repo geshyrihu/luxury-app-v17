@@ -9,10 +9,9 @@ import DashboardDynamicCardItemComponent from './dashboard-dynamic-card-item.com
 import SummaryTicketsComponent from './summary-tickets.component';
 
 @Component({
-  selector: 'app-dashboard-tickets',
-  templateUrl: './dashboard-tickets.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, DashboardDynamicCardItemComponent],
+    selector: 'app-dashboard-tickets',
+    templateUrl: './dashboard-tickets.component.html',
+    imports: [LuxuryAppComponentsModule, DashboardDynamicCardItemComponent]
 })
 export default class DashboardTicketsComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

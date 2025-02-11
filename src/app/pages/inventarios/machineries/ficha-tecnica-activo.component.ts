@@ -5,10 +5,9 @@ import { IFichaTecnicaActivo } from 'src/app/core/interfaces/ficha-tecnica-activ
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 
 @Component({
-  selector: 'app-ficha-tecnica-activo',
-  templateUrl: './ficha-tecnica-activo.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-ficha-tecnica-activo',
+    templateUrl: './ficha-tecnica-activo.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class FichaTecnicaActivoComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

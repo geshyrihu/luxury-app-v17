@@ -11,10 +11,9 @@ import { OrdenCompraService } from 'src/app/core/services/orden-compra.service';
 import OrdenCompraComponent from '../orden-compra/orden-compra.component';
 
 @Component({
-  selector: 'app-orden-compra-pagadas',
-  templateUrl: './orden-compra-pagadas.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CurrencyMexicoPipe],
+    selector: 'app-orden-compra-pagadas',
+    templateUrl: './orden-compra-pagadas.component.html',
+    imports: [LuxuryAppComponentsModule, CurrencyMexicoPipe]
 })
 export default class OrdenCompraPagadasComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

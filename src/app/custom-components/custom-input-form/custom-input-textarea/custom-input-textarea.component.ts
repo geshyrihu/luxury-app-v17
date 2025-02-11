@@ -9,21 +9,20 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import ValidationErrorsCustomInputComponent from '../validation-errors-custom-input/validation-errors-custom-input.component';
 
 @Component({
-  selector: 'custom-input-text-area',
-  templateUrl: './custom-input-textarea.component.html',
-  standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    CommonModule,
-    ValidationErrorsCustomInputComponent,
-  ],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => CustomInputTextAreaComponent),
-      multi: true,
-    },
-  ],
+    selector: 'custom-input-text-area',
+    templateUrl: './custom-input-textarea.component.html',
+    imports: [
+        LuxuryAppComponentsModule,
+        CommonModule,
+        ValidationErrorsCustomInputComponent,
+    ],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => CustomInputTextAreaComponent),
+            multi: true,
+        },
+    ]
 })
 export default class CustomInputTextAreaComponent
   implements ControlValueAccessor

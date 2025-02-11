@@ -4,10 +4,9 @@ import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import CustomBtnComponent from '../custom-button-button/custom-button.component';
 
 @Component({
-  selector: 'btn-edit',
-  templateUrl: './btn-edit.component.html',
-  standalone: true,
-  imports: [NgbTooltip, CustomBtnComponent, CommonModule],
+    selector: 'btn-edit',
+    templateUrl: './btn-edit.component.html',
+    imports: [NgbTooltip, CustomBtnComponent, CommonModule]
 })
 export default class BtnEditComponent {
   @Input() placement: string = 'top';

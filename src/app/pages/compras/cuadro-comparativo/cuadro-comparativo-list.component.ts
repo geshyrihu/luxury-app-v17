@@ -9,10 +9,9 @@ import CuadroComparativoAddProveedorComponent from './cuadro-comparativo-add-pro
 import CuadroComparativoCotizacionComponent from './cuadro-comparativo-cotizacion.component';
 
 @Component({
-  selector: 'app-cuadro-comparativo-list',
-  templateUrl: './cuadro-comparativo-list.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-cuadro-comparativo-list',
+    templateUrl: './cuadro-comparativo-list.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class CuadroComparativoListComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

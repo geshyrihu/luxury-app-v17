@@ -12,10 +12,9 @@ import AddOrEditStatusRequestSalaryModificationComponent from './addoredit-statu
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 
 @Component({
-  selector: 'app-status-request-salary-modification',
-  templateUrl: './status-request-salary-modification.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-status-request-salary-modification',
+    templateUrl: './status-request-salary-modification.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class StatusRequestSalaryModificationComponent
   implements OnInit

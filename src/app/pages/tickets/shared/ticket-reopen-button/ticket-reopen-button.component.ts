@@ -5,10 +5,9 @@ import CustomBtnComponent from 'src/app/custom-components/custom-buttons/custom-
 import TicketMessageReopenComponent from '../../messages/ticket-message-reopen/ticket-message-reopen.component';
 
 @Component({
-  selector: 'app-ticket-reopen-button',
-  standalone: true,
-  imports: [CommonModule, CustomBtnComponent],
-  templateUrl: './ticket-reopen-button.component.html',
+    selector: 'app-ticket-reopen-button',
+    imports: [CommonModule, CustomBtnComponent],
+    templateUrl: './ticket-reopen-button.component.html'
 })
 export default class TicketReopenButtonComponent {
   private dialogHandlerS = inject(DialogHandlerService);

@@ -10,10 +10,9 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { ProfielServiceService } from 'src/app/core/services/profiel-service.service';
 
 @Component({
-  selector: 'app-user-profile',
-  templateUrl: './user-profile.component.html',
-  standalone: true,
-  imports: [CommonModule, RouterModule, SimplebarAngularModule, FormsModule],
+    selector: 'app-user-profile',
+    templateUrl: './user-profile.component.html',
+    imports: [CommonModule, RouterModule, SimplebarAngularModule, FormsModule]
 })
 export default class UserProfileComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

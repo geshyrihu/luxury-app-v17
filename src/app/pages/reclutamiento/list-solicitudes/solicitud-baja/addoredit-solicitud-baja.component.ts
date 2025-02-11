@@ -15,11 +15,10 @@ import { EnumSelectService } from 'src/app/core/services/enum-select.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-addoredit-solicitud-baja',
-  templateUrl: './addoredit-solicitud-baja.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
-  providers: [EnumSelectService],
+    selector: 'app-addoredit-solicitud-baja',
+    templateUrl: './addoredit-solicitud-baja.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule],
+    providers: [EnumSelectService]
 })
 export default class AddoreditSolicitudBajaComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

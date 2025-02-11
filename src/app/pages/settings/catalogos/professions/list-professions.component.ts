@@ -8,10 +8,9 @@ import AddOrEditProfessionsComponent from './addoredit-professions.component';
 import DescripcionPuestoComponent from './descripcion-puesto.component';
 
 @Component({
-  selector: 'app-professions',
-  templateUrl: './list-professions.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-professions',
+    templateUrl: './list-professions.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class ListProfessionsComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

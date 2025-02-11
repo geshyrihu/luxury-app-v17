@@ -4,10 +4,9 @@ import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 
 @Component({
-  selector: 'app-ticket-traking-request-detail',
-  templateUrl: './ticket-traking-request-detail.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-ticket-traking-request-detail',
+    templateUrl: './ticket-traking-request-detail.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class TicketTrakingRequestDetailComponent implements OnInit {
   private apiRequestS = inject(ApiRequestService);

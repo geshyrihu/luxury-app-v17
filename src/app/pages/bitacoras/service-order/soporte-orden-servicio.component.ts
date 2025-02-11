@@ -6,10 +6,9 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DateService } from 'src/app/core/services/date.service';
 
 @Component({
-  selector: 'app-soporte-orden-servicio',
-  templateUrl: './soporte-orden-servicio.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-soporte-orden-servicio',
+    templateUrl: './soporte-orden-servicio.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class SoporteOrdenServicioComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

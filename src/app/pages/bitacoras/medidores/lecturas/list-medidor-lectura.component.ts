@@ -10,10 +10,9 @@ import AdminFormMedidorLecturaComponent from './admin-form-medidor-lectura.compo
 import FormMedidorLecturaComponent from './form-medidor-lectura.component';
 
 @Component({
-  selector: 'app-list-medidor-lectura',
-  templateUrl: './list-medidor-lectura.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-list-medidor-lectura',
+    templateUrl: './list-medidor-lectura.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class ListMedidorLecturaComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

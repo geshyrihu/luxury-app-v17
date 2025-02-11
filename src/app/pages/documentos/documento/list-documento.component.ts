@@ -7,10 +7,9 @@ import { DialogHandlerService } from 'src/app/core/services/dialog-handler.servi
 import AddoreditDocumentoComponent from './addoredit-documento.component';
 
 @Component({
-  selector: 'app-list-docuento',
-  templateUrl: './list-documento.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-list-docuento',
+    templateUrl: './list-documento.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class ListDocumentoComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

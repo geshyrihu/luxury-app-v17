@@ -9,10 +9,9 @@ import { OrdenCompraService } from 'src/app/core/services/orden-compra.service';
 import OrdenCompraComponent from '../orden-compra/orden-compra/orden-compra.component';
 
 @Component({
-  selector: 'app-ordenes-compra-cedula-list',
-  templateUrl: './ordenes-compra-cedula-list.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CommonModule, NgbTooltip],
+    selector: 'app-ordenes-compra-cedula-list',
+    templateUrl: './ordenes-compra-cedula-list.component.html',
+    imports: [LuxuryAppComponentsModule, CommonModule, NgbTooltip]
 })
 export default class OrdenesCompraCedulaListComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

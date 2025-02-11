@@ -6,10 +6,9 @@ import { DialogHandlerService } from 'src/app/core/services/dialog-handler.servi
 import AddOrEditEmailDataComponent from './addoredit-email-data.component';
 
 @Component({
-  selector: 'app-list-email-data',
-  templateUrl: './list-email-data.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-list-email-data',
+    templateUrl: './list-email-data.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class ListEmailDataComponent {
   apiRequestS = inject(ApiRequestService);

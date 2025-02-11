@@ -15,10 +15,9 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { SolicitudCompraService } from 'src/app/core/services/solicitud-compra.service';
 
 @Component({
-  selector: 'app-add-product',
-  templateUrl: './add-product.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-add-product',
+    templateUrl: './add-product.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class AddProductComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

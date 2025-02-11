@@ -8,10 +8,9 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-form-medidor',
-  templateUrl: './form-medidor.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
+    selector: 'app-form-medidor',
+    templateUrl: './form-medidor.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule]
 })
 export default class FormMedidorComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

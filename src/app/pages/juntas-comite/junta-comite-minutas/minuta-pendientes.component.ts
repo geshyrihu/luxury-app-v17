@@ -5,10 +5,9 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 
 @Component({
-  selector: 'app-minuta-pendientes',
-  templateUrl: './minuta-pendientes.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-minuta-pendientes',
+    templateUrl: './minuta-pendientes.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class MinutaPendientesComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

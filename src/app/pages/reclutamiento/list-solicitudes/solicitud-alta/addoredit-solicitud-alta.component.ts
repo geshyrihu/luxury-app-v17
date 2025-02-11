@@ -9,11 +9,10 @@ import { EnumSelectService } from 'src/app/core/services/enum-select.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-addoredit-solicitud-alta',
-  templateUrl: './addoredit-solicitud-alta.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, FlatpickrModule, CustomInputModule],
-  providers: [EnumSelectService],
+    selector: 'app-addoredit-solicitud-alta',
+    templateUrl: './addoredit-solicitud-alta.component.html',
+    imports: [LuxuryAppComponentsModule, FlatpickrModule, CustomInputModule],
+    providers: [EnumSelectService]
 })
 export default class AddOrEditSolicitudAltaComponent implements OnInit {
   formB = inject(FormBuilder);

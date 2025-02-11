@@ -13,10 +13,9 @@ import { TicketGroupService } from '../../ticket.service';
 import MyTicketMessageAddEditComponent from '../my-ticket-message-addedit/my-ticket-message-add.component';
 
 @Component({
-  selector: 'app-my-requests-ticket-message',
-  templateUrl: './my-requests-ticket-message.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, TicketMessageModule],
+    selector: 'app-my-requests-ticket-message',
+    templateUrl: './my-requests-ticket-message.component.html',
+    imports: [LuxuryAppComponentsModule, TicketMessageModule]
 })
 export default class MyRequestsTicketMessageComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

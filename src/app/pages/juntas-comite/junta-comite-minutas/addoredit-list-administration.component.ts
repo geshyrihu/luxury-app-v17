@@ -4,10 +4,9 @@ import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 
 @Component({
-  selector: 'app-addoredit-list-administration',
-  templateUrl: './addoredit-list-administration.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-addoredit-list-administration',
+    templateUrl: './addoredit-list-administration.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class AddOrEditListAdministrationComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

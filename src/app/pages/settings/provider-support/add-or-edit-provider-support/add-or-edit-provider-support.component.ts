@@ -7,10 +7,9 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-add-or-edit-provider-support',
-  templateUrl: './add-or-edit-provider-support.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
+    selector: 'app-add-or-edit-provider-support',
+    templateUrl: './add-or-edit-provider-support.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule]
 })
 export default class AddOrEditProviderSupportComponent {
   private config = inject(DynamicDialogConfig);

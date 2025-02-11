@@ -12,11 +12,10 @@ import { EnumSelectService } from 'src/app/core/services/enum-select.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-addoredit-activos',
-  templateUrl: './addoredit-activos.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule, CommonModule],
-  providers: [EnumSelectService],
+    selector: 'app-addoredit-activos',
+    templateUrl: './addoredit-activos.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule, CommonModule],
+    providers: [EnumSelectService]
 })
 export default class AddOrEditActivosComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

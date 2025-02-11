@@ -14,10 +14,9 @@ import AddoreditSolicitudBajaComponent from '../list-solicitudes/solicitud-baja/
 import AddOrEditVacanteComponent from '../list-solicitudes/vacantes/addoredit-vacante.component';
 
 @Component({
-  selector: 'app-list-solicitudes-por-cliente',
-  templateUrl: './list-solicitudes-por-cliente.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-list-solicitudes-por-cliente',
+    templateUrl: './list-solicitudes-por-cliente.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class ListSolicitudesPorClienteComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

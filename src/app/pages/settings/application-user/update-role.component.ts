@@ -4,10 +4,9 @@ import { IRoles } from 'src/app/core/interfaces/roles.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 
 @Component({
-  selector: 'app-update-role',
-  templateUrl: './update-role.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-update-role',
+    templateUrl: './update-role.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class UpdateRoleComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

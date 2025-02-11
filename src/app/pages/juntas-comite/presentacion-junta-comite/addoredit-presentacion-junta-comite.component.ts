@@ -6,10 +6,9 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
-  selector: 'app-addoredit-presentacion-junta-comite',
-  templateUrl: './addoredit-presentacion-junta-comite.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-addoredit-presentacion-junta-comite',
+    templateUrl: './addoredit-presentacion-junta-comite.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class AddoreditPresentacionJuntaComiteComponent
   implements OnInit

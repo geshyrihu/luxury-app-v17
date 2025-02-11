@@ -10,10 +10,9 @@ import { CustomToastService } from 'src/app/core/services/custom-toast.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-presupuesto-edition-file',
-  templateUrl: './presupuesto-edition-file.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, FileUploadModule],
+    selector: 'app-presupuesto-edition-file',
+    templateUrl: './presupuesto-edition-file.component.html',
+    imports: [LuxuryAppComponentsModule, FileUploadModule]
 })
 export default class PresupuestoEditionFileComponent implements OnInit {
   customToastService = inject(CustomToastService);

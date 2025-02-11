@@ -7,10 +7,9 @@ import { DialogHandlerService } from 'src/app/core/services/dialog-handler.servi
 import ProductosAddOrEditComponent from 'src/app/pages/settings/catalogos/productos/productos-addoredit.component';
 
 @Component({
-  selector: 'app-orden-compra-detalle-add-producto',
-  templateUrl: './orden-compra-detalle-add-producto.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-orden-compra-detalle-add-producto',
+    templateUrl: './orden-compra-detalle-add-producto.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class OrdenCompraDetalleAddProductoComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

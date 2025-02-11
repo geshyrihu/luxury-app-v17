@@ -8,10 +8,9 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-addoredit-email-data',
-  templateUrl: './addoredit-email-data.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
+    selector: 'app-addoredit-email-data',
+    templateUrl: './addoredit-email-data.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule]
 })
 export default class AddOrEditEmailDataComponent implements OnInit {
   formB = inject(FormBuilder);

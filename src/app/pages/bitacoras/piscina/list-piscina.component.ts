@@ -10,10 +10,9 @@ import { DialogHandlerService } from 'src/app/core/services/dialog-handler.servi
 import AddOrEditPiscinaComponent from './addoredit-piscina.component';
 
 @Component({
-  selector: 'app-list-piscina',
-  templateUrl: './list-piscina.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, ImageModule],
+    selector: 'app-list-piscina',
+    templateUrl: './list-piscina.component.html',
+    imports: [LuxuryAppComponentsModule, ImageModule]
 })
 export default class ListPiscinaComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

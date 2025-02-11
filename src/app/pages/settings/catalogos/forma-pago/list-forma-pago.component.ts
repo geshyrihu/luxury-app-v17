@@ -6,10 +6,9 @@ import { DialogHandlerService } from 'src/app/core/services/dialog-handler.servi
 import AddoreditFormaPagoComponent from './addoredit-forma-pago.component';
 
 @Component({
-  selector: 'app-list-forma-pago',
-  templateUrl: './list-forma-pago.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-list-forma-pago',
+    templateUrl: './list-forma-pago.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class ListFormaPagoComponent implements OnInit {
   dialogHandlerS = inject(DialogHandlerService);

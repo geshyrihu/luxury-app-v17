@@ -7,10 +7,9 @@ import LegalMatterCategoryComponent from './legal-matter-add-or-edit.component';
 import LegalMatterCategorieAddOrEditComponent from './legal-matter-categorie-add-or-edit.component';
 
 @Component({
-  selector: 'app-legal-matter-list',
-  templateUrl: './legal-matter-list.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-legal-matter-list',
+    templateUrl: './legal-matter-list.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class LegalMatterComponent {
   apiRequestS = inject(ApiRequestService);

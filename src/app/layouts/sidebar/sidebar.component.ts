@@ -21,18 +21,16 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { IMenuItem } from './menu.model';
 
 @Component({
-  selector: 'app-sidebar',
-  templateUrl: './sidebar.component.html',
-  // styleUrls: ['./sidebar.component.css'],
-  standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    SimplebarAngularModule,
-    FormsModule,
-    RouterModule,
-    CommonModule,
-  ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'app-sidebar',
+    templateUrl: './sidebar.component.html',
+    imports: [
+        LuxuryAppComponentsModule,
+        SimplebarAngularModule,
+        FormsModule,
+        RouterModule,
+        CommonModule,
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 /**

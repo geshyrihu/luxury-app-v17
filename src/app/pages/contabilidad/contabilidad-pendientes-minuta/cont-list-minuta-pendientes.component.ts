@@ -12,10 +12,9 @@ import AddoreditMinutaDetalleComponent from '../../juntas-comite/junta-comite-mi
 import ContMinutaSeguimientosComponent from './cont-minuta-seguimientos.component';
 
 @Component({
-  selector: 'app-cont-list-minuta-pendientes',
-  templateUrl: './cont-list-minuta-pendientes.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, NgbTooltip],
+    selector: 'app-cont-list-minuta-pendientes',
+    templateUrl: './cont-list-minuta-pendientes.component.html',
+    imports: [LuxuryAppComponentsModule, NgbTooltip]
 })
 export default class ContListMinutaPendientesComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

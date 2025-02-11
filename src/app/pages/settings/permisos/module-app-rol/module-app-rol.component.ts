@@ -6,10 +6,9 @@ import { DialogHandlerService } from 'src/app/core/services/dialog-handler.servi
 import ModuleAppRolUpdateComponent from './module-app-rol-update.component';
 
 @Component({
-  selector: 'app-module-app-rol',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
-  templateUrl: './module-app-rol.component.html',
+    selector: 'app-module-app-rol',
+    imports: [LuxuryAppComponentsModule],
+    templateUrl: './module-app-rol.component.html'
 })
 export default class ModuleAppRolComponent {
   apiRequestS = inject(ApiRequestService);

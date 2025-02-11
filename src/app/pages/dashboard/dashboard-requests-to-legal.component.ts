@@ -9,10 +9,9 @@ import DashboardDynamicCardItemComponent from './dashboard-dynamic-card-item.com
 import LegalSummaryComponent from './legal-summary.component';
 
 @Component({
-  selector: 'app-dashboard-requests-to-legal',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, DashboardDynamicCardItemComponent],
-  templateUrl: './dashboard-requests-to-legal.component.html',
+    selector: 'app-dashboard-requests-to-legal',
+    imports: [LuxuryAppComponentsModule, DashboardDynamicCardItemComponent],
+    templateUrl: './dashboard-requests-to-legal.component.html'
 })
 export default class DashboardRequestsToLegalComponent {
   apiRequestS = inject(ApiRequestService);

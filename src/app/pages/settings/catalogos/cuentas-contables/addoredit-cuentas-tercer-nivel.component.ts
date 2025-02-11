@@ -9,11 +9,10 @@ import { EnumSelectService } from 'src/app/core/services/enum-select.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-addoredit-cuentas-tercer-nivel',
-  templateUrl: './addoredit-cuentas-tercer-nivel.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
-  providers: [EnumSelectService],
+    selector: 'app-addoredit-cuentas-tercer-nivel',
+    templateUrl: './addoredit-cuentas-tercer-nivel.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule],
+    providers: [EnumSelectService]
 })
 export default class AddoreditLedgerAccountsComponent implements OnInit {
   formB = inject(FormBuilder);

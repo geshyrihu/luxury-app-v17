@@ -6,10 +6,9 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
-  selector: 'app-estado-financiero-add-file',
-  templateUrl: './estado-financiero-add-file.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-estado-financiero-add-file',
+    templateUrl: './estado-financiero-add-file.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class EstadoFinancieroAddFileComponent implements OnInit {
   formB = inject(FormBuilder);

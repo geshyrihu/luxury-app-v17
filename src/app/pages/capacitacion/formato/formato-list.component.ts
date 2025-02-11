@@ -7,10 +7,9 @@ import { DialogHandlerService } from 'src/app/core/services/dialog-handler.servi
 import FormatoAddOrEditComponent from './formato-addoredit.component';
 
 @Component({
-  selector: 'app-formato-list',
-  templateUrl: './formato-list.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-formato-list',
+    templateUrl: './formato-list.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class FormatoListComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

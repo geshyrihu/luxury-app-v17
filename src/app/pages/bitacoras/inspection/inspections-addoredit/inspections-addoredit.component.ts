@@ -16,10 +16,9 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-inspections-addoredit',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
-  templateUrl: './inspections-addoredit.component.html',
+    selector: 'app-inspections-addoredit',
+    imports: [LuxuryAppComponentsModule, CustomInputModule],
+    templateUrl: './inspections-addoredit.component.html'
 })
 export default class InspectionsAddoreditComponent implements OnInit {
   fb = inject(FormBuilder);

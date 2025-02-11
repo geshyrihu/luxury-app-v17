@@ -9,10 +9,9 @@ import AddorEditMeetingSeguimientoComponent from '../juntas-comite/junta-comite-
 import AddoreditMinutaDetalleComponent from '../juntas-comite/junta-comite-minutas/addoredit-minuta-detalle.component';
 
 @Component({
-  selector: 'app-legal-pendientes-minuta',
-  templateUrl: './legal-pendientes-minuta.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-legal-pendientes-minuta',
+    templateUrl: './legal-pendientes-minuta.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class LegalPendientesMinutaComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

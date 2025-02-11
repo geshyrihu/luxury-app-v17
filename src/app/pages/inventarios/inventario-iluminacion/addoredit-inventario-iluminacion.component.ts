@@ -9,10 +9,9 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-addoredit-inventario-iluminacion',
-  templateUrl: './addoredit-inventario-iluminacion.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
+    selector: 'app-addoredit-inventario-iluminacion',
+    templateUrl: './addoredit-inventario-iluminacion.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule]
 })
 export default class AddoreditInventarioIluminacionComponent implements OnInit {
   formB = inject(FormBuilder);

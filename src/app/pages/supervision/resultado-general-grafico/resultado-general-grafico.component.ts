@@ -4,10 +4,9 @@ import { FiltroCalendarService } from 'src/app/core/services/filtro-calendar.ser
 import { ResultadoGeneralService } from 'src/app/core/services/resultado-general.service';
 
 @Component({
-  selector: 'app-grafico-resultado-general',
-  templateUrl: './resultado-general-grafico.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-grafico-resultado-general',
+    templateUrl: './resultado-general-grafico.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class ResultadoGeneralGraficoComponent implements OnInit {
   private resultadoGeneralService = inject(ResultadoGeneralService);

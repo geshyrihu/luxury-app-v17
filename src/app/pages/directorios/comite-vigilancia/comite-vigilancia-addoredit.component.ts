@@ -9,11 +9,10 @@ import { EnumSelectService } from 'src/app/core/services/enum-select.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-comite-vigilancia-addoredit',
-  templateUrl: './comite-vigilancia-addoredit.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
-  providers: [EnumSelectService],
+    selector: 'app-comite-vigilancia-addoredit',
+    templateUrl: './comite-vigilancia-addoredit.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule],
+    providers: [EnumSelectService]
 })
 export default class ComiteVigilanciaAddOrEditComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

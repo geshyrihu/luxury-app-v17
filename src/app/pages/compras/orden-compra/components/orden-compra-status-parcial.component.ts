@@ -3,10 +3,9 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { EBoolTextPipe } from 'src/app/core/pipes/bool-text.pipe';
 
 @Component({
-  selector: 'app-orden-compra-status-parcial',
-  templateUrl: './orden-compra-status-parcial.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, EBoolTextPipe],
+    selector: 'app-orden-compra-status-parcial',
+    templateUrl: './orden-compra-status-parcial.component.html',
+    imports: [LuxuryAppComponentsModule, EBoolTextPipe]
 })
 export default class OrdenCompraStatusParcialComponent {
   @Input()

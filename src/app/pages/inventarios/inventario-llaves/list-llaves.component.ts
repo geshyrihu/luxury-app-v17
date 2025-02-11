@@ -10,10 +10,9 @@ import { DialogHandlerService } from 'src/app/core/services/dialog-handler.servi
 import FormInventarioLlaveComponent from './form-inventario-llave.component';
 
 @Component({
-  selector: 'app-llaves',
-  templateUrl: './list-llaves.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-llaves',
+    templateUrl: './list-llaves.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class ListLlavesComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

@@ -10,10 +10,9 @@ import CustomerAddressComponent from './customer-address.component';
 import CustomerImagesComponent from './customer-images.component';
 
 @Component({
-  selector: 'app-list-customer',
-  templateUrl: './list-customer.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-list-customer',
+    templateUrl: './list-customer.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class ListCustomerComponent implements OnInit {
   dialogHandlerS = inject(DialogHandlerService);

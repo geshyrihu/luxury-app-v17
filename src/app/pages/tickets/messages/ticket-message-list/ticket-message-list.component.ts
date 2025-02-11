@@ -23,10 +23,9 @@ import TicketMessageReadListComponent from '../ticket-message-read-list/ticket-m
 import TicketMessageReopenComponent from '../ticket-message-reopen/ticket-message-reopen.component';
 
 @Component({
-  selector: 'app-ticket-message-list',
-  templateUrl: './ticket-message-list.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, TicketMessageModule],
+    selector: 'app-ticket-message-list',
+    templateUrl: './ticket-message-list.component.html',
+    imports: [LuxuryAppComponentsModule, TicketMessageModule]
 })
 export default class TicketMessageListComponent implements OnInit {
   // Dependencies injection

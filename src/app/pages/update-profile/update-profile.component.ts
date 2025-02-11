@@ -4,13 +4,12 @@ import UpdatePasswordAccountComponent from './update-password.component';
 import UpdatePhotoApplicationUserComponent from './update-photo-application-user.component';
 
 @Component({
-  selector: 'app-update-profile',
-  templateUrl: './update-profile.component.html',
-  standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    UpdatePasswordAccountComponent,
-    UpdatePhotoApplicationUserComponent,
-  ],
+    selector: 'app-update-profile',
+    templateUrl: './update-profile.component.html',
+    imports: [
+        LuxuryAppComponentsModule,
+        UpdatePasswordAccountComponent,
+        UpdatePhotoApplicationUserComponent,
+    ]
 })
 export default class UpdateProfilComponent {}

@@ -10,10 +10,9 @@ import { DateService } from 'src/app/core/services/date.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-addoredit-entradas',
-  templateUrl: './addoredit-entradas.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
+    selector: 'app-addoredit-entradas',
+    templateUrl: './addoredit-entradas.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule]
 })
 export default class AddOrEditEntradasComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

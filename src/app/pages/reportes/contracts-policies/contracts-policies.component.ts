@@ -6,10 +6,9 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 
 @Component({
-  selector: 'app-contracts-policies',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
-  templateUrl: './contracts-policies.component.html',
+    selector: 'app-contracts-policies',
+    imports: [LuxuryAppComponentsModule],
+    templateUrl: './contracts-policies.component.html'
 })
 export default class ContractsPoliciesComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

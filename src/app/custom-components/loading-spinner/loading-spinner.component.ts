@@ -2,10 +2,9 @@ import { CommonModule } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
 
 @Component({
-  selector: "app-loading-spinner",
-  templateUrl: "./loading-spinner.component.html",
-  standalone: true,
-  imports: [CommonModule],
+    selector: "app-loading-spinner",
+    templateUrl: "./loading-spinner.component.html",
+    imports: [CommonModule]
 })
 export default class LoadingSpinnerComponent implements OnInit {
   colors: string[] = [

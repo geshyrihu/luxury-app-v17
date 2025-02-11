@@ -5,10 +5,9 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 
 @Component({
-  selector: 'app-mantenimientos',
-  templateUrl: './mantenimientos.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-mantenimientos',
+    templateUrl: './mantenimientos.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class MantenimientosComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

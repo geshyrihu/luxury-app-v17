@@ -12,10 +12,9 @@ import { DialogHandlerService } from 'src/app/core/services/dialog-handler.servi
 import CreateOrdenCompraComponent from '../orden-compra/orden-compra/create-orden-compra/create-orden-compra.component';
 
 @Component({
-  selector: 'app-cuadro-comparativo-cotizacion',
-  templateUrl: './cuadro-comparativo-cotizacion.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, FormsModule, CommonModule, ToastModule],
+    selector: 'app-cuadro-comparativo-cotizacion',
+    templateUrl: './cuadro-comparativo-cotizacion.component.html',
+    imports: [LuxuryAppComponentsModule, FormsModule, CommonModule, ToastModule]
 })
 export default class CuadroComparativoCotizacionComponent
   implements OnInit, OnDestroy

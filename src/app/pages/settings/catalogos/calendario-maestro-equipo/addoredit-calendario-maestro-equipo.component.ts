@@ -7,10 +7,9 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-addoredit-calendario-maestro-equipo',
-  templateUrl: './addoredit-calendario-maestro-equipo.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
+    selector: 'app-addoredit-calendario-maestro-equipo',
+    templateUrl: './addoredit-calendario-maestro-equipo.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule]
 })
 export default class AddOrEditCalendarioMaestroEquipoComponent
   implements OnInit

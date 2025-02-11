@@ -14,10 +14,9 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-bitacora-mantenimiento-form',
-  templateUrl: './bitacora-mantenimiento-form.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
+    selector: 'app-bitacora-mantenimiento-form',
+    templateUrl: './bitacora-mantenimiento-form.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule]
 })
 export default class BitacoraMantenimientoFormComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

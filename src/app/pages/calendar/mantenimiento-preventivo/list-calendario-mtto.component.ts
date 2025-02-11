@@ -6,16 +6,15 @@ import ListadoAnualMantenimientoComponent from '../listado-anual-mantenimiento/l
 import CronogramaAnualMantenimientoComponent from './cronograma-anual-mantenimiento.component';
 
 @Component({
-  selector: 'app-index',
-  templateUrl: './list-calendario-mtto.component.html',
-  standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    ListadoAnualMantenimientoComponent,
-    CronogramaAnualMantenimientoComponent,
-    GeneralAnualMantenimientoComponent,
-    NgbNavModule,
-  ],
+    selector: 'app-index',
+    templateUrl: './list-calendario-mtto.component.html',
+    imports: [
+        LuxuryAppComponentsModule,
+        ListadoAnualMantenimientoComponent,
+        CronogramaAnualMantenimientoComponent,
+        GeneralAnualMantenimientoComponent,
+        NgbNavModule,
+    ]
 })
 export default class ListCalendarioMttoComponent {
   @Input() tipoCalendario: string = 'preventivo de equipos';

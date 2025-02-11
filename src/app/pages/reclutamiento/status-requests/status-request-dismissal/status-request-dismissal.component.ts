@@ -13,10 +13,9 @@ import AddoreditSolicitudBajaComponent from '../../list-solicitudes/solicitud-ba
 import AddOrEditStatusRequestDismissalDiscountComponent from './addoredit-status-request-dismissal-discount.component';
 
 @Component({
-  selector: 'app-status-request-dismissal',
-  templateUrl: './status-request-dismissal.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
+    selector: 'app-status-request-dismissal',
+    templateUrl: './status-request-dismissal.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule]
 })
 export default class StatusRequestDismissalComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

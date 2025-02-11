@@ -13,10 +13,9 @@ import AddProductosAlmacenComponent from './add-productos-almacen.component';
 import EditProductosAlmacenComponent from './edit-productos-almacen.component';
 
 @Component({
-  selector: 'app-list-almacen-productos',
-  templateUrl: './list-almacen-productos.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-list-almacen-productos',
+    templateUrl: './list-almacen-productos.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class ListAlmacenProductosComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

@@ -5,10 +5,9 @@ import { DateService } from 'src/app/core/services/date.service';
 import { FiltroCalendarService } from 'src/app/core/services/filtro-calendar.service';
 
 @Component({
-  selector: 'app-calendar-range',
-  templateUrl: './calendar-range.component.html',
-  standalone: true,
-  imports: [FormsModule, TooltipModule],
+    selector: 'app-calendar-range',
+    templateUrl: './calendar-range.component.html',
+    imports: [FormsModule, TooltipModule]
 })
 export default class CalendarRangeComponent {
   private filtroCalendarService = inject(FiltroCalendarService);

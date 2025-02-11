@@ -8,10 +8,9 @@ import { DialogHandlerService } from 'src/app/core/services/dialog-handler.servi
 import AddoreditUsoCFDIComponent from './addoredit-uso-cfdi.component';
 
 @Component({
-  selector: 'app-uso-cfdi',
-  templateUrl: './list-uso-cfdi.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-uso-cfdi',
+    templateUrl: './list-uso-cfdi.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class ListUsoCfdiComponent implements OnInit {
   authS = inject(AuthService);

@@ -11,10 +11,9 @@ import { DateService } from 'src/app/core/services/date.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-addoredit-herramienta',
-  templateUrl: './addoredit-herramienta.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
+    selector: 'app-addoredit-herramienta',
+    templateUrl: './addoredit-herramienta.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule]
 })
 export default class AddoreditToolsComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

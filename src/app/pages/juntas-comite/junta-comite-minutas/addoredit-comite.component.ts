@@ -4,10 +4,9 @@ import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 
 @Component({
-  selector: 'app-addoredit-comite',
-  templateUrl: './addoredit-comite.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-addoredit-comite',
+    templateUrl: './addoredit-comite.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class AddOrEditComiteComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

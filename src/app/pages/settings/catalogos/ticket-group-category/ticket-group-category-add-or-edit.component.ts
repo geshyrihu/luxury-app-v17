@@ -8,11 +8,10 @@ import { EnumSelectService } from 'src/app/core/services/enum-select.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-ticket-group-category-add-or-edit',
-  templateUrl: './ticket-group-category-add-or-edit.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
-  providers: [EnumSelectService],
+    selector: 'app-ticket-group-category-add-or-edit',
+    templateUrl: './ticket-group-category-add-or-edit.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule],
+    providers: [EnumSelectService]
 })
 export default class TicketGroupCategoryAddOrEditComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

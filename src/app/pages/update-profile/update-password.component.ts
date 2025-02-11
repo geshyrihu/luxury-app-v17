@@ -7,10 +7,9 @@ import { ApiRequestService } from "src/app/core/services/api-request.service";
 import { AuthService } from "src/app/core/services/auth.service";
 
 @Component({
-  selector: "app-update-password",
-  templateUrl: "./update-password.component.html",
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: "app-update-password",
+    templateUrl: "./update-password.component.html",
+    imports: [LuxuryAppComponentsModule]
 })
 export default class UpdatePasswordComponent implements OnInit {
   formB = inject(FormBuilder);

@@ -5,10 +5,9 @@ import CustomBtnComponent from 'src/app/custom-components/custom-buttons/custom-
 import PagetitleComponent from '../pagetitle/pagetitle.component';
 
 @Component({
-  selector: 'custom-table-caption',
-  templateUrl: './custom-table-caption.component.html',
-  standalone: true,
-  imports: [CommonModule, NgbTooltip, CustomBtnComponent, PagetitleComponent],
+    selector: 'custom-table-caption',
+    templateUrl: './custom-table-caption.component.html',
+    imports: [CommonModule, NgbTooltip, CustomBtnComponent, PagetitleComponent]
 })
 export default class CustomTableCaptionComponent {
   private location = inject(Location);

@@ -11,22 +11,21 @@ import { flatpickrFactory } from 'src/app/core/helpers/flatpickr-factory';
 import ValidationErrorsCustomInputComponent from '../validation-errors-custom-input/validation-errors-custom-input.component';
 
 @Component({
-  selector: 'custom-input-hour',
-  standalone: true,
-  templateUrl: './custom-input-hour.component.html',
-  imports: [
-    FormsModule,
-    CommonModule,
-    FlatpickrModule,
-    ValidationErrorsCustomInputComponent,
-  ],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => CustomInputHourComponent),
-      multi: true,
-    },
-  ],
+    selector: 'custom-input-hour',
+    templateUrl: './custom-input-hour.component.html',
+    imports: [
+        FormsModule,
+        CommonModule,
+        FlatpickrModule,
+        ValidationErrorsCustomInputComponent,
+    ],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => CustomInputHourComponent),
+            multi: true,
+        },
+    ]
 })
 export default class CustomInputHourComponent implements ControlValueAccessor {
   @Input() control: FormControl;

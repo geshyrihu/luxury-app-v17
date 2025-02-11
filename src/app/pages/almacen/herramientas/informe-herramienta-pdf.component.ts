@@ -4,10 +4,9 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { ReporteHerramientasPdfService } from 'src/app/core/services/reporte-herramientas-pdf.service';
 
 @Component({
-  selector: 'app-informe-herramienta-pdf',
-  templateUrl: './informe-herramienta-pdf.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-informe-herramienta-pdf',
+    templateUrl: './informe-herramienta-pdf.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class InformeHerramientaPdfComponent implements OnInit {
   public reporteHerramientasPdfService = inject(ReporteHerramientasPdfService);

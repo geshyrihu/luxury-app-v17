@@ -6,10 +6,9 @@ import { DateService } from 'src/app/core/services/date.service';
 import { PeriodoMonthService } from 'src/app/core/services/periodo-month.service';
 
 @Component({
-  selector: 'app-reporte-envio-financieros',
-  templateUrl: './reporte-envio-financieros.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-reporte-envio-financieros',
+    templateUrl: './reporte-envio-financieros.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class ReporteEnvioFinancierosComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

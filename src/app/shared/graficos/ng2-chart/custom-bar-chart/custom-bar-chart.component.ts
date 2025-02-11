@@ -3,10 +3,9 @@ import { Component, Input, OnInit } from "@angular/core";
 import { ChartModule } from "primeng/chart";
 
 @Component({
-  selector: "app-custom-bar-chart",
-  templateUrl: "./custom-bar-chart.component.html",
-  standalone: true,
-  imports: [ChartModule, CommonModule],
+    selector: "app-custom-bar-chart",
+    templateUrl: "./custom-bar-chart.component.html",
+    imports: [ChartModule, CommonModule]
 })
 export default class CustomBarChartComponent implements OnInit {
   @Input()

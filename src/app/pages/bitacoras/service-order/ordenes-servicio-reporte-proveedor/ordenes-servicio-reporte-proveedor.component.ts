@@ -6,10 +6,9 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 
 @Component({
-  selector: 'app-ordenes-servicio-reporte-proveedor',
-  templateUrl: './ordenes-servicio-reporte-proveedor.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-ordenes-servicio-reporte-proveedor',
+    templateUrl: './ordenes-servicio-reporte-proveedor.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class OrdenesServicioReporteProveedorComponent
   implements OnInit

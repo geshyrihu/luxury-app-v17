@@ -7,10 +7,9 @@ import { SolicitudCompraService } from 'src/app/core/services/solicitud-compra.s
 import EditProductoComponent from '../edit-producto.component';
 
 @Component({
-  selector: 'app-solicitud-compra-detalle',
-  templateUrl: './solicitud-compra-detalle.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-solicitud-compra-detalle',
+    templateUrl: './solicitud-compra-detalle.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class SolicitudCompraDetalleComponent {
   apiRequestS = inject(ApiRequestService);

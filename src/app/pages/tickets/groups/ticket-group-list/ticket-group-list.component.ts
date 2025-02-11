@@ -15,10 +15,9 @@ import { TicketGroupService } from '../../ticket.service';
 import TicketGroupAddOrEditComponent from '../ticket-group-add-or-edit/ticket-group-add-or-edit.component';
 
 @Component({
-  selector: 'app-ticket-group-list',
-  templateUrl: './ticket-group-list.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, NgbDropdownModule, ButtonModule],
+    selector: 'app-ticket-group-list',
+    templateUrl: './ticket-group-list.component.html',
+    imports: [LuxuryAppComponentsModule, NgbDropdownModule, ButtonModule]
 })
 export default class TicketGroupListComponent implements OnInit {
   authS = inject(AuthService);

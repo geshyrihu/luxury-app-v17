@@ -10,11 +10,10 @@ import { DialogHandlerService } from 'src/app/core/services/dialog-handler.servi
 import MaintenancePreventiveAddoreditComponent from 'src/app/pages/calendar/mantenimiento-preventivo/maintenance-preventive-addoredit.component';
 
 @Component({
-  selector: 'app-gastos-mantenimiento',
-  templateUrl: './gastos-mantenimiento.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
-  providers: [MessageService, DialogService, CustomToastService],
+    selector: 'app-gastos-mantenimiento',
+    templateUrl: './gastos-mantenimiento.component.html',
+    imports: [LuxuryAppComponentsModule],
+    providers: [MessageService, DialogService, CustomToastService]
 })
 export default class GastosMantenimientoComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

@@ -4,10 +4,9 @@ import { RouterModule } from '@angular/router';
 import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  imports: [RouterModule, CommonModule, NgbTooltip],
-  selector: 'btn-link',
-  standalone: true,
-  templateUrl: './btn-link.component.html',
+    imports: [RouterModule, CommonModule, NgbTooltip],
+    selector: 'btn-link',
+    templateUrl: './btn-link.component.html'
 })
 export default class BtnLinkComponent {
   @Input() customClass: string = '';

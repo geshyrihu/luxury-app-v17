@@ -8,10 +8,9 @@ import { DialogHandlerService } from 'src/app/core/services/dialog-handler.servi
 import TarjetaProductoComponent from 'src/app/pages/settings/catalogos/productos/tarjeta-producto.component';
 
 @Component({
-  selector: 'app-add-product-modal',
-  templateUrl: './add-product-modal.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-add-product-modal',
+    templateUrl: './add-product-modal.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class AddProductModalComponent implements OnInit, OnDestroy {
   apiRequestS = inject(ApiRequestService);

@@ -9,10 +9,9 @@ import { PeriodoMonthService } from 'src/app/core/services/periodo-month.service
 import MultiAxisChartComponent from 'src/app/shared/graficos/primeng-chart/multi-axis-chart/multi-axis-chart.component';
 
 @Component({
-  selector: 'app-report-consumos',
-  templateUrl: './report-consumos.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, MultiAxisChartComponent],
+    selector: 'app-report-consumos',
+    templateUrl: './report-consumos.component.html',
+    imports: [LuxuryAppComponentsModule, MultiAxisChartComponent]
 })
 export default class ReportConsumosComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

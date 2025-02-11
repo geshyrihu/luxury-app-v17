@@ -10,10 +10,9 @@ import { DateService } from 'src/app/core/services/date.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-addoredit-agenda-supervision',
-  templateUrl: './addoredit-agenda-supervision.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
+    selector: 'app-addoredit-agenda-supervision',
+    templateUrl: './addoredit-agenda-supervision.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule]
 })
 export default class AddOrEditAgendaSupervisionComponent implements OnInit {
   authS = inject(AuthService);

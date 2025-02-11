@@ -6,10 +6,9 @@ import { DialogHandlerService } from 'src/app/core/services/dialog-handler.servi
 import BancoAddOrEditComponent from './banco-addoredit.component';
 
 @Component({
-  selector: 'app-banco-list',
-  templateUrl: './banco-list.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-banco-list',
+    templateUrl: './banco-list.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class BancoListComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

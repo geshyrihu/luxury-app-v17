@@ -9,10 +9,9 @@ import { DateService } from 'src/app/core/services/date.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-addor-edit-meeting-seguimiento',
-  templateUrl: './addor-edit-meeting-seguimiento.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
+    selector: 'app-addor-edit-meeting-seguimiento',
+    templateUrl: './addor-edit-meeting-seguimiento.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule]
 })
 export default class AddorEditMeetingSeguimientoComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

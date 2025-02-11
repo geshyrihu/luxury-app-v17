@@ -5,10 +5,9 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import BitacoraMantenimientoComponent from '../recorrido-mantenimiento/bitacora-mantenimiento.component';
 
 @Component({
-  selector: 'app-javi-bitacora',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, BitacoraMantenimientoComponent],
-  templateUrl: './javi-bitacora.component.html',
+    selector: 'app-javi-bitacora',
+    imports: [LuxuryAppComponentsModule, BitacoraMantenimientoComponent],
+    templateUrl: './javi-bitacora.component.html'
 })
 export default class JaviBitacoraComponent {
   private modalService = inject(NgbModal);

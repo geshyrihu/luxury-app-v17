@@ -6,10 +6,9 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-orden-compra-edit-presupusto-utilizado',
-  templateUrl: './orden-compra-edit-presupusto-utilizado.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
+    selector: 'app-orden-compra-edit-presupusto-utilizado',
+    templateUrl: './orden-compra-edit-presupusto-utilizado.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule]
 })
 export default class OrdenCompraEditPresupustoUtilizadoComponent
   implements OnInit

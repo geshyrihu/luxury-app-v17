@@ -17,10 +17,9 @@ import AddoreditPlantillaComponent from './addoredit-plantilla.component';
 import HoursWorkPositionComponent from './hours-work-position.component';
 
 @Component({
-  selector: 'app-list-plantilla',
-  templateUrl: './list-plantilla.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-list-plantilla',
+    templateUrl: './list-plantilla.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class ListWorkPlantillaComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

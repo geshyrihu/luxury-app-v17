@@ -9,21 +9,20 @@ import LuxuryAppComponentsModule from "app/shared/luxuryapp-components.module";
 import ValidationErrorsCustomInputComponent from "../validation-errors-custom-input/validation-errors-custom-input.component";
 
 @Component({
-  selector: "custom-input-number",
-  templateUrl: "./custom-input-number.component.html",
-  standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    CommonModule,
-    ValidationErrorsCustomInputComponent,
-  ],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => CustomInputNumberComponent),
-      multi: true,
-    },
-  ],
+    selector: "custom-input-number",
+    templateUrl: "./custom-input-number.component.html",
+    imports: [
+        LuxuryAppComponentsModule,
+        CommonModule,
+        ValidationErrorsCustomInputComponent,
+    ],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => CustomInputNumberComponent),
+            multi: true,
+        },
+    ]
 })
 export default class CustomInputNumberComponent
   implements ControlValueAccessor

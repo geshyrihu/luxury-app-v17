@@ -6,10 +6,9 @@ import { DialogHandlerService } from 'src/app/core/services/dialog-handler.servi
 import ServiceOrderAddOrEditComponent from '../../bitacoras/service-order/addoredit-service-order.component';
 
 @Component({
-  selector: 'app-service-history-machinery',
-  templateUrl: './service-history-machinery.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-service-history-machinery',
+    templateUrl: './service-history-machinery.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class ServiceHistoryMachineryComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

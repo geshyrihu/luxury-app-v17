@@ -5,10 +5,9 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 
 @Component({
-  selector: 'app-pending-minutes',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
-  templateUrl: './pending-minutes.component.html',
+    selector: 'app-pending-minutes',
+    imports: [LuxuryAppComponentsModule],
+    templateUrl: './pending-minutes.component.html'
 })
 export default class PendingMinutesComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

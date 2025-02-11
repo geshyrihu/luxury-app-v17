@@ -7,10 +7,9 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-addoredit-uso-cfdi',
-  templateUrl: './addoredit-uso-cfdi.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
+    selector: 'app-addoredit-uso-cfdi',
+    templateUrl: './addoredit-uso-cfdi.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule]
 })
 export default class AddoreditUsoCFDIComponent implements OnInit {
   authS = inject(AuthService);

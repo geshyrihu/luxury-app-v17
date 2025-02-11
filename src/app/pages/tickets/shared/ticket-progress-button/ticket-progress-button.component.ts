@@ -6,10 +6,9 @@ import CustomBtnComponent from 'src/app/custom-components/custom-buttons/custom-
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-ticket-progress-button',
-  standalone: true,
-  imports: [CommonModule, CustomBtnComponent],
-  templateUrl: './ticket-progress-button.component.html',
+    selector: 'app-ticket-progress-button',
+    imports: [CommonModule, CustomBtnComponent],
+    templateUrl: './ticket-progress-button.component.html'
 })
 export default class TicketProgressButtonComponent {
   private apiRequestS = inject(ApiRequestService);

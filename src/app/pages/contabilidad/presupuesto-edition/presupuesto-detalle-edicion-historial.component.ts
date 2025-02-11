@@ -4,10 +4,9 @@ import { DynamicDialogConfig, DynamicDialogRef } from "primeng/dynamicdialog";
 import { ApiRequestService } from "src/app/core/services/api-request.service";
 
 @Component({
-  selector: "app-presupuesto-detalle-edicion-historial",
-  templateUrl: "./presupuesto-detalle-edicion-historial.component.html",
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: "app-presupuesto-detalle-edicion-historial",
+    templateUrl: "./presupuesto-detalle-edicion-historial.component.html",
+    imports: [LuxuryAppComponentsModule]
 })
 export default class PresupuestoDetalleEdicionHistorialComponent
   implements OnInit

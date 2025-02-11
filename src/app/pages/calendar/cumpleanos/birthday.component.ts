@@ -9,10 +9,9 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 
 @Component({
-  selector: 'app-birthday',
-  templateUrl: './birthday.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, FullCalendarModule],
+    selector: 'app-birthday',
+    templateUrl: './birthday.component.html',
+    imports: [LuxuryAppComponentsModule, FullCalendarModule]
 })
 export default class BirthdayComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

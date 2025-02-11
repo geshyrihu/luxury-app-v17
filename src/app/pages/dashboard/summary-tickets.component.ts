@@ -5,10 +5,9 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 
 @Component({
-  selector: 'app-summary-tickets',
-  templateUrl: './summary-tickets.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-summary-tickets',
+    templateUrl: './summary-tickets.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class SummaryTicketsComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

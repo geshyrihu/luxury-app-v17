@@ -6,10 +6,9 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-addoredit-recorrido-task',
-  templateUrl: './addoredit-recorrido-task.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
+    selector: 'app-addoredit-recorrido-task',
+    templateUrl: './addoredit-recorrido-task.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule]
 })
 export default class RecorridoTaskAddOrEditComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

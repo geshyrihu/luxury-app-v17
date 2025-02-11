@@ -9,11 +9,10 @@ import { EnumSelectService } from 'src/app/core/services/enum-select.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-addoredit-vacante',
-  templateUrl: './addoredit-vacante.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, FlatpickrModule, CustomInputModule],
-  providers: [EnumSelectService],
+    selector: 'app-addoredit-vacante',
+    templateUrl: './addoredit-vacante.component.html',
+    imports: [LuxuryAppComponentsModule, FlatpickrModule, CustomInputModule],
+    providers: [EnumSelectService]
 })
 export default class AddOrEditVacanteComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

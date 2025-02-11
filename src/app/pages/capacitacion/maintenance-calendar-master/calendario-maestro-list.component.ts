@@ -8,10 +8,9 @@ import CalendarioMaestroAddOrEditComponent from './calendario-maestro-addoredit.
 import DatosServicioAddOrEditComponent from './datos-servicio-addoredit.component';
 
 @Component({
-  selector: 'app-calendario-maestro-list',
-  templateUrl: './calendario-maestro-list.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-calendario-maestro-list',
+    templateUrl: './calendario-maestro-list.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class CalendarioMaestroListComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

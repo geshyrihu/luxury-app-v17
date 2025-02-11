@@ -11,10 +11,9 @@ import AddorEditMeetingSeguimientoComponent from './addor-edit-meeting-seguimien
 import AddoreditMinutaDetalleComponent from './addoredit-minuta-detalle.component';
 
 @Component({
-  selector: 'app-seguimiento-minutas',
-  templateUrl: './seguimiento-minutas.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-seguimiento-minutas',
+    templateUrl: './seguimiento-minutas.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class SeguimientoMinutaComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

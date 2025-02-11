@@ -9,10 +9,9 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-form-inventario-llave',
-  templateUrl: './form-inventario-llave.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
+    selector: 'app-form-inventario-llave',
+    templateUrl: './form-inventario-llave.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule]
 })
 export default class FormInventarioLlaveComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

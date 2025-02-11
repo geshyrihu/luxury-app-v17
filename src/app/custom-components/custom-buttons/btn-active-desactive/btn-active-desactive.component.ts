@@ -2,10 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
-  selector: 'btn-active-desactive',
-  templateUrl: './btn-active-desactive.component.html',
-  standalone: true,
-  imports: [CommonModule],
+    selector: 'btn-active-desactive',
+    templateUrl: './btn-active-desactive.component.html',
+    imports: [CommonModule]
 })
 export default class BtnActiveDesactiveComponent {
   state: boolean = true;

@@ -10,10 +10,9 @@ import { RolesAdmin, RolesSuperUser } from '../employee-external/roles';
 import { EmployeeAddOrEditService } from './employee-add-or-edit.service';
 
 @Component({
-  selector: 'employee-generate-user-name-app',
-  templateUrl: './employee-generate-user-name-app.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
+    selector: 'employee-generate-user-name-app',
+    templateUrl: './employee-generate-user-name-app.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule]
 })
 export default class EmployeeGenerateUserNameAppComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

@@ -4,10 +4,9 @@ import LuxuryAppComponentsModule from "app/shared/luxuryapp-components.module";
 import { ReportService } from "src/app/core/services/report.service";
 
 @Component({
-  selector: "app-resumen-minuta-grafico",
-  templateUrl: "./resumen-minuta-grafico.component.html",
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, NgxChartsModule],
+    selector: "app-resumen-minuta-grafico",
+    templateUrl: "./resumen-minuta-grafico.component.html",
+    imports: [LuxuryAppComponentsModule, NgxChartsModule]
 })
 export default class ResumenMinutaGraficoComponent {
   public reportService = inject(ReportService);

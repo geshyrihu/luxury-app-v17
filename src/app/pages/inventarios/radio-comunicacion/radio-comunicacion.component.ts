@@ -10,10 +10,9 @@ import { DialogHandlerService } from 'src/app/core/services/dialog-handler.servi
 import AddOrEditRadioComunicacionComponent from './addoredit-radio-comunicacion.component';
 
 @Component({
-  selector: 'app-radio-comunicacion',
-  templateUrl: './radio-comunicacion.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-radio-comunicacion',
+    templateUrl: './radio-comunicacion.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class RadioComunicacionComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

@@ -7,10 +7,9 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 import { EmployeeAddOrEditService } from './employee-add-or-edit.service';
 
 @Component({
-  selector: 'employee-add-or-edit-adreess',
-  templateUrl: './employee-add-or-edit-adreess.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
+    selector: 'employee-add-or-edit-adreess',
+    templateUrl: './employee-add-or-edit-adreess.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule]
 })
 export default class EmployeeAddOrEditAdreessComponent implements OnInit {
   employeeAddOrEditService = inject(EmployeeAddOrEditService);

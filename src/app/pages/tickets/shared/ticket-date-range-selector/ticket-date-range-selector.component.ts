@@ -5,10 +5,9 @@ import { flatpickrFactory } from 'src/app/core/helpers/flatpickr-factory';
 import { DateRangeStorageService } from '../../services/date-range-storage.service';
 
 @Component({
-  selector: 'app-ticket-date-range-selector',
-  templateUrl: './ticket-date-range-selector.component.html',
-  standalone: true,
-  imports: [FlatpickrModule, FormsModule],
+    selector: 'app-ticket-date-range-selector',
+    templateUrl: './ticket-date-range-selector.component.html',
+    imports: [FlatpickrModule, FormsModule]
 })
 export default class TicketDateRangeSelectorComponent implements OnInit {
   constructor(private dateRangeStorageService: DateRangeStorageService) {

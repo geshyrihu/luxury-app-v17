@@ -9,10 +9,9 @@ import { DialogHandlerService } from 'src/app/core/services/dialog-handler.servi
 import AddoreditContratoPolizaComponent from './addoredit-contrato-poliza.component';
 
 @Component({
-  selector: 'app-contrato-poliza',
-  templateUrl: './list-contrato-poliza.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-contrato-poliza',
+    templateUrl: './list-contrato-poliza.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class ListContratoPolizaComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

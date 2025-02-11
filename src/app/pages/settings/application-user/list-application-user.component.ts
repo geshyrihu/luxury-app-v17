@@ -13,11 +13,10 @@ import AddOrEditApplicationUserComponent from './add-or-edit-application-user.co
 import MdEditAccountComponent from './md-edit-account.component';
 
 @Component({
-  selector: 'app-list-application-user',
-  templateUrl: './list-application-user.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
-  providers: [EnumSelectService],
+    selector: 'app-list-application-user',
+    templateUrl: './list-application-user.component.html',
+    imports: [LuxuryAppComponentsModule],
+    providers: [EnumSelectService]
 })
 export default class ListApplicationUserComponent implements OnInit {
   dialogHandlerS = inject(DialogHandlerService);

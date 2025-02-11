@@ -5,10 +5,9 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 
 @Component({
-  selector: 'app-legal-summary',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
-  templateUrl: './legal-summary.component.html',
+    selector: 'app-legal-summary',
+    imports: [LuxuryAppComponentsModule],
+    templateUrl: './legal-summary.component.html'
 })
 export default class LegalSummaryComponent {
   apiRequestS = inject(ApiRequestService);

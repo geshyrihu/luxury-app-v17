@@ -4,9 +4,8 @@ import MobileFooterComponent from './mobile-footer.component';
 import MobileNavbarComponent from './mobile-navbar.component';
 
 @Component({
-  selector: 'app-mobile',
-  templateUrl: './mobile-main.component.html',
-  standalone: true,
-  imports: [RouterModule, MobileNavbarComponent, MobileFooterComponent],
+    selector: 'app-mobile',
+    templateUrl: './mobile-main.component.html',
+    imports: [RouterModule, MobileNavbarComponent, MobileFooterComponent]
 })
 export default class MobileMainViewComponent {}

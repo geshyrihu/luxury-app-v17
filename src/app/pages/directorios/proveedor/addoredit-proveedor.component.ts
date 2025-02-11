@@ -9,10 +9,9 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-addoredit-proveedor',
-  templateUrl: './addoredit-proveedor.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, NgSelectModule, CustomInputModule],
+    selector: 'app-addoredit-proveedor',
+    templateUrl: './addoredit-proveedor.component.html',
+    imports: [LuxuryAppComponentsModule, NgSelectModule, CustomInputModule]
 })
 export default class AddoreditProveedorComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

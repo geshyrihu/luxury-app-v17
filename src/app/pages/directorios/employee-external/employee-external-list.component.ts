@@ -12,10 +12,9 @@ import { EmployeeAddOrEditService } from '../employee-internal/employee-add-or-e
 import { EmployeeProviderAddOrEditComponent } from '../employee-internal/employee-provider-addoredit.component';
 
 @Component({
-  selector: 'app-employee-external-list',
-  templateUrl: './employee-external-list.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-employee-external-list',
+    templateUrl: './employee-external-list.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class EmployeeExternalListComponent implements OnInit {
   employeeAddOrEditService = inject(EmployeeAddOrEditService);

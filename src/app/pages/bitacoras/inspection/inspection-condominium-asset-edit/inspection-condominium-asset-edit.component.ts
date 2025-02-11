@@ -7,10 +7,9 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-inspection-condominium-asset-edit',
-  templateUrl: './inspection-condominium-asset-edit.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
+    selector: 'app-inspection-condominium-asset-edit',
+    templateUrl: './inspection-condominium-asset-edit.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule]
 })
 export default class InspectionCondominiumAssetEditComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

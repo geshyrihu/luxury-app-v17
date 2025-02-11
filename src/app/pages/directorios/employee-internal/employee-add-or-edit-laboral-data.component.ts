@@ -10,11 +10,10 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 import { EmployeeAddOrEditService } from './employee-add-or-edit.service';
 
 @Component({
-  selector: 'employee-add-or-edit-laboral-data',
-  templateUrl: './employee-add-or-edit-laboral-data.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
-  providers: [EnumSelectService],
+    selector: 'employee-add-or-edit-laboral-data',
+    templateUrl: './employee-add-or-edit-laboral-data.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule],
+    providers: [EnumSelectService]
 })
 export default class EmployeeAddOrEditLaboralDataComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

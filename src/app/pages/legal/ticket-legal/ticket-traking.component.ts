@@ -9,10 +9,9 @@ import { DateService } from 'src/app/core/services/date.service';
 import CustomInputDateComponent from 'src/app/custom-components/custom-input-form/custom-input-date/custom-input-date.component';
 
 @Component({
-  selector: 'app-ticket-traking',
-  templateUrl: './ticket-traking.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputDateComponent],
+    selector: 'app-ticket-traking',
+    templateUrl: './ticket-traking.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputDateComponent]
 })
 export default class TicketTrakingComponent implements OnInit, OnDestroy {
   formB = inject(FormBuilder);

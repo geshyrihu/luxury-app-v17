@@ -5,10 +5,9 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 
 @Component({
-  selector: 'app-report-supervision',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
-  templateUrl: './report-supervision.component.html',
+    selector: 'app-report-supervision',
+    imports: [LuxuryAppComponentsModule],
+    templateUrl: './report-supervision.component.html'
 })
 export default class ReportSupervisionComponent implements OnInit {
   customerIdS = inject(CustomerIdService);

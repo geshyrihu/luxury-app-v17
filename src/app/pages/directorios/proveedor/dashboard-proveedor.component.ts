@@ -4,14 +4,13 @@ import BuscadorProvedorComponent from './buscador-proveedor.component';
 import ListProviderComponent from './list-provider.component';
 
 @Component({
-  selector: 'app-dashboard-proveedor',
-  templateUrl: './dashboard-proveedor.component.html',
-  standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    BuscadorProvedorComponent,
-    ListProviderComponent,
-  ],
+    selector: 'app-dashboard-proveedor',
+    templateUrl: './dashboard-proveedor.component.html',
+    imports: [
+        LuxuryAppComponentsModule,
+        BuscadorProvedorComponent,
+        ListProviderComponent,
+    ]
 })
 export default class DashboardProveedorComponent {
   mostrarBuscador: boolean = true;

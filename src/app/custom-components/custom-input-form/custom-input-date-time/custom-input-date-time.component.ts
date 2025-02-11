@@ -12,23 +12,22 @@ import { flatpickrFactory } from 'src/app/core/helpers/flatpickr-factory';
 import ValidationErrorsCustomInputComponent from '../validation-errors-custom-input/validation-errors-custom-input.component';
 
 @Component({
-  selector: 'custom-input-date-time',
-  templateUrl: './custom-input-date-time.component.html',
-  standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    FormsModule,
-    CommonModule,
-    FlatpickrModule,
-    ValidationErrorsCustomInputComponent,
-  ],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => CustomInputDateTimeComponent),
-      multi: true,
-    },
-  ],
+    selector: 'custom-input-date-time',
+    templateUrl: './custom-input-date-time.component.html',
+    imports: [
+        LuxuryAppComponentsModule,
+        FormsModule,
+        CommonModule,
+        FlatpickrModule,
+        ValidationErrorsCustomInputComponent,
+    ],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => CustomInputDateTimeComponent),
+            multi: true,
+        },
+    ]
 })
 export default class CustomInputDateTimeComponent
   implements ControlValueAccessor

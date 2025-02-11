@@ -6,10 +6,9 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 
 @Component({
-  selector: 'app-equipos',
-  templateUrl: './equipos.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, StripTagsPipe],
+    selector: 'app-equipos',
+    templateUrl: './equipos.component.html',
+    imports: [LuxuryAppComponentsModule, StripTagsPipe]
 })
 export default class EquiposComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

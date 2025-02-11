@@ -9,10 +9,9 @@ import { DialogHandlerService } from 'src/app/core/services/dialog-handler.servi
 import EditSalidasComponent from './edit-salidas.component';
 
 @Component({
-  selector: 'app-list-salidas',
-  templateUrl: './list-salidas.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-list-salidas',
+    templateUrl: './list-salidas.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class ListSalidasComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

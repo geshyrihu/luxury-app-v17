@@ -16,11 +16,10 @@ import { DateService } from 'src/app/core/services/date.service';
 import { FiltroCalendarService } from 'src/app/core/services/filtro-calendar.service';
 
 @Component({
-  selector: 'app-presupuesto-add',
-  templateUrl: './presupuesto-add.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
-  providers: [MessageService, DialogService, CustomToastService],
+    selector: 'app-presupuesto-add',
+    templateUrl: './presupuesto-add.component.html',
+    imports: [LuxuryAppComponentsModule],
+    providers: [MessageService, DialogService, CustomToastService]
 })
 export default class PresupuestoAddComponent implements OnInit {
   config = inject(DynamicDialogConfig);

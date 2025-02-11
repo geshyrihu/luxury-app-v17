@@ -2,10 +2,9 @@ import { Component, Input } from '@angular/core';
 import { PieChartModule } from '@swimlane/ngx-charts';
 
 @Component({
-  selector: 'app-advanced-pie-chart',
-  templateUrl: './advanced-pie-chart.component.html',
-  standalone: true,
-  imports: [PieChartModule],
+    selector: 'app-advanced-pie-chart',
+    templateUrl: './advanced-pie-chart.component.html',
+    imports: [PieChartModule]
 })
 export default class AdvancedPieChartComponent {
   // options

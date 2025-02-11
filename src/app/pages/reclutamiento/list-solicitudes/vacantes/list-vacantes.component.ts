@@ -17,14 +17,13 @@ import AddOrEditVacanteComponent from './addoredit-vacante.component';
 import RegisterEmployeToVacancyComponent from './register-employe-to-vacancy.component';
 
 @Component({
-  selector: 'app-list-vacantes',
-  templateUrl: './list-vacantes.component.html',
-  standalone: true,
-  imports: [
-    LuxuryAppComponentsModule,
-    FilterRequestsComponent,
-    NgbDropdownModule,
-  ],
+    selector: 'app-list-vacantes',
+    templateUrl: './list-vacantes.component.html',
+    imports: [
+        LuxuryAppComponentsModule,
+        FilterRequestsComponent,
+        NgbDropdownModule,
+    ]
 })
 export default class ListVacantesComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

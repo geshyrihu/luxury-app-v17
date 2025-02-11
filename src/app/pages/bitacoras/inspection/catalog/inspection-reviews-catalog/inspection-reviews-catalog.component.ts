@@ -6,10 +6,9 @@ import { DialogHandlerService } from 'src/app/core/services/dialog-handler.servi
 import InspectionReviewsCatalogAddoreditComponent from '../inspection-reviews-catalog-addoredit/inspection-reviews-catalog-addoredit.component';
 
 @Component({
-  selector: 'app-inspection-reviews-catalog',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
-  templateUrl: './inspection-reviews-catalog.component.html',
+    selector: 'app-inspection-reviews-catalog',
+    imports: [LuxuryAppComponentsModule],
+    templateUrl: './inspection-reviews-catalog.component.html'
 })
 export default class InspectionReviewsCatalogComponent {
   apiRequestS = inject(ApiRequestService);

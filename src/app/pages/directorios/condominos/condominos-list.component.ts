@@ -11,10 +11,9 @@ import { DialogHandlerService } from 'src/app/core/services/dialog-handler.servi
 import CondominosAddOrEditComponent from './condominos-addoredit.component';
 
 @Component({
-  selector: 'app-condominos-list',
-  templateUrl: './condominos-list.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-condominos-list',
+    templateUrl: './condominos-list.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class ListCondominosComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

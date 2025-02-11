@@ -7,10 +7,9 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 
 @Component({
-  selector: 'app-inspection-report-list',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, FlatpickrModule],
-  templateUrl: './inspection-report-list.component.html',
+    selector: 'app-inspection-report-list',
+    imports: [LuxuryAppComponentsModule, FlatpickrModule],
+    templateUrl: './inspection-report-list.component.html'
 })
 export default class InspectionReportListComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

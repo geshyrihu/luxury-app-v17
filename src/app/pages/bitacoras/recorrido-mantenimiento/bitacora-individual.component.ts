@@ -9,10 +9,9 @@ import { FiltroCalendarService } from 'src/app/core/services/filtro-calendar.ser
 import CardEmployeeComponent from 'src/app/pages/directorios/employee-internal/card-employee.component';
 
 @Component({
-  selector: 'app-bitacora-individual',
-  templateUrl: './bitacora-individual.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-bitacora-individual',
+    templateUrl: './bitacora-individual.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class BitacoraIndividualComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

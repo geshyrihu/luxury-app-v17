@@ -9,11 +9,10 @@ import { EnumSelectService } from 'src/app/core/services/enum-select.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-addoredit-modificacion-salario',
-  templateUrl: './addoredit-modificacion-salario.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, FlatpickrModule, CustomInputModule],
-  providers: [EnumSelectService],
+    selector: 'app-addoredit-modificacion-salario',
+    templateUrl: './addoredit-modificacion-salario.component.html',
+    imports: [LuxuryAppComponentsModule, FlatpickrModule, CustomInputModule],
+    providers: [EnumSelectService]
 })
 export default class AddoreditModificacionSalarioComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

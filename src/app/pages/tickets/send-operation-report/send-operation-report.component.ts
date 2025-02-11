@@ -9,10 +9,9 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 
 @Component({
-  selector: 'app-send-operation-report',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
-  templateUrl: './send-operation-report.component.html',
+    selector: 'app-send-operation-report',
+    imports: [LuxuryAppComponentsModule],
+    templateUrl: './send-operation-report.component.html'
 })
 export default class SendOperationReportComponent {
   authS = inject(AuthService);

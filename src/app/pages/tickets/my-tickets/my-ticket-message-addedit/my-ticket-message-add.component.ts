@@ -18,11 +18,10 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 import { TicketGroupService } from '../../ticket.service';
 
 @Component({
-  selector: 'app-my-ticket-message-addedit',
-  templateUrl: './my-ticket-message-addedit.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
-  providers: [EnumSelectService],
+    selector: 'app-my-ticket-message-addedit',
+    templateUrl: './my-ticket-message-addedit.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule],
+    providers: [EnumSelectService]
 })
 export default class MyTicketMessageAddEditComponent implements OnInit {
   customerIdS = inject(CustomerIdService);

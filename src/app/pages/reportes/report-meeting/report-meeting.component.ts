@@ -5,10 +5,9 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 
 @Component({
-  selector: 'app-report-meeting',
-  templateUrl: './report-meeting.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-report-meeting',
+    templateUrl: './report-meeting.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class ReportMeetingComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

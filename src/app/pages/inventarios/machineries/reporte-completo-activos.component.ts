@@ -6,10 +6,9 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 
 @Component({
-  selector: 'app-reporte-completo-activos',
-  templateUrl: './reporte-completo-activos.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-reporte-completo-activos',
+    templateUrl: './reporte-completo-activos.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class ReporteCompletoActivosComponent implements OnInit {
   customerIdS = inject(CustomerIdService);

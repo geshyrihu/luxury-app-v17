@@ -3,10 +3,9 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: 'btn-bagges',
-  templateUrl: './btn-bagges.component.html',
-  standalone: true,
-  imports: [CommonModule, NgbTooltip],
+    selector: 'btn-bagges',
+    templateUrl: './btn-bagges.component.html',
+    imports: [CommonModule, NgbTooltip]
 })
 export default class BtnBaggesComponent {
   @Input() disabled: boolean = false;

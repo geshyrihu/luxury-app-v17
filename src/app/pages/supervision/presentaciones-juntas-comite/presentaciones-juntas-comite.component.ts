@@ -6,10 +6,9 @@ import { DateService } from 'src/app/core/services/date.service';
 import { FiltroCalendarService } from 'src/app/core/services/filtro-calendar.service';
 
 @Component({
-  selector: 'app-presentaciones-juntas-comite',
-  templateUrl: './presentaciones-juntas-comite.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-presentaciones-juntas-comite',
+    templateUrl: './presentaciones-juntas-comite.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class PresentacionesJuntasComiteComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

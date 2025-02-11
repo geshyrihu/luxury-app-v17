@@ -7,11 +7,10 @@ import { EnumSelectService } from 'src/app/core/services/enum-select.service';
 import { TicketGroupService } from '../../../tickets/ticket.service';
 
 @Component({
-  selector: 'app-ticket-message-status',
-  templateUrl: './ticket-message-status.component.html',
-  standalone: true,
-  imports: [CommonModule, FormsModule],
-  providers: [EnumSelectService],
+    selector: 'app-ticket-message-status',
+    templateUrl: './ticket-message-status.component.html',
+    imports: [CommonModule, FormsModule],
+    providers: [EnumSelectService]
 })
 export default class TicketMessageStatusComponent implements OnInit {
   ticketGroupService = inject(TicketGroupService);

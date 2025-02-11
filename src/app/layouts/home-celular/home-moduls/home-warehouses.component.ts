@@ -4,10 +4,9 @@ import { IMenuItem } from '../../sidebar/menu.model';
 import HomeMenuComponent from '../home-menu/home-menu.component';
 
 @Component({
-  selector: 'app-home-warehouses',
-  standalone: true,
-  imports: [HomeMenuComponent],
-  templateUrl: './home-warehouses.component.html',
+    selector: 'app-home-warehouses',
+    imports: [HomeMenuComponent],
+    templateUrl: './home-warehouses.component.html'
 })
 export default class HomeWarehousesComponent {
   authS = inject(AuthService);

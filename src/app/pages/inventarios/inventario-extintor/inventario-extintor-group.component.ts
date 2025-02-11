@@ -5,10 +5,9 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 
 @Component({
-  selector: 'app-inventario-extintor-group',
-  templateUrl: './inventario-extintor-group.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-inventario-extintor-group',
+    templateUrl: './inventario-extintor-group.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class InventarioExtintorGroupComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

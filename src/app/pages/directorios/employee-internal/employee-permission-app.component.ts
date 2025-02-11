@@ -7,10 +7,9 @@ import { PermissionDto } from 'src/app/pages/settings/permisos/module-app-permis
 import { EmployeeAddOrEditService } from './employee-add-or-edit.service';
 
 @Component({
-  selector: 'employee-permission-app',
-  templateUrl: './employee-permission-app.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'employee-permission-app',
+    templateUrl: './employee-permission-app.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class EmployeePermissionAppComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

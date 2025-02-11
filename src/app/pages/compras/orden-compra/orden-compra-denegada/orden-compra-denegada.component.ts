@@ -7,10 +7,9 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-orden-compra-denegada',
-  templateUrl: './orden-compra-denegada.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
+    selector: 'app-orden-compra-denegada',
+    templateUrl: './orden-compra-denegada.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule]
 })
 export default class OrdenCompraDenegadaComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

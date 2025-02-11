@@ -6,10 +6,9 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 
 @Component({
-  selector: 'app-organigrama',
-  templateUrl: './organigrama.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-organigrama',
+    templateUrl: './organigrama.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class OrganigramaComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

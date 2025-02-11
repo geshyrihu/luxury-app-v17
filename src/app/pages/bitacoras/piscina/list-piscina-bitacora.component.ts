@@ -8,10 +8,9 @@ import { DialogHandlerService } from 'src/app/core/services/dialog-handler.servi
 import AddoreditPiscinaBitacoraComponent from './addoredit-piscina-bitacora.component';
 
 @Component({
-  selector: 's-list-piscina-bitacora',
-  templateUrl: './list-piscina-bitacora.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 's-list-piscina-bitacora',
+    templateUrl: './list-piscina-bitacora.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class ListPiscinaBitacoraComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

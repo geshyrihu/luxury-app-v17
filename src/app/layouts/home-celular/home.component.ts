@@ -11,10 +11,9 @@ import { HomeMenuService } from './home-menu.service';
 import HomeMenuComponent from './home-menu/home-menu.component';
 
 @Component({
-  selector: 'app-home',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, RouterModule, HomeMenuComponent],
-  templateUrl: './home.component.html',
+    selector: 'app-home',
+    imports: [LuxuryAppComponentsModule, RouterModule, HomeMenuComponent],
+    templateUrl: './home.component.html'
 })
 export default class HomeComponent implements OnInit {
   private apiRequestS = inject(ApiRequestService);

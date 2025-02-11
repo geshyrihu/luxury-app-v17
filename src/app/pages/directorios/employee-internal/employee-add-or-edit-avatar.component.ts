@@ -4,10 +4,9 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { EmployeeAddOrEditService } from './employee-add-or-edit.service';
 
 @Component({
-  selector: 'employee-add-or-edit-avatar',
-  templateUrl: './employee-add-or-edit-avatar.component.html',
-  standalone: true,
-  imports: [CommonModule],
+    selector: 'employee-add-or-edit-avatar',
+    templateUrl: './employee-add-or-edit-avatar.component.html',
+    imports: [CommonModule]
 })
 export default class EmployeeAddOrEditAvatarComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

@@ -4,10 +4,9 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 
 @Component({
-  selector: 'app-onden-compra-pdf-solicitud-pago',
-  templateUrl: './onden-compra-pdf-solicitud-pago.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-onden-compra-pdf-solicitud-pago',
+    templateUrl: './onden-compra-pdf-solicitud-pago.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class OndenCompraPdfSolicitudPagoComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

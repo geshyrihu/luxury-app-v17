@@ -13,10 +13,9 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-ticket-message-reopen',
-  templateUrl: './ticket-message-reopen.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
+    selector: 'app-ticket-message-reopen',
+    templateUrl: './ticket-message-reopen.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule]
 })
 export default class TicketMessageReopenComponent implements OnInit {
   authS = inject(AuthService);

@@ -4,10 +4,9 @@ import { IMenuItem } from '../../sidebar/menu.model';
 import HomeListGroupComponent from '../home-list-group/home-list-group.component';
 
 @Component({
-  selector: 'app-home-bitacoras',
-  standalone: true,
-  imports: [HomeListGroupComponent],
-  templateUrl: './home-bitacoras.component.html',
+    selector: 'app-home-bitacoras',
+    imports: [HomeListGroupComponent],
+    templateUrl: './home-bitacoras.component.html'
 })
 export default class HomeBitacorasComponent {
   authS = inject(AuthService);

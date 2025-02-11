@@ -8,11 +8,10 @@ import { EnumSelectService } from 'src/app/core/services/enum-select.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-addoredit-status-request-salary-modification',
-  templateUrl: './addoredit-status-request-salary-modification.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
-  providers: [EnumSelectService],
+    selector: 'app-addoredit-status-request-salary-modification',
+    templateUrl: './addoredit-status-request-salary-modification.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule],
+    providers: [EnumSelectService]
 })
 export default class AddOrEditStatusRequestSalaryModificationComponent
   implements OnInit

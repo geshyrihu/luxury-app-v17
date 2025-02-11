@@ -13,10 +13,9 @@ import { EmployeeAddOrEditService } from './employee-add-or-edit.service';
 import { EmployeeProviderAddOrEditComponent } from './employee-provider-addoredit.component';
 
 @Component({
-  selector: 'app-employee-list',
-  templateUrl: './employee-list.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-employee-list',
+    templateUrl: './employee-list.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class EmployeeListComponent implements OnInit {
   authS = inject(AuthService);

@@ -16,10 +16,9 @@ import AddOrEditMeetingComponent from './addoredit-meeting.component';
 import AddoreditMinutaDetalleComponent from './addoredit-minuta-detalle.component';
 
 @Component({
-  selector: 'app-list-minutas',
-  templateUrl: './list-minutas.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-list-minutas',
+    templateUrl: './list-minutas.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class ListMinutasComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

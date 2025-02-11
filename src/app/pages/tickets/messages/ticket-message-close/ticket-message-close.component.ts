@@ -15,10 +15,9 @@ import CustomInputModule from 'src/app/custom-components/custom-input-form/custo
 import { TicketGroupService } from '../../ticket.service';
 
 @Component({
-  selector: 'app-ticket-message-close',
-  templateUrl: './ticket-message-close.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
+    selector: 'app-ticket-message-close',
+    templateUrl: './ticket-message-close.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule]
 })
 export default class TicketMessageCloseComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

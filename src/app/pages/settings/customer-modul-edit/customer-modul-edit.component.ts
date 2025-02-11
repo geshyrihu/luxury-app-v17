@@ -6,10 +6,9 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DataConnectorService } from 'src/app/core/services/data.service';
 
 @Component({
-  selector: 'app-customer-modul-edit',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
-  templateUrl: './customer-modul-edit.component.html',
+    selector: 'app-customer-modul-edit',
+    imports: [LuxuryAppComponentsModule],
+    templateUrl: './customer-modul-edit.component.html'
 })
 export default class CustomerModulEditComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

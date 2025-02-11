@@ -6,10 +6,9 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-customer-address',
-  templateUrl: './customer-address.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
+    selector: 'app-customer-address',
+    templateUrl: './customer-address.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule]
 })
 export default class CustomerAddressComponent implements OnInit {
   formB = inject(FormBuilder);

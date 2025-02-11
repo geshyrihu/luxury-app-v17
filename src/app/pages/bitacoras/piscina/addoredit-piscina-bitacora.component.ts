@@ -8,10 +8,9 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-addoredit-piscina-bitacora',
-  templateUrl: './addoredit-piscina-bitacora.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
+    selector: 'app-addoredit-piscina-bitacora',
+    templateUrl: './addoredit-piscina-bitacora.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule]
 })
 export default class AddoreditPiscinaBitacoraComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

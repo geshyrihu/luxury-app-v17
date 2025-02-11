@@ -4,10 +4,9 @@ import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 
 @Component({
-  selector: 'app-pdf-solicitud-compra',
-  templateUrl: './pdf-solicitud-compra.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
+    selector: 'app-pdf-solicitud-compra',
+    templateUrl: './pdf-solicitud-compra.component.html',
+    imports: [LuxuryAppComponentsModule]
 })
 export default class PdfSolicitudCompraComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

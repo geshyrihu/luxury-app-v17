@@ -9,10 +9,9 @@ import { DialogHandlerService } from 'src/app/core/services/dialog-handler.servi
 import AddOrEditCustomerProviderComponent from './addoredit-customer-provider.component';
 
 @Component({
-  selector: 'app-mis-proveedores',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule],
-  templateUrl: './mis-proveedores.component.html',
+    selector: 'app-mis-proveedores',
+    imports: [LuxuryAppComponentsModule],
+    templateUrl: './mis-proveedores.component.html'
 })
 export default class MisProveedoresComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

@@ -4,10 +4,9 @@ import { DialogHandlerService } from 'src/app/core/services/dialog-handler.servi
 import ModalSearchComponent from '../modal-search/modal-search.component';
 
 @Component({
-  selector: 'app-search',
-  templateUrl: './search.component.html',
-  standalone: true,
-  imports: [],
+    selector: 'app-search',
+    templateUrl: './search.component.html',
+    imports: []
 })
 export default class SearchComponent implements OnInit {
   ref: DynamicDialogRef | undefined;

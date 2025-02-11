@@ -7,10 +7,9 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import CustomInputModule from 'src/app/custom-components/custom-input-form/custom-input.module';
 
 @Component({
-  selector: 'app-bitacora-add',
-  templateUrl: './bitacora-add.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
+    selector: 'app-bitacora-add',
+    templateUrl: './bitacora-add.component.html',
+    imports: [LuxuryAppComponentsModule, CustomInputModule]
 })
 export default class BitacoraAddComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

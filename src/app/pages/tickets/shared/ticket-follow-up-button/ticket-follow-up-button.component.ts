@@ -4,10 +4,9 @@ import { DialogHandlerService } from 'src/app/core/services/dialog-handler.servi
 import TicketMessageFollowupComponent from '../../../tickets/folloups/ticket-message-followup/ticket-message-followup.component';
 
 @Component({
-  selector: 'app-ticket-follow-up-button',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './ticket-follow-up-button.component.html',
+    selector: 'app-ticket-follow-up-button',
+    imports: [CommonModule],
+    templateUrl: './ticket-follow-up-button.component.html'
 })
 export default class TicketFollowUpButtonComponent {
   private dialogHandlerS = inject(DialogHandlerService);

@@ -9,10 +9,9 @@ import InspectionCondominiumAssetAddComponent from '../inspection-condominium-as
 import InspectionCondominiumAssetEditComponent from '../inspection-condominium-asset-edit/inspection-condominium-asset-edit.component';
 
 @Component({
-  selector: 'app-inspection-details',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, CustomInputModule],
-  templateUrl: './inspection-details.component.html',
+    selector: 'app-inspection-details',
+    imports: [LuxuryAppComponentsModule, CustomInputModule],
+    templateUrl: './inspection-details.component.html'
 })
 export default class InspectionDetailsComponent implements OnInit {
   activatedRoute = inject(ActivatedRoute);

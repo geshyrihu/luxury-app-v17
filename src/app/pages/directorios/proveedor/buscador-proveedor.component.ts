@@ -10,10 +10,9 @@ import CalificacionProveedorComponent from './calificacion-proveedor.component';
 import TarjetaProveedorComponent from './tarjeta-proveedor.component';
 
 @Component({
-  selector: 'app-buscador-proveedor',
-  templateUrl: './buscador-proveedor.component.html',
-  standalone: true,
-  imports: [LuxuryAppComponentsModule, NgbRatingModule],
+    selector: 'app-buscador-proveedor',
+    templateUrl: './buscador-proveedor.component.html',
+    imports: [LuxuryAppComponentsModule, NgbRatingModule]
 })
 export default class BuscadorProvedorComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);
