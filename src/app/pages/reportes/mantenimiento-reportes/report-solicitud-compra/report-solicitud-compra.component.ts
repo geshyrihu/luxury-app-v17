@@ -6,12 +6,11 @@ import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DateService } from 'src/app/core/services/date.service';
 import { PeriodoMonthService } from 'src/app/core/services/periodo-month.service';
-import PagetitleReportComponent from 'src/app/shared/cabeceras/pagetitlereport/pagetitlereport.component';
 
 @Component({
-    selector: 'app-report-solicitud-compra',
-    templateUrl: './report-solicitud-compra.component.html',
-    imports: [LuxuryAppComponentsModule, PagetitleReportComponent]
+  selector: 'app-report-solicitud-compra',
+  templateUrl: './report-solicitud-compra.component.html',
+  imports: [LuxuryAppComponentsModule],
 })
 export default class ReportSolicitudCompraComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

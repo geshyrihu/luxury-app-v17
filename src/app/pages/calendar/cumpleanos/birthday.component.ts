@@ -1,5 +1,4 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { FullCalendarModule } from '@fullcalendar/angular';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable } from 'rxjs';
@@ -9,9 +8,9 @@ import { CustomerIdService } from 'src/app/core/services/customer-id.service';
 import { DialogHandlerService } from 'src/app/core/services/dialog-handler.service';
 
 @Component({
-    selector: 'app-birthday',
-    templateUrl: './birthday.component.html',
-    imports: [LuxuryAppComponentsModule, FullCalendarModule]
+  selector: 'app-birthday',
+  templateUrl: './birthday.component.html',
+  imports: [LuxuryAppComponentsModule],
 })
 export default class BirthdayComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);

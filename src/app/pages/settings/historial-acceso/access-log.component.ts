@@ -7,9 +7,9 @@ import { DateService } from 'src/app/core/services/date.service';
 import { FiltroCalendarService } from 'src/app/core/services/filtro-calendar.service';
 
 @Component({
-    selector: 'app-access-log',
-    templateUrl: './access-log.component.html',
-    imports: [LuxuryAppComponentsModule]
+  selector: 'app-access-log',
+  templateUrl: './access-log.component.html',
+  imports: [LuxuryAppComponentsModule],
 })
 export default class AccessLogComponent implements OnInit {
   dateS = inject(DateService);
@@ -21,7 +21,7 @@ export default class AccessLogComponent implements OnInit {
   data: any[] = [];
 
   customerId$: Observable<number> = this.customerIdS.getCustomerId$();
-  dates$: Observable<Date[]> = this.filtroCalendarService.getDates$();
+  dateS$: Observable<Date[]> = this.filtroCalendarService.getDates$();
 
   ngOnInit(): void {
     this.onLoadData(
@@ -34,7 +34,7 @@ export default class AccessLogComponent implements OnInit {
         this.dateS.getDateFormat(this.filtroCalendarService.fechaFinal)
       );
     });
-    this.dates$.subscribe((dates) => {
+    this.dateS$.subscribe((dates) => {
       this.onLoadData(
         this.dateS.getDateFormat(dates[0]),
         this.dateS.getDateFormat(dates[1])

@@ -31,7 +31,7 @@ export class FiltroCalendarService {
   fechasMOnth$ = new EventEmitter<IFechasFiltro>();
 
   // Subject para emitir un arreglo de fechas
-  dates$ = new Subject<Date[]>();
+  dateS$ = new Subject<Date[]>();
 
   /**
    * Establece las fechas de inicio y fin completas para el filtro de calendario.
@@ -57,7 +57,7 @@ export class FiltroCalendarService {
       0
     );
     // Emitimos un evento a través del Subject con las fechas seleccionadas
-    this.dates$.next([this.fechaInicial, this.fechaFinal]);
+    this.dateS$.next([this.fechaInicial, this.fechaFinal]);
   }
 
   /**
@@ -65,6 +65,6 @@ export class FiltroCalendarService {
    * @returns Observable de un arreglo de fechas.
    */
   getDates$(): Observable<Date[]> {
-    return this.dates$.asObservable();
+    return this.dateS$.asObservable();
   }
 }

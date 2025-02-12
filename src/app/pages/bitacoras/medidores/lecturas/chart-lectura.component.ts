@@ -1,7 +1,8 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { NgChartsModule } from 'ng2-charts';
+import { ChartOptions } from 'chart.js';
+import { BaseChartDirective } from 'ng2-charts';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable } from 'rxjs';
 import { IChartType } from 'src/app/core/interfaces/chart-type.interface';
@@ -10,11 +11,10 @@ import { IFechasFiltro } from 'src/app/core/interfaces/fechas-filtro.interface';
 import { ApiRequestService } from 'src/app/core/services/api-request.service';
 import { DateService } from 'src/app/core/services/date.service';
 import { FiltroCalendarService } from 'src/app/core/services/filtro-calendar.service';
-
 @Component({
-    selector: 'app-chart-lectura',
-    templateUrl: './chart-lectura.component.html',
-    imports: [LuxuryAppComponentsModule, NgChartsModule]
+  selector: 'app-chart-lectura',
+  templateUrl: './chart-lectura.component.html',
+  imports: [LuxuryAppComponentsModule, BaseChartDirective],
 })
 export default class ChartLecturaComponent implements OnInit {
   apiRequestS = inject(ApiRequestService);
@@ -27,7 +27,7 @@ export default class ChartLecturaComponent implements OnInit {
   ViewMonth: boolean = false;
   ViewDay: boolean = true;
   medidorId: number = 0;
-  dates$: Observable<Date[]> = this.filtroCalendarService.getDates$();
+  dateS$: Observable<Date[]> = this.filtroCalendarService.getDates$();
 
   fechaInicial: string = this.dateS.getDateFormat(
     this.filtroCalendarService.fechaInicioDateFull
@@ -65,7 +65,7 @@ export default class ChartLecturaComponent implements OnInit {
       this.fechaFinal = resp.fechaFinal;
       this.onLoadData();
     });
-    this.dates$.subscribe((dates) => {
+    this.dateS$.subscribe((dates) => {
       this.onDataGraficoMensual(
         this.dateS.getDateFormat(dates[0]),
         this.dateS.getDateFormat(dates[1])
@@ -102,12 +102,30 @@ export default class ChartLecturaComponent implements OnInit {
   }
   lineBarChart: IChartType;
   // lineBarChartDiario: ChartType;
+
+  chartOptions: ChartOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    scales: {
+      x: {
+        grid: {
+          color: 'rgba(166, 176, 207, 0.1)',
+        },
+      },
+      y: {
+        grid: {
+          color: 'rgba(166, 176, 207, 0.1)',
+        },
+      },
+    },
+  };
+
   onLoadChart(
     label: string,
     backgroundColor: string,
     hoverBackgroundColor: string,
     labels: string[],
-    data: any
+    data: number[]
   ) {
     this.lineBarChart = {
       labels: labels,
@@ -123,25 +141,59 @@ export default class ChartLecturaComponent implements OnInit {
           barPercentage: 0.4,
         },
       ],
-      options: {
-        maintainAspectRatio: false,
-        scales: {
-          xAxes: [
-            {
-              gridLines: {
-                color: 'rgba(166, 176, 207, 0.1)',
-              },
-            },
-          ],
-          yAxes: [
-            {
-              gridLines: {
-                color: 'rgba(166, 176, 207, 0.1)',
-              },
-            },
-          ],
-        },
-      },
     };
   }
 }
+
+// dame este codigo con la version actualizada de chart,  <canvas
+//     baseChart
+//     [datasets]="lineBarChart.datasets"
+//     chartType="bar"
+//     [options]="lineBarChart.options"
+//     height="300"
+//     [labels]="lineBarChart.labels"
+//   >
+//   </canvas>, lineBarChart: IChartType;
+//   // lineBarChartDiario: ChartType;
+//   onLoadChart(
+//     label: string,
+//     backgroundColor: string,
+//     hoverBackgroundColor: string,
+//     labels: string[],
+//     data: any
+//   ) {
+//     this.lineBarChart = {
+//       labels: labels,
+//       datasets: [
+//         {
+//           label: label,
+//           backgroundColor: backgroundColor,
+//           borderColor: backgroundColor,
+//           borderWidth: 1,
+//           hoverBackgroundColor: hoverBackgroundColor,
+//           hoverBorderColor: hoverBackgroundColor,
+//           data: data,
+//           barPercentage: 0.4,
+//         },
+//       ],
+//       options: {
+//         maintainAspectRatio: false,
+//         scales: {
+//           xAxes: [
+//             {
+//               gridLines: {
+//                 color: 'rgba(166, 176, 207, 0.1)',
+//               },
+//             },
+//           ],
+//           yAxes: [
+//             {
+//               gridLines: {
+//                 color: 'rgba(166, 176, 207, 0.1)',
+//               },
+//             },
+//           ],
+//         },
+//       },
+//     };
+//   }
