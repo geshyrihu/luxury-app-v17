@@ -6,25 +6,26 @@ import {
   NG_VALUE_ACCESSOR,
 } from '@angular/forms';
 import LuxuryAppComponentsModule from 'app/shared/luxuryapp-components.module';
-import { NgxMaskModule } from 'ngx-mask';
+import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import ValidationErrorsCustomInputComponent from '../validation-errors-custom-input/validation-errors-custom-input.component';
 
 @Component({
-    selector: 'custom-input-mask',
-    templateUrl: './custom-input-mask.component.html',
-    imports: [
-        LuxuryAppComponentsModule,
-        CommonModule,
-        NgxMaskModule,
-        ValidationErrorsCustomInputComponent,
-    ],
-    providers: [
-        {
-            provide: NG_VALUE_ACCESSOR,
-            useExisting: forwardRef(() => CustomInputMaskComponent),
-            multi: true,
-        },
-    ]
+  selector: 'custom-input-mask',
+  templateUrl: './custom-input-mask.component.html',
+  imports: [
+    LuxuryAppComponentsModule,
+    CommonModule,
+    NgxMaskDirective,
+    ValidationErrorsCustomInputComponent,
+  ],
+  providers: [
+    provideNgxMask(),
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => CustomInputMaskComponent),
+      multi: true,
+    },
+  ],
 })
 export default class CustomInputMaskComponent implements ControlValueAccessor {
   @Input() control: FormControl;

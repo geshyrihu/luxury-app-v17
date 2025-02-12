@@ -20,14 +20,17 @@ import {
   BrowserAnimationsModule,
   provideAnimations,
 } from '@angular/platform-browser/animations';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideRouter } from '@angular/router';
 import {
   provideServiceWorker,
   ServiceWorkerModule,
 } from '@angular/service-worker';
 import { TranslateModule } from '@ngx-translate/core';
+import Aura from '@primeng/themes/aura';
 import { FlatpickrModule } from 'angularx-flatpickr';
-import { NgxMaskModule } from 'ngx-mask';
+import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
+import { providePrimeNG } from 'primeng/config';
 import { environment } from 'src/environments/environment';
 import { routes } from './app.routes';
 import { AutosizeDirective } from './core/directives/autosize-text-area.diective';
@@ -35,6 +38,19 @@ import { JwtInterceptor } from './core/services/jwt-interceptor.service';
 // Import the functions you need from the SDKs you need
 export const appConfig: ApplicationConfig = {
   providers: [
+    provideAnimationsAsync(),
+    providePrimeNG({
+      theme: {
+        preset: Aura,
+      },
+      ripple: true,
+      zIndex: {
+        modal: 1100, // dialog, sidebar
+        overlay: 1000, // dropdown, overlaypanel
+        menu: 1000, // overlay menus
+        tooltip: 1100, // tooltip
+      },
+    }),
     {
       provide: IMAGE_CONFIG,
       useValue: {
@@ -67,7 +83,7 @@ export const appConfig: ApplicationConfig = {
       // Módulo para realizar peticiones HTTP
       // HttpClientModule,
       // Módulo para aplicar máscaras a los campos de entrada
-      NgxMaskModule.forRoot()
+      NgxMaskDirective
     ),
     {
       // Proveedor para interceptores de HTTP, en este caso, se utiliza JwtInterceptor
@@ -87,6 +103,7 @@ export const appConfig: ApplicationConfig = {
       provide: LOCALE_ID,
       useValue: 'es-MX',
     },
+    provideNgxMask(),
     // Proveedor para configurar el cliente HTTP con los interceptores desde DI (Inyección de Dependencias)
     provideHttpClient(withInterceptorsFromDi()),
     // Proveedor para configurar las animaciones personalizadas
@@ -100,9 +117,10 @@ export const appConfig: ApplicationConfig = {
     provideServiceWorker('ngsw-worker.js', {
       enabled: !isDevMode(),
       registrationStrategy: 'registerWhenStable:30000',
-    }), provideServiceWorker('ngsw-worker.js', {
-            enabled: !isDevMode(),
-            registrationStrategy: 'registerWhenStable:30000'
-          }),
+    }),
+    provideServiceWorker('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      registrationStrategy: 'registerWhenStable:30000',
+    }),
   ],
 };
